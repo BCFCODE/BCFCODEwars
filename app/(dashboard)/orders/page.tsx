@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 export default function OrdersPage() {
   return (
     <Typography>
-      Welcome to the Toolpad orders!
+      Welcome to the BCFCODEwars orders!
     </Typography>
   );
 }
