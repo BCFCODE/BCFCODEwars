@@ -1,31 +1,58 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 
-const ANKICONNECT_URL = 'http://127.0.0.1:8765'; // AnkiConnect's default address
+// Load AnkiConnect URL from environment variables
+const ANKICONNECT_URL = process.env.ANKICONNECT_URL as string;
 
-export async function POST(req: NextRequest) {
-  const { action, params } = await req.json();
-
+// Helper function to handle AnkiConnect requests
+async function ankiConnectRequest(action: string, params = {}) {
   const body = {
     action,
     version: 6,
-    params: params || {}
+    params,
   };
 
-  try {
-    const res = await fetch(ANKICONNECT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    });
+  const res = await fetch(ANKICONNECT_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
 
-    const data = await res.json();
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error('Error connecting to Anki:', error);
-    return NextResponse.json({ error: 'Failed to connect to Anki' }, { status: 500 });
+  if (!res.ok) {
+    throw new Error(`Failed to connect to AnkiConnect: ${res.statusText}`);
   }
+
+  const data = await res.json();
+  return data;
 }
 
+export async function POST(req: NextRequest) {
+  try {
+    const { action, params } = await req.json();
+
+    // Validate that action is provided
+    if (!action) {
+      return NextResponse.json(
+        { error: "Action is required" },
+        { status: 400 }
+      );
+    }
+
+    // Call AnkiConnect API
+    const data = await ankiConnectRequest(action, params);
+
+    // Return successful response
+    return NextResponse.json(data);
+  } catch (error: any) {
+    console.error("Error in POST /api/anki:", error.message);
+
+    return NextResponse.json(
+      { error: error.message || "An unexpected error occurred" },
+      { status: 500 }
+    );
+  }
+}
 
 /* 
   To connect your Next.js project to your Anki database and access the cards and decks using TypeScript and the App Router approach, you'll likely need to use AnkiConnect. AnkiConnect is an API that allows external programs to interact with Anki.
