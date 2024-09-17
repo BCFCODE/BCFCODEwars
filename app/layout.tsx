@@ -7,6 +7,16 @@ import type { Navigation } from '@toolpad/core';
 import { SessionProvider, signIn, signOut } from 'next-auth/react';
 import { auth } from '../auth';
 import theme from '../theme';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | BCFCODEwars",
+    default: "BCFCODEwars",
+  },
+  description: "Welcome to BCFCODEwars, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
+  metadataBase: new URL("https://bakhshandehmorteza.ir/"),
+};
 
 const NAVIGATION: Navigation = [
   {
