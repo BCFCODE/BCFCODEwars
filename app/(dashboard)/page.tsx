@@ -7,7 +7,7 @@ export default async function HomePage() {
 
   return (
     <Typography>
-      Welcome to Toolpad, {session?.user?.name || 'User'}!
+      Welcome to BCFCODEwars, {session?.user?.name || 'User'}!
     </Typography>
   );
 }
