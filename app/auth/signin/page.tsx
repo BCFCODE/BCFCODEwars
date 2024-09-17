@@ -3,6 +3,11 @@ import type { AuthProvider } from "@toolpad/core";
 import { SignInPage } from "@toolpad/core/SignInPage";
 import { AuthError } from "next-auth";
 import { providerMap, signIn } from "../../../auth";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sign In | BCFCODEwars",
+};
 
 export default function SignIn() {
   return (
