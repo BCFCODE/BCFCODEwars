@@ -12,7 +12,14 @@ const seedData = [
     createdAt: new Date("2024-09-08T21:02:28.684Z"),
   },
   {
-    _id: new ObjectId("66de1a154ef9187fa6c73bf8"),
+    _id: new ObjectId(),
+    username: "Sepehr",
+    email: "sepehr.salimian11@gmail.com",
+    password: "1234",
+    createdAt: new Date(),
+  },
+  {
+    _id: new ObjectId(),
     username: "Mahsa",
     email: "mahsa.alamdari95@gmail.com",
     password: "1234",
@@ -21,6 +28,13 @@ const seedData = [
 ];
 
 export async function GET(request: NextRequest) {
+  /* 
+    http://localhost:3000/seed?key=your-secret-key
+    And in your .env.local file, you’d have:
+
+    SECRET_KEY=your-secret-key
+    This way, only requests with the correct key will succeed in seeding the database.
+  */
   const { searchParams } = new URL(request.url);
   const secretKey = searchParams.get("key");
 
