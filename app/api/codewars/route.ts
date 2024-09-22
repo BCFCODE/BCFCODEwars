@@ -1,1 +1,0 @@
-// https://dev.codewars.com/#introduction
