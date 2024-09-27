@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google"; // Import directly without typing 'Provider'
+import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import type { AuthProvider, SupportedAuthProvider } from "@toolpad/core"; // Ensure you import the types
 
 const providers = [
   GoogleProvider({
@@ -13,9 +14,23 @@ const providers = [
   }),
 ];
 
-export const providerMap = providers.map((provider) => {
-  const providerData = provider;
-  return { id: providerData.id, name: providerData.name };
+// Create providerMap ensuring proper type for AuthProvider
+export const providerMap: AuthProvider[] = providers.map((provider) => {
+  let providerId: SupportedAuthProvider;
+
+  // Ensure that the provider.id matches the SupportedAuthProvider type
+  switch (provider.name) {
+    case "Google":
+      providerId = "google"; // Match the supported ID
+      break;
+    case "GitHub":
+      providerId = "github"; // Match the supported ID
+      break;
+    default:
+      throw new Error(`Unsupported provider: ${provider.name}`);
+  }
+
+  return { id: providerId, name: provider.name };
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -24,16 +39,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   pages: {
     signIn: "/auth/signin",
   },
+  /* 
+   When you set trustHost: true, it allows the application to accept requests from all hosts. While this can be useful for development, it’s important to understand the security implications. This is not recommended for production environments since it can expose your application to potential security risks.
+   Setting trustHost: true opens your application to requests from any host, which can expose your app to security vulnerabilities, even in development. If you accidentally deploy your app without removing this option, it could lead to serious security issues.
+  */
+  // trustHost: true,
   callbacks: {
-    async authorized({ auth: session, request: { nextUrl } }: { auth: any, request: { nextUrl: URL } }) {
+    async authorized({
+      auth: session,
+      request: { nextUrl },
+    }: {
+      auth: any;
+      request: { nextUrl: URL };
+    }) {
       const isLoggedIn = !!session?.user;
       const isPublicPage = nextUrl.pathname.startsWith("/public");
 
-      if (isPublicPage || isLoggedIn) {
-        return true;
-      }
-
-      return false;
+      return isPublicPage || isLoggedIn; // Simplified return statement
     },
   },
 });
