@@ -1,42 +1,52 @@
-import * as React from 'react';
-import { AppProvider } from '@toolpad/core/nextjs';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import type { Navigation } from '@toolpad/core';
-import { SessionProvider, signIn, signOut } from 'next-auth/react';
-import { auth } from '../auth';
-import theme from '../theme';
-import { Metadata } from 'next';
+import * as React from "react";
+import { AppProvider } from "@toolpad/core/nextjs";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import type { Navigation } from "@toolpad/core";
+import { SessionProvider, signIn, signOut } from "next-auth/react";
+import { auth } from "../auth";
+import theme from "../theme";
+import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: {
     template: "%s | BCFCODEwars",
     default: "BCFCODEwars",
   },
-  description: "Welcome to BCFCODEwars, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
+  description:
+    "Welcome to BCFCODEwars, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
   metadataBase: new URL("https://bakhshandehmorteza.ir/"),
 };
 
 const NAVIGATION: Navigation = [
   {
-    kind: 'header',
-    title: 'Main items',
+    kind: "header",
+    title: "Main items",
   },
   {
-    segment: '',
-    title: 'Dashboard',
+    segment: "",
+    title: "Dashboard",
     icon: <DashboardIcon />,
   },
   {
-    segment: 'orders',
-    title: 'Orders',
+    segment: "orders",
+    title: "Orders",
     icon: <ShoppingCartIcon />,
   },
 ];
 
 const BRANDING = {
-  title: 'BCFCODEwars',
+  logo: (
+    <Image
+      width={40}
+      height={40}
+      src="/BCFCODEwars LOGO.png"
+      alt="BCFCODEwars LOGO"
+    />
+  ),
+  title: "BCFCODEwars",
 };
 
 const AUTHENTICATION = {
