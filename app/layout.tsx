@@ -9,6 +9,7 @@ import { auth } from "../auth";
 import theme from "../theme";
 import { Metadata } from "next";
 import Image from "next/image";
+import { montserrat } from "./lib/fonts";
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Welcome to BCFCODEwars, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
   metadataBase: new URL("https://bakhshandehmorteza.ir/"),
-  icons: '/BCFCODEwars LOGO.png'
+  icons: "/BCFCODEwars LOGO.png",
 };
 
 const NAVIGATION: Navigation = [
@@ -59,7 +60,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const session = await auth();
 
   return (
-    <html lang="en">
+    <html lang="en" className={montserrat.className}>
       <body>
         <SessionProvider session={session}>
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
