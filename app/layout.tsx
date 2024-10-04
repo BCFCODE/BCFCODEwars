@@ -18,6 +18,7 @@ export const metadata: Metadata = {
   description:
     "Welcome to BCFCODEwars, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
   metadataBase: new URL("https://bakhshandehmorteza.ir/"),
+  icons: '/BCFCODEwars LOGO.png'
 };
 
 const NAVIGATION: Navigation = [
