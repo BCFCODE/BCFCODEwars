@@ -9,6 +9,7 @@ import { auth } from "../auth";
 import theme from "../theme";
 import { Analytics } from "@vercel/analytics/react";
 import { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: {
@@ -38,8 +39,17 @@ const NAVIGATION: Navigation = [
 ];
 
 const BRANDING = {
+  logo: (
+    <Image
+      width={40}
+      height={40}
+      src="/BCFCODEwars LOGO.png"
+      alt="BCFCODEwars LOGO"
+    />
+  ),
   title: "BCFCODEwars",
 };
+
 
 const AUTHENTICATION = {
   signIn,
