@@ -53,11 +53,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   callbacks: {
     async authorized({
-      auth: session,
-      request: { nextUrl },
+      auth,
+      request,
     }: {
       auth: Session | null;
-      request: { nextUrl: NextRequest };
+      request: NextRequest;
     }) {
       const isLoggedIn = !!session?.user;
       const isPublicPage = nextUrl.pathname.startsWith("/public");
