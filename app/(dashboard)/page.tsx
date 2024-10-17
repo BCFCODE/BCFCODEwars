@@ -1,7 +1,7 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { auth } from "../../auth";
-import AnkiDecks from "./AnkiDecks";
+// import AnkiDecks from "./AnkiDecks";
 
 // import Image from "next/image";
 
