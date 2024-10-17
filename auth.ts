@@ -1,6 +1,7 @@
-import NextAuth from "next-auth";
+import NextAuth, { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import { NextRequest } from "next/server";
 
 const providers = [
   GoogleProvider({
@@ -51,7 +52,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/auth/signin",
   },
   callbacks: {
-    async authorized({ auth: session, request: { nextUrl } }) {
+    async authorized({
+      auth: session,
+      request: { nextUrl },
+    }: {
+      auth: Session | null;
+      request: { nextUrl: NextRequest };
+    }) {
       const isLoggedIn = !!session?.user;
       const isPublicPage = nextUrl.pathname.startsWith("/public");
 
