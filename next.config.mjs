@@ -1,8 +1,17 @@
+import path from 'path';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['lh3.googleusercontent.com'], // Add the Google image domain here
+    domains: ['lh3.googleusercontent.com'],
+  },
+  webpack: (config) => {
+    config.node = {
+      ...config.node,
+      __dirname: true,
+    };
+    return config;
   },
 };
+
 export default nextConfig;
