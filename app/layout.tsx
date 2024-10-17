@@ -1,40 +1,39 @@
-import * as React from 'react';
-import { AppProvider } from '@toolpad/core/nextjs';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import type { Navigation } from '@toolpad/core';
-import { SessionProvider, signIn, signOut } from 'next-auth/react';
-import { auth } from '../auth';
-import theme from '../theme';
+import * as React from "react";
+import { AppProvider } from "@toolpad/core/nextjs";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import type { Navigation } from "@toolpad/core";
+import { SessionProvider, signIn, signOut } from "next-auth/react";
+import { auth } from "../auth";
+import theme from "../theme";
+import { Analytics } from "@vercel/analytics/react";
 
 const NAVIGATION: Navigation = [
   {
-    kind: 'header',
-    title: 'Main items',
+    kind: "header",
+    title: "Main items",
   },
   {
-    segment: '',
-    title: 'Dashboard',
+    segment: "",
+    title: "Dashboard",
     icon: <DashboardIcon />,
   },
   {
-    segment: 'orders',
-    title: 'Orders',
+    segment: "orders",
+    title: "Orders",
     icon: <ShoppingCartIcon />,
   },
 ];
 
 const BRANDING = {
-  title: 'My Toolpad Core Next.js App',
+  title: "My Toolpad Core Next.js App",
 };
-
 
 const AUTHENTICATION = {
   signIn,
   signOut,
 };
-
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
   const session = await auth();
@@ -52,6 +51,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
               theme={theme}
             >
               {props.children}
+              <Analytics />
             </AppProvider>
           </AppRouterCacheProvider>
         </SessionProvider>
