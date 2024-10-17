@@ -14,7 +14,7 @@ export default async function HomePage() {
         Welcome to BCFCODEwars, {session?.user?.name || "User"}!
         {/* <Image height={500} width={500} src={session?.user?.image ?? ""} alt="" /> */}
       </Typography>
-      <AnkiDecks />
+      {/* <AnkiDecks /> */}
     </>
   );
 }
