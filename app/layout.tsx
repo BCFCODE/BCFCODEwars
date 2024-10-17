@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   description:
     "Welcome to BCFCODEwars, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
-  metadataBase: new URL("https://bcfcodewars.ir/"),
+  metadataBase: new URL("https://bcfcodewars.vercel.app/"),
 };
 
 const NAVIGATION: Navigation = [
