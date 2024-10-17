@@ -1,6 +1,6 @@
 import NextAuth, { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import GithubProvider from "next-auth/providers/github";
+// import GithubProvider from "next-auth/providers/github";
 import { NextRequest } from "next/server";
 
 const providers = [
@@ -8,10 +8,10 @@ const providers = [
     clientId: process.env.GOOGLE_CLIENT_ID!,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
   }),
-  GithubProvider({
-    clientId: process.env.GITHUB_CLIENT_ID!,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-  }),
+  // GithubProvider({
+  //   clientId: process.env.GITHUB_CLIENT_ID!,
+  //   clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+  // }),
 ];
 
 const missingVars: string[] = [];
@@ -24,8 +24,8 @@ const isMissing = (name: string, envVar: string | undefined) => {
 
 isMissing("GOOGLE_CLIENT_ID", process.env.GOOGLE_CLIENT_ID);
 isMissing("GOOGLE_CLIENT_SECRET", process.env.GOOGLE_CLIENT_SECRET);
-isMissing("GITHUB_CLIENT_ID", process.env.GITHUB_CLIENT_ID);
-isMissing("GITHUB_CLIENT_SECRET", process.env.GITHUB_CLIENT_SECRET);
+// isMissing("GITHUB_CLIENT_ID", process.env.GITHUB_CLIENT_ID);
+// isMissing("GITHUB_CLIENT_SECRET", process.env.GITHUB_CLIENT_SECRET);
 
 if (missingVars.length > 0) {
   const baseMessage =
@@ -41,7 +41,7 @@ if (missingVars.length > 0) {
 }
 
 export const providerMap = providers.map((provider) => ({
-  id: provider.id as "google" | "github",
+  id: provider.id as "google" /* | "github" */,
   name: provider.name,
 }));
 
