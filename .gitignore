@@ -129,4 +129,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 
-
+# exclude unneessary files from Visual Paradigm:
+# Ignore auto-generated and backup files
+.bak
+.log
+.vpp.bak
+.vp.log
