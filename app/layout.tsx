@@ -50,13 +50,16 @@ const BRANDING = {
   title: "BCFCODEwars",
 };
 
-
 const AUTHENTICATION = {
   signIn,
   signOut,
 };
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
+interface Props {
+  children: React.ReactNode;
+}
+
+export default async function RootLayout({ children }: Props) {
   const session = await auth();
 
   return (
@@ -71,7 +74,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
               authentication={AUTHENTICATION}
               theme={theme}
             >
-              {props.children}
+              {children}
               <Analytics />
             </AppProvider>
           </AppRouterCacheProvider>
