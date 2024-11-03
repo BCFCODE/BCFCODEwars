@@ -1,14 +1,7 @@
-import React from "react";
 import LeaderBoard from "./Leaderboard";
-import SignInButton from "./SignInButton";
 
 const MainPage = () => {
-  return (
-    <>
-      <SignInButton />
-      <LeaderBoard />
-    </>
-  );
+  return <LeaderBoard />;
 };
 
 export default MainPage;

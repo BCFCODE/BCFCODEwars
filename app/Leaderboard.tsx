@@ -1,12 +1,24 @@
 "use client";
 
-import * as React from "react";
+import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useDemoData } from "@mui/x-data-grid-generator";
+import SignInButton from "./SignInButton";
 
-const style = {
-  height: "100%",
-  width: "100%",
+const CustomToolbar = () => {
+  const styles = {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "10px",
+  };
+
+  return (
+    <Box {...styles}>
+      <GridToolbar />
+      <SignInButton />
+    </Box>
+  );
 };
 
 export default function LeaderBoard() {
@@ -16,14 +28,19 @@ export default function LeaderBoard() {
     maxColumns: 10,
   });
 
+  const styles = {
+    height: "100%",
+    width: "100%",
+  };
+
   return (
-    <div {...style}>
+    <Box {...styles}>
       <DataGrid
         {...data}
         slots={{
-          toolbar: GridToolbar,
+          toolbar: CustomToolbar, // Use the custom toolbar
         }}
       />
-    </div>
+    </Box>
   );
 }
