@@ -1,15 +1,16 @@
-import * as React from "react";
-import { AppProvider } from "@toolpad/core/nextjs";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Navigation } from "@toolpad/core";
+import { AppProvider } from "@toolpad/core/nextjs";
+import { Analytics } from "@vercel/analytics/react";
+import { Metadata } from "next";
 import { SessionProvider, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
+import * as React from "react";
 import { auth } from "../auth";
 import theme from "../theme";
-import { Analytics } from "@vercel/analytics/react";
-import { Metadata } from "next"; 
-import Image from "next/image"; 
+import { montserrat } from "./lib/fonts";
 
 export const metadata: Metadata = {
   title: {
@@ -61,7 +62,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="en" data-toolpad-color-scheme="light" suppressHydrationWarning>
-      <body>
+      <body className={montserrat.className}>
         <SessionProvider session={session}>
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <AppProvider
