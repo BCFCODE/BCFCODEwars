@@ -17,7 +17,7 @@ export default function SignIn() {
         'use server';
         try {
           return await signIn(provider.id, {            
-            redirectTo: callbackUrl ?? '/',
+            redirectTo: callbackUrl ?? '/dashboard',
           });
         } catch (error) {
           // The desired flow for successful sign in in all cases

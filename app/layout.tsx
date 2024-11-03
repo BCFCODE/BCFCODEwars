@@ -28,12 +28,12 @@ const NAVIGATION: Navigation = [
     title: "Main items",
   },
   {
-    segment: "",
+    segment: "dashboard",
     title: "Dashboard",
     icon: <DashboardIcon />,
   },
   {
-    segment: "orders",
+    segment: "dashboard/orders",
     title: "Orders",
     icon: <ShoppingCartIcon />,
   },
