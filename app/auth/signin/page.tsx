@@ -1,8 +1,8 @@
-import { SignInPage } from "@toolpad/core/SignInPage";
-import { Metadata } from "next";
+import { Metadata } from "next/types";
 import { providerMap } from "../../../auth";
 import LeaderBoard from "./Leaderboard";
 import { handleSignIn } from "./signInHandler";
+import { SignInPage } from "@toolpad/core/SignInPage";
 
 export const metadata: Metadata = {
   title: "Sign in",
