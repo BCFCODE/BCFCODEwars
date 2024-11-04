@@ -3,8 +3,7 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useDemoData } from "@mui/x-data-grid-generator";
-import SignInButton from "./SignInButton";
-
+ 
 const CustomToolbar = () => {
   const styles = {
     display: "flex",
@@ -12,11 +11,10 @@ const CustomToolbar = () => {
     alignItems: "center",
     marginBottom: "10px",
   };
-
+ 
   return (
     <Box {...styles}>
       <GridToolbar />
-      <SignInButton />
     </Box>
   );
 };
