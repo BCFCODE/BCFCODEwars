@@ -22,8 +22,9 @@ const CustomToolbar = () => {
 export default function LeaderBoard() {
   const { data } = useDemoData({
     dataSet: "Employee",
-    rowLength: 10,
+    rowLength: 30,
     maxColumns: 10,
+    editable: false
   });
 
   const styles = {
