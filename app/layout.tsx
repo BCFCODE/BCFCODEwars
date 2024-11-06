@@ -11,6 +11,7 @@ import * as React from "react";
 import { auth } from "../auth";
 import theme from "../theme";
 import { montserrat } from "./lib/fonts";
+import { Leaderboard } from "@mui/icons-material";
 
 export const metadata: Metadata = {
   title: {
@@ -36,6 +37,18 @@ const NAVIGATION: Navigation = [
     segment: "orders",
     title: "Orders",
     icon: <ShoppingCartIcon />,
+  },
+  {
+    kind: 'divider',
+  },
+  {
+    kind: 'header',
+    title: 'Analytics',
+  },
+  {
+    segment: 'leaderboard',
+    title: 'Leader board',
+    icon: <Leaderboard />,
   },
 ];
 
