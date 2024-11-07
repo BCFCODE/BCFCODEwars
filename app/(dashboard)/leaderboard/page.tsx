@@ -1,6 +1,6 @@
 import LeaderBoard from '@/app/Leaderboard';
 
-export default function OrdersPage() {
+export default function LeaderBoardPage() {
   return (
     <LeaderBoard />
   );
