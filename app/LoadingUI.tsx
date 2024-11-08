@@ -2,7 +2,12 @@ import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 
-const LoadingUI = () => {
+interface Props {
+  head: string;
+  body: string;
+}
+
+const LoadingUI = ({ head, body }: Props) => {
   return (
     <Box
       sx={{
@@ -16,10 +21,10 @@ const LoadingUI = () => {
     >
       <LinearProgress sx={{ width: "100%", marginBottom: 2 }} />
       <Typography variant="h5" color="text.primary">
-        Welcome to BCFCODEwars
+        {head}
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ marginTop: 1 }}>
-        Loading your experience...
+        {body}
       </Typography>
     </Box>
   );
