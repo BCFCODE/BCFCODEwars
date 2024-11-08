@@ -39,15 +39,29 @@ const NAVIGATION: Navigation = [
     icon: <ShoppingCartIcon />,
   },
   {
-    kind: 'divider',
+    segment: "codewars",
+    title: "Codewars",
+    icon: (
+      <Image
+        src="https://www.codewars.com/packs/assets/logo.f607a0fb.svg"
+        alt="Codewars Logo"
+        width={24}
+        height={24}
+        priority
+      />
+    ),
   },
   {
-    kind: 'header',
-    title: 'Analytics',
+    kind: "divider",
   },
   {
-    segment: 'leaderboard',
-    title: 'Leader board',
+    kind: "header",
+    title: "Analytics",
+  },
+
+  {
+    segment: "leaderboard",
+    title: "Leader board",
     icon: <Leaderboard />,
   },
 ];
@@ -63,7 +77,6 @@ const BRANDING = {
   ),
   title: "BCFCODEwars",
 };
-
 
 const AUTHENTICATION = {
   signIn,
