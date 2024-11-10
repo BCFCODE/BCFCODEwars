@@ -15,17 +15,23 @@ const BCFCODEwarsMainPage = async () => {
         alignItems: "center",
         justifyContent: "center",
         minHeight: "100%",
-        bgcolor: 'background.default',
-        color: 'text.primary',
+        bgcolor: "background.default",
+        color: "text.primary",
       }}
     >
-      <Typography variant="h3" sx={{ color: 'primary.secondary', fontWeight: 'bold', mb: 1 }}>
+      <Typography
+        variant="h3"
+        sx={{ color: "primary.secondary", fontWeight: "bold", mb: 1 }}
+      >
         Hello {session?.user?.name}!
       </Typography>
-      <Typography variant="h5" sx={{ color: 'text.secondary', mb: 3 }}>
+      <Typography variant="h5" sx={{ color: "text.secondary", mb: 3 }}>
         Welcome to the BCFCODEwars Main Page 🎉
       </Typography>
-      <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: 600, mb: 3 }}>
+      <Typography
+        variant="body1"
+        sx={{ color: "text.secondary", maxWidth: 600, mb: 3 }}
+      >
         This page is currently under construction, so stay tuned for updates!
       </Typography>
       <CircularProgress color="secondary" />
