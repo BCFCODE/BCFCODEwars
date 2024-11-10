@@ -4,7 +4,7 @@ import React from "react";
 const SignInLoadingMainPage = () => {
   return (
     <LoadingUI
-      head="Welcome to BCFCODEwars"
+      head="Welcome to BCFCODE"
       body="Preparing your sign-in and leaderboard..."
     />
   );

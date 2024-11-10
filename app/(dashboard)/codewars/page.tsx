@@ -1,23 +1,36 @@
-import { auth } from "@/auth";
 import React from "react";
+import { Box, Typography, CircularProgress } from "@mui/material";
+import { auth } from "@/auth";
 
-const CodewarsMainPage = async () => {
+const BCFCODEwarsMainPage = async () => {
   const session = await auth();
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         textAlign: "center",
-        padding: "20px",
+        p: 4,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100%",
+        bgcolor: 'background.default',
+        color: 'text.primary',
       }}
     >
-      <h1>Hello {session?.user?.name}!</h1>
-      <p>Welcome to the Codewars Main Page 🎉</p>
-      <p>
+      <Typography variant="h3" sx={{ color: 'primary.secondary', fontWeight: 'bold', mb: 1 }}>
+        Hello {session?.user?.name}!
+      </Typography>
+      <Typography variant="h5" sx={{ color: 'text.secondary', mb: 3 }}>
+        Welcome to the BCFCODEwars Main Page 🎉
+      </Typography>
+      <Typography variant="body1" sx={{ color: 'text.secondary', maxWidth: 600, mb: 3 }}>
         This page is currently under construction, so stay tuned for updates!
-      </p>
-    </div>
+      </Typography>
+      <CircularProgress color="secondary" />
+    </Box>
   );
 };
 
-export default CodewarsMainPage;
+export default BCFCODEwarsMainPage;

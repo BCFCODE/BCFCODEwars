@@ -1,6 +1,6 @@
-# BCFCODEwars
+# BCFCODE
 
-Welcome to BCFCODEwars! This is where we combine coding skills and teamwork to tackle challenges with creativity.
+Welcome to BCFCODE! This is where we combine coding skills and teamwork to tackle challenges with creativity.
 
 ## Dependencies:
 

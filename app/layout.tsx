@@ -12,14 +12,15 @@ import { auth } from "../auth";
 import theme from "../theme";
 import { montserrat } from "./lib/fonts";
 import { Leaderboard } from "@mui/icons-material";
+import { Typography } from "@mui/material";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | BCFCODEwars",
-    default: "BCFCODEwars",
+    template: "%s | BCFCODE",
+    default: "BCFCODE",
   },
   description:
-    "Welcome to BCFCODEwars, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
+    "Welcome to BCFCODE, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
   metadataBase: new URL("https://bcfcodewars.vercel.app/"),
 };
 
@@ -73,9 +74,14 @@ const BRANDING = {
       height={40}
       src="/BCFCODEwars LOGO.png"
       alt="BCFCODEwars LOGO"
+      style={{
+        borderRadius: "50%", // Rounded logo for a more modern look
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for a professional depth
+        marginLeft: 2
+      }}
     />
   ),
-  title: "BCFCODEwars",
+  title:  'BCFCODE',
 };
 
 const AUTHENTICATION = {
