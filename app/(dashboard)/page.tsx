@@ -12,7 +12,7 @@ export default async function HomePage() {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "100vh", // Full height of the screen
+        minHeight: "100%", // Full height of the screen
         bgcolor: "background.default", // Neutral background color
         color: "text.primary", // Primary text color for readability
         p: { xs: 3, sm: 5 }, // Responsive padding (smaller on mobile)
@@ -29,7 +29,7 @@ export default async function HomePage() {
           textAlign: "center",
           mb: 3,
           letterSpacing: 1.5,
-          fontSize: { xs: "h5.fontSize", sm: "h3.fontSize" }, // Responsive font size
+          fontSize: { xs: "h6.fontSize", sm: "h4.fontSize" }, // Responsive font size
           lineHeight: 1.4,
           transition: "color 0.3s ease-in-out",
         }}
@@ -93,7 +93,7 @@ export default async function HomePage() {
           justifyContent: "center",
           bgcolor: "background.paper", // Neutral background for professional feel
           color: "text.primary", // Maintain text color contrast
-          p: { xs: 3, sm: 4 }, // Adjust padding based on screen size
+          p: { xs: 1, sm: 2 }, // Adjust padding based on screen size
           mb: 4,
           textAlign: "center",
           borderRadius: 2,
@@ -104,7 +104,7 @@ export default async function HomePage() {
           variant="h4"
           sx={{
             fontWeight: 600,
-            fontSize: { xs: "1.5rem", sm: "2rem" }, // Bigger heading for impact on larger screens
+            fontSize: { xs: "1rem", sm: "1.5rem" }, // Bigger heading for impact on larger screens
             letterSpacing: 1.5,
             textTransform: "uppercase",
             color: "primary.main", // Use primary color for more prominence
@@ -117,7 +117,7 @@ export default async function HomePage() {
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: "1rem", sm: "1.2rem" },
+            fontSize: { xs: "0.5rem", sm: "0.7rem" },
             maxWidth: 700,
             textAlign: "center",
             color: "text.secondary", // More subdued color for the description
