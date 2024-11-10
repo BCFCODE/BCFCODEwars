@@ -50,6 +50,40 @@ export default async function HomePage() {
         </Box>
       </Typography>
 
+      {/* User Avatar */}
+      {session?.user?.image && (
+        <Avatar
+          alt={session?.user?.name || ""}
+          src={session?.user?.image}
+          sx={{
+            width: { xs: 100, sm: 120 }, // Responsive avatar size
+            height: { xs: 100, sm: 120 },
+            mb: 3,
+            boxShadow: 8, // Deep shadow for visual separation
+            border: "2px solid", // Adding a border for distinction
+            borderColor: "grey.400", // Neutral border color
+            transition: "transform 0.3s ease-in-out",
+            "&:hover": {
+              transform: "scale(1.1)", // Subtle hover effect to add interaction
+            },
+          }}
+        />
+      )}
+
+      {/* Loading Indicator if no session is found */}
+      {!session && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            mb: 3,
+          }}
+        >
+          <CircularProgress color="primary" size={60} />
+        </Box>
+      )}
+
       {/* Under Construction Message */}
       <Box
         sx={{
@@ -98,41 +132,6 @@ export default async function HomePage() {
           soon!
         </Typography>
       </Box>
-
-      {/* User Avatar */}
-      {session?.user?.image && (
-        <Avatar
-          alt={session?.user?.name || ""}
-          src={session?.user?.image}
-          sx={{
-            width: { xs: 100, sm: 120 }, // Responsive avatar size
-            height: { xs: 100, sm: 120 },
-            mb: 3,
-            boxShadow: 8, // Deep shadow for visual separation
-            border: "2px solid", // Adding a border for distinction
-            borderColor: "grey.400", // Neutral border color
-            transition: "transform 0.3s ease-in-out",
-            "&:hover": {
-              transform: "scale(1.1)", // Subtle hover effect to add interaction
-            },
-          }}
-        />
-      )}
-
-      {/* Loading Indicator if no session is found */}
-      {!session && (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            mb: 3,
-          }}
-        >
-          <CircularProgress color="primary" size={60} />
-        </Box>
-      )}
-
       {/* Inspirational Text */}
       <Fade in={Boolean(session)} timeout={1000}>
         <Typography
