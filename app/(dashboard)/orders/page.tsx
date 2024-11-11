@@ -17,8 +17,8 @@ export default function OrdersPage() {
         textAlign: 'center',
       }}
     >
-      <HourglassEmptyIcon sx={{ fontSize: 60, color: 'secondary.main', mb: 2 }} />
-      <Typography variant="h4" sx={{ mb: 1, fontWeight: 'bold', color: 'primary.secondary' }}>
+      {/* <HourglassEmptyIcon sx={{ fontSize: 60, color: 'secondary.main', mb: 2 }} /> */}
+      <Typography variant="h5" sx={{ mb: 1, fontWeight: 'bold', color: 'primary.secondary' }}>
         Welcome to the BCFCODE Orders Page!
       </Typography>
       <Typography variant="subtitle1" sx={{ mb: 3, color: 'text.secondary' }}>
@@ -28,7 +28,7 @@ export default function OrdersPage() {
         <Typography variant="body1" sx={{ mb: 1, color: 'text.secondary' }}>
           Stay tuned for updates!
         </Typography>
-        <LinearProgress color="secondary" />
+        {/* <LinearProgress color="secondary" /> */}
       </Box>
     </Box>
   );

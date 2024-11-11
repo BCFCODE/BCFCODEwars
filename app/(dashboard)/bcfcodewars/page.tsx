@@ -20,7 +20,7 @@ const BCFCODEwarsMainPage = async () => {
       }}
     >
       <Typography
-        variant="h3"
+        variant="h4"
         sx={{ color: "primary.secondary", fontWeight: "bold", mb: 1 }}
       >
         Hello {session?.user?.name}!
@@ -34,7 +34,7 @@ const BCFCODEwarsMainPage = async () => {
       >
         This page is currently under construction, so stay tuned for updates!
       </Typography>
-      <CircularProgress color="secondary" />
+      {/* <CircularProgress color="secondary" /> */}
     </Box>
   );
 };
