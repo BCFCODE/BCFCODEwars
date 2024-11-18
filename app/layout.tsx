@@ -44,8 +44,8 @@ const NAVIGATION: Navigation = [
     icon: <ShoppingCartIcon />,
   },
   {
-    segment: "bcfcodewars",
-    title: "BCFCODEwars",
+    segment: "wars",
+    title: "Wars",
     icon: <SchoolIcon />,
   },
   {

@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import { auth } from "@/auth";
 
-const BCFCODEwarsMainPage = async () => {
+const WarsMainPage = async () => {
   const session = await auth();
 
   return (
@@ -26,7 +26,7 @@ const BCFCODEwarsMainPage = async () => {
         Hello {session?.user?.name}!
       </Typography>
       <Typography variant="h5" sx={{ color: "text.secondary", mb: 3 }}>
-        Welcome to the BCFCODEwars Main Page 🎉
+        Welcome to the Wars Main Page 🎉
       </Typography>
       <Typography
         variant="body1"
@@ -39,4 +39,4 @@ const BCFCODEwarsMainPage = async () => {
   );
 };
 
-export default BCFCODEwarsMainPage;
+export default WarsMainPage;
