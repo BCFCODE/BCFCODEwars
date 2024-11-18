@@ -1,4 +1,6 @@
+import { Leaderboard } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import SecurityIcon from '@mui/icons-material/Security';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Navigation } from "@toolpad/core";
@@ -11,12 +13,6 @@ import * as React from "react";
 import { auth } from "../auth";
 import theme from "../theme";
 import { montserrat } from "./lib/fonts";
-import { Leaderboard } from "@mui/icons-material";
-import { Typography } from "@mui/material";
-import CodeIcon from '@mui/icons-material/Code';
-import SchoolIcon from '@mui/icons-material/School';
-
-
 
 export const metadata: Metadata = {
   title: {
@@ -46,7 +42,7 @@ const NAVIGATION: Navigation = [
   {
     segment: "wars",
     title: "Wars",
-    icon: <SchoolIcon />,
+    icon: <SecurityIcon />,
   },
   {
     kind: "divider",
