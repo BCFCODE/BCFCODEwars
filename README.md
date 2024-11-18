@@ -43,7 +43,7 @@ BCFCODE is a place for tech enthusiasts who value creativity and collaboration. 
 - [Morteza Bakhshandeh](https://bakhshandehmorteza.ir/)
 - Adib Khaki
 
-# [© BCFCODE](https://github.com/BCFCODE)
+# [© BCFCODE](https://www.bcfcode.ir/)
 
 [Join our Telegram](https://t.me/BCFCODE) | [Follow us on Instagram](https://www.instagram.com/bcfcodeteam/?igshid=MzRlODBiNWFlZA%3D%3D)
 
