@@ -1,0 +1,87 @@
+https://tenor.com/view/john-travolta-confused-lost-where-am-i-where-is-this-gif-16320987
+
+<div class="tenor-gif-embed" data-postid="16320987" data-share-method="host" data-aspect-ratio="1.72043" data-width="100%"><a href="https://tenor.com/view/john-travolta-confused-lost-where-am-i-where-is-this-gif-16320987">John Travolta Confused GIF</a>from <a href="https://tenor.com/search/john+travolta-gifs">John Travolta GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+
+Creating a custom "Not Found" (404) page with a John Travolta "Pulp Fiction" Confused GIF in a Next.js app is a fun way to personalize your error handling! Here's how you can build it step-by-step:
+
+Step-by-Step Guide
+Create a Custom 404 Page:
+
+In Next.js, you can create a custom 404 page by making a file called 404.js or 404.tsx in the pages directory.
+GIF Source:
+
+Download the John Travolta Confused GIF or find a URL that hosts it. For this example, I'll assume you have a URL for the GIF like https://example.com/john-travolta-confused.gif.
+Building the 404 Component:
+
+Add styling directly using inline CSS to keep it simple. The following example uses the Box component from Material-UI to style the page.
+Sample Code for pages/404.tsx
+javascript
+Copy code
+// pages/404.tsx
+import React from 'react';
+import { Box, Typography } from '@mui/material';
+
+// GIF URL (Replace with your local path or URL if you have a different source)
+const GIF_URL = 'https://example.com/john-travolta-confused.gif';
+
+const NotFoundPage = () => {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100vh',
+        bgcolor: 'background.default',
+        color: 'text.primary',
+        textAlign: 'center',
+        p: 3,
+      }}
+    >
+      <Typography
+        variant="h3"
+        sx={{ mb: 2, fontWeight: 'bold', color: 'error.main' }}
+      >
+        404 - Page Not Found
+      </Typography>
+      <Box
+        component="img"
+        src={GIF_URL}
+        alt="John Travolta Confused"
+        sx={{
+          width: '300px',
+          height: 'auto',
+          mb: 3,
+        }}
+      />
+      <Typography variant="h5" sx={{ color: 'text.secondary' }}>
+        Oops! It seems the page you are looking for doesn't exist.
+      </Typography>
+      <Typography variant="body1" sx={{ color: 'text.secondary', mt: 2 }}>
+        Try checking the URL or head back to the homepage.
+      </Typography>
+    </Box>
+  );
+};
+
+export default NotFoundPage;
+Explanation
+Imports: Using Box and Typography from Material-UI for styling.
+GIF Integration: The GIF is displayed using a <Box> component with component="img" and src set to the GIF URL.
+Styling:
+The page centers the content vertically and horizontally using flex properties.
+Colors are managed using Material-UI's theme settings, like bgcolor for background and color for text.
+Responsive and adaptive to different screen sizes.
+Additional Tips
+Custom Styling: You can use CSS-in-JS for more complex styling or switch to styled-components if you prefer.
+Button to Redirect: You can add a button to redirect back to the homepage if you want.
+Local GIF: If you have the GIF locally, put it in the public folder of your project and update the src to something like /john-travolta-confused.gif.
+How to Test
+Run your Next.js app:
+bash
+Copy code
+npm run dev
+Go to a URL that doesn't exist, like http://localhost:3000/non-existent-page, and check the custom 404 page.
+Feel free to ask if you want a different design or specific styling!
