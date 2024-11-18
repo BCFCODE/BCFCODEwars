@@ -1,6 +1,6 @@
 import { Leaderboard } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import SecurityIcon from '@mui/icons-material/Security';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Navigation } from "@toolpad/core";
@@ -13,6 +13,7 @@ import * as React from "react";
 import { auth } from "../auth";
 import theme from "../theme";
 import { montserrat } from "./lib/fonts";
+import MilitaryTechIcon from '@mui/icons-material/MilitaryTech'; 
 
 export const metadata: Metadata = {
   title: {
@@ -42,7 +43,7 @@ const NAVIGATION: Navigation = [
   {
     segment: "wars",
     title: "Wars",
-    icon: <SecurityIcon />,
+    icon: <MilitaryTechIcon />,
   },
   {
     kind: "divider",
