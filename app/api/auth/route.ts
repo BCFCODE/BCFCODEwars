@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateUserData } from "./validation";
 import { handleGoogleSignIn } from "./handler";
+import { GoogleUser } from "@/types/user";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const validatedUser = validateUserData(body.user); // Validate input
+    const validatedUser: GoogleUser = validateUserData(body.user) as GoogleUser; // Validate input
 
     const processedUser = await handleGoogleSignIn(validatedUser);
 

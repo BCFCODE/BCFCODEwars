@@ -1,16 +1,12 @@
 import clientPromise from "../lib/mongodb";
-import { User } from "../types/user";
+import { GoogleUser, NewUser } from "../types/user";
 
-export async function handleUserData(user: {
-  email: string;
-  name: string;
-  picture: string;
-}) {
+export async function handleUserData(user: GoogleUser) {
   const client = await clientPromise;
   const db = client.db("BCFCODEwars");
-  const usersCollection = db.collection<User>("users");
+  const usersCollection = db.collection<GoogleUser>("users");
 
-  const { email, name, picture } = user;
+  const { email, name, image, id: googleId } = user;
 
   // Check if the user exists
   const existingUser = await usersCollection.findOne({ email });
@@ -24,15 +20,17 @@ export async function handleUserData(user: {
     return existingUser;
   }
 
-  // Insert a new user
-  const newUser: User = {
+  // Create the new user object, replacing `id` with `googleId`
+  const newUser: NewUser = {
+    id: googleId, // Use googleId instead of id
     name,
     email,
-    image: picture,
+    image,
     createdAt: new Date(),
     lastLogin: new Date(),
   };
 
-  await usersCollection.insertOne(newUser);
+  // Cast the NewUser to a GoogleUser type for MongoDB insertion
+  await usersCollection.insertOne(newUser); // Type cast to GoogleUser
   return newUser;
 }
