@@ -1,5 +1,5 @@
 export interface GoogleUser {
-  id?: string; // Google unique user ID
+  // id?: string; // Google unique user ID
   name?: string; // User's display name
   email?: string; // User's email address
   image?: string; // URL to the user's profile picture

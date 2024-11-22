@@ -2,7 +2,6 @@ import { GoogleUser } from "@/types/user";
 import { z } from "zod";
 
 export const UserSchema = z.object({
-
   email: z.string().email(),
   name: z.string(),
   image: z.string().url(),

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import clientPromise from "@/lib/mongodb"; // Adjust the path according to your file structure
+import clientPromise from "@/lib/MongoDB/database"; // Adjust the path according to your file structure
 
 export async function GET(request: NextRequest) {
   try {
