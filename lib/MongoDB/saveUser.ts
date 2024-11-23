@@ -1,6 +1,6 @@
-// lib/database.ts
+// lib/MongoDB/saveUser.ts
 import { MongoClient } from "mongodb";
-import { GoogleUser } from "@/types/user";
+import { GoogleUser, NewUser } from "@/types/user";
 import { getDatabase } from "./database";
 
 // MongoDB connection setup
@@ -11,22 +11,37 @@ export async function saveUserDataToDatabase(user: GoogleUser) {
     const db = await getDatabase();
     const usersCollection = db.collection("users");
 
+    const { email, name, image } = user;
     // Check if the user already exists
-    const existingUser = await usersCollection.findOne({ email: user.email });
+    const existingUser = await usersCollection.findOne({ email });
 
     if (existingUser) {
       // Update user data if needed
       await usersCollection.updateOne(
-        { email: user.email },
-        { $set: { ...user, lastLogin: new Date() } }
+        { email },
+        { $set: { lastLogin: new Date() } }
       );
     } else {
-      // Create new user entry
-      await usersCollection.insertOne({ ...user, createdAt: new Date() });
+      // Create the new user object, replacing `id` with `googleId`
+      const newUser: NewUser = {
+        email,
+        name,
+        image,
+        createdAt: new Date(),
+        lastLogin: new Date(),
+      };
+
+      // Cast the NewUser to a GoogleUser type for MongoDB insertion
+      await usersCollection.insertOne(newUser); // Type cast to GoogleUser
+      return newUser;
     }
   } catch (error) {
     console.error("Error saving user data to the database:", error);
   } finally {
     await client.close();
   }
+}
+
+export async function handleGoogleSignIn(user: GoogleUser) {
+  return saveUserDataToDatabase(user); 
 }

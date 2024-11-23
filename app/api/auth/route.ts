@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { validateUserData } from "./validation";
-import { handleGoogleSignIn } from "./handler";
 import { GoogleUser } from "@/types/user";
+import { handleGoogleSignIn } from "@/lib/MongoDB/saveUser";
+import { validateUserData } from "./schema";
 
 export async function POST(req: NextRequest) {
   try {
