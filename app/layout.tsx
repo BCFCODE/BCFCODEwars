@@ -1,6 +1,8 @@
 import { Leaderboard } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
+
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Navigation } from "@toolpad/core";
@@ -98,6 +100,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             >
               {props.children}
               <Analytics />
+              <SpeedInsights />
             </AppProvider>
           </AppRouterCacheProvider>
         </SessionProvider>
