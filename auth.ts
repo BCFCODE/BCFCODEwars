@@ -1,3 +1,4 @@
+// auth.ts
 import NextAuth, { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 // import GithubProvider from "next-auth/providers/github";
@@ -52,6 +53,37 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     signIn: "/auth/signin",
   },
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        try {
+          // Trigger the API to store user data in MongoDB
+          const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              user: {
+                email: user.email,
+                name: user.name,
+                image: user.image,
+              },
+            }),
+          });
+
+          const data = await res.json();
+          if (data.user) {
+            console.log("User data successfully stored in MongoDB:", data.user);
+          } else {
+            console.error("Error storing user:", data.error);
+          }
+        } catch (error) {
+          console.error("Error during sign-in API call:", error);
+        }
+      }
+
+      return true; // Allow the sign-in process to continue
+    },
     async authorized({
       auth,
       request,

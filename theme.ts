@@ -1,7 +1,7 @@
 "use client";
 
 import { createTheme } from "@mui/material/styles";
-import { montserrat } from "./app/lib/fonts";
+import { montserrat } from "./lib/fonts";
 
 const theme = createTheme({
   typography: {

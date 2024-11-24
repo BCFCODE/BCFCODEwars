@@ -1,9 +1,12 @@
+// app/(dashboard)/page.tsx
 import * as React from "react";
 import { Box, Typography, CircularProgress, Avatar, Fade } from "@mui/material";
 import { auth } from "../../auth";
 
+
 export default async function HomePage() {
   const session = await auth();
+  
 
   return (
     <Box

@@ -2,7 +2,7 @@ import { Leaderboard } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next"
-
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Navigation } from "@toolpad/core";
@@ -13,7 +13,7 @@ import Image from "next/image";
 import * as React from "react";
 import { auth } from "../auth";
 import theme from "../theme";
-import { montserrat } from "./lib/fonts";
+import { montserrat } from "../lib/fonts";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 
 export const metadata: Metadata = {
