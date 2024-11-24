@@ -49,6 +49,17 @@ export const providerMap = providers.map((provider) => ({
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers,
   secret: process.env.AUTH_SECRET,
+  cookies: {
+    sessionToken: {
+      name: `next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax", // Ensures it works across domains
+        domain: ".bcfcode.ir", // Shared session cookie across domains
+      },
+    },
+  },
   pages: {
     signIn: "/auth/signin",
   },
