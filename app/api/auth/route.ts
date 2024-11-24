@@ -1,3 +1,4 @@
+// app/api/auth/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleUser } from "@/types/user";
 import { handleGoogleSignIn } from "@/lib/MongoDB/saveUser";
