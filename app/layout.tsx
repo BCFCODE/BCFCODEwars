@@ -66,12 +66,13 @@ const BRANDING = {
     <Image
       width={40}
       height={40}
-      src="/BCFCODEwars LOGO.png"
-      alt="BCFCODEwars LOGO"
+      src="/BCFCODE-LOGO.jpg"
+      alt="BCFCODE LOGO"
       style={{
         borderRadius: "50%", // Rounded logo for a more modern look
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for a professional depth
         marginLeft: 2,
+        marginRight: 1
       }}
     />
   ),
