@@ -1,7 +1,7 @@
 import { Leaderboard } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
@@ -15,6 +15,7 @@ import { auth } from "../auth";
 import theme from "../theme";
 import { montserrat } from "../lib/fonts";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
+import { Typography } from "@mui/material";
 
 export const metadata: Metadata = {
   title: {
@@ -68,15 +69,17 @@ const BRANDING = {
       height={40}
       src="/BCFCODE-LOGO.jpg"
       alt="BCFCODE LOGO"
+      unoptimized={true}
+      loading="lazy"
       style={{
         borderRadius: "50%", // Rounded logo for a more modern look
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for a professional depth
         marginLeft: 2,
-        marginRight: 1
+        marginRight: 1,
       }}
     />
   ),
-  title: "BCFCODE",
+  title: 'BCFCODE',
 };
 
 const AUTHENTICATION = {
