@@ -1,0 +1,52 @@
+# Robots.txt for Your Website
+
+# Directives for all search engine bots (User-agent: *)
+User-agent: *
+
+# Block access to sensitive administrative and backend areas
+# These sections should not be indexed by search engines for privacy and security.
+Disallow: /admin/          # Block access to /admin/ directory
+Disallow: /login/          # Block access to login page
+Disallow: /wp-admin/       # WordPress specific admin area
+Disallow: /private/        # Block any private section
+Disallow: /temp/           # Block temporary files or directories
+
+# Allow access to image and asset directories for SEO purposes
+Allow: /images/            # Allow access to images directory (Open Graph images)
+Allow: /assets/            # Allow crawlers to access your assets folder
+
+# Do not block critical resources (like JS and CSS), which are needed for proper indexing
+# These are required for search engines to fully render your pages.
+Allow: /js/                # Allow access to JS files
+Allow: /css/               # Allow access to CSS files
+Allow: /fonts/             # Allow access to fonts (especially for web fonts like Google Fonts)
+
+# Block access to specific file types (if you don't want them indexed)
+Disallow: *.pdf             # Block PDFs if they don't need to be indexed
+
+# Allow access to the sitemap to help search engines crawl your site efficiently
+Sitemap: https://yourdomain.com/sitemap.xml
+
+# Block crawlers from accessing certain parts (example: query strings, duplicates, etc.)
+# These prevent bots from crawling dynamic URLs or URL parameters that are not useful.
+Disallow: /*?               # Block any URLs with query parameters (example: ?id=123)
+
+# Prevent crawling of internal search result pages
+Disallow: /search/
+
+# Block access to duplicate content (for example, faceted navigation or session IDs in URLs)
+Disallow: /?sessionid=      # Block session IDs in URL parameters
+Disallow: /category/*?      # Block faceted navigation URLs with query parameters
+
+# Special rules for specific bots (like Googlebot)
+# Googlebot (or any other specific bot) can be instructed differently if needed.
+User-agent: Googlebot
+Disallow: /private-google/  # Block a specific directory for Googlebot only
+
+# Prevent crawling of internal search result pages (helpful for eCommerce sites)
+Disallow: /search/
+
+# Allow all bots to crawl the entire website (default behavior if no restrictions are applied)
+# This is just to demonstrate that you can choose to relax restrictions, but we generally recommend specifying the areas that should be blocked.
+User-agent: *
+Disallow:
