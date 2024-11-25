@@ -1,21 +1,19 @@
 import { Leaderboard } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Navigation } from "@toolpad/core";
 import { AppProvider } from "@toolpad/core/nextjs";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
 import { SessionProvider, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import * as React from "react";
 import { auth } from "../auth";
-import theme from "../theme";
 import { montserrat } from "../lib/fonts";
-import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
-import { Typography } from "@mui/material";
+import theme from "../theme";
 
 export const metadata: Metadata = {
   title: {
@@ -25,6 +23,39 @@ export const metadata: Metadata = {
   description:
     "Welcome to BCFCODE, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
   metadataBase: new URL("https://bcfcode.ir/"),
+
+  // Open Graph meta tags
+  openGraph: {
+    title: "BCFCODE",
+    description:
+      "Join the best coding battles and challenges at BCFCODE, led by Bakhshandeh Morteza. Ready to test your coding skills?",
+    url: "https://bcfcode.ir/",
+    siteName: "BCFCODE",
+    images: [
+      {
+        url: "https://bcfcode.ir/opengraph-image.jpg?9de773d50c401793", // URL of your Open Graph image
+        width: 1200,
+        height: 630,
+        alt: "BCFCODE Open Graph Image",
+      },
+    ],
+  },
+  // Twitter meta tags
+  twitter: {
+    card: "summary_large_image", // Large summary card with image
+    site: "@BCFCODE", // Twitter handle of the website or owner
+    title: "BCFCODE",
+    description:
+      "Join the best coding battles and challenges at BCFCODE, led by Bakhshandeh Morteza.",
+    images: [
+      {
+        url: "https://bcfcode.ir/twitter-image.jpg?9de773d50c401793", // URL of your Twitter image
+        alt: "BCFCODE Twitter Image",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
 };
 
 const NAVIGATION: Navigation = [
@@ -79,7 +110,7 @@ const BRANDING = {
       }}
     />
   ),
-  title: 'BCFCODE',
+  title: "BCFCODE",
 };
 
 const AUTHENTICATION = {
