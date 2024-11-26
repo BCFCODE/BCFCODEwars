@@ -13,6 +13,12 @@ import Image from "next/image";
 import * as React from "react";
 import { auth } from "../auth";
 import { montserrat } from "../lib/fonts";
+// import FlagIcon from '@mui/icons-material/Flag';
+import ExploreIcon from "@mui/icons-material/Explore";
+// import AssignmentIcon from '@mui/icons-material/Assignment';
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+// import StarIcon from '@mui/icons-material/Star';
+// import DashboardIcon from '@mui/icons-material/Dashboard';
 import theme from "../theme";
 
 export const metadata: Metadata = {
@@ -77,6 +83,11 @@ const NAVIGATION: Navigation = [
     segment: "wars",
     title: "Wars",
     icon: <MilitaryTechIcon />,
+  },
+  {
+    segment: "missions",
+    title: "Missions",
+    icon: <ExploreIcon />,
   },
   {
     kind: "divider",
