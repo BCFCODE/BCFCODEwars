@@ -1,52 +1,25 @@
 "use client";
 
-import * as React from "react";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import * as React from "react";
+import { createData, rows } from "./Data";
+import { TableContainer, Paper } from "@mui/material";
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-  price: number
-) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        date: "2020-01-05",
-        customerId: "11091700",
-        amount: 3,
-      },
-      {
-        date: "2020-01-02",
-        customerId: "Anonymous",
-        amount: 1,
-      },
-    ],
-  };
+interface Props {
+  user: ReturnType<typeof createData>;
 }
 
-function Row(props: { user: ReturnType<typeof createData> }) {
-  const { user } = props;
+export function Row({ user }: Props) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -108,14 +81,9 @@ function Row(props: { user: ReturnType<typeof createData> }) {
     </React.Fragment>
   );
 }
-const rows = [
-  createData("Morteza", 159, 6.0, 24, 4.0, 3.99),
-  createData("Miguel", 237, 9.0, 37, 4.3, 4.99),
-  createData("Martin", 262, 16.0, 24, 6.0, 3.79),
-  createData("John", 305, 3.7, 67, 4.3, 2.5),
-  createData("Mary", 356, 16.0, 49, 3.9, 1.5),
-];
+
 export default function CollapsibleTable() {
+  
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
