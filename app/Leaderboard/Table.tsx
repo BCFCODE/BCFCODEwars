@@ -37,17 +37,17 @@ export function Row({ user }: Props) {
         <TableCell component="th" scope="row">
           {user.name}
         </TableCell>
-        <TableCell align="right">{user.calories}</TableCell>
-        <TableCell align="right">{user.fat}</TableCell>
-        <TableCell align="right">{user.carbs}</TableCell>
-        <TableCell align="right">{user.protein}</TableCell>
+        <TableCell align="right">{user.memberSince}</TableCell>
+        <TableCell align="right">{user.rank}</TableCell>
+        <TableCell align="right">{user.position}</TableCell>
+        <TableCell align="right">{user.globalPosition}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                History
+                Completed Challenges
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
@@ -67,7 +67,7 @@ export function Row({ user }: Props) {
                       <TableCell>{userHistory.customerId}</TableCell>
                       <TableCell align="right">{userHistory.amount}</TableCell>
                       <TableCell align="right">
-                        {Math.round(userHistory.amount * user.price * 100) /
+                        {Math.round(userHistory.amount * user.rank * 100) /
                           100}
                       </TableCell>
                     </TableRow>
@@ -83,7 +83,6 @@ export function Row({ user }: Props) {
 }
 
 export default function CollapsibleTable() {
-  
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -91,7 +90,7 @@ export default function CollapsibleTable() {
           <TableRow>
             <TableCell />
             <TableCell width="auto">User</TableCell>
-            <TableCell align="right">Global Position</TableCell>
+            <TableCell align="right">Member Since</TableCell>
             <TableCell align="right">Rank</TableCell>
             <TableCell align="right">Position</TableCell>
             <TableCell align="right">Global Position</TableCell>

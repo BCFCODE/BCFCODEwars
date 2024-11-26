@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 const history = [
   {
     date: "2020-01-05",
@@ -13,27 +15,25 @@ const history = [
 
 export function createData(
   name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-  price: number
+  memberSince: string,
+  rank: number,
+  position: number,
+  globalPosition: number,
 ) {
   return {
     name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
+    memberSince,
+    rank,
+    position,
+    globalPosition,
     history,
   };
 }
 
 export const rows = [
-  createData("Morteza", 159, 6.0, 24, 4.0, 3.99),
-  createData("Miguel", 237, 9.0, 37, 4.3, 4.99),
-  createData("Martin", 262, 16.0, 24, 6.0, 3.79),
-  createData("John", 305, 3.7, 67, 4.3, 2.5),
-  createData("Mary", 356, 16.0, 49, 3.9, 1.5),
+  createData("Morteza", new Date().toLocaleDateString(), 6.0, 24, 4.0),
+  createData("Miguel", new Date().toLocaleDateString(), 9.0, 37, 4.3),
+  createData("Martin", new Date().toLocaleDateString(), 16.0, 24, 6.0),
+  createData("John", new Date().toLocaleDateString(), 3.7, 67, 4.3),
+  createData("Mary", new Date().toLocaleDateString(), 16.0, 49, 3.9),
 ];
