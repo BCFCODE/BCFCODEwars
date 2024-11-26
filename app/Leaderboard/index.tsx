@@ -45,8 +45,8 @@ function createData(
   };
 }
 
-function Row(props: { row: ReturnType<typeof createData> }) {
-  const { row } = props;
+function Row(props: { user: ReturnType<typeof createData> }) {
+  const { user } = props;
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -62,12 +62,12 @@ function Row(props: { row: ReturnType<typeof createData> }) {
           </IconButton>
         </TableCell>
         <TableCell component="th" scope="row">
-          {row.name}
+          {user.name}
         </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        <TableCell align="right">{user.calories}</TableCell>
+        <TableCell align="right">{user.fat}</TableCell>
+        <TableCell align="right">{user.carbs}</TableCell>
+        <TableCell align="right">{user.protein}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -79,22 +79,23 @@ function Row(props: { row: ReturnType<typeof createData> }) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell>Date Completed</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell align="right">Rank</TableCell>
+                    <TableCell align="right">Rank</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
+                  {user.history.map((userHistory) => (
+                    <TableRow key={userHistory.date}>
                       <TableCell component="th" scope="row">
-                        {historyRow.date}
+                        {userHistory.date}
                       </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell>{userHistory.customerId}</TableCell>
+                      <TableCell align="right">{userHistory.amount}</TableCell>
                       <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
+                        {Math.round(userHistory.amount * user.price * 100) /
+                          100}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -108,11 +109,11 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   );
 }
 const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0, 3.99),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3, 4.99),
-  createData("Eclair", 262, 16.0, 24, 6.0, 3.79),
-  createData("Cupcake", 305, 3.7, 67, 4.3, 2.5),
-  createData("Gingerbread", 356, 16.0, 49, 3.9, 1.5),
+  createData("Morteza", 159, 6.0, 24, 4.0, 3.99),
+  createData("Miguel", 237, 9.0, 37, 4.3, 4.99),
+  createData("Martin", 262, 16.0, 24, 6.0, 3.79),
+  createData("John", 305, 3.7, 67, 4.3, 2.5),
+  createData("Mary", 356, 16.0, 49, 3.9, 1.5),
 ];
 export default function CollapsibleTable() {
   return (
@@ -121,16 +122,16 @@ export default function CollapsibleTable() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell width="auto">User</TableCell>
+            <TableCell align="right">Global Position</TableCell>
+            <TableCell align="right">Rank</TableCell>
+            <TableCell align="right">Position</TableCell>
+            <TableCell align="right">Global Position</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.name} row={row} />
+            <Row key={row.name} user={row} />
           ))}
         </TableBody>
       </Table>
