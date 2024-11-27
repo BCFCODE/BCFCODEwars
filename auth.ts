@@ -57,7 +57,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax", // Ensures it works across domains
         // Comment this out for local development:
-        // domain: ".bcfcode.ir", // Shared session cookie across domains
+        domain: ".bcfcode.ir", // Shared session cookie across domains
       },
     },
   },
