@@ -1,6 +1,8 @@
-import { ReactNode } from "react";
+// app/Leaderboard/Data.ts
 
-const history = [
+import { LeaderboardRow } from "@/types/leaderboard";
+
+export const completedChallenges = [
   {
     date: "2020-01-05",
     customerId: "11091700",
@@ -13,27 +15,58 @@ const history = [
   },
 ];
 
-export function createData(
-  name: string,
-  memberSince: string,
-  rank: number,
-  position: number,
-  globalPosition: number,
-) {
-  return {
-    name,
-    memberSince,
-    rank,
-    position,
-    globalPosition,
-    history,
-  };
+
+export async function fetchAndCreateRows() {
+  try {
+    // Fetch the data from your API
+    const response = await fetch("/api/users");
+    if (!response.ok) {
+      throw new Error("Failed to fetch users");
+    }
+    const data = await response.json();
+
+    // Transform user data into rows
+    const rows = data.users.map((user: LeaderboardRow, index: number) => {
+      return {
+        name: user.name,
+        createdAt: new Date(user.createdAt).toLocaleDateString(),
+        rank: Math.floor(Math.random() * 1000), // Simulated rank
+        position: index + 1, // Position based on index
+        globalPosition: Math.floor(Math.random() * 1000), // Simulated global position
+      };
+    });
+
+    return rows;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return [{ success: false }, { error: "Error fetching user data" }];
+  }
 }
 
-export const rows = [
-  createData("Morteza", new Date().toLocaleDateString(), 6.0, 24, 4.0),
-  createData("Miguel", new Date().toLocaleDateString(), 9.0, 37, 4.3),
-  createData("Martin", new Date().toLocaleDateString(), 16.0, 24, 6.0),
-  createData("John", new Date().toLocaleDateString(), 3.7, 67, 4.3),
-  createData("Mary", new Date().toLocaleDateString(), 16.0, 49, 3.9),
-];
+
+export async function fetchCompletedChallenges() {
+  try {
+    // Fetch the data from your API
+    const response = await fetch("/api/users");
+    if (!response.ok) {
+      throw new Error("Failed to fetch users");
+    }
+    const data = await response.json();
+
+    // Transform user data into rows
+    const rows = data.users.map((user: LeaderboardRow, index: number) => {
+      return {
+        name: user.name,
+        createdAt: new Date(user.createdAt).toLocaleDateString(),
+        rank: Math.floor(Math.random() * 1000), // Simulated rank
+        position: index + 1, // Position based on index
+        globalPosition: Math.floor(Math.random() * 1000), // Simulated global position
+      };
+    });
+
+    return rows;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return [{ success: false }, { error: "Error fetching user data" }];
+  }
+}

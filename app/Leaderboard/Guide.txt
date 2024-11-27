@@ -1,179 +1,116 @@
-Yes, you can perform the data fetching on the server side in Next.js using server-side rendering (SSR) or static site generation (SSG). In Next.js, with the app router, you would typically use getServerSideProps or getStaticProps when working with the pages directory, but since you're using the app router, you can use an async server component to fetch data on the server side.
+To fetch your user data from the API and transform it to populate the rows array for use in your leaderboard, you can follow these steps:
 
-Here's how you can modify the approach to fetch data on the server side using the app router in Next.js with TypeScript:
+Fetch Data from API: Use the fetch function to call your API and retrieve the data.
+Transform Data: Map the user data to the format required by the rows array.
+Update the rows Array: Dynamically populate rows with the fetched data.
+Here’s how you can implement this:
 
-Steps for Server-Side Fetching
-Fetch Data in a Server Component: Since you're using the app router, you can create a server component that fetches data from your API or directly from the MongoDB database.
-Pass the Data to a Client Component (if you need interactivity).
-Example Using a Server Component
-Assuming you want to fetch the data from MongoDB directly on the server side without relying on the API, here's an example:
-
-1. Server Component Fetching Data
+Updated Data.ts with API Fetching
 typescript
 Copy code
-// app/(dashboard)/leaderboard/page.tsx
-import LeaderboardTable from "@/app/Leaderboard/Table";
-import clientPromise from "@/lib/MongoDB/database"; // Adjust the path according to your file structure
+const completedChallenges = [
+  {
+    date: "2020-01-05",
+    customerId: "11091700",
+    amount: 3,
+  },
+  {
+    date: "2020-01-02",
+    customerId: "Anonymous",
+    amount: 1,
+  },
+];
 
-// Fetch data from MongoDB directly in a server component
-export default async function LeaderBoardPage() {
-  // Fetch the data on the server side
-  const client = await clientPromise;
-  const db = client.db("BCFCODEwars");
-  const users = await db.collection("users").find({}).toArray();
-
-  // Format the data to match your 'createData' structure
-  const formattedRows = users.map((user: any) => ({
-    name: user.name,
-    calories: user.calories,
-    fat: user.fat,
-    carbs: user.carbs,
-    protein: user.protein,
-    price: user.price,
-    history: user.history, // Assuming your MongoDB has a history field
-  }));
-
-  return <LeaderboardTable rows={formattedRows} />;
-}
-2. Create a Client Component to Render the Table
-Now, you need to create a client component that accepts the server-side data as props. This component can use the data directly without fetching it again.
-
-typescript
-Copy code
-// app/Leaderboard/Table.tsx
-"use client";
-
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-
-// Define types for the props
-type User = {
-  date: string;
-  customerId: string;
-  amount: number;
-};
-
-type RowData = {
-  name: string;
-  calories: number;
-  fat: number;
-  carbs: number;
-  protein: number;
-  price: number;
-  history: User[];
-};
-
-// Define the props interface
-interface LeaderboardTableProps {
-  rows: RowData[];
+export function createData(
+  name: string,
+  memberSince: string,
+  rank: number,
+  position: number,
+  globalPosition: number,
+) {
+  return {
+    name,
+    memberSince,
+    rank,
+    position,
+    globalPosition,
+    completedChallenges,
+  };
 }
 
-export default function LeaderboardTable({ rows }: LeaderboardTableProps) {
+export async function fetchAndCreateRows() {
+  try {
+    // Fetch the data from your API
+    const response = await fetch('/api/users');
+    if (!response.ok) {
+      throw new Error('Failed to fetch users');
+    }
+    const data = await response.json();
+
+    // Transform user data into rows
+    const rows = data.users.map((user: any, index: number) => {
+      return createData(
+        user.name,
+        new Date(user.createdAt).toLocaleDateString(),
+        Math.random() * 10, // Simulated rank
+        index + 1, // Position based on index
+        Math.random() * 10, // Simulated global position
+      );
+    });
+
+    return rows;
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    return [];
+  }
+}
+Usage in a Component
+If you are using React, you can fetch and display the rows like this:
+
+import React, { useEffect, useState } from 'react';
+import { fetchAndCreateRows } from './Data';
+
+export default function Leaderboard() {
+  const [rows, setRows] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function loadData() {
+      const fetchedRows = await fetchAndCreateRows();
+      setRows(fetchedRows);
+    }
+    loadData();
+  }, []);
+
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell width="auto">User</TableCell>
-            <TableCell align="right">Global Position</TableCell>
-            <TableCell align="right">Rank</TableCell>
-            <TableCell align="right">Position</TableCell>
-            <TableCell align="right">Global Position</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} user={row} />
+    <div>
+      <h1>Leaderboard</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Member Since</th>
+            <th>Rank</th>
+            <th>Position</th>
+            <th>Global Position</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <tr key={index}>
+              <td>{row.name}</td>
+              <td>{row.memberSince}</td>
+              <td>{row.rank.toFixed(1)}</td>
+              <td>{row.position}</td>
+              <td>{row.globalPosition.toFixed(1)}</td>
+            </tr>
           ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+        </tbody>
+      </table>
+    </div>
   );
 }
-
-function Row(props: { user: RowData }) {
-  const { user } = props;
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <React.Fragment>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell component="th" scope="row">
-          {user.name}
-        </TableCell>
-        <TableCell align="right">{user.calories}</TableCell>
-        <TableCell align="right">{user.fat}</TableCell>
-        <TableCell align="right">{user.carbs}</TableCell>
-        <TableCell align="right">{user.protein}</TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                History
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Date Completed</TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell align="right">Rank</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {user.history.map((userHistory) => (
-                    <TableRow key={userHistory.date}>
-                      <TableCell component="th" scope="row">
-                        {userHistory.date}
-                      </TableCell>
-                      <TableCell>{userHistory.customerId}</TableCell>
-                      <TableCell align="right">{userHistory.amount}</TableCell>
-                      <TableCell align="right">{userHistory.amount}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
-    </React.Fragment>
-  );
-}
-Key Changes
-LeaderBoardPage is a server component that fetches data directly from MongoDB.
-LeaderboardTable is a client component that receives the rows data as props from the server component and renders the table.
-Benefits
-The data is fetched server-side, meaning it will be available when the page is loaded, reducing the need for additional API calls on the client side.
-Improved SEO and performance since data is already available when the page is served.
-This approach leverages the server-client component split in the Next.js app router for optimal data fetching and rendering.
-
-
-
-
-
-
+Key Notes
+Dynamic Rankings and Positions: In this example, rank and globalPosition are randomized. Replace these with actual logic if you have specific criteria for ranking.
+Error Handling: Ensure you handle fetch errors gracefully to prevent UI crashes.
+Backend Adjustments: Your API is returning the data in the required format, so no additional changes are necessary there.
+This will allow you to dynamically fetch user data and display it in your leaderboard.

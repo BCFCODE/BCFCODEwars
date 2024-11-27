@@ -12,7 +12,9 @@ export const metadata: Metadata = {
 export default function SignIn() {
   return (
     <>
-      <LeaderBoard />
+      <Box margin={5}>
+        <LeaderBoard />
+      </Box>
       <Box height="100vh" paddingTop="10vh">
         <SignInPage providers={providerMap} signIn={handleSignIn} />
       </Box>

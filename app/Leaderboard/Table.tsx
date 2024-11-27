@@ -1,7 +1,9 @@
 "use client";
 
+import { LeaderboardRow } from "@/types/leaderboard";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { Paper, TableContainer } from "@mui/material";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -12,11 +14,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { createData, rows } from "./Data";
-import { TableContainer, Paper } from "@mui/material";
+import { completedChallenges, fetchAndCreateRows } from "./Data";
 
 interface Props {
-  user: ReturnType<typeof createData>;
+  user: LeaderboardRow;
 }
 
 export function Row({ user }: Props) {
@@ -37,7 +38,7 @@ export function Row({ user }: Props) {
         <TableCell component="th" scope="row">
           {user.name}
         </TableCell>
-        <TableCell align="right">{user.memberSince}</TableCell>
+        <TableCell align="right">{user.createdAt}</TableCell>
         <TableCell align="right">{user.rank}</TableCell>
         <TableCell align="right">{user.position}</TableCell>
         <TableCell align="right">{user.globalPosition}</TableCell>
@@ -59,17 +60,14 @@ export function Row({ user }: Props) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {user.history.map((userHistory) => (
+                  {completedChallenges.map((userHistory) => (
                     <TableRow key={userHistory.date}>
                       <TableCell component="th" scope="row">
                         {userHistory.date}
                       </TableCell>
                       <TableCell>{userHistory.customerId}</TableCell>
                       <TableCell align="right">{userHistory.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(userHistory.amount * user.rank * 100) /
-                          100}
-                      </TableCell>
+                      <TableCell align="right">{user.rank}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -83,6 +81,17 @@ export function Row({ user }: Props) {
 }
 
 export default function CollapsibleTable() {
+  const [rows, setRows] = React.useState<LeaderboardRow[]>([]);
+
+  React.useEffect(() => {
+    async function loadData() {
+      const fetchedRows = await fetchAndCreateRows();
+      setRows(fetchedRows);
+    }
+
+    loadData();
+  }, []);
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

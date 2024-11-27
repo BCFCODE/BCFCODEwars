@@ -1,3 +1,4 @@
+// app/api/users/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/MongoDB/database"; // Adjust the path according to your file structure
 
