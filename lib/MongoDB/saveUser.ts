@@ -27,8 +27,8 @@ export async function saveUserDataToDatabase(user: GoogleUser) {
         email,
         name,
         image,
-        createdAt: new Date(),
-        lastLogin: new Date(),
+        createdAt: new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
       };
 
       // Cast the NewUser to a GoogleUser type for MongoDB insertion
@@ -43,5 +43,5 @@ export async function saveUserDataToDatabase(user: GoogleUser) {
 }
 
 export async function handleGoogleSignIn(user: GoogleUser) {
-  return saveUserDataToDatabase(user); 
+  return saveUserDataToDatabase(user);
 }
