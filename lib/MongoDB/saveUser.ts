@@ -19,7 +19,7 @@ export async function saveUserDataToDatabase(user: GoogleUser) {
       // Update user data if needed
       await usersCollection.updateOne(
         { email },
-        { $set: { lastLogin: new Date() } }
+        { $set: { lastLogin: new Date(), image, name } }
       );
     } else {
       // Create the new user object, replacing `id` with `googleId`
