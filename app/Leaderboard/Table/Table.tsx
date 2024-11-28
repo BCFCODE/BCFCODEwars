@@ -16,6 +16,7 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { completedChallenges, fetchAndCreateRows } from "../Data";
 import SkeletonTableRow from "./Skeleton";
+import LeaderboardAvatar from "./Avatar";
 
 interface Props {
   user: LeaderboardRow;
@@ -41,8 +42,22 @@ export function Row({ user }: Props) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell sx={textStyles} component="th" scope="row">
-          {user.name}
+        <TableCell
+          sx={{ ...textStyles, display: "flex", alignItems: "center", gap: 1 }}
+          component="th"
+          scope="row"
+        >
+          <LeaderboardAvatar image={user.image} />
+          <Typography
+            variant="body2"
+            sx={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {user.name}
+          </Typography>
         </TableCell>
         <TableCell sx={textStyles} align="right">
           {user.createdAt}

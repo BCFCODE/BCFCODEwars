@@ -1,6 +1,7 @@
-export interface LeaderboardRow {
+import { NewUser } from "./user";
+
+export interface LeaderboardRow extends Pick<NewUser, "createdAt" | "image"> {
   name: string; // User's name
-  createdAt: string; // Date user joined (e.g., '2024-01-01')
   rank: number; // User's rank
   position: number; // User's local position
   globalPosition: number; // User's global position

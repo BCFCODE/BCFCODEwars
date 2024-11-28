@@ -15,7 +15,6 @@ export const completedChallenges = [
   },
 ];
 
-
 export async function fetchAndCreateRows() {
   try {
     // Fetch the data from your API
@@ -33,6 +32,7 @@ export async function fetchAndCreateRows() {
         rank: Math.floor(Math.random() * 1000), // Simulated rank
         position: index + 1, // Position based on index
         globalPosition: Math.floor(Math.random() * 1000), // Simulated global position
+        image: user.image,
       };
     });
 
@@ -42,7 +42,6 @@ export async function fetchAndCreateRows() {
     return [{ success: false }, { error: "Error fetching user data" }];
   }
 }
-
 
 export async function fetchCompletedChallenges() {
   try {

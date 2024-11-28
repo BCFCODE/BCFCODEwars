@@ -8,8 +8,8 @@ export interface GoogleUser {
 }
 
 export interface NewUser extends GoogleUser {
-  createdAt: Date;
-  lastLogin: Date;
+  createdAt: string;
+  lastLogin: string;
 }
 
 export interface Session {
