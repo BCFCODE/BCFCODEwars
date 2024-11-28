@@ -116,8 +116,8 @@ const BRANDING = {
       style={{
         borderRadius: "50%", // Rounded logo for a more modern look
         boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for a professional depth
-        marginLeft: 2,
-        marginRight: 1,
+        // marginLeft: 2,
+        // marginRight: 1,
       }}
     />
   ),

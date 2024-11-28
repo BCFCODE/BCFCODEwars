@@ -3,7 +3,7 @@
 const nextConfig = {
   images: {
     domains: ['lh3.googleusercontent.com'], // Add the Google image domain here
-    unoptimized: true
+    // unoptimized: true
   },
 };
 export default nextConfig;
