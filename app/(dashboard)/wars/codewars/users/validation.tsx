@@ -25,6 +25,7 @@ export function CodewarsUsernameChecker() {
         `/api/codewars/users/validation?username=${username}`
       );
       const data = await response.json();
+      // console.log(data, response, "<<<<<<<<<<");
 
       if (response.ok) {
         setSuccess(`Username "${username}" is valid!`);
