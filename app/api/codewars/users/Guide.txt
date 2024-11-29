@@ -1,0 +1,133 @@
+To implement a Codewars username validation form in a Next.js (app router) TypeScript project, we can use Material-UI (MUI) for the UI and handle the validation API call with the Next.js API route.
+
+Here's the updated implementation:
+
+Steps to Implement
+Set up a Next.js API Route:
+
+Create an API endpoint (/api/validate-codewars) to call the Codewars API.
+This ensures API keys (if needed) stay secure on the server side.
+Create the Frontend Component:
+
+Use Material-UI's TextField, Button, and other components.
+Call the API route to validate the username asynchronously.
+Code Implementation
+1. API Route: /app/api/validate-codewars/route.ts
+ts
+Copy code
+import { NextResponse } from 'next/server';
+import axios from 'axios';
+
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const username = searchParams.get('username');
+
+  if (!username) {
+    return NextResponse.json({ error: 'Username is required' }, { status: 400 });
+  }
+
+  try {
+    const response = await axios.get(`https://www.codewars.com/api/v1/users/${username}`);
+    return NextResponse.json({ success: true, data: response.data });
+  } catch (err: any) {
+    return NextResponse.json({ error: 'Invalid username or not found' }, { status: 404 });
+  }
+}
+2. Frontend Component: /app/codewars/page.tsx
+tsx
+Copy code
+'use client';
+
+import React, { useState } from 'react';
+import { TextField, Button, CircularProgress, Box, Typography } from '@mui/material';
+
+const CodewarsUsernameChecker: React.FC = () => {
+  const [username, setUsername] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const validateUsername = async () => {
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      const response = await fetch(`/api/validate-codewars?username=${username}`);
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess(`Username "${username}" is valid!`);
+      } else {
+        setError(data.error || 'An error occurred');
+      }
+    } catch {
+      setError('Unable to validate the username. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Box sx={{ maxWidth: 400, margin: '0 auto', textAlign: 'center', mt: 4 }}>
+      <Typography variant="h5" gutterBottom>
+        Connect to Codewars
+      </Typography>
+      <TextField
+        label="Codewars Username"
+        variant="outlined"
+        fullWidth
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        error={!!error}
+        helperText={error || ''}
+        sx={{ mb: 2 }}
+      />
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        onClick={validateUsername}
+        disabled={loading || !username.trim()}
+      >
+        {loading ? <CircularProgress size={24} color="inherit" /> : 'Validate Username'}
+      </Button>
+      {success && (
+        <Typography variant="body1" color="green" sx={{ mt: 2 }}>
+          {success}
+        </Typography>
+      )}
+      {error && (
+        <Typography variant="body1" color="red" sx={{ mt: 2 }}>
+          {error}
+        </Typography>
+      )}
+    </Box>
+  );
+};
+
+export default CodewarsUsernameChecker;
+How It Works
+API Route:
+
+Listens for requests at /api/validate-codewars.
+Calls Codewars API to validate the username.
+Responds with success or an error message.
+Frontend Component:
+
+TextField captures the username.
+On clicking the "Validate Username" button:
+Sends the username to the API route.
+Shows a loading indicator while waiting for a response.
+Displays success or error messages based on the API response.
+Routing:
+
+The page is available at /codewars in the app router setup.
+Further Customizations
+Debounced Input:
+Use a debounce mechanism (e.g., lodash.debounce) for better performance.
+Styling:
+Customize the MUI theme or use the sx prop for more advanced styles.
+Error Handling:
+Add better error messages for cases like rate limits or network errors.
+This approach ensures a secure and user-friendly experience while keeping your project aligned with Next.js best practices.
