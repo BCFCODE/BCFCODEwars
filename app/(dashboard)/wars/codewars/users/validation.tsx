@@ -32,6 +32,7 @@ export function CodewarsUsernameChecker() {
       } else {
         setError(data.error || "An error occurred");
       }
+      
     } catch {
       setError("Unable to validate the username. Please try again later.");
     } finally {
