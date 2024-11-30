@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const username = searchParams.get("username");
-  // console.log(username, "<<<<<<<<");
+  
   if (!username) {
     return NextResponse.json(
       { error: "Username is required" },
@@ -20,7 +20,7 @@ export async function GET(request: Request) {
     if (!response.ok) {
       // Handle non-200 responses
       return NextResponse.json(
-        { error: "Invalid username or not found" },
+        { error: "You don't have this username on codewars.com" },
         { status: response.status }
       );
     }

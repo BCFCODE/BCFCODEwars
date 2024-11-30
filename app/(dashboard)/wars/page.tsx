@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
-import UnderDevelopment from "../UnderDevelopment";
+import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 import { CodewarsUsernameChecker } from "./codewars/users/validation";
-import { Box, Typography, Avatar, CircularProgress, Fade } from "@mui/material";
+import CustomizedSteppers from "./codewars/users/stepper";
 
 const WarsMainPage = async () => {
   const session = await auth();
@@ -19,18 +19,21 @@ const WarsMainPage = async () => {
         p: { xs: 3, sm: 5 }, // Responsive padding (smaller on mobile)
         boxShadow: 3, // Subtle shadow for depth
         borderRadius: 2, // Rounded corners for a modern feel
+      
       }}
     >
-      {/* Header Message */}
-      <Typography
-        variant="h3"
+
+        {/* Header Message */}
+        <Typography
+        variant="h4"
         sx={{
           fontWeight: "600",
           color: "text.primary", // Professional text color
           textAlign: "center",
-          mb: 3,
+          mb: 2,
           letterSpacing: 1.5,
-          fontSize: { xs: "h6.fontSize", sm: "h5.fontSize" }, // Responsive font size
+          fontSize: { xs: "0.6rem", sm: "h5.fontSize" },
+          // fontSize: { xs: "h6.fontSize", sm: "h5.fontSize" }, // Responsive font size
           lineHeight: 1.4,
           transition: "color 0.3s ease-in-out",
         }}
@@ -51,6 +54,10 @@ const WarsMainPage = async () => {
         </Box>
       </Typography>
 
+
+      <CustomizedSteppers />
+  
+
       {/* User Avatar */}
       {session?.user?.image && (
         <Avatar
@@ -59,7 +66,7 @@ const WarsMainPage = async () => {
           sx={{
             width: { xs: 100, sm: 120 }, // Responsive avatar size
             height: { xs: 100, sm: 120 },
-            mb: 3,
+            // mb: 3,
             boxShadow: 8, // Deep shadow for visual separation
             border: "2px solid", // Adding a border for distinction
             borderColor: "grey.400", // Neutral border color
@@ -67,6 +74,7 @@ const WarsMainPage = async () => {
             "&:hover": {
               transform: "scale(1.1)", // Subtle hover effect to add interaction
             },
+            mt: 3
           }}
         />
       )}
@@ -90,3 +98,6 @@ const WarsMainPage = async () => {
 };
 
 export default WarsMainPage;
+
+
+

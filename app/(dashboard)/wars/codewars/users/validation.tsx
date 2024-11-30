@@ -29,6 +29,7 @@ export function CodewarsUsernameChecker() {
 
       if (response.ok) {
         setSuccess(`Username "${username}" is valid!`);
+        
       } else {
         setError(data.error || "An error occurred");
       }
