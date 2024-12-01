@@ -122,7 +122,7 @@ const steps = ['Welcome', 'Connect to Codewars', 'Codewars Leaderboard'];
 export default function CustomizedSteppers() {
   return (
     <Stack sx={{ width: '100%' }} spacing={4}>
-      <Stepper alternativeLabel activeStep={1} connector={<QontoConnector />}>
+      <Stepper alternativeLabel activeStep={0} connector={<QontoConnector />}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
