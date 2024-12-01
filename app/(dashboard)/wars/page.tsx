@@ -1,7 +1,8 @@
 import { auth } from "@/auth";
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 import { CodewarsUsernameChecker } from "./codewars/users/validation";
-import CustomizedSteppers from "./codewars/users/stepper";
+import CustomizedSteppers from "./codewars/users/Stepper/stepper";
+import HorizontalLinearStepper from "./codewars/users/Stepper/buttons";
 
 const WarsMainPage = async () => {
   const session = await auth();
@@ -93,6 +94,7 @@ const WarsMainPage = async () => {
         </Box>
       )}
       <CodewarsUsernameChecker />
+      <HorizontalLinearStepper />
     </Box>
   );
 };
