@@ -1,3 +1,5 @@
+'use client'
+
 import { Avatar, Box, CircularProgress, Fade, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 interface Props {

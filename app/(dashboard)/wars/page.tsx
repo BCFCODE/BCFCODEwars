@@ -1,4 +1,4 @@
-"use client";
+"use client"; 
 
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
@@ -6,7 +6,7 @@ import { CodewarsUsernameChecker } from "./codewars/users/validation/Stepper/S2/
 
 const Wars = () => {
   const { data: session } = useSession();
-
+// console.log(session)
   return (
     <>
       {/* Header Message */}
