@@ -1,31 +1,14 @@
 import { auth } from "@/auth";
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
-import { CodewarsUsernameChecker } from "./codewars/users/validation";
-import CustomizedSteppers from "./codewars/users/Stepper/stepper";
-import HorizontalLinearStepper from "./codewars/users/Stepper/buttons";
+import { CodewarsUsernameChecker } from "./codewars/users/validation/input";
 
 const WarsMainPage = async () => {
   const session = await auth();
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100%", // Full height of the screen
-        bgcolor: "background.default", // Neutral background color
-        color: "text.primary", // Primary text color for readability
-        p: { xs: 3, sm: 5 }, // Responsive padding (smaller on mobile)
-        boxShadow: 3, // Subtle shadow for depth
-        borderRadius: 2, // Rounded corners for a modern feel
-      
-      }}
-    >
-
-        {/* Header Message */}
-        <Typography
+    <>
+      {/* Header Message */}
+      <Typography
         variant="h4"
         sx={{
           fontWeight: "600",
@@ -56,9 +39,6 @@ const WarsMainPage = async () => {
       </Typography>
 
 
-      <CustomizedSteppers />
-  
-
       {/* User Avatar */}
       {session?.user?.image && (
         <Avatar
@@ -75,7 +55,7 @@ const WarsMainPage = async () => {
             "&:hover": {
               transform: "scale(1.1)", // Subtle hover effect to add interaction
             },
-            mt: 3
+            mt: 3,
           }}
         />
       )}
@@ -94,12 +74,8 @@ const WarsMainPage = async () => {
         </Box>
       )}
       <CodewarsUsernameChecker />
-      <HorizontalLinearStepper />
-    </Box>
+    </>
   );
 };
 
 export default WarsMainPage;
-
-
-
