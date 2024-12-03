@@ -7,9 +7,10 @@ import { steps } from "./codewars/users/validation/Stepper/constants";
 
 interface Props {
   children: ReactNode;
+  codewars: ReactNode;
 }
 
-const WarsLayout = ({ children }: Props) => {
+const Layout = ({ children , codewars}: Props) => {
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
@@ -55,4 +56,4 @@ const WarsLayout = ({ children }: Props) => {
   );
 };
 
-export default WarsLayout;
+export default Layout;

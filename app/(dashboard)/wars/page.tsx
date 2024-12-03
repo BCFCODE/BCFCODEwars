@@ -1,9 +1,11 @@
-import { auth } from "@/auth";
+"use client";
+
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
+import { useSession } from "next-auth/react";
 import { CodewarsUsernameChecker } from "./codewars/users/validation/Stepper/S2/input";
 
-const WarsMainPage = async () => {
-  const session = await auth();
+const Wars = () => {
+  const { data: session } = useSession();
 
   return (
     <>
@@ -77,4 +79,4 @@ const WarsMainPage = async () => {
   );
 };
 
-export default WarsMainPage;
+export default Wars;
