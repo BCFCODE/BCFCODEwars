@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
-import { CodewarsUsernameChecker } from "./codewars/users/validation/input";
+import { CodewarsUsernameChecker } from "./codewars/users/validation/Stepper/S2/input";
 
 const WarsMainPage = async () => {
   const session = await auth();
@@ -37,7 +37,6 @@ const WarsMainPage = async () => {
           {session?.user?.name || "User"}!
         </Box>
       </Typography>
-
 
       {/* User Avatar */}
       {session?.user?.image && (

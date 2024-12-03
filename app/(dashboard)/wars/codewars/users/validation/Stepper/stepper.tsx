@@ -11,7 +11,7 @@ import { StepIconProps } from "@mui/material/StepIcon";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import { styled } from "@mui/material/styles";
-import { steps } from "../constants";
+import { steps } from "./constants";
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {

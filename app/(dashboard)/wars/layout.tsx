@@ -3,7 +3,7 @@
 import { Box, Button } from "@mui/material";
 import { ReactNode, useState } from "react";
 import CodewarsUsernameCheckerStepper from "./codewars/users/validation/Stepper/stepper";
-import { steps } from "./codewars/users/validation/constants";
+import { steps } from "./codewars/users/validation/Stepper/constants";
 
 interface Props {
   children: ReactNode;
