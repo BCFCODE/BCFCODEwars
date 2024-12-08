@@ -2,19 +2,21 @@
 
 import { Box, Button } from "@mui/material";
 import { ReactNode, useState } from "react";
-import CodewarsUsernameCheckerStepper from "./codewars/users/validation/Stepper/stepper";
-import { steps } from "./codewars/users/validation/Stepper/constants";
+import CodewarsUsernameCheckerStepper from "../../../codewars/users/validation/Stepper/stepper";
+import { steps } from "../../../codewars/users/validation/Stepper/constants";
+import { useRouter } from "next/navigation";
 
 interface Props {
   children: ReactNode;
-  codewars: ReactNode;
 }
 
-const Layout = ({ children , codewars}: Props) => {
+const Layout = ({ children }: Props) => {
+  // const router = useRouter()
   const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    // router.replace(`validation/steps/1`)
   };
 
   const handleBack = () => {
