@@ -2,8 +2,7 @@
 
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { CodewarsUsernameChecker } from "../../../codewars/users/validation/Stepper/S2/input";
-
+import { CodewarsUsernameChecker } from "./(stepper)/S2/input";
 
 const CodewarsValidationPage = () => {
   
