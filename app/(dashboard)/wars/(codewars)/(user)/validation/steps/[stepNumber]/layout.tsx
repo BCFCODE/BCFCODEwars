@@ -3,8 +3,10 @@
 import { Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { ReactNode } from "react";
+
+import StepperButtons from "../../(stepper)/buttons";
+import CodewarsValidationStepper from "../../(stepper)/stepper";
 import { steps } from "../../(stepper)/constants";
-import CodewarsUsernameCheckerStepper from "../../(stepper)/stepper";
 
 interface Props {
   children: ReactNode;
@@ -12,9 +14,6 @@ interface Props {
 }
 
 const Layout = ({ children, params: { stepNumber } }: Props) => {
-  const router = useRouter();
-  const currentStep = Number(stepNumber);
-
   return (
     <Box
       sx={{
@@ -30,22 +29,8 @@ const Layout = ({ children, params: { stepNumber } }: Props) => {
         borderRadius: 2, // Rounded corners for a modern feel
       }}
     >
-      <CodewarsUsernameCheckerStepper activeStep={currentStep} />
+      <CodewarsValidationStepper activeStep={Number(stepNumber)} />
       {children}
-      <Box sx={{ display: "flex", width: "100%", flexDirection: "row", pt: 2 }}>
-        <Button
-          color="inherit"
-          disabled={currentStep === 0}
-          onClick={() => router.push(`${currentStep - 1}`)}
-          sx={{ mr: 1 }}
-        >
-          Back
-        </Button>
-        <Box sx={{ flex: "1 1 auto" }} />
-        <Button onClick={() => router.push(`${currentStep + 1}`)}>
-          {currentStep === steps.length - 1 ? "Finish" : "Next"}
-        </Button>
-      </Box>
     </Box>
   );
 };

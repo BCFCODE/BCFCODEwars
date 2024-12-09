@@ -88,7 +88,7 @@ interface Props {
   activeStep: number;
 }
 
-export default function CodewarsUsernameCheckerStepper({ activeStep }: Props) {
+export default function CodewarsValidationStepper({ activeStep }: Props) {
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
       <Stepper
