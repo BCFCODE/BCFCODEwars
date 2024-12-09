@@ -1,8 +1,8 @@
 "use client";
 
 import { Box, Button } from "@mui/material";
-import { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
+import { ReactNode } from "react";
 import { steps } from "../../(stepper)/constants";
 import CodewarsUsernameCheckerStepper from "../../(stepper)/stepper";
 

@@ -3,7 +3,7 @@ import React from "react";
 
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { CodewarsUsernameChecker } from "../../(stepper)/S2/input";
+import { CodewarsUsernameChecker } from "../../(stepper)/(steps)/2";
 
 interface Props {
   params: { stepNumber: number };
