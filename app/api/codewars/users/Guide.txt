@@ -41,7 +41,7 @@ Copy code
 import React, { useState } from 'react';
 import { TextField, Button, CircularProgress, Box, Typography } from '@mui/material';
 
-const CodewarsUsernameChecker: React.FC = () => {
+const Step2: React.FC = () => {
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -106,7 +106,7 @@ const CodewarsUsernameChecker: React.FC = () => {
   );
 };
 
-export default CodewarsUsernameChecker;
+export default Step2;
 How It Works
 API Route:
 

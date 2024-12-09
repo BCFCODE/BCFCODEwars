@@ -8,8 +8,9 @@ import {
   Box,
   Typography,
 } from "@mui/material";
+import UserAvatar from "../(content)/UserAvatar";
 
-export function CodewarsUsernameChecker() {
+export default function Step2() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -29,11 +30,9 @@ export function CodewarsUsernameChecker() {
 
       if (response.ok) {
         setSuccess(`Username "${username}" is valid!`);
-        
       } else {
         setError(data.error || "An error occurred");
       }
-      
     } catch {
       setError("Unable to validate the username. Please try again later.");
     } finally {
@@ -41,8 +40,10 @@ export function CodewarsUsernameChecker() {
     }
   };
 
-  return (
-    <Box sx={{ maxWidth: 400, margin: "0 auto", textAlign: "center", mt: 4 }}>
+  return (<>
+  <UserAvatar />
+  <Box sx={{ maxWidth: 400, margin: "0 auto", textAlign: "center", mt: 4 }}>
+      
       <Typography variant="h5" gutterBottom>
         Connect to Codewars
       </Typography>
@@ -80,5 +81,6 @@ export function CodewarsUsernameChecker() {
         </Typography>
       )}
     </Box>
+  </>
   );
 }

@@ -17,7 +17,7 @@ const StepperButtons = ({ currentStep = 0 }: Props) => {
         onClick={() => router.push(`${currentStep - 1}`)}
         sx={{ mr: 1 }}
       >
-        Back
+        {currentStep === steps.length - 1 ? "No" : 'Back'}
       </Button>
       <Box sx={{ flex: "1 1 auto" }} />
       <Button
@@ -25,7 +25,7 @@ const StepperButtons = ({ currentStep = 0 }: Props) => {
           currentStep < steps.length && router.push(`${currentStep + 1}`)
         }
       >
-        {currentStep === steps.length - 1 ? "Finish" : "Next"}
+        {currentStep === steps.length - 1 ? "Yes, it is me" : "Next"}
       </Button>
     </>
   );
