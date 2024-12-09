@@ -1,19 +1,13 @@
 "use client";
 
-import { Box, Button } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { Box } from "@mui/material";
 import { ReactNode } from "react";
-
-import StepperButtons from "../../(stepper)/buttons";
-import CodewarsValidationStepper from "../../(stepper)/stepper";
-import { steps } from "../../(stepper)/constants";
 
 interface Props {
   children: ReactNode;
-  params: { stepNumber: string };
 }
 
-const Layout = ({ children, params: { stepNumber } }: Props) => {
+const Layout = ({ children }: Props) => {
   return (
     <Box
       sx={{
@@ -29,7 +23,6 @@ const Layout = ({ children, params: { stepNumber } }: Props) => {
         borderRadius: 2, // Rounded corners for a modern feel
       }}
     >
-      <CodewarsValidationStepper activeStep={Number(stepNumber)} />
       {children}
     </Box>
   );

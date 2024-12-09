@@ -5,6 +5,7 @@ import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { CodewarsUsernameChecker } from "../../(stepper)/(steps)/2";
 import StepperButtons from "../../(stepper)/buttons";
+import CodewarsValidationStepper from "../../(stepper)/stepper";
 
 interface Props {
   params: { stepNumber: number };
@@ -12,9 +13,10 @@ interface Props {
 
 const StepNumberPage = ({ params: { stepNumber } }: Props) => {
   const { data: session } = useSession();
-  
+
   return (
     <>
+      <CodewarsValidationStepper activeStep={Number(stepNumber)} />
       {/* Header Message */}
       <Typography
         variant="h4"
@@ -80,6 +82,7 @@ const StepNumberPage = ({ params: { stepNumber } }: Props) => {
           <CircularProgress color="primary" size={60} />
         </Box>
       )}
+
       <CodewarsUsernameChecker />
       <Box sx={{ display: "flex", width: "100%", flexDirection: "row", pt: 2 }}>
         <StepperButtons currentStep={Number(stepNumber)} />

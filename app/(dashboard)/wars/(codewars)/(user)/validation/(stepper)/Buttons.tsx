@@ -9,7 +9,6 @@ interface Props {
 const StepperButtons = ({ currentStep = 0 }: Props) => {
   const router = useRouter();
 
-
   return (
     <>
       <Button
@@ -21,7 +20,11 @@ const StepperButtons = ({ currentStep = 0 }: Props) => {
         Back
       </Button>
       <Box sx={{ flex: "1 1 auto" }} />
-      <Button onClick={() => router.push(`${currentStep + 1}`)}>
+      <Button
+        onClick={() =>
+          currentStep < steps.length && router.push(`${currentStep + 1}`)
+        }
+      >
         {currentStep === steps.length - 1 ? "Finish" : "Next"}
       </Button>
     </>
