@@ -1,5 +1,5 @@
 "use client";
-
+// app/(dashboard)/leaderboard/(Table)/Table.tsx
 import { LeaderboardRow } from "@/types/leaderboard";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -14,7 +14,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { completedChallenges, fetchAndCreateRows } from "../Data";
+import { completedChallenges, fetchAndCreateRows } from "./Data";
 import SkeletonTableRow from "./Skeleton";
 import LeaderboardAvatar from "./Avatar";
 
