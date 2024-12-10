@@ -3,7 +3,7 @@
 import { Box } from "@mui/material";
 import StepperButtons from "../../(stepper)/Buttons";
 import StepperContent from "../../(stepper)/(content)/Content";
-import CodewarsValidationStepper from "../../(stepper)/Stepper";
+import CodewarsValidationStepper from "../../(stepper)/stepper";
 
 interface Props {
   params: { stepNumber: number };
