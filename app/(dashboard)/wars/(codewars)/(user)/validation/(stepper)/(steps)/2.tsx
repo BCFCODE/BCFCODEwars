@@ -23,7 +23,7 @@ export default function Step2() {
 
     try {
       const response = await fetch(
-        `/api/codewars/users/validation?username=${username}`
+        `/api/wars/codewars/user?username=${username}`
       );
       const data = await response.json();
       // console.log(data, response, "<<<<<<<<<<");

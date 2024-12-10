@@ -1,4 +1,4 @@
-In Next.js, API routes are used to handle server-side logic like fetching data or interacting with a database. If your /api/users route is exposed to the public without any access control, you need to implement authentication and authorization to secure the endpoint.
+In Next.js, API routes are used to handle server-side logic like fetching data or interacting with a database. If your /api/wars/users route is exposed to the public without any access control, you need to implement authentication and authorization to secure the endpoint.
 
 Here’s how to add authentication and authorization to your Next.js API routes:
 
@@ -18,7 +18,7 @@ bash
 Copy code
 npm install next-auth
 2. Use JWT Authentication (Custom Implementation)
-If you’re using JWT, you'll need to validate the token on each API request. Here’s an example of how to secure your /api/users route using JWT:
+If you’re using JWT, you'll need to validate the token on each API request. Here’s an example of how to secure your /api/wars/users route using JWT:
 
 2.1 Create an Authentication Middleware
 You can create a middleware function to verify the JWT token for protected routes. For example, inside the /lib directory, create a middleware.js file:
@@ -42,12 +42,12 @@ export function authenticate(req) {
     throw new Error('Invalid or expired token');
   }
 }
-2.2 Protect the /api/users Endpoint
-In your /pages/api/users.js file, use the authenticate function to check if the user is authenticated before allowing access to user data.
+2.2 Protect the /api/wars/users Endpoint
+In your /pages/api/wars/users.js file, use the authenticate function to check if the user is authenticated before allowing access to user data.
 
 javascript
 Copy code
-// pages/api/users.js
+// pages/api/wars/users.js
 import { authenticate } from '../../lib/middleware';
 
 export default async function handler(req, res) {
@@ -136,12 +136,12 @@ export default NextAuth({
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
-3.3 Secure Your /api/users Route
-Now that NextAuth is managing authentication, you can easily secure your /api/users route:
+3.3 Secure Your /api/wars/users Route
+Now that NextAuth is managing authentication, you can easily secure your /api/wars/users route:
 
 javascript
 Copy code
-// pages/api/users.js
+// pages/api/wars/users.js
 import { getSession } from 'next-auth/react';
 
 export default async function handler(req, res) {
@@ -183,7 +183,7 @@ ChatGPT said:
 ChatGPT
 In Next.js 14, using App Router with TypeScript to secure your API routes requires a slightly different approach, especially when it comes to authentication and authorization.
 
-Here’s a solution that aligns with the new App Router in Next.js 14, which uses TypeScript, and applies the JWT authentication method to secure your /api/users endpoint.
+Here’s a solution that aligns with the new App Router in Next.js 14, which uses TypeScript, and applies the JWT authentication method to secure your /api/wars/users endpoint.
 
 Steps to Secure Your API Routes in Next.js 14 (App Router + TypeScript)
 1. Install Required Packages
@@ -228,13 +228,13 @@ export function authenticate(req: Request): DecodedToken | null {
 }
 Here, we are extracting the token from the request's cookies and verifying it using JWT. If the token is valid, we return the decoded user information; otherwise, we return null.
 
-3. Create the Protected API Route (/app/api/users/route.ts)
+3. Create the Protected API Route (/app/api/wars/users/route.ts)
 Now, you need to create your API route for fetching the users, but protect it with JWT authentication. In Next.js 14 App Router, API routes are placed inside the /app/api directory.
 
-/app/api/users/route.ts
+/app/api/wars/users/route.ts
 typescript
 Copy code
-// app/api/users/route.ts
+// app/api/wars/users/route.ts
 import { NextResponse } from 'next/server';
 import { authenticate } from '@/lib/auth';  // Import the JWT utility
 
@@ -308,7 +308,7 @@ import { authenticate } from './lib/auth';
 export function middleware(req: NextRequest) {
   const user = authenticate(req);
 
-  if (!user && req.url.startsWith('/api/users')) {
+  if (!user && req.url.startsWith('/api/wars/users')) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
@@ -316,10 +316,10 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/api/users/*'],  // Apply to the `/api/users` route
+  matcher: ['/api/wars/users/*'],  // Apply to the `/api/wars/users` route
 };
 Explanation:
-The middleware checks if the request is heading to a protected route (like /api/users).
+The middleware checks if the request is heading to a protected route (like /api/wars/users).
 If the user is not authenticated (i.e., authenticate() returns null), it sends a 401 Unauthorized response.
 6. Environment Variables
 Make sure to store your sensitive keys in the .env.local file:
@@ -330,7 +330,7 @@ JWT_SECRET=your-secret-key
 Summary of the Steps:
 Install necessary packages: jsonwebtoken, cookie.
 Create authentication utility: Create a function to verify JWT tokens from cookies.
-Secure API route: In /app/api/users/route.ts, protect the route with the authenticate() function.
+Secure API route: In /app/api/wars/users/route.ts, protect the route with the authenticate() function.
 Login route: Implement the login route to authenticate the user and set the JWT in cookies.
 Middleware (Optional): Use middleware to protect multiple routes at once.
 By following these steps, you ensure that only authenticated users can access sensitive data like the list of users, and you secure your API routes in a Next.js 14 App Router approach with TypeScript.
