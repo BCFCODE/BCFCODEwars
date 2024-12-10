@@ -18,7 +18,7 @@ export const completedChallenges = [
 export async function fetchAndCreateRows() {
   try {
     // Fetch the data from your API
-    const response = await fetch("/api/wars/users", { cache: "no-store" });
+    const response = await fetch("/api/users", { cache: "no-store" });
     if (!response.ok) {
       throw new Error("Failed to fetch users");
     }
