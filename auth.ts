@@ -3,6 +3,7 @@ import NextAuth, { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 // import GithubProvider from "next-auth/providers/github";
 import { NextRequest } from "next/server";
+import { baseURL } from "./utils/constants";
 
 const providers = [
   GoogleProvider({
@@ -67,7 +68,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (account?.provider === "google") {
         try {
           // Trigger the API to store user data in MongoDB
-          const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth`, {
+          const res = await fetch(`${baseURL}/api/auth`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
