@@ -4,7 +4,7 @@ Here’s a step-by-step guide to secure your Next.js (TypeScript) app with authe
 Store sensitive data in .env.local:
 
 env
-Copy code
+
 JWT_SECRET=your_super_secure_secret_key
 Steps:
 
@@ -13,9 +13,8 @@ Add environment variables like JWT_SECRET.
 Never commit .env.local to your repository (it’s ignored by default in Next.js).
 2. Install Required Packages
 Run these commands to install essential packages:
+  
 
-bash
-Copy code
 pnpm add jsonwebtoken bcryptjs zod next-safe-middleware
 pnpm add -D @types/jsonwebtoken @types/bcryptjs
 3. Add Middleware for Authentication

@@ -1,9 +1,14 @@
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['lh3.googleusercontent.com'], // Add the Google image domain here
-    // unoptimized: true
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
+    ],
+    // unoptimized: true 
   },
 };
 export default nextConfig;
+  
