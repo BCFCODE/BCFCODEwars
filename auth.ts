@@ -1,8 +1,8 @@
-// auth.ts
 import NextAuth, { Session } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 // import GithubProvider from "next-auth/providers/github";
 import { NextRequest } from "next/server";
+import { NextResponse } from "next/server"; // Import NextResponse explicitly
 import { baseURL } from "./utils/constants";
 
 const providers = [
@@ -95,13 +95,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       return true; // Allow the sign-in process to continue
     },
-    async authorized({
-      auth,
-      request,
-    }: {
-      auth: Session | null;
-      request: NextRequest;
-    }) {
+    async authorized({ request, auth }) {
       const isLoggedIn = !!auth?.user;
       const isPublicPage = request.nextUrl.pathname.startsWith("/public");
 
@@ -109,7 +103,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return true;
       }
 
-      return false; // Redirect unauthenticated users to login page
+      // Redirect unauthenticated users to the login page
+      return NextResponse.redirect(new URL("/auth/signin", request.url));
     },
   },
 });
