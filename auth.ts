@@ -27,7 +27,7 @@ if (missingVars.length > 0) {
   const message = `The following environment variables are missing: ${missingVars.join(", ")}`;
   console.warn(`\u001b[33mwarn:\u001b[0m ${message}`);
 }
-
+ 
 export const providerMap = providers.map((provider) => ({
   id: provider.id as "google",
   name: provider.name,
