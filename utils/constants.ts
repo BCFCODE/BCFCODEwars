@@ -1,1 +1,1 @@
-export const baseURL = process.env.NEXTAUTH_URL 
+export const baseURL = process.env.PUBLIC_BASE_URL
