@@ -133,8 +133,8 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   const session = await auth();
 
   return (
-    <html lang="en" data-toolpad-color-scheme="light" suppressHydrationWarning>
-      <body className={montserrat.className}>
+    <html lang="en" className={montserrat.className} data-toolpad-color-scheme="light" suppressHydrationWarning>
+      <body >
         <SessionProvider session={session}>
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <AppProvider

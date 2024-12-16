@@ -1,7 +1,6 @@
-import NextAuth, { Session } from "next-auth";
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 // import GithubProvider from "next-auth/providers/github";
-import { NextRequest } from "next/server";
 import { NextResponse } from "next/server"; // Import NextResponse explicitly
 import { baseURL } from "./utils/constants";
 
@@ -104,7 +103,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       // Redirect unauthenticated users to the login page
-      return NextResponse.redirect(new URL("/auth/signin", request.url));
+      // return NextResponse.redirect(new URL("/auth/signin", request.url));
+      return false;
     },
   },
 });
