@@ -13,13 +13,9 @@ import Image from "next/image";
 import * as React from "react";
 import { auth } from "../auth";
 import { montserrat } from "../lib/fonts";
-// import FlagIcon from '@mui/icons-material/Flag';
 import ExploreIcon from "@mui/icons-material/Explore";
-// import AssignmentIcon from '@mui/icons-material/Assignment';
-// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-// import StarIcon from '@mui/icons-material/Star';
-// import DashboardIcon from '@mui/icons-material/Dashboard';
 import theme from "../theme";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: {
@@ -29,8 +25,6 @@ export const metadata: Metadata = {
   description:
     "Welcome to BCFCODE, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
   metadataBase: new URL("https://bcfcode.ir/"),
-
-  // Open Graph meta tags
   openGraph: {
     title: "BCFCODE",
     description:
@@ -39,23 +33,22 @@ export const metadata: Metadata = {
     siteName: "BCFCODE",
     images: [
       {
-        url: "https://bcfcode.ir/opengraph-image.jpg?9de773d50c401793", // URL of your Open Graph image
+        url: "https://bcfcode.ir/opengraph-image.jpg?9de773d50c401793",
         width: 1200,
         height: 630,
         alt: "BCFCODE Open Graph Image",
       },
     ],
   },
-  // Twitter meta tags
   twitter: {
-    card: "summary_large_image", // Large summary card with image
-    site: "@BCFCODE", // Twitter handle of the website or owner
+    card: "summary_large_image",
+    site: "@BCFCODE",
     title: "BCFCODE",
     description:
       "Join the best coding battles and challenges at BCFCODE, led by Bakhshandeh Morteza.",
     images: [
       {
-        url: "https://bcfcode.ir/twitter-image.jpg?9de773d50c401793", // URL of your Twitter image
+        url: "https://bcfcode.ir/twitter-image.jpg?9de773d50c401793",
         alt: "BCFCODE Twitter Image",
         width: 1200,
         height: 630,
@@ -96,7 +89,6 @@ const NAVIGATION: Navigation = [
     kind: "header",
     title: "Analytics",
   },
-
   {
     segment: "leaderboard",
     title: "Leader board",
@@ -111,13 +103,10 @@ const BRANDING = {
       height={40}
       src="/BCFCODE-LOGO.jpg"
       alt="BCFCODE LOGO"
-      // unoptimized={true}
       loading="lazy"
       style={{
-        borderRadius: "50%", // Rounded logo for a more modern look
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for a professional depth
-        // marginLeft: 2,
-        // marginRight: 1,
+        borderRadius: "50%",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       }}
     />
   ),
@@ -130,11 +119,24 @@ const AUTHENTICATION = {
 };
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
+  const reqHeaders = await headers();
+
+  const forwardedHost = reqHeaders.get("x-forwarded-host");
+  const forwardedProto = reqHeaders.get("x-forwarded-proto");
+  const cookies = reqHeaders.get("cookie");
+
+  // console.log("Headers Info:", { forwardedHost, forwardedProto, cookies });
+
   const session = await auth();
 
   return (
-    <html lang="en" className={montserrat.className} data-toolpad-color-scheme="light" suppressHydrationWarning>
-      <body >
+    <html
+      lang="en"
+      className={montserrat.className}
+      data-toolpad-color-scheme="light"
+      suppressHydrationWarning
+    >
+      <body>
         <SessionProvider session={session}>
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>
             <AppProvider
