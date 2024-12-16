@@ -15,7 +15,7 @@ import { auth } from "../auth";
 import { montserrat } from "../lib/fonts";
 import ExploreIcon from "@mui/icons-material/Explore";
 import theme from "../theme";
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: {
@@ -119,11 +119,11 @@ const AUTHENTICATION = {
 };
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
-  const reqHeaders = await headers();
+  // const reqHeaders = await headers();
 
-  const forwardedHost = reqHeaders.get("x-forwarded-host");
-  const forwardedProto = reqHeaders.get("x-forwarded-proto");
-  const cookies = reqHeaders.get("cookie");
+  // const forwardedHost = reqHeaders.get("x-forwarded-host");
+  // const forwardedProto = reqHeaders.get("x-forwarded-proto");
+  // const cookies = reqHeaders.get("cookie");
 
   // console.log("Headers Info:", { forwardedHost, forwardedProto, cookies });
 
