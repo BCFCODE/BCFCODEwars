@@ -15,7 +15,8 @@ import { auth } from "../auth";
 import { montserrat } from "../lib/fonts";
 import ExploreIcon from "@mui/icons-material/Explore";
 import theme from "../theme";
-// import { headers } from "next/headers";
+import { headers } from "next/headers";
+import { baseURL } from "@/utils/constants";
 
 export const metadata: Metadata = {
   title: {
@@ -24,16 +25,16 @@ export const metadata: Metadata = {
   },
   description:
     "Welcome to BCFCODE, the home of awesome coding battles built by the BCFCODEteam, led by Bakhshandeh Morteza. Dive in and join the fun!",
-  metadataBase: new URL("https://bcfcode.ir/"),
+  metadataBase: new URL(`${baseURL}/`),
   openGraph: {
     title: "BCFCODE",
     description:
       "Join the best coding battles and challenges at BCFCODE, led by Bakhshandeh Morteza. Ready to test your coding skills?",
-    url: "https://bcfcode.ir/",
+    url: `${baseURL}/`,
     siteName: "BCFCODE",
     images: [
       {
-        url: "https://bcfcode.ir/opengraph-image.jpg?9de773d50c401793",
+        url: `/app/opengraph-image.jpg`,
         width: 1200,
         height: 630,
         alt: "BCFCODE Open Graph Image",
@@ -48,7 +49,7 @@ export const metadata: Metadata = {
       "Join the best coding battles and challenges at BCFCODE, led by Bakhshandeh Morteza.",
     images: [
       {
-        url: "https://bcfcode.ir/twitter-image.jpg?9de773d50c401793",
+        url: `/app/twitter-image.jpg`,
         alt: "BCFCODE Twitter Image",
         width: 1200,
         height: 630,
@@ -119,15 +120,10 @@ const AUTHENTICATION = {
 };
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
-  // const reqHeaders = await headers();
-
-  // const forwardedHost = reqHeaders.get("x-forwarded-host");
-  // const forwardedProto = reqHeaders.get("x-forwarded-proto");
-  // const cookies = reqHeaders.get("cookie");
-
-  // console.log("Headers Info:", { forwardedHost, forwardedProto, cookies });
-
-  const session = await auth();
+  // Await the headers() function call to ensure you can use .get()
+  const headersList = await headers(); // Await here
+  const forwardedProto = headersList.get("x-forwarded-proto");
+  const session = await auth(); // Now fully async
 
   return (
     <html
