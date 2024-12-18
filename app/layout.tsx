@@ -104,10 +104,7 @@ const BRANDING = {
       height={40}
       src="/BCFCODE-LOGO.jpg"
       alt="BCFCODE LOGO"
-<<<<<<< HEAD
       unoptimized={true}
-=======
->>>>>>> main
       loading="lazy"
       style={{
         borderRadius: "50%",
