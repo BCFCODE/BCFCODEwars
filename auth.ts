@@ -1,49 +1,35 @@
-// auth.ts
-import NextAuth, { Session } from "next-auth";
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-// import GithubProvider from "next-auth/providers/github";
-import { NextRequest } from "next/server";
 import { baseURL } from "./utils/constants";
 
+// Define authentication providers
 const providers = [
   GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID!,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
   }),
-  // GithubProvider({
-  //   clientId: process.env.GITHUB_CLIENT_ID!,
-  //   clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-  // }),
 ];
 
 const missingVars: string[] = [];
 
+// Utility to check for missing environment variables
 const isMissing = (name: string, envVar: string | undefined) => {
   if (!envVar) {
     missingVars.push(name);
   }
 };
 
+// Validate required environment variables
 isMissing("GOOGLE_CLIENT_ID", process.env.GOOGLE_CLIENT_ID);
 isMissing("GOOGLE_CLIENT_SECRET", process.env.GOOGLE_CLIENT_SECRET);
-// isMissing("GITHUB_CLIENT_ID", process.env.GITHUB_CLIENT_ID);
-// isMissing("GITHUB_CLIENT_SECRET", process.env.GITHUB_CLIENT_SECRET);
 
 if (missingVars.length > 0) {
-  const baseMessage =
-    "Authentication is configured but the following environment variables are missing:";
-
-  if (process.env.NODE_ENV === "production") {
-    console.warn(`warn: ${baseMessage} ${missingVars.join(", ")}`);
-  } else {
-    console.warn(
-      `\u001b[33mwarn:\u001b[0m ${baseMessage} \u001b[31m${missingVars.join(", ")}\u001b[0m`
-    );
-  }
+  const message = `The following environment variables are missing: ${missingVars.join(", ")}`;
+  console.warn(`\u001b[33mwarn:\u001b[0m ${message}`);
 }
-
+ 
 export const providerMap = providers.map((provider) => ({
-  id: provider.id as "google" /* | "github" */,
+  id: provider.id as "google",
   name: provider.name,
 }));
 
@@ -52,11 +38,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: process.env.AUTH_SECRET,
   cookies: {
     sessionToken: {
-      name: `next-auth.session-token`,
+      name: "next-auth.session-token",
       options: {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        sameSite: "lax", // Ensures it works across domains
+        sameSite: "lax",
       },
     },
   },
@@ -67,8 +53,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async signIn({ user, account }) {
       if (account?.provider === "google") {
         try {
-          // Trigger the API to store user data in MongoDB
-          const res = await fetch(`${baseURL}/api/auth`, {
+          const response = await fetch(`${baseURL}/api/auth`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -82,26 +67,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             }),
           });
 
-          const data = await res.json();
+          const data = await response.json();
           if (data.user) {
-            console.log("User data successfully stored in MongoDB:", data.user);
+            console.log("User data stored in MongoDB:", data.user);
           } else {
             console.error("Error storing user:", data.error);
           }
         } catch (error) {
-          console.error("Error during sign-in API call:", error);
+          console.error("API error during sign-in:", error);
         }
       }
 
-      return true; // Allow the sign-in process to continue
+      return true; // Continue sign-in
     },
-    async authorized({
-      auth,
-      request,
-    }: {
-      auth: Session | null;
-      request: NextRequest;
-    }) {
+    async authorized({ request, auth }) {
       const isLoggedIn = !!auth?.user;
       const isPublicPage = request.nextUrl.pathname.startsWith("/public");
 
@@ -109,7 +88,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return true;
       }
 
-      return false; // Redirect unauthenticated users to login page
+      return false;
     },
   },
 });
