@@ -1,13 +1,25 @@
+import React, { useEffect, useState } from 'react';
+import { auth } from "@/auth";
 import { Avatar } from "@mui/material";
-import { useSession } from "next-auth/react";
-import React from "react";
 
 const UserAvatar = () => {
-  const { data: session } = useSession();
+  const [session, setSession] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const sessionData = await auth();
+      setSession(sessionData);
+    };
+
+    fetchSession();
+  }, []);
+
+  if (!session) {
+    return null; // or a loading indicator
+  }
+
   return (
     <>
-      {" "}
-      {/* User Avatar */}
       {session?.user?.image && (
         <Avatar
           alt={session?.user?.name || ""}
@@ -15,7 +27,6 @@ const UserAvatar = () => {
           sx={{
             width: { xs: 100, sm: 120 }, // Responsive avatar size
             height: { xs: 100, sm: 120 },
-            // mb: 3,
             boxShadow: 8, // Deep shadow for visual separation
             border: "2px solid", // Adding a border for distinction
             borderColor: "grey.400", // Neutral border color

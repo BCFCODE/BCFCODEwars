@@ -134,21 +134,19 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
       suppressHydrationWarning
     >
       <body>
-        <SessionProvider session={session}>
-          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-            <AppProvider
-              navigation={NAVIGATION}
-              branding={BRANDING}
-              session={session}
-              authentication={AUTHENTICATION}
-              theme={theme}
-            >
-              {props.children}
-              <Analytics />
-              <SpeedInsights />
-            </AppProvider>
-          </AppRouterCacheProvider>
-        </SessionProvider>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <AppProvider
+            navigation={NAVIGATION}
+            branding={BRANDING}
+            session={session}
+            authentication={AUTHENTICATION}
+            theme={theme}
+          >
+            {props.children}
+            <Analytics />
+            <SpeedInsights />
+          </AppProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );

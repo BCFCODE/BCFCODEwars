@@ -1,13 +1,12 @@
-'use client'
 
+import { auth } from "@/auth";
 import { Avatar, Box, CircularProgress, Fade, Typography } from "@mui/material";
-import { useSession } from "next-auth/react";
 interface Props {
   pageName: string;
 }
 
-const UnderDevelopment = ({ pageName }: Props) => {
-  const { data: session } = useSession();
+const UnderDevelopment = async ({ pageName }: Props) => {
+  const session = await auth()
 
   return (
     <Box

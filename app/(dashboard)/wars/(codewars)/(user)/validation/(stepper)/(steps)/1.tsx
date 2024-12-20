@@ -2,9 +2,10 @@ import { Typography, Box, Avatar, CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
 import React from "react";
 import UserAvatar from "../(content)/UserAvatar";
+import { auth } from "@/auth";
 
-const Step1 = () => {
-  const { data: session } = useSession();
+const Step1 = async () => {
+  const session = await auth();
 
   return (
     <Box
@@ -15,7 +16,7 @@ const Step1 = () => {
         textAlign: "center",
         gap: 2,
         px: 2, // Add padding for responsive spacing
-        pt: 5
+        pt: 5,
       }}
     >
       {/* Header Message */}
@@ -41,9 +42,7 @@ const Step1 = () => {
       >
         Welcome to BCFCODE Wars, Morteza Bakhshandeh! We’re thrilled to have you
         here! At BCFCODE Wars, we’re connecting you to your Codewars account to
-        deliver exciting stats and insights. 
-        Ready to begin? 
-        Click Next and
+        deliver exciting stats and insights. Ready to begin? Click Next and
         let’s guide you through each step to join our special leaderboard.
       </Typography>
 
