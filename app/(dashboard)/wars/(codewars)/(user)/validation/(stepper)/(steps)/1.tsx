@@ -1,8 +1,6 @@
-import { Typography, Box, Avatar, CircularProgress } from "@mui/material";
-import { useSession } from "next-auth/react";
-import React from "react";
-import UserAvatar from "../(content)/UserAvatar";
 import { auth } from "@/auth";
+import { Box, CircularProgress, Typography } from "@mui/material";
+import UserAvatar from "../(content)/UserAvatar";
 
 const Step1 = async () => {
   const session = await auth();
@@ -47,7 +45,7 @@ const Step1 = async () => {
       </Typography>
 
       {/* User Avatar */}
-      <UserAvatar />
+      <UserAvatar session={session} />
 
       {/* Loading Indicator */}
       {!session && (
