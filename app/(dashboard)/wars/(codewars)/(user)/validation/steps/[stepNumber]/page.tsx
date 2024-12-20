@@ -1,15 +1,15 @@
-"use client";
-
 import { Box } from "@mui/material";
 import StepperButtons from "../../(stepper)/Buttons";
 import StepperContent from "../../(stepper)/(content)/Content";
 import CodewarsValidationStepper from "../../(stepper)/stepper";
 
 interface Props {
-  params: { stepNumber: number };
+  params: Promise<{ stepNumber: number }>;
 }
 
-const StepNumberPage = ({ params: { stepNumber } }: Props) => {
+const StepNumberPage = async ({ params }: Props) => {
+  const stepNumber = (await params).stepNumber;
+
   return (
     <>
       <CodewarsValidationStepper activeStep={Number(stepNumber)} />

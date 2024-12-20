@@ -1,45 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { auth } from "@/auth";
+"use client"; // Since Avatar is interactive, we still need this directive
+
+import React from "react";
 import { Avatar } from "@mui/material";
+import { auth } from "@/auth";
 
-const UserAvatar = () => {
-  const [session, setSession] = useState<any>(null);
-
-  useEffect(() => {
-    const fetchSession = async () => {
-      const sessionData = await auth();
-      setSession(sessionData);
-    };
-
-    fetchSession();
-  }, []);
-
-  if (!session) {
-    return null; // or a loading indicator
+const UserAvatar = ({ session }: { session: any }) => {
+  if (!session || !session.user) {
+    return null; // or a placeholder
   }
 
   return (
-    <>
-      {session?.user?.image && (
-        <Avatar
-          alt={session?.user?.name || ""}
-          src={session?.user?.image}
-          sx={{
-            width: { xs: 100, sm: 120 }, // Responsive avatar size
-            height: { xs: 100, sm: 120 },
-            boxShadow: 8, // Deep shadow for visual separation
-            border: "2px solid", // Adding a border for distinction
-            borderColor: "grey.400", // Neutral border color
-            transition: "transform 0.3s ease-in-out",
-            "&:hover": {
-              transform: "scale(1.1)", // Subtle hover effect to add interaction
-            },
-            mt: 3,
-          }}
-        />
-      )}
-    </>
+    <Avatar
+      alt={session.user.name || ""}
+      src={session.user.image}
+      sx={{
+        width: { xs: 100, sm: 120 }, // Responsive avatar size
+        height: { xs: 100, sm: 120 },
+        boxShadow: 8,
+        border: "2px solid",
+        borderColor: "grey.400",
+        transition: "transform 0.3s ease-in-out",
+        "&:hover": {
+          transform: "scale(1.1)",
+        },
+        mt: 3,
+      }}
+    />
   );
 };
 
 export default UserAvatar;
+
+// Server-side data fetching
+export async function getServerSideProps(context: any) {
+  const session = await auth(context.req); // Pass request context if needed
+  return {
+    props: {
+      session,
+    },
+  };
+}
