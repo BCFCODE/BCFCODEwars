@@ -2,7 +2,8 @@
 
 import { auth } from "@/auth";
 import clientPromise from "@/lib/MongoDB/database";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
+import Link from "next/link";
 
 const WarsPage = async () => {
   const session = await auth();
@@ -35,7 +36,9 @@ const WarsPage = async () => {
           worries—let’s get you connected so you can start climbing the
           leaderboard!&quot;
         </Typography>
-        
+        <Button LinkComponent={Link} href="/wars/validation/steps/0">
+          Connect My Codewars Account
+        </Button>
       </Box>
     );
   }
