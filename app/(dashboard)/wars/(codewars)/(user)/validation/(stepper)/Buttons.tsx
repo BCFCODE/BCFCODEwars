@@ -15,8 +15,8 @@ const StepperButtons = ({ currentStep = 0 }: Props) => {
     <>
       <Button
         color="inherit"
-        disabled={currentStep === 0}
-        onClick={() => router.push(`${currentStep - 1}`)}
+        // disabled={currentStep === 0}
+        onClick={() => currentStep === 0 ? router.push(`/wars`) : router.push(`${currentStep - 1}`)}
         sx={{ mr: 1 }}
       >
         {currentStep === steps.length - 1 ? "No" : 'Back'}
