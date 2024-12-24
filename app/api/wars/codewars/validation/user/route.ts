@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const client = await clientPromise;
-    const db = client.db("BCFCODEwars");
+    const db = client.db(process.env.MONGODB_DB);
 
     // Fetch the user with the given email
     const user = await db.collection("users").findOne({ email });
@@ -26,10 +26,9 @@ export async function GET(request: NextRequest) {
       );
     }
 
-
     return NextResponse.json({
       codewars: {
-        username: user.codewars ?? null
+        username: user.codewars ?? null,
       },
     });
   } catch (error) {

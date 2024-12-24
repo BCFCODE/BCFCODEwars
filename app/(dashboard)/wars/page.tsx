@@ -15,7 +15,7 @@ const WarsPage = async () => {
     try {
       // Connect to MongoDB
       const client = await clientPromise;
-      const db = client.db("BCFCODEwars");
+      const db = client.db(process.env.MONGODB_DB);
 
       // Fetch the user from the database
       const user = await db.collection("users").findOne({ email });
@@ -141,7 +141,7 @@ export default WarsPage;
 
       // Connect to MongoDB
       const client = await clientPromise;
-      const db = client.db("BCFCODEwars"); // Your MongoDB database
+      const db = client.db(process.env.MONGODB_DB); // Your MongoDB database
 
       if (!username) {
         return NextResponse.json(

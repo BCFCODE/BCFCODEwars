@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   try {
     // Connect to MongoDB
     const client = await clientPromise;
-    const db = client.db("BCFCODEwars"); // Your MongoDB database
+    const db = client.db(process.env.MONGODB_DB); // Your MongoDB database
 
     // Fetch the users from the 'users' collection
     const users = await db.collection("users").find({}).toArray();

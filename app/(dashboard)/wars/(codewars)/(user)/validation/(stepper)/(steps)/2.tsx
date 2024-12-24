@@ -41,7 +41,7 @@ export default function Step2() {
   };
 
   return (<>
-  <UserAvatar />
+  {/* <UserAvatar session={undefined}/> */}
   <Box sx={{ maxWidth: 400, margin: "0 auto", textAlign: "center", mt: 4 }}>
       
       <Typography variant="h5" gutterBottom>

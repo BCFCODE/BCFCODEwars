@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
   try {
     // Connect to the MongoDB cluster
     await client.connect();
-    const db = client.db("BCFCODEwars"); // Use your database name
+    const db = client.db(process.env.MONGODB_DB); // Use your database name
     const usersCollection = db.collection("users");
     // Insert seed data
     const result = await usersCollection.insertMany(seedData);
