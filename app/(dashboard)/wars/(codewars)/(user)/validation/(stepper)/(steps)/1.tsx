@@ -4,6 +4,9 @@ import UserAvatar from "../(content)/UserAvatar";
 
 const Step1 = async () => {
   const session = await auth();
+  
+  let firstName;
+  session && (firstName = session.user.name.split(" ")[0]);
 
   return (
     <Box
@@ -13,39 +16,59 @@ const Step1 = async () => {
         alignItems: "center",
         textAlign: "center",
         gap: 2,
-        px: 2, // Add padding for responsive spacing
+        px: 2,
         pt: 5,
       }}
     >
-      {/* Header Message */}
-      <Typography
-        variant="h6"
-        sx={{
-          fontWeight: 500,
-          color: "text.secondary",
-          fontSize: { xs: "1rem", sm: "1.25rem" },
-        }}
-      >
-        Welcome to BCFCODE Wars {session?.user?.name || "User"}!
-      </Typography>
-
-      {/* Welcome Message */}
-      <Typography
-        variant="body1"
-        sx={{
-          color: "text.secondary",
-          lineHeight: 1.6,
-          maxWidth: "600px", // Constrain text width for better readability
-        }}
-      >
-        Welcome to BCFCODE Wars, Morteza Bakhshandeh! We’re thrilled to have you
-        here! At BCFCODE Wars, we’re connecting you to your Codewars account to
-        deliver exciting stats and insights. Ready to begin? Click Next and
-        let’s guide you through each step to join our special leaderboard.
-      </Typography>
-
       {/* User Avatar */}
       <UserAvatar session={session} />
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          maxWidth: "80%",
+          // minHeight: "100%", // Full height of the screen
+          bgcolor: "background.default", // Neutral background color
+          // color: "text.primary", // Primary text color for readability
+          p: { xs: 3, sm: 3 }, // Responsive padding (smaller on mobile)
+          boxShadow: 3, // Subtle shadow for depth
+          borderRadius: 2, // Rounded corners for a modern feel
+        }}
+      >
+        {/* Header Message */}
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: 500,
+            color: "text.secondary",
+            fontSize: { xs: "1.1rem", sm: "1.35rem" },
+          }}
+        >
+          Welcome to the BCFCODE Community, {session?.user?.name || "User"}!
+        </Typography>
+
+        {/* Welcome Message */}
+        <Typography
+          variant="body1"
+          sx={{
+            color: "text.secondary",
+            lineHeight: 1.6,
+            // maxWidth: "80%",
+            textAlign: "left",
+          }}
+        >
+          You’re about to embark on the first step of your validation journey.
+          In just a few simple steps, we’ll connect you to your Codewars account
+          to unlock exclusive access to personalized insights, detailed stats,
+          and our vibrant leaderboard. We’re here to guide you every step of the
+          way. Ready to get started? Simply click Next, and let’s make your
+          coding adventure with BCFCODE even more exciting and rewarding,{" "}
+          {firstName}!
+        </Typography>
+      </Box>
 
       {/* Loading Indicator */}
       {!session && (
