@@ -11,6 +11,7 @@ Steps:
 Create a .env.local file in the root of your project.
 Add environment variables like JWT_SECRET.
 Never commit .env.local to your repository (it’s ignored by default in Next.js).
+
 2. Install Required Packages
 Run these commands to install essential packages:
   
