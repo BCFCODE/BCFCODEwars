@@ -40,47 +40,54 @@ export default function Step2() {
     }
   };
 
-  return (<>
-  {/* <UserAvatar session={undefined}/> */}
-  <Box sx={{ maxWidth: 400, margin: "0 auto", textAlign: "center", mt: 4 }}>
-      
-      <Typography variant="h5" gutterBottom>
-        Connect to Codewars
-      </Typography>
-      <TextField
-        label="Codewars Username"
-        variant="outlined"
-        fullWidth
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        error={!!error}
-        helperText={error || ""}
-        sx={{ mb: 2 }}
-      />
-      <Button
-        variant="contained"
-        color="primary"
-        fullWidth
-        onClick={validateUsername}
-        disabled={loading || !username.trim()}
+  return (
+    <>
+      {/* <UserAvatar session={undefined}/> */}
+      <Box
+        sx={{
+          maxWidth: 400,
+          margin: "0 auto",
+          textAlign: "center",
+          mt: 4,
+        }}
       >
-        {loading ? (
-          <CircularProgress size={24} color="inherit" />
-        ) : (
-          "Validate Username"
+        <Typography variant="h5" gutterBottom>
+          Connect to Codewars
+        </Typography>
+        <TextField
+          label="Codewars Username"
+          variant="outlined"
+          fullWidth
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          error={!!error}
+          helperText={error || ""}
+          sx={{ mb: 2 }}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={validateUsername}
+          disabled={loading || !username.trim()}
+        >
+          {loading ? (
+            <CircularProgress size={24} color="inherit" />
+          ) : (
+            "Validate Username"
+          )}
+        </Button>
+        {success && (
+          <Typography variant="body1" color="green" sx={{ mt: 2 }}>
+            {success}
+          </Typography>
         )}
-      </Button>
-      {success && (
-        <Typography variant="body1" color="green" sx={{ mt: 2 }}>
-          {success}
-        </Typography>
-      )}
-      {error && (
-        <Typography variant="body1" color="red" sx={{ mt: 2 }}>
-          {error}
-        </Typography>
-      )}
-    </Box>
-  </>
+        {error && (
+          <Typography variant="body1" color="red" sx={{ mt: 2 }}>
+            {error}
+          </Typography>
+        )}
+      </Box>
+    </>
   );
 }

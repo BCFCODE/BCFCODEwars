@@ -14,7 +14,7 @@ const Layout = ({ children }: Props) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "space-between",
         minHeight: "100%", // Full height of the screen
         bgcolor: "background.default", // Neutral background color
         color: "text.primary", // Primary text color for readability
