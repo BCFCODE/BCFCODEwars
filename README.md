@@ -45,10 +45,4 @@ BCFCODE is a place for tech enthusiasts who value creativity and collaboration. 
 
 # [© BCFCODE](https://www.bcfcode.ir/)
 
-[Join our Telegram](https://t.me/BCFCODE) | [Follow us on Instagram](https://www.instagram.com/bcfcodeteam/?igshid=MzRlODBiNWFlZA%3D%3D)
-
-<span style="color: yellow;">  
-Using data from an API, such as the CodeWars API, requires following specific terms and policies. Check the [CodeWars API documentation](https://dev.codewars.com/) for details on data usage, limits, and guidelines. Make sure to adhere to these rules and keep your API keys secure.
-</span>
-
-## [CodeWars API documentation](https://dev.codewars.com/)
+[Join our Telegram](https://t.me/BCFCODE) | [Follow us on X](https://x.com/bcfcode)
