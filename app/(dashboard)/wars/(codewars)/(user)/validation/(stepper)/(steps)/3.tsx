@@ -1,7 +1,17 @@
-import { Typography, Box, Paper } from "@mui/material";
-import React from "react";
+import { CodewarsUser } from "@/types/codewars";
+import { Box, Paper, Typography } from "@mui/material";
+// import { useRouter } from "next/navigation";
+interface Props {
+  validatedUsername: string;
+}
 
-const Step3 = () => {
+const Step3 = async ({ validatedUsername }: Props) => {
+  const response = await fetch(
+    `https://www.codewars.com/api/v1/users/${validatedUsername}`
+  );
+
+  const codewarsUser: CodewarsUser = await response.json();
+
   return (
     <Box
       sx={{
@@ -59,7 +69,7 @@ const Step3 = () => {
             mb: 1,
           }}
         >
-          <strong>User Name:</strong> BCFCODE
+          <strong>User Name:</strong> {validatedUsername}
         </Typography>
         <Typography
           variant="body1"
@@ -68,7 +78,7 @@ const Step3 = () => {
             mb: 1,
           }}
         >
-          <strong>Name:</strong> Morteza Bakhshendeh
+          <strong>Name:</strong> {codewarsUser.name}
         </Typography>
         <Typography
           variant="body1"
@@ -77,7 +87,7 @@ const Step3 = () => {
             mb: 1,
           }}
         >
-          <strong>Clan:</strong> BCFCODEwars
+          <strong>Clan:</strong> {codewarsUser.clan ?? "N/A"}
         </Typography>
         <Typography
           variant="body1"
@@ -85,7 +95,8 @@ const Step3 = () => {
             fontWeight: 500,
           }}
         >
-          <strong>Leaderboard Position:</strong> 2356
+          <strong>Leaderboard Position:</strong>{" "}
+          {codewarsUser.leaderboardPosition ?? "N/A"}
         </Typography>
       </Paper>
     </Box>

@@ -6,16 +6,17 @@ import { Typography } from "@mui/material";
 
 interface Props {
   stepNumber: number;
+  validatedUsername: string;
 }
 
-const StepperContent = ({ stepNumber }: Props) => {
+const StepperContent = ({ stepNumber, validatedUsername }: Props) => {
   switch (stepNumber) {
     case 0:
       return <Step1 />;
     case 1:
       return <Step2 />;
     case 2:
-      return <Step3 />;
+      return <Step3 validatedUsername={validatedUsername} />;
     default:
       return <Typography>Invalid step number (Stepper Content)</Typography>;
   }

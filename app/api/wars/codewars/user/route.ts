@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const username = searchParams.get("username");
-  
+
   if (!username) {
     return NextResponse.json(
       { error: "Username is required" },
@@ -14,7 +14,8 @@ export async function GET(request: Request) {
 
   try {
     const response = await fetch(
-      `https://www.codewars.com/api/v1/users/${username}`
+      `https://www.codewars.com/api/v1/users/${username}`,
+      { cache: "no-store" }
     );
 
     if (!response.ok) {

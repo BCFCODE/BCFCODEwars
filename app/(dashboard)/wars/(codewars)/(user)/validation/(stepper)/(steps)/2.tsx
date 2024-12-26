@@ -9,12 +9,14 @@ import {
   Typography,
 } from "@mui/material";
 import UserAvatar from "../(content)/UserAvatar";
+import { useRouter } from "next/navigation";
 
 export default function Step2() {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const router = useRouter();
 
   const validateUsername = async () => {
     setLoading(true);
@@ -30,6 +32,7 @@ export default function Step2() {
 
       if (response.ok) {
         setSuccess(`Username "${username}" is valid!`);
+        router.push(`2?username=${username}`);
       } else {
         setError(data.error || "An error occurred");
       }

@@ -7,9 +7,11 @@ import { validateUserData } from "./schema";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const validatedUser: GoogleUser = validateUserData(body.user) as GoogleUser; // Validate input
+    const validatedUsername: GoogleUser = validateUserData(
+      body.user
+    ) as GoogleUser; // Validate input
 
-    const processedUser = await handleGoogleSignIn(validatedUser);
+    const processedUser = await handleGoogleSignIn(validatedUsername);
 
     return NextResponse.json({ user: processedUser });
   } catch (error: any) {

@@ -1,34 +1,36 @@
-export type CodewarsUserResponse = 
-  | { success: false; reason: "not found" }
-  | {
-      id: string;
-      username: string;
+export type CodewarsUser = {
+  id: string;
+  username: string | null;
+  name: string;
+  honor: number;
+  clan: string | null;
+  leaderboardPosition: number | null;
+  skills: string[] | null;
+  ranks: {
+    overall: {
+      rank: number;
       name: string;
-      honor: number;
-      clan: string;
-      leaderboardPosition: number;
-      skills: string[];
-      ranks: {
-        overall: {
-          rank: number;
-          name: string;
-          color: string;
-          score: number;
-        };
-        languages: {
-          [language: string]: {
-            rank: number;
-            name: string;
-            color: string;
-            score: number;
-          };
-        };
-      };
-      codeChallenges: {
-        totalAuthored: number;
-        totalCompleted: number;
+      color: string;
+      score: number;
+    };
+    languages: {
+      [language: string]: {
+        rank: number;
+        name: string;
+        color: string;
+        score: number;
       };
     };
+  };
+  codeChallenges: {
+    totalAuthored: number;
+    totalCompleted: number;
+  };
+};
+
+export type CodewarsUserResponse =
+  | { success: false; reason: "not found" }
+  | CodewarsUser;
 
 export interface CompletedChallenge {
   id: string; // Unique identifier for each challenge
