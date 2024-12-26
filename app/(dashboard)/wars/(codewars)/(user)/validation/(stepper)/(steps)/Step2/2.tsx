@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
 import {
-  TextField,
-  Button,
-  CircularProgress,
   Box,
-  Typography,
+  TextField,
+  Typography
 } from "@mui/material";
-import UserAvatar from "../(content)/UserAvatar";
+import { useState } from "react";
+// import UserAvatar from "../(content)/UserAvatar";
 import { useRouter } from "next/navigation";
+import ValidationButton from "./Button";
 
 export default function Step2() {
   const [username, setUsername] = useState("");
@@ -43,6 +42,8 @@ export default function Step2() {
     }
   };
 
+  const buttonProps = { loading, username, validateUsername };
+
   return (
     <>
       {/* <UserAvatar session={undefined}/> */}
@@ -67,19 +68,7 @@ export default function Step2() {
           helperText={error || ""}
           sx={{ mb: 2 }}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={validateUsername}
-          disabled={loading || !username.trim()}
-        >
-          {loading ? (
-            <CircularProgress size={24} color="inherit" />
-          ) : (
-            "Validate Username"
-          )}
-        </Button>
+        <ValidationButton {...buttonProps} />
         {success && (
           <Typography variant="body1" color="green" sx={{ mt: 2 }}>
             {success}

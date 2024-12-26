@@ -1,7 +1,7 @@
 import React from "react";
-import Step1 from "../(steps)/1";
-import Step2 from "../(steps)/2";
-import Step3 from "../(steps)/3";
+import Step1 from "../(steps)/Step1/1";
+import Step2 from "../(steps)/Step2/2";
+import Step3 from "../(steps)/Step3/3";
 import { Typography } from "@mui/material";
 
 interface Props {
