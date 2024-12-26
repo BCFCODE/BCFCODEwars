@@ -1,7 +1,7 @@
 export type CodewarsUser = {
   id: string;
-  username: string | null;
-  name: string;
+  username: string;
+  name: string | null;
   honor: number;
   clan: string | null;
   leaderboardPosition: number | null;

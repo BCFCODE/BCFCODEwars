@@ -66,7 +66,7 @@ const Step3 = async ({ validatedUsername }: Props) => {
           variant="body1"
           sx={{
             fontWeight: 500,
-            mb: 1,
+            // mb: 1,
           }}
         >
           <strong>User Name:</strong> {validatedUsername}
@@ -75,19 +75,27 @@ const Step3 = async ({ validatedUsername }: Props) => {
           variant="body1"
           sx={{
             fontWeight: 500,
-            mb: 1,
           }}
         >
-          <strong>Name:</strong> {codewarsUser.name}
+          <strong>Honor:</strong> {codewarsUser.honor}
         </Typography>
         <Typography
           variant="body1"
           sx={{
             fontWeight: 500,
-            mb: 1,
           }}
         >
-          <strong>Clan:</strong> {codewarsUser.clan ?? "N/A"}
+          <strong>Overall Rank:</strong>{" "}
+          {Math.abs(codewarsUser.ranks.overall.rank).toString()}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: 500,
+            // mb: 1,
+          }}
+        >
+          <strong>Name:</strong> {codewarsUser.name ?? "N/A"}
         </Typography>
         <Typography
           variant="body1"
@@ -97,6 +105,15 @@ const Step3 = async ({ validatedUsername }: Props) => {
         >
           <strong>Leaderboard Position:</strong>{" "}
           {codewarsUser.leaderboardPosition ?? "N/A"}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            fontWeight: 500,
+            // mb: 1,
+          }}
+        >
+          <strong>Clan:</strong> {codewarsUser.clan ?? "N/A"}
         </Typography>
       </Paper>
     </Box>
