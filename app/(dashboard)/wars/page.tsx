@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
-import UserAvatar from "./(codewars)/(user)/validation/(stepper)/(content)/UserAvatar";
+import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
 
 const WarsPage = async () => {
   const session = await auth();

@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import UserAvatar from "../../(stepper)/(content)/UserAvatar";
+import UserAvatar from "../UserAvatar";
 
 const Step1 = async () => {
   const session = await auth();

@@ -1,7 +1,7 @@
 import React from "react";
-import Step1 from "../../steps/Step1/1";
-import Step2 from "../../steps/Step2/2";
-import Step3 from "../../steps/Step3/3";
+import Step1 from "./Step1/1";
+import Step2 from "./Step2/2";
+import Step3 from "./Step3/3";
 import { Typography } from "@mui/material";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   validatedUsername: string;
 }
 
-const StepperContent = ({ stepNumber, validatedUsername }: Props) => {
+const StepperChildren = ({ stepNumber, validatedUsername }: Props) => {
   switch (stepNumber) {
     case 0:
       return <Step1 />;
@@ -22,4 +22,4 @@ const StepperContent = ({ stepNumber, validatedUsername }: Props) => {
   }
 };
 
-export default StepperContent;
+export default StepperChildren;

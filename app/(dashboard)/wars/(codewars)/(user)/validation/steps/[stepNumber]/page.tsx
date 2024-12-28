@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
-import StepperContent from "../../(stepper)/(content)/Content";
+
 import CodewarsValidationStepper from "../stepper";
 import StepperButtons from "../Buttons";
+import StepperChildren from "../StepperChildren";
 
 interface Props {
   params: Promise<{ stepNumber: number }>;
@@ -18,7 +19,7 @@ const StepNumberPage = async ({
     <>
       <CodewarsValidationStepper activeStep={Number(stepNumber)} />
 
-      <StepperContent
+      <StepperChildren
         validatedUsername={username}
         stepNumber={Number(stepNumber)}
       />

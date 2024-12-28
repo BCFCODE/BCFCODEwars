@@ -11,7 +11,8 @@ import { StepIconProps } from "@mui/material/StepIcon";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 import { styled } from "@mui/material/styles";
-import { steps } from "../steps/constants";
+
+export const steps = ["Welcome", "Connect to Codewars", "Codewars Leaderboard"];
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -89,6 +90,7 @@ interface Props {
 }
 
 export default function CodewarsValidationStepper({ activeStep }: Props) {
+
   return (
     <Stack sx={{ width: "100%" }} spacing={4}>
       <Stepper

@@ -2,7 +2,7 @@
 
 import { Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { steps } from "./constants";
+import { steps } from "./stepper";
 
 interface Props {
   currentStep: number;
