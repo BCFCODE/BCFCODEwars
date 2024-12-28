@@ -1,10 +1,11 @@
 // app/api/wars/users/route.ts
+
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/MongoDB/database"; // Adjust the path according to your file structure
 
 export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const users = searchParams.get("users");
+  // const { searchParams } = new URL(request.url);
+  // const users = searchParams.get("users");
 
   try {
     // Connect to MongoDB
@@ -23,4 +24,11 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+// Handle PATCH requests to update a user's data
+export async function PATCH(request: NextRequest) {
+  try {
+    // Parse the request body (assuming you're sending JSON data)
+  } catch (error) {}
 }

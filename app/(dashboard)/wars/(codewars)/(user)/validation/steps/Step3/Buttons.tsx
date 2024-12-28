@@ -12,6 +12,10 @@ interface Props {
 const Buttons = ({ codewars, currentStep = 0 }: Props) => {
   const router = useRouter();
 
+  const handleAddCodewarsUsernameToMongoDB = () => {
+    console.log('handleAddCodewarsUsernameToMongoDB',codewars);
+  };
+
   return (
     <>
       <Button
@@ -23,11 +27,7 @@ const Buttons = ({ codewars, currentStep = 0 }: Props) => {
         No
       </Button>
       <Box sx={{ flex: "1 1 auto" }} />
-      <Button
-        onClick={() => {
-          console.log(codewars);
-        }}
-      >
+      <Button onClick={handleAddCodewarsUsernameToMongoDB}>
         Yes, it is me
       </Button>
     </>
