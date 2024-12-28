@@ -1,13 +1,15 @@
 "use client";
 
+import { CodewarsUser } from "@/types/codewars";
 import { Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 interface Props {
   currentStep: number;
+  codewars: CodewarsUser;
 }
 
-const StepperButtons = ({ currentStep = 0 }: Props) => {
+const Buttons = ({ codewars, currentStep = 0 }: Props) => {
   const router = useRouter();
 
   return (
@@ -21,9 +23,15 @@ const StepperButtons = ({ currentStep = 0 }: Props) => {
         No
       </Button>
       <Box sx={{ flex: "1 1 auto" }} />
-      <Button onClick={() => {}}>Yes, it is me</Button>
+      <Button
+        onClick={() => {
+          console.log(codewars);
+        }}
+      >
+        Yes, it is me
+      </Button>
     </>
   );
 };
 
-export default StepperButtons;
+export default Buttons;

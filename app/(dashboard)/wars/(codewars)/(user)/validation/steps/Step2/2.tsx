@@ -11,7 +11,7 @@ interface Props {
   currentStep: number;
 }
 
-export default function Step2({currentStep}: Props) {
+export default function Step2({ currentStep }: Props) {
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -25,7 +25,8 @@ export default function Step2({currentStep}: Props) {
 
     try {
       const response = await fetch(
-        `/api/wars/codewars/user?username=${username}`
+        `/api/wars/codewars/user?username=${username}`,
+        { cache: "no-store" }
       );
       const data = await response.json();
       // console.log(data, response, "<<<<<<<<<<");

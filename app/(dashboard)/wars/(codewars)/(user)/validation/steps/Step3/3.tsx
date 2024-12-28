@@ -1,6 +1,7 @@
 import { CodewarsUser } from "@/types/codewars";
 import { Box, Paper, Typography } from "@mui/material";
 import Buttons from "./Buttons";
+
 // import { useRouter } from "next/navigation";
 interface Props {
   currentStep: number;
@@ -122,7 +123,7 @@ const Step3 = async ({ currentStep, validatedUsername }: Props) => {
       </Box>
 
       <Box sx={{ display: "flex", width: "100%", flexDirection: "row", pt: 2 }}>
-        <Buttons currentStep={Number(currentStep)} />
+        <Buttons codewars={codewarsUser} currentStep={Number(currentStep)} />
       </Box>
     </>
   );

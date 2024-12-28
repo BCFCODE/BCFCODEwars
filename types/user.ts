@@ -1,4 +1,6 @@
 // types/user.ts
+
+
 export interface GoogleUser {
   // id?: string; // Google unique user ID
   name: string; // User's display name
