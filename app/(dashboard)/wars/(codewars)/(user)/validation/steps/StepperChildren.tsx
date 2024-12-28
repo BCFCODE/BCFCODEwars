@@ -12,11 +12,13 @@ interface Props {
 const StepperChildren = ({ stepNumber, validatedUsername }: Props) => {
   switch (stepNumber) {
     case 0:
-      return <Step1 />;
+      return <Step1 currentStep={stepNumber} />;
     case 1:
-      return <Step2 />;
+      return <Step2 currentStep={stepNumber} />;
     case 2:
-      return <Step3 validatedUsername={validatedUsername} />;
+      return (
+        <Step3 currentStep={stepNumber} validatedUsername={validatedUsername} />
+      );
     default:
       return <Typography>Invalid step number (Stepper Content)</Typography>;
   }

@@ -1,6 +1,4 @@
-import loading from "@/app/loading";
 import { Button, CircularProgress } from "@mui/material";
-import React from "react";
 
 interface Props {
   loading: boolean;
