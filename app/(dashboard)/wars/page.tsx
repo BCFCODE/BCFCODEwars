@@ -1,13 +1,6 @@
 import { auth } from "@/auth";
 import clientPromise from "@/lib/MongoDB/database";
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Fade,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
 
@@ -36,10 +29,12 @@ const WarsPage = async () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "100vh",
+          minHeight: "100%",
           bgcolor: "background.default",
           color: "text.primary",
           p: { xs: 3, sm: 5 },
+          borderRadius: 2,
+          boxShadow: 3,
         }}
       >
         {/* Header Section */}
@@ -52,7 +47,7 @@ const WarsPage = async () => {
             color: "text.primary",
           }}
         >
-          Welcome to BCFCODE Wars
+          Welcome to BCFCODE Wars 
         </Typography>
         <Typography
           variant="h5"
@@ -129,9 +124,7 @@ const WarsPage = async () => {
           >
             Connect My Codewars Account
           </Button>
-        </Box>
-
-        {/* Inspirational Text */}
+             {/* Inspirational Text */}
         <Fade in timeout={1000}>
           <Typography
             variant="body2"
@@ -147,6 +140,8 @@ const WarsPage = async () => {
             coding journey!
           </Typography>
         </Fade>
+        </Box>
+     
       </Box>
     );
 
