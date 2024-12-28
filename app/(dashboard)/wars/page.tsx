@@ -1,5 +1,3 @@
-// app/(dashboard)/wars/page.tsx
-
 import { auth } from "@/auth";
 import clientPromise from "@/lib/MongoDB/database";
 import {
@@ -11,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import UserAvatar from "./(codewars)/(user)/validation/(stepper)/(content)/UserAvatar";
 
 const WarsPage = async () => {
   const session = await auth();
@@ -37,94 +36,80 @@ const WarsPage = async () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "100%", // Full height of the screen
-          bgcolor: "background.default", // Neutral background color
-          color: "text.primary", // Primary text color for readability
-          p: { xs: 3, sm: 5 }, // Responsive padding (smaller on mobile)
-          boxShadow: 3, // Subtle shadow for depth
-          borderRadius: 2, // Rounded corners for a modern feel
+          minHeight: "100vh",
+          bgcolor: "background.default",
+          color: "text.primary",
+          p: { xs: 3, sm: 5 },
         }}
       >
-        {/* Header Message */}
+        {/* Header Section */}
         <Typography
-          variant="h3"
+          variant="h4"
           sx={{
-            fontWeight: "600",
-            color: "text.primary", // Professional text color
+            fontWeight: 600,
             textAlign: "center",
             mb: 3,
-            letterSpacing: 1.5,
-            fontSize: { xs: "h6.fontSize", sm: "h5.fontSize" }, // Responsive font size
-            lineHeight: 1.4,
-            transition: "color 0.3s ease-in-out",
+            color: "text.primary",
           }}
         >
-          <Box
-            sx={{
-              color: "text.secondary", // More subtle tone for the title
-            }}
-          >
-            Welcome to BCFCODE Wars
-          </Box>
-          <Box
-            sx={{
-              color: "text.secondary", // Consistent color for user's name
-            }}
-          >
-            {session?.user?.name || "User"}!
-          </Box>
+          Welcome to BCFCODE Wars
+        </Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            textAlign: "center",
+            mb: 2,
+            color: "text.secondary",
+          }}
+        >
+          {session?.user?.name || "Hello, User!"}
         </Typography>
 
         {/* User Avatar */}
-        {session?.user?.image && (
-          <Avatar
-            alt={session?.user?.name || ""}
-            src={session?.user?.image}
-            sx={{
-              width: { xs: 100, sm: 120 }, // Responsive avatar size
-              height: { xs: 100, sm: 120 },
-              mb: 3,
-              boxShadow: 8, // Deep shadow for visual separation
-              border: "2px solid", // Adding a border for distinction
-              borderColor: "grey.400", // Neutral border color
-              transition: "transform 0.3s ease-in-out",
-              "&:hover": {
-                transform: "scale(1.1)", // Subtle hover effect to add interaction
-              },
-            }}
-          />
-        )}
+        <UserAvatar session={session} />
 
-        {/* Loading Indicator if no session is found */}
-        {!session && (
-          <Box
+        {/* Main Message */}
+        <Box
+          sx={{
+            textAlign: "center",
+            maxWidth: 700,
+            mb: 4,
+            bgcolor: "background.paper",
+            p: 3,
+            borderRadius: 2,
+            boxShadow: 3,
+          }}
+        >
+          <Typography variant="body1" sx={{ mb: 2, fontWeight: 500 }}>
+            It looks like this is your first time connecting your Codewars
+            profile. 🎉
+          </Typography>
+          <Typography
+            variant="body2"
             sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              color: "text.secondary",
+              lineHeight: 1.6,
               mb: 3,
             }}
           >
-            <CircularProgress color="primary" size={60} />
-          </Box>
-        )}
-
-        {/* Under Construction Message */}
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            bgcolor: "background.paper", // Neutral background for professional feel
-            color: "text.primary", // Maintain text color contrast
-            p: { xs: 1, sm: 2 }, // Adjust padding based on screen size
-            mb: 4,
-            textAlign: "center",
-            borderRadius: 2,
-            boxShadow: 3, // Adding more depth for a more elevated look
-          }}
-        >
+            Let’s link your account to start climbing the leaderboard and
+            showcase your coding skills! 🚀
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              color: "text.secondary",
+              lineHeight: 1.6,
+              mb: 3,
+            }}
+          >
+            Don’t have a Codewars account yet? No worries!{" "}
+            <Link href="https://www.codewars.com/users/sign_in" target="_blank">
+              <strong>Sign up here</strong>
+            </Link>{" "}
+            to sharpen your skills through fun, challenging problem-solving.
+            Then, come back and hit the button below to get started.
+          </Typography>
           <Button
             component={Link}
             href="/wars/validation/steps/0"
@@ -140,48 +125,33 @@ const WarsPage = async () => {
                 lg: "1.2rem",
               },
               mb: 3,
-              // textAlign: "center",
             }}
           >
             Connect My Codewars Account
           </Button>
-          <Typography
-            variant="body1"
-            sx={{
-              // fontSize: { xs: "0.5rem", sm: "0.7rem" },
-              maxWidth: 700,
-              textAlign: "center",
-              color: "text.secondary", // More subdued color for the description
-              fontWeight: 400, // Regular weight for description text
-              lineHeight: 1.6, // Improved line height for readability
-              opacity: 0.85,
-              // mb: 4, // Adequate margin for spacing
-            }}
-          >
-            It looks like this is your first time connecting your Codewars
-            profile.
-          </Typography>
         </Box>
+
         {/* Inspirational Text */}
-        <Fade in={Boolean(session)} timeout={1000}>
+        <Fade in timeout={1000}>
           <Typography
-            variant="h6"
+            variant="body2"
             sx={{
               textAlign: "center",
-              maxWidth: 600,
-              mb: 3,
               color: "text.secondary",
               fontStyle: "italic",
+              fontWeight: 500,
               opacity: 0.8,
-              fontWeight: "500",
             }}
           >
-            Let’s link your account to start climbing the leaderboard and
-            showcase your skills!
+            Unlock personalized insights, stats, and milestones to inspire your
+            coding journey!
           </Typography>
         </Fade>
       </Box>
     );
+
+  // Render other content if the user is already connected
+  return <div>Other content for connected users...</div>;
 };
 
 export default WarsPage;

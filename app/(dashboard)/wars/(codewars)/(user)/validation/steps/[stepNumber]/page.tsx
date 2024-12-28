@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import StepperButtons from "../../(stepper)/Buttons";
 import StepperContent from "../../(stepper)/(content)/Content";
-import CodewarsValidationStepper from "../../(stepper)/stepper";
+import CodewarsValidationStepper from "../stepper";
+import StepperButtons from "../Buttons";
 
 interface Props {
   params: Promise<{ stepNumber: number }>;

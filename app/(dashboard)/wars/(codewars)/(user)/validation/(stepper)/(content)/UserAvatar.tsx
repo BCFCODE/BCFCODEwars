@@ -23,7 +23,7 @@ const UserAvatar = ({ session }: { session: any }) => {
         "&:hover": {
           transform: "scale(1.1)",
         },
-        mt: 3,
+        // mt: 3,
       }}
     />
   );
