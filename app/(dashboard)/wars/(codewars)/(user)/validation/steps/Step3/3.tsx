@@ -1,6 +1,7 @@
-import { CodewarsUser } from "@/types/codewars";
+import { CodewarsDatabase, CodewarsUser } from "@/types/codewars";
 import { Box, Paper, Typography } from "@mui/material";
 import Buttons from "./Buttons";
+import { auth } from "@/auth";
 
 // import { useRouter } from "next/navigation";
 interface Props {
@@ -13,7 +14,14 @@ const Step3 = async ({ currentStep, validatedUsername }: Props) => {
     `https://www.codewars.com/api/v1/users/${validatedUsername}`
   );
 
-  const codewarsUser: CodewarsUser = await response.json();
+  const session = await auth();
+
+  const codewars = await response.json();
+
+  const codewarsDatabase: CodewarsDatabase = {
+    codewars,
+    email: session?.user.email,
+  };
 
   return (
     <>
@@ -81,7 +89,7 @@ const Step3 = async ({ currentStep, validatedUsername }: Props) => {
               fontWeight: 500,
             }}
           >
-            <strong>Honor:</strong> {codewarsUser.honor}
+            <strong>Honor:</strong> {codewars.honor}
           </Typography>
           <Typography
             variant="body1"
@@ -90,7 +98,7 @@ const Step3 = async ({ currentStep, validatedUsername }: Props) => {
             }}
           >
             <strong>Overall Rank:</strong>{" "}
-            {Math.abs(codewarsUser.ranks.overall.rank).toString()}
+            {Math.abs(codewars.ranks.overall.rank).toString()}
           </Typography>
           <Typography
             variant="body1"
@@ -99,7 +107,7 @@ const Step3 = async ({ currentStep, validatedUsername }: Props) => {
               // mb: 1,
             }}
           >
-            <strong>Name:</strong> {codewarsUser.name ?? "N/A"}
+            <strong>Name:</strong> {codewars.name ?? "N/A"}
           </Typography>
           <Typography
             variant="body1"
@@ -108,7 +116,7 @@ const Step3 = async ({ currentStep, validatedUsername }: Props) => {
             }}
           >
             <strong>Leaderboard Position:</strong>{" "}
-            {codewarsUser.leaderboardPosition ?? "N/A"}
+            {codewars.leaderboardPosition ?? "N/A"}
           </Typography>
           <Typography
             variant="body1"
@@ -117,13 +125,16 @@ const Step3 = async ({ currentStep, validatedUsername }: Props) => {
               // mb: 1,
             }}
           >
-            <strong>Clan:</strong> {codewarsUser.clan ?? "N/A"}
+            <strong>Clan:</strong> {codewars.clan ?? "N/A"}
           </Typography>
         </Paper>
       </Box>
 
       <Box sx={{ display: "flex", width: "100%", flexDirection: "row", pt: 2 }}>
-        <Buttons codewars={codewarsUser} currentStep={Number(currentStep)} />
+        <Buttons
+          codewars={codewarsDatabase}
+          currentStep={Number(currentStep)}
+        />
       </Box>
     </>
   );

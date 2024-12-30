@@ -28,6 +28,11 @@ export type CodewarsUser = {
   };
 };
 
+export interface CodewarsDatabase {
+  codewars: CodewarsUser;
+  email?: string
+}
+
 export type CodewarsUserResponse =
   | { success: false; reason: "not found" }
   | CodewarsUser;
@@ -45,3 +50,4 @@ export interface ApiResponse {
   totalItems: number; // Total number of items across all pages
   data: CompletedChallenge[]; // Array of completed challenges
 }
+

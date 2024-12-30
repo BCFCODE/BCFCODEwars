@@ -1,20 +1,17 @@
 "use client";
 
-import { CodewarsUser } from "@/types/codewars";
+import { CodewarsDatabase, CodewarsUser } from "@/types/codewars";
 import { Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
+import handleAddUserToDB from "./AddUser";
 
 interface Props {
   currentStep: number;
-  codewars: CodewarsUser;
+  codewars: CodewarsDatabase;
 }
 
 const Buttons = ({ codewars, currentStep = 0 }: Props) => {
   const router = useRouter();
-
-  const handleAddCodewarsUsernameToMongoDB = () => {
-    console.log('handleAddCodewarsUsernameToMongoDB',codewars);
-  };
 
   return (
     <>
@@ -27,9 +24,7 @@ const Buttons = ({ codewars, currentStep = 0 }: Props) => {
         No
       </Button>
       <Box sx={{ flex: "1 1 auto" }} />
-      <Button onClick={handleAddCodewarsUsernameToMongoDB}>
-        Yes, it is me
-      </Button>
+      <Button onClick={() => handleAddUserToDB(codewars)}>Yes, it is me</Button>
     </>
   );
 };

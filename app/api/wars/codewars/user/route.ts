@@ -1,5 +1,8 @@
-import { CodewarsUserResponse } from "@/types/codewars";
-import { NextResponse } from "next/server";
+// app/api/wars/codewars/user/route.ts
+
+import clientPromise from "@/lib/MongoDB/database";
+import { CodewarsDatabase, CodewarsUserResponse } from "@/types/codewars";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -40,6 +43,49 @@ export async function GET(request: Request) {
 
     return NextResponse.json(
       { error: "Something went wrong while fetching user data" },
+      { status: 500 }
+    );
+  }
+}
+
+// Handle PATCH requests to update a user's data
+export async function PATCH(request: NextRequest) {
+  try {
+    // Parse the request body (assuming you're sending JSON data)
+    const { email, codewars }: CodewarsDatabase = await request.json();
+
+    console.log(
+      email,
+      codewars,
+      "from PATCH app/api/wars/codewars/user/route.ts"
+    );
+    if (!codewars || !email) {
+      return NextResponse.json({
+        error: "codewars object, and email is required",
+      });
+    }
+
+    // Connect to MongoDB
+    const client = await clientPromise;
+    const db = client.db(process.env.MONGODB_DB);
+
+    // Update the codewars property in the 'users' collection based on the codewars object
+    const codewarsUser = await db.collection("users").findOneAndUpdate(
+      { email }, // Find user by their email
+      { $set: { codewars } }, // Update the codewars object
+      { returnDocument: "after" } // Return the updated document
+    );
+
+    if (!codewarsUser?.username) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    // Return the updated codewarsUser
+    return NextResponse.json({ codewarsUser });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Failed to update codewarsUser object" },
       { status: 500 }
     );
   }

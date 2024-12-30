@@ -1,7 +1,7 @@
 // app/api/wars/users/route.ts
 
-import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/MongoDB/database"; // Adjust the path according to your file structure
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   // const { searchParams } = new URL(request.url);
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     const db = client.db(process.env.MONGODB_DB); // Your MongoDB database
 
     // Fetch the users from the 'users' collection
-    const users = await db.collection("users").find({}).toArray();
+    const users = db.collection("users").find({}).toArray();
 
     // Return the users as JSON
     return NextResponse.json({ users });
@@ -26,9 +26,4 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// Handle PATCH requests to update a user's data
-export async function PATCH(request: NextRequest) {
-  try {
-    // Parse the request body (assuming you're sending JSON data)
-  } catch (error) {}
-}
+
