@@ -1,6 +1,5 @@
-
-import CodewarsValidationStepper from "../stepper";
-import StepperChildren from "../StepperChildren";
+import CodewarsValidationStepper from "../topStepper";
+import Steps from "../stepSwitch";
 
 interface Props {
   params: Promise<{ stepNumber: number }>;
@@ -17,10 +16,7 @@ const StepNumberPage = async ({
     <>
       <CodewarsValidationStepper activeStep={Number(stepNumber)} />
 
-      <StepperChildren
-        validatedUsername={username}
-        stepNumber={Number(stepNumber)}
-      />
+      <Steps validatedUsername={username} currentStep={Number(stepNumber)} />
     </>
   );
 };

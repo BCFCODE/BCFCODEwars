@@ -99,18 +99,18 @@ export async function PATCH(request: NextRequest) {
 
     // Return the updated user
     return NextResponse.json({
-      message: "User successfully updated.",
-      user: userInDB,
+      message: "codewars object successfully updated.",
+      codewars: userInDB,
     });
   } catch (error) {
     // Log the error for debugging
-    console.error("Error in PATCH handler:", error);
+    // console.error("Error in PATCH handler:", error);
 
     // Return a generic error message to the client
     return NextResponse.json(
       {
         error:
-          "An unexpected error occurred while updating the user. Please try again later.",
+          "An unexpected error occurred while updating the codewars object. Please try again later.",
       },
       { status: 500 }
     );

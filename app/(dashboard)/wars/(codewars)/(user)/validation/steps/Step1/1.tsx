@@ -2,14 +2,9 @@ import { auth } from "@/auth";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import UserAvatar from "../UserAvatar";
 import Buttons from "./Buttons";
+import { StepProps } from "../stepSwitch";
 
-interface Props {
-  currentStep: number;
-}
-
-const Step1 = async ({ currentStep }: Props) => {
-  const session = await auth();
-
+const Step1 = async ({ session, currentStep }: StepProps) => {
   let firstName;
   session && (firstName = session.user.name.split(" ")[0]);
 

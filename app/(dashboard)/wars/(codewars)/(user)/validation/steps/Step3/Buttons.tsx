@@ -1,16 +1,13 @@
 "use client";
 
-import { CodewarsDatabase } from "@/types/codewars";
 import { Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
-import handleAddUserToDB from "./AddUser";
-
 interface Props {
   currentStep: number;
-  codewars: CodewarsDatabase;
+  onYes: () => void;
 }
 
-const Buttons = ({ codewars, currentStep = 0 }: Props) => {
+const Buttons = ({ onYes, currentStep = 0 }: Props) => {
   const router = useRouter();
 
   return (
@@ -24,7 +21,7 @@ const Buttons = ({ codewars, currentStep = 0 }: Props) => {
         No
       </Button>
       <Box sx={{ flex: "1 1 auto" }} />
-      <Button onClick={() => handleAddUserToDB(codewars)}>Yes, it is me</Button>
+      <Button onClick={onYes}>Yes, it is me</Button>
     </>
   );
 };

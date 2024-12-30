@@ -1,3 +1,19 @@
+interface OverallRanks {
+  rank: number;
+  name: string;
+  color: string;
+  score: number;
+}
+
+interface languagesRanks {
+  [language: string]: {
+    rank: number;
+    name: string;
+    color: string;
+    score: number;
+  };
+}
+
 export type CodewarsUser = {
   id: string;
   username: string;
@@ -7,20 +23,8 @@ export type CodewarsUser = {
   leaderboardPosition: number | null;
   skills: string[] | null;
   ranks: {
-    overall: {
-      rank: number;
-      name: string;
-      color: string;
-      score: number;
-    };
-    languages: {
-      [language: string]: {
-        rank: number;
-        name: string;
-        color: string;
-        score: number;
-      };
-    };
+    overall: OverallRanks;
+    languages: languagesRanks;
   };
   codeChallenges: {
     totalAuthored: number;
@@ -29,8 +33,9 @@ export type CodewarsUser = {
 };
 
 export interface CodewarsDatabase {
+  validatedUsername: string;
+  email?: string;
   codewars: CodewarsUser;
-  email?: string
 }
 
 export type CodewarsUserResponse =
@@ -50,4 +55,3 @@ export interface ApiResponse {
   totalItems: number; // Total number of items across all pages
   data: CompletedChallenge[]; // Array of completed challenges
 }
-
