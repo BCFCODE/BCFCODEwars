@@ -1,6 +1,6 @@
 "use client";
 
-import { CodewarsDatabase, CodewarsUser } from "@/types/codewars";
+import { CodewarsDatabase } from "@/types/codewars";
 import { Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import handleAddUserToDB from "./AddUser";
