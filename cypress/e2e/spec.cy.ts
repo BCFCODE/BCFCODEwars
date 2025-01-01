@@ -14,7 +14,7 @@ describe("Page tests", () => {
   Domains.forEach((Domain) => {
     Paths.forEach((Path) => {
       const URL = `${getDomain(Domain)}/${Path}`;
-      it(`Visit ${URL}`, () => {
+      it(`Visit: ${URL}`, () => {
         cy.visit(URL);
       });
     });
