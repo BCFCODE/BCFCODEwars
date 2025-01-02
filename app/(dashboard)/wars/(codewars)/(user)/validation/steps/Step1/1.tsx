@@ -1,8 +1,9 @@
-import { auth } from "@/auth";
+// app/(dashboard)/wars/(codewars)/(user)/validation/steps/Step1
+
 import { Box, CircularProgress, Typography } from "@mui/material";
+import { StepProps } from "../stepSwitch";
 import UserAvatar from "../UserAvatar";
 import Buttons from "./Buttons";
-import { StepProps } from "../stepSwitch";
 
 const Step1 = async ({ session, currentStep }: StepProps) => {
   let firstName;

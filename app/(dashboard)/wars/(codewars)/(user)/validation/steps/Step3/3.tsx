@@ -4,6 +4,7 @@ import { Box, Paper, Typography } from "@mui/material";
 import { StepProps } from "../stepSwitch";
 import handleAddUserToDB from "./AddUser";
 import Buttons from "./Buttons";
+import { useRouter } from "next/navigation";
 
 const Step3 = ({
   currentStep,
@@ -11,8 +12,10 @@ const Step3 = ({
   session,
   codewars,
 }: StepProps) => {
+  const router = useRouter();
   const handleOnYes = () => {
     handleAddUserToDB({ currentStep, validatedUsername, session, codewars });
+    router.replace(`${currentStep + 1}`);
   };
 
   const overallRank = Math.abs(Number(codewars?.ranks.overall.rank)).toString();

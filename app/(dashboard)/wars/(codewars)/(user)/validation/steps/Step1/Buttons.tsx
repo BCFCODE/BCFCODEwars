@@ -1,3 +1,5 @@
+// app/(dashboard)/wars/(codewars)/(user)/validation/steps/Step1/Buttons.tsx
+
 "use client";
 
 import { Box, Button } from "@mui/material";
