@@ -2,7 +2,7 @@
 
 import { Box, Paper, Typography } from "@mui/material";
 import { StepProps } from "../stepSwitch";
-import handleAddUserToDB from "./AddUser";
+import handleAddUserToDB from "./connectUser";
 import Buttons from "./Buttons";
 import { useRouter } from "next/navigation";
 

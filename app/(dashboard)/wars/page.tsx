@@ -3,25 +3,26 @@ import clientPromise from "@/lib/MongoDB/database";
 import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
+import { DatabaseUser } from "@/types/database";
 
 const WarsPage = async () => {
   const session = await auth();
   const email = session?.user?.email;
 
-  let isConnectedToCodewarsBefore = true;
+  let isConnected = false;
 
   if (email) {
     try {
       const client = await clientPromise;
       const db = client.db(process.env.MONGODB_DB);
       const user = await db.collection("users").findOne({ email });
-      isConnectedToCodewarsBefore = Boolean(user?.codewars);
+      isConnected = user?.codewars.isConnected;
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
   }
 
-  if (!isConnectedToCodewarsBefore)
+  if (!isConnected)
     return (
       <Box
         sx={{
@@ -47,7 +48,7 @@ const WarsPage = async () => {
             color: "text.primary",
           }}
         >
-          Welcome to BCFCODE Wars 
+          Welcome to BCFCODE Wars
         </Typography>
         <Typography
           variant="h5"
@@ -124,24 +125,23 @@ const WarsPage = async () => {
           >
             Connect My Codewars Account
           </Button>
-             {/* Inspirational Text */}
-        <Fade in timeout={1000}>
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "center",
-              color: "text.secondary",
-              fontStyle: "italic",
-              fontWeight: 500,
-              opacity: 0.8,
-            }}
-          >
-            Unlock personalized insights, stats, and milestones to inspire your
-            coding journey!
-          </Typography>
-        </Fade>
+          {/* Inspirational Text */}
+          <Fade in timeout={1000}>
+            <Typography
+              variant="body2"
+              sx={{
+                textAlign: "center",
+                color: "text.secondary",
+                fontStyle: "italic",
+                fontWeight: 500,
+                opacity: 0.8,
+              }}
+            >
+              Unlock personalized insights, stats, and milestones to inspire
+              your coding journey!
+            </Typography>
+          </Fade>
         </Box>
-     
       </Box>
     );
 

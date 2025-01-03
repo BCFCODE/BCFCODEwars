@@ -32,10 +32,8 @@ export type CodewarsUser = {
   };
 };
 
-export interface CodewarsDatabase {
-  validatedUsername: string;
-  email?: string;
-  codewars: CodewarsUser;
+export interface CodewarsDatabase extends CodewarsUser {
+  isConnected: boolean;
 }
 
 export type CodewarsUserResponse =

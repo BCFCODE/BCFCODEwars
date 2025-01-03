@@ -5,6 +5,7 @@ import Step1 from "./Step1/1";
 import Step2 from "./Step2/2";
 import Step3 from "./Step3/3";
 import { Session } from "next-auth";
+import Step4 from "./Step4 (success)/4";
 
 interface Props {
   currentStep: number;
@@ -18,7 +19,7 @@ export interface StepProps extends Props {
 
 const Steps = async ({ currentStep, validatedUsername }: Props) => {
   const session = await auth();
-  
+
   const response = await fetch(
     `https://www.codewars.com/api/v1/users/${validatedUsername}`,
     { cache: "no-store" }
@@ -40,7 +41,7 @@ const Steps = async ({ currentStep, validatedUsername }: Props) => {
     case 2:
       return <Step3 {...stepProps} />;
     default:
-      return <Typography>Invalid step number (Stepper Content)</Typography>;
+      return <Step4 {...stepProps} />;
   }
 };
 

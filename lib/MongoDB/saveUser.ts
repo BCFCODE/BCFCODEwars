@@ -1,6 +1,7 @@
 // lib/MongoDB/saveUser.ts
+import { NewDatabaseUser } from "@/types/user";
+import { GoogleUser } from "@/types/google";
 import { MongoClient } from "mongodb";
-import { GoogleUser, NewUser } from "@/types/user";
 import { getDatabase } from "./database";
 
 // MongoDB connection setup
@@ -23,15 +24,16 @@ export async function saveUserDataToDatabase(user: GoogleUser) {
       );
     } else {
       // Create the new user object, replacing `id` with `googleId`
-      const newUser: NewUser = {
+      const newUser: NewDatabaseUser = {
         email,
         name,
         image,
         createdAt: new Date().toISOString(),
         lastLogin: new Date().toISOString(),
+        codewars: { isConnected: false },
       };
 
-      // Cast the NewUser to a GoogleUser type for MongoDB insertion
+      // Cast the NewDatabaseUser to a GoogleUser type for MongoDB insertion
       await usersCollection.insertOne(newUser); // Type cast to GoogleUser
       return newUser;
     }

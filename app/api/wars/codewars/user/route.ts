@@ -1,7 +1,7 @@
 // app/api/wars/codewars/user/route.ts
 
 import clientPromise from "@/lib/MongoDB/database";
-import { CodewarsDatabase, CodewarsUserResponse } from "@/types/codewars";
+import { CodewarsUser, CodewarsUserResponse } from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -48,10 +48,15 @@ export async function GET(request: Request) {
   }
 }
 
+export interface AddCodewarsUserToDB {
+  codewars: CodewarsUser;
+  email: string;
+}
+
 export async function PATCH(request: NextRequest) {
   try {
     // Parse the request body (assuming you're sending JSON data)
-    const { email, codewars }: CodewarsDatabase = await request.json();
+    const { email, codewars }: AddCodewarsUserToDB = await request.json();
 
     // Log the incoming payload
     // console.log("Received PATCH request with payload:", { email, codewars });

@@ -9,7 +9,7 @@ const handleAddUserToDB = async ({ session, codewars }: StepProps) => {
       },
       body: JSON.stringify({
         email: session?.user.email,
-        codewars,
+        codewars: { ...codewars, isConnected: true },
       }),
     });
 
