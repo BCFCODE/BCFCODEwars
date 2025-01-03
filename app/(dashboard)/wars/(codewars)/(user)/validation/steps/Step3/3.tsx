@@ -5,6 +5,7 @@ import { StepProps } from "../stepSwitch";
 import handleAddUserToDB from "./connectUser";
 import Buttons from "./Buttons";
 import { useRouter } from "next/navigation";
+import UserInfoCard from "../UserInfoCard/UserInfoCard";
 
 const Step3 = ({
   currentStep,
@@ -19,6 +20,8 @@ const Step3 = ({
   };
 
   const overallRank = Math.abs(Number(codewars?.ranks.overall.rank)).toString();
+
+  const userInfoCardProps = { codewars, validatedUsername };
 
   return (
     <>
@@ -60,70 +63,7 @@ const Step3 = ({
         </Typography>
 
         {/* User Info */}
-        <Paper
-          elevation={3}
-          sx={{
-            p: 3,
-            mt: 2,
-            maxWidth: "400px",
-            borderRadius: 2,
-            backgroundColor: "background.paper",
-            textAlign: "left",
-          }}
-        >
-          <Typography
-            variant="body1"
-            sx={{
-              fontWeight: 500,
-              // mb: 1,
-            }}
-          >
-            <strong>User Name:</strong> {validatedUsername}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontWeight: 500,
-            }}
-          >
-            <strong>Honor:</strong> {codewars?.honor}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontWeight: 500,
-            }}
-          >
-            <strong>Overall Rank:</strong> {overallRank}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontWeight: 500,
-              // mb: 1,
-            }}
-          >
-            <strong>Name:</strong> {codewars?.name ?? "N/A"}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontWeight: 500,
-            }}
-          >
-            <strong>Leaderboard Position:</strong>{" "}
-            {codewars?.leaderboardPosition ?? "N/A"}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontWeight: 500,
-              // mb: 1,
-            }}
-          >
-            <strong>Clan:</strong> {codewars?.clan ?? "N/A"}
-          </Typography>
-        </Paper>
+        <UserInfoCard {...userInfoCardProps} />
       </Box>
 
       <Box sx={{ display: "flex", width: "100%", flexDirection: "row", pt: 2 }}>

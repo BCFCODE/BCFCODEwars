@@ -3,7 +3,9 @@ import clientPromise from "@/lib/MongoDB/database";
 import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
-import { DatabaseUser } from "@/types/database";
+import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect/Reconnect";
+import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
+import { CodewarsDatabase, CodewarsUser } from "@/types/codewars";
 
 const WarsPage = async () => {
   const session = await auth();
@@ -11,12 +13,24 @@ const WarsPage = async () => {
 
   let isConnected = false;
 
+  let reconnectProps: Omit<StepProps, "currentStep"> = {
+    codewars: {} as CodewarsDatabase,
+    validatedUsername: "",
+    session: session || null,
+  };
+
   if (email) {
     try {
       const client = await clientPromise;
       const db = client.db(process.env.MONGODB_DB);
       const user = await db.collection("users").findOne({ email });
       isConnected = user?.codewars.isConnected;
+
+      reconnectProps = {
+        codewars: user?.codewars,
+        validatedUsername: user?.codewars.username,
+        session,
+      };
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -146,7 +160,7 @@ const WarsPage = async () => {
     );
 
   // Render other content if the user is already connected
-  return <div>Other content for connected users...</div>;
+  return <Reconnect {...reconnectProps} />;
 };
 
 export default WarsPage;
