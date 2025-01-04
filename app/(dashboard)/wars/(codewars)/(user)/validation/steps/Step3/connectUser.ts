@@ -2,6 +2,7 @@ import { baseURL } from "@/utils/constants";
 import { StepProps } from "../stepSwitch";
 
 const handleAddUserToDB = async ({ session, codewars }: StepProps) => {
+  
   try {
     const response = await fetch(`${baseURL}/api/wars/codewars/user`, {
       method: "PATCH",

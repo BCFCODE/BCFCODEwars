@@ -15,6 +15,7 @@ interface languagesRanks {
 }
 
 export type CodewarsUser = {
+  success?: boolean;
   id: string;
   username: string;
   name: string | null;

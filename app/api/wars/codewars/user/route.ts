@@ -1,11 +1,7 @@
 // app/api/wars/codewars/user/route.ts
 
 import clientPromise from "@/lib/db/database";
-import {
-  AddCodewarsUserToDB,
-  CodewarsUser,
-  CodewarsUserResponse,
-} from "@/types/codewars";
+import { AddCodewarsUserToDB, CodewarsUserResponse } from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -28,7 +24,10 @@ export async function GET(request: Request) {
     if (!response.ok) {
       // Handle non-200 responses
       return NextResponse.json(
-        { error: "You don't have this username on codewars.com" },
+        {
+          success: false,
+          error: "You don't have this username on codewars.com",
+        },
         { status: response.status }
       );
     }
@@ -37,7 +36,10 @@ export async function GET(request: Request) {
 
     if ("success" in user && user.success === false) {
       // Handle the "not found" response explicitly
-      return NextResponse.json({ error: user.reason }, { status: 404 });
+      return NextResponse.json(
+        { success: user.success, error: "User not found" },
+        { status: 404 }
+      );
     }
 
     // If the response contains valid user, return it

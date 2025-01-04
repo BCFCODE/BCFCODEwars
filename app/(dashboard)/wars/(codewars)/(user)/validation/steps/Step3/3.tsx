@@ -14,12 +14,23 @@ const Step3 = ({
   codewars,
 }: StepProps) => {
   const router = useRouter();
+
   const handleOnYes = () => {
     handleAddUserToDB({ currentStep, validatedUsername, session, codewars });
     router.replace(`${currentStep + 1}`);
   };
 
-  const userInfoCardProps = { codewars, validatedUsername };
+  const userInfoCardProps = {
+    /*  
+      This flag is temporarily set to 'true' to ensure that the user info card is displayed for validation purposes. 
+      It allows us to show the user’s Codewars information while confirming if the username is accurate. 
+      Once the validation process is complete, this can be updated or removed based on the application's flow. 
+    */
+    isDbUsernameSyncedWithCodewars: true,
+    session,
+    codewars,
+    validatedUsername,
+  };
 
   return (
     <>
@@ -48,7 +59,7 @@ const Step3 = ({
 
         {/* User Info */}
         <UserInfoCard {...userInfoCardProps} />
-       
+
         {/* Description */}
         <Typography
           variant="body1"

@@ -9,6 +9,7 @@ const Reconnect = ({
   session,
   codewars,
   validatedUsername,
+  isDbUsernameSyncedWithCodewars,
 }: Omit<StepProps, "currentStep">) => {
   const router = useRouter();
   const userName = session?.user?.name.split(" ")[0] || "User";
@@ -17,7 +18,12 @@ const Reconnect = ({
     router.replace("/wars/validation/steps/1"); // Navigate to the first step to reconnect
   };
 
-  const userInfoCardProps = { codewars, validatedUsername };
+  const userInfoCardProps = {
+    session,
+    codewars,
+    validatedUsername,
+    isDbUsernameSyncedWithCodewars,
+  };
 
   return (
     <Box>
@@ -44,42 +50,13 @@ const Reconnect = ({
             boxShadow: 5,
           }}
         >
-          {/* <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 600,
-              mb: 2,
-              color: "text.primary",
-            }}
-          >
-            Welcome Back, {userName}!
-          </Typography> */}
-
-          <Typography
-            variant="body1"
-            sx={{
-              mb: 2,
-              lineHeight: 1.8,
-              color: "text.secondary",
-              textAlign: "left",
-            }}
-          >
-            It seems you were previously connected as this user. If this isn’t
-            you, don’t worry—you can reconnect and validate your username
-            correctly. Please ensure your information is accurate to help us
-            maintain a reliable database.
-          </Typography>
-
-          {/* User Info */}
-          <UserInfoCard {...userInfoCardProps} />
-
           {/* Tip Section */}
           <Typography
             variant="body2"
             color="text.secondary"
             sx={{ mt: 2, textAlign: "center" }}
           >
-            Tip: Want to update your username? Simply click{" "}
+            Tip: Want to update your clan, name, or username? Simply click{" "}
             <Link
               href="https://www.codewars.com/users/edit"
               target="_blank"
@@ -88,8 +65,41 @@ const Reconnect = ({
             >
               here
             </Link>{" "}
-            to make the change. After updating, return here to reconnect.
+            to make the change. After updating, come back here to reconnect your
+            account and stay in sync.
           </Typography>
+
+          {/* User Info */}
+          <UserInfoCard {...userInfoCardProps} />
+
+          {!isDbUsernameSyncedWithCodewars ? (
+            <Typography
+              variant="body1"
+              sx={{
+                color: "text.secondary",
+                textAlign: "left",
+                lineHeight: 1.6,
+                mt: 2,
+              }}
+            >
+              No worries—you can easily reconnect and revalidate your new
+              username. This helps us keep your data accurate and up to date.
+            </Typography>
+          ) : (
+            <Typography
+              variant="body1"
+              sx={{
+                lineHeight: 1.8,
+                color: "text.secondary",
+                textAlign: "left",
+              }}
+            >
+              It seems you’re already connected as this user {userName}. If this
+              isn’t correct, you can always reconnect and validate your username
+              to make sure everything is accurate. Keeping your details
+              up-to-date ensures a seamless experience!
+            </Typography>
+          )}
 
           {/* Reconnect Button */}
           <Button
@@ -104,11 +114,10 @@ const Reconnect = ({
               fontWeight: 600,
               fontSize: "1rem",
               boxShadow: 3,
-              // borderRadius: 2,
             }}
             onClick={handleReconnect}
           >
-            Reconnect
+            Reconnect Now
           </Button>
         </Paper>
       </Box>

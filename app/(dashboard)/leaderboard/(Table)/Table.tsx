@@ -30,6 +30,10 @@ const textStyles: SxProps = {
 export function Row({ user }: Props) {
   const [open, setOpen] = React.useState(false);
 
+  const handleOpenTable = () => {
+    console.log('Table opened!')
+  };
+
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -37,7 +41,10 @@ export function Row({ user }: Props) {
           <IconButton
             aria-label="expand row"
             size="small"
-            onClick={() => setOpen(!open)}
+            onClick={() => {
+              setOpen(!open);
+              !open && handleOpenTable();
+            }}
           >
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
@@ -122,7 +129,7 @@ export function Row({ user }: Props) {
 export default function CollapsibleTable() {
   const [rows, setRows] = React.useState<LeaderboardRow[]>([]);
   const [isLoading, setLoading] = React.useState<boolean>(true);
-  const columns = 6;
+  const columns = 7;
 
   React.useEffect(() => {
     async function loadData() {

@@ -1,11 +1,13 @@
 import { auth } from "@/auth";
-import clientPromise from "@/lib/db/database";
-import { CodewarsDatabase } from "@/types/codewars";
+import clientPromise, { getDatabase } from "@/lib/db/database";
+import { CodewarsDatabase, CodewarsUser } from "@/types/codewars";
 import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
 import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect/Reconnect";
 import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
+import { baseURL } from "@/utils/constants";
+import { boolean } from "zod";
 
 const WarsPage = async () => {
   const session = await auth();
@@ -17,20 +19,57 @@ const WarsPage = async () => {
     codewars: {} as CodewarsDatabase,
     validatedUsername: "",
     session: session || null,
+    isDbUsernameSyncedWithCodewars: true,
   };
 
   if (email) {
     try {
-      const client = await clientPromise;
-      const db = client.db(process.env.MONGODB_DB);
+      const db = await getDatabase();
       const user = await db.collection("users").findOne({ email });
-      isConnected = user?.codewars.isConnected;
+      /* 
+        Purpose: 
+          This block of code checks if the Codewars account associated with the user 
+          (stored in our database) is in sync with the current state on Codewars.com. 
+          Specifically, it validates whether the username on Codewars.com matches 
+          the username stored in our database. If a mismatch is detected, the user 
+          will be guided to reconnect and revalidate their updated username.
+
+        Step-by-step:
+          1. Retrieve the user's record from the database using their email address.
+          2. Fetch the latest Codewars user data from our API, which queries Codewars.com,
+            using the stored Codewars username.
+          3. Determine synchronization status (`isSyncWithDb`) based on the success 
+            property returned by the Codewars API response.
+          4. Update the `isConnected` status by checking if the user is already marked 
+            as connected in the database OR if the Codewars data is successfully synced.
+          5. Prepare `reconnectProps` to guide the user through the reconnection process 
+            if their username is found to have changed, including:
+            - Current Codewars data from the database
+            - The last validated username
+            - The current session object for context.
+
+        Why it matters: 
+          Ensuring the Codewars username in our database is up-to-date prevents inconsistencies 
+          in leaderboard functionality, user progress tracking, or other dependent features. 
+          This mechanism ensures a seamless experience while providing a clear path to resolve any discrepancies. 
+      */
+      const res = await fetch(
+        `${baseURL}/api/wars/codewars/user?username=${user?.codewars.username}`
+      );
+      const codewarsUser: CodewarsUser = await res.json();
+
+      const isDbUsernameSyncedWithCodewars = codewarsUser.success;
+
+      isConnected =
+        user?.codewars.isConnected || isDbUsernameSyncedWithCodewars;
 
       reconnectProps = {
         codewars: user?.codewars,
         validatedUsername: user?.codewars.username,
         session,
+        isDbUsernameSyncedWithCodewars,
       };
+
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -159,6 +198,7 @@ const WarsPage = async () => {
       </Box>
     );
 
+    
   // Render other content if the user is already connected
   return <Reconnect {...reconnectProps} />;
 };

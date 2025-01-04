@@ -10,6 +10,7 @@ import Step4 from "./Step4 (success)/4";
 interface Props {
   currentStep: number;
   validatedUsername: string;
+  isDbUsernameSyncedWithCodewars?: boolean
 }
 
 export interface StepProps extends Props {
@@ -24,6 +25,7 @@ const Steps = async ({ currentStep, validatedUsername }: Props) => {
     `https://www.codewars.com/api/v1/users/${validatedUsername}`,
     { cache: "no-store" }
   );
+
   const codewars = await response.json();
 
   const stepProps: StepProps = {
