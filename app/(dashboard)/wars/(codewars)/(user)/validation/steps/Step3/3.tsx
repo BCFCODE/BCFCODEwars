@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Link, Paper, Typography } from "@mui/material";
 import { StepProps } from "../stepSwitch";
 import handleAddUserToDB from "./connectUser";
 import Buttons from "./Buttons";
@@ -48,7 +48,7 @@ const Step3 = ({
 
         {/* User Info */}
         <UserInfoCard {...userInfoCardProps} />
-
+       
         {/* Description */}
         <Typography
           variant="body1"
@@ -57,7 +57,6 @@ const Step3 = ({
             lineHeight: 1.6,
             maxWidth: "600px",
             textAlign: "revert-layer",
-            
           }}
         >
           Confirm to update your username on the leaderboard based on this

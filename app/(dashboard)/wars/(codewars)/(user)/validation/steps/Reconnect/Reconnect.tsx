@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Button, Link, Paper, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
@@ -44,9 +44,6 @@ const Reconnect = ({
             boxShadow: 5,
           }}
         >
-           {/* User Info */}
-           <UserInfoCard {...userInfoCardProps} />
-
           {/* <Typography
             variant="h5"
             sx={{
@@ -58,11 +55,10 @@ const Reconnect = ({
             Welcome Back, {userName}!
           </Typography> */}
 
-         
           <Typography
             variant="body1"
             sx={{
-              mt: 2,
+              mb: 2,
               lineHeight: 1.8,
               color: "text.secondary",
               textAlign: "left",
@@ -74,14 +70,25 @@ const Reconnect = ({
             maintain a reliable database.
           </Typography>
 
+          {/* User Info */}
+          <UserInfoCard {...userInfoCardProps} />
+
+          {/* Tip Section */}
           <Typography
-            variant="body1"
-            sx={{
-              mt: 2,
-              color: "text.secondary",
-            }}
+            variant="body2"
+            color="text.secondary"
+            sx={{ mt: 2, textAlign: "center" }}
           >
-            Ready to confirm your details or reconnect?
+            Tip: Want to update your username? Simply click{" "}
+            <Link
+              href="https://www.codewars.com/users/edit"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ fontWeight: 500 }}
+            >
+              here
+            </Link>{" "}
+            to make the change. After updating, return here to reconnect.
           </Typography>
 
           {/* Reconnect Button */}

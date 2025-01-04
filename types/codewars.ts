@@ -36,6 +36,11 @@ export interface CodewarsDatabase extends CodewarsUser {
   isConnected: boolean;
 }
 
+export interface AddCodewarsUserToDB {
+  codewars: CodewarsUser;
+  email: string;
+}
+
 export type CodewarsUserResponse =
   | { success: false; reason: "not found" }
   | CodewarsUser;

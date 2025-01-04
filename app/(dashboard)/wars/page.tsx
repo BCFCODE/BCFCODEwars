@@ -1,11 +1,11 @@
 import { auth } from "@/auth";
-import clientPromise from "@/lib/MongoDB/database";
+import clientPromise from "@/lib/db/database";
+import { CodewarsDatabase } from "@/types/codewars";
 import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
-import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
 import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect/Reconnect";
 import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
-import { CodewarsDatabase, CodewarsUser } from "@/types/codewars";
+import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
 
 const WarsPage = async () => {
   const session = await auth();

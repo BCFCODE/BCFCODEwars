@@ -20,10 +20,10 @@ const UserInfoCard = ({
         backgroundColor: "background.paper",
         boxShadow: 5,
         textAlign: "left",
-        margin: 'auto'
+        margin: "auto",
       }}
     >
-      <Box sx={{ display: "flex", flexDirection: "column"}}>
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Typography
           variant="body1"
           sx={{ fontWeight: 600, color: "text.primary" }}

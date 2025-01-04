@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, Link, Paper, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 // import UserAvatar from "../(content)/UserAvatar";
 import { useRouter } from "next/navigation";
@@ -52,36 +52,74 @@ export default function Step2({ currentStep }: Props) {
       {/* <UserAvatar session={undefined}/> */}
       <Box
         sx={{
-          maxWidth: 400,
+          width: 400,
           margin: "0 auto",
           textAlign: "center",
           mt: 4,
         }}
       >
-        <Typography variant="h5" gutterBottom>
-          Connect to Codewars
-        </Typography>
-        <TextField
-          label="Codewars Username"
-          variant="outlined"
-          fullWidth
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          error={!!error}
-          helperText={error || ""}
-          sx={{ mb: 2 }}
-        />
-        <ValidationButton {...buttonProps} />
-        {success && (
-          <Typography variant="body1" color="green" sx={{ mt: 2 }}>
-            {success}
+        <Paper
+          elevation={4}
+          sx={{
+            p: 4,
+            maxWidth: "600px",
+            textAlign: "center",
+            backgroundColor: "background.default",
+            borderRadius: 3,
+            boxShadow: 5,
+          }}
+        >
+          {" "}
+          <Typography variant="h5" gutterBottom>
+            Connect to Codewars
           </Typography>
-        )}
-        {error && (
-          <Typography variant="body1" color="red" sx={{ mt: 2 }}>
-            {error}
+          <TextField
+            label="Codewars Username"
+            variant="outlined"
+            fullWidth
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            error={!!error}
+            // helperText={error || ""}
+            sx={{ mb: 2 }}
+          />
+
+          {/* Validation Button */}
+          <ValidationButton {...buttonProps} />
+          {success && (
+            <Typography variant="body1" color="green" sx={{ mt: 2 }}>
+              {success}
+            </Typography>
+          )}
+          {error && (
+            <Typography variant="body1" color="red" sx={{ mt: 2 }}>
+              {error}
+            </Typography>
+          )}
+
+          {/* Tip Section */}
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ mt: 2, textAlign: "left" }}
+          >
+            Tip: If you already have an account, you can find your
+            Codewars username{" "}
+            <Link
+              href="https://www.codewars.com/users/edit"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{ fontWeight: 500 }}
+            >
+              here
+            </Link>
+            . If you don&apos;t have a Codewars account yet,{" "}
+            <Link href="https://www.codewars.com/users/sign_in" target="_blank">
+              sign up here
+            </Link>{" "}
+            to get started. 
           </Typography>
-        )}
+        </Paper>
       </Box>
 
       <Box sx={{ display: "flex", width: "100%", flexDirection: "row", pt: 2 }}>

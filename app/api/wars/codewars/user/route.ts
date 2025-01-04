@@ -1,7 +1,11 @@
 // app/api/wars/codewars/user/route.ts
 
-import clientPromise from "@/lib/MongoDB/database";
-import { CodewarsUser, CodewarsUserResponse } from "@/types/codewars";
+import clientPromise from "@/lib/db/database";
+import {
+  AddCodewarsUserToDB,
+  CodewarsUser,
+  CodewarsUserResponse,
+} from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -42,15 +46,13 @@ export async function GET(request: Request) {
     console.error("Error fetching Codewars user:", err);
 
     return NextResponse.json(
-      { error: "Something went wrong while fetching user data" },
+      {
+        error:
+          "We encountered an issue while connecting to the Codewars database and fetching user data. Please try again later. If the issue persists, contact support.",
+      },
       { status: 500 }
     );
   }
-}
-
-export interface AddCodewarsUserToDB {
-  codewars: CodewarsUser;
-  email: string;
 }
 
 export async function PATCH(request: NextRequest) {
@@ -76,7 +78,7 @@ export async function PATCH(request: NextRequest) {
     // Update the codewars property in the 'users' collection
     const userInDB = await db.collection("users").findOneAndUpdate(
       { email }, // Find user by email
-      { $set: { codewars } }, // Update the codewars object
+      { $set: { name: codewars.name, codewars } }, // Update the codewars object
       { returnDocument: "after" } // Return the updated document
     );
 

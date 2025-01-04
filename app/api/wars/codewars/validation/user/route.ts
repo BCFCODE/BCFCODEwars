@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import clientPromise from "@/lib/MongoDB/database";
+import clientPromise from "@/lib/db/database";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
