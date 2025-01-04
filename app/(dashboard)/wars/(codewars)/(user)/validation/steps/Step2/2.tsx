@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ValidationButton from "./ValidationButton";
 import Buttons from "./Buttons";
+import { baseURL } from "@/utils/constants";
 
 interface Props {
   currentStep: number;
@@ -25,7 +26,7 @@ export default function Step2({ currentStep }: Props) {
 
     try {
       const response = await fetch(
-        `/api/wars/codewars/user?username=${username}`,
+        `${baseURL}/api/wars/codewars/user?username=${username}`,
         { cache: "no-store" }
       );
       const data = await response.json();

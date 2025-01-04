@@ -1,8 +1,8 @@
 // app/api/auth/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { GoogleUser } from "@/types/user";
 import { handleGoogleSignIn } from "@/lib/MongoDB/saveUser";
 import { validateUserData } from "./schema";
+import { GoogleUser } from "@/types/google";
 
 export async function POST(req: NextRequest) {
   try {

@@ -1,6 +1,7 @@
 // app/Leaderboard/Data.ts
 
 import { LeaderboardRow } from "@/types/leaderboard";
+import { baseURL } from "@/utils/constants";
 
 export const completedChallenges = [
   {
@@ -18,7 +19,7 @@ export const completedChallenges = [
 export async function fetchAndCreateRows() {
   try {
     // Fetch the data from your API
-    const response = await fetch("/api/wars/users", { cache: "no-store" });
+    const response = await fetch(`${baseURL}/api/wars/users`, { cache: "no-store" });
     if (!response.ok) {
       throw new Error("Failed to fetch users");
     }
@@ -46,7 +47,7 @@ export async function fetchAndCreateRows() {
 export async function fetchCompletedChallenges() {
   try {
     // Fetch the data from your API
-    const response = await fetch("/api/wars/users");
+    const response = await fetch(`${baseURL}/api/wars/users`);
     if (!response.ok) {
       throw new Error("Failed to fetch users");
     }
