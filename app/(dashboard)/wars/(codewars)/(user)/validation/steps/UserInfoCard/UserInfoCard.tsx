@@ -14,7 +14,7 @@ const UserInfoCard = ({
       elevation={4}
       sx={{
         p: 2.5,
-        mt: 2,
+        // mt: 2,
         maxWidth: "400px",
         borderRadius: 3,
         backgroundColor: "background.paper",

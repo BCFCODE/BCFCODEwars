@@ -44,7 +44,10 @@ const Reconnect = ({
             boxShadow: 5,
           }}
         >
-          <Typography
+           {/* User Info */}
+           <UserInfoCard {...userInfoCardProps} />
+
+          {/* <Typography
             variant="h5"
             sx={{
               fontWeight: 600,
@@ -53,13 +56,16 @@ const Reconnect = ({
             }}
           >
             Welcome Back, {userName}!
-          </Typography>
+          </Typography> */}
 
+         
           <Typography
             variant="body1"
             sx={{
+              mt: 2,
               lineHeight: 1.8,
               color: "text.secondary",
+              textAlign: "left",
             }}
           >
             It seems you were previously connected as this user. If this isn’t
@@ -67,11 +73,6 @@ const Reconnect = ({
             correctly. Please ensure your information is accurate to help us
             maintain a reliable database.
           </Typography>
-
-        
-
-          {/* User Info */}
-          <UserInfoCard {...userInfoCardProps} />
 
           <Typography
             variant="body1"

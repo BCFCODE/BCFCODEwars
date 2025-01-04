@@ -19,8 +19,6 @@ const Step3 = ({
     router.replace(`${currentStep + 1}`);
   };
 
-  const overallRank = Math.abs(Number(codewars?.ranks.overall.rank)).toString();
-
   const userInfoCardProps = { codewars, validatedUsername };
 
   return (
@@ -48,6 +46,9 @@ const Step3 = ({
           Is this you?
         </Typography>
 
+        {/* User Info */}
+        <UserInfoCard {...userInfoCardProps} />
+
         {/* Description */}
         <Typography
           variant="body1"
@@ -55,15 +56,14 @@ const Step3 = ({
             color: "text.secondary",
             lineHeight: 1.6,
             maxWidth: "600px",
+            textAlign: "revert-layer",
+            
           }}
         >
           Confirm to update your username on the leaderboard based on this
           information. If it’s not correct, go back and double-check to ensure
           the username is accurate!
         </Typography>
-
-        {/* User Info */}
-        <UserInfoCard {...userInfoCardProps} />
       </Box>
 
       <Box sx={{ display: "flex", width: "100%", flexDirection: "row", pt: 2 }}>
