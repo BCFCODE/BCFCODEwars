@@ -3,7 +3,7 @@
 import { LeaderboardRow } from "@/types/leaderboard";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { Paper, SxProps, TableContainer } from "@mui/material";
+import { Paper, TableContainer } from "@mui/material";
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -14,30 +14,28 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { completedChallenges, fetchAndCreateRows } from "./Data";
-import SkeletonTableRow from "./Skeleton";
 import LeaderboardAvatar from "./Avatar";
+import Body from "./Body";
+import { fetchAndCreateRows } from "./Data";
+import SkeletonTableRow from "./Skeleton";
+import { textStyles } from "./styles";
 
 interface Props {
   user: LeaderboardRow;
 }
 
-const textStyles: SxProps = {
-  whiteSpace: "nowrap",
-  // fontSize: { xs: "0.75rem", sm: "1rem" },
-};
-
 export function Row({ user }: Props) {
   const [open, setOpen] = React.useState(false);
 
   const handleOpenTable = () => {
-    console.log('Table opened!')
+    console.log("Table opened!");
   };
 
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
+          {/* open/close button */}
           <IconButton
             aria-label="expand row"
             size="small"
@@ -99,24 +97,8 @@ export function Row({ user }: Props) {
                     </TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
-                  {completedChallenges.map((userHistory) => (
-                    <TableRow key={userHistory.date}>
-                      <TableCell sx={textStyles} component="th" scope="row">
-                        {userHistory.date}
-                      </TableCell>
-                      <TableCell sx={textStyles}>
-                        {userHistory.customerId}
-                      </TableCell>
-                      <TableCell sx={textStyles} align="right">
-                        {userHistory.amount}
-                      </TableCell>
-                      <TableCell sx={textStyles} align="right">
-                        {user.rank}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
+                {/* main body */}
+                <Body />
               </Table>
             </Box>
           </Collapse>
@@ -126,7 +108,7 @@ export function Row({ user }: Props) {
   );
 }
 
-export default function CollapsibleTable() {
+export default function MainLeaderboardTable() {
   const [rows, setRows] = React.useState<LeaderboardRow[]>([]);
   const [isLoading, setLoading] = React.useState<boolean>(true);
   const columns = 7;
