@@ -108,7 +108,7 @@ export function Row({ user }: Props) {
   );
 }
 
-export default function MainLeaderboardTable() {
+export default function Leaderboard() {
   const [rows, setRows] = React.useState<LeaderboardRow[]>([]);
   const [isLoading, setLoading] = React.useState<boolean>(true);
   const columns = 7;

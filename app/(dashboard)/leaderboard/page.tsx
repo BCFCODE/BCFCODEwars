@@ -1,7 +1,7 @@
 // app/(dashboard)/leaderboard/page.tsx
 
-import LeaderBoard from "@/app/(dashboard)/leaderboard/(Table)/Table";
+import MainLeaderboardTable from "./(Table)/Table";
 
 export default function LeaderBoardPage() {
-  return <LeaderBoard />;
+  return <MainLeaderboardTable />;
 }
