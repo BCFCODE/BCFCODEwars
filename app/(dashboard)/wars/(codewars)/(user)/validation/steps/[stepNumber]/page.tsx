@@ -3,14 +3,13 @@ import Steps from "../stepSwitch";
 
 interface Props {
   params: Promise<{ stepNumber: number }>;
-  searchParams: { username: string };
+  searchParams: Promise<{ username: string }>;
 }
 
-const StepNumberPage = async ({
-  params,
-  searchParams: { username },
-}: Props) => {
-  const stepNumber = (await params).stepNumber;
+const StepNumberPage = async ({ params, searchParams }: Props) => {
+  const { username } = await searchParams;
+
+  const { stepNumber } = await params;
 
   return (
     <>

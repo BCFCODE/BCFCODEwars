@@ -121,9 +121,11 @@ const AUTHENTICATION = {
 };
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
-  // Await the headers() function call to ensure you can use .get()
-  const headersList = await headers(); // Await here
-  const forwardedProto = headersList.get("x-forwarded-proto");
+   // Await headers() and ensure its operations are performed synchronously after awaiting
+   const headersList = await headers();
+   const forwardedProto = headersList.get("x-forwarded-proto");
+   
+   // Await the auth call after resolving headers
   const session = await auth(); // Now fully async
 
   return (

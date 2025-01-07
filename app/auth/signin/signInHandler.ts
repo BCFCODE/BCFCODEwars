@@ -1,8 +1,12 @@
+// app/auth/signin/signInHandler.ts
+
 'use server'
 
+import { signIn } from "@/auth";
 import type { AuthProvider } from "@toolpad/core";
 import { AuthError } from "next-auth";
-import { signIn } from "../../../auth";
+
+import { cookies } from "next/headers";
 
 export async function handleSignIn(
   provider: AuthProvider,
@@ -10,6 +14,9 @@ export async function handleSignIn(
   callbackUrl?: string
 ) {
   try {
+    const cookiesList = await cookies();
+    const cookieValue = cookiesList.get('authjs.pkce.code_verifier');
+    
     return await signIn(provider.id, {
       redirectTo: callbackUrl ?? "/",
     });
