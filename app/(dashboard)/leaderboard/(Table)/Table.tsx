@@ -1,4 +1,5 @@
 "use client";
+
 // app/(dashboard)/leaderboard/(Table)/Table.tsx
 import {
   CodewarsCompletedChallenge,
@@ -7,22 +8,27 @@ import {
 import { DatabaseUser } from "@/types/database";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { LinearProgress, Paper, TableContainer } from "@mui/material";
-import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
-import * as React from "react";
+import {
+  LinearProgress,
+  Paper,
+  TableContainer,
+  Box,
+  Collapse,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import React from "react";
 import LeaderboardAvatar from "./Avatar";
 import { fetchCompletedChallenges, fetchDatabaseUsers } from "./Data";
 import SkeletonTableRow from "./Skeleton";
-import { textStyles } from "./styles";
+import { diamondTextStyle, textStyles } from "./styles";
 import LoadingUI from "@/app/LoadingUI";
+import DiamondIcon from "@mui/icons-material/Diamond";
 
 interface Props {
   user: DatabaseUser;
@@ -40,10 +46,6 @@ export function UserInTable({ user }: Props) {
 
   React.useEffect(() => {
     if (open) {
-      // console.log("Table opened!");
-      // console.log(`isCodewarsConnected`, isCodewarsConnected);
-      // console.log(`codewarsUsername`, codewarsUsername);
-
       (async () => {
         try {
           setIsLoading(true);
@@ -52,29 +54,28 @@ export function UserInTable({ user }: Props) {
 
           if ("data" in fetchedChallenges) {
             const { data: challenges } = fetchedChallenges;
-            console.log(challenges, "<<<<<<<<<<<<<");
             setCompletedChallenges(challenges);
           } else {
-            // TODO
+            // TODO: Handle cases where data is missing
           }
         } catch (error) {
-          // TODO
+          // TODO: Handle errors gracefully
         } finally {
           setIsLoading(false);
-          // TODO
+          // TODO: Add additional cleanup or updates if needed
         }
       })();
     }
-  }, [open]);
+  }, [open, codewarsUsername, pageNumber]);
 
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
-          {/* open/close button */}
+          {/* Expand/Collapse button */}
           {isCodewarsConnected && (
             <IconButton
-              aria-label="expand row"
+              aria-label="Toggle challenge details"
               size="small"
               onClick={() => setOpen(!open)}
             >
@@ -105,11 +106,14 @@ export function UserInTable({ user }: Props) {
         <TableCell sx={textStyles} align="right">
           {new Date(user.lastLogin).toLocaleTimeString()}
         </TableCell>
-        <TableCell sx={textStyles} align="right">
-          {/* N/A */}
+        <TableCell sx={{ ...textStyles }} align="right">
+          <Box sx={diamondTextStyle}>
+            <Typography>{Math.floor(Math.random() * 100000)}</Typography>
+            <DiamondIcon />
+          </Box>
         </TableCell>
         <TableCell sx={textStyles} align="right">
-          {/* N/A */}
+          {/* Not available */}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -117,24 +121,24 @@ export function UserInTable({ user }: Props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Completed Challenges on Codewars
+                Codewars Challenges Completed
               </Typography>
               {isLoading ? (
                 <LoadingUI
-                  title="Loading challenges"
-                  message="Please wait while we fetch data..."
+                  title="Loading Challenges"
+                  message="Retrieving data from Codewars. Please wait..."
                 />
               ) : (
-                <Table size="small" aria-label="purchases">
+                <Table size="small" aria-label="completed challenges">
                   <TableHead>
                     <TableRow>
-                      <TableCell sx={textStyles}>Date Completed</TableCell>
-                      <TableCell sx={textStyles}>Name</TableCell>
+                      <TableCell sx={textStyles}>Date completed</TableCell>
+                      <TableCell sx={textStyles}>Challenge Name</TableCell>
                       <TableCell sx={textStyles} align="right">
-                        Rank
+                        Earned Diamonds
                       </TableCell>
                       <TableCell sx={textStyles} align="right">
-                        Rank
+                        Solved Time
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -142,9 +146,7 @@ export function UserInTable({ user }: Props) {
                     {completedChallenges?.map((challenge) => (
                       <TableRow key={challenge.id}>
                         <TableCell sx={textStyles} component="th" scope="row">
-                          {new Date(challenge.completedAt).toLocaleDateString()}{" "}
-                          at{" "}
-                          {new Date(challenge.completedAt).toLocaleTimeString()}
+                          {new Date(challenge.completedAt).toLocaleDateString()}
                         </TableCell>
                         <TableCell sx={textStyles}>
                           {challenge.name.length > 50
@@ -152,10 +154,16 @@ export function UserInTable({ user }: Props) {
                             : challenge.name}
                         </TableCell>
                         <TableCell sx={textStyles} align="right">
-                          Rank
+                          <Box sx={diamondTextStyle}>
+                            <Typography>
+                              {Math.floor(Math.random() * 100000)}
+                            </Typography>
+                            <DiamondIcon />
+                          </Box>
                         </TableCell>
+
                         <TableCell sx={textStyles} align="right">
-                          Rank
+                          {new Date(challenge.completedAt).toLocaleTimeString()}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -181,7 +189,7 @@ export default function Leaderboard() {
         const fetchUsers = await fetchDatabaseUsers();
         setUsers(fetchUsers as DatabaseUser[]);
       } catch (error) {
-        console.error("Error fetching Leaderboard table rows:", error);
+        console.error("Error loading leaderboard data:", error);
       } finally {
         setLoading(false);
       }
@@ -190,7 +198,7 @@ export default function Leaderboard() {
 
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
+      <Table aria-label="Leaderboard Table">
         <TableHead>
           <TableRow>
             <TableCell />
@@ -201,7 +209,7 @@ export default function Leaderboard() {
               Member Since
             </TableCell>
             <TableCell sx={textStyles} align="right">
-              Last login
+              Last Login
             </TableCell>
             <TableCell sx={textStyles} align="right">
               Diamonds
