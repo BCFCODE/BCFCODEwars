@@ -38,7 +38,7 @@ export function createData(
   };
 }
 
-export async function fetchAndCreateRows() {
+export async function fetchDatabaseUsers() {
   try {
     // Fetch the data from your API
     const response = await fetch('/api/wars/users');
@@ -68,14 +68,14 @@ Usage in a Component
 If you are using React, you can fetch and display the rows like this:
 
 import React, { useEffect, useState } from 'react';
-import { fetchAndCreateRows } from './Data';
+import { fetchDatabaseUsers } from './Data';
 
 export default function Leaderboard() {
   const [rows, setRows] = useState<any[]>([]);
 
   useEffect(() => {
     async function loadData() {
-      const fetchedRows = await fetchAndCreateRows();
+      const fetchedRows = await fetchDatabaseUsers();
       setRows(fetchedRows);
     }
     loadData();

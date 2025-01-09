@@ -3,11 +3,11 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 
 interface Props {
-  head: string;
-  body: string;
+  title: string;
+  message: string;
 }
 
-const LoadingUI = ({ head, body }: Props) => {
+const LoadingUI = ({ title, message }: Props) => {
   return (
     <Box
       sx={{
@@ -15,16 +15,17 @@ const LoadingUI = ({ head, body }: Props) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "100%",
+        width: "100%",
         padding: 2,
       }}
     >
       <LinearProgress sx={{ width: "100%", marginBottom: 2 }} />
       <Typography variant="h5" color="text.primary">
-        {head}
+        {title}
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ marginTop: 1 }}>
-        {body}
+        {message}
       </Typography>
     </Box>
   );

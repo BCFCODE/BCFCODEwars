@@ -1,6 +1,11 @@
 // app/(dashboard)/leaderboard/(Table)/Data.ts
 
-import { LeaderboardRow } from "@/types/leaderboard";
+import {
+  CodewarsChallenge,
+  CodewarsCompletedChallenge,
+  CodewarsCompletedChallengeApiResponse,
+} from "@/types/codewars";
+import { DatabaseUser } from "@/types/database";
 import { baseURL } from "@/utils/constants";
 
 export const completedChallenges = [
@@ -16,7 +21,7 @@ export const completedChallenges = [
   },
 ];
 
-export async function fetchAndCreateRows() {
+export async function fetchDatabaseUsers() {
   try {
     // Fetch the data from your API
     const response = await fetch(`${baseURL}/api/users`, { cache: "no-store" });
@@ -25,50 +30,40 @@ export async function fetchAndCreateRows() {
     }
     const data = await response.json();
 
-    // Transform user data into rows
-    const rows = data.users.map((user: LeaderboardRow, index: number) => {
-      return {
-        name: user.name,
-        createdAt: new Date(user.createdAt).toLocaleDateString(),
-        rank: Math.floor(Math.random() * 1000), // Simulated rank
-        position: index + 1, // Position based on index
-        globalPosition: Math.floor(Math.random() * 1000), // Simulated global position
-        image: user.image,
-      };
-    });
-
-    return rows;
+    return data.users as DatabaseUser[];
   } catch (error) {
     console.error("Error fetching user data:", error);
     return [{ success: false }, { error: "Error fetching user data" }];
   }
 }
 
-export async function fetchCompletedChallenges() {
-  try {
-    // Fetch the data from your API
-    const response = await fetch(`${baseURL}/api/wars/codewars/user`, {
-      cache: "no-store",
-    });
-    if (!response.ok) {
-      throw new Error("Failed to fetch user");
-    }
-    const data = await response.json();
-
-    // Transform user data into rows
-    const rows = data.users.map((user: LeaderboardRow, index: number) => {
-      return {
-        name: user.name,
-        createdAt: new Date(user.createdAt).toLocaleDateString(),
-        rank: Math.floor(Math.random() * 1000), // Simulated rank
-        position: index + 1, // Position based on index
-        globalPosition: Math.floor(Math.random() * 1000), // Simulated global position
-      };
-    });
-
-    return rows;
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-    return [{ success: false }, { error: "Error fetching user data" }];
+export async function fetchCompletedChallenges(
+  username: string,
+  pageNumber: number
+): Promise<CodewarsCompletedChallengeApiResponse> {
+  // Fetch List Completed Challenges
+  const response = await fetch(
+    `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=${pageNumber}`,
+    { cache: "no-store" }
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch completed challenges");
   }
+
+  return await response.json();
+}
+
+export async function fetchSingleChallenge(
+  id: string
+): Promise<CodewarsChallenge> {
+  // Fetch single challenge
+  const response = await fetch(
+    `https://www.codewars.com/api/v1/code-challenges/${id}`,
+    { cache: "no-store" }
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch challenge");
+  }
+
+  return await response.json();
 }

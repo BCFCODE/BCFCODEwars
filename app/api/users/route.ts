@@ -1,5 +1,6 @@
 // app/api/users/route.ts
 import clientPromise from "@/lib/db/database";
+import { DatabaseUser } from "@/types/database";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
