@@ -1,6 +1,7 @@
 "use client";
 
 // app/(dashboard)/leaderboard/(Table)/Table.tsx
+import LoadingUI from "@/app/LoadingUI";
 import {
   CodewarsCompletedChallenge,
   CodewarsCompletedChallengeApiResponse,
@@ -9,27 +10,25 @@ import { DatabaseUser } from "@/types/database";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import {
-  LinearProgress,
-  Paper,
-  TableContainer,
   Box,
   Collapse,
   IconButton,
+  Paper,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  Typography,
+  Typography
 } from "@mui/material";
 import React from "react";
 import LeaderboardAvatar from "./Avatar";
 import { fetchCompletedChallenges, fetchDatabaseUsers } from "./Data";
 import SkeletonTableRow from "./Skeleton";
 import { diamondTextStyle, textStyles } from "./styles";
-import LoadingUI from "@/app/LoadingUI";
+import GetDiamondsButton from "./Buttons/GetDiamonds/GetDiamondsButton";
 import DiamondIcon from "@mui/icons-material/Diamond";
-
 interface Props {
   user: DatabaseUser;
 }
@@ -40,7 +39,7 @@ export function UserInTable({ user }: Props) {
   const [completedChallenges, setCompletedChallenges] =
     React.useState<CodewarsCompletedChallenge[]>();
   const [error, setError] = React.useState();
-  const [pageNumber, setPageNumber] = React.useState(1);
+  const [pageNumber, setPageNumber] = React.useState(0);
   const isCodewarsConnected = user.codewars?.isConnected ?? false;
   const codewarsUsername = user.codewars?.username;
 
@@ -154,12 +153,7 @@ export function UserInTable({ user }: Props) {
                             : challenge.name}
                         </TableCell>
                         <TableCell sx={textStyles} align="right">
-                          <Box sx={diamondTextStyle}>
-                            <Typography>
-                              {Math.floor(Math.random() * 100000)}
-                            </Typography>
-                            <DiamondIcon />
-                          </Box>
+                          <GetDiamondsButton />
                         </TableCell>
 
                         <TableCell sx={textStyles} align="right">

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const uri: string | undefined = process.env.MONGODB_URI;
 
-const usersSeedData = [
+const seedData = [
   {
     _id: new ObjectId("66de10e40acbb5c30fc4e49b"),
     username: "Morteza",
@@ -27,44 +27,9 @@ const usersSeedData = [
   },
 ];
 
-const diamondsSeedData = {
-  scoreMap: { // Map reference for diamond rewards for each solved challenge
-    codewars: {
-    /* 
-    Number of diamonds according to its kyo (8 = 8kyo)
-      Scores:
-        8kyo = 5💎
-        7kyo = 10💎
-        6kyo = 25💎
-        5kyo = 50💎
-        4kyo = 100💎
-        3kyo = 200💎
-        2kyo = 300💎
-        1kyo = 500💎
-    */
-      1: 500,
-      2: 300,
-      3: 200,
-      4: 100,
-      5: 50,
-      6: 25,
-      7: 10,
-      8: 5
-    },
-  },
-  data: [
-    {
-      _id: new ObjectId("66de10e40acbb5c30fc4e49b"),
-      codewars: {
-       
-      }
-    },
-  ],
-};
-
 export async function GET(request: NextRequest) {
   /* 
-    http://localhost:3000/seed?key=your-secret-key
+    http://localhost:3000/seed/users?key=your-secret-key
     And in your .env.local file, you’d have:
 
     SECRET_KEY=your-secret-key
@@ -88,7 +53,7 @@ export async function GET(request: NextRequest) {
     const db = client.db(process.env.MONGODB_DB); // Use your database name
     const usersCollection = db.collection("users");
     // Insert seed data
-    const result = await usersCollection.insertMany(usersSeedData);
+    const result = await usersCollection.insertMany(seedData);
     // Return a success response
     return NextResponse.json({
       message: `Seeded ${result.insertedCount} users.`,
