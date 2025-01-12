@@ -9,11 +9,11 @@ interface Props extends TableProps {
   onOpen: () => void;
 }
 
-const OpenButton = ({ user, open, onOpen }: Props) => {
+const OpenButton = ({ userInDB, open, onOpen }: Props) => {
   return (
     <>
       {/* Expand/Collapse button */}
-      {user.codewars?.isConnected && (
+      {userInDB.codewars?.isConnected && (
         <IconButton
           aria-label="Toggle challenge details"
           size="small"

@@ -28,10 +28,10 @@ import { fetchCompletedChallenges, fetchDatabaseUsers } from "./Data";
 import SkeletonTableRow from "./Skeleton";
 import { diamondTextStyle, textStyles } from "./styles";
 export interface TableProps {
-  user: DatabaseUser;
+  userInDB: DatabaseUser;
 }
 
-export function UserInTable({ user }: TableProps) {
+export function UserInTable({ userInDB }: TableProps) {
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [completedChallenges, setCompletedChallenges] =
@@ -39,7 +39,7 @@ export function UserInTable({ user }: TableProps) {
   const [error, setError] = React.useState();
   const [pageNumber, setPageNumber] = React.useState(0);
 
-  const codewarsUsername = user.codewars?.username;
+  const codewarsUsername = userInDB.codewars?.username;
 
   React.useEffect(() => {
     if (open) {
@@ -70,14 +70,14 @@ export function UserInTable({ user }: TableProps) {
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           {/* Expand/Collapse button */}
-          <OpenButton {...{ user, open }} onOpen={() => setOpen(!open)} />
+          <OpenButton {...{ userInDB, open }} onOpen={() => setOpen(!open)} />
         </TableCell>
         <TableCell
           sx={{ ...textStyles, display: "flex", alignItems: "center", gap: 1 }}
           component="th"
           scope="row"
         >
-          <LeaderboardAvatar image={user.image} />
+          <LeaderboardAvatar image={userInDB.image} />
           <Typography
             variant="body2"
             sx={{
@@ -86,14 +86,14 @@ export function UserInTable({ user }: TableProps) {
               textOverflow: "ellipsis",
             }}
           >
-            {user.name}
+            {userInDB.name}
           </Typography>
         </TableCell>
         <TableCell sx={textStyles} align="right">
-          {new Date(user.createdAt).toLocaleDateString()}
+          {new Date(userInDB.createdAt).toLocaleDateString()}
         </TableCell>
         <TableCell sx={textStyles} align="right">
-          {new Date(user.lastLogin).toLocaleTimeString()}
+          {new Date(userInDB.lastLogin).toLocaleTimeString()}
         </TableCell>
         <TableCell sx={{ ...textStyles }} align="right">
           <Box sx={diamondTextStyle}>
@@ -144,7 +144,9 @@ export function UserInTable({ user }: TableProps) {
                         </TableCell>
                         <TableCell sx={textStyles} align="right">
                           {/* Click and get diamonds */}
-                          <GetDiamondsButton {...{ user, challenge }} />
+                          <GetDiamondsButton
+                            {...{ userInDB, challenge }}
+                          />
                         </TableCell>
 
                         <TableCell sx={textStyles} align="right">
@@ -209,7 +211,9 @@ export default function Leaderboard() {
             ? Array.from({ length: 10 }).map((_, i) => (
                 <SkeletonTableRow key={i} nOfCols={columns} />
               ))
-            : users.map((user) => <UserInTable key={user.email} user={user} />)}
+            : users.map((user: DatabaseUser) => (
+                <UserInTable key={user.email} {...{ userInDB: user }} />
+              ))}
         </TableBody>
       </Table>
     </TableContainer>
