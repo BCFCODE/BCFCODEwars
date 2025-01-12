@@ -7,12 +7,10 @@ import {
   CodewarsCompletedChallengeApiResponse,
 } from "@/types/codewars";
 import { DatabaseUser } from "@/types/database";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import DiamondIcon from "@mui/icons-material/Diamond";
 import {
   Box,
   Collapse,
-  IconButton,
   Paper,
   Table,
   TableBody,
@@ -20,27 +18,27 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography
+  Typography,
 } from "@mui/material";
 import React from "react";
 import LeaderboardAvatar from "./Avatar";
+import GetDiamondsButton from "./Buttons/GetDiamonds/GetDiamondsButton";
+import OpenButton from "./Buttons/OpenButton";
 import { fetchCompletedChallenges, fetchDatabaseUsers } from "./Data";
 import SkeletonTableRow from "./Skeleton";
 import { diamondTextStyle, textStyles } from "./styles";
-import GetDiamondsButton from "./Buttons/GetDiamonds/GetDiamondsButton";
-import DiamondIcon from "@mui/icons-material/Diamond";
-interface Props {
+export interface TableProps {
   user: DatabaseUser;
 }
 
-export function UserInTable({ user }: Props) {
+export function UserInTable({ user }: TableProps) {
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [completedChallenges, setCompletedChallenges] =
     React.useState<CodewarsCompletedChallenge[]>();
   const [error, setError] = React.useState();
   const [pageNumber, setPageNumber] = React.useState(0);
-  const isCodewarsConnected = user.codewars?.isConnected ?? false;
+
   const codewarsUsername = user.codewars?.username;
 
   React.useEffect(() => {
@@ -72,15 +70,7 @@ export function UserInTable({ user }: Props) {
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           {/* Expand/Collapse button */}
-          {isCodewarsConnected && (
-            <IconButton
-              aria-label="Toggle challenge details"
-              size="small"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          )}
+          <OpenButton {...{ user, open }} onOpen={() => setOpen(!open)} />
         </TableCell>
         <TableCell
           sx={{ ...textStyles, display: "flex", alignItems: "center", gap: 1 }}
@@ -153,7 +143,8 @@ export function UserInTable({ user }: Props) {
                             : challenge.name}
                         </TableCell>
                         <TableCell sx={textStyles} align="right">
-                          <GetDiamondsButton />
+                          {/* Click and get diamonds */}
+                          <GetDiamondsButton {...{ user, challenge }} />
                         </TableCell>
 
                         <TableCell sx={textStyles} align="right">
