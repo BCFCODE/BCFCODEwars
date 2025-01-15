@@ -4,7 +4,7 @@ import DatabaseService from "@/app/services/db-service";
 import { AddCodewarsUserToDB, CodewarsUserResponse } from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getDatabase } = new DatabaseService();
+const { getDatabase, getCollections } = new DatabaseService();
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -72,14 +72,10 @@ export async function PATCH(request: NextRequest) {
   }
 
   try {
-    // Log the incoming payload
-    // console.log("Received PATCH request with payload:", { email, codewars });
-
-    // Connect to MongoDB
-    const db = await getDatabase();
+    const { users } = await getCollections();
 
     // Update the codewars property in the 'users' collection
-    const userInDB = await db.collection("users").findOneAndUpdate(
+    const userInDB = await users.findOneAndUpdate(
       { email }, // Find user by email
       { $set: { name: codewars.name, codewars } }, // Update the codewars object
       { returnDocument: "after" } // Return the updated document

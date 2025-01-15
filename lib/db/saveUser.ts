@@ -1,40 +1,32 @@
 // lib/MongoDB/saveUser.ts
-import { NewDatabaseUser } from "@/types/user";
+import DatabaseService from "@/app/services/db-service";
+import GoogleService from "@/app/services/google-service";
 import { GoogleUser } from "@/types/google";
 import { MongoClient } from "mongodb";
-import { getDatabase } from "./database";
+
+const { getUser, getCollections } = new DatabaseService();
+const { createNewDatabaseUser } = new GoogleService();
 
 // MongoDB connection setup
 const client = new MongoClient(process.env.MONGODB_URI || "");
 
 export async function saveUserDataToDatabase(user: GoogleUser) {
   try {
-    const db = await getDatabase();
-    const usersCollection = db.collection("users");
-
     const { email, name, image } = user;
-    // Check if the user already exists
-    const existingUser = await usersCollection.findOne({ email });
+    const { users } = await getCollections();
+
+    const existingUser = await getUser(email);
 
     if (existingUser) {
       // Update user data if needed
-      await usersCollection.updateOne(
+      await users.updateOne(
         { email },
         { $set: { lastLogin: new Date().toISOString(), image, name } }
       );
     } else {
-      // Create the new user object, replacing `id` with `googleId`
-      const newUser: NewDatabaseUser = {
-        email,
-        name,
-        image,
-        createdAt: new Date().toISOString(),
-        lastLogin: new Date().toISOString(),
-        codewars: { isConnected: false },
-      };
+      const newUser = createNewDatabaseUser(user);
 
-      // Cast the NewDatabaseUser to a GoogleUser type for MongoDB insertion
-      await usersCollection.insertOne(newUser); // Type cast to GoogleUser
+      await users.insertOne(newUser); // Type cast to GoogleUser
       return newUser;
     }
   } catch (error) {

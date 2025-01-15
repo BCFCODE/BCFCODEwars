@@ -1,7 +1,7 @@
 import DatabaseService from "@/app/services/db-service";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getDatabase } = new DatabaseService();
+const { getDatabase, getUser } = new DatabaseService();
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -15,10 +15,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const db = await getDatabase();
-
-    // Fetch the user with the given email
-    const user = await db.collection("users").findOne({ email });
+    const user = await getUser(email);
 
     if (!user) {
       return NextResponse.json(

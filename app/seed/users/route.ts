@@ -1,5 +1,8 @@
+import DatabaseService from "@/app/services/db-service";
 import { MongoClient, ObjectId } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
+
+const { getCollections } = new DatabaseService();
 
 const uri: string | undefined = process.env.MONGODB_URI;
 
@@ -48,12 +51,9 @@ export async function GET(request: NextRequest) {
   const client = new MongoClient(uri);
 
   try {
-    // Connect to the MongoDB cluster
-    await client.connect();
-    const db = client.db(process.env.MONGODB_DB); // Use your database name
-    const usersCollection = db.collection("users");
+    const { users } = await getCollections();
     // Insert seed data
-    const result = await usersCollection.insertMany(seedData);
+    const result = await users.insertMany(seedData);
     // Return a success response
     return NextResponse.json({
       message: `Seeded ${result.insertedCount} users.`,

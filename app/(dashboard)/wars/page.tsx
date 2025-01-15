@@ -1,15 +1,14 @@
+import DatabaseService from "@/app/services/db-service";
 import { auth } from "@/auth";
 import { CodewarsDatabase, CodewarsUser } from "@/types/codewars";
+import { baseURL } from "@/utils/constants";
 import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
 import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect/Reconnect";
 import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
-import { baseURL } from "@/utils/constants";
-import { boolean } from "zod";
-import DatabaseService from "@/app/services/db-service";
 
-const { getDatabase } = new DatabaseService();
+const { getDatabase, getUser } = new DatabaseService();
 
 const WarsPage = async () => {
   const session = await auth();
@@ -26,8 +25,7 @@ const WarsPage = async () => {
 
   if (email) {
     try {
-      const db = await getDatabase();
-      const user = await db.collection("users").findOne({ email });
+      const user = await getUser(email);
       /* 
         Purpose: 
           This block of code checks if the Codewars account associated with the user 
