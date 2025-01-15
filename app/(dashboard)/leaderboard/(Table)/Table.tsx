@@ -3,9 +3,7 @@
 // app/(dashboard)/leaderboard/(Table)/Table.tsx
 import LoadingUI from "@/app/LoadingUI";
 import CodewarsService from "@/app/services/codewars-service";
-import {
-  CodewarsCompletedChallenge
-} from "@/types/codewars";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { DatabaseUser } from "@/types/database";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import {
@@ -27,6 +25,8 @@ import OpenButton from "./Buttons/OpenButton";
 import { fetchDatabaseUsers } from "./Data";
 import SkeletonTableRow from "./Skeleton";
 import { diamondTextStyle, textStyles } from "./styles";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const { getCompletedChallenges } = new CodewarsService();
 export interface TableProps {
@@ -34,6 +34,7 @@ export interface TableProps {
 }
 
 export function UserInTable({ userInDB }: TableProps) {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [completedChallenges, setCompletedChallenges] =
@@ -48,11 +49,10 @@ export function UserInTable({ userInDB }: TableProps) {
       (async () => {
         try {
           setIsLoading(true);
-          const fetchedChallenges =
-            await getCompletedChallenges(
-              codewarsUsername,
-              pageNumber
-            );
+          const fetchedChallenges = await getCompletedChallenges(
+            codewarsUsername,
+            pageNumber
+          );
 
           if ("data" in fetchedChallenges) {
             const { data: challenges } = fetchedChallenges;
@@ -75,7 +75,9 @@ export function UserInTable({ userInDB }: TableProps) {
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
           {/* Expand/Collapse button */}
+          {/* <Link href={`?username=${codewarsUsername}&pageNumber=${pageNumber}`}> */}
           <OpenButton {...{ userInDB, open }} onOpen={() => setOpen(!open)} />
+          {/* </Link> */}
         </TableCell>
         <TableCell
           sx={{ ...textStyles, display: "flex", alignItems: "center", gap: 1 }}

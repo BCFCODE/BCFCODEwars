@@ -1,4 +1,3 @@
-import { CodewarsChallenge } from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -54,10 +53,6 @@ export function POST(request: NextRequest) {
     );
   }
 
-  console.log('this is from "POST" (api/wars/codewars/challenge)', {
-    username,
-    challengeId,
-  });
   try {
   } catch (error) {}
 }

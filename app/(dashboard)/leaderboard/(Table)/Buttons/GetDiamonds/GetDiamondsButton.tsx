@@ -1,15 +1,21 @@
+import CodewarsService from "@/app/services/codewars-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { baseURL } from "@/utils/constants";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { diamondTextStyle } from "../../styles";
 import { TableProps } from "../../Table";
 
+const { getSingleChallenge } = new CodewarsService();
 interface Props extends TableProps {
   challenge: CodewarsCompletedChallenge;
 }
 
-const GetDiamondsButton = ({ userInDB, challenge }: Props) => {
+const GetDiamondsButton = ({
+  userInDB: {
+    codewars: { username },
+  },
+  challenge: { id },
+}: Props) => {
   return (
     <Box sx={diamondTextStyle}>
       {/* TODO: Send a request to codewars api to catch this specific solved problem and write it to our database */}
@@ -18,11 +24,9 @@ const GetDiamondsButton = ({ userInDB, challenge }: Props) => {
       <IconButton
         color="primary"
         onClick={async () => {
-          const fetchedChallenge = await fetch(
-            `${baseURL}/api/wars/codewars/challenge?username=${userInDB.codewars.username}&challengeId=${challenge.id}`,
-            { cache: "no-store" }
-          ).then((res) => res.json());
-          console.log("codewars userInDB >>", userInDB);
+          const fetchedChallenge = await getSingleChallenge(username, id);
+
+          console.log("codewars userInDB >>", username);
           console.log("fetchedChallenge >>", fetchedChallenge);
         }}
       >

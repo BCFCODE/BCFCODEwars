@@ -83,7 +83,6 @@ export default function Step2({ currentStep }: Props) {
             // helperText={error || ""}
             sx={{ mb: 2 }}
           />
-
           {/* Validation Button */}
           <ValidationButton {...buttonProps} />
           {success && (
@@ -96,15 +95,14 @@ export default function Step2({ currentStep }: Props) {
               {error}
             </Typography>
           )}
-
           {/* Tip Section */}
           <Typography
             variant="body2"
             color="text.secondary"
             sx={{ mt: 2, textAlign: "left" }}
           >
-            Tip: If you already have an account, you can find your
-            Codewars username{" "}
+            Tip: If you already have an account, you can find your Codewars
+            username{" "}
             <Link
               href="https://www.codewars.com/users/edit"
               target="_blank"
@@ -117,7 +115,7 @@ export default function Step2({ currentStep }: Props) {
             <Link href="https://www.codewars.com/users/sign_in" target="_blank">
               sign up here
             </Link>{" "}
-            to get started. 
+            to get started.
           </Typography>
         </Paper>
       </Box>

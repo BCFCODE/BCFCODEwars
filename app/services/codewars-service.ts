@@ -4,6 +4,7 @@ import {
   CodewarsChallenge,
   CodewarsCompletedChallengeApiResponse,
 } from "@/types/codewars";
+import { baseURL } from "@/utils/constants";
 
 class CodewarsService {
   /* 
@@ -21,31 +22,25 @@ class CodewarsService {
   getCompletedChallenges = async (
     username: string,
     pageNumber: number
-  ): Promise<CodewarsCompletedChallengeApiResponse> => {
-    // Fetch List Completed Challenges
-    const response = await fetch(
+  ): Promise<CodewarsCompletedChallengeApiResponse> =>
+    await fetch(
       `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=${pageNumber}`,
       { cache: "no-store" }
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch completed challenges");
-    }
+    )
+      .then((res) => res.json())
+      .catch((error) => {
+        console.error(error);
+        throw new Error("Failed to fetch completed challenges");
+      });
 
-    return await response.json();
-  };
-
-  getSingleChallenge = async (id: string): Promise<CodewarsChallenge> => {
-    // Fetch single challenge
-    const response = await fetch(
-      `https://www.codewars.com/api/v1/code-challenges/${id}`,
+  getSingleChallenge = async (
+    username: string,
+    id: string
+  ): Promise<CodewarsChallenge> =>
+    await fetch(
+      `${baseURL}/api/wars/codewars/challenge?username=${username}&challengeId=${id}`,
       { cache: "no-store" }
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch challenge");
-    }
-
-    return await response.json();
-  };
+    ).then((res) => res.json());
 }
 
 export default CodewarsService;

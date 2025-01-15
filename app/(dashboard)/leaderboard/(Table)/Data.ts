@@ -2,11 +2,10 @@
 
 import {
   CodewarsChallenge,
-  CodewarsCompletedChallengeApiResponse
+  CodewarsCompletedChallengeApiResponse,
 } from "@/types/codewars";
 import { DatabaseUser } from "@/types/database";
 import { baseURL } from "@/utils/constants";
-
 
 export async function fetchDatabaseUsers() {
   try {

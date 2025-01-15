@@ -69,7 +69,6 @@ const WarsPage = async () => {
         session,
         isDbUsernameSyncedWithCodewars,
       };
-
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -198,7 +197,6 @@ const WarsPage = async () => {
       </Box>
     );
 
-    
   // Render other content if the user is already connected
   return <Reconnect {...reconnectProps} />;
 };
