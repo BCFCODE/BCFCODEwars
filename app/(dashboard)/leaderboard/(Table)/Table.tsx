@@ -2,9 +2,9 @@
 
 // app/(dashboard)/leaderboard/(Table)/Table.tsx
 import LoadingUI from "@/app/LoadingUI";
+import CodewarsService from "@/app/services/codewars-service";
 import {
-  CodewarsCompletedChallenge,
-  CodewarsCompletedChallengeApiResponse,
+  CodewarsCompletedChallenge
 } from "@/types/codewars";
 import { DatabaseUser } from "@/types/database";
 import DiamondIcon from "@mui/icons-material/Diamond";
@@ -24,9 +24,11 @@ import React from "react";
 import LeaderboardAvatar from "./Avatar";
 import GetDiamondsButton from "./Buttons/GetDiamonds/GetDiamondsButton";
 import OpenButton from "./Buttons/OpenButton";
-import { fetchCompletedChallenges, fetchDatabaseUsers } from "./Data";
+import { fetchDatabaseUsers } from "./Data";
 import SkeletonTableRow from "./Skeleton";
 import { diamondTextStyle, textStyles } from "./styles";
+
+const { getCompletedChallenges } = new CodewarsService();
 export interface TableProps {
   userInDB: DatabaseUser;
 }
@@ -46,8 +48,11 @@ export function UserInTable({ userInDB }: TableProps) {
       (async () => {
         try {
           setIsLoading(true);
-          const fetchedChallenges: CodewarsCompletedChallengeApiResponse =
-            await fetchCompletedChallenges(codewarsUsername, pageNumber);
+          const fetchedChallenges =
+            await getCompletedChallenges(
+              codewarsUsername,
+              pageNumber
+            );
 
           if ("data" in fetchedChallenges) {
             const { data: challenges } = fetchedChallenges;
@@ -144,9 +149,7 @@ export function UserInTable({ userInDB }: TableProps) {
                         </TableCell>
                         <TableCell sx={textStyles} align="right">
                           {/* Click and get diamonds */}
-                          <GetDiamondsButton
-                            {...{ userInDB, challenge }}
-                          />
+                          <GetDiamondsButton {...{ userInDB, challenge }} />
                         </TableCell>
 
                         <TableCell sx={textStyles} align="right">
