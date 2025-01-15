@@ -3,7 +3,10 @@
 // app/(dashboard)/leaderboard/(Table)/Table.tsx
 import LoadingUI from "@/app/LoadingUI";
 import CodewarsService from "@/app/services/codewars-service";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import {
+  CodewarsChallengesApiResponse,
+  CodewarsCompletedChallenge,
+} from "@/types/codewars";
 import { DatabaseUser } from "@/types/database";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import {
@@ -48,13 +51,13 @@ export function UserInTable({ userInDB }: TableProps) {
       (async () => {
         try {
           setIsLoading(true);
-          const fetchedChallenges = await getCompletedChallenges(
+          const response = await getCompletedChallenges(
             codewarsUsername,
             pageNumber
           );
 
-          if ("data" in fetchedChallenges) {
-            const { data: challenges } = fetchedChallenges;
+          if ("data" in response) {
+            const { data: challenges } = response.data;
             setCompletedChallenges(challenges);
           } else {
             // TODO: Handle cases where data is missing

@@ -55,11 +55,14 @@ export interface CodewarsCompletedChallenge {
   completedAt: string; // ISO 8601 date string representing when the challenge was completed
 }
 
-export type CodewarsCompletedChallengeApiResponse =
+export type CodewarsChallengesApiResponse =
   | {
-      totalPages: number; // Total number of pages in the response
-      totalItems: number; // Total number of items across all pages
-      data: CodewarsCompletedChallenge[]; // Array of completed challenges
+      success: boolean;
+      data: {
+        totalPages: number; // Total number of pages in the response
+        totalItems: number; // Total number of items across all pages
+        data: CodewarsCompletedChallenge[]; // Array of completed challenges
+      };
     }
   | {
       success: boolean;

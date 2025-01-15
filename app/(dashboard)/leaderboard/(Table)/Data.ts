@@ -2,7 +2,7 @@
 
 import {
   CodewarsChallenge,
-  CodewarsCompletedChallengeApiResponse,
+  CodewarsChallengesApiResponse,
 } from "@/types/codewars";
 import { DatabaseUser } from "@/types/database";
 import { baseURL } from "@/utils/constants";

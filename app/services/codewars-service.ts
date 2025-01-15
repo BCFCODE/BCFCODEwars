@@ -2,7 +2,7 @@
 
 import {
   CodewarsChallenge,
-  CodewarsCompletedChallengeApiResponse,
+  CodewarsChallengesApiResponse,
 } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
 
@@ -22,9 +22,9 @@ class CodewarsService {
   getCompletedChallenges = async (
     username: string,
     pageNumber: number
-  ): Promise<CodewarsCompletedChallengeApiResponse> =>
+  ): Promise<CodewarsChallengesApiResponse> =>
     await fetch(
-      `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=${pageNumber}`,
+      `${baseURL}/api/wars/codewars/challenges/all?username=${username}&pageNumber=${pageNumber}`,
       { cache: "no-store" }
     )
       .then((res) => res.json())
