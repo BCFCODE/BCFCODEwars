@@ -55,6 +55,7 @@ export function UserInTable({ userInDB }: TableProps) {
             codewarsUsername,
             pageNumber
           );
+          
 
           if ("data" in response) {
             const { data: challenges } = response.data;

@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import clientPromise, { getDatabase } from "@/lib/db/database";
 import { CodewarsDatabase, CodewarsUser } from "@/types/codewars";
 import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
@@ -8,6 +7,9 @@ import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
 import { baseURL } from "@/utils/constants";
 import { boolean } from "zod";
+import DatabaseService from "@/app/services/db-service";
+
+const { getDatabase } = new DatabaseService();
 
 const WarsPage = async () => {
   const session = await auth();

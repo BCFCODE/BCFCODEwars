@@ -1,7 +1,9 @@
 // app/api/wars/users/route.ts
 
-import clientPromise from "@/lib/db/database"; // Adjust the path according to your file structure
+import DatabaseService from "@/app/services/db-service";
 import { NextRequest, NextResponse } from "next/server";
+
+const { getDatabase } = new DatabaseService();
 
 export async function GET(request: NextRequest) {
   // const { searchParams } = new URL(request.url);
@@ -9,8 +11,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // Connect to MongoDB
-    const client = await clientPromise;
-    const db = client.db(process.env.MONGODB_DB); // Your MongoDB database
+    const db = await getDatabase();
 
     // Fetch the users from the 'users' collection
     const users = db.collection("users").find({}).toArray();

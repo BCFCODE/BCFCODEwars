@@ -1,5 +1,7 @@
+import DatabaseService from "@/app/services/db-service";
 import { NextRequest, NextResponse } from "next/server";
-import clientPromise from "@/lib/db/database";
+
+const { getDatabase } = new DatabaseService();
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -13,8 +15,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const client = await clientPromise;
-    const db = client.db(process.env.MONGODB_DB);
+    const db = await getDatabase();
 
     // Fetch the user with the given email
     const user = await db.collection("users").findOne({ email });

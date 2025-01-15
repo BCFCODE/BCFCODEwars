@@ -39,7 +39,12 @@ class CodewarsService {
   ): Promise<CodewarsChallenge> =>
     await fetch(
       `${baseURL}/api/wars/codewars/challenges/single?username=${username}&challengeId=${id}`
-    ).then((res) => res.json());
+    )
+      .then((res) => res.json())
+      .catch((error) => {
+        console.error(error);
+        throw new Error("Failed to fetch single challenge.");
+      });
 }
 
 export default CodewarsService;

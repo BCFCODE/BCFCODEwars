@@ -1,8 +1,10 @@
 // app/api/wars/codewars/user/route.ts
 
-import clientPromise from "@/lib/db/database";
+import DatabaseService from "@/app/services/db-service";
 import { AddCodewarsUserToDB, CodewarsUserResponse } from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
+
+const { getDatabase } = new DatabaseService();
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -58,24 +60,23 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: NextRequest) {
-  try {
-    // Parse the request body (assuming you're sending JSON data)
-    const { email, codewars }: AddCodewarsUserToDB = await request.json();
+  // Parse the request body (assuming you're sending JSON data)
+  const { email, codewars }: AddCodewarsUserToDB = await request.json();
 
+  // Validate input
+  if (!email || !codewars) {
+    return NextResponse.json(
+      { error: "Both 'email' and 'codewars' fields are required." },
+      { status: 400 }
+    );
+  }
+
+  try {
     // Log the incoming payload
     // console.log("Received PATCH request with payload:", { email, codewars });
 
-    // Validate input
-    if (!email || !codewars) {
-      return NextResponse.json(
-        { error: "Both 'email' and 'codewars' fields are required." },
-        { status: 400 }
-      );
-    }
-
     // Connect to MongoDB
-    const client = await clientPromise;
-    const db = client.db(process.env.MONGODB_DB);
+    const db = await getDatabase();
 
     // Update the codewars property in the 'users' collection
     const userInDB = await db.collection("users").findOneAndUpdate(
@@ -108,7 +109,7 @@ export async function PATCH(request: NextRequest) {
 
     // Return the updated user
     return NextResponse.json({
-      message: "codewars object successfully updated.",
+      message: `codewars object in db successfully updated.`,
       codewars: userInDB,
     });
   } catch (error) {
