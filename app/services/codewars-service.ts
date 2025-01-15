@@ -38,8 +38,7 @@ class CodewarsService {
     id: string
   ): Promise<CodewarsChallenge> =>
     await fetch(
-      `${baseURL}/api/wars/codewars/challenge?username=${username}&challengeId=${id}`,
-      { cache: "no-store" }
+      `${baseURL}/api/wars/codewars/challenges/single?username=${username}&challengeId=${id}`
     ).then((res) => res.json());
 }
 

@@ -26,7 +26,6 @@ import { fetchDatabaseUsers } from "./Data";
 import SkeletonTableRow from "./Skeleton";
 import { diamondTextStyle, textStyles } from "./styles";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 const { getCompletedChallenges } = new CodewarsService();
 export interface TableProps {
