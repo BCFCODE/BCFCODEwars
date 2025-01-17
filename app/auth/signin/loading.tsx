@@ -1,4 +1,4 @@
-import LoadingUI from "@/app/LoadingUI";
+import LoadingUI from "@/app/components/UI/LoadingUI";
 import React from "react";
 
 const SignInLoadingMainPage = () => {

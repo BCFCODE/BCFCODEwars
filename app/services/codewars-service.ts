@@ -27,9 +27,16 @@ class CodewarsService {
       `${baseURL}/api/wars/codewars/challenges/all?username=${username}&pageNumber=${pageNumber}`,
       { cache: "no-store" }
     )
-      .then((res) => res.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch completed challenges: ${response.status} ${response.statusText}`
+          );
+        }
+        return response.json();
+      })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
         throw new Error("Failed to fetch completed challenges");
       });
 
@@ -40,9 +47,16 @@ class CodewarsService {
     await fetch(
       `${baseURL}/api/wars/codewars/challenges/single?username=${username}&challengeId=${id}`
     )
-      .then((res) => res.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch single challenge: ${response.status} ${response.statusText}`
+          );
+        }
+        return response.json();
+      })
       .catch((error) => {
-        console.error(error);
+        // console.error(error);
         throw new Error("Failed to fetch single challenge.");
       });
 }

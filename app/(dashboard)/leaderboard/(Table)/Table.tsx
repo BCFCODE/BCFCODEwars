@@ -1,7 +1,7 @@
 "use client";
 
 // app/(dashboard)/leaderboard/(Table)/Table.tsx
-import LoadingUI from "@/app/LoadingUI";
+import LoadingUI from "@/app/components/UI/LoadingUI";
 import CodewarsService from "@/app/services/codewars-service";
 import {
   CodewarsChallengesApiResponse,
@@ -29,6 +29,7 @@ import { fetchDatabaseUsers } from "./Data";
 import SkeletonTableRow from "./Skeleton";
 import { diamondTextStyle, textStyles } from "./styles";
 import { useRouter } from "next/navigation";
+import ErrorUI from "@/app/components/UI/ErrorUI";
 
 const { getCompletedChallenges } = new CodewarsService();
 export interface TableProps {
@@ -36,42 +37,48 @@ export interface TableProps {
 }
 
 export function UserInTable({ userInDB }: TableProps) {
-  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [completedChallenges, setCompletedChallenges] =
     React.useState<CodewarsCompletedChallenge[]>();
-  const [error, setError] = React.useState();
+  const [error, setError] = React.useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
 
   const codewarsUsername = userInDB.codewars?.username;
 
-  React.useEffect(() => {
-    if (open) {
-      (async () => {
-        try {
-          setIsLoading(true);
-          const response = await getCompletedChallenges(
-            codewarsUsername,
-            pageNumber
-          );
-          
+  const handleOpen = async () => {
+    try {
+      setIsLoading(true);
+      const response = await getCompletedChallenges(
+        codewarsUsername,
+        pageNumber
+      );
 
-          if ("data" in response) {
-            const { data: challenges } = response.data;
-            setCompletedChallenges(challenges);
-          } else {
-            // TODO: Handle cases where data is missing
-          }
-        } catch (error) {
-          // TODO: Handle errors gracefully
-        } finally {
-          setIsLoading(false);
-          // TODO: Add additional cleanup or updates if needed
-        }
-      })();
+      if ("data" in response) {
+        const { data: challenges } = response.data;
+        setCompletedChallenges(challenges);
+      } else {
+        // TODO: Handle cases where data is missing
+      }
+    } catch (error) {
+      // TODO: Handle errors gracefully
+      // console.error("Error fetching challenges: ", error);
+      setError(true);
+    } finally {
+      setIsLoading(false);
+      // TODO: Add additional cleanup or updates if needed
     }
+  };
+
+  React.useEffect(() => {
+    open && handleOpen();
   }, [open, codewarsUsername, pageNumber]);
+
+  const handleRetry = () => {
+    setError(false); // Clear the error
+    setIsLoading(true); // Re-initiate loading state
+    handleOpen();
+  };
 
   return (
     <React.Fragment>
@@ -122,7 +129,12 @@ export function UserInTable({ userInDB }: TableProps) {
               <Typography variant="h6" gutterBottom component="div">
                 Codewars Challenges Completed
               </Typography>
-              {isLoading ? (
+              {error ? (
+                <ErrorUI
+                  message="Oops, we couldn’t fetch your challenge list from Codewars. If you’ve changed your username on Codewars, click 'Reconnect.' Otherwise, it’s likely a network issue—please check your connection and try again!"
+                  onRetry={handleRetry}
+                />
+              ) : isLoading ? (
                 <LoadingUI
                   title="Loading Challenges"
                   message="Retrieving data from Codewars. Please wait..."

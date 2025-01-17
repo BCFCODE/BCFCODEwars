@@ -34,8 +34,8 @@ const Step4 = ({ session }: StepProps) => {
           backgroundColor: "background.default",
           borderRadius: 3,
           boxShadow: 5,
-          display: 'flex',
-          flexDirection: 'column'
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <Box>
@@ -48,7 +48,7 @@ const Step4 = ({ session }: StepProps) => {
               textAlign: "center",
             }}
           >
-            🎉 Well Done, {userName}!
+            🎉 Great job, {userName}!
           </Typography>
           <Typography
             variant="body1"
@@ -57,10 +57,11 @@ const Step4 = ({ session }: StepProps) => {
               color: "text.secondary",
             }}
           >
-            We&apos;ve analyzed your Codewars activity and placed you in the
-            right spot on our BCFCODE leaderboard. You can easily see your
-            position, explore your stats, and discover more about your
-            performance.
+            Your Codewars activity has been analyzed, and you’re now ranked on
+            the BCFCODE leaderboard. Check out your position, explore your
+            stats, and dive into your performance. Ready to climb higher and
+            tackle new challenges? Click the button below to visit the
+            leaderboard and keep the momentum going!
           </Typography>
           <Typography
             variant="body1"
