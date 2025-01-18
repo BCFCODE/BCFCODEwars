@@ -6,6 +6,7 @@ import { diamondTextStyle } from "../../styles";
 import { TableProps } from "../../Table";
 
 const { getSingleChallenge } = new CodewarsService();
+
 interface Props extends TableProps {
   challenge: CodewarsCompletedChallenge;
 }

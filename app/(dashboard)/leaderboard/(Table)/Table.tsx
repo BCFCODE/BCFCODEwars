@@ -21,7 +21,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useCallback } from "react";
 import LeaderboardAvatar from "./Avatar";
 import GetDiamondsButton from "./Buttons/GetDiamonds/GetDiamondsButton";
 import OpenButton from "./Buttons/OpenButton";
@@ -46,7 +46,7 @@ export function UserInTable({ userInDB }: TableProps) {
 
   const codewarsUsername = userInDB.codewars?.username;
 
-  const handleOpen = async () => {
+  const handleOpen = useCallback(async () => {
     try {
       setIsLoading(true);
       const response = await getCompletedChallenges(
@@ -68,11 +68,11 @@ export function UserInTable({ userInDB }: TableProps) {
       setIsLoading(false);
       // TODO: Add additional cleanup or updates if needed
     }
-  };
+  }, [codewarsUsername, pageNumber]);
 
   React.useEffect(() => {
     open && handleOpen();
-  }, [open, codewarsUsername, pageNumber]);
+  }, [open, codewarsUsername, pageNumber, handleOpen]);
 
   const handleRetry = () => {
     setError(false); // Clear the error
