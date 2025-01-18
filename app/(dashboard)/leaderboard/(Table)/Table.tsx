@@ -190,17 +190,19 @@ export default function Leaderboard() {
   const [isLoading, setLoading] = React.useState<boolean>(true);
   const columns = 7;
 
+  const fetchUsersFromDatabaseAndBuildLeaderBoard = async () => {
+    try {
+      const fetchedUsers = await fetchDatabaseUsers();
+      setUsers(fetchedUsers as DatabaseUser[]);
+    } catch (error) {
+      console.error("Error loading leaderboard data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   React.useEffect(() => {
-    (async () => {
-      try {
-        const fetchUsers = await fetchDatabaseUsers();
-        setUsers(fetchUsers as DatabaseUser[]);
-      } catch (error) {
-        console.error("Error loading leaderboard data:", error);
-      } finally {
-        setLoading(false);
-      }
-    })();
+    fetchUsersFromDatabaseAndBuildLeaderBoard();
   }, []);
 
   return (
