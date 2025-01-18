@@ -1,12 +1,10 @@
 "use client";
 
 // app/(dashboard)/leaderboard/(Table)/Table.tsx
+import ErrorUI from "@/app/components/UI/ErrorUI";
 import LoadingUI from "@/app/components/UI/LoadingUI";
 import CodewarsService from "@/app/services/codewars-service";
-import {
-  CodewarsChallengesApiResponse,
-  CodewarsCompletedChallenge,
-} from "@/types/codewars";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { DatabaseUser } from "@/types/database";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import {
@@ -23,20 +21,19 @@ import {
 } from "@mui/material";
 import React, { useCallback } from "react";
 import LeaderboardAvatar from "./Avatar";
-import GetDiamondsButton from "./Buttons/GetDiamonds/GetDiamondsButton";
 import OpenButton from "./Buttons/OpenButton";
+import CodewarsCompletedChallengesTable from "./Codewars/Table/Table";
 import { fetchDatabaseUsers } from "./Data";
 import SkeletonTableRow from "./Skeleton";
 import { diamondTextStyle, textStyles } from "./styles";
-import { useRouter } from "next/navigation";
-import ErrorUI from "@/app/components/UI/ErrorUI";
 
 const { getCompletedChallenges } = new CodewarsService();
-export interface TableProps {
-  userInDB: DatabaseUser;
-}
 
-export function UserInTable({ userInDB }: TableProps) {
+export function FillTableWithDatabaseUsers({
+  userInDB,
+}: {
+  userInDB: DatabaseUser;
+}) {
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [completedChallenges, setCompletedChallenges] =
@@ -84,10 +81,7 @@ export function UserInTable({ userInDB }: TableProps) {
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
-          {/* Expand/Collapse button */}
-          {/* <Link href={`?username=${codewarsUsername}&pageNumber=${pageNumber}`}> */}
           <OpenButton {...{ userInDB, open }} onOpen={() => setOpen(!open)} />
-          {/* </Link> */}
         </TableCell>
         <TableCell
           sx={{ ...textStyles, display: "flex", alignItems: "center", gap: 1 }}
@@ -127,7 +121,7 @@ export function UserInTable({ userInDB }: TableProps) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Codewars Challenges Completed
+                Codewars Completed Challenges
               </Typography>
               {error ? (
                 <ErrorUI
@@ -140,42 +134,9 @@ export function UserInTable({ userInDB }: TableProps) {
                   message="Retrieving data from Codewars. Please wait..."
                 />
               ) : (
-                <Table size="small" aria-label="completed challenges">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell sx={textStyles}>Date completed</TableCell>
-                      <TableCell sx={textStyles}>Challenge Name</TableCell>
-                      <TableCell sx={textStyles} align="right">
-                        Earned Diamonds
-                      </TableCell>
-                      <TableCell sx={textStyles} align="right">
-                        Solved Time
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {completedChallenges?.map((challenge) => (
-                      <TableRow key={challenge.id}>
-                        <TableCell sx={textStyles} component="th" scope="row">
-                          {new Date(challenge.completedAt).toLocaleDateString()}
-                        </TableCell>
-                        <TableCell sx={textStyles}>
-                          {challenge.name.length > 50
-                            ? `${challenge.name.slice(0, 50)}...`
-                            : challenge.name}
-                        </TableCell>
-                        <TableCell sx={textStyles} align="right">
-                          {/* Click and get diamonds */}
-                          <GetDiamondsButton {...{ userInDB, challenge }} />
-                        </TableCell>
-
-                        <TableCell sx={textStyles} align="right">
-                          {new Date(challenge.completedAt).toLocaleTimeString()}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                <CodewarsCompletedChallengesTable
+                  {...{ userInDB, completedChallenges }}
+                />
               )}
             </Box>
           </Collapse>
@@ -234,7 +195,10 @@ export default function Leaderboard() {
                 <SkeletonTableRow key={i} nOfCols={columns} />
               ))
             : users.map((user: DatabaseUser) => (
-                <UserInTable key={user.email} {...{ userInDB: user }} />
+                <FillTableWithDatabaseUsers
+                  key={user.email}
+                  {...{ userInDB: user }}
+                />
               ))}
         </TableBody>
       </Table>

@@ -2,8 +2,8 @@ import CodewarsService from "@/app/services/codewars-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
-import { diamondTextStyle } from "../../styles";
-import { TableProps } from "../../Table";
+import { diamondTextStyle } from "../../../styles";
+import { TableProps } from "../../../Table";
 
 const { getSingleChallenge } = new CodewarsService();
 
