@@ -3,7 +3,7 @@
 import DatabaseService from "@/app/services/db-service";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getDatabase, getAllUsers } = new DatabaseService();
+const { getAllUsers } = new DatabaseService();
 
 export async function GET(request: NextRequest) {
   try {

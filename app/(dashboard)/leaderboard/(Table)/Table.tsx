@@ -1,6 +1,7 @@
 "use client";
 
 // app/(dashboard)/leaderboard/(Table)/Table.tsx
+import APIUsersService from "@/app/api/services/users-service";
 import ErrorUI from "@/app/components/UI/ErrorUI";
 import LoadingUI from "@/app/components/UI/LoadingUI";
 import CodewarsService from "@/app/services/codewars-service";
@@ -23,11 +24,11 @@ import React, { useCallback } from "react";
 import LeaderboardAvatar from "./Avatar";
 import OpenButton from "./Buttons/OpenButton";
 import CodewarsCompletedChallengesTable from "./Codewars/Table/Table";
-import { fetchDatabaseUsers } from "./Data";
 import SkeletonTableRow from "./Skeleton";
 import { diamondTextStyle, textStyles } from "./styles";
 
 const { getCompletedChallenges } = new CodewarsService();
+const { getUsers } = new APIUsersService();
 
 export function FillTableWithDatabaseUsers({
   userInDB,
@@ -151,9 +152,9 @@ export default function Leaderboard() {
   const [isLoading, setLoading] = React.useState<boolean>(true);
   const columns = 7;
 
-  const fetchUsersFromDatabaseAndBuildLeaderBoard = async () => {
+  const fetchUsersFromDatabase = async () => {
     try {
-      const fetchedUsers = await fetchDatabaseUsers();
+      const fetchedUsers = await getUsers();
       setUsers(fetchedUsers as DatabaseUser[]);
     } catch (error) {
       console.error("Error loading leaderboard data:", error);
@@ -163,7 +164,7 @@ export default function Leaderboard() {
   };
 
   React.useEffect(() => {
-    fetchUsersFromDatabaseAndBuildLeaderBoard();
+    fetchUsersFromDatabase();
   }, []);
 
   return (
