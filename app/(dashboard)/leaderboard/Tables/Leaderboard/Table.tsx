@@ -49,8 +49,9 @@ export function LeaderboardUsers() {
 
   const codewarsUsername = codewars?.username;
 
-  const handleOpen = useCallback(async () => {
+  const handleOpen = async () => {
     try {
+      setOpen(!open);
       setIsLoading(true);
       const response = await getCompletedChallenges(
         codewarsUsername,
@@ -69,13 +70,10 @@ export function LeaderboardUsers() {
       setError(true);
     } finally {
       setIsLoading(false);
+
       // TODO: Add additional cleanup or updates if needed
     }
-  }, [codewarsUsername, pageNumber]);
-
-  React.useEffect(() => {
-    open && handleOpen();
-  }, [open, codewarsUsername, pageNumber, handleOpen]);
+  };
 
   const handleRetry = () => {
     setError(false); // Clear the error
@@ -91,7 +89,7 @@ export function LeaderboardUsers() {
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
-          <OpenButton {...{ open, onOpen: () => setOpen(!open) }} />
+          <OpenButton {...{ open, handleOpen }} />
         </TableCell>
         <TableCell
           sx={{ ...textStyles, display: "flex", alignItems: "center", gap: 1 }}

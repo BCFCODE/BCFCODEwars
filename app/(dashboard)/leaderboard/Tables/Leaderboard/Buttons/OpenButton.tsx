@@ -6,10 +6,10 @@ import { IconButton } from "@mui/material";
 
 interface Props {
   open: boolean;
-  onOpen: () => void;
+  handleOpen: () => void;
 }
 
-const OpenButton = ({ open, onOpen }: Props) => {
+const OpenButton = ({ open, handleOpen }: Props) => {
   const {
     currentUser: { codewars },
   } = useDatabaseUserContext();
@@ -20,7 +20,7 @@ const OpenButton = ({ open, onOpen }: Props) => {
         <IconButton
           aria-label="Toggle challenge details"
           size="small"
-          onClick={onOpen}
+          onClick={handleOpen}
         >
           {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
         </IconButton>

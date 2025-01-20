@@ -11,12 +11,13 @@ interface Props {
   challenge: CodewarsCompletedChallenge;
 }
 
-const GetDiamondsButton = ({ challenge: { id } }: Props) => {
+const GetDiamonds = ({ challenge: { id } }: Props) => {
   const {
     currentUser: {
       codewars: { username },
     },
   } = useDatabaseUserContext();
+  
   return (
     <Box sx={diamondTextStyle}>
       {/* TODO: Send a request to codewars api to catch this specific solved problem and write it to our database */}
@@ -37,4 +38,4 @@ const GetDiamondsButton = ({ challenge: { id } }: Props) => {
   );
 };
 
-export default GetDiamondsButton;
+export default GetDiamonds;
