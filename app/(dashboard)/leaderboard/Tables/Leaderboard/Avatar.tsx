@@ -1,3 +1,4 @@
+import useDatabaseUserContext from "@/app/context/hooks/useDatabaseUserContext";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
@@ -31,11 +32,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-interface Props {
-  image?: string;
-}
-
-export default function LeaderboardAvatar({ image }: Props) {
+export default function LeaderboardAvatar() {
+  const {
+    currentUser: { image },
+  } = useDatabaseUserContext();
   return (
     <StyledBadge
       overlap="circular"

@@ -1,12 +1,12 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
-import { CodewarsTableProps } from "./Table";
+
 import { textStyles } from "../../styles";
 import GetDiamondsButton from "./Buttons/GetDiamondsButton";
+import useCodewarsContext from "../../../../context/hooks/useCodewarsContext";
 
-export default function CodewarsCompletedChallengesTableBody({
-  userInDB,
-  completedChallenges,
-}: CodewarsTableProps) {
+export default function CodewarsCompletedChallengesTableBody() {
+  const { completedChallenges } = useCodewarsContext();
+
   return (
     <>
       <TableBody>
@@ -25,7 +25,7 @@ export default function CodewarsCompletedChallengesTableBody({
             </TableCell>
             <TableCell sx={textStyles} align="right">
               {/* Click and get diamonds */}
-              <GetDiamondsButton {...{ userInDB, challenge }} />
+              <GetDiamondsButton {...{ challenge }} />
             </TableCell>
             <TableCell sx={textStyles} align="right">
               {new Date(challenge.completedAt).toLocaleTimeString()}

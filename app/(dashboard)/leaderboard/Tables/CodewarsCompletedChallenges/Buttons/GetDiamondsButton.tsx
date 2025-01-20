@@ -1,23 +1,22 @@
+import useDatabaseUserContext from "@/app/context/hooks/useDatabaseUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { diamondTextStyle } from "../../../styles";
-import { DatabaseUser } from "@/types/database";
 
 const { getSingleChallenge } = new CodewarsService();
 
 interface Props {
   challenge: CodewarsCompletedChallenge;
-  userInDB: DatabaseUser;
 }
 
-const GetDiamondsButton = ({
-  userInDB: {
-    codewars: { username },
-  },
-  challenge: { id },
-}: Props) => {
+const GetDiamondsButton = ({ challenge: { id } }: Props) => {
+  const {
+    currentUser: {
+      codewars: { username },
+    },
+  } = useDatabaseUserContext();
   return (
     <Box sx={diamondTextStyle}>
       {/* TODO: Send a request to codewars api to catch this specific solved problem and write it to our database */}

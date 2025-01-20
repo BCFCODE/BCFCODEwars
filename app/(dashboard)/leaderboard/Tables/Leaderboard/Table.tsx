@@ -2,8 +2,10 @@
 
 // app/(dashboard)/leaderboard/(Table)/Table.tsx
 import APIUsersService from "@/app/api/services/users-service";
+import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
-import LoadingUI from "@/app/components/UI/LoadingUI";
+import DatabaseUserProvider from "@/app/context/DatabaseUserProvider";
+import useDatabaseUserContext from "@/app/context/hooks/useDatabaseUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { DatabaseUser } from "@/types/database";
@@ -21,19 +23,22 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import React, { useCallback } from "react";
+import CodewarsProvider from "../../../../context/CodewarsProvider";
+import { diamondTextStyle, textStyles } from "../../styles";
+import CodewarsCompletedChallengesTable from "../CodewarsCompletedChallenges/Table";
 import LeaderboardAvatar from "./Avatar";
 import OpenButton from "./Buttons/OpenButton";
-import CodewarsCompletedChallengesTable from "../CodewarsCompletedChallenges/Table";
 import SkeletonTableRow from "./Skeleton";
-import { diamondTextStyle, textStyles } from "../../styles";
-import { useRouter } from "next/navigation";
-import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 
 const { getCompletedChallenges } = new CodewarsService();
 const { getUsers } = new APIUsersService();
 
-export function LeaderboardUsers({ userInDB }: { userInDB: DatabaseUser }) {
+export function LeaderboardUsers() {
+  const {
+    currentUser: { codewars, name, createdAt, lastLogin },
+  } = useDatabaseUserContext();
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -42,7 +47,7 @@ export function LeaderboardUsers({ userInDB }: { userInDB: DatabaseUser }) {
   const [error, setError] = React.useState(false);
   const [pageNumber, setPageNumber] = React.useState(0);
 
-  const codewarsUsername = userInDB.codewars?.username;
+  const codewarsUsername = codewars?.username;
 
   const handleOpen = useCallback(async () => {
     try {
@@ -86,14 +91,14 @@ export function LeaderboardUsers({ userInDB }: { userInDB: DatabaseUser }) {
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>
-          <OpenButton {...{ userInDB, open }} onOpen={() => setOpen(!open)} />
+          <OpenButton {...{ open, onOpen: () => setOpen(!open) }} />
         </TableCell>
         <TableCell
           sx={{ ...textStyles, display: "flex", alignItems: "center", gap: 1 }}
           component="th"
           scope="row"
         >
-          <LeaderboardAvatar image={userInDB.image} />
+          <LeaderboardAvatar />
           <Typography
             variant="body2"
             sx={{
@@ -102,14 +107,14 @@ export function LeaderboardUsers({ userInDB }: { userInDB: DatabaseUser }) {
               textOverflow: "ellipsis",
             }}
           >
-            {userInDB.name}
+            {name}
           </Typography>
         </TableCell>
         <TableCell sx={textStyles} align="right">
-          {new Date(userInDB.createdAt).toLocaleDateString()}
+          {new Date(createdAt).toLocaleDateString()}
         </TableCell>
         <TableCell sx={textStyles} align="right">
-          {new Date(userInDB.lastLogin).toLocaleTimeString()}
+          {new Date(lastLogin).toLocaleTimeString()}
         </TableCell>
         <TableCell sx={{ ...textStyles }} align="right">
           <Box sx={diamondTextStyle}>
@@ -124,46 +129,16 @@ export function LeaderboardUsers({ userInDB }: { userInDB: DatabaseUser }) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Codewars Completed Challenges
-              </Typography>
-              {error ? (
-                <ErrorUI>
-                  <Typography variant="body1" color="text.secondary">
-                    Oops, we couldn’t fetch your challenge list from Codewars.
-                    If you’ve changed your username on Codewars, click
-                    &apos;Reconnect&apos; Otherwise, it’s likely a network
-                    issue—please check your connection and try again!
-                  </Typography>
-                  <ErrorButtonContainer>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={handleRetry}
-                    >
-                      Try Again
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleReconnect}
-                    >
-                      Reconnect
-                    </Button>
-                  </ErrorButtonContainer>
-                </ErrorUI>
-              ) : isLoading ? (
-                <LoadingUI
-                  title="Loading Challenges"
-                  message="Retrieving data from Codewars. Please wait..."
-                />
-              ) : (
-                <CodewarsCompletedChallengesTable
-                  {...{ userInDB, completedChallenges }}
-                />
-              )}
-            </Box>
+            <CodewarsProvider context={{ completedChallenges }}>
+              <CodewarsCompletedChallengesTable
+                {...{
+                  handleReconnect,
+                  handleRetry,
+                  error,
+                  isLoading,
+                }}
+              />
+            </CodewarsProvider>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -172,7 +147,7 @@ export function LeaderboardUsers({ userInDB }: { userInDB: DatabaseUser }) {
 }
 
 export default function Leaderboard() {
-  const [users, setUsers] = React.useState<DatabaseUser[]>([]);
+  const [allUsers, setAllUsers] = React.useState<DatabaseUser[]>([]);
   const [isLoading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<boolean>(false);
   const columns = 6;
@@ -183,7 +158,7 @@ export default function Leaderboard() {
       if (!fetchedUsers.success) {
         setError(true);
       }
-      setUsers(fetchedUsers.users as DatabaseUser[]);
+      setAllUsers(fetchedUsers.users as DatabaseUser[]);
     } catch (error) {
       console.error("Error loading leaderboard data:", error);
     } finally {
@@ -272,8 +247,13 @@ export default function Leaderboard() {
             ? Array.from({ length: 10 }).map((_, i) => (
                 <SkeletonTableRow key={i} nOfCols={columns} />
               ))
-            : users.map((user: DatabaseUser) => (
-                <LeaderboardUsers key={user.email} {...{ userInDB: user }} />
+            : allUsers.map((currentUser: DatabaseUser) => (
+                <DatabaseUserProvider
+                  key={currentUser.email}
+                  context={{ allUsers, currentUser }}
+                >
+                  <LeaderboardUsers />
+                </DatabaseUserProvider>
               ))}
         </TableBody>
       </Table>
