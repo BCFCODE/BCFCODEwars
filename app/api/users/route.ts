@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     const users = await getAllUsers();
 
     // Return the users as JSON
-    return NextResponse.json({ users });
+    return NextResponse.json({ success: true, users }, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(
