@@ -1,8 +1,7 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
-
 import { CodewarsTableProps } from "./Table";
 import { textStyles } from "../../styles";
-import GetDiamondsButton from "../Buttons/GetDiamonds/GetDiamondsButton";
+import GetDiamondsButton from "./Buttons/GetDiamondsButton";
 
 export default function CodewarsCompletedChallengesTableBody({
   userInDB,

@@ -3,12 +3,13 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { diamondTextStyle } from "../../../styles";
-import { TableProps } from "../../../Table";
+import { DatabaseUser } from "@/types/database";
 
 const { getSingleChallenge } = new CodewarsService();
 
-interface Props extends TableProps {
+interface Props {
   challenge: CodewarsCompletedChallenge;
+  userInDB: DatabaseUser;
 }
 
 const GetDiamondsButton = ({

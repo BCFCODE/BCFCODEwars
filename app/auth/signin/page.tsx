@@ -3,7 +3,7 @@ import { providerMap } from "../../../auth";
 import { handleSignIn } from "./signInHandler";
 import { SignInPage } from "@toolpad/core/SignInPage";
 import { Box, SxProps, Theme } from "@mui/material";
-import LeaderBoard from "@/app/(dashboard)/leaderboard/(Table)/Table";
+import LeaderBoard from "@/app/(dashboard)/leaderboard/Tables/Leaderboard/Table";
 
 export const metadata: Metadata = {
   title: "Sign in",

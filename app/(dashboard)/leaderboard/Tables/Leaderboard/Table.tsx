@@ -24,20 +24,16 @@ import {
 import React, { useCallback } from "react";
 import LeaderboardAvatar from "./Avatar";
 import OpenButton from "./Buttons/OpenButton";
-import CodewarsCompletedChallengesTable from "./Codewars/Table/Table";
+import CodewarsCompletedChallengesTable from "../CodewarsCompletedChallenges/Table";
 import SkeletonTableRow from "./Skeleton";
-import { diamondTextStyle, textStyles } from "./styles";
+import { diamondTextStyle, textStyles } from "../../styles";
 import { useRouter } from "next/navigation";
 import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 
 const { getCompletedChallenges } = new CodewarsService();
 const { getUsers } = new APIUsersService();
 
-export function FillTableWithDatabaseUsers({
-  userInDB,
-}: {
-  userInDB: DatabaseUser;
-}) {
+export function LeaderboardUsers({ userInDB }: { userInDB: DatabaseUser }) {
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -277,10 +273,7 @@ export default function Leaderboard() {
                 <SkeletonTableRow key={i} nOfCols={columns} />
               ))
             : users.map((user: DatabaseUser) => (
-                <FillTableWithDatabaseUsers
-                  key={user.email}
-                  {...{ userInDB: user }}
-                />
+                <LeaderboardUsers key={user.email} {...{ userInDB: user }} />
               ))}
         </TableBody>
       </Table>

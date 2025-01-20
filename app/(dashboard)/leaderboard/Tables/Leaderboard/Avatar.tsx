@@ -42,7 +42,7 @@ export default function LeaderboardAvatar({ image }: Props) {
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       variant="dot"
     >
-      <Avatar alt="Remy Sharp" src={image} />
+      <Avatar alt="User's Avatar" src={image} />
     </StyledBadge>
   );
 }
