@@ -2,7 +2,7 @@ import LoadingUI from "./components/UI/LoadingUI";
 
 const Loading = () => {
   return (
-    <LoadingUI head="Welcome to BCFCODE" body="Setting up your dashboard..." />
+    <LoadingUI title="Welcome to BCFCODE" message="Setting up your dashboard..." />
   );
 };
 

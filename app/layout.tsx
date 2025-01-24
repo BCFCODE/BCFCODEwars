@@ -4,9 +4,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExploreIcon from "@mui/icons-material/Explore";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Navigation } from "@toolpad/core";
-import { AppProvider } from "@toolpad/core/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
@@ -17,7 +15,10 @@ import * as React from "react";
 import { auth } from "../auth";
 import { montserrat } from "../lib/fonts";
 import theme from "../theme";
-
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import { LinearProgress } from "@mui/material";
+import { NextAppProvider } from '@toolpad/core/nextjs';
+ 
 export const metadata: Metadata = {
   title: {
     template: "%s | BCFCODE",
@@ -137,17 +138,19 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
     >
       <body>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <AppProvider
-            navigation={NAVIGATION}
-            branding={BRANDING}
-            session={session}
-            authentication={AUTHENTICATION}
-            theme={theme}
-          >
-            {props.children}
-            <Analytics />
-            <SpeedInsights />
-          </AppProvider>
+          <React.Suspense fallback={<LinearProgress />}>
+            <NextAppProvider
+              navigation={NAVIGATION}
+              branding={BRANDING}
+              session={session}
+              authentication={AUTHENTICATION}
+              theme={theme}
+            >
+              {props.children}
+              <Analytics />
+              <SpeedInsights />
+            </NextAppProvider>
+          </React.Suspense>
         </AppRouterCacheProvider>
       </body>
     </html>

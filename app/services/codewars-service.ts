@@ -22,7 +22,7 @@ class CodewarsService {
   getCompletedChallenges = async (
     username: string,
     pageNumber: number
-  ): Promise<{ success: boolean; data: CodewarsChallengesApiResponse }> =>
+  ): Promise<CodewarsChallengesApiResponse> =>
     await fetch(
       `${baseURL}/api/wars/codewars/challenges/all?username=${username}&pageNumber=${pageNumber}`,
       { cache: "no-store" }

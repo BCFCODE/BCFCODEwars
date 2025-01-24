@@ -24,9 +24,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React, { useCallback } from "react";
+import React from "react";
 import CodewarsProvider from "../../../../context/CodewarsProvider";
-import { diamondTextStyle, textStyles } from "../../styles";
+import { diamondBoxStyle, textStyles } from "../../styles";
 import CodewarsCompletedChallengesTable from "../CodewarsCompletedChallenges/Table";
 import LeaderboardAvatar from "./Avatar";
 import OpenButton from "./Buttons/OpenButton";
@@ -50,9 +50,13 @@ export function LeaderboardUsers() {
   const codewarsUsername = codewars?.username;
 
   const handleOpen = async () => {
+    setOpen(!open);
+    setIsLoading(true);
+    handleTry();
+  };
+
+  const handleTry = async () => {
     try {
-      setOpen(!open);
-      setIsLoading(true);
       const response = await getCompletedChallenges(
         codewarsUsername,
         pageNumber
@@ -78,7 +82,7 @@ export function LeaderboardUsers() {
   const handleRetry = () => {
     setError(false); // Clear the error
     setIsLoading(true); // Re-initiate loading state
-    handleOpen();
+    handleRetry();
   };
 
   const handleReconnect = () => {
@@ -115,7 +119,7 @@ export function LeaderboardUsers() {
           {new Date(lastLogin).toLocaleTimeString()}
         </TableCell>
         <TableCell sx={{ ...textStyles }} align="right">
-          <Box sx={diamondTextStyle}>
+          <Box sx={diamondBoxStyle}>
             <Typography>{Math.floor(Math.random() * 100000)}</Typography>
             <DiamondIcon />
           </Box>

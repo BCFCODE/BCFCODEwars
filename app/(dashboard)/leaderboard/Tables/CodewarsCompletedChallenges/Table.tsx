@@ -1,6 +1,5 @@
 import LoadingUI from "@/app/components/UI/LoadingUI";
 import { Box, Table, Typography } from "@mui/material";
-import { error } from "console";
 import Error from "./Error";
 import CodewarsCompletedChallengesTableBody from "./TableBody";
 import { CodewarsCompletedChallengesTableHead } from "./TableHead";

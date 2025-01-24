@@ -10,7 +10,7 @@ export function CodewarsCompletedChallengesTableHead() {
           <TableCell sx={textStyles}>Challenge Name</TableCell>
           <TableCell sx={textStyles}>Rank</TableCell>
           <TableCell sx={textStyles} align="right">
-            Earned Diamonds
+            Diamonds
           </TableCell>
           <TableCell sx={textStyles} align="right">
             Solved Time
