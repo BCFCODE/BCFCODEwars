@@ -8,6 +8,7 @@ export const textStyles: SxProps = {
 export const diamondTextStyle: SxProps = {
   display: "flex",
   justifyContent: "flex-end",
+  alignItems: 'center'
 };
 
 

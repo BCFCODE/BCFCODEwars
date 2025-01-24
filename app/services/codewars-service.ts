@@ -22,7 +22,7 @@ class CodewarsService {
   getCompletedChallenges = async (
     username: string,
     pageNumber: number
-  ): Promise<CodewarsChallengesApiResponse> =>
+  ): Promise<{ success: boolean; data: CodewarsChallengesApiResponse }> =>
     await fetch(
       `${baseURL}/api/wars/codewars/challenges/all?username=${username}&pageNumber=${pageNumber}`,
       { cache: "no-store" }
@@ -43,7 +43,7 @@ class CodewarsService {
   getSingleChallenge = async (
     username: string,
     id: string
-  ): Promise<CodewarsChallenge> =>
+  ): Promise<{ success: boolean; data: CodewarsChallenge }> =>
     await fetch(
       `${baseURL}/api/wars/codewars/challenges/single?username=${username}&challengeId=${id}`
     )
@@ -59,6 +59,8 @@ class CodewarsService {
         // console.error(error);
         throw new Error("Failed to fetch single challenge.");
       });
+
+  collectLeaderboardDiamonds = () => {};
 }
 
 export default CodewarsService;

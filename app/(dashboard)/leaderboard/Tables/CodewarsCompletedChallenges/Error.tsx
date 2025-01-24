@@ -18,10 +18,10 @@ const Error = ({ onReconnect, onRetry }: Props) => {
         try again!
       </Typography>
       <ErrorButtonContainer>
-        <Button variant="outlined" color="primary" onClick={handleRetry}>
+        <Button variant="outlined" color="primary" onClick={onRetry}>
           Try Again
         </Button>
-        <Button variant="contained" color="secondary" onClick={handleReconnect}>
+        <Button variant="contained" color="secondary" onClick={onReconnect}>
           Reconnect
         </Button>
       </ErrorButtonContainer>
