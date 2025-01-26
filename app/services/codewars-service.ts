@@ -60,6 +60,8 @@ class CodewarsService {
         throw new Error("Failed to fetch single challenge.");
       });
 
+  
+
   collectLeaderboardDiamonds = () => {};
 }
 

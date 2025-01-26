@@ -1,34 +1,11 @@
 import DatabaseService from "@/app/services/db-service";
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
+import seedData from "./data";
 
 const { getCollections } = new DatabaseService();
 
 const uri: string | undefined = process.env.MONGODB_URI;
-
-const seedData = [
-  {
-    _id: new ObjectId("66de10e40acbb5c30fc4e49b"),
-    username: "Morteza",
-    email: "bcfcode@gmail.com",
-    password: "1234",
-    createdAt: new Date("2024-09-08T21:02:28.684Z"),
-  },
-  {
-    _id: new ObjectId(),
-    username: "Sepehr",
-    email: "sepehr.salimian11@gmail.com",
-    password: "1234",
-    createdAt: new Date(),
-  },
-  {
-    _id: new ObjectId(),
-    username: "Mahsa",
-    email: "mahsa.alamdari95@gmail.com",
-    password: "1234",
-    createdAt: new Date("2024-09-08T21:41:41.283Z"),
-  },
-];
 
 export async function GET(request: NextRequest) {
   /* 
