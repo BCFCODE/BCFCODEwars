@@ -1,6 +1,6 @@
 // app/services/db-service.ts
 
-import { Db, Document, MongoClient, WithId } from "mongodb";
+import { Db, Document, MongoClient, OptionalId, WithId } from "mongodb";
 
 class DatabaseService {
   private clientPromise: Promise<MongoClient>;
@@ -49,6 +49,23 @@ class DatabaseService {
     return await db.collection("users").findOne({ email });
   };
 
+  saveSingleUser = async <T>(newUser: T) => {
+    const { users } = await this.getCollections();
+    await users.insertOne(newUser as OptionalId<Document>);
+  };
+
+  updateSingleUser = async <T>(email: string, update: T) => {
+    const { users } = await this.getCollections();
+    await users.updateOne(
+      { email },
+      { $set: update as Readonly<Partial<Document>> }
+    );
+  };
+
+  closeConnection = async () => {
+    const client = await this.clientPromise;
+    await client.close();
+  };
 }
 
 export default DatabaseService;

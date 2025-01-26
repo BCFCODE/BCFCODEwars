@@ -1,17 +1,15 @@
 // app/api/auth/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { handleGoogleSignIn } from "@/lib/db/saveUser";
-import { validateUserData } from "./schema";
-import { GoogleUser } from "@/types/google";
+import GoogleService from "@/app/services/google-service";
+
+const { handleGoogleSignIn } = new GoogleService();
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const validatedUsername: GoogleUser = validateUserData(
-      body.user
-    ) as GoogleUser; // Validate input
+    const newUser = body.user;
 
-    const processedUser = await handleGoogleSignIn(validatedUsername);
+    const processedUser = await handleGoogleSignIn(newUser);
 
     return NextResponse.json({ user: processedUser });
   } catch (error: any) {
