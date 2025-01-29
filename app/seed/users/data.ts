@@ -2,7 +2,7 @@ import { ObjectId } from "mongodb";
 
 const seedData = [
   {
-    _id: new ObjectId("66de10e40acbb5c30fc4e49b"),
+    _id: new ObjectId("6742cc5470e85826d17dfbbe"),
     username: "Morteza",
     email: "bcfcode@gmail.com",
     password: "1234",

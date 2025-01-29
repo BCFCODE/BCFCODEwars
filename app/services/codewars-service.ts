@@ -1,7 +1,7 @@
 // app/services/codewars-service.ts
 
 import {
-  CodewarsChallenge,
+  CodewarsSingleChallenge,
   CodewarsChallengesApiResponse,
 } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
@@ -19,6 +19,7 @@ class CodewarsService {
     ...
   */
 
+  // Read
   getCompletedChallenges = async (
     username: string,
     pageNumber: number
@@ -43,7 +44,7 @@ class CodewarsService {
   getSingleChallenge = async (
     username: string,
     id: string
-  ): Promise<{ success: boolean; data: CodewarsChallenge }> =>
+  ): Promise<{ success: boolean; data: CodewarsSingleChallenge }> =>
     await fetch(
       `${baseURL}/api/wars/codewars/challenges/single?username=${username}&challengeId=${id}`
     )
@@ -59,8 +60,6 @@ class CodewarsService {
         // console.error(error);
         throw new Error("Failed to fetch single challenge.");
       });
-
-  
 
   collectLeaderboardDiamonds = () => {};
 }

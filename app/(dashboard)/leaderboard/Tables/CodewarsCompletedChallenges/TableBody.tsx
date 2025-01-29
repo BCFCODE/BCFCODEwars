@@ -1,11 +1,19 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
 
+import { CodewarsSingleChallenge } from "@/types/codewars";
+import { useState } from "react";
+import useCodewarsContext from "../../../../context/hooks/useCodewarsContext";
 import { textStyles } from "../../styles";
 import CollectDiamonds from "./Buttons/CollectDiamonds";
-import useCodewarsContext from "../../../../context/hooks/useCodewarsContext";
 
 export default function CodewarsCompletedChallengesTableBody() {
   const { completedChallenges } = useCodewarsContext();
+  const [rank, setRank] = useState<number>();
+
+  const manageSelectedChallenge = (selectedSingleChallenge: CodewarsSingleChallenge) => {
+    console.log("selectedSingleChallenge = ", selectedSingleChallenge);
+    // setRank(challenge.)
+  };
 
   return (
     <>
@@ -21,11 +29,11 @@ export default function CodewarsCompletedChallengesTableBody() {
                 : challenge.name}
             </TableCell>
             <TableCell sx={textStyles} align="right">
-              {/* Challenge Rank */}
+              {rank}
             </TableCell>
             <TableCell sx={textStyles} align="right">
               {/* Click and get diamonds */}
-              <CollectDiamonds {...{ challenge }} />
+              <CollectDiamonds {...{ challenge, manageSelectedChallenge }} />
             </TableCell>
             <TableCell sx={textStyles} align="right">
               {new Date(challenge.completedAt).toLocaleTimeString()}

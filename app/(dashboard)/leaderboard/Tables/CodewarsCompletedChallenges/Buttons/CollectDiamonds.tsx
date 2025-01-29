@@ -1,4 +1,10 @@
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import useDatabaseUserContext from "@/app/context/hooks/useDatabaseUserContext";
+import CodewarsService from "@/app/services/codewars-service";
+import DiamondsService from "@/app/services/diamonds-service";
+import {
+  CodewarsCompletedChallenge,
+  CodewarsSingleChallenge,
+} from "@/types/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -10,29 +16,52 @@ import {
   fade,
   iconButtonStyles,
 } from "../../../styles";
-import useDiamonds from "../hooks/useDiamonds";
+
+const { getSingleChallenge } = new CodewarsService();
+const { collectDiamonds } = new DiamondsService();
 
 interface Props {
   challenge: CodewarsCompletedChallenge;
+  manageSelectedChallenge: (
+    selectedSingleChallenge: CodewarsSingleChallenge
+  ) => void;
 }
 
-const CollectDiamonds = ({ challenge: { id } }: Props) => {
-  const { collectDiamonds } = useDiamonds(id);
+const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
+  const { currentUser } = useDatabaseUserContext();
   const [isLoading, setLoading] = useState(false);
-  const [collectedDiamonds, setCollectedDiamonds] = useState<number>();
+  const [collectedDiamondsCount, setCollectedDiamondsCount] =
+    useState<number>();
   const [isCollected, setIsCollected] = useState<boolean>();
-  const [collectingCounter, setCounter] = useState<number>(0);
+  const [collectingCount, setCounter] = useState<number>(0);
+
+  const handleClick = async () => {
+    setLoading(true);
+
+    const { data: selectedSingleChallenge, success } = await getSingleChallenge(
+      currentUser.codewars.username,
+      challenge.id
+    );
+
+    const { collectedDiamondsCount } = await collectDiamonds(
+      selectedSingleChallenge
+    );
+
+    success && setCollectedDiamondsCount(collectedDiamondsCount);
+
+    manageSelectedChallenge(selectedSingleChallenge);
+  };
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
 
     if (isLoading && !isCollected) {
       timer = setTimeout(() => {
-        setCounter((collectingCounter) => collectingCounter + 1);
+        setCounter((collectingCount) => collectingCount + 1);
       }, 50);
     }
 
-    if (collectingCounter >= (collectedDiamonds ?? 500)) {
+    if (collectingCount >= (collectedDiamondsCount ?? 500)) {
       setLoading(false);
       setIsCollected(true);
     }
@@ -42,23 +71,19 @@ const CollectDiamonds = ({ challenge: { id } }: Props) => {
     return () => {
       timer && clearTimeout(timer);
     };
-  }, [isLoading, isCollected, collectingCounter]);
+  }, [isLoading, isCollected, collectingCount]);
 
   return (
     <Box sx={diamondBoxStyle}>
       <Typography sx={diamondTextStyle}>
-        {isLoading ? collectingCounter : collectedDiamonds}
+        {isLoading ? collectingCount : collectedDiamondsCount}
       </Typography>
       {isCollected && <DiamondIcon sx={collectedDiamond} />}
       {!isCollected && (
         <IconButton
+          // disabled={selectedId === challenge.id}
           sx={iconButtonStyles}
-          onClick={async () => {
-            setLoading(true);
-            const { isCollected, rankId, collectedDiamonds } =
-              await collectDiamonds();
-            isCollected && setCollectedDiamonds(collectedDiamonds);
-          }}
+          onClick={handleClick}
         >
           <DiamondIcon sx={isLoading ? fade : diamondStyles} />
         </IconButton>

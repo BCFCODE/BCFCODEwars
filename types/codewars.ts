@@ -69,7 +69,7 @@ export type CodewarsChallengesApiResponse =
       reason: string;
     };
 
-export interface CodewarsChallenge {
+export interface CodewarsSingleChallenge {
   id: string; // Unique identifier for the challenge
   name: string; // Name of the challenge
   slug: string; // URL-friendly name of the challenge
