@@ -87,7 +87,11 @@ const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
   return (
     <Box sx={diamondBoxStyles}>
       <Typography sx={diamondTextStyles}>
-        {isLoading ? (counter < 4 ? "" : counter) : collectedDiamondsCount}
+        {isLoading
+          ? counter < 4
+            ? "" // Hide the count for the first 200ms (4 * 50ms = 200ms) to prevent flashing "0" on click, ensuring a smoother UX by avoiding unnecessary visual updates before the count starts.
+            : counter // Show counts after 4 * 50ms = 200ms
+          : collectedDiamondsCount}
       </Typography>
 
       {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}
