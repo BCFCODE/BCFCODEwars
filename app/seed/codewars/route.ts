@@ -1,5 +1,5 @@
 import DatabaseService from "@/app/services/db-service";
-import { MongoClient, ObjectId } from "mongodb";
+import { MongoClient } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import seedData from "./data";
 

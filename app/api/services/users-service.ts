@@ -1,4 +1,4 @@
-import { DatabaseUser } from "@/types/database";
+import { DBUser } from "@/types/db/users";
 import { baseURL } from "@/utils/constants";
 
 interface GetUsersAPIResponseError {
@@ -7,7 +7,7 @@ interface GetUsersAPIResponseError {
 }
 
 interface GetUsersAPIResponse extends GetUsersAPIResponseError {
-  users?: DatabaseUser[];
+  users?: DBUser[];
 }
 
 class APIUsersService {

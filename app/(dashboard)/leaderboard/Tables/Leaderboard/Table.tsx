@@ -8,7 +8,7 @@ import DatabaseUserProvider from "@/app/context/DatabaseUserProvider";
 import useDatabaseUserContext from "@/app/context/hooks/useDatabaseUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { DatabaseUser } from "@/types/database";
+import { DBUser } from "@/types/db/users";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import {
   Box,
@@ -149,7 +149,7 @@ export function LeaderboardUsers() {
 }
 
 export default function Leaderboard() {
-  const [allUsers, setAllUsers] = React.useState<DatabaseUser[]>([]);
+  const [allUsers, setAllUsers] = React.useState<DBUser[]>([]);
   const [isLoading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<boolean>(false);
   const columns = 6;
@@ -160,7 +160,7 @@ export default function Leaderboard() {
       if (!fetchedUsers.success) {
         setError(true);
       }
-      setAllUsers(fetchedUsers.users as DatabaseUser[]);
+      setAllUsers(fetchedUsers.users as DBUser[]);
     } catch (error) {
       console.error("Error loading leaderboard data:", error);
     } finally {
@@ -249,7 +249,7 @@ export default function Leaderboard() {
             ? Array.from({ length: 10 }).map((_, i) => (
                 <SkeletonTableRow key={i} nOfCols={columns} />
               ))
-            : allUsers.map((currentUser: DatabaseUser) => (
+            : allUsers.map((currentUser: DBUser) => (
                 <DatabaseUserProvider
                   key={currentUser.email}
                   context={{ allUsers, currentUser }}

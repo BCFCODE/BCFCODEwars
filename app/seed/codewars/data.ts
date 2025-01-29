@@ -44,11 +44,11 @@ const seedData = [
       totalItems: 1235,
       data: [
         {
-          // https://dev.codewars.com/#code-challenges-api
-          // https://www.codewars.com/api/v1/code-challenges/5782dd86202c0e43410001f6
           id: "5782dd86202c0e43410001f6",
           name: "Number , number ... wait LETTER !",
           slug: "number-number-dot-dot-dot-wait-letter",
+          // https://dev.codewars.com/#code-challenges-api
+          // https://www.codewars.com/api/v1/code-challenges/5782dd86202c0e43410001f6
           completedLanguages: ["javascript"],
           completedAt: "2025-01-11T10:08:25.255Z",
         },

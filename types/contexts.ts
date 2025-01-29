@@ -1,11 +1,11 @@
 import { CodewarsCompletedChallenge } from "./codewars";
-import { DatabaseUser } from "./database";
+import { DBUser } from "./db/users";
 
 export interface ICodewarsContext {
   completedChallenges: CodewarsCompletedChallenge[] | undefined;
 }
 
 export interface IDatabaseUserProvider {
-  currentUser: DatabaseUser;
-  allUsers: DatabaseUser[];
+  currentUser: DBUser;
+  allUsers: DBUser[];
 }

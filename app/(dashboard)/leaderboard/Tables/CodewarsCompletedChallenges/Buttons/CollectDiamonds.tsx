@@ -22,9 +22,7 @@ const { collectDiamonds } = new DiamondsService();
 
 interface Props {
   challenge: CodewarsCompletedChallenge;
-  manageSelectedChallenge: (
-    selectedSingleChallenge: CodewarsSingleChallenge
-  ) => void;
+  manageSelectedChallenge: (challenge: CodewarsSingleChallenge) => void;
 }
 
 const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
@@ -40,14 +38,14 @@ const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
     setIsLoading(true);
     setError(false);
 
-    const singleChallengeResponse = await getSingleChallenge(
+    const response = await getSingleChallenge(
       currentUser.codewars.username,
       challenge.id
     );
 
-    if (singleChallengeResponse.success) {
+    if (response.success) {
       setError(false);
-      const { data: selectedSingleChallenge } = singleChallengeResponse;
+      const { data: selectedSingleChallenge } = response;
       const { collectedDiamondsCount } = await collectDiamonds(
         selectedSingleChallenge
       );
@@ -55,9 +53,9 @@ const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
       manageSelectedChallenge(selectedSingleChallenge);
     }
 
-    if (!singleChallengeResponse.success) {
+    if (!response.success) {
       setError(true);
-      console.error(singleChallengeResponse.reason);
+      // console.error(response.reason);
       setIsLoading(false);
       setCounter(0);
     }

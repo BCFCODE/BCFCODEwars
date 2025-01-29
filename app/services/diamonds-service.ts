@@ -49,7 +49,7 @@ class DiamondsService {
       selectedSingleChallenge
     );
     console.log(
-      "challenge >>",
+      "diamonds-service, challenge >>",
       selectedSingleChallenge,
       "Number of diamonds: ",
       collectedDiamondsCount
