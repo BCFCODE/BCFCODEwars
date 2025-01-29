@@ -26,7 +26,7 @@ import {
 import { useRouter } from "next/navigation";
 import React from "react";
 import CodewarsProvider from "../../../../context/CodewarsProvider";
-import { diamondBoxStyle, textStyles } from "../../styles";
+import { diamondBoxStyles, textStyles } from "../../styles";
 import CodewarsCompletedChallengesTable from "../CodewarsCompletedChallenges/Table";
 import LeaderboardAvatar from "./Avatar";
 import OpenButton from "./Buttons/OpenButton";
@@ -119,7 +119,7 @@ export function LeaderboardUsers() {
           {new Date(lastLogin).toLocaleTimeString()}
         </TableCell>
         <TableCell sx={{ ...textStyles }} align="right">
-          <Box sx={diamondBoxStyle}>
+          <Box sx={diamondBoxStyles}>
             <Typography>{Math.floor(Math.random() * 100000)}</Typography>
             <DiamondIcon />
           </Box>

@@ -18,6 +18,8 @@ class CodewarsService {
 
     ...
   */
+  getRank = (challenge: CodewarsSingleChallenge): number =>
+    Math.abs(challenge.rank.id);
 
   // Read
   getCompletedChallenges = async (
@@ -30,9 +32,7 @@ class CodewarsService {
     )
       .then((response) => {
         if (!response.ok) {
-          throw new Error(
-            `Failed to fetch completed challenges: ${response.status} ${response.statusText}`
-          );
+          throw new Error(`Failed to fetch completed challenges`);
         }
         return response.json();
       })
@@ -44,22 +44,13 @@ class CodewarsService {
   getSingleChallenge = async (
     username: string,
     id: string
-  ): Promise<{ success: boolean; data: CodewarsSingleChallenge }> =>
+  ): Promise<
+    | { success: true; data: CodewarsSingleChallenge }
+    | { success: false; reason: string }
+  > =>
     await fetch(
       `${baseURL}/api/wars/codewars/challenges/single?username=${username}&challengeId=${id}`
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(
-            `Failed to fetch single challenge: ${response.status} ${response.statusText}`
-          );
-        }
-        return response.json();
-      })
-      .catch((error) => {
-        // console.error(error);
-        throw new Error("Failed to fetch single challenge.");
-      });
+    ).then((res) => res.json());
 
   collectLeaderboardDiamonds = () => {};
 }

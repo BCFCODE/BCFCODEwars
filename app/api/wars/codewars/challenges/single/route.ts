@@ -7,7 +7,10 @@ export async function GET(request: NextRequest) {
   // Validate input
   if (!challengeId) {
     return NextResponse.json(
-      { error: "challengeId field is required to fetch codewars challenge." },
+      {
+        success: false,
+        reason: "challengeId field is required to fetch codewars challenge.",
+      },
       { status: 400 }
     );
   }
@@ -27,7 +30,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error) {
-    console.error("Error fetching challenge", error);
+    console.error("Failed to fetch single challenge");
     return NextResponse.json(
       {
         success: false,

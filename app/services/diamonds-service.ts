@@ -1,4 +1,7 @@
 import { CodewarsSingleChallenge } from "@/types/codewars";
+import CodewarsService from "./codewars-service";
+
+const { getRank } = new CodewarsService();
 
 interface ScoreMap {
   codewars: { [key: number]: number };
@@ -31,18 +34,23 @@ class DiamondsService {
     },
   };
 
+  getDiamondsCount = (challenge: CodewarsSingleChallenge): number => {
+    const rank = getRank(challenge);
+    const calculatedScore = this.scoreMap.codewars[rank];
+    return calculatedScore;
+  };
+
   collectDiamonds = async (
     selectedSingleChallenge: CodewarsSingleChallenge
   ): Promise<{
     collectedDiamondsCount: number;
   }> => {
-    const rankId = Math.abs(selectedSingleChallenge.rank.id);
-    const collectedDiamondsCount = this.scoreMap.codewars[rankId];
+    const collectedDiamondsCount = this.getDiamondsCount(
+      selectedSingleChallenge
+    );
     console.log(
       "challenge >>",
       selectedSingleChallenge,
-      "Rank:",
-      rankId,
       "Number of diamonds: ",
       collectedDiamondsCount
     );
