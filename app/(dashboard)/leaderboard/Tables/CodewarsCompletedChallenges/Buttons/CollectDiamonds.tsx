@@ -2,17 +2,17 @@ import useDatabaseUserContext from "@/app/context/hooks/useDatabaseUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
 import {
-  CodewarsCompletedChallenge,
-  CodewarsSingleChallenge,
+  CodewarsCompletedChallenge
 } from "@/types/codewars";
+import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import {
   collectedDiamondStyles,
+  counterStyles,
   diamondBoxStyles,
   diamondStyles,
-  counterStyles,
   fade,
   iconButtonStyles,
 } from "../../../styles";
@@ -21,11 +21,18 @@ const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
 
 interface Props {
+  setIconButtonDisable: (isDisabled: boolean) => void;
+  isDisabled: boolean;
   challenge: CodewarsCompletedChallenge;
-  manageSelectedChallenge: (challenge: CodewarsSingleChallenge) => void;
+  manageSelectedChallenge: (challenge: DBCodewarsCompletedChallenge) => void;
 }
 
-const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
+const CollectDiamonds = ({
+  setIconButtonDisable,
+  isDisabled,
+  manageSelectedChallenge,
+  challenge,
+}: Props) => {
   const { currentUser } = useDatabaseUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -35,6 +42,7 @@ const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
   const [counter, setCounter] = useState<number>(0);
 
   const handleClick = async () => {
+    setIconButtonDisable(true);
     setIsLoading(true);
     setError(false);
 
@@ -50,10 +58,12 @@ const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
         selectedSingleChallenge
       );
       setCollectedDiamondsCount(collectedDiamondsCount);
-      manageSelectedChallenge(selectedSingleChallenge);
+
+      manageSelectedChallenge({ ...challenge, ...selectedSingleChallenge });
     }
 
     if (!response.success) {
+      setIconButtonDisable(false);
       setError(true);
       console.error(response.reason);
       setIsLoading(false);
@@ -70,7 +80,8 @@ const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
       }, 50);
     }
 
-    if (counter >= (collectedDiamondsCount ?? 500)) {
+    if (counter > (collectedDiamondsCount ?? 500)) {
+      setIconButtonDisable(false);
       setIsLoading(false);
       setIsCollected(true);
     }
@@ -94,7 +105,11 @@ const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
 
       {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}
       {!isCollected && (
-        <IconButton sx={iconButtonStyles} onClick={handleClick}>
+        <IconButton
+          disabled={isDisabled}
+          sx={iconButtonStyles}
+          onClick={handleClick}
+        >
           <DiamondIcon sx={isLoading || error ? fade(error) : diamondStyles} />
         </IconButton>
       )}

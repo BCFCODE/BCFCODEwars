@@ -1,15 +1,11 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
 
-import {
-  CodewarsCompletedChallenge,
-  CodewarsSingleChallenge,
-} from "@/types/codewars";
-import { useState } from "react";
-import useCodewarsContext from "../../../../context/hooks/useCodewarsContext";
-import CollectDiamonds from "./Buttons/CollectDiamonds";
 import CodewarsService from "@/app/services/codewars-service";
-import { codewarsCellStyles } from "../../styles";
 import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
+import { useEffect, useRef, useState } from "react";
+import useCodewarsContext from "../../../../context/hooks/useCodewarsContext";
+import { codewarsCellStyles } from "../../styles";
+import CollectDiamonds from "./Buttons/CollectDiamonds";
 
 const { getRank } = new CodewarsService();
 
@@ -18,20 +14,33 @@ export default function CodewarsCompletedChallengesTableBody() {
   const [challenges, setChallenges] = useState<DBCodewarsCompletedChallenge[]>(
     completedChallenges as DBCodewarsCompletedChallenge[]
   );
+  const [isDisabled, setIsDisabled] = useState(false);
+  const updatedChallengeListRef = useRef<DBCodewarsCompletedChallenge[]>(
+    completedChallenges as DBCodewarsCompletedChallenge[]
+  );
+
+  const setIconButtonDisable = (isDisable: boolean) => {
+    // Set true when IconButton clicked and false when counter count finished or response not successful
+    setIsDisabled(isDisable);
+  };
 
   const manageSelectedChallenge = (
-    selectedChallenge: CodewarsSingleChallenge
+    selectedChallenge: DBCodewarsCompletedChallenge
   ) => {
     console.log("selectedSingleChallenge", selectedChallenge);
     // Add selected challenge to challenges list
-    const newChallengeList = challenges.map((challenge) =>
-      challenge.id === selectedChallenge.id
-        ? { ...challenge, ...selectedChallenge }
-        : challenge
-    ) as DBCodewarsCompletedChallenge[];
-
-     setChallenges(newChallengeList);
+    const updatedChallengeList = challenges.map((challenge) =>
+      challenge.id === selectedChallenge.id ? selectedChallenge : challenge
+    );
+    updatedChallengeListRef.current = updatedChallengeList;
   };
+
+  useEffect(() => {
+    if (!isDisabled) {
+      // render new challenge list only after counter is finished
+      setChallenges(updatedChallengeListRef.current);
+    }
+  }, [isDisabled]);
 
   return (
     <>
@@ -51,7 +60,14 @@ export default function CodewarsCompletedChallengesTableBody() {
             </TableCell>
             <TableCell sx={codewarsCellStyles} align="right">
               {/* Click and get diamonds */}
-              <CollectDiamonds {...{ challenge, manageSelectedChallenge }} />
+              <CollectDiamonds
+                {...{
+                  setIconButtonDisable,
+                  isDisabled,
+                  challenge,
+                  manageSelectedChallenge,
+                }}
+              />
             </TableCell>
             <TableCell sx={codewarsCellStyles} align="right">
               {new Date(challenge.completedAt).toLocaleTimeString()}

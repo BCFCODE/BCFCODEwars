@@ -2,7 +2,6 @@ import { SxProps } from "@mui/material";
 
 export const diamondStyles: SxProps = {
   marginTop: 0.4,
-  // marginLeft: 0,
   color: "primary.main",
 };
 
