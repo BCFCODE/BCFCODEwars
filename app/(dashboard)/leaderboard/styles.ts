@@ -1,11 +1,13 @@
 import { SxProps } from "@mui/material";
 
 export const diamondStyles: SxProps = {
-  marginTop : 0.4,
+  marginTop: 0.4,
+  // marginLeft: 0,
   color: "primary.main",
 };
 
 export const fade = (error: boolean): SxProps => ({
+  ...diamondStyles,
   color: error ? "customPalette.goldOchre" : "initial",
   animation: `fade 700ms infinite`,
   "@keyframes fade": {
@@ -22,7 +24,7 @@ export const textStyles: SxProps = {
 
 export const codewarsCellStyles: SxProps = {
   ...textStyles,
-  p: 1.2,
+  p: 1,
 };
 
 export const diamondBoxStyles: SxProps = {
@@ -32,7 +34,7 @@ export const diamondBoxStyles: SxProps = {
   height: 5,
 };
 
-export const diamondTextStyles: SxProps = {
+export const counterStyles: SxProps = {
   mr: 0.35,
 };
 
@@ -40,4 +42,8 @@ export const collectedDiamondStyles: SxProps = {
   ...diamondStyles,
   mr: 1,
   color: "customPalette.roseGold", // "#B76E79" A softer, modern take on luxury with a pinkish-gold hue.
+};
+
+export const iconButtonStyles: SxProps = {
+  marginLeft: -1,
 };
