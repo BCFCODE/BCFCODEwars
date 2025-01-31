@@ -14,7 +14,6 @@ import {
   diamondStyles,
   diamondTextStyles,
   fade,
-  iconButtonStyles,
 } from "../../../styles";
 
 const { getSingleChallenge } = new CodewarsService();
@@ -55,7 +54,7 @@ const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
 
     if (!response.success) {
       setError(true);
-      // console.error(response.reason);
+      console.error(response.reason);
       setIsLoading(false);
       setCounter(0);
     }
@@ -94,11 +93,7 @@ const CollectDiamonds = ({ manageSelectedChallenge, challenge }: Props) => {
 
       {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}
       {!isCollected && (
-        <IconButton
-          // disabled={selectedId === challenge.id}
-          sx={iconButtonStyles}
-          onClick={handleClick}
-        >
+        <IconButton onClick={handleClick}>
           <DiamondIcon sx={isLoading || error ? fade(error) : diamondStyles} />
         </IconButton>
       )}

@@ -1,12 +1,8 @@
 import { SxProps } from "@mui/material";
 
 export const diamondStyles: SxProps = {
+  marginTop : 0.4,
   color: "primary.main",
-};
-
-export const iconButtonStyles: SxProps = {
-  ...diamondStyles,
-  ml: -1,
 };
 
 export const fade = (error: boolean): SxProps => ({
@@ -24,20 +20,24 @@ export const textStyles: SxProps = {
   // fontSize: { xs: "0.75rem", sm: "1rem" },
 };
 
+export const codewarsCellStyles: SxProps = {
+  ...textStyles,
+  p: 1.2,
+};
+
 export const diamondBoxStyles: SxProps = {
   display: "flex",
   justifyContent: "flex-end",
   alignItems: "center",
-  // height: 5,
+  height: 5,
 };
 
 export const diamondTextStyles: SxProps = {
-  mb: 0.33,
   mr: 0.35,
 };
 
 export const collectedDiamondStyles: SxProps = {
+  ...diamondStyles,
   mr: 1,
-  my: 1,
   color: "customPalette.roseGold", // "#B76E79" A softer, modern take on luxury with a pinkish-gold hue.
 };

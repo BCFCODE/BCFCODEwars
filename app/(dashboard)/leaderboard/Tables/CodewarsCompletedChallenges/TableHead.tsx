@@ -1,18 +1,18 @@
 import { TableHead, TableRow, TableCell } from "@mui/material";
-import { textStyles } from "../../styles";
+import { tableCellStyle } from "../../styles";
 
 export function CodewarsCompletedChallengesTableHead() {
   return (
     <>
       <TableHead>
         <TableRow>
-          <TableCell sx={textStyles}>Date completed</TableCell>
-          <TableCell sx={textStyles}>Challenge Name</TableCell>
-          <TableCell sx={textStyles}>Rank</TableCell>
-          <TableCell sx={textStyles} align="right">
+          <TableCell sx={tableCellStyle}>Date completed</TableCell>
+          <TableCell sx={tableCellStyle}>Challenge Name</TableCell>
+          <TableCell sx={tableCellStyle}>Rank</TableCell>
+          <TableCell sx={tableCellStyle} align="right">
             Diamonds
           </TableCell>
-          <TableCell sx={textStyles} align="right">
+          <TableCell sx={tableCellStyle} align="right">
             Solved Time
           </TableCell>
         </TableRow>

@@ -6,9 +6,9 @@ import {
 } from "@/types/codewars";
 import { useState } from "react";
 import useCodewarsContext from "../../../../context/hooks/useCodewarsContext";
-import { textStyles } from "../../styles";
 import CollectDiamonds from "./Buttons/CollectDiamonds";
 import CodewarsService from "@/app/services/codewars-service";
+import { codewarsCellStyles } from "../../styles";
 
 const { getRank } = new CodewarsService();
 
@@ -30,24 +30,24 @@ export default function CodewarsCompletedChallengesTableBody() {
       <TableBody>
         {challenges.map((challenge) => (
           <TableRow key={challenge.id}>
-            <TableCell sx={textStyles} component="th" scope="row">
+            <TableCell sx={codewarsCellStyles} component="th" scope="row">
               {new Date(challenge.completedAt).toLocaleDateString()}
             </TableCell>
-            <TableCell sx={textStyles}>
+            <TableCell sx={codewarsCellStyles}>
               {challenge.name.length > 50
                 ? `${challenge.name.slice(0, 50)}...`
                 : challenge.name}
             </TableCell>
-            <TableCell sx={textStyles} align="right">
+            <TableCell sx={codewarsCellStyles} align="center">
               {/* {selectedSingleChallenge?.id === challenge.id && rank} */}
               {/* {challenge.} */}
               {rank}
             </TableCell>
-            <TableCell sx={textStyles} align="right">
+            <TableCell sx={codewarsCellStyles} align="right">
               {/* Click and get diamonds */}
               <CollectDiamonds {...{ challenge, manageSelectedChallenge }} />
             </TableCell>
-            <TableCell sx={textStyles} align="right">
+            <TableCell sx={codewarsCellStyles} align="right">
               {new Date(challenge.completedAt).toLocaleTimeString()}
             </TableCell>
           </TableRow>

@@ -26,7 +26,7 @@ import {
 import { useRouter } from "next/navigation";
 import React from "react";
 import CodewarsProvider from "../../../../context/CodewarsProvider";
-import { diamondBoxStyles, textStyles } from "../../styles";
+import { diamondBoxStyles, tableCellStyle } from "../../styles";
 import CodewarsCompletedChallengesTable from "../CodewarsCompletedChallenges/Table";
 import LeaderboardAvatar from "./Avatar";
 import OpenButton from "./Buttons/OpenButton";
@@ -96,7 +96,12 @@ export function LeaderboardUsers() {
           <OpenButton {...{ open, handleOpen }} />
         </TableCell>
         <TableCell
-          sx={{ ...textStyles, display: "flex", alignItems: "center", gap: 1 }}
+          sx={{
+            ...tableCellStyle,
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
           component="th"
           scope="row"
         >
@@ -112,19 +117,19 @@ export function LeaderboardUsers() {
             {name}
           </Typography>
         </TableCell>
-        <TableCell sx={textStyles} align="right">
+        <TableCell sx={tableCellStyle} align="right">
           {new Date(createdAt).toLocaleDateString()}
         </TableCell>
-        <TableCell sx={textStyles} align="right">
+        <TableCell sx={tableCellStyle} align="right">
           {new Date(lastLogin).toLocaleTimeString()}
         </TableCell>
-        <TableCell sx={{ ...textStyles }} align="right">
+        <TableCell sx={{ ...tableCellStyle }} align="right">
           <Box sx={diamondBoxStyles}>
             <Typography>{Math.floor(Math.random() * 100000)}</Typography>
             <DiamondIcon />
           </Box>
         </TableCell>
-        <TableCell sx={textStyles} align="right">
+        <TableCell sx={tableCellStyle} align="right">
           {/* Not available */}
         </TableCell>
       </TableRow>
@@ -227,19 +232,19 @@ export default function Leaderboard() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell sx={textStyles} width="auto">
+            <TableCell sx={tableCellStyle} width="auto">
               User
             </TableCell>
-            <TableCell sx={textStyles} align="right">
+            <TableCell sx={tableCellStyle} align="right">
               Member Since
             </TableCell>
-            <TableCell sx={textStyles} align="right">
+            <TableCell sx={tableCellStyle} align="right">
               Last Login
             </TableCell>
-            <TableCell sx={textStyles} align="right">
+            <TableCell sx={tableCellStyle} align="right">
               Diamonds
             </TableCell>
-            <TableCell sx={textStyles} align="right">
+            <TableCell sx={tableCellStyle} align="right">
               Rank
             </TableCell>
           </TableRow>
