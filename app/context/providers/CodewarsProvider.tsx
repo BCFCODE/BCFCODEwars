@@ -1,6 +1,6 @@
 import { ICodewarsContext } from "@/types/contexts";
 import { createContext, ReactNode, useReducer } from "react";
-import codewarsReducer from "./reducers/codewars";
+import codewarsReducer from "../reducers/codewarsReducer";
 
 // Props for the provider component
 interface Props {
@@ -19,7 +19,7 @@ const CodewarsProvider = ({ children, context }: Props) => {
   return (
     <CodewarsContext.Provider value={context}>
       {/* <CodewarsDispatchContext.Provider value={dispatch}> */}
-        {children}
+      {children}
       {/* </CodewarsDispatchContext.Provider> */}
     </CodewarsContext.Provider>
   );

@@ -1,7 +1,7 @@
-import DatabaseService from "@/app/services/db-service";
+import DBService from "@/app/services/db-service";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getDatabase, getUser } = new DatabaseService();
+const { getDatabase, getUser } = new DBService();
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);

@@ -1,10 +1,10 @@
 // app/api/wars/codewars/user/route.ts
 
-import DatabaseService from "@/app/services/db-service";
+import DBService from "@/app/services/db-service";
 import { AddCodewarsUserToDB, CodewarsUserResponse } from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getDatabase, getCollections } = new DatabaseService();
+const { getDatabase, getCollections } = new DBService();
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);

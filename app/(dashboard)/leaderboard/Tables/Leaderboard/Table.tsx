@@ -1,11 +1,11 @@
 "use client";
 
 // app/(dashboard)/leaderboard/(Table)/Table.tsx
-import APIUsersService from "@/app/api/services/users-service";
+import APIdbService from "@/app/api/services/db-service";
 import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
-import DatabaseUserProvider from "@/app/context/DatabaseUserProvider";
-import useDatabaseUserContext from "@/app/context/hooks/useDatabaseUserContext";
+import DBUserProvider from "@/app/context/providers/DBUserProvider";
+import useDBUserContext from "@/app/context/hooks/useDBUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { DBUser } from "@/types/db/users";
@@ -25,7 +25,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
-import CodewarsProvider from "../../../../context/CodewarsProvider";
+import CodewarsProvider from "../../../../context/providers/CodewarsProvider";
 import { diamondBoxStyles, tableCellStyle } from "../../styles";
 import CodewarsCompletedChallengesTable from "../CodewarsCompletedChallenges/Table";
 import LeaderboardAvatar from "./Avatar";
@@ -33,12 +33,12 @@ import OpenButton from "./Buttons/OpenButton";
 import SkeletonTableRow from "./Skeleton";
 
 const { getCompletedChallenges } = new CodewarsService();
-const { getUsers } = new APIUsersService();
+const { getUsers } = new APIdbService();
 
 export function LeaderboardUsers() {
   const {
     currentUser: { codewars, name, createdAt, lastLogin },
-  } = useDatabaseUserContext();
+  } = useDBUserContext();
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -255,12 +255,12 @@ export default function Leaderboard() {
                 <SkeletonTableRow key={i} nOfCols={columns} />
               ))
             : allUsers.map((currentUser: DBUser) => (
-                <DatabaseUserProvider
+                <DBUserProvider
                   key={currentUser.email}
                   context={{ allUsers, currentUser }}
                 >
                   <LeaderboardUsers />
-                </DatabaseUserProvider>
+                </DBUserProvider>
               ))}
         </TableBody>
       </Table>

@@ -1,4 +1,4 @@
-import useDatabaseUserContext from "@/app/context/hooks/useDatabaseUserContext";
+import useDBUserContext from "@/app/context/hooks/useDBUserContext";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
@@ -11,7 +11,7 @@ interface Props {
 const OpenButton = ({ open, handleOpen }: Props) => {
   const {
     currentUser: { codewars },
-  } = useDatabaseUserContext();
+  } = useDBUserContext();
   return (
     <>
       {/* Expand/Collapse button */}

@@ -10,8 +10,8 @@ interface GetUsersAPIResponse extends GetUsersAPIResponseError {
   users?: DBUser[];
 }
 
-class APIUsersService {
-  private endpoint = `${baseURL}/api/users`;
+class APIdbService {
+  private endpoint = `${baseURL}/api/db/users`;
 
   getUsers = async (): Promise<GetUsersAPIResponse> => {
     try {
@@ -39,4 +39,4 @@ class APIUsersService {
   };
 }
 
-export default APIUsersService;
+export default APIdbService;

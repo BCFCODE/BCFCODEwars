@@ -1,4 +1,4 @@
-import useDatabaseUserContext from "@/app/context/hooks/useDatabaseUserContext";
+import useDBUserContext from "@/app/context/hooks/useDBUserContext";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
@@ -35,7 +35,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function LeaderboardAvatar() {
   const {
     currentUser: { image },
-  } = useDatabaseUserContext();
+  } = useDBUserContext();
   return (
     <StyledBadge
       overlap="circular"

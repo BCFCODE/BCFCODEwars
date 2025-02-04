@@ -1,8 +1,15 @@
 // app/services/db-service.ts
 
-import { Db, Document, MongoClient, OptionalId, WithId } from "mongodb";
+import {
+  Db,
+  Document,
+  FindCursor,
+  MongoClient,
+  OptionalId,
+  WithId,
+} from "mongodb";
 
-class DatabaseService {
+class DBService {
   private clientPromise: Promise<MongoClient>;
 
   constructor() {
@@ -40,13 +47,13 @@ class DatabaseService {
   };
 
   getAllUsers = async (): Promise<WithId<Document>[]> => {
-    const db = await this.getDatabase();
-    return await db.collection("users").find({}).toArray();
+    const { users } = await this.getCollections();
+    return users.find({}).toArray();
   };
 
   getUser = async (email: string): Promise<WithId<Document> | null> => {
-    const db = await this.getDatabase();
-    return await db.collection("users").findOne({ email });
+    const { users } = await this.getCollections();
+    return users.findOne({ email });
   };
 
   saveSingleUser = async <T>(newUser: T) => {
@@ -62,10 +69,15 @@ class DatabaseService {
     );
   };
 
+  getDiamonds = async (): Promise<WithId<Document>[]> => {
+    const { diamonds } = await this.getCollections();
+    return diamonds.find({}).toArray();
+  };
+
   closeConnection = async () => {
     const client = await this.clientPromise;
     await client.close();
   };
 }
 
-export default DatabaseService;
+export default DBService;

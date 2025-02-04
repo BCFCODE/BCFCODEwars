@@ -1,9 +1,9 @@
-// app/api/users/route.ts
+// app/api/db/users/route.ts
 
-import DatabaseService from "@/app/services/db-service";
+import DBService from "@/app/services/db-service";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getAllUsers } = new DatabaseService();
+const { getAllUsers } = new DBService();
 
 export async function GET(request: NextRequest) {
   try {
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-      { error: "Unable to fetch users" },
+      { error: "Unable to fetch users from database." },
       { status: 500 }
     );
   }

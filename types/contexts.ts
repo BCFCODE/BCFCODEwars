@@ -5,7 +5,7 @@ export interface ICodewarsContext {
   completedChallenges: CodewarsCompletedChallenge[] | undefined;
 }
 
-export interface IDatabaseUserProvider {
+export interface IDBUserProvider {
   currentUser: DBUser;
   allUsers: DBUser[];
 }

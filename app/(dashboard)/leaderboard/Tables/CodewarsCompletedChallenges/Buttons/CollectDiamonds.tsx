@@ -1,9 +1,7 @@
-import useDatabaseUserContext from "@/app/context/hooks/useDatabaseUserContext";
+import useDBUserContext from "@/app/context/hooks/useDBUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
-import {
-  CodewarsCompletedChallenge
-} from "@/types/codewars";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -33,7 +31,7 @@ const CollectDiamonds = ({
   manageSelectedChallenge,
   challenge,
 }: Props) => {
-  const { currentUser } = useDatabaseUserContext();
+  const { currentUser } = useDBUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [collectedDiamondsCount, setCollectedDiamondsCount] =

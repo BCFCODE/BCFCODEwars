@@ -1,8 +1,8 @@
 import { GoogleUser } from "@/types/google";
 import { NewDatabaseUser } from "@/types/user";
-import DatabaseService from "./db-service";
+import DBService from "./db-service";
 
-const { updateSingleUser, saveSingleUser, getUser } = new DatabaseService();
+const { updateSingleUser, saveSingleUser, getUser } = new DBService();
 
 class GoogleService {
   makeDatabaseUserFromGoogleSigninUser = (
