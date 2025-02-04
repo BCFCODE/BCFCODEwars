@@ -4,7 +4,6 @@
 import APIdbService from "@/app/api/services/db-service";
 import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
-import DBUserProvider from "@/app/context/providers/DBUserProvider";
 import useDBUserContext from "@/app/context/hooks/useDBUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
@@ -25,12 +24,13 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
-import CodewarsProvider from "../../../../context/providers/CodewarsProvider";
-import { diamondBoxStyles, tableCellStyle } from "../../styles";
+import { diamondBoxStyles, codewarsCellStyles } from "../../styles";
 import CodewarsCompletedChallengesTable from "../CodewarsCompletedChallenges/Table";
 import LeaderboardAvatar from "./Avatar";
 import OpenButton from "./Buttons/OpenButton";
 import SkeletonTableRow from "./Skeleton";
+import CodewarsProvider from "@/app/context/providers/codewars/CodewarsProvider";
+import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
 
 const { getCompletedChallenges } = new CodewarsService();
 const { getUsers } = new APIdbService();
@@ -97,7 +97,7 @@ export function LeaderboardUsers() {
         </TableCell>
         <TableCell
           sx={{
-            ...tableCellStyle,
+            ...codewarsCellStyles,
             display: "flex",
             alignItems: "center",
             gap: 1,
@@ -117,19 +117,19 @@ export function LeaderboardUsers() {
             {name}
           </Typography>
         </TableCell>
-        <TableCell sx={tableCellStyle} align="right">
+        <TableCell sx={codewarsCellStyles} align="right">
           {new Date(createdAt).toLocaleDateString()}
         </TableCell>
-        <TableCell sx={tableCellStyle} align="right">
+        <TableCell sx={codewarsCellStyles} align="right">
           {new Date(lastLogin).toLocaleTimeString()}
         </TableCell>
-        <TableCell sx={{ ...tableCellStyle }} align="right">
+        <TableCell sx={{ ...codewarsCellStyles }} align="right">
           <Box sx={diamondBoxStyles}>
             <Typography>{Math.floor(Math.random() * 100000)}</Typography>
             <DiamondIcon />
           </Box>
         </TableCell>
-        <TableCell sx={tableCellStyle} align="right">
+        <TableCell sx={codewarsCellStyles} align="right">
           {/* Not available */}
         </TableCell>
       </TableRow>
@@ -232,19 +232,19 @@ export default function Leaderboard() {
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell sx={tableCellStyle} width="auto">
+            <TableCell sx={codewarsCellStyles} width="auto">
               User
             </TableCell>
-            <TableCell sx={tableCellStyle} align="right">
+            <TableCell sx={codewarsCellStyles} align="right">
               Member Since
             </TableCell>
-            <TableCell sx={tableCellStyle} align="right">
+            <TableCell sx={codewarsCellStyles} align="right">
               Last Login
             </TableCell>
-            <TableCell sx={tableCellStyle} align="right">
+            <TableCell sx={codewarsCellStyles} align="right">
               Diamonds
             </TableCell>
-            <TableCell sx={tableCellStyle} align="right">
+            <TableCell sx={codewarsCellStyles} align="right">
               Rank
             </TableCell>
           </TableRow>

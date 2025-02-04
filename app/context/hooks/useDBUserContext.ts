@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { IDBUserProvider } from "@/types/contexts";
-import { DBUserContext } from "../providers/DBUserProvider";
+import { DBUserContext } from "../providers/db/DBUserProvider";
 
 const useDBUserContext = (): IDBUserProvider => {
   const context = useContext(DBUserContext);

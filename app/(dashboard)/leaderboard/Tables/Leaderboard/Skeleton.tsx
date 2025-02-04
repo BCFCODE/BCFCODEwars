@@ -1,12 +1,12 @@
 import { Skeleton, TableCell, TableRow } from "@mui/material";
 import React from "react";
-import { tableCellStyle } from "../../styles";
+import { codewarsCellStyles } from "../../styles";
 
 const SkeletonTableRow: React.FC<{ nOfCols: number }> = ({ nOfCols }) => {
   return (
     <TableRow>
       {Array.from({ length: nOfCols }).map((_, i) => (
-        <TableCell sx={tableCellStyle} key={i}>
+        <TableCell sx={codewarsCellStyles} key={i}>
           <Skeleton variant="text" animation="wave" />
         </TableCell>
       ))}

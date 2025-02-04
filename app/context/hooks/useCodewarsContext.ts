@@ -1,6 +1,6 @@
 import { ICodewarsContext } from "@/types/contexts";
 import { useContext } from "react";
-import { CodewarsContext } from "../providers/CodewarsProvider";
+import { CodewarsContext } from "../providers/codewars/CodewarsProvider";
 
 const useCodewarsContext = (): ICodewarsContext => {
   const context = useContext(CodewarsContext);

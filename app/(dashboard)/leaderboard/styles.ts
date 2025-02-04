@@ -23,7 +23,7 @@ export const textStyles: SxProps = {
 
 export const codewarsCellStyles: SxProps = {
   ...textStyles,
-  p: 1,
+  // p: 1,
 };
 
 export const diamondBoxStyles: SxProps = {

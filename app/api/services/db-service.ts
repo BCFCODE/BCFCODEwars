@@ -33,7 +33,7 @@ class APIdbService {
 
       return { success: true, users: data.users };
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      console.error("Error fetching user data from database");
       return { success: false, error: "Error fetching user data" };
     }
   };

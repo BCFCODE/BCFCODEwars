@@ -18,3 +18,7 @@ export interface DBDiamonds {
   diamonds: Diamonds;
   codewars: CodewarsDiamonds;
 }
+
+export type APIdbGetDiamondsResponse<T> =
+  | { success: true; diamonds: T }
+  | { success: false; error: string };

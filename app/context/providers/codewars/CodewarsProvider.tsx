@@ -1,6 +1,6 @@
 import { ICodewarsContext } from "@/types/contexts";
 import { createContext, ReactNode, useReducer } from "react";
-import codewarsReducer from "../reducers/codewarsReducer";
+import codewarsReducer from "../../reducers/codewars/codewarsReducer";
 
 // Props for the provider component
 interface Props {
