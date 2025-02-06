@@ -31,6 +31,7 @@ import OpenButton from "./Buttons/OpenButton";
 import SkeletonTableRow from "./Skeleton";
 import CodewarsProvider from "@/app/context/providers/codewars/CodewarsProvider";
 import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
+import LeaderboardLoadingError from "./Error";
 
 const { getCompletedChallenges } = new CodewarsService();
 const { getUsers } = new APIdbService();
@@ -167,7 +168,7 @@ export default function Leaderboard() {
       }
       setAllUsers(fetchedUsers.users as DBUser[]);
     } catch (error) {
-      console.error("Error loading leaderboard data:", error);
+      console.error("Error loading leaderboard data");
     } finally {
       setLoading(false);
     }
@@ -183,48 +184,7 @@ export default function Leaderboard() {
     fetchUsersFromDatabase(); // Refetch the leaderboard data
   };
 
-  if (error)
-    return (
-      <ErrorUI>
-        <Typography variant="body1" color="text.primary" gutterBottom>
-          We encountered an issue while fetching user data.
-        </Typography>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          This could be due to:
-        </Typography>
-        <Typography
-          variant="body2"
-          component="ul"
-          color="text.secondary"
-          sx={{ pl: 2, textAlign: "left" }}
-        >
-          <li>A network connectivity problem.</li>
-          <li>The server being temporarily unavailable.</li>
-          <li>An unexpected error in our system.</li>
-        </Typography>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          What you can do:
-        </Typography>
-        <Typography
-          variant="body2"
-          component="ol"
-          color="text.secondary"
-          sx={{ pl: 2, textAlign: "left" }}
-        >
-          <li>Check your internet connection.</li>
-          <li>Ensure the server is reachable.</li>
-          <li>Try refreshing the page or clicking the retry button below.</li>
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          If the issue persists, please contact our support team for assistance.
-        </Typography>
-        <ErrorButtonContainer>
-          <Button variant="outlined" color="primary" onClick={handleRetry}>
-            Try Again
-          </Button>
-        </ErrorButtonContainer>
-      </ErrorUI>
-    );
+  if (error) return <LeaderboardLoadingError onRetry={handleRetry} />;
 
   return (
     <TableContainer component={Paper}>

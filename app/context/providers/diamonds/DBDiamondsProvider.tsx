@@ -1,3 +1,5 @@
+'use client'
+
 import APIDiamondsService from "@/app/api/services/diamonds-service";
 import { DBDiamonds } from "@/types/db/diamonds";
 import {

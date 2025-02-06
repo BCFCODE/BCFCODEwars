@@ -1,12 +1,9 @@
-// app/services/db-service.ts
-
 import {
   Db,
   Document,
-  FindCursor,
   MongoClient,
   OptionalId,
-  WithId,
+  WithId
 } from "mongodb";
 
 class DBService {

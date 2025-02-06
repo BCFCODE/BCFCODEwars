@@ -17,8 +17,9 @@ import { montserrat } from "../lib/fonts";
 import theme from "../theme";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { LinearProgress } from "@mui/material";
-import { NextAppProvider } from '@toolpad/core/nextjs';
- 
+import { NextAppProvider } from "@toolpad/core/nextjs";
+import DBDiamondsProvider from "./context/providers/diamonds/DBDiamondsProvider";
+
 export const metadata: Metadata = {
   title: {
     template: "%s | BCFCODE",
@@ -146,7 +147,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
               authentication={AUTHENTICATION}
               theme={theme}
             >
-              {props.children}
+              <DBDiamondsProvider>{props.children}</DBDiamondsProvider>
               <Analytics />
               <SpeedInsights />
             </NextAppProvider>

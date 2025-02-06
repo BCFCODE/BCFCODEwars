@@ -1,7 +1,6 @@
 // app/api/db/diamonds/route.ts
 
 import DBService from "@/app/services/db-service";
-import { DBDiamonds } from "@/types/db/diamonds";
 import { NextRequest, NextResponse } from "next/server";
 
 const { getDiamonds } = new DBService();
