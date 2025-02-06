@@ -232,7 +232,7 @@ index 2c91abb..9373f4a 100644
 @@ -11,22 +12,20 @@ interface Props {
  }
  
- const LeaderboardBody = ({ allUsers, isLoading }: Props) => {
+ const Body = ({ allUsers, isLoading }: Props) => {
 -  const columns = 6;
 -
    return (

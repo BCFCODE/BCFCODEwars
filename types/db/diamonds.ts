@@ -1,6 +1,7 @@
 export interface Diamonds {
   codewars: number;
   missions: number;
+  sum: number;
 }
 
 export interface CodewarsChallengeDiamonds {
@@ -19,6 +20,16 @@ export interface DBDiamonds {
   codewars: CodewarsDiamonds;
 }
 
-export type APIdbGetDiamondsResponse<T> =
-  | { success: true; diamonds: T }
-  | { success: false; error: string };
+export interface APIdbDiamondsSuccessResponse {
+  success: true;
+  data: DBDiamonds;
+}
+
+export interface APIdbDiamondsFailedResponse {
+  success: false;
+  error: string;
+}
+
+export type APIdbGetDiamondsResponse =
+  | APIdbDiamondsSuccessResponse
+  | APIdbDiamondsFailedResponse;

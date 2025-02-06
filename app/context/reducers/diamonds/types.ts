@@ -1,6 +1,8 @@
-import { APIdbGetDiamondsResponse, DBDiamonds } from "@/types/db/diamonds";
+import {
+  APIdbDiamondsFailedResponse,
+  APIdbGetDiamondsResponse
+} from "@/types/db/diamonds";
 
-export type DiamondsState = APIdbGetDiamondsResponse<DBDiamonds>;
+export type DiamondsState = APIdbGetDiamondsResponse;
 
 export type Action = { type: "SET_DIAMONDS"; payload: DiamondsState };
-

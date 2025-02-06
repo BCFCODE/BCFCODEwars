@@ -6,9 +6,9 @@ import APIdbService from "@/app/api/services/db-service";
 import { DBUser } from "@/types/db/users";
 import { Paper, Table, TableContainer } from "@mui/material";
 import React from "react";
-import LeaderboardLoadingError from "./Body/Error";
+import LeaderboardLoadingError from "./Error";
 import LeaderboardHeader from "./Head/Header";
-import LeaderboardBody from "./Body";
+import Body from "./Body";
 
 const { getUsers } = new APIdbService();
 
@@ -47,7 +47,7 @@ export default function LeaderBoardPage() {
     <TableContainer component={Paper}>
       <Table aria-label="Leaderboard Table">
         <LeaderboardHeader />
-        <LeaderboardBody {...{ allUsers, isLoading }} />
+        <Body {...{ allUsers, isLoading }} />
       </Table>
     </TableContainer>
   );

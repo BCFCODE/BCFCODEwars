@@ -2,15 +2,19 @@ import {
   codewarsCellStyles,
   diamondBoxStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
-import { Box, TableCell, Typography } from "@mui/material";
+import useDBDiamondsContext from "@/app/context/hooks/useDBDiamondsContext";
 import DiamondIcon from "@mui/icons-material/Diamond";
-import React from "react";
+import { Box, TableCell, Typography } from "@mui/material";
 
 const DiamondsCell = () => {
+  const {
+    data: { diamonds },
+  } = useDBDiamondsContext();
+
   return (
     <TableCell sx={{ ...codewarsCellStyles }} align="right">
       <Box sx={diamondBoxStyles}>
-        <Typography>{Math.floor(Math.random() * 100000)}</Typography>
+        <Typography>{diamonds.sum}</Typography>
         <DiamondIcon />
       </Box>
     </TableCell>

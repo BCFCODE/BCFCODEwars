@@ -7,8 +7,8 @@ const { getDiamonds } = new DBService();
 
 export async function GET(request: NextRequest) {
   try {
-    const diamonds = await getDiamonds();
-    return NextResponse.json({ success: true, diamonds }, { status: 200 });
+    const [data] = await getDiamonds();
+    return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

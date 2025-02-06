@@ -4,7 +4,7 @@ import { baseURL } from "@/utils/constants";
 class APIDiamondsService {
   private endpoint = `${baseURL}/api/db/diamonds`;
 
-  getDiamonds = async (): Promise<APIdbGetDiamondsResponse<DBDiamonds>> => {
+  getDiamonds = async (): Promise<APIdbGetDiamondsResponse> => {
     try {
       const response = await fetch(this.endpoint, { cache: "no-store" });
       if (!response.ok) {

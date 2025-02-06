@@ -1,13 +1,8 @@
-'use client'
+"use client";
 
 import APIDiamondsService from "@/app/api/services/diamonds-service";
-import { DBDiamonds } from "@/types/db/diamonds";
-import {
-  createContext,
-  ReactNode,
-  useEffect,
-  useReducer
-} from "react";
+import { APIdbDiamondsFailedResponse, DBDiamonds } from "@/types/db/diamonds";
+import { createContext, ReactNode, useEffect, useReducer } from "react";
 import dbDiamondsReducer from "../../reducers/diamonds/dbDiamondsReducer";
 import { Action, DiamondsState } from "../../reducers/diamonds/types";
 
@@ -19,11 +14,12 @@ interface Props {
 }
 
 // Default (synchronous) state for diamonds
-const initialDBDiamonds: DiamondsState = { success: false, error: "" };
+const initialDBDiamonds: APIdbDiamondsFailedResponse = {
+  success: false,
+  error: "",
+};
 
-export const DBDiamondsContext = createContext<
-  DiamondsState | DBDiamonds | null
->(null);
+export const DBDiamondsContext = createContext<DiamondsState | null>(null);
 export const DBDiamondsDispatchContext =
   createContext<React.Dispatch<Action> | null>(null);
 
@@ -39,7 +35,7 @@ const DBDiamondsProvider = ({ children }: Props) => {
       dispatch({ type: "SET_DIAMONDS", payload: diamonds });
     })();
   }, []);
-
+  console.log(DBDiamonds, "<<<<<<<<<<<<<<<<<< DBDiamondsProvider");
   return (
     <DBDiamondsContext.Provider value={DBDiamonds}>
       <DBDiamondsDispatchContext.Provider value={dispatch}>
