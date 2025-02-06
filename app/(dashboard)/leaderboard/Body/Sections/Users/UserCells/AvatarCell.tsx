@@ -1,4 +1,6 @@
+import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
 import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+import { TableCell, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
@@ -32,17 +34,39 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export default function LeaderboardAvatar() {
+export default function AvatarCell() {
   const {
-    currentUser: { image },
+    currentUser: { image, name },
   } = useDBUserContext();
+
   return (
-    <StyledBadge
-      overlap="circular"
-      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-      variant="dot"
+    <TableCell
+      sx={{
+        ...codewarsCellStyles,
+        display: "flex",
+        alignItems: "center",
+        gap: 1,
+      }}
+      component="th"
+      scope="row"
     >
-      <Avatar alt="User's Avatar" src={image} />
-    </StyledBadge>
+      <StyledBadge
+        overlap="circular"
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        variant="dot"
+      >
+        <Avatar alt="User's Avatar" src={image} />
+      </StyledBadge>
+      <Typography
+        variant="body2"
+        sx={{
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
+        {name}
+      </Typography>
+    </TableCell>
   );
 }

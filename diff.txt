@@ -1,0 +1,320 @@
+diff --git a/app/(dashboard)/leaderboard/Body/Collapse/OpenButton.tsx b/app/(dashboard)/leaderboard/Body/Collapse/OpenButton.tsx
+deleted file mode 100644
+index acaf5f0..0000000
+--- a/app/(dashboard)/leaderboard/Body/Collapse/OpenButton.tsx
++++ /dev/null
+@@ -1,31 +0,0 @@
+-import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+-import { IconButton } from "@mui/material";
+-
+-interface Props {
+-  isCollapse: boolean;
+-  handleOpen: () => void;
+-}
+-
+-const OpenButton = ({ isCollapse, handleOpen }: Props) => {
+-  const {
+-    currentUser: { codewars },
+-  } = useDBUserContext();
+-  return (
+-    <>
+-      {/* Expand/Collapse button */}
+-      {codewars?.isConnected && (
+-        <IconButton
+-          aria-label="Toggle challenge details"
+-          size="small"
+-          onClick={handleOpen}
+-        >
+-          {isCollapse ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+-        </IconButton>
+-      )}
+-    </>
+-  );
+-};
+-
+-export default OpenButton;
+diff --git a/app/(dashboard)/leaderboard/Body/Collapse/TopRow.tsx b/app/(dashboard)/leaderboard/Body/Collapse/TopRow.tsx
+deleted file mode 100644
+index cdd4391..0000000
+--- a/app/(dashboard)/leaderboard/Body/Collapse/TopRow.tsx
++++ /dev/null
+@@ -1,69 +0,0 @@
+-import { Box, TableCell, TableRow, Typography } from "@mui/material";
+-import React from "react";
+-import OpenButton from "./OpenButton";
+-import LeaderboardAvatar from "../../Head/Avatar";
+-import DiamondIcon from "@mui/icons-material/Diamond";
+-import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+-import { codewarsCellStyles, diamondBoxStyles } from "../../styles";
+-
+-interface Props {
+-  onOpen: {
+-    isCollapse: boolean;
+-    handleOpen: () => void;
+-  };
+-}
+-
+-const TopRow = ({ onOpen }: Props) => {
+-  const {
+-    currentUser: { codewars, name, createdAt, lastLogin },
+-  } = useDBUserContext();
+-
+-  return (
+-    <>
+-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+-        <TableCell>
+-          <OpenButton {...onOpen} />
+-        </TableCell>
+-        <TableCell
+-          sx={{
+-            ...codewarsCellStyles,
+-            display: "flex",
+-            alignItems: "center",
+-            gap: 1,
+-          }}
+-          component="th"
+-          scope="row"
+-        >
+-          <LeaderboardAvatar />
+-          <Typography
+-            variant="body2"
+-            sx={{
+-              whiteSpace: "nowrap",
+-              overflow: "hidden",
+-              textOverflow: "ellipsis",
+-            }}
+-          >
+-            {name}
+-          </Typography>
+-        </TableCell>
+-        <TableCell sx={codewarsCellStyles} align="right">
+-          {new Date(createdAt).toLocaleDateString()}
+-        </TableCell>
+-        <TableCell sx={codewarsCellStyles} align="right">
+-          {new Date(lastLogin).toLocaleTimeString()}
+-        </TableCell>
+-        <TableCell sx={{ ...codewarsCellStyles }} align="right">
+-          <Box sx={diamondBoxStyles}>
+-            <Typography>{Math.floor(Math.random() * 100000)}</Typography>
+-            <DiamondIcon />
+-          </Box>
+-        </TableCell>
+-        <TableCell sx={codewarsCellStyles} align="right">
+-          {/* Not available */}
+-        </TableCell>
+-      </TableRow>
+-    </>
+-  );
+-};
+-
+-export default TopRow;
+diff --git a/app/(dashboard)/leaderboard/Body/Collapse/index.tsx b/app/(dashboard)/leaderboard/Body/Collapse/index.tsx
+deleted file mode 100644
+index 840498b..0000000
+--- a/app/(dashboard)/leaderboard/Body/Collapse/index.tsx
++++ /dev/null
+@@ -1,74 +0,0 @@
+-import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+-import CodewarsService from "@/app/services/codewars-service";
+-import { CodewarsCompletedChallenge } from "@/types/codewars";
+-import { Collapse, TableCell, TableRow } from "@mui/material";
+-import { useState } from "react";
+-import TopRow from "./TopRow";
+-import CodewarsSection from "../Sections/Codewars";
+-
+-const { getCompletedChallenges } = new CodewarsService();
+-
+-export function LeaderboardUsers() {
+-  const {
+-    currentUser: { codewars },
+-  } = useDBUserContext();
+-  const [isCollapse, setIsCollapse] = useState(false);
+-  const [isLoading, setIsLoading] = useState(false);
+-  const [completedChallenges, setCompletedChallenges] =
+-    useState<CodewarsCompletedChallenge[]>();
+-  const [error, setError] = useState(false);
+-  const [pageNumber, setPageNumber] = useState(0);
+-
+-  const codewarsUsername = codewars?.username;
+-
+-  const handleOpen = async () => {
+-    setIsCollapse(!isCollapse);
+-    setIsLoading(true);
+-    handleTry();
+-  };
+-
+-  const handleTry = async () => {
+-    try {
+-      const response = await getCompletedChallenges(
+-        codewarsUsername,
+-        pageNumber
+-      );
+-
+-      if ("data" in response) {
+-        const { data: challenges } = response.data;
+-        setCompletedChallenges(challenges);
+-      } else {
+-        // TODO: Handle cases where data is missing
+-      }
+-    } catch (error) {
+-      // TODO: Handle errors gracefully
+-      // console.error("Error fetching challenges: ", error);
+-      setError(true);
+-    } finally {
+-      setIsLoading(false);
+-
+-      // TODO: Add additional cleanup or updates if needed
+-    }
+-  };
+-
+-  const handleRetry = () => {
+-    setError(false); // Clear the error
+-    setIsLoading(true); // Re-initiate loading state
+-    handleRetry();
+-  };
+-
+-  return (
+-    <>
+-      <TopRow onOpen={{ isCollapse, handleOpen }} />
+-      <TableRow>
+-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+-          <Collapse in={isCollapse} timeout="auto" unmountOnExit>
+-            <CodewarsSection
+-              {...{ completedChallenges, error, handleRetry, isLoading }}
+-            />
+-          </Collapse>
+-        </TableCell>
+-      </TableRow>
+-    </>
+-  );
+-}
+diff --git a/app/(dashboard)/leaderboard/Body/Skeleton.tsx b/app/(dashboard)/leaderboard/Body/Skeleton.tsx
+deleted file mode 100644
+index 50f752e..0000000
+--- a/app/(dashboard)/leaderboard/Body/Skeleton.tsx
++++ /dev/null
+@@ -1,17 +0,0 @@
+-import { Skeleton, TableCell, TableRow } from "@mui/material";
+-import React from "react";
+-import { codewarsCellStyles } from "../styles";
+-
+-const SkeletonTableRow: React.FC<{ nOfCols: number }> = ({ nOfCols }) => {
+-  return (
+-    <TableRow>
+-      {Array.from({ length: nOfCols }).map((_, i) => (
+-        <TableCell sx={codewarsCellStyles} key={i}>
+-          <Skeleton variant="text" animation="wave" />
+-        </TableCell>
+-      ))}
+-    </TableRow>
+-  );
+-};
+-
+-export default SkeletonTableRow;
+diff --git a/app/(dashboard)/leaderboard/Body/index.tsx b/app/(dashboard)/leaderboard/Body/index.tsx
+index 2c91abb..9373f4a 100644
+--- a/app/(dashboard)/leaderboard/Body/index.tsx
++++ b/app/(dashboard)/leaderboard/Body/index.tsx
+@@ -2,8 +2,9 @@ import { TableBody } from "@mui/material";
+ import React from "react";
+ import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
+ import { DBUser } from "@/types/db/users";
+-import { LeaderboardUsers } from "./Collapse";
+-import SkeletonTableRow from "./Skeleton";
++import { LeaderboardUsersSection } from "./Sections/Users";
++import Row from "./Sections/Users/Skeleton/Row";
++import Skeleton from "./Sections/Users/Skeleton";
+ 
+ interface Props {
+   allUsers: DBUser[];
+@@ -11,22 +12,20 @@ interface Props {
+ }
+ 
+ const LeaderboardBody = ({ allUsers, isLoading }: Props) => {
+-  const columns = 6;
+-
+   return (
+     <TableBody>
+-      {isLoading
+-        ? Array.from({ length: 10 }).map((_, i) => (
+-            <SkeletonTableRow key={i} nOfCols={columns} />
+-          ))
+-        : allUsers.map((currentUser: DBUser) => (
+-            <DBUserProvider
+-              key={currentUser.email}
+-              context={{ allUsers, currentUser }}
+-            >
+-              <LeaderboardUsers />
+-            </DBUserProvider>
+-          ))}
++      {isLoading ? (
++        <Skeleton />
++      ) : (
++        allUsers.map((currentUser: DBUser) => (
++          <DBUserProvider
++            key={currentUser.email}
++            context={{ allUsers, currentUser }}
++          >
++            <LeaderboardUsersSection />
++          </DBUserProvider>
++        ))
++      )}
+     </TableBody>
+   );
+ };
+diff --git a/app/(dashboard)/leaderboard/Head/Avatar.tsx b/app/(dashboard)/leaderboard/Head/Avatar.tsx
+deleted file mode 100644
+index c13b2d9..0000000
+--- a/app/(dashboard)/leaderboard/Head/Avatar.tsx
++++ /dev/null
+@@ -1,48 +0,0 @@
+-import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+-import Avatar from "@mui/material/Avatar";
+-import Badge from "@mui/material/Badge";
+-import { styled } from "@mui/material/styles";
+-
+-const StyledBadge = styled(Badge)(({ theme }) => ({
+-  "& .MuiBadge-badge": {
+-    backgroundColor: "#44b700",
+-    color: "#44b700",
+-    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+-    "&::after": {
+-      position: "absolute",
+-      top: 0,
+-      left: 0,
+-      width: "100%",
+-      height: "100%",
+-      borderRadius: "50%",
+-      animation: "ripple 1.2s infinite ease-in-out",
+-      border: "1px solid currentColor",
+-      content: '""',
+-    },
+-  },
+-  "@keyframes ripple": {
+-    "0%": {
+-      transform: "scale(.8)",
+-      opacity: 1,
+-    },
+-    "100%": {
+-      transform: "scale(2.4)",
+-      opacity: 0,
+-    },
+-  },
+-}));
+-
+-export default function LeaderboardAvatar() {
+-  const {
+-    currentUser: { image },
+-  } = useDBUserContext();
+-  return (
+-    <StyledBadge
+-      overlap="circular"
+-      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+-      variant="dot"
+-    >
+-      <Avatar alt="User's Avatar" src={image} />
+-    </StyledBadge>
+-  );
+-}

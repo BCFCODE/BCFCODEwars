@@ -1,14 +1,14 @@
 import useDBUserContext from "@/app/context/hooks/useDBUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { Collapse, TableCell, TableRow } from "@mui/material";
 import { useState } from "react";
-import TopRow from "./TopRow";
-import CodewarsSection from "../Sections/Codewars";
+import CodewarsSection from "../Codewars";
+import CollapseSection from "../Collapse";
+import User from "./UserCells";
 
 const { getCompletedChallenges } = new CodewarsService();
 
-export function LeaderboardUsers() {
+export function LeaderboardUsersSection() {
   const {
     currentUser: { codewars },
   } = useDBUserContext();
@@ -59,16 +59,12 @@ export function LeaderboardUsers() {
 
   return (
     <>
-      <TopRow onOpen={{ isCollapse, handleOpen }} />
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={isCollapse} timeout="auto" unmountOnExit>
-            <CodewarsSection
-              {...{ completedChallenges, error, handleRetry, isLoading }}
-            />
-          </Collapse>
-        </TableCell>
-      </TableRow>
+      <User onOpen={{ isCollapse, handleOpen }} />
+      <CollapseSection {...{ isCollapse }}>
+        <CodewarsSection
+          {...{ completedChallenges, error, handleRetry, isLoading }}
+        />
+      </CollapseSection>
     </>
   );
 }
