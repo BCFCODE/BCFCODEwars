@@ -27,7 +27,7 @@ git push origin main
 
 Collaborator Workflow:
 
-Your collaborator can clone or pull the repository, open the .vpp file in Visual Paradigm, make edits, and commit their changes in the same file.
+Your collaborator can clone or pull the repository, isCollapse the .vpp file in Visual Paradigm, make edits, and commit their changes in the same file.
 Recap:
 File to share: The .vpp file (e.g., MyProject.vpp)
 Folder: Save the .vpp file in the VP folder of your Next.js project

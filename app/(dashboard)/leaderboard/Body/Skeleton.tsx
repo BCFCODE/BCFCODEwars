@@ -1,6 +1,6 @@
 import { Skeleton, TableCell, TableRow } from "@mui/material";
 import React from "react";
-import { codewarsCellStyles } from "../../styles";
+import { codewarsCellStyles } from "../styles";
 
 const SkeletonTableRow: React.FC<{ nOfCols: number }> = ({ nOfCols }) => {
   return (

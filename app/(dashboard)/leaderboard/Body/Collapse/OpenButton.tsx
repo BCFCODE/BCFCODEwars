@@ -4,11 +4,11 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
 
 interface Props {
-  open: boolean;
+  isCollapse: boolean;
   handleOpen: () => void;
 }
 
-const OpenButton = ({ open, handleOpen }: Props) => {
+const OpenButton = ({ isCollapse, handleOpen }: Props) => {
   const {
     currentUser: { codewars },
   } = useDBUserContext();
@@ -21,7 +21,7 @@ const OpenButton = ({ open, handleOpen }: Props) => {
           size="small"
           onClick={handleOpen}
         >
-          {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          {isCollapse ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
         </IconButton>
       )}
     </>

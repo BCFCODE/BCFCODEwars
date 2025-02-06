@@ -1,3 +1,4 @@
+import { diamondBoxStyles, counterStyles, collectedDiamondStyles, iconButtonStyles, fade, diamondStyles } from "@/app/(dashboard)/leaderboard/styles";
 import useDBUserContext from "@/app/context/hooks/useDBUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
@@ -6,14 +7,6 @@ import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import {
-  collectedDiamondStyles,
-  counterStyles,
-  diamondBoxStyles,
-  diamondStyles,
-  fade,
-  iconButtonStyles,
-} from "../../../styles";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();

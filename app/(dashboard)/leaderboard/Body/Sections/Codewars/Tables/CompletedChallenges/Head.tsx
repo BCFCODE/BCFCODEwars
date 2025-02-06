@@ -1,7 +1,7 @@
+import { textStyles } from "@/app/(dashboard)/leaderboard/styles";
 import { TableHead, TableRow, TableCell } from "@mui/material";
-import { textStyles } from "../../styles";
 
-export function CodewarsCompletedChallengesTableHead() {
+export function Head() {
   return (
     <>
       <TableHead>

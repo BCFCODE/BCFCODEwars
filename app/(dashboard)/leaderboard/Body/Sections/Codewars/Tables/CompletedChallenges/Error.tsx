@@ -1,14 +1,14 @@
 import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
 import { Typography, Button } from "@mui/material";
+import Link from "next/link";
 import React from "react";
 
 interface Props {
-  onReconnect: () => void;
   onRetry: () => void;
 }
 
-const Error = ({ onReconnect, onRetry }: Props) => {
+const Error = ({ onRetry }: Props) => {
   return (
     <ErrorUI>
       <Typography variant="body1" color="text.secondary">
@@ -21,9 +21,11 @@ const Error = ({ onReconnect, onRetry }: Props) => {
         <Button variant="outlined" color="primary" onClick={onRetry}>
           Try Again
         </Button>
-        <Button variant="contained" color="secondary" onClick={onReconnect}>
-          Reconnect
-        </Button>
+        <Link href="/wars/validation/steps/1" replace>
+          <Button variant="contained" color="secondary">
+            Reconnect
+          </Button>
+        </Link>
       </ErrorButtonContainer>
     </ErrorUI>
   );

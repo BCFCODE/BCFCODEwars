@@ -3,13 +3,13 @@ import { TableBody, TableCell, TableRow } from "@mui/material";
 import CodewarsService from "@/app/services/codewars-service";
 import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
 import { useEffect, useRef, useState } from "react";
-import useCodewarsContext from "../../../../context/hooks/useCodewarsContext";
-import { codewarsCellStyles } from "../../styles";
+import useCodewarsContext from "../../../../../../../context/hooks/useCodewarsContext";
+import { codewarsCellStyles } from "../../../../../styles";
 import CollectDiamonds from "./Buttons/CollectDiamonds";
 
 const { getRank } = new CodewarsService();
 
-export default function CodewarsCompletedChallengesTableBody() {
+export default function Body() {
   const { completedChallenges = [] } = useCodewarsContext();
   const [challenges, setChallenges] = useState<DBCodewarsCompletedChallenge[]>(
     completedChallenges as DBCodewarsCompletedChallenge[]

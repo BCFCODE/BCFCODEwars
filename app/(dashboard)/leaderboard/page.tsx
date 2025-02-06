@@ -1,7 +1,54 @@
 // app/(dashboard)/leaderboard/page.tsx
 
-import MainLeaderboardTable from "./Tables/Leaderboard/Table";
+"use client";
+
+import APIdbService from "@/app/api/services/db-service";
+import { DBUser } from "@/types/db/users";
+import { Paper, Table, TableContainer } from "@mui/material";
+import React from "react";
+import LeaderboardLoadingError from "./Body/Error";
+import LeaderboardHeader from "./Head/Header";
+import LeaderboardBody from "./Body";
+
+const { getUsers } = new APIdbService();
 
 export default function LeaderBoardPage() {
-  return <MainLeaderboardTable />;
+  const [allUsers, setAllUsers] = React.useState<DBUser[]>([]);
+  const [isLoading, setLoading] = React.useState<boolean>(true);
+  const [error, setError] = React.useState<boolean>(false);
+
+  const fetchUsersFromDatabase = async () => {
+    try {
+      const fetchedUsers = await getUsers();
+      if (!fetchedUsers.success) {
+        setError(true);
+      }
+      setAllUsers(fetchedUsers.users as DBUser[]);
+    } catch (error) {
+      console.error("Error loading leaderboard data");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchUsersFromDatabase();
+  }, []);
+
+  const handleRetry = () => {
+    setLoading(true); // Show loading state
+    setError(false); // Clear any existing errors
+    fetchUsersFromDatabase(); // Refetch the leaderboard data
+  };
+
+  if (error) return <LeaderboardLoadingError onRetry={handleRetry} />;
+
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="Leaderboard Table">
+        <LeaderboardHeader />
+        <LeaderboardBody {...{ allUsers, isLoading }} />
+      </Table>
+    </TableContainer>
+  );
 }

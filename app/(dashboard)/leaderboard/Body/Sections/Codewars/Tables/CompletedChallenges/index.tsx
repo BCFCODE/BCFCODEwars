@@ -1,29 +1,25 @@
 import LoadingUI from "@/app/components/UI/LoadingUI";
 import { Box, Table, Typography } from "@mui/material";
 import Error from "./Error";
-import CodewarsCompletedChallengesTableBody from "./TableBody";
-import { CodewarsCompletedChallengesTableHead } from "./TableHead";
+import Body from "./Body";
+import { Head } from "./Head";
+import { ReactNode } from "react";
 
 interface Props {
   error: boolean;
   isLoading: boolean;
-  handleReconnect: () => void;
   handleRetry: () => void;
+  children: ReactNode;
 }
 
-const CodewarsCompletedChallengesTable = ({
-  handleReconnect,
-  handleRetry,
-  error,
-  isLoading,
-}: Props) => {
+const CodewarsTable = ({ handleRetry, error, isLoading, children }: Props) => {
   return (
     <Box sx={{ margin: 1 }}>
       <Typography variant="h6" gutterBottom component="div">
         Codewars Completed Challenges
       </Typography>
       {error ? (
-        <Error onRetry={handleRetry} onReconnect={handleReconnect} />
+        <Error onRetry={handleRetry} />
       ) : isLoading ? (
         <LoadingUI
           title="Loading Challenges"
@@ -31,12 +27,13 @@ const CodewarsCompletedChallengesTable = ({
         />
       ) : (
         <Table size="small" aria-label="completed challenges">
-          <CodewarsCompletedChallengesTableHead />
-          <CodewarsCompletedChallengesTableBody />
+          <Head />
+          <Body />
+          {children}
         </Table>
       )}
     </Box>
   );
 };
 
-export default CodewarsCompletedChallengesTable;
+export default CodewarsTable;

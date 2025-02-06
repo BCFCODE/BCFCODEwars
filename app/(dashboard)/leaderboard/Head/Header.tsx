@@ -1,8 +1,8 @@
 import { TableHead, TableRow, TableCell } from "@mui/material";
 import React from "react";
-import { codewarsCellStyles } from "../../styles";
+import { codewarsCellStyles } from "../styles";
 
-const LeaderboardHead = () => {
+const LeaderboardHeader = () => {
   return (
     <TableHead>
       <TableRow>
@@ -27,4 +27,4 @@ const LeaderboardHead = () => {
   );
 };
 
-export default LeaderboardHead;
+export default LeaderboardHeader;
