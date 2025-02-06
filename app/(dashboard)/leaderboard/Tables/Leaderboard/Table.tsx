@@ -32,6 +32,7 @@ import SkeletonTableRow from "./Skeleton";
 import CodewarsProvider from "@/app/context/providers/codewars/CodewarsProvider";
 import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
 import LeaderboardLoadingError from "./Error";
+import LeaderboardHead from "./Head";
 
 const { getCompletedChallenges } = new CodewarsService();
 const { getUsers } = new APIdbService();
@@ -189,26 +190,7 @@ export default function Leaderboard() {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="Leaderboard Table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell sx={codewarsCellStyles} width="auto">
-              User
-            </TableCell>
-            <TableCell sx={codewarsCellStyles} align="right">
-              Member Since
-            </TableCell>
-            <TableCell sx={codewarsCellStyles} align="right">
-              Last Login
-            </TableCell>
-            <TableCell sx={codewarsCellStyles} align="right">
-              Diamonds
-            </TableCell>
-            <TableCell sx={codewarsCellStyles} align="right">
-              Rank
-            </TableCell>
-          </TableRow>
-        </TableHead>
+        <LeaderboardHead />
         <TableBody>
           {isLoading
             ? Array.from({ length: 10 }).map((_, i) => (
