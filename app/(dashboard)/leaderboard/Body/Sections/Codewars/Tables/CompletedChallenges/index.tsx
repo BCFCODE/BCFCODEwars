@@ -11,7 +11,7 @@ interface Props {
   handleRetry: () => void;
 }
 
-const CodewarsTable = ({ handleRetry, error, isLoading }: Props) => {
+const CompletedChallengesTable = ({ handleRetry, error, isLoading }: Props) => {
   if (error) return <Error onRetry={handleRetry} />;
 
   if (isLoading)
@@ -30,4 +30,4 @@ const CodewarsTable = ({ handleRetry, error, isLoading }: Props) => {
   );
 };
 
-export default CodewarsTable;
+export default CompletedChallengesTable;

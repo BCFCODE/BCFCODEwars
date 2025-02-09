@@ -1,10 +1,7 @@
 import CodewarsProvider from "@/app/context/providers/codewars/CodewarsProvider";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import React from "react";
-import CodewarsTable from "./Tables/CompletedChallenges";
-import Head from "./Tables/CompletedChallenges/Head";
-import Body from "./Tables/CompletedChallenges/Body";
-import { Box, Table } from "@mui/material";
+import { Box } from "@mui/material";
+import CompletedChallengesTable from "./Tables/CompletedChallenges";
 
 interface Props {
   completedChallenges?: CodewarsCompletedChallenge[];
@@ -22,7 +19,7 @@ const CodewarsSection = ({
   return (
     <CodewarsProvider context={{ completedChallenges }}>
       <Box sx={{ margin: 1 }}>
-        <CodewarsTable {...{ handleRetry, error, isLoading }} />
+        <CompletedChallengesTable {...{ handleRetry, error, isLoading }} />
       </Box>
     </CodewarsProvider>
   );
