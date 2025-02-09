@@ -1,13 +1,10 @@
-import { TableBody, TableCell, TableRow } from "@mui/material";
-
-import CodewarsService from "@/app/services/codewars-service";
 import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
+import { TableBody } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import useCodewarsContext from "../../../../../../../context/hooks/useCodewarsContext";
-import { codewarsCellStyles } from "../../../../../styles";
-import CollectDiamonds from "./Buttons/CollectDiamonds";
-
-const { getRank } = new CodewarsService();
+import useCodewarsContext from "../../../../../../../../context/hooks/useCodewarsContext";
+import CollectDiamonds from "../Buttons/CollectDiamonds";
+import SingleRow from "./SingleRow";
+import CollectDiamondsCell from "./SingleRow/Cells/CollectDiamondsCell";
 
 export default function Body() {
   const { completedChallenges = [] } = useCodewarsContext();
@@ -42,37 +39,22 @@ export default function Body() {
     }
   }, [isDisabled]);
 
+  const collectDiamondsProps = (challenge: DBCodewarsCompletedChallenge) => ({
+    setIconButtonDisable,
+    isDisabled,
+    challenge,
+    manageSelectedChallenge,
+  });
+
   return (
     <>
       <TableBody>
         {challenges.map((challenge) => (
-          <TableRow key={challenge.id}>
-            <TableCell sx={codewarsCellStyles} component="th" scope="row">
-              {new Date(challenge.completedAt).toLocaleDateString()}
-            </TableCell>
-            <TableCell sx={codewarsCellStyles}>
-              {challenge.name.length > 50
-                ? `${challenge.name.slice(0, 50)}...`
-                : challenge.name}
-            </TableCell>
-            <TableCell sx={codewarsCellStyles} align="center">
-              {challenge.rank?.id ? getRank(challenge) : ""}
-            </TableCell>
-            <TableCell sx={codewarsCellStyles} align="right">
-              {/* Click and get diamonds */}
-              <CollectDiamonds
-                {...{
-                  setIconButtonDisable,
-                  isDisabled,
-                  challenge,
-                  manageSelectedChallenge,
-                }}
-              />
-            </TableCell>
-            <TableCell sx={codewarsCellStyles} align="right">
-              {new Date(challenge.completedAt).toLocaleTimeString()}
-            </TableCell>
-          </TableRow>
+          <SingleRow key={challenge.id} {...{ challenge }}>
+            <CollectDiamondsCell>
+              <CollectDiamonds {...collectDiamondsProps(challenge)} />
+            </CollectDiamondsCell>
+          </SingleRow>
         ))}
       </TableBody>
     </>

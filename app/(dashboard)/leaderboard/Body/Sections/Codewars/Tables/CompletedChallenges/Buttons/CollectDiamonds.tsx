@@ -1,4 +1,11 @@
-import { diamondBoxStyles, counterStyles, collectedDiamondStyles, iconButtonStyles, fade, diamondStyles } from "@/app/(dashboard)/leaderboard/styles";
+import {
+  diamondBoxStyles,
+  counterStyles,
+  collectedDiamondStyles,
+  iconButtonStyles,
+  fade,
+  diamondStyles,
+} from "@/app/(dashboard)/leaderboard/styles";
 import useDBUserContext from "@/app/context/hooks/useDBUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
@@ -14,7 +21,7 @@ const { collectDiamonds } = new DiamondsService();
 interface Props {
   setIconButtonDisable: (isDisabled: boolean) => void;
   isDisabled: boolean;
-  challenge: CodewarsCompletedChallenge;
+  challenge: DBCodewarsCompletedChallenge;
   manageSelectedChallenge: (challenge: DBCodewarsCompletedChallenge) => void;
 }
 

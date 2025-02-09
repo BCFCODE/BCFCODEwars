@@ -13,7 +13,7 @@ export default function Head() {
             Diamonds
           </TableCell>
           <TableCell sx={textStyles} align="right">
-            Solved Time
+            Solved On
           </TableCell>
         </TableRow>
       </TableHead>
