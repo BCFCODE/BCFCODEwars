@@ -10,7 +10,7 @@ const DiamondsCell = () => {
   const {
     data: { diamonds },
   } = useDBDiamondsContext();
-
+  console.log(diamonds, "<<<<< DiamondsCell");
   return (
     <TableCell sx={{ ...codewarsCellStyles }} align="right">
       <Box sx={diamondBoxStyles}>

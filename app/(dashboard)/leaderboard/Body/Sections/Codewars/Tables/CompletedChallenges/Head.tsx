@@ -1,7 +1,7 @@
 import { textStyles } from "@/app/(dashboard)/leaderboard/styles";
 import { TableHead, TableRow, TableCell } from "@mui/material";
 
-export function Head() {
+export default function Head() {
   return (
     <>
       <TableHead>

@@ -1,16 +1,16 @@
 import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
 import { DBUser } from "@/types/db/users";
-import React from "react";
-import { LeaderboardUsersSection } from ".";
+import { ReactNode } from "react";
 
 interface Props {
   allUsers: DBUser[];
+  children: ReactNode;
 }
 
-const Users = ({ allUsers }: Props) => {
+const Users = ({ allUsers, children }: Props) => {
   return allUsers.map((currentUser: DBUser) => (
     <DBUserProvider key={currentUser.email} context={{ allUsers, currentUser }}>
-      <LeaderboardUsersSection />
+      {children}
     </DBUserProvider>
   ));
 };

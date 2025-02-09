@@ -11,7 +11,7 @@ interface Props {
 
 const ButtonCell = ({ onOpen }: Props) => {
   return (
-    <TableCell>
+    <TableCell> 
       <OpenButton {...onOpen} />
     </TableCell>
   );

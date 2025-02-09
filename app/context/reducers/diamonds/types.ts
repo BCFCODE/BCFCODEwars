@@ -1,5 +1,4 @@
 import {
-  APIdbDiamondsFailedResponse,
   APIdbGetDiamondsResponse
 } from "@/types/db/diamonds";
 

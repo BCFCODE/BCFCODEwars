@@ -223,7 +223,7 @@ index 2c91abb..9373f4a 100644
  import { DBUser } from "@/types/db/users";
 -import { LeaderboardUsers } from "./Collapse";
 -import SkeletonTableRow from "./Skeleton";
-+import { LeaderboardUsersSection } from "./Sections/Users";
++import { UsersSection } from "./Sections/Users";
 +import Row from "./Sections/Users/Skeleton/Row";
 +import Skeleton from "./Sections/Users/Skeleton";
  
@@ -257,7 +257,7 @@ index 2c91abb..9373f4a 100644
 +            key={currentUser.email}
 +            context={{ allUsers, currentUser }}
 +          >
-+            <LeaderboardUsersSection />
++            <UsersSection />
 +          </DBUserProvider>
 +        ))
 +      )}

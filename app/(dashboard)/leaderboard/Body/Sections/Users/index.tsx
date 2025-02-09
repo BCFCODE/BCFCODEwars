@@ -8,7 +8,7 @@ import User from "./UserCells";
 
 const { getCompletedChallenges } = new CodewarsService();
 
-export function LeaderboardUsersSection() {
+export function UsersSection() {
   const {
     currentUser: { codewars },
   } = useDBUserContext();
