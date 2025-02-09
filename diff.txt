@@ -1,867 +1,957 @@
 diff --git a/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds.tsx b/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds.tsx
-index ba794c0..65a6dae 100644
+index 65a6dae..1893a66 100644
 --- a/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds.tsx
 +++ b/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds.tsx
-@@ -1,15 +1,14 @@
- import {
--  diamondBoxStyles,
--  counterStyles,
-   collectedDiamondStyles,
--  iconButtonStyles,
--  fade,
-+  counterStyles,
-+  diamondBoxStyles,
-   diamondStyles,
-+  fade,
-+  iconButtonStyles,
+@@ -7,6 +7,7 @@ import {
+   iconButtonStyles,
  } from "@/app/(dashboard)/leaderboard/styles";
--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+ import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
++import useDBDiamondsDispatchContext from "@/app/context/hooks/useDBDiamondsDispatchContext";
  import CodewarsService from "@/app/services/codewars-service";
  import DiamondsService from "@/app/services/diamonds-service";
--import { CodewarsCompletedChallenge } from "@/types/codewars";
  import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
- import DiamondIcon from "@mui/icons-material/Diamond";
- import { Box, IconButton, Typography } from "@mui/material";
-@@ -31,7 +30,7 @@ const CollectDiamonds = ({
-   manageSelectedChallenge,
+@@ -31,6 +32,7 @@ const CollectDiamonds = ({
    challenge,
  }: Props) => {
--  const { currentUser } = useDBUserContext();
-+  const { currentUser } = useDBCurrentUserContext();
+   const { currentUser } = useDBCurrentUserContext();
++  const dispatch = useDBDiamondsDispatchContext();
    const [isLoading, setIsLoading] = useState(false);
    const [error, setError] = useState(false);
    const [collectedDiamondsCount, setCollectedDiamondsCount] =
-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Collapse/OpenButton.tsx b/app/(dashboard)/leaderboard/Body/Sections/Collapse/OpenButton.tsx
-index acaf5f0..7edac30 100644
---- a/app/(dashboard)/leaderboard/Body/Sections/Collapse/OpenButton.tsx
-+++ b/app/(dashboard)/leaderboard/Body/Sections/Collapse/OpenButton.tsx
-@@ -1,4 +1,4 @@
--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
- import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
- import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
- import { IconButton } from "@mui/material";
-@@ -11,7 +11,7 @@ interface Props {
- const OpenButton = ({ isCollapse, handleOpen }: Props) => {
-   const {
-     currentUser: { codewars },
--  } = useDBUserContext();
-+  } = useDBCurrentUserContext();
-   return (
-     <>
-       {/* Expand/Collapse button */}
-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/AvatarCell.tsx b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/AvatarCell.tsx
-index 2eef968..086e1ae 100644
---- a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/AvatarCell.tsx
-+++ b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/AvatarCell.tsx
-@@ -1,5 +1,5 @@
- import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
- import { TableCell, Typography } from "@mui/material";
- import Avatar from "@mui/material/Avatar";
- import Badge from "@mui/material/Badge";
-@@ -37,7 +37,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
- export default function AvatarCell() {
-   const {
-     currentUser: { image, name },
--  } = useDBUserContext();
-+  } = useDBCurrentUserContext();
+@@ -83,13 +85,21 @@ const CollectDiamonds = ({
+       setIsCollected(true);
+     }
  
-   return (
-     <TableCell
-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/LastLoginCell.tsx b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/LastLoginCell.tsx
-index 675e4df..5c7105b 100644
---- a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/LastLoginCell.tsx
-+++ b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/LastLoginCell.tsx
-@@ -1,12 +1,12 @@
- import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
- import { TableCell } from "@mui/material";
- import React from "react";
+-    isCollected && setCounter(0); // Reset counter when isCollected becomes true or isLoading stops
+-
+     return () => {
+       timer && clearTimeout(timer);
+     };
+   }, [error, isLoading, isCollected, counter]);
  
- const LastLoginCell = () => {
-   const {
-     currentUser: { lastLogin },
--  } = useDBUserContext();
-+  } = useDBCurrentUserContext();
- 
-   return (
-     <TableCell sx={codewarsCellStyles} align="right">
-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/MemberSinceCell.tsx b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/MemberSinceCell.tsx
-index 5ca05b1..4418069 100644
---- a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/MemberSinceCell.tsx
-+++ b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/MemberSinceCell.tsx
-@@ -1,12 +1,12 @@
- import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
- import { TableCell } from "@mui/material";
- import React from "react";
- 
- const MemberSinceCell = () => {
-   const {
-     currentUser: { createdAt },
--  } = useDBUserContext();
-+  } = useDBCurrentUserContext();
- 
-   return (
-     <TableCell sx={codewarsCellStyles} align="right">
-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Users/UsersMap.tsx b/app/(dashboard)/leaderboard/Body/Sections/Users/UsersMap.tsx
-index 8115934..9f9ac93 100644
---- a/app/(dashboard)/leaderboard/Body/Sections/Users/UsersMap.tsx
-+++ b/app/(dashboard)/leaderboard/Body/Sections/Users/UsersMap.tsx
-@@ -1,18 +1,20 @@
--import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
-+import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
-+import DBCurrentUserProvider from "@/app/context/providers/db/currentUser/dbCurrentUserProvider";
- import { DBUser } from "@/types/db/users";
- import { ReactNode } from "react";
- 
- interface Props {
--  allUsers: DBUser[];
-   children: ReactNode;
- }
- 
--const Users = ({ allUsers, children }: Props) => {
-+const UsersMap = ({ children }: Props) => {
-+  const { allUsers } = useDBAllUsersContext();
++  useEffect(() => {
++    if (isCollected && collectedDiamondsCount)
++      dispatch({
++        type: "COLLECT_CODEWARS_DIAMONDS",
++        codewarsCollectedDiamonds: collectedDiamondsCount,
++      });
++    // Reset counter to avoid duplicate dispatches on subsequent renders
++    setCounter(0);
++  }, [isCollected, collectedDiamondsCount, dispatch]);
 +
-   return allUsers.map((currentUser: DBUser) => (
--    <DBUserProvider key={currentUser.email} context={{ allUsers, currentUser }}>
-+    <DBCurrentUserProvider key={currentUser.email} context={{ currentUser }}>
-       {children}
--    </DBUserProvider>
-+    </DBCurrentUserProvider>
-   ));
- };
- 
--export default Users;
-+export default UsersMap;
-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Users/index.tsx b/app/(dashboard)/leaderboard/Body/Sections/Users/index.tsx
-index a01e35a..19f39a3 100644
---- a/app/(dashboard)/leaderboard/Body/Sections/Users/index.tsx
-+++ b/app/(dashboard)/leaderboard/Body/Sections/Users/index.tsx
-@@ -1,4 +1,4 @@
--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
- import CodewarsService from "@/app/services/codewars-service";
- import { CodewarsCompletedChallenge } from "@/types/codewars";
- import { useState } from "react";
-@@ -11,7 +11,7 @@ const { getCompletedChallenges } = new CodewarsService();
- export function UsersSection() {
-   const {
-     currentUser: { codewars },
--  } = useDBUserContext();
-+  } = useDBCurrentUserContext();
-   const [isCollapse, setIsCollapse] = useState(false);
-   const [isLoading, setIsLoading] = useState(false);
-   const [completedChallenges, setCompletedChallenges] =
-diff --git a/app/(dashboard)/leaderboard/Body/index.tsx b/app/(dashboard)/leaderboard/Body/index.tsx
-index 6e6ed00..55b4301 100644
---- a/app/(dashboard)/leaderboard/Body/index.tsx
-+++ b/app/(dashboard)/leaderboard/Body/index.tsx
-@@ -1,21 +1,18 @@
--import { DBUser } from "@/types/db/users";
-+import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
- import { TableBody } from "@mui/material";
-+import { UsersSection } from "./Sections/Users";
- import Skeleton from "./Sections/Users/Skeleton";
- import Users from "./Sections/Users/UsersMap";
--import { UsersSection } from "./Sections/Users";
- 
--interface Props {
--  allUsers: DBUser[];
--  isLoading: boolean;
--}
-+const Body = () => {
-+  const { isLoading } = useDBAllUsersContext();
- 
--const Body = ({ allUsers, isLoading }: Props) => {
    return (
-     <TableBody>
-       {isLoading ? (
-         <Skeleton />
-       ) : (
--        <Users {...{ allUsers }}>
-+        <Users>
-           <UsersSection />
-         </Users>
-       )}
-diff --git a/app/(dashboard)/leaderboard/Error.tsx b/app/(dashboard)/leaderboard/Error.tsx
-index f13bc06..3f46b54 100644
---- a/app/(dashboard)/leaderboard/Error.tsx
-+++ b/app/(dashboard)/leaderboard/Error.tsx
-@@ -1,7 +1,6 @@
- import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
- import ErrorUI from "@/app/components/UI/Error/ErrorUI";
--import { Typography, Button } from "@mui/material";
--import React from "react";
-+import { Button, Typography } from "@mui/material";
- 
- interface Props {
-   onRetry: () => void;
-diff --git a/app/(dashboard)/leaderboard/page.tsx b/app/(dashboard)/leaderboard/page.tsx
-index 1470c82..7d4cc97 100644
---- a/app/(dashboard)/leaderboard/page.tsx
-+++ b/app/(dashboard)/leaderboard/page.tsx
-@@ -1,54 +1,29 @@
--// app/(dashboard)/leaderboard/page.tsx
--
- "use client";
- 
--import APIdbService from "@/app/api/services/db-service";
--import { DBUser } from "@/types/db/users";
-+import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
- import { Paper, Table, TableContainer } from "@mui/material";
--import React from "react";
-+import { useRouter } from "next/navigation";
-+import Body from "./Body";
- import LeaderboardLoadingError from "./Error";
- import LeaderboardHeader from "./Head/Header";
--import Body from "./Body";
--
--const { getUsers } = new APIdbService();
- 
- export default function LeaderBoardPage() {
--  const [allUsers, setAllUsers] = React.useState<DBUser[]>([]);
--  const [isLoading, setLoading] = React.useState<boolean>(true);
--  const [error, setError] = React.useState<boolean>(false);
--
--  const fetchUsersFromDatabase = async () => {
--    try {
--      const fetchedUsers = await getUsers();
--      if (!fetchedUsers.success) {
--        setError(true);
--      }
--      setAllUsers(fetchedUsers.users as DBUser[]);
--    } catch (error) {
--      console.error("Error loading leaderboard data");
--    } finally {
--      setLoading(false);
--    }
--  };
--
--  React.useEffect(() => {
--    fetchUsersFromDatabase();
--  }, []);
--
--  const handleRetry = () => {
--    setLoading(true); // Show loading state
--    setError(false); // Clear any existing errors
--    fetchUsersFromDatabase(); // Refetch the leaderboard data
--  };
--
--  if (error) return <LeaderboardLoadingError onRetry={handleRetry} />;
--
--  return (
--    <TableContainer component={Paper}>
--      <Table aria-label="Leaderboard Table">
--        <LeaderboardHeader />
--        <Body {...{ allUsers, isLoading }} />
--      </Table>
--    </TableContainer>
--  );
-+  const router = useRouter();
-+  // // Consume the error state from context to trigger re-render when it updates.
-+  const { error } = useDBAllUsersContext();
-+
-+  console.log(">>>>>>>>>>>> useDBAllUsersContext error", error);
-+  // // Conditionally render the error UI when error is true.
-+  if (error)
-+    return <LeaderboardLoadingError onRetry={() => router.refresh()} />;
-+
-+  if (!error)
-+    return (
-+      <TableContainer component={Paper}>
-+        <Table aria-label="Leaderboard Table">
-+          <LeaderboardHeader />
-+          <Body />
-+        </Table>
-+      </TableContainer>
-+    );
- }
-diff --git a/app/api/db/users/route.ts b/app/api/db/users/route.ts
-index a0d31e7..c9697ec 100644
---- a/app/api/db/users/route.ts
-+++ b/app/api/db/users/route.ts
-@@ -3,16 +3,16 @@
- import DBService from "@/app/services/db-service";
- import { NextRequest, NextResponse } from "next/server";
- 
--const { getAllUsers } = new DBService();
-+const { getUsers } = new DBService();
- 
- export async function GET(request: NextRequest) {
-   try {
--    const users = await getAllUsers();
-+    const users = await getUsers();
- 
-     // Return the users as JSON
-     return NextResponse.json({ success: true, users }, { status: 200 });
-   } catch (error) {
--    console.error(error);
-+    // console.error(error);
-     return NextResponse.json(
-       { error: "Unable to fetch users from database." },
-       { status: 500 }
-diff --git a/app/api/services/db-service.ts b/app/api/services/db-service.ts
-index 9d5d7e4..7d86cd3 100644
---- a/app/api/services/db-service.ts
-+++ b/app/api/services/db-service.ts
-@@ -13,11 +13,12 @@ interface GetUsersAPIResponse extends GetUsersAPIResponseError {
- class APIdbService {
-   private endpoint = `${baseURL}/api/db/users`;
- 
--  getUsers = async (): Promise<GetUsersAPIResponse> => {
-+  // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
-+  getUsers = async (options?: RequestInit): Promise<GetUsersAPIResponse> => {
-     try {
-       // Fetch the data from your API
-       const response = await fetch(this.endpoint, {
--        cache: "no-store",
-+        ...options, // This will include things like { signal: controller.signal }
-       });
-       if (!response.ok) {
-         console.error(
-diff --git a/app/api/services/diamonds-service.ts b/app/api/services/diamonds-service.ts
-index 745ea6e..7b927d0 100644
---- a/app/api/services/diamonds-service.ts
-+++ b/app/api/services/diamonds-service.ts
-@@ -4,13 +4,10 @@ import { baseURL } from "@/utils/constants";
- class APIDiamondsService {
-   private endpoint = `${baseURL}/api/db/diamonds`;
- 
--  getDiamonds = async (): Promise<APIdbGetDiamondsResponse> => {
-+  getDiamonds = async (options?: RequestInit): Promise<APIdbGetDiamondsResponse> => {
-     try {
--      const response = await fetch(this.endpoint, { cache: "no-store" });
-+      const response = await fetch(this.endpoint, {...options});
-       if (!response.ok) {
--        console.error(
--          "Error: Unable to fetch diamonds data from database. This might be due to a network issue, an invalid API endpoint, or server unavailability. Please check your internet connection and try again. If the problem persists, contact support or review the server status."
--        );
-         return {
-           success: false,
-           error:
-diff --git a/app/api/wars/db/users/route.ts b/app/api/wars/db/users/route.ts
-index 49c3916..45af47b 100644
---- a/app/api/wars/db/users/route.ts
-+++ b/app/api/wars/db/users/route.ts
-@@ -3,11 +3,11 @@
- import DBService from "@/app/services/db-service";
- import { NextRequest, NextResponse } from "next/server";
- 
--const { getAllUsers } = new DBService();
-+const { getUsers } = new DBService();
- 
- export async function GET(request: NextRequest) {
-   try {
--    const users = getAllUsers();
-+    const users = getUsers();
- 
-     // Return the users as JSON
-     return NextResponse.json({ users });
-diff --git a/app/context/hooks/useDBUserContext.ts b/app/context/hooks/useDBUserContext.ts
-deleted file mode 100644
-index 73ae9ee..0000000
---- a/app/context/hooks/useDBUserContext.ts
-+++ /dev/null
-@@ -1,13 +0,0 @@
--import { useContext } from "react";
--import { IDBUserProvider } from "@/types/contexts";
--import { DBUserContext } from "../providers/db/DBUserProvider";
--
--const useDBUserContext = (): IDBUserProvider => {
--  const context = useContext(DBUserContext);
--  if (!context) {
--    throw new Error("useDBUserContext must be used within a useDBUserContext");
--  }
--  return context;
--};
--
--export default useDBUserContext;
-diff --git a/app/context/providers/db/DBUserProvider.tsx b/app/context/providers/db/DBUserProvider.tsx
-deleted file mode 100644
-index 95f6e1d..0000000
---- a/app/context/providers/db/DBUserProvider.tsx
-+++ /dev/null
-@@ -1,17 +0,0 @@
--import { IDBUserProvider } from "@/types/contexts";
--import { createContext, ReactNode } from "react";
--
--interface Props {
--  children: ReactNode;
--  context: IDBUserProvider;
--}
--
--export const DBUserContext = createContext<IDBUserProvider | null>(null);
--
--const DBUserProvider = ({ children, context }: Props) => {
--  return (
--    <DBUserContext.Provider value={context}>{children}</DBUserContext.Provider>
--  );
--};
--
--export default DBUserProvider;
-diff --git a/app/context/providers/diamonds/DBDiamondsProvider.tsx b/app/context/providers/diamonds/DBDiamondsProvider.tsx
-index 5f25bbb..7115822 100644
---- a/app/context/providers/diamonds/DBDiamondsProvider.tsx
-+++ b/app/context/providers/diamonds/DBDiamondsProvider.tsx
-@@ -5,6 +5,7 @@ import { APIdbDiamondsFailedResponse, DBDiamonds } from "@/types/db/diamonds";
- import { createContext, ReactNode, useEffect, useReducer } from "react";
- import dbDiamondsReducer from "../../reducers/diamonds/dbDiamondsReducer";
- import { Action, DiamondsState } from "../../reducers/diamonds/types";
-+import useDBAllUsersDispatchContext from "../../hooks/useDBAllUsersDispatchContext";
- 
- const { getDiamonds } = new APIDiamondsService();
- 
-@@ -14,7 +15,7 @@ interface Props {
- }
- 
- // Default (synchronous) state for diamonds
--const initialDBDiamonds: APIdbDiamondsFailedResponse = {
-+const initialDBDiamondsState: APIdbDiamondsFailedResponse = {
-   success: false,
-   error: "",
- };
-@@ -26,12 +27,13 @@ export const DBDiamondsDispatchContext =
- const DBDiamondsProvider = ({ children }: Props) => {
-   const [DBDiamonds, dispatch] = useReducer(
-     dbDiamondsReducer,
--    initialDBDiamonds
-+    initialDBDiamondsState
-   );
- 
-   useEffect(() => {
-     (async () => {
--      const diamonds = await getDiamonds();
-+      const diamonds = await getDiamonds({ cache: "no-store" });
-+      // !diamonds.success && dispatch({type: ''})
-       dispatch({ type: "SET_DIAMONDS", payload: diamonds });
-     })();
-   }, []);
-diff --git a/app/layout.tsx b/app/layout.tsx
-index ff24e9b..a927b10 100644
---- a/app/layout.tsx
-+++ b/app/layout.tsx
-@@ -4,7 +4,10 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
- import ExploreIcon from "@mui/icons-material/Explore";
- import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
- import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-+import { LinearProgress } from "@mui/material";
-+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
- import type { Navigation } from "@toolpad/core";
-+import { NextAppProvider } from "@toolpad/core/nextjs";
- import { Analytics } from "@vercel/analytics/react";
- import { SpeedInsights } from "@vercel/speed-insights/next";
- import { Metadata } from "next";
-@@ -12,13 +15,12 @@ import { signIn, signOut } from "next-auth/react";
- import { headers } from "next/headers";
- import Image from "next/image";
- import * as React from "react";
-+import { ReactNode } from "react";
- import { auth } from "../auth";
- import { montserrat } from "../lib/fonts";
- import theme from "../theme";
--import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
--import { LinearProgress } from "@mui/material";
--import { NextAppProvider } from "@toolpad/core/nextjs";
- import DBDiamondsProvider from "./context/providers/diamonds/DBDiamondsProvider";
-+import DBAllUsersProvider from "./context/providers/db/allUsers/dbAllUsersProvider";
- 
- export const metadata: Metadata = {
-   title: {
-@@ -122,7 +124,11 @@ const AUTHENTICATION = {
-   signOut,
- };
- 
--export default async function RootLayout(props: { children: React.ReactNode }) {
-+interface Props {
-+  children: ReactNode;
-+}
-+
-+export default async function RootLayout({ children }: Props) {
-   // Await headers() and ensure its operations are performed synchronously after awaiting
-   const headersList = await headers();
-   const forwardedProto = headersList.get("x-forwarded-proto");
-@@ -147,7 +153,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
-               authentication={AUTHENTICATION}
-               theme={theme}
-             >
--              <DBDiamondsProvider>{props.children}</DBDiamondsProvider>
-+              {children}
-               <Analytics />
-               <SpeedInsights />
-             </NextAppProvider>
-diff --git a/app/services/db-service.ts b/app/services/db-service.ts
-index 7d4cb06..3e34cc2 100644
---- a/app/services/db-service.ts
-+++ b/app/services/db-service.ts
-@@ -1,10 +1,4 @@
+     <Box sx={diamondBoxStyles}>
+       <Typography sx={counterStyles}>
+diff --git a/app/context/reducers/diamonds/dbDiamondsReducer.ts b/app/context/reducers/diamonds/dbDiamondsReducer.ts
+index bebdecc..72b63cd 100644
+--- a/app/context/reducers/diamonds/dbDiamondsReducer.ts
++++ b/app/context/reducers/diamonds/dbDiamondsReducer.ts
+@@ -7,6 +7,20 @@ const dbDiamondsReducer = (
+   switch (action.type) {
+     case "SET_DIAMONDS":
+       return { ...action.payload };
++    case "COLLECT_CODEWARS_DIAMONDS":
++      if (state.success)
++        return {
++          ...state,
++          data: {
++            ...state.data,
++            diamonds: {
++              ...state.data.diamonds,
++              codewars:
++                state.data.diamonds.codewars + action.codewarsCollectedDiamonds,
++              sum: state.data.diamonds.sum + action.codewarsCollectedDiamonds,
++            },
++          },
++        };
+     default:
+       return state;
+   }
+diff --git a/app/context/reducers/diamonds/types.ts b/app/context/reducers/diamonds/types.ts
+index d3ebb8f..3529dd7 100644
+--- a/app/context/reducers/diamonds/types.ts
++++ b/app/context/reducers/diamonds/types.ts
+@@ -1,7 +1,7 @@
 -import {
--  Db,
--  Document,
--  MongoClient,
--  OptionalId,
--  WithId
--} from "mongodb";
-+import { Db, Document, MongoClient, OptionalId, WithId } from "mongodb";
+-  APIdbGetDiamondsResponse
+-} from "@/types/db/diamonds";
++import { APIdbGetDiamondsResponse } from "@/types/db/diamonds";
  
- class DBService {
-   private clientPromise: Promise<MongoClient>;
-@@ -43,7 +37,7 @@ class DBService {
-     return { users, diamonds, codewars };
-   };
+ export type DiamondsState = APIdbGetDiamondsResponse;
  
--  getAllUsers = async (): Promise<WithId<Document>[]> => {
-+  getUsers = async (): Promise<WithId<Document>[]> => {
-     const { users } = await this.getCollections();
-     return users.find({}).toArray();
-   };
+-export type Action = { type: "SET_DIAMONDS"; payload: DiamondsState };
++export type Action =
++  | { type: "SET_DIAMONDS"; payload: DiamondsState }
++  | { type: "COLLECT_CODEWARS_DIAMONDS"; codewarsCollectedDiamonds: number };
 diff --git a/diff.txt b/diff.txt
-index 76ac143..6d79ed7 100644
+index 7a722ea..e69de29 100644
 --- a/diff.txt
 +++ b/diff.txt
-@@ -1,320 +0,0 @@
--diff --git a/app/(dashboard)/leaderboard/Body/Collapse/OpenButton.tsx b/app/(dashboard)/leaderboard/Body/Collapse/OpenButton.tsx
--deleted file mode 100644
--index acaf5f0..0000000
----- a/app/(dashboard)/leaderboard/Body/Collapse/OpenButton.tsx
--+++ /dev/null
--@@ -1,31 +0,0 @@
+@@ -1,867 +0,0 @@
+-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds.tsx b/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds.tsx
+-index ba794c0..65a6dae 100644
+---- a/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds.tsx
+-+++ b/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds.tsx
+-@@ -1,15 +1,14 @@
+- import {
+--  diamondBoxStyles,
+--  counterStyles,
+-   collectedDiamondStyles,
+--  iconButtonStyles,
+--  fade,
+-+  counterStyles,
+-+  diamondBoxStyles,
+-   diamondStyles,
+-+  fade,
+-+  iconButtonStyles,
+- } from "@/app/(dashboard)/leaderboard/styles";
 --import useDBUserContext from "@/app/context/hooks/useDBUserContext";
---import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
---import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
---import { IconButton } from "@mui/material";
---
---interface Props {
---  isCollapse: boolean;
---  handleOpen: () => void;
---}
---
---const OpenButton = ({ isCollapse, handleOpen }: Props) => {
---  const {
---    currentUser: { codewars },
---  } = useDBUserContext();
---  return (
---    <>
---      {/* Expand/Collapse button */}
---      {codewars?.isConnected && (
---        <IconButton
---          aria-label="Toggle challenge details"
---          size="small"
---          onClick={handleOpen}
---        >
---          {isCollapse ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
---        </IconButton>
---      )}
---    </>
---  );
---};
---
---export default OpenButton;
--diff --git a/app/(dashboard)/leaderboard/Body/Collapse/TopRow.tsx b/app/(dashboard)/leaderboard/Body/Collapse/TopRow.tsx
--deleted file mode 100644
--index cdd4391..0000000
----- a/app/(dashboard)/leaderboard/Body/Collapse/TopRow.tsx
--+++ /dev/null
--@@ -1,69 +0,0 @@
---import { Box, TableCell, TableRow, Typography } from "@mui/material";
---import React from "react";
---import OpenButton from "./OpenButton";
---import LeaderboardAvatar from "../../Head/Avatar";
---import DiamondIcon from "@mui/icons-material/Diamond";
---import useDBUserContext from "@/app/context/hooks/useDBUserContext";
---import { codewarsCellStyles, diamondBoxStyles } from "../../styles";
---
---interface Props {
---  onOpen: {
---    isCollapse: boolean;
---    handleOpen: () => void;
---  };
---}
---
---const TopRow = ({ onOpen }: Props) => {
---  const {
---    currentUser: { codewars, name, createdAt, lastLogin },
---  } = useDBUserContext();
---
---  return (
---    <>
---      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
---        <TableCell>
---          <OpenButton {...onOpen} />
---        </TableCell>
---        <TableCell
---          sx={{
---            ...codewarsCellStyles,
---            display: "flex",
---            alignItems: "center",
---            gap: 1,
---          }}
---          component="th"
---          scope="row"
---        >
---          <LeaderboardAvatar />
---          <Typography
---            variant="body2"
---            sx={{
---              whiteSpace: "nowrap",
---              overflow: "hidden",
---              textOverflow: "ellipsis",
---            }}
---          >
---            {name}
---          </Typography>
---        </TableCell>
---        <TableCell sx={codewarsCellStyles} align="right">
---          {new Date(createdAt).toLocaleDateString()}
---        </TableCell>
---        <TableCell sx={codewarsCellStyles} align="right">
---          {new Date(lastLogin).toLocaleTimeString()}
---        </TableCell>
---        <TableCell sx={{ ...codewarsCellStyles }} align="right">
---          <Box sx={diamondBoxStyles}>
---            <Typography>{Math.floor(Math.random() * 100000)}</Typography>
---            <DiamondIcon />
---          </Box>
---        </TableCell>
---        <TableCell sx={codewarsCellStyles} align="right">
---          {/* Not available */}
---        </TableCell>
---      </TableRow>
---    </>
---  );
---};
---
---export default TopRow;
--diff --git a/app/(dashboard)/leaderboard/Body/Collapse/index.tsx b/app/(dashboard)/leaderboard/Body/Collapse/index.tsx
--deleted file mode 100644
--index 840498b..0000000
----- a/app/(dashboard)/leaderboard/Body/Collapse/index.tsx
--+++ /dev/null
--@@ -1,74 +0,0 @@
---import useDBUserContext from "@/app/context/hooks/useDBUserContext";
---import CodewarsService from "@/app/services/codewars-service";
+-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+- import CodewarsService from "@/app/services/codewars-service";
+- import DiamondsService from "@/app/services/diamonds-service";
 --import { CodewarsCompletedChallenge } from "@/types/codewars";
---import { Collapse, TableCell, TableRow } from "@mui/material";
---import { useState } from "react";
---import TopRow from "./TopRow";
---import CodewarsSection from "../Sections/Codewars";
---
---const { getCompletedChallenges } = new CodewarsService();
---
---export function LeaderboardUsers() {
---  const {
---    currentUser: { codewars },
+- import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
+- import DiamondIcon from "@mui/icons-material/Diamond";
+- import { Box, IconButton, Typography } from "@mui/material";
+-@@ -31,7 +30,7 @@ const CollectDiamonds = ({
+-   manageSelectedChallenge,
+-   challenge,
+- }: Props) => {
+--  const { currentUser } = useDBUserContext();
+-+  const { currentUser } = useDBCurrentUserContext();
+-   const [isLoading, setIsLoading] = useState(false);
+-   const [error, setError] = useState(false);
+-   const [collectedDiamondsCount, setCollectedDiamondsCount] =
+-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Collapse/OpenButton.tsx b/app/(dashboard)/leaderboard/Body/Sections/Collapse/OpenButton.tsx
+-index acaf5f0..7edac30 100644
+---- a/app/(dashboard)/leaderboard/Body/Sections/Collapse/OpenButton.tsx
+-+++ b/app/(dashboard)/leaderboard/Body/Sections/Collapse/OpenButton.tsx
+-@@ -1,4 +1,4 @@
+--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+- import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+- import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+- import { IconButton } from "@mui/material";
+-@@ -11,7 +11,7 @@ interface Props {
+- const OpenButton = ({ isCollapse, handleOpen }: Props) => {
+-   const {
+-     currentUser: { codewars },
 --  } = useDBUserContext();
---  const [isCollapse, setIsCollapse] = useState(false);
---  const [isLoading, setIsLoading] = useState(false);
---  const [completedChallenges, setCompletedChallenges] =
---    useState<CodewarsCompletedChallenge[]>();
---  const [error, setError] = useState(false);
---  const [pageNumber, setPageNumber] = useState(0);
+-+  } = useDBCurrentUserContext();
+-   return (
+-     <>
+-       {/* Expand/Collapse button */}
+-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/AvatarCell.tsx b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/AvatarCell.tsx
+-index 2eef968..086e1ae 100644
+---- a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/AvatarCell.tsx
+-+++ b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/AvatarCell.tsx
+-@@ -1,5 +1,5 @@
+- import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
+--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+- import { TableCell, Typography } from "@mui/material";
+- import Avatar from "@mui/material/Avatar";
+- import Badge from "@mui/material/Badge";
+-@@ -37,7 +37,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
+- export default function AvatarCell() {
+-   const {
+-     currentUser: { image, name },
+--  } = useDBUserContext();
+-+  } = useDBCurrentUserContext();
+- 
+-   return (
+-     <TableCell
+-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/LastLoginCell.tsx b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/LastLoginCell.tsx
+-index 675e4df..5c7105b 100644
+---- a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/LastLoginCell.tsx
+-+++ b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/LastLoginCell.tsx
+-@@ -1,12 +1,12 @@
+- import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
+--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+- import { TableCell } from "@mui/material";
+- import React from "react";
+- 
+- const LastLoginCell = () => {
+-   const {
+-     currentUser: { lastLogin },
+--  } = useDBUserContext();
+-+  } = useDBCurrentUserContext();
+- 
+-   return (
+-     <TableCell sx={codewarsCellStyles} align="right">
+-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/MemberSinceCell.tsx b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/MemberSinceCell.tsx
+-index 5ca05b1..4418069 100644
+---- a/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/MemberSinceCell.tsx
+-+++ b/app/(dashboard)/leaderboard/Body/Sections/Users/UserCells/MemberSinceCell.tsx
+-@@ -1,12 +1,12 @@
+- import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
+--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+- import { TableCell } from "@mui/material";
+- import React from "react";
+- 
+- const MemberSinceCell = () => {
+-   const {
+-     currentUser: { createdAt },
+--  } = useDBUserContext();
+-+  } = useDBCurrentUserContext();
+- 
+-   return (
+-     <TableCell sx={codewarsCellStyles} align="right">
+-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Users/UsersMap.tsx b/app/(dashboard)/leaderboard/Body/Sections/Users/UsersMap.tsx
+-index 8115934..9f9ac93 100644
+---- a/app/(dashboard)/leaderboard/Body/Sections/Users/UsersMap.tsx
+-+++ b/app/(dashboard)/leaderboard/Body/Sections/Users/UsersMap.tsx
+-@@ -1,18 +1,20 @@
+--import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
+-+import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
+-+import DBCurrentUserProvider from "@/app/context/providers/db/currentUser/dbCurrentUserProvider";
+- import { DBUser } from "@/types/db/users";
+- import { ReactNode } from "react";
+- 
+- interface Props {
+--  allUsers: DBUser[];
+-   children: ReactNode;
+- }
+- 
+--const Users = ({ allUsers, children }: Props) => {
+-+const UsersMap = ({ children }: Props) => {
+-+  const { allUsers } = useDBAllUsersContext();
+-+
+-   return allUsers.map((currentUser: DBUser) => (
+--    <DBUserProvider key={currentUser.email} context={{ allUsers, currentUser }}>
+-+    <DBCurrentUserProvider key={currentUser.email} context={{ currentUser }}>
+-       {children}
+--    </DBUserProvider>
+-+    </DBCurrentUserProvider>
+-   ));
+- };
+- 
+--export default Users;
+-+export default UsersMap;
+-diff --git a/app/(dashboard)/leaderboard/Body/Sections/Users/index.tsx b/app/(dashboard)/leaderboard/Body/Sections/Users/index.tsx
+-index a01e35a..19f39a3 100644
+---- a/app/(dashboard)/leaderboard/Body/Sections/Users/index.tsx
+-+++ b/app/(dashboard)/leaderboard/Body/Sections/Users/index.tsx
+-@@ -1,4 +1,4 @@
+--import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+-+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+- import CodewarsService from "@/app/services/codewars-service";
+- import { CodewarsCompletedChallenge } from "@/types/codewars";
+- import { useState } from "react";
+-@@ -11,7 +11,7 @@ const { getCompletedChallenges } = new CodewarsService();
+- export function UsersSection() {
+-   const {
+-     currentUser: { codewars },
+--  } = useDBUserContext();
+-+  } = useDBCurrentUserContext();
+-   const [isCollapse, setIsCollapse] = useState(false);
+-   const [isLoading, setIsLoading] = useState(false);
+-   const [completedChallenges, setCompletedChallenges] =
+-diff --git a/app/(dashboard)/leaderboard/Body/index.tsx b/app/(dashboard)/leaderboard/Body/index.tsx
+-index 6e6ed00..55b4301 100644
+---- a/app/(dashboard)/leaderboard/Body/index.tsx
+-+++ b/app/(dashboard)/leaderboard/Body/index.tsx
+-@@ -1,21 +1,18 @@
+--import { DBUser } from "@/types/db/users";
+-+import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
+- import { TableBody } from "@mui/material";
+-+import { UsersSection } from "./Sections/Users";
+- import Skeleton from "./Sections/Users/Skeleton";
+- import Users from "./Sections/Users/UsersMap";
+--import { UsersSection } from "./Sections/Users";
+- 
+--interface Props {
+--  allUsers: DBUser[];
+--  isLoading: boolean;
+--}
+-+const Body = () => {
+-+  const { isLoading } = useDBAllUsersContext();
+- 
+--const Body = ({ allUsers, isLoading }: Props) => {
+-   return (
+-     <TableBody>
+-       {isLoading ? (
+-         <Skeleton />
+-       ) : (
+--        <Users {...{ allUsers }}>
+-+        <Users>
+-           <UsersSection />
+-         </Users>
+-       )}
+-diff --git a/app/(dashboard)/leaderboard/Error.tsx b/app/(dashboard)/leaderboard/Error.tsx
+-index f13bc06..3f46b54 100644
+---- a/app/(dashboard)/leaderboard/Error.tsx
+-+++ b/app/(dashboard)/leaderboard/Error.tsx
+-@@ -1,7 +1,6 @@
+- import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
+- import ErrorUI from "@/app/components/UI/Error/ErrorUI";
+--import { Typography, Button } from "@mui/material";
+--import React from "react";
+-+import { Button, Typography } from "@mui/material";
+- 
+- interface Props {
+-   onRetry: () => void;
+-diff --git a/app/(dashboard)/leaderboard/page.tsx b/app/(dashboard)/leaderboard/page.tsx
+-index 1470c82..7d4cc97 100644
+---- a/app/(dashboard)/leaderboard/page.tsx
+-+++ b/app/(dashboard)/leaderboard/page.tsx
+-@@ -1,54 +1,29 @@
+--// app/(dashboard)/leaderboard/page.tsx
 --
---  const codewarsUsername = codewars?.username;
+- "use client";
+- 
+--import APIdbService from "@/app/api/services/db-service";
+--import { DBUser } from "@/types/db/users";
+-+import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
+- import { Paper, Table, TableContainer } from "@mui/material";
+--import React from "react";
+-+import { useRouter } from "next/navigation";
+-+import Body from "./Body";
+- import LeaderboardLoadingError from "./Error";
+- import LeaderboardHeader from "./Head/Header";
+--import Body from "./Body";
 --
---  const handleOpen = async () => {
---    setIsCollapse(!isCollapse);
---    setIsLoading(true);
---    handleTry();
---  };
+--const { getUsers } = new APIdbService();
+- 
+- export default function LeaderBoardPage() {
+--  const [allUsers, setAllUsers] = React.useState<DBUser[]>([]);
+--  const [isLoading, setLoading] = React.useState<boolean>(true);
+--  const [error, setError] = React.useState<boolean>(false);
 --
---  const handleTry = async () => {
+--  const fetchUsersFromDatabase = async () => {
 --    try {
---      const response = await getCompletedChallenges(
---        codewarsUsername,
---        pageNumber
---      );
---
---      if ("data" in response) {
---        const { data: challenges } = response.data;
---        setCompletedChallenges(challenges);
---      } else {
---        // TODO: Handle cases where data is missing
+--      const fetchedUsers = await getUsers();
+--      if (!fetchedUsers.success) {
+--        setError(true);
 --      }
+--      setAllUsers(fetchedUsers.users as DBUser[]);
 --    } catch (error) {
---      // TODO: Handle errors gracefully
---      // console.error("Error fetching challenges: ", error);
---      setError(true);
+--      console.error("Error loading leaderboard data");
 --    } finally {
---      setIsLoading(false);
---
---      // TODO: Add additional cleanup or updates if needed
+--      setLoading(false);
 --    }
 --  };
 --
+--  React.useEffect(() => {
+--    fetchUsersFromDatabase();
+--  }, []);
+--
 --  const handleRetry = () => {
---    setError(false); // Clear the error
---    setIsLoading(true); // Re-initiate loading state
---    handleRetry();
+--    setLoading(true); // Show loading state
+--    setError(false); // Clear any existing errors
+--    fetchUsersFromDatabase(); // Refetch the leaderboard data
 --  };
 --
+--  if (error) return <LeaderboardLoadingError onRetry={handleRetry} />;
+--
 --  return (
---    <>
---      <TopRow onOpen={{ isCollapse, handleOpen }} />
---      <TableRow>
---        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
---          <Collapse in={isCollapse} timeout="auto" unmountOnExit>
---            <CodewarsSection
---              {...{ completedChallenges, error, handleRetry, isLoading }}
---            />
---          </Collapse>
---        </TableCell>
---      </TableRow>
---    </>
+--    <TableContainer component={Paper}>
+--      <Table aria-label="Leaderboard Table">
+--        <LeaderboardHeader />
+--        <Body {...{ allUsers, isLoading }} />
+--      </Table>
+--    </TableContainer>
 --  );
---}
--diff --git a/app/(dashboard)/leaderboard/Body/Skeleton.tsx b/app/(dashboard)/leaderboard/Body/Skeleton.tsx
+-+  const router = useRouter();
+-+  // // Consume the error state from context to trigger re-render when it updates.
+-+  const { error } = useDBAllUsersContext();
+-+
+-+  console.log(">>>>>>>>>>>> useDBAllUsersContext error", error);
+-+  // // Conditionally render the error UI when error is true.
+-+  if (error)
+-+    return <LeaderboardLoadingError onRetry={() => router.refresh()} />;
+-+
+-+  if (!error)
+-+    return (
+-+      <TableContainer component={Paper}>
+-+        <Table aria-label="Leaderboard Table">
+-+          <LeaderboardHeader />
+-+          <Body />
+-+        </Table>
+-+      </TableContainer>
+-+    );
+- }
+-diff --git a/app/api/db/users/route.ts b/app/api/db/users/route.ts
+-index a0d31e7..c9697ec 100644
+---- a/app/api/db/users/route.ts
+-+++ b/app/api/db/users/route.ts
+-@@ -3,16 +3,16 @@
+- import DBService from "@/app/services/db-service";
+- import { NextRequest, NextResponse } from "next/server";
+- 
+--const { getAllUsers } = new DBService();
+-+const { getUsers } = new DBService();
+- 
+- export async function GET(request: NextRequest) {
+-   try {
+--    const users = await getAllUsers();
+-+    const users = await getUsers();
+- 
+-     // Return the users as JSON
+-     return NextResponse.json({ success: true, users }, { status: 200 });
+-   } catch (error) {
+--    console.error(error);
+-+    // console.error(error);
+-     return NextResponse.json(
+-       { error: "Unable to fetch users from database." },
+-       { status: 500 }
+-diff --git a/app/api/services/db-service.ts b/app/api/services/db-service.ts
+-index 9d5d7e4..7d86cd3 100644
+---- a/app/api/services/db-service.ts
+-+++ b/app/api/services/db-service.ts
+-@@ -13,11 +13,12 @@ interface GetUsersAPIResponse extends GetUsersAPIResponseError {
+- class APIdbService {
+-   private endpoint = `${baseURL}/api/db/users`;
+- 
+--  getUsers = async (): Promise<GetUsersAPIResponse> => {
+-+  // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
+-+  getUsers = async (options?: RequestInit): Promise<GetUsersAPIResponse> => {
+-     try {
+-       // Fetch the data from your API
+-       const response = await fetch(this.endpoint, {
+--        cache: "no-store",
+-+        ...options, // This will include things like { signal: controller.signal }
+-       });
+-       if (!response.ok) {
+-         console.error(
+-diff --git a/app/api/services/diamonds-service.ts b/app/api/services/diamonds-service.ts
+-index 745ea6e..7b927d0 100644
+---- a/app/api/services/diamonds-service.ts
+-+++ b/app/api/services/diamonds-service.ts
+-@@ -4,13 +4,10 @@ import { baseURL } from "@/utils/constants";
+- class APIDiamondsService {
+-   private endpoint = `${baseURL}/api/db/diamonds`;
+- 
+--  getDiamonds = async (): Promise<APIdbGetDiamondsResponse> => {
+-+  getDiamonds = async (options?: RequestInit): Promise<APIdbGetDiamondsResponse> => {
+-     try {
+--      const response = await fetch(this.endpoint, { cache: "no-store" });
+-+      const response = await fetch(this.endpoint, {...options});
+-       if (!response.ok) {
+--        console.error(
+--          "Error: Unable to fetch diamonds data from database. This might be due to a network issue, an invalid API endpoint, or server unavailability. Please check your internet connection and try again. If the problem persists, contact support or review the server status."
+--        );
+-         return {
+-           success: false,
+-           error:
+-diff --git a/app/api/wars/db/users/route.ts b/app/api/wars/db/users/route.ts
+-index 49c3916..45af47b 100644
+---- a/app/api/wars/db/users/route.ts
+-+++ b/app/api/wars/db/users/route.ts
+-@@ -3,11 +3,11 @@
+- import DBService from "@/app/services/db-service";
+- import { NextRequest, NextResponse } from "next/server";
+- 
+--const { getAllUsers } = new DBService();
+-+const { getUsers } = new DBService();
+- 
+- export async function GET(request: NextRequest) {
+-   try {
+--    const users = getAllUsers();
+-+    const users = getUsers();
+- 
+-     // Return the users as JSON
+-     return NextResponse.json({ users });
+-diff --git a/app/context/hooks/useDBUserContext.ts b/app/context/hooks/useDBUserContext.ts
 -deleted file mode 100644
--index 50f752e..0000000
----- a/app/(dashboard)/leaderboard/Body/Skeleton.tsx
+-index 73ae9ee..0000000
+---- a/app/context/hooks/useDBUserContext.ts
+-+++ /dev/null
+-@@ -1,13 +0,0 @@
+--import { useContext } from "react";
+--import { IDBUserProvider } from "@/types/contexts";
+--import { DBUserContext } from "../providers/db/DBUserProvider";
+--
+--const useDBUserContext = (): IDBUserProvider => {
+--  const context = useContext(DBUserContext);
+--  if (!context) {
+--    throw new Error("useDBUserContext must be used within a useDBUserContext");
+--  }
+--  return context;
+--};
+--
+--export default useDBUserContext;
+-diff --git a/app/context/providers/db/DBUserProvider.tsx b/app/context/providers/db/DBUserProvider.tsx
+-deleted file mode 100644
+-index 95f6e1d..0000000
+---- a/app/context/providers/db/DBUserProvider.tsx
 -+++ /dev/null
 -@@ -1,17 +0,0 @@
---import { Skeleton, TableCell, TableRow } from "@mui/material";
---import React from "react";
---import { codewarsCellStyles } from "../styles";
+--import { IDBUserProvider } from "@/types/contexts";
+--import { createContext, ReactNode } from "react";
 --
---const SkeletonTableRow: React.FC<{ nOfCols: number }> = ({ nOfCols }) => {
+--interface Props {
+--  children: ReactNode;
+--  context: IDBUserProvider;
+--}
+--
+--export const DBUserContext = createContext<IDBUserProvider | null>(null);
+--
+--const DBUserProvider = ({ children, context }: Props) => {
 --  return (
---    <TableRow>
---      {Array.from({ length: nOfCols }).map((_, i) => (
---        <TableCell sx={codewarsCellStyles} key={i}>
---          <Skeleton variant="text" animation="wave" />
---        </TableCell>
---      ))}
---    </TableRow>
+--    <DBUserContext.Provider value={context}>{children}</DBUserContext.Provider>
 --  );
 --};
 --
---export default SkeletonTableRow;
--diff --git a/app/(dashboard)/leaderboard/Body/index.tsx b/app/(dashboard)/leaderboard/Body/index.tsx
--index 2c91abb..9373f4a 100644
----- a/app/(dashboard)/leaderboard/Body/index.tsx
--+++ b/app/(dashboard)/leaderboard/Body/index.tsx
--@@ -2,8 +2,9 @@ import { TableBody } from "@mui/material";
-- import React from "react";
-- import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
-- import { DBUser } from "@/types/db/users";
---import { LeaderboardUsers } from "./Collapse";
---import SkeletonTableRow from "./Skeleton";
--+import { UsersSection } from "./Sections/Users";
--+import Row from "./Sections/Users/Skeleton/Row";
--+import Skeleton from "./Sections/Users/Skeleton";
+--export default DBUserProvider;
+-diff --git a/app/context/providers/diamonds/DBDiamondsProvider.tsx b/app/context/providers/diamonds/DBDiamondsProvider.tsx
+-index 5f25bbb..7115822 100644
+---- a/app/context/providers/diamonds/DBDiamondsProvider.tsx
+-+++ b/app/context/providers/diamonds/DBDiamondsProvider.tsx
+-@@ -5,6 +5,7 @@ import { APIdbDiamondsFailedResponse, DBDiamonds } from "@/types/db/diamonds";
+- import { createContext, ReactNode, useEffect, useReducer } from "react";
+- import dbDiamondsReducer from "../../reducers/diamonds/dbDiamondsReducer";
+- import { Action, DiamondsState } from "../../reducers/diamonds/types";
+-+import useDBAllUsersDispatchContext from "../../hooks/useDBAllUsersDispatchContext";
 - 
-- interface Props {
--   allUsers: DBUser[];
--@@ -11,22 +12,20 @@ interface Props {
+- const { getDiamonds } = new APIDiamondsService();
+- 
+-@@ -14,7 +15,7 @@ interface Props {
 - }
 - 
-- const Body = ({ allUsers, isLoading }: Props) => {
---  const columns = 6;
---
--   return (
--     <TableBody>
---      {isLoading
---        ? Array.from({ length: 10 }).map((_, i) => (
---            <SkeletonTableRow key={i} nOfCols={columns} />
---          ))
---        : allUsers.map((currentUser: DBUser) => (
---            <DBUserProvider
---              key={currentUser.email}
---              context={{ allUsers, currentUser }}
---            >
---              <LeaderboardUsers />
---            </DBUserProvider>
---          ))}
--+      {isLoading ? (
--+        <Skeleton />
--+      ) : (
--+        allUsers.map((currentUser: DBUser) => (
--+          <DBUserProvider
--+            key={currentUser.email}
--+            context={{ allUsers, currentUser }}
--+          >
--+            <UsersSection />
--+          </DBUserProvider>
--+        ))
--+      )}
--     </TableBody>
--   );
+- // Default (synchronous) state for diamonds
+--const initialDBDiamonds: APIdbDiamondsFailedResponse = {
+-+const initialDBDiamondsState: APIdbDiamondsFailedResponse = {
+-   success: false,
+-   error: "",
 - };
--diff --git a/app/(dashboard)/leaderboard/Head/Avatar.tsx b/app/(dashboard)/leaderboard/Head/Avatar.tsx
--deleted file mode 100644
--index c13b2d9..0000000
----- a/app/(dashboard)/leaderboard/Head/Avatar.tsx
--+++ /dev/null
--@@ -1,48 +0,0 @@
---import useDBUserContext from "@/app/context/hooks/useDBUserContext";
---import Avatar from "@mui/material/Avatar";
---import Badge from "@mui/material/Badge";
---import { styled } from "@mui/material/styles";
---
---const StyledBadge = styled(Badge)(({ theme }) => ({
---  "& .MuiBadge-badge": {
---    backgroundColor: "#44b700",
---    color: "#44b700",
---    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
---    "&::after": {
---      position: "absolute",
---      top: 0,
---      left: 0,
---      width: "100%",
---      height: "100%",
---      borderRadius: "50%",
---      animation: "ripple 1.2s infinite ease-in-out",
---      border: "1px solid currentColor",
---      content: '""',
---    },
---  },
---  "@keyframes ripple": {
---    "0%": {
---      transform: "scale(.8)",
---      opacity: 1,
---    },
---    "100%": {
---      transform: "scale(2.4)",
---      opacity: 0,
---    },
---  },
---}));
---
---export default function LeaderboardAvatar() {
---  const {
---    currentUser: { image },
---  } = useDBUserContext();
---  return (
---    <StyledBadge
---      overlap="circular"
---      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
---      variant="dot"
---    >
---      <Avatar alt="User's Avatar" src={image} />
---    </StyledBadge>
---  );
+-@@ -26,12 +27,13 @@ export const DBDiamondsDispatchContext =
+- const DBDiamondsProvider = ({ children }: Props) => {
+-   const [DBDiamonds, dispatch] = useReducer(
+-     dbDiamondsReducer,
+--    initialDBDiamonds
+-+    initialDBDiamondsState
+-   );
+- 
+-   useEffect(() => {
+-     (async () => {
+--      const diamonds = await getDiamonds();
+-+      const diamonds = await getDiamonds({ cache: "no-store" });
+-+      // !diamonds.success && dispatch({type: ''})
+-       dispatch({ type: "SET_DIAMONDS", payload: diamonds });
+-     })();
+-   }, []);
+-diff --git a/app/layout.tsx b/app/layout.tsx
+-index ff24e9b..a927b10 100644
+---- a/app/layout.tsx
+-+++ b/app/layout.tsx
+-@@ -4,7 +4,10 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
+- import ExploreIcon from "@mui/icons-material/Explore";
+- import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
+- import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+-+import { LinearProgress } from "@mui/material";
+-+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+- import type { Navigation } from "@toolpad/core";
+-+import { NextAppProvider } from "@toolpad/core/nextjs";
+- import { Analytics } from "@vercel/analytics/react";
+- import { SpeedInsights } from "@vercel/speed-insights/next";
+- import { Metadata } from "next";
+-@@ -12,13 +15,12 @@ import { signIn, signOut } from "next-auth/react";
+- import { headers } from "next/headers";
+- import Image from "next/image";
+- import * as React from "react";
+-+import { ReactNode } from "react";
+- import { auth } from "../auth";
+- import { montserrat } from "../lib/fonts";
+- import theme from "../theme";
+--import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+--import { LinearProgress } from "@mui/material";
+--import { NextAppProvider } from "@toolpad/core/nextjs";
+- import DBDiamondsProvider from "./context/providers/diamonds/DBDiamondsProvider";
+-+import DBAllUsersProvider from "./context/providers/db/allUsers/dbAllUsersProvider";
+- 
+- export const metadata: Metadata = {
+-   title: {
+-@@ -122,7 +124,11 @@ const AUTHENTICATION = {
+-   signOut,
+- };
+- 
+--export default async function RootLayout(props: { children: React.ReactNode }) {
+-+interface Props {
+-+  children: ReactNode;
+-+}
+-+
+-+export default async function RootLayout({ children }: Props) {
+-   // Await headers() and ensure its operations are performed synchronously after awaiting
+-   const headersList = await headers();
+-   const forwardedProto = headersList.get("x-forwarded-proto");
+-@@ -147,7 +153,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
+-               authentication={AUTHENTICATION}
+-               theme={theme}
+-             >
+--              <DBDiamondsProvider>{props.children}</DBDiamondsProvider>
+-+              {children}
+-               <Analytics />
+-               <SpeedInsights />
+-             </NextAppProvider>
+-diff --git a/app/services/db-service.ts b/app/services/db-service.ts
+-index 7d4cb06..3e34cc2 100644
+---- a/app/services/db-service.ts
+-+++ b/app/services/db-service.ts
+-@@ -1,10 +1,4 @@
+--import {
+--  Db,
+--  Document,
+--  MongoClient,
+--  OptionalId,
+--  WithId
+--} from "mongodb";
+-+import { Db, Document, MongoClient, OptionalId, WithId } from "mongodb";
+- 
+- class DBService {
+-   private clientPromise: Promise<MongoClient>;
+-@@ -43,7 +37,7 @@ class DBService {
+-     return { users, diamonds, codewars };
+-   };
+- 
+--  getAllUsers = async (): Promise<WithId<Document>[]> => {
+-+  getUsers = async (): Promise<WithId<Document>[]> => {
+-     const { users } = await this.getCollections();
+-     return users.find({}).toArray();
+-   };
+-diff --git a/diff.txt b/diff.txt
+-index 76ac143..6d79ed7 100644
+---- a/diff.txt
+-+++ b/diff.txt
+-@@ -1,320 +0,0 @@
+--diff --git a/app/(dashboard)/leaderboard/Body/Collapse/OpenButton.tsx b/app/(dashboard)/leaderboard/Body/Collapse/OpenButton.tsx
+--deleted file mode 100644
+--index acaf5f0..0000000
+----- a/app/(dashboard)/leaderboard/Body/Collapse/OpenButton.tsx
+--+++ /dev/null
+--@@ -1,31 +0,0 @@
+---import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+---import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+---import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+---import { IconButton } from "@mui/material";
+---
+---interface Props {
+---  isCollapse: boolean;
+---  handleOpen: () => void;
+---}
+---
+---const OpenButton = ({ isCollapse, handleOpen }: Props) => {
+---  const {
+---    currentUser: { codewars },
+---  } = useDBUserContext();
+---  return (
+---    <>
+---      {/* Expand/Collapse button */}
+---      {codewars?.isConnected && (
+---        <IconButton
+---          aria-label="Toggle challenge details"
+---          size="small"
+---          onClick={handleOpen}
+---        >
+---          {isCollapse ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+---        </IconButton>
+---      )}
+---    </>
+---  );
+---};
+---
+---export default OpenButton;
+--diff --git a/app/(dashboard)/leaderboard/Body/Collapse/TopRow.tsx b/app/(dashboard)/leaderboard/Body/Collapse/TopRow.tsx
+--deleted file mode 100644
+--index cdd4391..0000000
+----- a/app/(dashboard)/leaderboard/Body/Collapse/TopRow.tsx
+--+++ /dev/null
+--@@ -1,69 +0,0 @@
+---import { Box, TableCell, TableRow, Typography } from "@mui/material";
+---import React from "react";
+---import OpenButton from "./OpenButton";
+---import LeaderboardAvatar from "../../Head/Avatar";
+---import DiamondIcon from "@mui/icons-material/Diamond";
+---import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+---import { codewarsCellStyles, diamondBoxStyles } from "../../styles";
+---
+---interface Props {
+---  onOpen: {
+---    isCollapse: boolean;
+---    handleOpen: () => void;
+---  };
+---}
+---
+---const TopRow = ({ onOpen }: Props) => {
+---  const {
+---    currentUser: { codewars, name, createdAt, lastLogin },
+---  } = useDBUserContext();
+---
+---  return (
+---    <>
+---      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+---        <TableCell>
+---          <OpenButton {...onOpen} />
+---        </TableCell>
+---        <TableCell
+---          sx={{
+---            ...codewarsCellStyles,
+---            display: "flex",
+---            alignItems: "center",
+---            gap: 1,
+---          }}
+---          component="th"
+---          scope="row"
+---        >
+---          <LeaderboardAvatar />
+---          <Typography
+---            variant="body2"
+---            sx={{
+---              whiteSpace: "nowrap",
+---              overflow: "hidden",
+---              textOverflow: "ellipsis",
+---            }}
+---          >
+---            {name}
+---          </Typography>
+---        </TableCell>
+---        <TableCell sx={codewarsCellStyles} align="right">
+---          {new Date(createdAt).toLocaleDateString()}
+---        </TableCell>
+---        <TableCell sx={codewarsCellStyles} align="right">
+---          {new Date(lastLogin).toLocaleTimeString()}
+---        </TableCell>
+---        <TableCell sx={{ ...codewarsCellStyles }} align="right">
+---          <Box sx={diamondBoxStyles}>
+---            <Typography>{Math.floor(Math.random() * 100000)}</Typography>
+---            <DiamondIcon />
+---          </Box>
+---        </TableCell>
+---        <TableCell sx={codewarsCellStyles} align="right">
+---          {/* Not available */}
+---        </TableCell>
+---      </TableRow>
+---    </>
+---  );
+---};
+---
+---export default TopRow;
+--diff --git a/app/(dashboard)/leaderboard/Body/Collapse/index.tsx b/app/(dashboard)/leaderboard/Body/Collapse/index.tsx
+--deleted file mode 100644
+--index 840498b..0000000
+----- a/app/(dashboard)/leaderboard/Body/Collapse/index.tsx
+--+++ /dev/null
+--@@ -1,74 +0,0 @@
+---import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+---import CodewarsService from "@/app/services/codewars-service";
+---import { CodewarsCompletedChallenge } from "@/types/codewars";
+---import { Collapse, TableCell, TableRow } from "@mui/material";
+---import { useState } from "react";
+---import TopRow from "./TopRow";
+---import CodewarsSection from "../Sections/Codewars";
+---
+---const { getCompletedChallenges } = new CodewarsService();
+---
+---export function LeaderboardUsers() {
+---  const {
+---    currentUser: { codewars },
+---  } = useDBUserContext();
+---  const [isCollapse, setIsCollapse] = useState(false);
+---  const [isLoading, setIsLoading] = useState(false);
+---  const [completedChallenges, setCompletedChallenges] =
+---    useState<CodewarsCompletedChallenge[]>();
+---  const [error, setError] = useState(false);
+---  const [pageNumber, setPageNumber] = useState(0);
+---
+---  const codewarsUsername = codewars?.username;
+---
+---  const handleOpen = async () => {
+---    setIsCollapse(!isCollapse);
+---    setIsLoading(true);
+---    handleTry();
+---  };
+---
+---  const handleTry = async () => {
+---    try {
+---      const response = await getCompletedChallenges(
+---        codewarsUsername,
+---        pageNumber
+---      );
+---
+---      if ("data" in response) {
+---        const { data: challenges } = response.data;
+---        setCompletedChallenges(challenges);
+---      } else {
+---        // TODO: Handle cases where data is missing
+---      }
+---    } catch (error) {
+---      // TODO: Handle errors gracefully
+---      // console.error("Error fetching challenges: ", error);
+---      setError(true);
+---    } finally {
+---      setIsLoading(false);
+---
+---      // TODO: Add additional cleanup or updates if needed
+---    }
+---  };
+---
+---  const handleRetry = () => {
+---    setError(false); // Clear the error
+---    setIsLoading(true); // Re-initiate loading state
+---    handleRetry();
+---  };
+---
+---  return (
+---    <>
+---      <TopRow onOpen={{ isCollapse, handleOpen }} />
+---      <TableRow>
+---        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+---          <Collapse in={isCollapse} timeout="auto" unmountOnExit>
+---            <CodewarsSection
+---              {...{ completedChallenges, error, handleRetry, isLoading }}
+---            />
+---          </Collapse>
+---        </TableCell>
+---      </TableRow>
+---    </>
+---  );
+---}
+--diff --git a/app/(dashboard)/leaderboard/Body/Skeleton.tsx b/app/(dashboard)/leaderboard/Body/Skeleton.tsx
+--deleted file mode 100644
+--index 50f752e..0000000
+----- a/app/(dashboard)/leaderboard/Body/Skeleton.tsx
+--+++ /dev/null
+--@@ -1,17 +0,0 @@
+---import { Skeleton, TableCell, TableRow } from "@mui/material";
+---import React from "react";
+---import { codewarsCellStyles } from "../styles";
+---
+---const SkeletonTableRow: React.FC<{ nOfCols: number }> = ({ nOfCols }) => {
+---  return (
+---    <TableRow>
+---      {Array.from({ length: nOfCols }).map((_, i) => (
+---        <TableCell sx={codewarsCellStyles} key={i}>
+---          <Skeleton variant="text" animation="wave" />
+---        </TableCell>
+---      ))}
+---    </TableRow>
+---  );
+---};
+---
+---export default SkeletonTableRow;
+--diff --git a/app/(dashboard)/leaderboard/Body/index.tsx b/app/(dashboard)/leaderboard/Body/index.tsx
+--index 2c91abb..9373f4a 100644
+----- a/app/(dashboard)/leaderboard/Body/index.tsx
+--+++ b/app/(dashboard)/leaderboard/Body/index.tsx
+--@@ -2,8 +2,9 @@ import { TableBody } from "@mui/material";
+-- import React from "react";
+-- import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
+-- import { DBUser } from "@/types/db/users";
+---import { LeaderboardUsers } from "./Collapse";
+---import SkeletonTableRow from "./Skeleton";
+--+import { UsersSection } from "./Sections/Users";
+--+import Row from "./Sections/Users/Skeleton/Row";
+--+import Skeleton from "./Sections/Users/Skeleton";
+-- 
+-- interface Props {
+--   allUsers: DBUser[];
+--@@ -11,22 +12,20 @@ interface Props {
+-- }
+-- 
+-- const Body = ({ allUsers, isLoading }: Props) => {
+---  const columns = 6;
+---
+--   return (
+--     <TableBody>
+---      {isLoading
+---        ? Array.from({ length: 10 }).map((_, i) => (
+---            <SkeletonTableRow key={i} nOfCols={columns} />
+---          ))
+---        : allUsers.map((currentUser: DBUser) => (
+---            <DBUserProvider
+---              key={currentUser.email}
+---              context={{ allUsers, currentUser }}
+---            >
+---              <LeaderboardUsers />
+---            </DBUserProvider>
+---          ))}
+--+      {isLoading ? (
+--+        <Skeleton />
+--+      ) : (
+--+        allUsers.map((currentUser: DBUser) => (
+--+          <DBUserProvider
+--+            key={currentUser.email}
+--+            context={{ allUsers, currentUser }}
+--+          >
+--+            <UsersSection />
+--+          </DBUserProvider>
+--+        ))
+--+      )}
+--     </TableBody>
+--   );
+-- };
+--diff --git a/app/(dashboard)/leaderboard/Head/Avatar.tsx b/app/(dashboard)/leaderboard/Head/Avatar.tsx
+--deleted file mode 100644
+--index c13b2d9..0000000
+----- a/app/(dashboard)/leaderboard/Head/Avatar.tsx
+--+++ /dev/null
+--@@ -1,48 +0,0 @@
+---import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+---import Avatar from "@mui/material/Avatar";
+---import Badge from "@mui/material/Badge";
+---import { styled } from "@mui/material/styles";
+---
+---const StyledBadge = styled(Badge)(({ theme }) => ({
+---  "& .MuiBadge-badge": {
+---    backgroundColor: "#44b700",
+---    color: "#44b700",
+---    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+---    "&::after": {
+---      position: "absolute",
+---      top: 0,
+---      left: 0,
+---      width: "100%",
+---      height: "100%",
+---      borderRadius: "50%",
+---      animation: "ripple 1.2s infinite ease-in-out",
+---      border: "1px solid currentColor",
+---      content: '""',
+---    },
+---  },
+---  "@keyframes ripple": {
+---    "0%": {
+---      transform: "scale(.8)",
+---      opacity: 1,
+---    },
+---    "100%": {
+---      transform: "scale(2.4)",
+---      opacity: 0,
+---    },
+---  },
+---}));
+---
+---export default function LeaderboardAvatar() {
+---  const {
+---    currentUser: { image },
+---  } = useDBUserContext();
+---  return (
+---    <StyledBadge
+---      overlap="circular"
+---      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+---      variant="dot"
+---    >
+---      <Avatar alt="User's Avatar" src={image} />
+---    </StyledBadge>
+---  );
+---}
+-diff --git a/types/contexts.ts b/types/contexts.ts
+-index a2eee4c..c0f507d 100644
+---- a/types/contexts.ts
+-+++ b/types/contexts.ts
+-@@ -1,11 +1,9 @@
+- import { CodewarsCompletedChallenge } from "./codewars";
+--import { DBUser } from "./db/users";
+- 
+- export interface ICodewarsContext {
+-   completedChallenges: CodewarsCompletedChallenge[] | undefined;
+- }
+- 
+--export interface IDBUserProvider {
+--  currentUser: DBUser;
+--  allUsers: DBUser[];
 --}
-diff --git a/types/contexts.ts b/types/contexts.ts
-index a2eee4c..c0f507d 100644
---- a/types/contexts.ts
-+++ b/types/contexts.ts
-@@ -1,11 +1,9 @@
- import { CodewarsCompletedChallenge } from "./codewars";
--import { DBUser } from "./db/users";
- 
- export interface ICodewarsContext {
-   completedChallenges: CodewarsCompletedChallenge[] | undefined;
- }
- 
--export interface IDBUserProvider {
--  currentUser: DBUser;
--  allUsers: DBUser[];
--}
-+
-+
-+
+-+
+-+
+-+

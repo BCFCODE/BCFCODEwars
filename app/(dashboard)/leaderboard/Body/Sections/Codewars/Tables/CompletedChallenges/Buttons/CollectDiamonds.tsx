@@ -7,6 +7,7 @@ import {
   iconButtonStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
 import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+import useDBDiamondsDispatchContext from "@/app/context/hooks/useDBDiamondsDispatchContext";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
 import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
@@ -31,6 +32,7 @@ const CollectDiamonds = ({
   challenge,
 }: Props) => {
   const { currentUser } = useDBCurrentUserContext();
+  const dispatch = useDBDiamondsDispatchContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [collectedDiamondsCount, setCollectedDiamondsCount] =
@@ -83,12 +85,20 @@ const CollectDiamonds = ({
       setIsCollected(true);
     }
 
-    isCollected && setCounter(0); // Reset counter when isCollected becomes true or isLoading stops
-
     return () => {
       timer && clearTimeout(timer);
     };
   }, [error, isLoading, isCollected, counter]);
+
+  useEffect(() => {
+    if (isCollected && collectedDiamondsCount)
+      dispatch({
+        type: "COLLECT_CODEWARS_DIAMONDS",
+        codewarsCollectedDiamonds: collectedDiamondsCount,
+      });
+    // Reset counter to avoid duplicate dispatches on subsequent renders
+    setCounter(0);
+  }, [isCollected, collectedDiamondsCount, dispatch]);
 
   return (
     <Box sx={diamondBoxStyles}>
