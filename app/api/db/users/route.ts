@@ -3,16 +3,16 @@
 import DBService from "@/app/services/db-service";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getAllUsers } = new DBService();
+const { getUsers } = new DBService();
 
 export async function GET(request: NextRequest) {
   try {
-    const users = await getAllUsers();
+    const users = await getUsers();
 
     // Return the users as JSON
     return NextResponse.json({ success: true, users }, { status: 200 });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return NextResponse.json(
       { error: "Unable to fetch users from database." },
       { status: 500 }

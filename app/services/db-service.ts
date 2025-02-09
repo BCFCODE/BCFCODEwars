@@ -1,10 +1,4 @@
-import {
-  Db,
-  Document,
-  MongoClient,
-  OptionalId,
-  WithId
-} from "mongodb";
+import { Db, Document, MongoClient, OptionalId, WithId } from "mongodb";
 
 class DBService {
   private clientPromise: Promise<MongoClient>;
@@ -43,7 +37,7 @@ class DBService {
     return { users, diamonds, codewars };
   };
 
-  getAllUsers = async (): Promise<WithId<Document>[]> => {
+  getUsers = async (): Promise<WithId<Document>[]> => {
     const { users } = await this.getCollections();
     return users.find({}).toArray();
   };

@@ -3,11 +3,11 @@
 import DBService from "@/app/services/db-service";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getAllUsers } = new DBService();
+const { getUsers } = new DBService();
 
 export async function GET(request: NextRequest) {
   try {
-    const users = getAllUsers();
+    const users = getUsers();
 
     // Return the users as JSON
     return NextResponse.json({ users });

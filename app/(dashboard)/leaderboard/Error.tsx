@@ -1,7 +1,6 @@
 import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
-import { Typography, Button } from "@mui/material";
-import React from "react";
+import { Button, Typography } from "@mui/material";
 
 interface Props {
   onRetry: () => void;

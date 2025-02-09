@@ -1,21 +1,18 @@
-import { DBUser } from "@/types/db/users";
+import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
 import { TableBody } from "@mui/material";
+import { UsersSection } from "./Sections/Users";
 import Skeleton from "./Sections/Users/Skeleton";
 import Users from "./Sections/Users/UsersMap";
-import { UsersSection } from "./Sections/Users";
 
-interface Props {
-  allUsers: DBUser[];
-  isLoading: boolean;
-}
+const Body = () => {
+  const { isLoading } = useDBAllUsersContext();
 
-const Body = ({ allUsers, isLoading }: Props) => {
   return (
     <TableBody>
       {isLoading ? (
         <Skeleton />
       ) : (
-        <Users {...{ allUsers }}>
+        <Users>
           <UsersSection />
         </Users>
       )}

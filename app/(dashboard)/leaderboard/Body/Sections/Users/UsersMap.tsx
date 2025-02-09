@@ -1,18 +1,20 @@
-import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
+import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
+import DBCurrentUserProvider from "@/app/context/providers/db/currentUser/dbCurrentUserProvider";
 import { DBUser } from "@/types/db/users";
 import { ReactNode } from "react";
 
 interface Props {
-  allUsers: DBUser[];
   children: ReactNode;
 }
 
-const Users = ({ allUsers, children }: Props) => {
+const UsersMap = ({ children }: Props) => {
+  const { allUsers } = useDBAllUsersContext();
+
   return allUsers.map((currentUser: DBUser) => (
-    <DBUserProvider key={currentUser.email} context={{ allUsers, currentUser }}>
+    <DBCurrentUserProvider key={currentUser.email} context={{ currentUser }}>
       {children}
-    </DBUserProvider>
+    </DBCurrentUserProvider>
   ));
 };
 
-export default Users;
+export default UsersMap;

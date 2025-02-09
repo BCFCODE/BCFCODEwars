@@ -1,15 +1,14 @@
 import {
-  diamondBoxStyles,
-  counterStyles,
   collectedDiamondStyles,
-  iconButtonStyles,
-  fade,
+  counterStyles,
+  diamondBoxStyles,
   diamondStyles,
+  fade,
+  iconButtonStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
-import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
@@ -31,7 +30,7 @@ const CollectDiamonds = ({
   manageSelectedChallenge,
   challenge,
 }: Props) => {
-  const { currentUser } = useDBUserContext();
+  const { currentUser } = useDBCurrentUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [collectedDiamondsCount, setCollectedDiamondsCount] =

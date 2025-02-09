@@ -13,11 +13,12 @@ interface GetUsersAPIResponse extends GetUsersAPIResponseError {
 class APIdbService {
   private endpoint = `${baseURL}/api/db/users`;
 
-  getUsers = async (): Promise<GetUsersAPIResponse> => {
+  // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
+  getUsers = async (options?: RequestInit): Promise<GetUsersAPIResponse> => {
     try {
       // Fetch the data from your API
       const response = await fetch(this.endpoint, {
-        cache: "no-store",
+        ...options, // This will include things like { signal: controller.signal }
       });
       if (!response.ok) {
         console.error(

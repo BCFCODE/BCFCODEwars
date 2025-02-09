@@ -5,6 +5,7 @@ import { APIdbDiamondsFailedResponse, DBDiamonds } from "@/types/db/diamonds";
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 import dbDiamondsReducer from "../../reducers/diamonds/dbDiamondsReducer";
 import { Action, DiamondsState } from "../../reducers/diamonds/types";
+import useDBAllUsersDispatchContext from "../../hooks/useDBAllUsersDispatchContext";
 
 const { getDiamonds } = new APIDiamondsService();
 
@@ -14,7 +15,7 @@ interface Props {
 }
 
 // Default (synchronous) state for diamonds
-const initialDBDiamonds: APIdbDiamondsFailedResponse = {
+const initialDBDiamondsState: APIdbDiamondsFailedResponse = {
   success: false,
   error: "",
 };
@@ -26,12 +27,13 @@ export const DBDiamondsDispatchContext =
 const DBDiamondsProvider = ({ children }: Props) => {
   const [DBDiamonds, dispatch] = useReducer(
     dbDiamondsReducer,
-    initialDBDiamonds
+    initialDBDiamondsState
   );
 
   useEffect(() => {
     (async () => {
-      const diamonds = await getDiamonds();
+      const diamonds = await getDiamonds({ cache: "no-store" });
+      // !diamonds.success && dispatch({type: ''})
       dispatch({ type: "SET_DIAMONDS", payload: diamonds });
     })();
   }, []);

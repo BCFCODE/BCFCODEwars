@@ -1,4 +1,4 @@
-import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
@@ -11,7 +11,7 @@ interface Props {
 const OpenButton = ({ isCollapse, handleOpen }: Props) => {
   const {
     currentUser: { codewars },
-  } = useDBUserContext();
+  } = useDBCurrentUserContext();
   return (
     <>
       {/* Expand/Collapse button */}

@@ -1,4 +1,4 @@
-import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
 import CodewarsService from "@/app/services/codewars-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useState } from "react";
@@ -11,7 +11,7 @@ const { getCompletedChallenges } = new CodewarsService();
 export function UsersSection() {
   const {
     currentUser: { codewars },
-  } = useDBUserContext();
+  } = useDBCurrentUserContext();
   const [isCollapse, setIsCollapse] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [completedChallenges, setCompletedChallenges] =

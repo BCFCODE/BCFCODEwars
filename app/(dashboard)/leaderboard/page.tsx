@@ -1,54 +1,29 @@
-// app/(dashboard)/leaderboard/page.tsx
-
 "use client";
 
-import APIdbService from "@/app/api/services/db-service";
-import { DBUser } from "@/types/db/users";
+import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
 import { Paper, Table, TableContainer } from "@mui/material";
-import React from "react";
+import { useRouter } from "next/navigation";
+import Body from "./Body";
 import LeaderboardLoadingError from "./Error";
 import LeaderboardHeader from "./Head/Header";
-import Body from "./Body";
-
-const { getUsers } = new APIdbService();
 
 export default function LeaderBoardPage() {
-  const [allUsers, setAllUsers] = React.useState<DBUser[]>([]);
-  const [isLoading, setLoading] = React.useState<boolean>(true);
-  const [error, setError] = React.useState<boolean>(false);
+  const router = useRouter();
+  // // Consume the error state from context to trigger re-render when it updates.
+  const { error } = useDBAllUsersContext();
 
-  const fetchUsersFromDatabase = async () => {
-    try {
-      const fetchedUsers = await getUsers();
-      if (!fetchedUsers.success) {
-        setError(true);
-      }
-      setAllUsers(fetchedUsers.users as DBUser[]);
-    } catch (error) {
-      console.error("Error loading leaderboard data");
-    } finally {
-      setLoading(false);
-    }
-  };
+  console.log(">>>>>>>>>>>> useDBAllUsersContext error", error);
+  // // Conditionally render the error UI when error is true.
+  if (error)
+    return <LeaderboardLoadingError onRetry={() => router.refresh()} />;
 
-  React.useEffect(() => {
-    fetchUsersFromDatabase();
-  }, []);
-
-  const handleRetry = () => {
-    setLoading(true); // Show loading state
-    setError(false); // Clear any existing errors
-    fetchUsersFromDatabase(); // Refetch the leaderboard data
-  };
-
-  if (error) return <LeaderboardLoadingError onRetry={handleRetry} />;
-
-  return (
-    <TableContainer component={Paper}>
-      <Table aria-label="Leaderboard Table">
-        <LeaderboardHeader />
-        <Body {...{ allUsers, isLoading }} />
-      </Table>
-    </TableContainer>
-  );
+  if (!error)
+    return (
+      <TableContainer component={Paper}>
+        <Table aria-label="Leaderboard Table">
+          <LeaderboardHeader />
+          <Body />
+        </Table>
+      </TableContainer>
+    );
 }

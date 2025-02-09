@@ -4,7 +4,10 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExploreIcon from "@mui/icons-material/Explore";
 import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { LinearProgress } from "@mui/material";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import type { Navigation } from "@toolpad/core";
+import { NextAppProvider } from "@toolpad/core/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
@@ -12,13 +15,12 @@ import { signIn, signOut } from "next-auth/react";
 import { headers } from "next/headers";
 import Image from "next/image";
 import * as React from "react";
+import { ReactNode } from "react";
 import { auth } from "../auth";
 import { montserrat } from "../lib/fonts";
 import theme from "../theme";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import { LinearProgress } from "@mui/material";
-import { NextAppProvider } from "@toolpad/core/nextjs";
 import DBDiamondsProvider from "./context/providers/diamonds/DBDiamondsProvider";
+import DBAllUsersProvider from "./context/providers/db/allUsers/dbAllUsersProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -122,7 +124,11 @@ const AUTHENTICATION = {
   signOut,
 };
 
-export default async function RootLayout(props: { children: React.ReactNode }) {
+interface Props {
+  children: ReactNode;
+}
+
+export default async function RootLayout({ children }: Props) {
   // Await headers() and ensure its operations are performed synchronously after awaiting
   const headersList = await headers();
   const forwardedProto = headersList.get("x-forwarded-proto");
@@ -147,7 +153,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
               authentication={AUTHENTICATION}
               theme={theme}
             >
-              <DBDiamondsProvider>{props.children}</DBDiamondsProvider>
+              {children}
               <Analytics />
               <SpeedInsights />
             </NextAppProvider>

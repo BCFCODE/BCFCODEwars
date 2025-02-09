@@ -4,13 +4,10 @@ import { baseURL } from "@/utils/constants";
 class APIDiamondsService {
   private endpoint = `${baseURL}/api/db/diamonds`;
 
-  getDiamonds = async (): Promise<APIdbGetDiamondsResponse> => {
+  getDiamonds = async (options?: RequestInit): Promise<APIdbGetDiamondsResponse> => {
     try {
-      const response = await fetch(this.endpoint, { cache: "no-store" });
+      const response = await fetch(this.endpoint, {...options});
       if (!response.ok) {
-        console.error(
-          "Error: Unable to fetch diamonds data from database. This might be due to a network issue, an invalid API endpoint, or server unavailability. Please check your internet connection and try again. If the problem persists, contact support or review the server status."
-        );
         return {
           success: false,
           error:

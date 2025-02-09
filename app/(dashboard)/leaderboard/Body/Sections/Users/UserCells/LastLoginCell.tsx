@@ -1,12 +1,12 @@
 import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
-import useDBUserContext from "@/app/context/hooks/useDBUserContext";
+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
 import { TableCell } from "@mui/material";
 import React from "react";
 
 const LastLoginCell = () => {
   const {
     currentUser: { lastLogin },
-  } = useDBUserContext();
+  } = useDBCurrentUserContext();
 
   return (
     <TableCell sx={codewarsCellStyles} align="right">
