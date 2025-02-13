@@ -5,6 +5,7 @@ import { useState } from "react";
 import CodewarsSection from "../Codewars";
 import CollapseSection from "../Collapse";
 import User from "./UserCells";
+import CodewarsProvider from "@/app/context/providers/codewars/CodewarsProvider";
 
 const { getCompletedChallenges } = new CodewarsService();
 
@@ -58,13 +59,13 @@ export function UsersSection() {
   };
 
   return (
-    <>
+    <CodewarsProvider context={{ completedChallenges }}>
       <User onOpen={{ isCollapse, handleOpen }} />
       <CollapseSection {...{ isCollapse }}>
         <CodewarsSection
-          {...{ completedChallenges, error, handleRetry, isLoading }}
+          {...{  error, handleRetry, isLoading }}
         />
       </CollapseSection>
-    </>
+    </CodewarsProvider>
   );
 }
