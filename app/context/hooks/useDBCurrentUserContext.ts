@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { CurrentUserContextType } from "../providers/db/currentUser/types";
+import { CurrentUserContextState } from "../providers/db/currentUser/types";
 import { DBCurrentUserContext } from "../providers/db/currentUser/dbCurrentUserProvider";
 
-const useDBCurrentUserContext = (): CurrentUserContextType => {
+const useDBCurrentUserContext = (): CurrentUserContextState => {
   const context = useContext(DBCurrentUserContext);
   if (!context) {
     throw new Error(

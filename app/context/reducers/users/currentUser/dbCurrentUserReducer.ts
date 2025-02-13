@@ -9,6 +9,8 @@ const dbCurrentUserReducer = (
       return {
         currentUser: { ...state.currentUser, diamonds: action.diamonds },
       };
+    case "SET_COLLAPSE_OPEN":
+      return { ...state, isCollapse: action.isCollapse };
     default:
       return state;
   }

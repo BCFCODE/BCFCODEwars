@@ -6,18 +6,11 @@ import LastLoginCell from "./LastLoginCell";
 import MemberSinceCell from "./MemberSinceCell";
 import RankCell from "./RankCell";
 
-interface Props {
-  onOpen: {
-    isCollapse: boolean;
-    handleOpen: () => void;
-  };
-}
-
-const User = ({ onOpen }: Props) => {
+const User = () => {
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <ButtonCell {...{ onOpen }} />
+        <ButtonCell />
         <AvatarCell />
         <MemberSinceCell />
         <LastLoginCell />

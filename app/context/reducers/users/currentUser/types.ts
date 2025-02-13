@@ -1,6 +1,9 @@
-import { CurrentUserContextType } from "@/app/context/providers/db/currentUser/types";
+import { CurrentUserContextState } from "@/app/context/providers/db/currentUser/types";
 import { Diamonds } from "@/types/db/diamonds";
 
-export type CurrentUserState = CurrentUserContextType;
+export type CurrentUserState = CurrentUserContextState;
 
-export type Action = { type: "SET_USER_DIAMONDS"; diamonds: Diamonds };
+export type Action =
+  | { type: "SET_USER_DIAMONDS"; diamonds: Diamonds }
+  | { type: "SET_COLLAPSE_OPEN"; isCollapse: boolean };
+  

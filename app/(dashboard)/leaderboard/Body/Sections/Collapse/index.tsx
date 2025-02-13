@@ -1,12 +1,13 @@
-import { TableRow, TableCell, Collapse } from "@mui/material";
-import React, { ReactNode } from "react";
+import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+import { Collapse, TableCell, TableRow } from "@mui/material";
+import { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
-  isCollapse: boolean;
 }
 
-const CollapseSection = ({ children, isCollapse }: Props) => {
+const CollapseSection = ({ children }: Props) => {
+  const { isCollapse } = useDBCurrentUserContext();
   return (
     <TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

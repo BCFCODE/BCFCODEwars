@@ -1,21 +1,28 @@
+import useCodewarsContext from "@/app/context/hooks/useCodewarsContext";
+import useCodewarsDispatchContext from "@/app/context/hooks/useCodewarsDispatchContext";
 import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+import useDBCurrentUserDispatchContext from "@/app/context/hooks/useDBCurrentUserDispatchContext";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
+import { handleTry } from "../Codewars/Tables/CompletedChallenges/Error";
 
-interface Props {
-  isCollapse: boolean;
-  handleOpen: () => void;
-}
+const OpenButton = () => {
+  const { isCollapse, currentUser } = useDBCurrentUserContext();
+  const currentUserDispatch = useDBCurrentUserDispatchContext();
+  const { pageNumber } = useCodewarsContext();
+  const codewarsDispatch = useCodewarsDispatchContext();
 
-const OpenButton = ({ isCollapse, handleOpen }: Props) => {
-  const {
-    currentUser: { codewars },
-  } = useDBCurrentUserContext();
+  const handleOpen = async () => {
+    currentUserDispatch({ type: "SET_COLLAPSE_OPEN", isCollapse: !isCollapse });
+    codewarsDispatch({ type: "SET_LOADING", isLoading: true });
+    handleTry(currentUser, pageNumber, codewarsDispatch);
+  };
+
   return (
     <>
       {/* Expand/Collapse button */}
-      {codewars?.isConnected && (
+      {currentUser.codewars?.isConnected && (
         <IconButton
           aria-label="Toggle challenge details"
           size="small"
