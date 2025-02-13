@@ -1,18 +1,14 @@
 import LoadingUI from "@/app/components/UI/LoadingUI";
-import { Box, Table, Typography } from "@mui/material";
-import { ReactNode } from "react";
+import useCodewarsContext from "@/app/context/hooks/useCodewarsContext";
+import { Table } from "@mui/material";
+import Body from "./Body";
 import Error from "./Error";
 import Head from "./Head";
-import Body from "./Body";
 
-interface Props {
-  error: boolean;
-  isLoading: boolean;
-  handleRetry: () => void;
-}
+const CompletedChallengesTable = () => {
+  const { isError, isLoading } = useCodewarsContext();
 
-const CompletedChallengesTable = ({ handleRetry, error, isLoading }: Props) => {
-  if (error) return <Error onRetry={handleRetry} />;
+  if (isError) return <Error />;
 
   if (isLoading)
     return (

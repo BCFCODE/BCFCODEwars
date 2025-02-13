@@ -77,11 +77,11 @@ index d3ebb8f..3529dd7 100644
 -} from "@/types/db/diamonds";
 +import { APIdbGetDiamondsResponse } from "@/types/db/diamonds";
  
- export type DiamondsState = APIdbGetDiamondsResponse;
+ export type DiamondsContextState = APIdbGetDiamondsResponse;
  
--export type Action = { type: "SET_DIAMONDS"; payload: DiamondsState };
+-export type Action = { type: "SET_DIAMONDS"; payload: DiamondsContextState };
 +export type Action =
-+  | { type: "SET_DIAMONDS"; payload: DiamondsState }
++  | { type: "SET_DIAMONDS"; payload: DiamondsContextState }
 +  | { type: "COLLECT_CODEWARS_DIAMONDS"; codewarsCollectedDiamonds: number };
 diff --git a/diff.txt b/diff.txt
 index 7a722ea..e69de29 100644
@@ -503,7 +503,7 @@ index 7a722ea..e69de29 100644
 -@@ -5,6 +5,7 @@ import { APIdbDiamondsFailedResponse, DBDiamonds } from "@/types/db/diamonds";
 - import { createContext, ReactNode, useEffect, useReducer } from "react";
 - import dbDiamondsReducer from "../../reducers/diamonds/dbDiamondsReducer";
-- import { Action, DiamondsState } from "../../reducers/diamonds/types";
+- import { Action, DiamondsContextState } from "../../reducers/diamonds/types";
 -+import useDBAllUsersDispatchContext from "../../hooks/useDBAllUsersDispatchContext";
 - 
 - const { getDiamonds } = new APIDiamondsService();
@@ -944,7 +944,7 @@ index 7a722ea..e69de29 100644
 - import { CodewarsCompletedChallenge } from "./codewars";
 --import { DBUser } from "./db/users";
 - 
-- export interface ICodewarsContext {
+- export interface CodewarsContextState {
 -   completedChallenges: CodewarsCompletedChallenge[] | undefined;
 - }
 - 

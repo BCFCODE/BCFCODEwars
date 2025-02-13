@@ -2,7 +2,7 @@ import { DBDiamonds } from "@/types/db/diamonds";
 
 export interface Context {}
 
-export interface DiamondsState extends Context {
+export interface DiamondsContextState extends Context {
   success: boolean;
   error?: string;
   data?: DBDiamonds;

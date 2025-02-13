@@ -1,9 +1,9 @@
-import { Action, DiamondsState } from "./types";
+import { Action, DiamondsContextState } from "./types";
 
 const dbDiamondsReducer = (
-  state: DiamondsState,
+  state: DiamondsContextState,
   action: Action
-): DiamondsState => {
+): DiamondsContextState => {
   switch (action.type) {
     case "SET_DIAMONDS":
       return { ...action.payload };

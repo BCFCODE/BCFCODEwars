@@ -1,26 +1,36 @@
-import { ICodewarsContext } from "@/types/contexts";
-import { createContext, ReactNode, useReducer } from "react";
+import { CodewarsContextState } from "@/types/contexts";
+import { createContext, Dispatch, ReactNode, useReducer } from "react";
 import codewarsReducer from "../../reducers/codewars/codewarsReducer";
+import { Action } from "../../reducers/codewars/types";
 
-// Props for the provider component
 interface Props {
   children: ReactNode;
-  context: ICodewarsContext;
+  // context: CodewarsContextState;
 }
 
-// const initialCodewars = {}
+const initialCodewars: CodewarsContextState = {
+  completedChallenges: [],
+  isError: false,
+  isLoading: false,
+  pageNumber: 0
+};
 
-export const CodewarsContext = createContext<ICodewarsContext | null>(null);
-// export const CodewarsDispatchContext = createContext(null);
+export const CodewarsContext = createContext<CodewarsContextState | null>(null);
+export const CodewarsDispatchContext = createContext<Dispatch<Action> | null>(
+  null
+);
 
-const CodewarsProvider = ({ children, context }: Props) => {
-  // const [codewars, dispatch] = useReducer(codewarsReducer, initialCodewars);
+const CodewarsProvider = ({ children }: Props) => {
+  const [codewarsState, dispatch] = useReducer(
+    codewarsReducer,
+    initialCodewars
+  );
 
   return (
-    <CodewarsContext.Provider value={context}>
-      {/* <CodewarsDispatchContext.Provider value={dispatch}> */}
-      {children}
-      {/* </CodewarsDispatchContext.Provider> */}
+    <CodewarsContext.Provider value={codewarsState}>
+      <CodewarsDispatchContext.Provider value={dispatch}>
+        {children}
+      </CodewarsDispatchContext.Provider>
     </CodewarsContext.Provider>
   );
 };

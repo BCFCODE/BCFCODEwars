@@ -1,10 +1,10 @@
-import { DiamondsState } from "../../providers/diamonds/types";
+import { DiamondsContextState } from "../../providers/diamonds/types";
 import { Action } from "./types";
 
 const diamondsReducer = (
-  state: DiamondsState,
+  state: DiamondsContextState,
   action: Action
-): DiamondsState => {
+): DiamondsContextState => {
   switch (action.type) {
     case "SET_DIAMONDS":
       return { ...action.payload };

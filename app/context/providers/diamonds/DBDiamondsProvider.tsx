@@ -4,7 +4,7 @@ import APIDiamondsService from "@/app/api/services/diamonds-service";
 import { APIdbDiamondsFailedResponse, DBDiamonds } from "@/types/db/diamonds";
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 import dbDiamondsReducer from "../../reducers/diamonds/dbDiamondsReducer";
-import { Action, DiamondsState } from "../../reducers/diamonds/types";
+import { Action, DiamondsContextState } from "../../reducers/diamonds/types";
 import useDBAllUsersDispatchContext from "../../hooks/useDBAllUsersDispatchContext";
 
 const { getDiamonds } = new APIDiamondsService();
@@ -20,7 +20,9 @@ const initialDBDiamondsState: APIdbDiamondsFailedResponse = {
   error: "",
 };
 
-export const DBDiamondsContext = createContext<DiamondsState | null>(null);
+export const DBDiamondsContext = createContext<DiamondsContextState | null>(
+  null
+);
 export const DBDiamondsDispatchContext =
   createContext<React.Dispatch<Action> | null>(null);
 

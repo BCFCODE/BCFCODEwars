@@ -1,16 +1,10 @@
 import { Box } from "@mui/material";
 import CompletedChallengesTable from "./Tables/CompletedChallenges";
 
-interface Props {
-  handleRetry: () => void;
-  error: boolean;
-  isLoading: boolean;
-}
-
-const CodewarsSection = ({ handleRetry, error, isLoading }: Props) => {
+const CodewarsSection = () => {
   return (
     <Box sx={{ margin: 1 }}>
-      <CompletedChallengesTable {...{ handleRetry, error, isLoading }} />
+      <CompletedChallengesTable />
     </Box>
   );
 };

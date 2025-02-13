@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Body from "./Body";
 import LeaderboardLoadingError from "./Error";
 import LeaderboardHeader from "./Head/Header";
+import CodewarsProvider from "@/app/context/providers/codewars/CodewarsProvider";
 
 export default function LeaderBoardPage() {
   const router = useRouter();
@@ -19,11 +20,13 @@ export default function LeaderBoardPage() {
 
   if (!error)
     return (
-      <TableContainer component={Paper}>
-        <Table aria-label="Leaderboard Table">
-          <LeaderboardHeader />
-          <Body />
-        </Table>
-      </TableContainer>
+      <CodewarsProvider>
+        <TableContainer component={Paper}>
+          <Table aria-label="Leaderboard Table">
+            <LeaderboardHeader />
+            <Body />
+          </Table>
+        </TableContainer>
+      </CodewarsProvider>
     );
 }

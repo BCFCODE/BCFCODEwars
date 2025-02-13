@@ -1,9 +1,8 @@
 import { CodewarsCompletedChallenge } from "./codewars";
 
-export interface ICodewarsContext {
-  completedChallenges: CodewarsCompletedChallenge[] | undefined;
+export interface CodewarsContextState {
+  completedChallenges?: CodewarsCompletedChallenge[];
+  isLoading: boolean;
+  isError: boolean;
+  pageNumber: number
 }
-
-
-
-
