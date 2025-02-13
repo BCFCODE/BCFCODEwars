@@ -5,7 +5,7 @@ import { APIdbDiamondsFailedResponse, DBDiamonds } from "@/types/db/diamonds";
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 import dbDiamondsReducer from "../../reducers/diamonds/dbDiamondsReducer";
 import { Action, DiamondsContextState } from "../../reducers/diamonds/types";
-import useDBAllUsersDispatchContext from "../../hooks/useDBAllUsersDispatchContext";
+import useDBAllUsersDispatchContext from "../../hooks/useDispatches/useDBAllUsersDispatchContext";
 
 const { getDiamonds } = new APIDiamondsService();
 

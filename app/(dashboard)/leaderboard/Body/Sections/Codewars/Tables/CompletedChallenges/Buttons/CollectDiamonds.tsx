@@ -6,8 +6,9 @@ import {
   fade,
   iconButtonStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
-import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
-import useDBDiamondsDispatchContext from "@/app/context/hooks/useDBDiamondsDispatchContext";
+import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
+import useDBDiamondsDispatchContext from "@/app/context/hooks/useDispatches/useDBDiamondsDispatchContext";
+
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
 import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";

@@ -3,9 +3,9 @@ import {
   collectedDiamondStyles,
   counterStyles,
   diamondBoxStyles,
-  fade
+  fade,
 } from "@/app/(dashboard)/leaderboard/styles";
-import useDBDiamondsContext from "@/app/context/hooks/useDBDiamondsContext";
+import useDBDiamondsContext from "@/app/context/hooks/useContexts/useDBDiamondsContext";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, TableCell, Typography } from "@mui/material";
 

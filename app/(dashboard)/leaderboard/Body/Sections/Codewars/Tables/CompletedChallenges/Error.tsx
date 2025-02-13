@@ -1,8 +1,8 @@
 import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
-import useCodewarsContext from "@/app/context/hooks/useCodewarsContext";
-import useCodewarsDispatchContext from "@/app/context/hooks/useCodewarsDispatchContext";
-import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+import useCodewarsContext from "@/app/context/hooks/useContexts/useCodewarsContext";
+import useCodewarsDispatchContext from "@/app/context/hooks/useDispatches/useCodewarsDispatchContext";
+import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
 import { Action } from "@/app/context/reducers/codewars/types";
 import CodewarsService from "@/app/services/codewars-service";
 import { DBUser } from "@/types/db/users";

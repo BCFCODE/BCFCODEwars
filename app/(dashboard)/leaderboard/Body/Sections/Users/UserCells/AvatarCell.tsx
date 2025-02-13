@@ -1,5 +1,5 @@
 import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
-import useDBCurrentUserContext from "@/app/context/hooks/useDBCurrentUserContext";
+import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
 import { TableCell, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";

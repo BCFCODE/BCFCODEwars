@@ -1,7 +1,7 @@
 import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
 import { TableBody } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import useCodewarsContext from "../../../../../../../../context/hooks/useCodewarsContext";
+import useCodewarsContext from "../../../../../../../../context/hooks/useContexts/useCodewarsContext";
 import CollectDiamonds from "../Buttons/CollectDiamonds";
 import SingleRow from "./SingleRow";
 import CollectDiamondsCell from "./SingleRow/Cells/CollectDiamondsCell";

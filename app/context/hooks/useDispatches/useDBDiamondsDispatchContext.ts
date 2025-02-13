@@ -1,6 +1,6 @@
 import { Dispatch, useContext } from "react";
-import { DBDiamondsDispatchContext } from "../providers/diamonds/DBDiamondsProvider";
-import { Action } from "../reducers/diamonds/types";
+import { DBDiamondsDispatchContext } from "../../providers/diamonds/DBDiamondsProvider";
+import { Action } from "../../reducers/diamonds/types";
 
 const useDBDiamondsDispatchContext = (): Dispatch<Action> => {
   const context = useContext(DBDiamondsDispatchContext);

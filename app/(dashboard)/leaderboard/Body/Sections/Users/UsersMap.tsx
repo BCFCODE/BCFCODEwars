@@ -1,4 +1,4 @@
-import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
+import useDBAllUsersContext from "@/app/context/hooks/useContexts/useDBAllUsersContext";
 import DBCurrentUserProvider from "@/app/context/providers/db/currentUser/dbCurrentUserProvider";
 import { DBUser } from "@/types/db/users";
 import { ReactNode } from "react";

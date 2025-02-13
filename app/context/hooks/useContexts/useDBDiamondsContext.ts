@@ -1,6 +1,6 @@
 import { APIdbDiamondsSuccessResponse, DBDiamonds } from "@/types/db/diamonds";
 import { useContext } from "react";
-import { DBDiamondsContext } from "../providers/diamonds/DBDiamondsProvider";
+import { DBDiamondsContext } from "../../providers/diamonds/DBDiamondsProvider";
 
 const useDBDiamondsContext = (): APIdbDiamondsSuccessResponse => {
   const context = useContext(DBDiamondsContext);

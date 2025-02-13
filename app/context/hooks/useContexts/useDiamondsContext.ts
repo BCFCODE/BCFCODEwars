@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { DiamondsContext } from "../providers/diamonds/DiamondsProvider";
-import { DiamondsContextState } from "../providers/diamonds/types";
+import { DiamondsContext } from "../../providers/diamonds/DiamondsProvider";
+import { DiamondsContextState } from "../../providers/diamonds/types";
 
 const useDiamondsContext = (): DiamondsContextState => {
   const context = useContext(DiamondsContext);

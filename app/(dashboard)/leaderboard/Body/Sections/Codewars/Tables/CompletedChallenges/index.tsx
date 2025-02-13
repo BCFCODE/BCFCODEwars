@@ -1,5 +1,5 @@
 import LoadingUI from "@/app/components/UI/LoadingUI";
-import useCodewarsContext from "@/app/context/hooks/useCodewarsContext";
+import useCodewarsContext from "@/app/context/hooks/useContexts/useCodewarsContext";
 import { Table } from "@mui/material";
 import Body from "./Body";
 import Error from "./Error";
