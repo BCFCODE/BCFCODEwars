@@ -7,7 +7,8 @@ import {
   iconButtonStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
 import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
-import useDBDiamondsDispatchContext from "@/app/context/hooks/useDispatches/useDBDiamondsDispatchContext";
+import useDiamondsContext from "@/app/context/hooks/useContexts/useDiamondsContext";
+import useDiamondsDispatchContext from "@/app/context/hooks/useDispatches/useDiamondsDispatchContext";
 
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
@@ -33,9 +34,9 @@ const CollectDiamonds = ({
   challenge,
 }: Props) => {
   const { currentUser } = useDBCurrentUserContext();
-  const dispatch = useDBDiamondsDispatchContext();
+  const dispatch = useDiamondsDispatchContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [isError, setError] = useState(false);
   const [collectedDiamondsCount, setCollectedDiamondsCount] =
     useState<number>();
   const [isCollected, setIsCollected] = useState<boolean>();
@@ -43,6 +44,8 @@ const CollectDiamonds = ({
 
   const handleClick = async () => {
     setIconButtonDisable(true);
+    dispatch({ type: "SET_LOADING", isLoading: true });
+    dispatch({ type: "SET_ERROR", isError: false });
     setIsLoading(true);
     setError(false);
 
@@ -52,7 +55,8 @@ const CollectDiamonds = ({
     );
 
     if (response.success) {
-      setError(false);
+      dispatch({ type: "SET_ERROR", isError: false });
+      // setError(false);
       const { data: selectedSingleChallenge } = response;
       const { collectedDiamondsCount } = await collectDiamonds(
         selectedSingleChallenge
@@ -64,8 +68,10 @@ const CollectDiamonds = ({
 
     if (!response.success) {
       setIconButtonDisable(false);
+      dispatch({ type: "SET_ERROR", isError: true });
       setError(true);
       console.error(response.reason);
+      dispatch({ type: "SET_LOADING", isLoading: false });
       setIsLoading(false);
       setCounter(0);
     }
@@ -82,6 +88,7 @@ const CollectDiamonds = ({
 
     if (counter > (collectedDiamondsCount ?? 500)) {
       setIconButtonDisable(false);
+      dispatch({ type: "SET_LOADING", isLoading: false });
       setIsLoading(false);
       setIsCollected(true);
     }
@@ -89,7 +96,7 @@ const CollectDiamonds = ({
     return () => {
       timer && clearTimeout(timer);
     };
-  }, [error, isLoading, isCollected, counter]);
+  }, [isError, isLoading, isCollected, counter]);
 
   useEffect(() => {
     if (isCollected && collectedDiamondsCount)
@@ -118,7 +125,9 @@ const CollectDiamonds = ({
           sx={iconButtonStyles}
           onClick={handleClick}
         >
-          <DiamondIcon sx={isLoading || error ? fade(error) : diamondStyles} />
+          <DiamondIcon
+            sx={isLoading || isError ? fade(isError) : diamondStyles}
+          />
         </IconButton>
       )}
     </Box>

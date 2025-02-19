@@ -19,7 +19,7 @@ import { ReactNode } from "react";
 import { auth } from "../auth";
 import { montserrat } from "../lib/fonts";
 import theme from "../theme";
-import DBDiamondsProvider from "./context/providers/diamonds/DBDiamondsProvider";
+import DBDiamondsProvider from "./context/providers/diamonds/DiamondsProvider";
 import DBAllUsersProvider from "./context/providers/db/allUsers/dbAllUsersProvider";
 
 export const metadata: Metadata = {
