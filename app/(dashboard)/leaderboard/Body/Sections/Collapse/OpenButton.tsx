@@ -5,7 +5,7 @@ import useDBCurrentUserDispatchContext from "@/app/context/hooks/useDispatches/u
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
-import { handleTry } from "../Codewars/Tables/CompletedChallenges/Error";
+import handleTry from "./Error/handleTry";
 
 const OpenButton = () => {
   const { isCollapse, currentUser } = useDBCurrentUserContext();

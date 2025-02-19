@@ -1,48 +1,11 @@
 import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
 import useCodewarsContext from "@/app/context/hooks/useContexts/useCodewarsContext";
-import useCodewarsDispatchContext from "@/app/context/hooks/useDispatches/useCodewarsDispatchContext";
 import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
-import { Action } from "@/app/context/reducers/codewars/types";
-import CodewarsService from "@/app/services/codewars-service";
-import { DBUser } from "@/types/db/users";
-import { Typography, Button } from "@mui/material";
+import useCodewarsDispatchContext from "@/app/context/hooks/useDispatches/useCodewarsDispatchContext";
+import { Button, Typography } from "@mui/material";
 import Link from "next/link";
-import React, { Dispatch } from "react";
-
-const { getCompletedChallenges } = new CodewarsService();
-
-export const handleTry = async (
-  currentUser: DBUser,
-  pageNumber: number,
-  dispatch: Dispatch<Action>
-) => {
-  try {
-    const response = await getCompletedChallenges(
-      currentUser.codewars.username,
-      pageNumber
-    );
-
-    if ("data" in response) {
-      const { data: completedChallenges } = response.data;
-      // setCompletedChallenges(challenges);
-      dispatch({ type: "SET_ERROR", isError: false });
-      dispatch({ type: "SET_COMPLETED_CHALLENGES", completedChallenges });
-    } else {
-      // TODO: Handle cases where data is missing
-    }
-  } catch (error) {
-    // TODO: Handle errors gracefully
-    // console.error("Error fetching challenges: ", error);
-    dispatch({ type: "SET_ERROR", isError: true });
-    // setError(true);
-  } finally {
-    dispatch({ type: "SET_LOADING", isLoading: false });
-    // setIsLoading(false);
-
-    // TODO: Add additional cleanup or updates if needed
-  }
-};
+import handleTry from "../../../Collapse/Error/handleTry";
 
 const Error = () => {
   const { currentUser } = useDBCurrentUserContext();
