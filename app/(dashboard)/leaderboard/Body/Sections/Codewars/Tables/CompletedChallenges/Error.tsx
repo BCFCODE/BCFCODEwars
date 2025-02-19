@@ -26,6 +26,7 @@ export const handleTry = async (
     if ("data" in response) {
       const { data: completedChallenges } = response.data;
       // setCompletedChallenges(challenges);
+      dispatch({ type: "SET_ERROR", isError: false });
       dispatch({ type: "SET_COMPLETED_CHALLENGES", completedChallenges });
     } else {
       // TODO: Handle cases where data is missing
