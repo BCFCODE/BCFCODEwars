@@ -10,6 +10,7 @@ export interface CodewarsChallengeDiamonds {
 }
 
 export interface CodewarsDiamonds {
+  id: string;
   challenges: CodewarsChallengeDiamonds[];
 }
 

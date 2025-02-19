@@ -6,11 +6,12 @@ const seedData = [
     email: "bcfcode@gmail.com",
     name: "Morteza Bakhshandeh",
     diamonds: {
-      codewars: 100, // Sum of codewars diamonds awards
-      missions: 30,
-      sum: 100,
+      codewars: 0, // Sum of codewars diamonds awards
+      missions: 0,
+      sum: 0,
     },
     codewars: {
+      id: "63e68a181664895f434c9fa9",
       challenges: [
         { id: "5782dd86202c0e43410001f6" },
         { id: "6210fb7aabf047000f3a3ad6" },
