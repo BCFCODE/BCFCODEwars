@@ -1,15 +1,14 @@
 import {
   codewarsCellStyles,
-  collectedDiamondStyles,
   counterStyles,
   diamondBoxStyles,
-  diamondStyles,
   fade,
 } from "@/app/(dashboard)/leaderboard/styles";
 import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
 import useDiamondsContext from "@/app/context/hooks/useContexts/useDiamondsContext";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, TableCell, Typography } from "@mui/material";
+import { diamondSumStyles } from "./styles";
 
 const DiamondsCell = () => {
   const { data: diamondsData, isError, isLoading } = useDiamondsContext();
@@ -22,10 +21,9 @@ const DiamondsCell = () => {
     diamondsData
   );
 
-  const diamondsSum =
-    currentUser.codewars?.id === diamondsData?.codewars.id
-      ? diamondsData.diamonds.sum
-      : 0;
+  const isCurrentUser = currentUser.codewars?.id === diamondsData?.codewars.id;
+
+  const diamondsSum = isCurrentUser ? diamondsData.diamonds.sum : 0;
 
   // if (!diamondsSum) return null;
 
@@ -34,7 +32,11 @@ const DiamondsCell = () => {
       <Box sx={diamondBoxStyles}>
         <Typography sx={counterStyles}>{diamondsSum}</Typography>
         <DiamondIcon
-          sx={isLoading || isError ? fade(isError) : {...collectedDiamondStyles, mr: 0}}
+          sx={
+            (isLoading || isError) && isCurrentUser
+              ? fade(isError)
+              : diamondSumStyles
+          }
         />
       </Box>
     </TableCell>

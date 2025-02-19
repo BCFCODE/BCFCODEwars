@@ -70,7 +70,6 @@ const CollectDiamonds = ({
       setIconButtonDisable(false);
       dispatch({ type: "SET_ERROR", isError: true });
       setError(true);
-      console.error(response.reason);
       dispatch({ type: "SET_LOADING", isLoading: false });
       setIsLoading(false);
       setCounter(0);

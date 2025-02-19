@@ -46,3 +46,5 @@ export const collectedDiamondStyles: SxProps = {
 export const iconButtonStyles: SxProps = {
   marginLeft: -1,
 };
+
+
