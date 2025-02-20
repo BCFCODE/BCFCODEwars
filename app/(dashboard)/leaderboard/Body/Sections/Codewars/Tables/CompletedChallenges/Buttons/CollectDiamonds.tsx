@@ -6,13 +6,16 @@ import {
   fade,
   iconButtonStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
+import useCodewarsContext from "@/app/context/hooks/useContexts/useCodewarsContext";
 import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
 import useDiamondsContext from "@/app/context/hooks/useContexts/useDiamondsContext";
+import useCodewarsDispatchContext from "@/app/context/hooks/useDispatches/useCodewarsDispatchContext";
 import useDiamondsDispatchContext from "@/app/context/hooks/useDispatches/useDiamondsDispatchContext";
 
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
-import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
+
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
@@ -23,8 +26,8 @@ const { collectDiamonds } = new DiamondsService();
 interface Props {
   setIconButtonDisable: (isDisabled: boolean) => void;
   isDisabled: boolean;
-  challenge: DBCodewarsCompletedChallenge;
-  manageSelectedChallenge: (challenge: DBCodewarsCompletedChallenge) => void;
+  challenge: CodewarsCompletedChallenge;
+  manageSelectedChallenge: (challenge: CodewarsCompletedChallenge) => void;
 }
 
 const CollectDiamonds = ({
@@ -34,7 +37,9 @@ const CollectDiamonds = ({
   challenge,
 }: Props) => {
   const { currentUser } = useDBCurrentUserContext();
-  const dispatch = useDiamondsDispatchContext();
+  const diamondsDispatch = useDiamondsDispatchContext();
+  const { completedChallenges } = useCodewarsContext();
+  const codewarsDispatch = useCodewarsDispatchContext();
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setError] = useState(false);
   const [collectedDiamondsCount, setCollectedDiamondsCount] =
@@ -44,8 +49,8 @@ const CollectDiamonds = ({
 
   const handleClick = async () => {
     setIconButtonDisable(true);
-    dispatch({ type: "SET_LOADING", isLoading: true });
-    dispatch({ type: "SET_ERROR", isError: false });
+    diamondsDispatch({ type: "SET_LOADING", isLoading: true });
+    diamondsDispatch({ type: "SET_ERROR", isError: false });
     setIsLoading(true);
     setError(false);
 
@@ -55,7 +60,7 @@ const CollectDiamonds = ({
     );
 
     if (response.success) {
-      dispatch({ type: "SET_ERROR", isError: false });
+      diamondsDispatch({ type: "SET_ERROR", isError: false });
       // setError(false);
       const { data: selectedSingleChallenge } = response;
       const { collectedDiamondsCount } = await collectDiamonds(
@@ -63,14 +68,41 @@ const CollectDiamonds = ({
       );
       setCollectedDiamondsCount(collectedDiamondsCount);
 
-      manageSelectedChallenge({ ...challenge, ...selectedSingleChallenge });
+      const selectedChallenge = {
+        ...challenge,
+        details: selectedSingleChallenge,
+      };
+
+      codewarsDispatch({
+        type: "SET_SELECTED_CHALLENGE",
+        selectedChallenge,
+      });
+
+      // const updatedChallengeList = completedChallenges?.map((challenge) =>
+      //   challenge.id === selectedSingleChallenge.id
+      //     ? selectedSingleChallenge
+      //     : challenge
+      // );
+
+      manageSelectedChallenge(selectedChallenge);
+
+      // const manageSelectedChallenge = (
+      //   selectedChallenge: CodewarsCompletedChallenge
+      // ) => {
+      //   console.log("selectedSingleChallenge", selectedChallenge);
+      //   // Add selected challenge to challenges list
+      //   const updatedChallengeList = challenges.map((challenge) =>
+      //     challenge.id === selectedChallenge.id ? selectedChallenge : challenge
+      //   );
+      //   updatedChallengeListRef.current = updatedChallengeList;
+      // };
     }
 
     if (!response.success) {
       setIconButtonDisable(false);
-      dispatch({ type: "SET_ERROR", isError: true });
+      diamondsDispatch({ type: "SET_ERROR", isError: true });
       setError(true);
-      dispatch({ type: "SET_LOADING", isLoading: false });
+      diamondsDispatch({ type: "SET_LOADING", isLoading: false });
       setIsLoading(false);
       setCounter(0);
     }
@@ -87,7 +119,7 @@ const CollectDiamonds = ({
 
     if (counter > (collectedDiamondsCount ?? 500)) {
       setIconButtonDisable(false);
-      dispatch({ type: "SET_LOADING", isLoading: false });
+      diamondsDispatch({ type: "SET_LOADING", isLoading: false });
       setIsLoading(false);
       setIsCollected(true);
     }
@@ -99,13 +131,20 @@ const CollectDiamonds = ({
 
   useEffect(() => {
     if (isCollected && collectedDiamondsCount)
-      dispatch({
+      diamondsDispatch({
         type: "COLLECT_CODEWARS_DIAMONDS",
         codewarsCollectedDiamonds: collectedDiamondsCount,
       });
     // Reset counter to avoid duplicate dispatches on subsequent renders
     setCounter(0);
-  }, [isCollected, collectedDiamondsCount, dispatch]);
+  }, [isCollected, collectedDiamondsCount, diamondsDispatch]);
+
+  useEffect(() => {
+    if (!isDisabled) {
+      // render new challenge list only after counter is finished
+      // setChallenges(updatedChallengeListRef.current);
+    }
+  }, [isDisabled]);
 
   return (
     <Box sx={diamondBoxStyles}>

@@ -3,6 +3,7 @@
 import {
   CodewarsSingleChallenge,
   CodewarsChallengesApiResponse,
+  CodewarsCompletedChallenge,
 } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
 
@@ -18,8 +19,7 @@ class CodewarsService {
 
     ...
   */
-  getRank = (challenge: CodewarsSingleChallenge): number =>
-    Math.abs(challenge.rank.id);
+  getRank = (challengeRankId: number): number => Math.abs(challengeRankId);
 
   // Read
   getCompletedChallenges = async (

@@ -1,19 +1,20 @@
-import { DBCodewarsCompletedChallenge } from "@/types/db/codewars";
+// import { CodewarsCompletedChallenge } from "@/types/db/codewars";
 import { TableBody } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import useCodewarsContext from "../../../../../../../../context/hooks/useContexts/useCodewarsContext";
 import CollectDiamonds from "../Buttons/CollectDiamonds";
 import SingleRow from "./SingleRow";
 import CollectDiamondsCell from "./SingleRow/Cells/CollectDiamondsCell";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 
 export default function Body() {
   const { completedChallenges = [] } = useCodewarsContext();
-  const [challenges, setChallenges] = useState<DBCodewarsCompletedChallenge[]>(
-    completedChallenges as DBCodewarsCompletedChallenge[]
+  const [challenges, setChallenges] = useState<CodewarsCompletedChallenge[]>(
+    completedChallenges as CodewarsCompletedChallenge[]
   );
   const [isDisabled, setIsDisabled] = useState(false);
-  const updatedChallengeListRef = useRef<DBCodewarsCompletedChallenge[]>(
-    completedChallenges as DBCodewarsCompletedChallenge[]
+  const updatedChallengeListRef = useRef<CodewarsCompletedChallenge[]>(
+    completedChallenges as CodewarsCompletedChallenge[]
   );
 
   const setIconButtonDisable = (isDisable: boolean) => {
@@ -22,12 +23,12 @@ export default function Body() {
   };
 
   const manageSelectedChallenge = (
-    selectedChallenge: DBCodewarsCompletedChallenge
+    selectedChallenge: CodewarsCompletedChallenge
   ) => {
     console.log("selectedSingleChallenge", selectedChallenge);
     // Add selected challenge to challenges list
     const updatedChallengeList = challenges.map((challenge) =>
-      challenge.id === selectedChallenge.id ? selectedChallenge : challenge
+      challenge.id === selectedChallenge?.id ? selectedChallenge : challenge
     );
     updatedChallengeListRef.current = updatedChallengeList;
   };
@@ -39,7 +40,7 @@ export default function Body() {
     }
   }, [isDisabled]);
 
-  const collectDiamondsProps = (challenge: DBCodewarsCompletedChallenge) => ({
+  const collectDiamondsProps = (challenge: CodewarsCompletedChallenge) => ({
     setIconButtonDisable,
     isDisabled,
     challenge,

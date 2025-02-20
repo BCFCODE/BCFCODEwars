@@ -20,10 +20,8 @@ const initialDiamondsState: DiamondsContextState = {
   isError: false,
 };
 
-export const DBDiamondsContext = createContext<DiamondsContextState | null>(
-  null
-);
-export const DBDiamondsDispatchContext =
+export const DiamondsContext = createContext<DiamondsContextState | null>(null);
+export const DiamondsDispatchContext =
   createContext<React.Dispatch<Action> | null>(null);
 
 const DBDiamondsProvider = ({ children }: Props) => {
@@ -47,13 +45,13 @@ const DBDiamondsProvider = ({ children }: Props) => {
       }
     })();
   }, []);
-  console.log(DBDiamonds, "<<<<<<<<<<<<<<<<<< DBDiamondsProvider");
+  
   return (
-    <DBDiamondsContext.Provider value={DBDiamonds}>
-      <DBDiamondsDispatchContext.Provider value={dispatch}>
+    <DiamondsContext.Provider value={DBDiamonds}>
+      <DiamondsDispatchContext.Provider value={dispatch}>
         {children}
-      </DBDiamondsDispatchContext.Provider>
-    </DBDiamondsContext.Provider>
+      </DiamondsDispatchContext.Provider>
+    </DiamondsContext.Provider>
   );
 };
 

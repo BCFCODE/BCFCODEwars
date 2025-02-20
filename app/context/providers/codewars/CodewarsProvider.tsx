@@ -10,9 +10,10 @@ interface Props {
 
 const initialCodewars: CodewarsContextState = {
   completedChallenges: [],
+  isDisable: false,
   isError: false,
   isLoading: false,
-  pageNumber: 0
+  pageNumber: 0,
 };
 
 export const CodewarsContext = createContext<CodewarsContextState | null>(null);

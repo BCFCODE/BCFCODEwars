@@ -517,7 +517,7 @@ index 7a722ea..e69de29 100644
 -   success: false,
 -   error: "",
 - };
--@@ -26,12 +27,13 @@ export const DBDiamondsDispatchContext =
+-@@ -26,12 +27,13 @@ export const DiamondsDispatchContext =
 - const DBDiamondsProvider = ({ children }: Props) => {
 -   const [DBDiamonds, dispatch] = useReducer(
 -     dbDiamondsReducer,

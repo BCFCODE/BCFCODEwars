@@ -1,5 +1,6 @@
 import { CodewarsSingleChallenge } from "@/types/codewars";
 import CodewarsService from "./codewars-service";
+import useDiamondsContext from "../context/hooks/useContexts/useDiamondsContext";
 
 const { getRank } = new CodewarsService();
 
@@ -35,7 +36,7 @@ class DiamondsService {
   };
 
   getDiamondsCount = (challenge: CodewarsSingleChallenge): number => {
-    const rank = getRank(challenge);
+    const rank = getRank(challenge.rank.id);
     const calculatedScore = this.scoreMap.codewars[rank];
     return calculatedScore;
   };
