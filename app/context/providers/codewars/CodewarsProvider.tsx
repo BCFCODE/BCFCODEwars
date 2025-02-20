@@ -10,7 +10,7 @@ interface Props {
 
 const initialCodewars: CodewarsContextState = {
   completedChallenges: [],
-  isDisable: false,
+  isDisabled: false,
   isError: false,
   isLoading: false,
   pageNumber: 0,

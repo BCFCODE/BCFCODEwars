@@ -4,6 +4,7 @@ export interface Context {}
 
 export interface DiamondsContextState extends Context {
   data?: DBDiamonds;
+  isDiamondIconButtonDisabled: boolean;
   isLoading: boolean;
   isError: boolean;
   // success: boolean;

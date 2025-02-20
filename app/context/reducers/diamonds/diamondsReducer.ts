@@ -8,6 +8,8 @@ const dbDiamondsReducer = (
   switch (action.type) {
     case "SET_DIAMONDS":
       return { ...action.payload };
+    case "SET_DIAMOND_ICON_BUTTON_DISABLE":
+      return { ...state, isDiamondIconButtonDisabled: action.isDisabled };
     case "SET_LOADING":
       return { ...state, isLoading: action.isLoading };
     case "SET_ERROR":

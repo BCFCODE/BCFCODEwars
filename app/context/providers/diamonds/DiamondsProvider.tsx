@@ -16,6 +16,7 @@ interface Props {
 
 // Default (synchronous) state for diamonds
 const initialDiamondsState: DiamondsContextState = {
+  isDiamondIconButtonDisabled: false,
   isLoading: false,
   isError: false,
 };
@@ -37,7 +38,10 @@ const DBDiamondsProvider = ({ children }: Props) => {
       if (response.success)
         dispatch({
           type: "SET_DIAMONDS",
-          payload: { data: response.data, isLoading: false, isError: false },
+          payload: {
+            ...initialDiamondsState,
+            data: response.data,
+          },
         });
       else {
         dispatch({ type: "SET_LOADING", isLoading: true });
@@ -45,7 +49,7 @@ const DBDiamondsProvider = ({ children }: Props) => {
       }
     })();
   }, []);
-  
+
   return (
     <DiamondsContext.Provider value={DBDiamonds}>
       <DiamondsDispatchContext.Provider value={dispatch}>
