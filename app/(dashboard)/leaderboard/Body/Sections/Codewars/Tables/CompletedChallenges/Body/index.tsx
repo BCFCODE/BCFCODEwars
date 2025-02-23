@@ -1,6 +1,6 @@
 // import { CodewarsCompletedChallenge } from "@/types/db/codewars";
 import { TableBody } from "@mui/material";
-import useCodewarsContext from "../../../../../../../../context/hooks/useContexts/useCodewarsContext";
+import useCodewarsContext from "../../../../../../../../context/hooks/codewars/useCodewarsContext";
 import CollectDiamonds from "../Buttons/CollectDiamonds";
 import SingleRow from "./SingleRow";
 import CollectDiamondsCell from "./SingleRow/Cells/CollectDiamondsCell";

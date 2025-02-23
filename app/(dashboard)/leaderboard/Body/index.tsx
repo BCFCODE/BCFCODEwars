@@ -1,4 +1,4 @@
-import useDBAllUsersContext from "@/app/context/hooks/useContexts/useDBAllUsersContext";
+import useDBAllUsersContext from "@/app/context/hooks/db/useDBAllUsersContext";
 import { TableBody } from "@mui/material";
 import { UsersSection } from "./Sections/Users";
 import Skeleton from "./Sections/Users/Skeleton";

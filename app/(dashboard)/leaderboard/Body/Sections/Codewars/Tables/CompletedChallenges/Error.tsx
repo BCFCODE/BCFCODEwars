@@ -1,8 +1,8 @@
 import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
-import useCodewarsContext from "@/app/context/hooks/useContexts/useCodewarsContext";
-import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
-import useCodewarsDispatchContext from "@/app/context/hooks/useDispatches/useCodewarsDispatchContext";
+import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
+import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
+import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
 import handleTry from "../../../Collapse/Error/handleTry";

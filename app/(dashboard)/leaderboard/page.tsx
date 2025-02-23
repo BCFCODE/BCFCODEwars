@@ -1,6 +1,6 @@
 "use client";
 
-import useDBAllUsersContext from "@/app/context/hooks/useContexts/useDBAllUsersContext";
+import useDBAllUsersContext from "@/app/context/hooks/db/useDBAllUsersContext";
 import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Body from "./Body";

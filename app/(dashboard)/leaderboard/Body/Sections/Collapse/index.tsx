@@ -1,4 +1,4 @@
-import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
+import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
 import { Collapse, TableCell, TableRow } from "@mui/material";
 import { ReactNode } from "react";
 

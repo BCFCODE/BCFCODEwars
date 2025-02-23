@@ -1,6 +1,6 @@
 import { CodewarsSingleChallenge } from "@/types/codewars";
 import CodewarsService from "./codewars-service";
-import useDiamondsContext from "../context/hooks/useContexts/useDiamondsContext";
+import useDiamondsContext from "../context/hooks/diamonds/useDiamondsContext";
 
 const { getRank } = new CodewarsService();
 

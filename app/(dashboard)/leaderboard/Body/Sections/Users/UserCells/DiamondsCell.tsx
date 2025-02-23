@@ -4,8 +4,8 @@ import {
   diamondBoxStyles,
   fade,
 } from "@/app/(dashboard)/leaderboard/styles";
-import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
-import useDiamondsContext from "@/app/context/hooks/useContexts/useDiamondsContext";
+import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
+import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, TableCell, Typography } from "@mui/material";
 import { diamondSumStyles } from "./styles";

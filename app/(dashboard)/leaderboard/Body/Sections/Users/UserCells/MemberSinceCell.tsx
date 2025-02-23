@@ -1,5 +1,5 @@
 import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
-import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
+import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
 import { TableCell } from "@mui/material";
 import React from "react";
 

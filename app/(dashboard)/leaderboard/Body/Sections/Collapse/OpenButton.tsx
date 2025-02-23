@@ -1,7 +1,7 @@
-import useCodewarsContext from "@/app/context/hooks/useContexts/useCodewarsContext";
-import useCodewarsDispatchContext from "@/app/context/hooks/useDispatches/useCodewarsDispatchContext";
-import useDBCurrentUserContext from "@/app/context/hooks/useContexts/useDBCurrentUserContext";
-import useDBCurrentUserDispatchContext from "@/app/context/hooks/useDispatches/useDBCurrentUserDispatchContext";
+import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
+import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
+import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
+import useDBCurrentUserDispatchContext from "@/app/context/hooks/db/useDBCurrentUserDispatchContext";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
