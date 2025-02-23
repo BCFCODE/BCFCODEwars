@@ -1,4 +1,4 @@
-import { initialCollectDiamondsState } from "./useCollectButtonReducer";
+import { initialCollectDiamondsState } from "./hooks/useCollectButtonReducer";
 
 export interface CollectDiamondsState {
   isLoading: boolean;

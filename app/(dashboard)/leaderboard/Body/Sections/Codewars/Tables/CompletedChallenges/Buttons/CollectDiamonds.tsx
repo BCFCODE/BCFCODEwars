@@ -8,7 +8,7 @@ import {
 } from "@/app/(dashboard)/leaderboard/styles";
 
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import useCollectDiamonds from "@/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/useCollectDiamonds";
+import useCollectDiamonds from "@/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/hooks/useCollectDiamonds";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 

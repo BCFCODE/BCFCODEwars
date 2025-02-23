@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import collectButtonReducer, {
   CollectDiamondsState,
-} from "./collectButtonReducer";
+} from "../collectButtonReducer";
 
 export const initialCollectDiamondsState: CollectDiamondsState = {
   isLoading: false,

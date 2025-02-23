@@ -1,13 +1,9 @@
-import { CodewarsCompletedChallenge } from "@/types/codewars";
-import useDBCurrentUserContext from "../../../../../../../../context/hooks/db/useDBCurrentUserContext";
-import useDiamondsContext from "../../../../../../../../context/hooks/diamonds/useDiamondsContext";
-import useDiamondsDispatchContext from "../../../../../../../../context/hooks/diamonds/useDiamondsDispatchContext";
-import useCodewarsContext from "../../../../../../../../context/hooks/codewars/useCodewarsContext";
-import { useEffect, useRef, useState } from "react";
-import useCodewarsDispatchContext from "../../../../../../../../context/hooks/codewars/useCodewarsDispatchContext";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { useEffect } from "react";
 import useCollectButtonReducer from "./useCollectButtonReducer";
+import useCollectDiamondsContext from "./useCollectDiamondsContext";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
@@ -15,13 +11,14 @@ const { collectDiamonds } = new DiamondsService();
 export default function useCollectDiamonds(
   currentChallenge: CodewarsCompletedChallenge
 ) {
-  const { currentUser } = useDBCurrentUserContext();
-  const { isDiamondIconButtonDisabled } = useDiamondsContext();
-  const diamondsDispatch = useDiamondsDispatchContext();
-  const { completedChallenges } = useCodewarsContext();
-  const completedChallengesRef =
-    useRef<CodewarsCompletedChallenge[]>(completedChallenges);
-  const codewarsDispatch = useCodewarsDispatchContext();
+  const {
+    codewarsContextDispatch,
+    completedChallenges,
+    completedChallengesRef,
+    currentUser,
+    diamondsContextDispatch,
+    isDiamondIconButtonDisabled,
+  } = useCollectDiamondsContext();
 
   const {
     collectButtonState: {
@@ -35,12 +32,7 @@ export default function useCollectDiamonds(
   } = useCollectButtonReducer();
 
   const handleClick = async () => {
-    diamondsDispatch({
-      type: "SET_DIAMOND_ICON_BUTTON_DISABLE",
-      isDisabled: true,
-    });
-    diamondsDispatch({ type: "SET_LOADING", isLoading: true });
-    diamondsDispatch({ type: "SET_ERROR", isError: false });
+    diamondsContextDispatch({ type: "LOADING..." });
 
     collectButtonDispatch({ type: "LOADING...", isLoading: true });
 
@@ -50,7 +42,7 @@ export default function useCollectDiamonds(
     );
 
     if (response.success) {
-      diamondsDispatch({ type: "SET_ERROR", isError: false });
+      diamondsContextDispatch({ type: "SET_ERROR", isError: false });
 
       const { data: selectedSingleChallenge } = response;
       const { collectedDiamondsCount } = await collectDiamonds(
@@ -67,9 +59,12 @@ export default function useCollectDiamonds(
         details: selectedSingleChallenge,
       };
 
-      codewarsDispatch({
+      codewarsContextDispatch({
         type: "SET_SELECTED_CHALLENGE",
-        selectedChallenge,
+        selectedChallenge: {
+          ...currentChallenge,
+          details: selectedSingleChallenge,
+        },
       });
 
       completedChallengesRef.current = completedChallenges?.map((challenge) =>
@@ -80,14 +75,7 @@ export default function useCollectDiamonds(
     }
 
     if (!response.success) {
-      // setIconButtonDisable(false);
-      diamondsDispatch({
-        type: "SET_DIAMOND_ICON_BUTTON_DISABLE",
-        isDisabled: false,
-      }); // this is for Diamonds sum in header
-      diamondsDispatch({ type: "SET_ERROR", isError: true }); // this is for Diamonds sum in header
-      diamondsDispatch({ type: "SET_LOADING", isLoading: false }); // this is for Diamonds sum in header
-
+      diamondsContextDispatch({ type: "!SUCCESSFUL_RESPONSE" });
       collectButtonDispatch({ type: "LOADING...", isLoading: false });
       collectButtonDispatch({ type: "RESET_COUNTER" });
     }
@@ -103,12 +91,7 @@ export default function useCollectDiamonds(
     }
 
     if (counter > (collectedDiamondsCount ?? 500)) {
-      diamondsDispatch({
-        type: "SET_DIAMOND_ICON_BUTTON_DISABLE",
-        isDisabled: false,
-      }); // this is for Diamonds sum in header
-      diamondsDispatch({ type: "SET_LOADING", isLoading: false }); // this is for Diamonds sum in header
-
+      diamondsContextDispatch({ type: "DIAMONDS_COLLECTED" }); // this is for Diamonds sum in header
       collectButtonDispatch({ type: "LOADING...", isLoading: false });
       collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
     }
@@ -120,17 +103,17 @@ export default function useCollectDiamonds(
 
   useEffect(() => {
     if (isCollected && collectedDiamondsCount)
-      diamondsDispatch({
+      diamondsContextDispatch({
         type: "COLLECT_CODEWARS_DIAMONDS",
         codewarsCollectedDiamonds: collectedDiamondsCount,
       }); // this is for Diamonds sum in header
     // Reset counter to avoid duplicate dispatches on subsequent renders
     collectButtonDispatch({ type: "RESET_COUNTER" });
-  }, [isCollected, collectedDiamondsCount, diamondsDispatch]);
+  }, [isCollected, collectedDiamondsCount, diamondsContextDispatch]);
 
   useEffect(() => {
     if (!isDiamondIconButtonDisabled) {
-      codewarsDispatch({
+      codewarsContextDispatch({
         type: "SET_COMPLETED_CHALLENGES",
         completedChallenges: completedChallengesRef.current ?? [],
       });
