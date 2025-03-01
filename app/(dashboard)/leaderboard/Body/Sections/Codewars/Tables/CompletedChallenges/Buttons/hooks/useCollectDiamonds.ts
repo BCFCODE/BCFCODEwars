@@ -91,7 +91,6 @@ export default function useCollectDiamonds(
     }
 
     if (counter > (collectedDiamondsCount ?? 500)) {
-      diamondsContextDispatch({ type: "DIAMONDS_COLLECTED" }); // this is for Diamonds sum in header
       collectButtonDispatch({ type: "LOADING...", isLoading: false });
       collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
     }
@@ -104,10 +103,11 @@ export default function useCollectDiamonds(
   useEffect(() => {
     if (isCollected && collectedDiamondsCount)
       diamondsContextDispatch({
-        type: "COLLECT_CODEWARS_DIAMONDS",
+        type: "DIAMONDS_COLLECTED",
         codewarsCollectedDiamonds: collectedDiamondsCount,
       }); // this is for Diamonds sum in header
     // Reset counter to avoid duplicate dispatches on subsequent renders
+
     collectButtonDispatch({ type: "RESET_COUNTER" });
   }, [isCollected, collectedDiamondsCount, diamondsContextDispatch]);
 

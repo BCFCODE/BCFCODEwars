@@ -6,16 +6,21 @@ const dbDiamondsReducer = (
   action: Action
 ): DiamondsContextState => {
   switch (action.type) {
+    case "LOADING...":
+      return { ...state, isDiamondIconButtonDisabled: true };
+    case "!SUCCESSFUL_RESPONSE":
+      return { ...state, isDiamondIconButtonDisabled: false };
     case "SET_DIAMONDS":
       return { ...action.payload };
     case "SET_LOADING":
       return { ...state, isLoading: action.isLoading };
     case "SET_ERROR":
       return { ...state, isError: action.isError };
-    case "COLLECT_CODEWARS_DIAMONDS":
+    case "DIAMONDS_COLLECTED":
       if (state.data)
         return {
           ...state,
+          isDiamondIconButtonDisabled: false,
           data: {
             ...state.data,
             sum: {
