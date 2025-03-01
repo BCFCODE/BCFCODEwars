@@ -1,6 +1,6 @@
 import DBService from "@/app/services/db-service";
 import { auth } from "@/auth";
-import { CodewarsDatabase, CodewarsUser } from "@/types/codewars";
+import { CodewarsUser } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
 import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
@@ -17,7 +17,7 @@ const WarsPage = async () => {
   let isConnected = false;
 
   let reconnectProps: Omit<StepProps, "currentStep"> = {
-    codewars: {} as CodewarsDatabase,
+    codewars: {} as CodewarsUser,
     validatedUsername: "",
     session: session || null,
     isDbUsernameSyncedWithCodewars: true,

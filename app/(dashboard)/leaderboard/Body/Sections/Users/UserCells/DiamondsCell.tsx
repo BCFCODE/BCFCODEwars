@@ -21,11 +21,9 @@ const DiamondsCell = () => {
     diamondsData
   );
 
-  const isCurrentUser = currentUser.codewars?.id === diamondsData?.codewars.id;
+  const isCurrentUser = currentUser.email === diamondsData?.email;
 
-  const diamondsSum = isCurrentUser ? diamondsData.diamonds.sum : 0;
-
-  // if (!diamondsSum) return null;
+  const diamondsSum = isCurrentUser ? diamondsData?.sum.total : 0;
 
   return (
     <TableCell sx={{ ...codewarsCellStyles }} align="right">

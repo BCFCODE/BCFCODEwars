@@ -3,17 +3,19 @@ import dbCurrentUserReducer from "../../../reducers/users/currentUser/dbCurrentU
 import { Action } from "../../../reducers/users/currentUser/types";
 import { CurrentUserContextState } from "./types";
 
-interface Props {
-  children: ReactNode;
-  context: CurrentUserContextState;
-}
-
-export const DBCurrentUserContext =
-  createContext<CurrentUserContextState | null>(null);
-export const DBCurrentUserDispatchContext =
+export const CurrentUserContext = createContext<CurrentUserContextState | null>(
+  null
+);
+export const CurrentUserDispatchContext =
   createContext<Dispatch<Action> | null>(null);
 
-const DBCurrentUserProvider = ({ children, context }: Props) => {
+const CurrentUserProvider = ({
+  children,
+  context,
+}: {
+  children: ReactNode;
+  context: CurrentUserContextState;
+}) => {
   const initialCurrentUserState: CurrentUserContextState = {
     ...context,
     isCollapse: false,
@@ -22,14 +24,14 @@ const DBCurrentUserProvider = ({ children, context }: Props) => {
     dbCurrentUserReducer,
     initialCurrentUserState
   );
-  console.log(context, "<<<<<<<<< DBCurrentUserProvider");
+  console.log(context, "<<<<<<<<< CurrentUserProvider");
   return (
-    <DBCurrentUserContext.Provider value={currentUserContext}>
-      <DBCurrentUserDispatchContext.Provider value={dispatch}>
+    <CurrentUserContext.Provider value={currentUserContext}>
+      <CurrentUserDispatchContext.Provider value={dispatch}>
         {children}
-      </DBCurrentUserDispatchContext.Provider>
-    </DBCurrentUserContext.Provider>
+      </CurrentUserDispatchContext.Provider>
+    </CurrentUserContext.Provider>
   );
 };
 
-export default DBCurrentUserProvider;
+export default CurrentUserProvider;

@@ -206,7 +206,7 @@ index 7a722ea..e69de29 100644
 -@@ -1,18 +1,20 @@
 --import DBUserProvider from "@/app/context/providers/db/DBUserProvider";
 -+import useDBAllUsersContext from "@/app/context/hooks/useDBAllUsersContext";
--+import DBCurrentUserProvider from "@/app/context/providers/db/currentUser/dbCurrentUserProvider";
+-+import CurrentUserProvider from "@/app/context/providers/db/currentUser/CurrentUserProvider";
 - import { DBUser } from "@/types/db/users";
 - import { ReactNode } from "react";
 - 
@@ -221,10 +221,10 @@ index 7a722ea..e69de29 100644
 -+
 -   return allUsers.map((currentUser: DBUser) => (
 --    <DBUserProvider key={currentUser.email} context={{ allUsers, currentUser }}>
--+    <DBCurrentUserProvider key={currentUser.email} context={{ currentUser }}>
+-+    <CurrentUserProvider key={currentUser.email} context={{ currentUser }}>
 -       {children}
 --    </DBUserProvider>
--+    </DBCurrentUserProvider>
+-+    </CurrentUserProvider>
 -   ));
 - };
 - 

@@ -1,21 +1,15 @@
 import { GoogleUser } from "@/types/google";
-import { NewDatabaseUser } from "@/types/user";
 import DBService from "./db-service";
 
-const { updateSingleUser, saveSingleUser, getUser } = new DBService();
+const {
+  initializeDiamonds,
+  updateSingleUser,
+  saveNewGoogleUser,
+  getUser,
+  saveNewCodewarsUser,
+} = new DBService();
 
 class GoogleService {
-  makeDatabaseUserFromGoogleSigninUser = (
-    user: GoogleUser
-  ): NewDatabaseUser => ({
-    email: user.email,
-    name: user.name,
-    image: user.image,
-    createdAt: new Date().toISOString(),
-    lastLogin: new Date().toISOString(),
-    codewars: { isConnected: false },
-  });
-
   handleGoogleSignIn = async (user: GoogleUser): Promise<void> => {
     const { email, name, image } = user;
 
@@ -28,8 +22,9 @@ class GoogleService {
         name,
       });
     } else {
-      const newUser = this.makeDatabaseUserFromGoogleSigninUser(user);
-      saveSingleUser<NewDatabaseUser>(newUser);
+      initializeDiamonds(email);
+      saveNewCodewarsUser(email);
+      saveNewGoogleUser(user);
     }
   };
 }

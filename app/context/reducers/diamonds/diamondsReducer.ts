@@ -18,11 +18,11 @@ const dbDiamondsReducer = (
           ...state,
           data: {
             ...state.data,
-            diamonds: {
-              ...state.data.diamonds,
+            sum: {
+              ...state.data.sum,
               codewars:
-                state.data.diamonds.codewars + action.codewarsCollectedDiamonds,
-              sum: state.data.diamonds.sum + action.codewarsCollectedDiamonds,
+                state.data.sum.codewars + action.codewarsCollectedDiamonds,
+              total: state.data.sum.total + action.codewarsCollectedDiamonds,
             },
           },
         };

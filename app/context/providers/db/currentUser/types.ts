@@ -1,9 +1,9 @@
-import { DBUser } from "@/types/db/users";
+import { CurrentUser } from "@/types/db/users";
 
-type Context = {
-  currentUser: DBUser;
+export type CurrentUserContext = {
+  currentUser: CurrentUser;
 };
 
-export interface CurrentUserContextState extends Context {
+export interface CurrentUserContextState extends CurrentUserContext {
   isCollapse?: boolean;
 }

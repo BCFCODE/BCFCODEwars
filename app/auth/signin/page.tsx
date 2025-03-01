@@ -16,9 +16,9 @@ const leaderboardStyles: SxProps<Theme> = {
 export default function SignIn() {
   return (
     <>
-      <Box sx={leaderboardStyles}>
+      {/* <Box sx={leaderboardStyles}>
         <LeaderBoard />
-      </Box>
+      </Box> */}
       <Box height="100vh" paddingTop="10vh">
         <SignInPage providers={providerMap} signIn={handleSignIn} />
       </Box>

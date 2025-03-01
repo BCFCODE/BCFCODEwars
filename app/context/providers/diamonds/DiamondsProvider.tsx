@@ -1,7 +1,7 @@
 "use client";
 
 import APIDiamondsService from "@/app/api/services/diamonds-service";
-import { DBDiamonds } from "@/types/db/diamonds";
+import { Diamonds } from "@/types/db/diamonds";
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 import dbDiamondsReducer from "../../reducers/diamonds/diamondsReducer";
 import { Action } from "../../reducers/diamonds/types";
@@ -11,7 +11,7 @@ const { getDiamonds } = new APIDiamondsService();
 
 interface Props {
   children: ReactNode;
-  context?: DBDiamonds;
+  context?: Diamonds;
 }
 
 // Default (synchronous) state for diamonds

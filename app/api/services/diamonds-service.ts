@@ -1,4 +1,4 @@
-import { APIdbGetDiamondsResponse, DBDiamonds } from "@/types/db/diamonds";
+import { APIdbGetDiamondsResponse } from "@/types/db/diamonds";
 import { baseURL } from "@/utils/constants";
 
 class APIDiamondsService {

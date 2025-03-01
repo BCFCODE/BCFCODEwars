@@ -1,7 +1,7 @@
 // app/api/wars/codewars/user/route.ts
 
 import DBService from "@/app/services/db-service";
-import { AddCodewarsUserToDB, CodewarsUserResponse } from "@/types/codewars";
+import { CodewarsUser, CodewarsUserResponse } from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
 const { getDatabase, getCollections } = new DBService();
@@ -59,66 +59,72 @@ export async function GET(request: Request) {
   }
 }
 
-export async function PATCH(request: NextRequest) {
-  // Parse the request body (assuming you're sending JSON data)
-  const { email, codewars }: AddCodewarsUserToDB = await request.json();
+// export async function PATCH(request: NextRequest) {
+//   // Parse the request body (assuming you're sending JSON data)
+//   const codewarsUser: CodewarsUser = await request.json();
 
-  // Validate input
-  if (!email || !codewars) {
-    return NextResponse.json(
-      { error: "Both 'email' and 'codewars' fields are required." },
-      { status: 400 }
-    );
-  }
+//   // Validate input
+//   if (!codewarsUser) {
+//     return NextResponse.json(
+//       { error: "codewarsUser is required." },
+//       { status: 400 }
+//     );
+//   }
 
-  try {
-    const { users } = await getCollections();
+//   try {
+//     const { users, codewars } = await getCollections();
 
-    // Update the codewars property in the 'users' collection
-    const userInDB = await users.findOneAndUpdate(
-      { email }, // Find user by email
-      { $set: { name: codewars.name, codewars } }, // Update the codewars object
-      { returnDocument: "after" } // Return the updated document
-    );
+//     // Update the codewars property in the 'users' collection
+//     const response = await users.findOneAndUpdate(
+//       { email: codewarsUser.email }, // Find user by email
+//       { $set: { name: codewarsUser.name } }, // Update the codewars object
+//       { returnDocument: "after" } // Return the updated document
+//     );
 
-    // Log the result from MongoDB
-    // console.log("Database operation result:", userInDB);
+//     // await codewars.findOneAndUpdate(
+//     //   { email: codewarsUser.email },
+//     //   { $set: codewarsUser },
+//     //   { returnDocument: "after" }
+//     // );
 
-    // Check if the user was found and updated
-    if (!userInDB) {
-      return NextResponse.json(
-        { error: "User with the provided email does not exist." },
-        { status: 404 }
-      );
-    }
+//     // Log the result from MongoDB
+//     // console.log("Database operation result:", response);
 
-    // Ensure the updated document includes a valid 'username' in the 'codewars' object
-    if (!userInDB?.codewars?.username) {
-      return NextResponse.json(
-        {
-          error:
-            "The 'codewars' object does not contain a valid 'username'. Please verify your data.",
-        },
-        { status: 400 }
-      );
-    }
+//     // Check if the user was found and updated
+//     if (!response) {
+//       return NextResponse.json(
+//         { error: "User with the provided email does not exist." },
+//         { status: 404 }
+//       );
+//     }
 
-    // Return the updated user
-    return NextResponse.json({
-      message: `codewars object in db successfully updated.`,
-      codewars: userInDB,
-    });
-  } catch (error) {
-    // Log the error for debugging
-    // console.error("Error in PATCH handler:", error);
+//     // Ensure the updated document includes a valid 'username' in the 'codewars' object
+//     if (!response?.codewars?.username) {
+//       return NextResponse.json(
+//         {
+//           error:
+//             "The 'codewars' object does not contain a valid 'username'. Please verify your data.",
+//         },
+//         { status: 400 }
+//       );
+//     }
 
-    // Return a generic error message to the client
-    return NextResponse.json(
-      {
-        error:
-          "An unexpected error occurred while updating the codewars object. Please try again later.",
-      },
-      { status: 500 }
-    );
-  }
-}
+//     // Return the updated user
+//     return NextResponse.json({
+//       message: `codewars object in db successfully updated.`,
+//       codewars: response,
+//     });
+//   } catch (error) {
+//     // Log the error for debugging
+//     // console.error("Error in PATCH handler:", error);
+
+//     // Return a generic error message to the client
+//     return NextResponse.json(
+//       {
+//         error:
+//           "An unexpected error occurred while updating the codewars object. Please try again later.",
+//       },
+//       { status: 500 }
+//     );
+//   }
+// }

@@ -1,3 +1,4 @@
+import { GoogleUser } from "@/types/google";
 import { Db, Document, MongoClient, OptionalId, WithId } from "mongodb";
 
 class DBService {
@@ -37,9 +38,56 @@ class DBService {
     return { users, diamonds, codewars };
   };
 
-  getUsers = async (): Promise<WithId<Document>[]> => {
+  getUsers = async (): Promise<Document[]> => {
     const { users } = await this.getCollections();
-    return users.find({}).toArray();
+
+    return users
+      .aggregate([
+        // Join with diamonds collection based on the email field
+        {
+          $lookup: {
+            from: "diamonds",
+            localField: "email", // Use the email field in users collection
+            foreignField: "email", // Use the email field in diamonds collection
+            as: "diamonds",
+          },
+        },
+        // Join with codewars collection based on the email field
+        {
+          $lookup: {
+            from: "codewars",
+            localField: "email", // Use the email field in users collection
+            foreignField: "email", // Use the email field in codewars collection
+            as: "codewars",
+          },
+        },
+        // Optionally, unwind arrays to flatten them (if there are multiple matching documents)
+        {
+          $unwind: {
+            path: "$diamonds",
+            preserveNullAndEmptyArrays: true, // Keep users without diamonds
+          },
+        },
+        {
+          $unwind: {
+            path: "$codewars",
+            preserveNullAndEmptyArrays: true, // Keep users without codewars data
+          },
+        },
+        // Project fields you want to return
+        {
+          $project: {
+            email: 1,
+            name: 1,
+            diamonds: 1,
+            codewars: 1,
+            image: 1,
+            createdAt: 1,
+            lastLogin: 1,
+          },
+        },
+      ])
+      .toArray();
   };
 
   getUser = async (email: string): Promise<WithId<Document> | null> => {
@@ -47,14 +95,46 @@ class DBService {
     return users.findOne({ email });
   };
 
-  saveSingleUser = async <T>(newUser: T) => {
+  saveNewGoogleUser = async (user: GoogleUser) => {
     const { users } = await this.getCollections();
-    await users.insertOne(newUser as OptionalId<Document>);
+    await users.insertOne({
+      email: user.email,
+      name: user.name,
+      image: user.image,
+      createdAt: new Date().toISOString(),
+      lastLogin: new Date().toISOString(),
+      // codewars: { isConnected: false },
+    });
+  };
+
+  saveNewCodewarsUser = async (email: string) => {
+    const { codewars } = await this.getCollections();
+    await codewars.insertOne({ email, isConnected: false });
+  };
+
+  initializeDiamonds = async (email: string) => {
+    const { diamonds } = await this.getCollections();
+    await diamonds.insertOne({
+      email,
+      sum: {
+        codewars: 0,
+        missions: 0,
+        total: 0,
+      },
+    });
   };
 
   updateSingleUser = async <T>(email: string, update: T) => {
     const { users } = await this.getCollections();
     await users.updateOne(
+      { email },
+      { $set: update as Readonly<Partial<Document>> }
+    );
+  };
+
+  updateSingleCodewarsUser = async <T>(email: string = "", update: T) => {
+    const { codewars } = await this.getCollections();
+    await codewars.updateOne(
       { email },
       { $set: update as Readonly<Partial<Document>> }
     );

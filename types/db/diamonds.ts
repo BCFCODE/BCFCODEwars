@@ -1,29 +1,18 @@
-export interface Diamonds {
+export interface Sum {
   codewars: number;
   missions: number;
-  sum: number;
+  total: number;
 }
 
-export interface CodewarsChallengeDiamonds {
-  id: string;
-  diamonds?: number;
-}
-
-export interface CodewarsDiamonds {
-  id: string;
-  challenges: CodewarsChallengeDiamonds[];
-}
-
-export interface DBDiamonds {
+export interface Diamonds {
   email: string;
   name: string;
-  diamonds: Diamonds;
-  codewars: CodewarsDiamonds;
+  sum: Sum;
 }
 
 export interface APIdbDiamondsSuccessResponse {
   success: true;
-  data: DBDiamonds;
+  data: Diamonds;
 }
 
 export interface APIdbDiamondsFailedResponse {

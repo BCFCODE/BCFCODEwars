@@ -3,7 +3,7 @@
 import APIdbService from "@/app/api/services/db-service";
 import dbAllUsersReducer from "@/app/context/reducers/users/allUsers/dbAllUsersReducer";
 import { Action } from "@/app/context/reducers/users/allUsers/types";
-import { DBUser } from "@/types/db/users";
+import { CurrentUser, DBUser } from "@/types/db/users";
 import {
   createContext,
   Dispatch,
@@ -59,7 +59,7 @@ const DBAllUsersProvider = ({ children }: Props) => {
           dispatch({
             type: "SET_ALL_USERS",
             payload: {
-              allUsers: fetchedUsers.users as DBUser[],
+              allUsers: fetchedUsers.users as CurrentUser[],
               error: false,
               isLoading: false,
             },

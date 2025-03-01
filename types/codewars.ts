@@ -17,6 +17,8 @@ interface languagesRanks {
 
 export type CodewarsUser = {
   success?: boolean;
+  isConnected: boolean;
+  email: string;
   id: string;
   username: string;
   name: string | null;
@@ -34,14 +36,14 @@ export type CodewarsUser = {
   };
 };
 
-export interface CodewarsDatabase extends CodewarsUser {
-  isConnected: boolean;
-}
+// export interface CodewarsDatabase extends CodewarsUser {
+//   isConnected: boolean;
+// }
 
-export interface AddCodewarsUserToDB {
-  codewars: CodewarsUser;
-  email: string;
-}
+// export interface AddCodewarsUserToDB {
+//   codewars: CodewarsUser;
+//   email: string;
+// }
 
 export type CodewarsUserResponse =
   | { success: false; reason: "not found" }

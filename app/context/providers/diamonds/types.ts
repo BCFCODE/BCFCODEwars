@@ -1,9 +1,9 @@
-import { DBDiamonds } from "@/types/db/diamonds";
+import { Diamonds } from "@/types/db/diamonds";
 
 export interface Context {}
 
 export interface DiamondsContextState extends Context {
-  data?: DBDiamonds;
+  data?: Diamonds;
   isDiamondIconButtonDisabled: boolean;
   isLoading: boolean;
   isError: boolean;

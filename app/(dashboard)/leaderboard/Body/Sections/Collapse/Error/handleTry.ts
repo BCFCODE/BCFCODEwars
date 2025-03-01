@@ -1,12 +1,12 @@
 import { Action } from "@/app/context/reducers/codewars/types";
 import CodewarsService from "@/app/services/codewars-service";
-import { DBUser } from "@/types/db/users";
+import { CurrentUser, DBUser } from "@/types/db/users";
 import { Dispatch } from "react";
 
 const { getCompletedChallenges } = new CodewarsService();
 
 export const handleTry = async (
-  currentUser: DBUser,
+  currentUser: CurrentUser,
   pageNumber: number,
   dispatch: Dispatch<Action>
 ) => {
