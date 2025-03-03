@@ -7,12 +7,16 @@ import Link from "next/link";
 import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect/Reconnect";
 import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
+import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
+import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
 
-const { getDatabase, getUser } = new DBService();
+const { getDatabase, getSingleCodewarsUser } = new DBService();
 
 const WarsPage = async () => {
   const session = await auth();
   const email = session?.user?.email;
+
+  // const { currentUser } = useDBCurrentUserContext();
 
   let isConnected = false;
 
@@ -25,7 +29,8 @@ const WarsPage = async () => {
 
   if (email) {
     try {
-      const user = await getUser(email);
+      const currentCodewarsUser = await getSingleCodewarsUser(email);
+      console.log(currentCodewarsUser, "<<<<<< currentCodewarsUser");
       /* 
         Purpose: 
           This block of code checks if the Codewars account associated with the user 
@@ -53,19 +58,22 @@ const WarsPage = async () => {
           in leaderboard functionality, user progress tracking, or other dependent features. 
           This mechanism ensures a seamless experience while providing a clear path to resolve any discrepancies. 
       */
-      const res = await fetch(
-        `${baseURL}/api/wars/codewars/user?username=${user?.codewars.username}`
+
+      const response = await fetch(
+        `${baseURL}/api/wars/codewars/user?username=${currentCodewarsUser?.username}`
       );
-      const codewarsUser: CodewarsUser = await res.json();
+      const codewarsUser: CodewarsUser = await response.json();
 
       const isDbUsernameSyncedWithCodewars = codewarsUser.success;
 
       isConnected =
-        user?.codewars.isConnected || isDbUsernameSyncedWithCodewars;
+        currentCodewarsUser?.isConnected ||
+        isDbUsernameSyncedWithCodewars ||
+        false;
 
       reconnectProps = {
-        codewars: user?.codewars,
-        validatedUsername: user?.codewars.username,
+        codewars: currentCodewarsUser,
+        validatedUsername: currentCodewarsUser?.username,
         session,
         isDbUsernameSyncedWithCodewars,
       };

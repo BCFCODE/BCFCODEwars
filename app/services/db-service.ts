@@ -1,3 +1,4 @@
+import { CodewarsUser } from "@/types/codewars";
 import { GoogleUser } from "@/types/google";
 import { Db, Document, MongoClient, OptionalId, WithId } from "mongodb";
 
@@ -110,6 +111,11 @@ class DBService {
   saveNewCodewarsUser = async (email: string) => {
     const { codewars } = await this.getCollections();
     await codewars.insertOne({ email, isConnected: false });
+  };
+
+  getSingleCodewarsUser = async (email: string): Promise<CodewarsUser> => {
+    const { codewars } = await this.getCollections();
+    return await codewars.findOne({ email });
   };
 
   initializeDiamonds = async (email: string) => {

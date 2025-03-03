@@ -4,6 +4,7 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useEffect } from "react";
 import useCollectButtonReducer from "./useCollectButtonReducer";
 import useCollectDiamondsContext from "./useCollectDiamondsContext";
+import useCounter from "./useCounter";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
@@ -81,24 +82,14 @@ export default function useCollectDiamonds(
     }
   };
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout | null = null;
-
-    if (isLoading && !isCollected) {
-      timer = setTimeout(() => {
-        collectButtonDispatch({ type: "DIAMOND_COUNTS", counter: counter + 1 });
-      }, 50);
-    }
-
-    if (counter > (collectedDiamondsCount ?? 500)) {
-      collectButtonDispatch({ type: "LOADING...", isLoading: false });
-      collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
-    }
-
-    return () => {
-      timer && clearTimeout(timer);
-    };
-  }, [isError, isLoading, isCollected, counter]);
+  useCounter({
+    collectButtonDispatch,
+    collectedDiamondsCount,
+    counter,
+    isCollected,
+    isError,
+    isLoading,
+  });
 
   useEffect(() => {
     if (isCollected && collectedDiamondsCount)

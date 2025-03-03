@@ -7,4 +7,5 @@ export interface CodewarsContextState {
   isLoading: boolean;
   isError: boolean;
   pageNumber: number;
+  // isConnected: boolean;
 }
