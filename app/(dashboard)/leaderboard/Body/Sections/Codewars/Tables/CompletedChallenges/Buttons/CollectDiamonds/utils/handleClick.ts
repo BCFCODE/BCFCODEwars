@@ -7,6 +7,9 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CodewarsContextAction } from "@/app/context/reducers/codewars/types";
 import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
+import { CurrentUserContextState } from "@/app/context/providers/db/currentUser/types";
+import { CurrentUser } from "@/types/db/users";
+import { CodewarsContextState } from "@/types/contexts";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
@@ -17,6 +20,8 @@ interface Props {
   codewarsContextDispatch: Dispatch<CodewarsContextAction>;
   completedChallengesRef: RefObject<CodewarsCompletedChallenge[] | undefined>;
   currentChallenge: CodewarsCompletedChallenge;
+  currentUser: CurrentUser;
+  completedChallenges: CodewarsCompletedChallenge[] | undefined;
 }
 
 const handleClick = async ({
@@ -25,9 +30,11 @@ const handleClick = async ({
   completedChallengesRef,
   codewarsContextDispatch,
   currentChallenge,
+  currentUser,
+  completedChallenges,
 }: Props) => {
-  const { currentUser } = useDBCurrentUserContext();
-  const { completedChallenges } = useCodewarsContext();
+  // const { currentUser } = useDBCurrentUserContext();
+  // const { completedChallenges } = useCodewarsContext();
 
   diamondsContextDispatch({ type: "LOADING..." });
 

@@ -29,6 +29,8 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     completedChallengesRef,
     diamondsContextDispatch,
     isError,
+    currentUser,
+    completedChallenges,
   } = useCollectDiamonds();
 
   return (
@@ -53,6 +55,8 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
               completedChallengesRef,
               currentChallenge,
               diamondsContextDispatch,
+              currentUser,
+              completedChallenges,
             })
           }
         >
