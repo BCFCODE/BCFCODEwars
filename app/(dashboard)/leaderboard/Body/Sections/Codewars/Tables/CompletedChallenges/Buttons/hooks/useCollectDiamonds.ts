@@ -4,7 +4,8 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useEffect } from "react";
 import useCollectButtonReducer from "./useCollectButtonReducer";
 import useCollectDiamondsContext from "./useCollectDiamondsContext";
-import useCounter from "./useCounter";
+import useCounter from "./effects/useCounter";
+import useCollectedDiamonds from "./effects/useCollectedDiamonds";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
@@ -91,16 +92,12 @@ export default function useCollectDiamonds(
     isLoading,
   });
 
-  useEffect(() => {
-    if (isCollected && collectedDiamondsCount)
-      diamondsContextDispatch({
-        type: "DIAMONDS_COLLECTED",
-        codewarsCollectedDiamonds: collectedDiamondsCount,
-      }); // this is for Diamonds sum in header
-    // Reset counter to avoid duplicate dispatches on subsequent renders
-
-    collectButtonDispatch({ type: "RESET_COUNTER" });
-  }, [isCollected, collectedDiamondsCount, diamondsContextDispatch]);
+  useCollectedDiamonds({
+    collectButtonDispatch,
+    collectedDiamondsCount,
+    diamondsContextDispatch,
+    isCollected,
+  });
 
   useEffect(() => {
     if (!isDiamondIconButtonDisabled) {

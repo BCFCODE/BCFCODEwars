@@ -1,5 +1,5 @@
 import { Dispatch, useEffect, useRef } from "react";
-import { CollectDiamondsAction } from "../collectButtonReducer";
+import { CollectDiamondsAction } from "../../collectButtonReducer";
 
 interface Props {
   isLoading: boolean;
