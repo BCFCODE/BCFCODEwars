@@ -1,4 +1,4 @@
-import { Action } from "@/app/context/reducers/codewars/types";
+import { CodewarsContextAction } from "@/app/context/reducers/codewars/types";
 import CodewarsService from "@/app/services/codewars-service";
 import { CurrentUser, DBUser } from "@/types/db/users";
 import { Dispatch } from "react";
@@ -8,7 +8,7 @@ const { getCompletedChallenges } = new CodewarsService();
 export const handleTry = async (
   currentUser: CurrentUser,
   pageNumber: number,
-  dispatch: Dispatch<Action>
+  dispatch: Dispatch<CodewarsContextAction>
 ) => {
   try {
     const response = await getCompletedChallenges(

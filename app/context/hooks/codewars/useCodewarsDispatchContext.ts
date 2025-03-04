@@ -1,8 +1,8 @@
 import { Dispatch, useContext } from "react";
 import { CodewarsDispatchContext } from "../../providers/codewars/CodewarsProvider";
-import { Action } from "../../reducers/codewars/types";
+import { CodewarsContextAction } from "../../reducers/codewars/types";
 
-const useCodewarsDispatchContext = (): Dispatch<Action> => {
+const useCodewarsDispatchContext = (): Dispatch<CodewarsContextAction> => {
   const context = useContext(CodewarsDispatchContext);
   if (!context) {
     throw new Error(

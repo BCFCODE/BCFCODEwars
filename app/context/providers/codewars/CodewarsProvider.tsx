@@ -1,7 +1,7 @@
 import { CodewarsContextState } from "@/types/contexts";
 import { createContext, Dispatch, ReactNode, useReducer } from "react";
 import codewarsReducer from "../../reducers/codewars/codewarsReducer";
-import { Action } from "../../reducers/codewars/types";
+import { CodewarsContextAction } from "../../reducers/codewars/types";
 
 interface Props {
   children: ReactNode;
@@ -17,7 +17,7 @@ const initialCodewars: CodewarsContextState = {
 };
 
 export const CodewarsContext = createContext<CodewarsContextState | null>(null);
-export const CodewarsDispatchContext = createContext<Dispatch<Action> | null>(
+export const CodewarsDispatchContext = createContext<Dispatch<CodewarsContextAction> | null>(
   null
 );
 
