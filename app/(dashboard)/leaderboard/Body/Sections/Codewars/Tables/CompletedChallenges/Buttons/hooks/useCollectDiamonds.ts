@@ -1,11 +1,13 @@
+import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { useEffect } from "react";
+import { useRef } from "react";
+import useCollectedDiamonds from "./effects/useCollectedDiamonds";
+import useCompletedChallenges from "./effects/useCompletedChallenges";
+import useCounter from "./effects/useCounter";
 import useCollectButtonReducer from "./useCollectButtonReducer";
 import useCollectDiamondsContext from "./useCollectDiamondsContext";
-import useCounter from "./effects/useCounter";
-import useCollectedDiamonds from "./effects/useCollectedDiamonds";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
@@ -13,10 +15,12 @@ const { collectDiamonds } = new DiamondsService();
 export default function useCollectDiamonds(
   currentChallenge: CodewarsCompletedChallenge
 ) {
+  const { completedChallenges } = useCodewarsContext();
+  const completedChallengesRef =
+    useRef<CodewarsCompletedChallenge[]>(completedChallenges);
+
   const {
     codewarsContextDispatch,
-    completedChallenges,
-    completedChallengesRef,
     currentUser,
     diamondsContextDispatch,
     isDiamondIconButtonDisabled,
@@ -99,14 +103,11 @@ export default function useCollectDiamonds(
     isCollected,
   });
 
-  useEffect(() => {
-    if (!isDiamondIconButtonDisabled) {
-      codewarsContextDispatch({
-        type: "SET_COMPLETED_CHALLENGES",
-        completedChallenges: completedChallengesRef.current ?? [],
-      });
-    }
-  }, [isDiamondIconButtonDisabled]);
+  useCompletedChallenges({
+    codewarsContextDispatch,
+    isDiamondIconButtonDisabled,
+    completedChallengesRef,
+  });
 
   return {
     isLoading,

@@ -10,17 +10,12 @@ export default function useCollectDiamondsContext() {
   const { currentUser } = useDBCurrentUserContext();
   const { isDiamondIconButtonDisabled } = useDiamondsContext();
   const diamondsContextDispatch = useDiamondsDispatchContext();
-  const { completedChallenges } = useCodewarsContext();
-  const completedChallengesRef =
-    useRef<CodewarsCompletedChallenge[]>(completedChallenges);
   const codewarsContextDispatch = useCodewarsDispatchContext();
 
   return {
     currentUser,
     isDiamondIconButtonDisabled,
     diamondsContextDispatch,
-    completedChallenges,
-    completedChallengesRef,
     codewarsContextDispatch,
   };
 }

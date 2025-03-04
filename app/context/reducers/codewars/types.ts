@@ -7,10 +7,6 @@ export type Action =
       type: "SET_COMPLETED_CHALLENGES";
       completedChallenges: CodewarsCompletedChallenge[];
     }
-  // | {
-  //     type: "SET_DB_COMPLETED_CHALLENGES";
-  //     dbCompletedChallenges: CodewarsCompletedChallenge[];
-  //   }
   | {
       type: "SET_SELECTED_CHALLENGE";
       selectedChallenge: CodewarsCompletedChallenge;
