@@ -1,14 +1,14 @@
-import { CodewarsContextState } from "@/types/contexts";
 import { createContext, Dispatch, ReactNode, useReducer } from "react";
 import codewarsReducer from "../../reducers/codewars/codewarsReducer";
 import { CodewarsAction } from "../../reducers/codewars/types";
+import { CodewarsState } from "./types";
 
 interface Props {
   children: ReactNode;
-  // context: CodewarsContextState;
+  // context: CodewarsState;
 }
 
-const initialCodewars: CodewarsContextState = {
+const initialCodewars: CodewarsState = {
   completedChallenges: [],
   isDisabled: false,
   isError: false,
@@ -16,7 +16,7 @@ const initialCodewars: CodewarsContextState = {
   pageNumber: 0,
 };
 
-export const CodewarsContext = createContext<CodewarsContextState | null>(null);
+export const CodewarsContext = createContext<CodewarsState | null>(null);
 export const CodewarsDispatchContext =
   createContext<Dispatch<CodewarsAction> | null>(null);
 

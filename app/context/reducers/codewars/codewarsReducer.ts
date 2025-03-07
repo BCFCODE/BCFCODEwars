@@ -1,10 +1,10 @@
-import { CodewarsContextState } from "@/types/contexts";
+import { CodewarsState } from "../../providers/codewars/types";
 import { CodewarsAction } from "./types";
 
 const codewarsReducer = (
-  state: CodewarsContextState,
+  state: CodewarsState,
   action: CodewarsAction
-): CodewarsContextState => {
+): CodewarsState => {
   switch (action.type) {
     case "SET_COMPLETED_CHALLENGES":
       return { ...state, completedChallenges: action.completedChallenges };
