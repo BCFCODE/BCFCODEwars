@@ -52,9 +52,6 @@ class CodewarsService {
       `${baseURL}/api/wars/codewars/challenges/single?username=${username}&challengeId=${id}`
     ).then((res) => res.json());
 
-
-
-  collectLeaderboardDiamonds = () => {};
 }
 
 export default CodewarsService;

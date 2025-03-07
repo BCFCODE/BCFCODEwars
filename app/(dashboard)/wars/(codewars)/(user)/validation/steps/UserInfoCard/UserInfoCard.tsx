@@ -1,17 +1,21 @@
-"use client";
+// "use client";
 
-import { Paper, Typography, Box } from "@mui/material";
-import { StepProps } from "../stepSwitch";
+import { CodewarsUser } from "@/types/codewars";
+import { Box, Paper, Typography } from "@mui/material";
+
+interface Props {
+  codewars: CodewarsUser;
+  validatedUsername: string;
+  isDbUsernameSyncedWithCodewars: boolean | undefined;
+}
 
 const UserInfoCard = ({
   codewars,
   validatedUsername,
   isDbUsernameSyncedWithCodewars,
-  session,
-}: Omit<StepProps, "currentStep">) => {
-  const overallRank = Math.abs(Number(codewars?.ranks.overall.rank)).toString();
-  const userName = session?.user?.name.split(" ")[0] || "User";
-
+}: Props) => {
+  const overallRank = Math.abs(Number(codewars?.ranks?.overall.rank)).toString();
+  const userName = codewars?.name?.split(" ")[0] || "User";
   return (
     <Paper
       elevation={4}

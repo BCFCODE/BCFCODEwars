@@ -4,7 +4,7 @@ import { CodewarsUser } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
 import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
-import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect/Reconnect";
+import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect";
 import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
 
@@ -29,8 +29,7 @@ const WarsPage = async () => {
     try {
       const currentCodewarsUser = await getSingleCodewarsUser(email);
       console.log(currentCodewarsUser, "<<<<<< currentCodewarsUser");
-      /* 
-        Purpose: 
+      /* Purpose: 
           This block of code checks if the Codewars account associated with the user 
           (stored in our database) is in sync with the current state on Codewars.com. 
           Specifically, it validates whether the username on Codewars.com matches 
@@ -63,15 +62,15 @@ const WarsPage = async () => {
       const codewarsUser: CodewarsUser = await response.json();
 
       const isDbUsernameSyncedWithCodewars = codewarsUser.success;
-
+console.log(currentCodewarsUser?.isConnected , isDbUsernameSyncedWithCodewars)
       isConnected =
         currentCodewarsUser?.isConnected ||
-        isDbUsernameSyncedWithCodewars ||
+        !isDbUsernameSyncedWithCodewars ||
         false;
 
       reconnectProps = {
-        codewars: currentCodewarsUser,
-        validatedUsername: currentCodewarsUser?.username,
+        codewars: currentCodewarsUser ?? ({} as CodewarsUser),
+        validatedUsername: currentCodewarsUser?.username ?? "",
         session,
         isDbUsernameSyncedWithCodewars,
       };
@@ -79,7 +78,7 @@ const WarsPage = async () => {
       console.error("Error fetching user data:", error);
     }
   }
-
+console.log('isConnected (wars page)', isConnected)
   if (!isConnected)
     return (
       <Box

@@ -1,8 +1,12 @@
+
+
 import { CodewarsSingleChallenge } from "@/types/codewars";
 import CodewarsService from "./codewars-service";
 import useDiamondsContext from "../context/hooks/diamonds/useDiamondsContext";
+import DBService from "./db-service";
 
 const { getRank } = new CodewarsService();
+// const { saveNewCodewarsSingleChallenge } = new DBService();
 
 interface ScoreMap {
   codewars: { [key: number]: number };
@@ -55,6 +59,7 @@ class DiamondsService {
       "Number of diamonds: ",
       collectedDiamondsCount
     );
+// saveNewCodewarsSingleChallenge()
     {
       /* TODO: Send a request to codewars api to catch this specific solved problem and write it to our database */
     }

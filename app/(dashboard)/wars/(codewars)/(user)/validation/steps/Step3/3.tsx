@@ -20,18 +20,6 @@ const Step3 = ({
     router.replace(`${currentStep + 1}`);
   };
 
-  const userInfoCardProps = {
-    /*  
-      This flag is temporarily set to 'true' to ensure that the user info card is displayed for validation purposes. 
-      It allows us to show the user’s Codewars information while confirming if the username is accurate. 
-      Once the validation process is complete, this can be updated or removed based on the application's flow. 
-    */
-    isDbUsernameSyncedWithCodewars: true,
-    session,
-    codewars,
-    validatedUsername,
-  };
-
   return (
     <>
       <Box
@@ -58,7 +46,19 @@ const Step3 = ({
         </Typography>
 
         {/* User Info */}
-        <UserInfoCard {...userInfoCardProps} />
+        <UserInfoCard
+          {...{
+            isDbUsernameSyncedWithCodewars: true,
+            session,
+            codewars,
+            validatedUsername,
+            /*  
+              This flag is temporarily set to 'true' to ensure that the user info card is displayed for validation purposes. 
+              It allows us to show the user’s Codewars information while confirming if the username is accurate. 
+              Once the validation process is complete, this can be updated or removed based on the application's flow. 
+            */
+          }}
+        />
 
         {/* Description */}
         <Typography

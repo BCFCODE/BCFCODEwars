@@ -1,6 +1,18 @@
-import { CodewarsUser } from "@/types/codewars";
+import {
+  CodewarsSingleChallenge,
+  CodewarsUser,
+  InitialCodewarsUser,
+} from "@/types/codewars";
 import { GoogleUser } from "@/types/google";
-import { Db, Document, MongoClient, OptionalId, WithId } from "mongodb";
+import {
+  Collection,
+  Db,
+  Document,
+  MongoClient,
+  ObjectId,
+  OptionalId,
+  WithId,
+} from "mongodb";
 
 class DBService {
   private clientPromise: Promise<MongoClient>;
@@ -110,12 +122,30 @@ class DBService {
 
   saveNewCodewarsUser = async (email: string) => {
     const { codewars } = await this.getCollections();
-    await codewars.insertOne({ email, isConnected: false });
+    const newUser: InitialCodewarsUser = { email, isConnected: false };
+    await codewars.insertOne(newUser);
   };
 
-  getSingleCodewarsUser = async (email: string): Promise<CodewarsUser> => {
+  saveNewCodewarsSingleChallenge = async (
+    selectedSingleChallenge: CodewarsSingleChallenge,
+    userId: string
+  ) => {
+    const db = await this.getDatabase();
+    const codewars: Collection<CodewarsUser> =
+      db.collection<CodewarsUser>("codewars");
+
+    await codewars.findOneAndUpdate(
+      { id: userId },
+      { $push: { "codeChallenges.list": selectedSingleChallenge } },
+      { upsert: true }
+    );
+  };
+
+  getSingleCodewarsUser = async (
+    email: string
+  ): Promise<CodewarsUser | null> => {
     const { codewars } = await this.getCollections();
-    return await codewars.findOne({ email });
+    return await codewars.findOne<CodewarsUser>({ email });
   };
 
   initializeDiamonds = async (email: string) => {

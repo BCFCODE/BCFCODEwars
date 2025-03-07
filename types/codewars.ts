@@ -33,8 +33,11 @@ export type CodewarsUser = {
   codeChallenges: {
     totalAuthored: number;
     totalCompleted: number;
+    list: CodewarsSingleChallenge[] ;
   };
 };
+
+export type InitialCodewarsUser = Pick<CodewarsUser, "email" | "isConnected">;
 
 // export interface CodewarsDatabase extends CodewarsUser {
 //   isConnected: boolean;

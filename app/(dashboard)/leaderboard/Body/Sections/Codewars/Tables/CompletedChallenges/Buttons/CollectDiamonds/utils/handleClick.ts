@@ -1,15 +1,12 @@
+import { CodewarsContextAction } from "@/app/context/reducers/codewars/types";
 import { Action } from "@/app/context/reducers/diamonds/types";
 import CodewarsService from "@/app/services/codewars-service";
-import { Dispatch, RefObject } from "react";
-import { CollectButtonAction } from "../reducers/collectButtonReducer";
 import DiamondsService from "@/app/services/diamonds-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { CodewarsContextAction } from "@/app/context/reducers/codewars/types";
-import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import { CurrentUserContextState } from "@/app/context/providers/db/currentUser/types";
 import { CurrentUser } from "@/types/db/users";
-import { CodewarsContextState } from "@/types/contexts";
+import { Dispatch, RefObject } from "react";
+import useSelectedSingleChallenge from "../hooks/useSelectedSingleChallenge";
+import { CollectButtonAction } from "../reducers/collectButtonReducer";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
@@ -52,6 +49,8 @@ const handleClick = async ({
     const { collectedDiamondsCount } = await collectDiamonds(
       selectedSingleChallenge
     );
+
+    useSelectedSingleChallenge(selectedSingleChallenge, currentUser);
 
     collectButtonDispatch({
       type: "SUCCESSFUL_RESPONSE",
