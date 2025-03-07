@@ -1,19 +1,6 @@
-import {
-  CodewarsCompletedChallenge,
-  CodewarsSingleChallenge,
-  CodewarsUser,
-  InitialCodewarsUser,
-} from "@/types/codewars";
+import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 import { GoogleUser } from "@/types/google";
-import {
-  Collection,
-  Db,
-  Document,
-  MongoClient,
-  ObjectId,
-  OptionalId,
-  WithId,
-} from "mongodb";
+import { Collection, Db, Document, MongoClient, WithId } from "mongodb";
 
 class DBService {
   private clientPromise: Promise<MongoClient>;
@@ -123,7 +110,7 @@ class DBService {
 
   saveNewCodewarsUser = async (email: string) => {
     const { codewars } = await this.getCollections();
-    const newUser: InitialCodewarsUser = { email, isConnected: false };
+    const newUser = { email, isConnected: false };
     await codewars.insertOne(newUser);
   };
 

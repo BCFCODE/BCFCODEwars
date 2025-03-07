@@ -5,8 +5,8 @@ import DiamondsService from "@/app/services/diamonds-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/db/users";
 import { Dispatch, RefObject } from "react";
-import useSelectedSingleChallenge from "../hooks/useSelectedSingleChallenge";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
+import useSelectedChallenge from "../hooks/useSelectedChallenge";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
@@ -66,7 +66,7 @@ const handleClick = async ({
     });
 
     // Update codeChallenges.list in codewars collection in db
-    useSelectedSingleChallenge({ selectedChallenge, currentUser });
+    useSelectedChallenge({ selectedChallenge, currentUser });
 
     completedChallengesRef.current = completedChallenges?.map((challenge) =>
       challenge.id === selectedSingleChallenge.id

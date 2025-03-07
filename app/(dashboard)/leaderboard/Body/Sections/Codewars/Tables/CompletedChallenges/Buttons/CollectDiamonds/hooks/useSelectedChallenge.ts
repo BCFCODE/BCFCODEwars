@@ -11,7 +11,7 @@ interface Props {
   currentUser: CurrentUser;
 }
 
-export default async function useSelectedSingleChallenge({
+export default async function useSelectedChallenge({
   currentUser,
   selectedChallenge,
 }: Props) {
