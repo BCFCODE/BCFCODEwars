@@ -5,7 +5,7 @@ import { Dispatch } from "react";
 
 const { getCompletedChallenges } = new CodewarsService();
 
-export const handleTry = async (
+export const fetchCompletedChallenges = async (
   currentUser: CurrentUser,
   pageNumber: number,
   dispatch: Dispatch<CodewarsAction>
@@ -19,6 +19,7 @@ export const handleTry = async (
     if ("data" in response) {
       const { data: completedChallenges } = response.data;
       // setCompletedChallenges(challenges);
+
       dispatch({ type: "SET_ERROR", isError: false });
       dispatch({ type: "SET_COMPLETED_CHALLENGES", completedChallenges });
     } else {
@@ -37,4 +38,4 @@ export const handleTry = async (
   }
 };
 
-export default handleTry;
+export default fetchCompletedChallenges;

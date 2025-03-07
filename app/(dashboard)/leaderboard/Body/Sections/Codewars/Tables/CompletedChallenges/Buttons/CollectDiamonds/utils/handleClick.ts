@@ -50,25 +50,23 @@ const handleClick = async ({
       selectedSingleChallenge
     );
 
-    useSelectedSingleChallenge(selectedSingleChallenge, currentUser);
-
     collectButtonDispatch({
       type: "SUCCESSFUL_RESPONSE",
       collectedDiamondsCount,
     });
 
-    const selectedChallenge = {
+    const selectedChallenge: CodewarsCompletedChallenge = {
       ...currentChallenge,
-      details: selectedSingleChallenge,
+      moreDetails: selectedSingleChallenge,
     };
 
     codewarsContextDispatch({
       type: "SET_SELECTED_CHALLENGE",
-      selectedChallenge: {
-        ...currentChallenge,
-        details: selectedSingleChallenge,
-      },
+      selectedChallenge,
     });
+
+    // Update codeChallenges.list in codewars collection in db
+    useSelectedSingleChallenge({ selectedChallenge, currentUser });
 
     completedChallengesRef.current = completedChallenges?.map((challenge) =>
       challenge.id === selectedSingleChallenge.id

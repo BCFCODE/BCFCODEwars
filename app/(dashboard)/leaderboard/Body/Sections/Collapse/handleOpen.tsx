@@ -1,8 +1,8 @@
 import { Dispatch } from "react";
-import handleTry from "./Error/handleTry";
 import { CurrentUserAction } from "@/app/context/reducers/users/currentUser/types";
 import { CodewarsAction } from "@/app/context/reducers/codewars/types";
 import { CurrentUser } from "@/types/db/users";
+import fetchCompletedChallenges from "./fetchCompletedChallenges";
 
 interface Props {
   isCollapse: boolean;
@@ -21,7 +21,7 @@ const handleOpen = async ({
 }: Props) => {
   currentUserDispatch({ type: "SET_COLLAPSE_OPEN", isCollapse: !isCollapse });
   codewarsDispatch({ type: "SET_LOADING", isLoading: true });
-  handleTry(currentUser, pageNumber, codewarsDispatch);
+  fetchCompletedChallenges(currentUser, pageNumber, codewarsDispatch);
 };
 
 export default handleOpen;

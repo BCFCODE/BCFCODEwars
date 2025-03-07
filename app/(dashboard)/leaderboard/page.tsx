@@ -13,7 +13,7 @@ export default function LeaderBoardPage() {
   // // Consume the error state from context to trigger re-render when it updates.
   const { error } = useDBAllUsersContext();
 
-  console.log(">>>>>>>>>>>> useDBAllUsersContext error", error);
+  // console.log(">>>>>>>>>>>> useDBAllUsersContext error", error);
   // // Conditionally render the error UI when error is true.
   if (error)
     return <LeaderboardLoadingError onRetry={() => router.refresh()} />;

@@ -1,4 +1,5 @@
 import {
+  CodewarsCompletedChallenge,
   CodewarsSingleChallenge,
   CodewarsUser,
   InitialCodewarsUser,
@@ -127,7 +128,7 @@ class DBService {
   };
 
   saveNewCodewarsSingleChallenge = async (
-    selectedSingleChallenge: CodewarsSingleChallenge,
+    selectedSingleChallenge: CodewarsCompletedChallenge,
     userId: string
   ) => {
     const db = await this.getDatabase();

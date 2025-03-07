@@ -1,12 +1,14 @@
-import { APIdbGetDiamondsResponse, DBDiamonds } from "@/types/db/diamonds";
+import { APIdbGetDiamondsResponse } from "@/types/db/diamonds";
 import { baseURL } from "@/utils/constants";
 
 class APIDiamondsService {
   private endpoint = `${baseURL}/api/db/diamonds`;
 
-  getDiamonds = async (options?: RequestInit): Promise<APIdbGetDiamondsResponse> => {
+  getDiamonds = async (
+    options?: RequestInit
+  ): Promise<APIdbGetDiamondsResponse> => {
     try {
-      const response = await fetch(this.endpoint, {...options});
+      const response = await fetch(this.endpoint, { ...options });
       if (!response.ok) {
         return {
           success: false,

@@ -13,7 +13,7 @@ interface Props {
 const RankCell = ({ challenge }: Props) => {
   return (
     <TableCell sx={codewarsCellStyles} align="center">
-      {challenge.details ? getRank(challenge.details.rank.id) : ""}
+      {challenge.moreDetails ? getRank(challenge.moreDetails.rank.id) : ""}
     </TableCell>
   );
 };

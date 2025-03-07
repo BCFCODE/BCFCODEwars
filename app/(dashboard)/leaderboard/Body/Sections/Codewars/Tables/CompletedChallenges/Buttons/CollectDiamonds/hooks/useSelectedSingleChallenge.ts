@@ -1,17 +1,19 @@
 "use server";
 
 import DBService from "@/app/services/db-service";
-import { CodewarsSingleChallenge } from "@/types/codewars";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/db/users";
 
 const { saveNewCodewarsSingleChallenge } = new DBService();
 
-export default async function useSelectedSingleChallenge(
-  selectedSingleChallenge: CodewarsSingleChallenge,
-  currentUser: CurrentUser
-) {
-  saveNewCodewarsSingleChallenge(
-    selectedSingleChallenge,
-    currentUser.codewars.id
-  );
+interface Props {
+  selectedChallenge: CodewarsCompletedChallenge;
+  currentUser: CurrentUser;
+}
+
+export default async function useSelectedSingleChallenge({
+  currentUser,
+  selectedChallenge,
+}: Props) {
+  saveNewCodewarsSingleChallenge(selectedChallenge, currentUser.codewars.id);
 }

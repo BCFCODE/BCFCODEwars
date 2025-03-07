@@ -5,7 +5,7 @@ import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserCont
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
-import handleTry from "../../../Collapse/Error/handleTry";
+import fetchCompletedChallenges from "../../../Collapse/fetchCompletedChallenges";
 
 const Error = () => {
   const { currentUser } = useDBCurrentUserContext();
@@ -24,7 +24,9 @@ const Error = () => {
         <Button
           variant="outlined"
           color="primary"
-          onClick={() => handleTry(currentUser, pageNumber, dispatch)}
+          onClick={() =>
+            fetchCompletedChallenges(currentUser, pageNumber, dispatch)
+          }
         >
           Try Again
         </Button>

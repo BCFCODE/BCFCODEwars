@@ -58,7 +58,7 @@ export interface CodewarsCompletedChallenge {
   slug: string; // URL-friendly name of the challenge
   completedLanguages: string[]; // List of languages in which the challenge was completed
   completedAt: string; // ISO 8601 date string representing when the challenge was completed
-  details?: CodewarsSingleChallenge;
+  moreDetails?: CodewarsSingleChallenge;
 }
 
 export interface CodewarsChallengesResponse {
