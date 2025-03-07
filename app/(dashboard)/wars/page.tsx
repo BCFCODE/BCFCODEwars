@@ -7,8 +7,6 @@ import Link from "next/link";
 import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect/Reconnect";
 import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
 
 const { getDatabase, getSingleCodewarsUser } = new DBService();
 

@@ -70,9 +70,8 @@ const Step3 = ({
             textAlign: "revert-layer",
           }}
         >
-          Confirm to update your username on the leaderboard based on this
-          information. If it’s not correct, go back and double-check to ensure
-          the username is accurate!
+          Confirm these details for your username update on the leaderboard. If
+          they're incorrect, go back and check!
         </Typography>
       </Box>
 
