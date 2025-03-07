@@ -1,19 +1,24 @@
-"use server";
-
-import DBService from "@/app/services/db-service";
+import { CodewarsAction } from "@/app/context/reducers/codewars/types";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/db/users";
-
-const { saveNewCodewarsSingleChallenge } = new DBService();
+import { Dispatch } from "react";
+import useCodewarsDB from "./useCodewarsDB";
 
 interface Props {
-  selectedChallenge: CodewarsCompletedChallenge;
   currentUser: CurrentUser;
+  selectedChallenge: CodewarsCompletedChallenge;
+  codewarsContextDispatch: Dispatch<CodewarsAction>;
 }
 
 export default async function useSelectedChallenge({
   currentUser,
   selectedChallenge,
+  codewarsContextDispatch,
 }: Props) {
-  saveNewCodewarsSingleChallenge(selectedChallenge, currentUser.codewars.id);
+  codewarsContextDispatch({
+    type: "SET_SELECTED_CHALLENGE",
+    selectedChallenge,
+  });
+
+  useCodewarsDB({ currentUser, selectedChallenge });
 }

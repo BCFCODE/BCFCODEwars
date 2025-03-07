@@ -59,14 +59,13 @@ const handleClick = async ({
       ...currentChallenge,
       moreDetails: selectedSingleChallenge,
     };
-
-    codewarsContextDispatch({
-      type: "SET_SELECTED_CHALLENGE",
-      selectedChallenge,
-    });
-
+    
     // Update codeChallenges.list in codewars collection in db
-    useSelectedChallenge({ selectedChallenge, currentUser });
+    useSelectedChallenge({
+      codewarsContextDispatch,
+      selectedChallenge,
+      currentUser,
+    });
 
     completedChallengesRef.current = completedChallenges?.map((challenge) =>
       challenge.id === selectedSingleChallenge.id
