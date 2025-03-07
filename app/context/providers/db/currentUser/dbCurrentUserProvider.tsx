@@ -1,13 +1,13 @@
 import { createContext, Dispatch, ReactNode, useReducer } from "react";
 import dbCurrentUserReducer from "../../../reducers/users/currentUser/dbCurrentUserReducer";
-import { Action } from "../../../reducers/users/currentUser/types";
+import { CurrentUserAction } from "../../../reducers/users/currentUser/types";
 import { CurrentUserContextState } from "./types";
 
 export const CurrentUserContext = createContext<CurrentUserContextState | null>(
   null
 );
-export const CurrentUserDispatchContext =
-  createContext<Dispatch<Action> | null>(null);
+export const CurrentUserActionContext =
+  createContext<Dispatch<CurrentUserAction> | null>(null);
 
 const CurrentUserProvider = ({
   children,
@@ -27,9 +27,9 @@ const CurrentUserProvider = ({
   console.log(context, "<<<<<<<<< CurrentUserProvider");
   return (
     <CurrentUserContext.Provider value={currentUserContext}>
-      <CurrentUserDispatchContext.Provider value={dispatch}>
+      <CurrentUserActionContext.Provider value={dispatch}>
         {children}
-      </CurrentUserDispatchContext.Provider>
+      </CurrentUserActionContext.Provider>
     </CurrentUserContext.Provider>
   );
 };

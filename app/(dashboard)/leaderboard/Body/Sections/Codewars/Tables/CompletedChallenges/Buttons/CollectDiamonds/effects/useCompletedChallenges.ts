@@ -1,10 +1,10 @@
-import { CodewarsContextAction } from "@/app/context/reducers/codewars/types";
+import { CodewarsAction } from "@/app/context/reducers/codewars/types";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { Dispatch, RefObject, useEffect } from "react";
 
 interface Props {
   isDiamondIconButtonDisabled: boolean;
-  codewarsContextDispatch: Dispatch<CodewarsContextAction>;
+  codewarsContextDispatch: Dispatch<CodewarsAction>;
   completedChallengesRef: RefObject<CodewarsCompletedChallenge[] | undefined>;
 }
 export default function useCompletedChallenges({

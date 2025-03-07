@@ -1,23 +1,17 @@
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
-import useDBCurrentUserDispatchContext from "@/app/context/hooks/db/useDBCurrentUserDispatchContext";
+import useDBCurrentUserActionContext from "@/app/context/hooks/db/useDBCurrentUserDispatchContext";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
-import handleTry from "./Error/handleTry";
+import handleOpen from "./handleOpen";
 
 const OpenButton = () => {
   const { isCollapse, currentUser } = useDBCurrentUserContext();
-  const currentUserDispatch = useDBCurrentUserDispatchContext();
+  const currentUserDispatch = useDBCurrentUserActionContext();
   const { pageNumber } = useCodewarsContext();
   const codewarsDispatch = useCodewarsDispatchContext();
-
-  const handleOpen = async () => {
-    currentUserDispatch({ type: "SET_COLLAPSE_OPEN", isCollapse: !isCollapse });
-    codewarsDispatch({ type: "SET_LOADING", isLoading: true });
-    handleTry(currentUser, pageNumber, codewarsDispatch);
-  };
 
   return (
     <>
@@ -26,7 +20,15 @@ const OpenButton = () => {
         <IconButton
           aria-label="Toggle challenge details"
           size="small"
-          onClick={handleOpen}
+          onClick={() =>
+            handleOpen({
+              pageNumber,
+              codewarsDispatch,
+              currentUserDispatch,
+              isCollapse: isCollapse ?? false,
+              currentUser,
+            })
+          }
         >
           {isCollapse ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
         </IconButton>

@@ -3,7 +3,6 @@ import { Diamonds } from "@/types/db/diamonds";
 
 export type CurrentUserState = CurrentUserContextState;
 
-export type Action =
+export type CurrentUserAction =
   | { type: "SET_USER_DIAMONDS"; diamonds: Diamonds }
   | { type: "SET_COLLAPSE_OPEN"; isCollapse: boolean };
-  

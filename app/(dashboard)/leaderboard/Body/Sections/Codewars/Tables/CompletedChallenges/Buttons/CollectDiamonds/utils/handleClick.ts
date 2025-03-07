@@ -1,4 +1,4 @@
-import { CodewarsContextAction } from "@/app/context/reducers/codewars/types";
+import { CodewarsAction } from "@/app/context/reducers/codewars/types";
 import { Action } from "@/app/context/reducers/diamonds/types";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
@@ -14,7 +14,7 @@ const { collectDiamonds } = new DiamondsService();
 interface Props {
   diamondsContextDispatch: Dispatch<Action>;
   collectButtonDispatch: Dispatch<CollectButtonAction>;
-  codewarsContextDispatch: Dispatch<CodewarsContextAction>;
+  codewarsContextDispatch: Dispatch<CodewarsAction>;
   completedChallengesRef: RefObject<CodewarsCompletedChallenge[] | undefined>;
   currentChallenge: CodewarsCompletedChallenge;
   currentUser: CurrentUser;

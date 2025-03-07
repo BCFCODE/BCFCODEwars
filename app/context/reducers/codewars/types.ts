@@ -1,8 +1,6 @@
-import {
-  CodewarsCompletedChallenge
-} from "@/types/codewars";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 
-export type CodewarsContextAction =
+export type CodewarsAction =
   | {
       type: "SET_COMPLETED_CHALLENGES";
       completedChallenges: CodewarsCompletedChallenge[];
