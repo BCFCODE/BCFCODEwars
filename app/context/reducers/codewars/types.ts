@@ -1,7 +1,7 @@
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 
 export type CodewarsAction =
-  | { type: "UPDATE_CODEWARS_COLLECTION"; codewarsUsers: CodewarsUser[] }
+  | { type: "UPDATE_CODEWARS_USERS"; codewarsUsers: CodewarsUser[] }
   | {
       type: "SET_COMPLETED_CHALLENGES";
       completedChallenges: CodewarsCompletedChallenge[];

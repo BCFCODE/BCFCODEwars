@@ -13,13 +13,6 @@ import { diamondSumStyles } from "./styles";
 const DiamondsCell = () => {
   const { data: diamondsData, isError, isLoading } = useDiamondsContext();
   const { currentUser } = useDBCurrentUserContext();
-  // console.log(
-  //   "DiamondsCell >>\n",
-  //   "currentUser >>",
-  //   currentUser,
-  //   "useDiamondsContext diamondsData",
-  //   diamondsData
-  // );
 
   const isCurrentUser = currentUser.email === diamondsData?.email;
 

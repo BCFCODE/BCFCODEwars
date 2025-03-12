@@ -33,7 +33,7 @@ export type CodewarsUser = {
   codeChallenges: {
     totalAuthored: number;
     totalCompleted: number;
-    list: CodewarsSingleChallenge[];
+    list: CodewarsCompletedChallenge[];
   };
 };
 

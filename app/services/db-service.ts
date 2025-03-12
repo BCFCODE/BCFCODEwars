@@ -91,6 +91,11 @@ class DBService {
       .toArray();
   };
 
+  getCodewarsUsers = async (): Promise<CodewarsUser[]> => {
+    const { codewars } = await this.getCollections();
+    return await codewars.find<CodewarsUser>({}).toArray();
+  };
+
   getUser = async (email: string): Promise<WithId<Document> | null> => {
     const { users } = await this.getCollections();
     return users.findOne({ email });

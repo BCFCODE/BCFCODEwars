@@ -5,9 +5,19 @@ import useCodewarsContext from "../../../../../../../../context/hooks/codewars/u
 import SingleRow from "./SingleRow";
 import CollectDiamondsCell from "./SingleRow/Cells/CollectDiamondsCell";
 import CollectDiamonds from "../Buttons/CollectDiamonds";
+import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
 
 export default function Body() {
-  const { completedChallenges = [] } = useCodewarsContext();
+  const { completedChallenges = [], codewarsUsers } = useCodewarsContext();
+  const { currentUser } = useDBCurrentUserContext();
+  console.log(
+    "codewarsUsers in Table/CompletedChallenges/Body/index.tsx",
+    codewarsUsers
+  );
+  console.log(
+    'currentUser in Table/CompletedChallenges/Body/index.tsx"',
+    currentUser.codewars.codeChallenges.list
+  );
 
   return (
     <>

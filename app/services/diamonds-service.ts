@@ -1,6 +1,7 @@
-
-
-import { CodewarsSingleChallenge } from "@/types/codewars";
+import {
+  CodewarsCompletedChallenge,
+  CodewarsSingleChallenge,
+} from "@/types/codewars";
 import CodewarsService from "./codewars-service";
 import useDiamondsContext from "../context/hooks/diamonds/useDiamondsContext";
 import DBService from "./db-service";
@@ -39,8 +40,18 @@ class DiamondsService {
     },
   };
 
-  getDiamondsCount = (challenge: CodewarsSingleChallenge): number => {
+  calculateCodewarsDiamondsCount = (
+    challenge: CodewarsSingleChallenge
+  ): number => {
     const rank = getRank(challenge.rank.id);
+    const calculatedScore = this.scoreMap.codewars[rank];
+    return calculatedScore;
+  };
+
+  calculateCodewarsDBdiamondsCount = (
+    challenge: CodewarsCompletedChallenge
+  ): number => {
+    const rank = getRank(challenge.moreDetails?.rank.id ?? 8);
     const calculatedScore = this.scoreMap.codewars[rank];
     return calculatedScore;
   };
@@ -50,7 +61,7 @@ class DiamondsService {
   ): Promise<{
     collectedDiamondsCount: number;
   }> => {
-    const collectedDiamondsCount = this.getDiamondsCount(
+    const collectedDiamondsCount = this.calculateCodewarsDiamondsCount(
       selectedSingleChallenge
     );
     console.log(
@@ -59,7 +70,7 @@ class DiamondsService {
       "Number of diamonds: ",
       collectedDiamondsCount
     );
-// saveNewCodewarsSingleChallenge()
+    // saveNewCodewarsSingleChallenge()
     {
       /* TODO: Send a request to codewars api to catch this specific solved problem and write it to our database */
     }

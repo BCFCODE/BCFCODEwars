@@ -2,11 +2,11 @@ import { CodewarsAction } from "@/app/context/reducers/codewars/types";
 import { Action } from "@/app/context/reducers/diamonds/types";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 import { CurrentUser } from "@/types/db/users";
 import { Dispatch, RefObject } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
-import useSelectedChallenge from "../hooks/useSelectedChallenge";
+import useSelectedChallenge from "../hooks/CodewarsChallenges/useSelectedChallenge";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
@@ -59,13 +59,16 @@ const handleClick = async ({
       ...currentChallenge,
       moreDetails: selectedSingleChallenge,
     };
-    
+
     // Update codeChallenges.list in codewars collection in db
-    useSelectedChallenge({
-      codewarsContextDispatch,
-      selectedChallenge,
-      currentUser,
-    });
+    const { codewarsUsers }: { codewarsUsers: CodewarsUser[] } =
+      await useSelectedChallenge({
+        codewarsContextDispatch,
+        selectedChallenge,
+        currentUser,
+      });
+
+    console.log("codewarsUsers in handleClick", codewarsUsers);
 
     completedChallengesRef.current = completedChallenges?.map((challenge) =>
       challenge.id === selectedSingleChallenge.id

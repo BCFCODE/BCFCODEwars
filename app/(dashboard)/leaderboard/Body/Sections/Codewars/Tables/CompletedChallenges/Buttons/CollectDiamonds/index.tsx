@@ -12,6 +12,9 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import handleClick from "./utils/handleClick";
+import DiamondsService from "@/app/services/diamonds-service";
+
+const { calculateCodewarsDBdiamondsCount } = new DiamondsService();
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
@@ -32,6 +35,21 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     currentUser,
     completedChallenges,
   } = useCollectDiamonds();
+
+  console.log(
+    "currentChallenge in Table/CompletedChallenges/Buttons/CollectDiamonds/index.tsx",
+    currentChallenge.moreDetails?.rank
+  );
+
+  if ("moreDetails" in currentChallenge)
+    return (
+      <Box sx={diamondBoxStyles}>
+        <Typography sx={counterStyles}>
+          {calculateCodewarsDBdiamondsCount(currentChallenge)}
+        </Typography>
+        <DiamondIcon sx={collectedDiamondStyles} />
+      </Box>
+    );
 
   return (
     <Box sx={diamondBoxStyles}>

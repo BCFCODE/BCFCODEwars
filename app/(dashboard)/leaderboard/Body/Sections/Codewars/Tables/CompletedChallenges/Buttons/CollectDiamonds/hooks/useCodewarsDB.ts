@@ -4,7 +4,7 @@ import DBService from "@/app/services/db-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/db/users";
 
-const { saveNewCodewarsSingleChallenge } = new DBService();
+const { saveNewCodewarsSingleChallenge, getCodewarsUsers } = new DBService();
 
 interface Props {
   selectedChallenge: CodewarsCompletedChallenge;
@@ -16,4 +16,10 @@ export default async function useCodewarsDB({
   selectedChallenge,
 }: Props) {
   saveNewCodewarsSingleChallenge(selectedChallenge, currentUser.codewars.id);
+
+  const codewarsUsers = await getCodewarsUsers();
+
+  return {
+    codewarsUsers,
+  };
 }

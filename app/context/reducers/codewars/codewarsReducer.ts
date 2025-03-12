@@ -6,6 +6,8 @@ const codewarsReducer = (
   action: CodewarsAction
 ): CodewarsState => {
   switch (action.type) {
+    case "UPDATE_CODEWARS_USERS":
+      return { ...state, codewarsUsers: action.codewarsUsers };
     case "SET_COMPLETED_CHALLENGES":
       return { ...state, completedChallenges: action.completedChallenges };
     case "SET_SELECTED_CHALLENGE":

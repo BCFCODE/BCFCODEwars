@@ -1,18 +1,13 @@
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { useRef } from "react";
 import useCollectedDiamonds from "../effects/useCollectedDiamonds";
 import useCompletedChallenges from "../effects/useCompletedChallenges";
 import useCounter from "../effects/useCounter";
 import useCollectButtonReducer from "./useCollectButtonReducer";
 import useCollectDiamondsContext from "./useCollectDiamondsContext";
-import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
+import useMixedDBchallenges from "./CodewarsChallenges/useMixedDBchallenges";
 
 export default function useCollectDiamonds() {
-  const { currentUser } = useDBCurrentUserContext();
-  const { completedChallenges } = useCodewarsContext();
-  const completedChallengesRef =
-    useRef<CodewarsCompletedChallenge[]>(completedChallenges);
+  const { completedChallenges, completedChallengesRef, currentUser } =
+    useMixedDBchallenges();
 
   const {
     codewarsContextDispatch,
@@ -64,7 +59,7 @@ export default function useCollectDiamonds() {
     completedChallengesRef,
     diamondsContextDispatch,
     isError,
-    currentUser, 
-    completedChallenges
+    currentUser,
+    completedChallenges,
   };
 }
