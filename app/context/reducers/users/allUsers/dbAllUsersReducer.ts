@@ -11,6 +11,8 @@ const dbAllUsersReducer = (
       return { ...state, error: action.error };
     case "SET_LOADING":
       return { ...state, error: action.loading };
+    case "SHOW_COLLECT_SWITCH":
+      return {...state, }
     default:
       return state;
   }

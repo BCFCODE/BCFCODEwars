@@ -20,7 +20,7 @@ const LeaderboardHeader = () => {
           Diamonds
         </TableCell>
         <TableCell sx={codewarsCellStyles} align="right">
-          Rank
+          Collect
         </TableCell>
       </TableRow>
     </TableHead>

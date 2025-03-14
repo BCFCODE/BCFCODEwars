@@ -25,6 +25,7 @@ const initialDBAllUsersState = {
   allUsers: [],
   isLoading: true,
   error: false,
+  isCollectSwitchVisible: false,
 };
 
 export const DBAllUsersContext = createContext<AllUsersContextType | null>(
@@ -50,7 +51,7 @@ const DBAllUsersProvider = ({ children }: Props) => {
         const fetchedUsers = await getUsers({ cache: "no-store" });
 
         if (!fetchedUsers.success || fetchedUsers.error) {
-          console.log('error in DBAllUsersProvider')
+          console.log("error in DBAllUsersProvider");
           dispatch({ type: "SET_LOADING", loading: false });
           dispatch({ type: "SET_ERROR", error: true });
         }
@@ -62,6 +63,7 @@ const DBAllUsersProvider = ({ children }: Props) => {
               allUsers: fetchedUsers.users as CurrentUser[],
               error: false,
               isLoading: false,
+              isCollectSwitchVisible: false,
             },
           });
         }

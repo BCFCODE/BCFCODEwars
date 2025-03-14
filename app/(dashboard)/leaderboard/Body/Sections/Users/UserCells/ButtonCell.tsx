@@ -1,10 +1,11 @@
 import { TableCell } from "@mui/material";
 import React from "react";
 import OpenButton from "../../Collapse/OpenButton";
+import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
 
 const ButtonCell = () => {
   return (
-    <TableCell>
+    <TableCell sx={{ ...codewarsCellStyles }} align="left">
       <OpenButton />
     </TableCell>
   );
