@@ -25,7 +25,6 @@ const initialDBAllUsersState = {
   allUsers: [],
   isLoading: true,
   error: false,
-  isCollectSwitchVisible: false,
 };
 
 export const DBAllUsersContext = createContext<AllUsersContextType | null>(
@@ -63,7 +62,6 @@ const DBAllUsersProvider = ({ children }: Props) => {
               allUsers: fetchedUsers.users as CurrentUser[],
               error: false,
               isLoading: false,
-              isCollectSwitchVisible: false,
             },
           });
         }

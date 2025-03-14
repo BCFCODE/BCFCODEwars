@@ -19,8 +19,8 @@ const LeaderboardHeader = () => {
         <TableCell sx={codewarsCellStyles} align="right">
           Diamonds
         </TableCell>
-        <TableCell sx={codewarsCellStyles} align="right">
-          Collect
+        <TableCell sx={codewarsCellStyles} align="center">
+          Rank
         </TableCell>
       </TableRow>
     </TableHead>
