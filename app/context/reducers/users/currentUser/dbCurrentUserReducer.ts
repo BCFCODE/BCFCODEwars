@@ -7,6 +7,7 @@ const dbCurrentUserReducer = (
   switch (action.type) {
     case "UPDATE_CODE_CHALLENGES_LIST":
       return {
+        ...state,
         currentUser: {
           ...state.currentUser,
           codewars: {
@@ -20,6 +21,7 @@ const dbCurrentUserReducer = (
       };
     case "SET_USER_DIAMONDS":
       return {
+        ...state,
         currentUser: { ...state.currentUser, diamonds: action.diamonds },
       };
     case "SET_COLLAPSE_OPEN":

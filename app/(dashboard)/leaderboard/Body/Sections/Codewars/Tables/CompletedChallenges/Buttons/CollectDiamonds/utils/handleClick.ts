@@ -14,6 +14,8 @@ const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
 
 interface Props {
+  success: boolean;
+  isDiamondIconButtonDisabled: boolean
   diamondsContextDispatch: Dispatch<Action>;
   collectButtonDispatch: Dispatch<CollectButtonAction>;
   codewarsContextDispatch: Dispatch<CodewarsAction>;
@@ -33,15 +35,9 @@ const handleClick = async ({
   currentUser,
   completedChallenges,
   currentUserDispatch,
+  success,
+  isDiamondIconButtonDisabled
 }: Props) => {
-  console.log(
-    "currentUser.codewars.codeChallenges.list in CollectDiamonds button",
-    currentUser.codewars.codeChallenges.list
-  );
-  // const list = currentUser.codewars.codeChallenges.list
-  // .map(challenge => challenge.id === currentChallenge.id ? {...currentChallenge})
-  // currentUserDispatch({type: "UPDATE_CODE_CHALLENGES_LIST", })
-
   diamondsContextDispatch({ type: "LOADING..." });
 
   collectButtonDispatch({ type: "LOADING...", isLoading: true });
@@ -59,7 +55,7 @@ const handleClick = async ({
       selectedSingleChallenge
     );
 
-    console.log("selectedSingleChallenge", selectedSingleChallenge);
+    // console.log("selectedSingleChallenge", selectedSingleChallenge);
     collectButtonDispatch({
       type: "SUCCESSFUL_RESPONSE",
       collectedDiamondsCount,
@@ -72,6 +68,11 @@ const handleClick = async ({
       moreDetails: selectedSingleChallenge,
     };
 
+    codewarsContextDispatch({
+      type: "SET_SELECTED_CHALLENGE",
+      selectedChallenge,
+    });
+    console.log("selectedChallenge", selectedChallenge);
     // Update codeChallenges.list in codewars collection in db
     // const { codewarsUsers }: { codewarsUsers: CodewarsUser[] } =
     //   await useSelectedChallenge({
@@ -80,11 +81,11 @@ const handleClick = async ({
     //     currentUser,
     //   });
 
-    completedChallengesRef.current = completedChallenges?.map((challenge) =>
-      challenge.id === selectedSingleChallenge.id
-        ? selectedChallenge
-        : currentChallenge
-    );
+    // completedChallengesRef.current = completedChallenges?.map((challenge) =>
+    //   challenge.id === selectedSingleChallenge.id
+    //     ? selectedChallenge
+    //     : currentChallenge
+    // );
   }
 
   if (!response.success) {

@@ -9,7 +9,7 @@ interface Props {
   collectButtonDispatch: Dispatch<CollectButtonAction>;
 }
 
-export default function useCollectedDiamonds({
+export default function useCollectedDiamondsEffect({
   collectedDiamondsCount,
   collectButtonDispatch,
   diamondsContextDispatch,

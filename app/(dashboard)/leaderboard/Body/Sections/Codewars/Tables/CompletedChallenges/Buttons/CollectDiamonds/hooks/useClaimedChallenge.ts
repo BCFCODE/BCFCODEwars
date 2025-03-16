@@ -4,22 +4,23 @@ import useCurrentUserDispatchContext from "@/app/context/hooks/db/useDBCurrentUs
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useRef } from "react";
 
-const useMixedDBchallenges = () => {
+const useClaimedChallenge = () => {
   const { currentUser } = useCurrentUserContext();
+  const currentUserDispatch = useCurrentUserDispatchContext();
   // const dispatch = useCurrentUserDispatchContext()
-  const { completedChallenges } = useCodewarsContext();
+  const { completedChallenges, selectedChallenge } = useCodewarsContext();
 
   const list = currentUser.codewars.codeChallenges.list;
-
-  const completedChallengesRef =
-    useRef<CodewarsCompletedChallenge[]>(list);
-  // console.log("currentUser in useMixedDBchallenges", currentUser);
+  // console.log("selectedChallenge in useClaimedChallenge", selectedChallenge);
+  const completedChallengesRef = useRef<CodewarsCompletedChallenge[]>(list);
+  // console.log("currentUser in useClaimedChallenge", currentUser);
 
   return {
     currentUser,
+    currentUserDispatch,
     completedChallenges,
     completedChallengesRef,
   };
 };
 
-export default useMixedDBchallenges;
+export default useClaimedChallenge;

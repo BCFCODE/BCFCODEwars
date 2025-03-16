@@ -18,10 +18,10 @@ const initializeCodeChallengesList = ({ data, currentUserDispatch }: Props) => {
     type: "UPDATE_CODE_CHALLENGES_LIST",
     list: completedChallenges,
   });
-  currentUserDispatch({
-    type: "SET_COLLAPSE_OPEN",
-    isCollapse: true
-  })
+  // currentUserDispatch({
+  //   type: "SET_COLLAPSE_OPEN",
+  //   isCollapse: true
+  // })
 };
 
 export default initializeCodeChallengesList;

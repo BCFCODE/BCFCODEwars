@@ -1,36 +1,39 @@
 import { Dispatch, useEffect, useRef } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
+import { CurrentUser } from "@/types/db/users";
+import { CurrentUserAction } from "@/app/context/reducers/users/currentUser/types";
+import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 
 interface Props {
-  isLoading: boolean;
+  // isLoading: boolean;
   counter: number;
   isError: boolean;
-  isCollected: boolean;
+  // isCollected: boolean;
   success: boolean;
   collectedDiamondsCount: number | undefined;
   collectButtonDispatch: Dispatch<CollectButtonAction>;
 }
 
-export default function useCounter({
+export default function useCounterEffect({
   collectButtonDispatch,
   collectedDiamondsCount,
   counter,
-  isCollected,
+  // isCollected,
   isError,
-  isLoading,
+  // isLoading,
   success,
 }: Props) {
+  
   const timeRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (isLoading && !isCollected && success) {
+    if (success) {
       timeRef.current = setTimeout(() => {
         collectButtonDispatch({ type: "DIAMOND_COUNTS", counter: counter + 1 });
       }, 50);
     }
-    console.log("isCollected", isCollected);
 
-    if (counter > (collectedDiamondsCount ?? 500)) {
+    if (counter === collectedDiamondsCount) {
       collectButtonDispatch({ type: "LOADING...", isLoading: false });
       collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
     }
@@ -38,5 +41,5 @@ export default function useCounter({
     return () => {
       timeRef.current && clearTimeout(timeRef.current);
     };
-  }, [isError, isLoading, isCollected, counter, success]);
+  }, [isError, counter, success]);
 }

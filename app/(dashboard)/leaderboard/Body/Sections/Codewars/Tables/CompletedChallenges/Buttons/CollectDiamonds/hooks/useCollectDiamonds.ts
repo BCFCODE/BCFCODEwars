@@ -1,13 +1,19 @@
-import useCollectedDiamonds from "../effects/useCollectedDiamonds";
-import useCompletedChallenges from "../effects/useCompletedChallenges";
-import useCounter from "../effects/useCounter";
-import useMixedDBchallenges from "./useMixedDBchallenges";
+import useCollectedDiamondsEffect from "../effects/useCollectedDiamondsEffect";
+
+import useCounterEffect from "../effects/useCounterEffect";
+import useClaimedChallenge from "./useClaimedChallenge";
 import useCollectButtonReducer from "./useCollectButtonReducer";
 import useCollectDiamondsContext from "./useCollectDiamondsContext";
+import useCodeChallengesListEffect from "../effects/useCodeChallengesListEffect";
+import useCurrentUserDispatchContext from "@/app/context/hooks/db/useDBCurrentUserDispatchContext";
 
 export default function useCollectDiamonds() {
-  const { completedChallenges, completedChallengesRef, currentUser } =
-    useMixedDBchallenges();
+  const {
+    completedChallenges,
+    completedChallengesRef,
+    currentUser,
+    currentUserDispatch,
+  } = useClaimedChallenge();
 
   const {
     codewarsContextDispatch,
@@ -22,32 +28,36 @@ export default function useCollectDiamonds() {
       isError,
       isCollected,
       collectedDiamondsCount,
-      success
+      success,
     },
     collectButtonDispatch,
   } = useCollectButtonReducer();
 
-  useCounter({
+  useCounterEffect({
     collectButtonDispatch,
     collectedDiamondsCount,
     counter,
-    isCollected,
+    // isCollected,
     isError,
-    isLoading,
-    success
+    // isLoading,
+    success,
   });
 
-  useCollectedDiamonds({
+  useCollectedDiamondsEffect({
     collectButtonDispatch,
     collectedDiamondsCount,
     diamondsContextDispatch,
     isCollected,
   });
 
-  useCompletedChallenges({
+  useCodeChallengesListEffect({
     codewarsContextDispatch,
     isDiamondIconButtonDisabled,
     completedChallengesRef,
+    currentUser,
+    currentUserDispatch,
+    success,
+    isCollected
   });
 
   return {
@@ -63,6 +73,7 @@ export default function useCollectDiamonds() {
     isError,
     currentUser,
     completedChallenges,
-    success
+    currentUserDispatch,
+    success,
   };
 }
