@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { DBAllUsersContext } from "../../providers/db/allUsers/dbAllUsersProvider";
+import { AllUsersContext } from "../../providers/db/allUsers/AllUsersProvider";
 import { AllUsersContextType } from "../../providers/db/allUsers/types";
 
 const useDBAllUsersContext = (): AllUsersContextType => {
-  const context = useContext(DBAllUsersContext);
+  const context = useContext(AllUsersContext);
 
   if (!context) {
     throw new Error(

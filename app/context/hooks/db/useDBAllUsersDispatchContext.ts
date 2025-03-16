@@ -1,13 +1,13 @@
 import { useContext } from "react";
-import { DBAllUsersDispatchContext } from "../../providers/db/allUsers/dbAllUsersProvider";
+import { AllUsersDispatchContext } from "../../providers/db/allUsers/AllUsersProvider";
 import { Dispatch } from "react";
-import { Action } from "../../reducers/users/allUsers/types";
+import { AllUsersAction } from "../../reducers/users/allUsers/types";
 
-const useDBAllUsersDispatchContext = (): Dispatch<Action> => {
-  const context = useContext(DBAllUsersDispatchContext);
+const useDBAllUsersDispatchContext = (): Dispatch<AllUsersAction> => {
+  const context = useContext(AllUsersDispatchContext);
   if (!context) {
     throw new Error(
-      "useDBAllUsersDispatchContext must be used within a DBAllUsersProvider"
+      "useDBAllUsersDispatchContext must be used within a AllUsersProvider"
     );
   }
   return context;

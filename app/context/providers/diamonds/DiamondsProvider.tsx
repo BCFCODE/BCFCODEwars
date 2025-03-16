@@ -6,6 +6,7 @@ import { createContext, ReactNode, useEffect, useReducer } from "react";
 import dbDiamondsReducer from "../../reducers/diamonds/diamondsReducer";
 import { DiamondsAction } from "../../reducers/diamonds/types";
 import { DiamondsContextState } from "./types";
+import useCurrentUserContext from "../../hooks/db/useCurrentUserContext";
 
 const { getDiamonds } = new APIDiamondsService();
 
@@ -31,6 +32,8 @@ const DBDiamondsProvider = ({ children }: Props) => {
     initialDiamondsState
   );
 
+  // const { currentUser } = useCurrentUserContext();
+  
   useEffect(() => {
     (async () => {
       const response = await getDiamonds({ cache: "no-store" });

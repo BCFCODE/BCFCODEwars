@@ -14,9 +14,14 @@ const DiamondsCell = () => {
   const { data: diamondsData, isError, isLoading } = useDiamondsContext();
   const { currentUser } = useCurrentUserContext();
 
+  // currentUserDispatch({
+  //   type: "UPDATE_CODEWARS_DIAMONDS_SUM",
+  //   reward: collectedDiamondsCount,
+  // });
   const isCurrentUser = currentUser.email === diamondsData?.email;
 
-  const diamondsSum = isCurrentUser ? diamondsData?.sum.total : 0;
+  // const diamondsSum = isCurrentUser ? currentUser.diamonds.sum.total : 0;
+  const diamondsSum = isCurrentUser ? diamondsData.sum.total : 0;
 
   return (
     <TableCell sx={{ ...codewarsCellStyles }} align="right">

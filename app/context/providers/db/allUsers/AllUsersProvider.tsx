@@ -2,7 +2,7 @@
 
 import APIdbService from "@/app/api/services/db-service";
 import dbAllUsersReducer from "@/app/context/reducers/users/allUsers/dbAllUsersReducer";
-import { Action } from "@/app/context/reducers/users/allUsers/types";
+import { AllUsersAction } from "@/app/context/reducers/users/allUsers/types";
 import { CurrentUser, DBUser } from "@/types/db/users";
 import {
   createContext,
@@ -27,14 +27,11 @@ const initialDBAllUsersState = {
   error: false,
 };
 
-export const DBAllUsersContext = createContext<AllUsersContextType | null>(
-  null
-);
-export const DBAllUsersDispatchContext = createContext<Dispatch<Action> | null>(
-  null
-);
+export const AllUsersContext = createContext<AllUsersContextType | null>(null);
+export const AllUsersDispatchContext =
+  createContext<Dispatch<AllUsersAction> | null>(null);
 
-const DBAllUsersProvider = ({ children }: Props) => {
+const AllUsersProvider = ({ children }: Props) => {
   const [allUsersContext, dispatch] = useReducer(
     dbAllUsersReducer,
     initialDBAllUsersState
@@ -50,7 +47,7 @@ const DBAllUsersProvider = ({ children }: Props) => {
         const fetchedUsers = await getUsers({ cache: "no-store" });
 
         if (!fetchedUsers.success || fetchedUsers.error) {
-          console.log("error in DBAllUsersProvider");
+          console.log("error in AllUsersProvider");
           dispatch({ type: "SET_LOADING", loading: false });
           dispatch({ type: "SET_ERROR", error: true });
         }
@@ -78,12 +75,12 @@ const DBAllUsersProvider = ({ children }: Props) => {
   }, []);
 
   return (
-    <DBAllUsersDispatchContext.Provider value={dispatch}>
-      <DBAllUsersContext.Provider value={allUsersContext}>
+    <AllUsersDispatchContext.Provider value={dispatch}>
+      <AllUsersContext.Provider value={allUsersContext}>
         {children}
-      </DBAllUsersContext.Provider>
-    </DBAllUsersDispatchContext.Provider>
+      </AllUsersContext.Provider>
+    </AllUsersDispatchContext.Provider>
   );
 };
 
-export default DBAllUsersProvider;
+export default AllUsersProvider;
