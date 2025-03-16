@@ -19,6 +19,20 @@ const dbCurrentUserReducer = (
           },
         },
       };
+    case "UPDATE_CODEWARS_DIAMONDS_SUM":
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          diamonds: {
+            ...state.currentUser.diamonds,
+            sum: {
+              ...state.currentUser.diamonds.sum,
+              codewars: state.currentUser.diamonds.sum.codewars + action.reward,
+            },
+          },
+        },
+      };
     case "SET_USER_DIAMONDS":
       return {
         ...state,

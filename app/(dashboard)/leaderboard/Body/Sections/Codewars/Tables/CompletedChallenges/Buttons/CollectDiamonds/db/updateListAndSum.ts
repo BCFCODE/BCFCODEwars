@@ -9,7 +9,8 @@ interface Props {
   list: CodewarsCompletedChallenge[];
 }
 
-export default async function useCodewarsDB({ currentUser, list }: Props) {
+export default async function updateListAndSum({ currentUser, list }: Props) {
   const { saveChallengesList } = new DBService();
+  console.log('updateListAndSum > currentUser.diamonds.sum.codewars', currentUser.diamonds.sum.codewars)
   saveChallengesList(list, currentUser.codewars.id);
 }

@@ -6,7 +6,10 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/db/users";
 import { Dispatch, RefObject, useEffect } from "react";
 import useCollectButtonReducer from "../hooks/useCollectButtonReducer";
-import saveChallengeListToDB from "../utils/saveChallengeListToDB";
+import updateListAndSum from "../db/updateListAndSum";
+import DiamondsService from "@/app/services/diamonds-service";
+
+// const { calculateCodewarsDiamondsCount } = new DiamondsService();
 
 interface Props {
   success: boolean;
@@ -43,8 +46,12 @@ export default function useCodeChallengesListEffect({
         type: "UPDATE_CODE_CHALLENGES_LIST",
         list,
       });
-
-      saveChallengeListToDB({ currentUser, list });
+      // currentUserDispatch({type: "UPDATE_CODEWARS_DIAMONDS_SUM", reward: })
+      console.log(
+        "useCodeChallengesListEffect > currentUser.diamonds.sum.codewars",
+        currentUser.diamonds.sum.codewars
+      );
+      updateListAndSum({ currentUser, list });
     }
   }, [success, isDiamondIconButtonDisabled]);
 }
