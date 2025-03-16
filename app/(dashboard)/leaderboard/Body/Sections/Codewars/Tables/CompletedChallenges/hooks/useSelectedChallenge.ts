@@ -2,7 +2,7 @@
 // import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 // import { CurrentUser } from "@/types/db/users";
 // import { Dispatch } from "react";
-// import useCodewarsDB from "../Buttons/CollectDiamonds/hooks/useCodewarsDB";
+// import saveChallengeListToDB from "../Buttons/CollectDiamonds/hooks/saveChallengeListToDB";
 
 // interface Props {
 //   currentUser: CurrentUser;
@@ -15,7 +15,7 @@
 //   selectedChallenge,
 //   codewarsContextDispatch,
 // }: Props): Promise<{ codewarsUsers: CodewarsUser[] }> {
-//   const { codewarsUsers } = await useCodewarsDB({
+//   const { codewarsUsers } = await saveChallengeListToDB({
 //     currentUser,
 //     selectedChallenge,
 //   });

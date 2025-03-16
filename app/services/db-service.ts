@@ -119,8 +119,8 @@ class DBService {
     await codewars.insertOne(newUser);
   };
 
-  saveNewCodewarsSingleChallenge = async (
-    selectedSingleChallenge: CodewarsCompletedChallenge,
+  saveChallengesList = async (
+    list: CodewarsCompletedChallenge[],
     userId: string
   ) => {
     const db = await this.getDatabase();
@@ -129,8 +129,7 @@ class DBService {
 
     await codewars.findOneAndUpdate(
       { id: userId },
-      { $push: { "codeChallenges.list": selectedSingleChallenge } },
-      { upsert: true }
+      { $set: { "codeChallenges.list": list } }
     );
   };
 

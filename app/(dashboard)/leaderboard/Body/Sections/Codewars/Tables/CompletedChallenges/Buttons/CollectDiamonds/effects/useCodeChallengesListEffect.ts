@@ -6,6 +6,7 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/db/users";
 import { Dispatch, RefObject, useEffect } from "react";
 import useCollectButtonReducer from "../hooks/useCollectButtonReducer";
+import saveChallengeListToDB from "../utils/saveChallengeListToDB";
 
 interface Props {
   success: boolean;
@@ -42,6 +43,8 @@ export default function useCodeChallengesListEffect({
         type: "UPDATE_CODE_CHALLENGES_LIST",
         list,
       });
+
+      saveChallengeListToDB({ currentUser, list });
     }
   }, [success, isDiamondIconButtonDisabled]);
 }
