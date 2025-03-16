@@ -1,16 +1,18 @@
 import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
-import fetchCompletedChallenges from "../../../Collapse/fetchCompletedChallenges";
+import fetchCompletedChallenges from "../../../fetchCompletedChallenges";
+import useCurrentUserDispatchContext from "@/app/context/hooks/db/useDBCurrentUserDispatchContext";
 
 const Error = () => {
-  const { currentUser } = useDBCurrentUserContext();
+  const { currentUser } = useCurrentUserContext();
+  const currentUserDispatch = useCurrentUserDispatchContext();
   const { pageNumber } = useCodewarsContext();
-  const dispatch = useCodewarsDispatchContext();
+  const codewarsDispatch = useCodewarsDispatchContext();
 
   return (
     <ErrorUI>
@@ -25,7 +27,12 @@ const Error = () => {
           variant="outlined"
           color="primary"
           onClick={() =>
-            fetchCompletedChallenges(currentUser, pageNumber, dispatch)
+            fetchCompletedChallenges({
+              currentUser,
+              currentUserDispatch,
+              pageNumber,
+              codewarsDispatch,
+            })
           }
         >
           Try Again

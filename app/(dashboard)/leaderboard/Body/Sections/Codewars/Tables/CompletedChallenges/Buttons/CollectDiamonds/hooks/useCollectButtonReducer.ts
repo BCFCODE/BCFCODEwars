@@ -8,6 +8,7 @@ export const initialCollectDiamondsState: CollectDiamondsState = {
   isError: false,
   isCollected: false,
   counter: 0,
+  success: false,
 };
 
 export default function useCollectButtonReducer() {

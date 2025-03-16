@@ -1,5 +1,5 @@
 import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
-import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import { TableCell, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Badge from "@mui/material/Badge";
@@ -37,7 +37,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 export default function AvatarCell() {
   const {
     currentUser: { image, name },
-  } = useDBCurrentUserContext();
+  } = useCurrentUserContext();
 
   return (
     <TableCell

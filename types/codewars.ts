@@ -1,3 +1,5 @@
+import { RewardStatus } from "./db/diamonds";
+
 // types/codewars.ts
 interface OverallRanks {
   rank: number;
@@ -58,6 +60,7 @@ export interface CodewarsCompletedChallenge {
   slug: string; // URL-friendly name of the challenge
   completedLanguages: string[]; // List of languages in which the challenge was completed
   completedAt: string; // ISO 8601 date string representing when the challenge was completed
+  rewardStatus: RewardStatus;
   moreDetails?: CodewarsSingleChallenge;
 }
 

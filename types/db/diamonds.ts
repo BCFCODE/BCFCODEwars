@@ -23,3 +23,8 @@ export interface APIdbDiamondsFailedResponse {
 export type APIdbGetDiamondsResponse =
   | APIdbDiamondsSuccessResponse
   | APIdbDiamondsFailedResponse;
+
+export enum RewardStatus {
+  UnclaimedDiamonds = "unclaimedDiamonds",
+  ClaimedDiamonds = "claimedDiamonds",
+}

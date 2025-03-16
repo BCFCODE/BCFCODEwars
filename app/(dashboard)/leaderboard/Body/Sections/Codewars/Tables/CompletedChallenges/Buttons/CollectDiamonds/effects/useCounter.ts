@@ -6,6 +6,7 @@ interface Props {
   counter: number;
   isError: boolean;
   isCollected: boolean;
+  success: boolean;
   collectedDiamondsCount: number | undefined;
   collectButtonDispatch: Dispatch<CollectButtonAction>;
 }
@@ -17,15 +18,17 @@ export default function useCounter({
   isCollected,
   isError,
   isLoading,
+  success,
 }: Props) {
   const timeRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (isLoading && !isCollected) {
+    if (isLoading && !isCollected && success) {
       timeRef.current = setTimeout(() => {
         collectButtonDispatch({ type: "DIAMOND_COUNTS", counter: counter + 1 });
       }, 50);
     }
+    console.log("isCollected", isCollected);
 
     if (counter > (collectedDiamondsCount ?? 500)) {
       collectButtonDispatch({ type: "LOADING...", isLoading: false });
@@ -35,5 +38,5 @@ export default function useCounter({
     return () => {
       timeRef.current && clearTimeout(timeRef.current);
     };
-  }, [isError, isLoading, isCollected, counter]);
+  }, [isError, isLoading, isCollected, counter, success]);
 }

@@ -5,24 +5,26 @@ import useCodewarsContext from "../../../../../../../../context/hooks/codewars/u
 import SingleRow from "./SingleRow";
 import CollectDiamondsCell from "./SingleRow/Cells/CollectDiamondsCell";
 import CollectDiamonds from "../Buttons/CollectDiamonds";
-import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 export default function Body() {
-  const { completedChallenges = [], codewarsUsers } = useCodewarsContext();
-  const { currentUser } = useDBCurrentUserContext();
-  console.log(
-    "codewarsUsers in Table/CompletedChallenges/Body/index.tsx",
-    codewarsUsers
-  );
-  console.log(
-    'currentUser in Table/CompletedChallenges/Body/index.tsx"',
-    currentUser.codewars.codeChallenges.list
-  );
-
+  const { currentUser } = useCurrentUserContext();
+  // console.log(
+  //   "codewarsUsers in Table/CompletedChallenges/Body/index.tsx",
+  //   codewarsUsers
+  // );
+  // console.log(
+  //   'currentUser in Table/CompletedChallenges/Body/index.tsx"',
+  //   currentUser.codewars.codeChallenges.list
+  // );
+  // console.log(
+  //   "currentUser.codewars.codeChallenges.list in completedChallenges.map((challenge...",
+  //   currentUser.codewars.codeChallenges.list
+  // );
   return (
     <>
       <TableBody>
-        {completedChallenges.map((challenge) => (
+        {currentUser.codewars.codeChallenges.list.map((challenge) => (
           <SingleRow key={challenge.id} {...{ challenge }}>
             <CollectDiamondsCell>
               <CollectDiamonds currentChallenge={challenge} />

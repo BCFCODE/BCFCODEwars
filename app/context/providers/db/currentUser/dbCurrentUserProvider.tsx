@@ -24,7 +24,7 @@ const CurrentUserProvider = ({
     dbCurrentUserReducer,
     initialCurrentUserState
   );
-  console.log(context, "<<<<<<<<< CurrentUserProvider");
+  // console.log(context, "<<<<<<<<< CurrentUserProvider");
   return (
     <CurrentUserContext.Provider value={currentUserContext}>
       <CurrentUserActionContext.Provider value={dispatch}>

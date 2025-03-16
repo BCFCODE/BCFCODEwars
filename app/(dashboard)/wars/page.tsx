@@ -14,7 +14,7 @@ const WarsPage = async () => {
   const session = await auth();
   const email = session?.user?.email;
 
-  // const { currentUser } = useDBCurrentUserContext();
+  // const { currentUser } = useCurrentUserContext();
 
   let isConnected = false;
 
@@ -62,7 +62,10 @@ const WarsPage = async () => {
       const codewarsUser: CodewarsUser = await response.json();
 
       const isDbUsernameSyncedWithCodewars = codewarsUser.success;
-console.log(currentCodewarsUser?.isConnected , isDbUsernameSyncedWithCodewars)
+      console.log(
+        currentCodewarsUser?.isConnected,
+        isDbUsernameSyncedWithCodewars
+      );
       isConnected =
         currentCodewarsUser?.isConnected ||
         !isDbUsernameSyncedWithCodewars ||
@@ -78,7 +81,7 @@ console.log(currentCodewarsUser?.isConnected , isDbUsernameSyncedWithCodewars)
       console.error("Error fetching user data:", error);
     }
   }
-console.log('isConnected (wars page)', isConnected)
+  console.log("isConnected (wars page)", isConnected);
   if (!isConnected)
     return (
       <Box

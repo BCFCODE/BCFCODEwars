@@ -1,9 +1,9 @@
 import useCollectedDiamonds from "../effects/useCollectedDiamonds";
 import useCompletedChallenges from "../effects/useCompletedChallenges";
 import useCounter from "../effects/useCounter";
+import useMixedDBchallenges from "./useMixedDBchallenges";
 import useCollectButtonReducer from "./useCollectButtonReducer";
 import useCollectDiamondsContext from "./useCollectDiamondsContext";
-import useMixedDBchallenges from "./CodewarsChallenges/useMixedDBchallenges";
 
 export default function useCollectDiamonds() {
   const { completedChallenges, completedChallengesRef, currentUser } =
@@ -22,6 +22,7 @@ export default function useCollectDiamonds() {
       isError,
       isCollected,
       collectedDiamondsCount,
+      success
     },
     collectButtonDispatch,
   } = useCollectButtonReducer();
@@ -33,6 +34,7 @@ export default function useCollectDiamonds() {
     isCollected,
     isError,
     isLoading,
+    success
   });
 
   useCollectedDiamonds({
@@ -61,5 +63,6 @@ export default function useCollectDiamonds() {
     isError,
     currentUser,
     completedChallenges,
+    success
   };
 }

@@ -4,6 +4,7 @@ export interface CollectDiamondsState {
   isCollected: boolean;
   counter: number;
   collectedDiamondsCount?: number;
+  success: boolean;
 }
 
 export type CollectButtonAction =
@@ -14,7 +15,15 @@ export type CollectButtonAction =
     }
   | { type: "RESET_COUNTER" }
   | { type: "DIAMONDS_COLLECTED" }
-  | { type: "SUCCESSFUL_RESPONSE"; collectedDiamondsCount: number }
+  | {
+      type: "SUCCESSFUL_RESPONSE";
+      success: true;
+      collectedDiamondsCount: number;
+    }
+  | {
+      type: "!SUCCESSFUL_RESPONSE";
+      success: false;
+    }
   | { type: "ERROR?"; isError: boolean };
 
 // | { type: "START_LOADING" }
@@ -47,9 +56,12 @@ export default function collectButtonReducer(
     case "SUCCESSFUL_RESPONSE":
       return {
         ...state,
+        success: true,
         isError: false,
         collectedDiamondsCount: action.collectedDiamondsCount,
       };
+    case "!SUCCESSFUL_RESPONSE":
+      return { ...state, success: false };
     case "ERROR?":
       return { ...state, isError: action.isError };
     // case "RESET_COUNTER":

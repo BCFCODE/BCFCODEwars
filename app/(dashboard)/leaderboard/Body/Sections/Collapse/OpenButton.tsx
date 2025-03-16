@@ -1,11 +1,11 @@
-import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
 import useHandleOpen from "./useHandleOpen";
 
 const OpenButton = () => {
-  const { isCollapse, currentUser } = useDBCurrentUserContext();
+  const { isCollapse, currentUser } = useCurrentUserContext();
   const { handleOpen } = useHandleOpen();
 
   return (

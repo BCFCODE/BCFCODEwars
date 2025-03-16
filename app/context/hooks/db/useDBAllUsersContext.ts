@@ -7,7 +7,7 @@ const useDBAllUsersContext = (): AllUsersContextType => {
 
   if (!context) {
     throw new Error(
-      "useDBCurrentUserContext must be used within a useDBCurrentUserContext"
+      "useCurrentUserContext must be used within a useCurrentUserContext"
     );
   }
   return context;

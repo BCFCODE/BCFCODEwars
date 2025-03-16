@@ -1,4 +1,3 @@
-import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
 import { CodewarsAction } from "@/app/context/reducers/codewars/types";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { Dispatch, RefObject, useEffect } from "react";

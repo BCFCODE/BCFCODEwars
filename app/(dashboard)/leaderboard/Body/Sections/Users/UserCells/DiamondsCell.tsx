@@ -4,7 +4,7 @@ import {
   diamondBoxStyles,
   fade,
 } from "@/app/(dashboard)/leaderboard/styles";
-import useDBCurrentUserContext from "@/app/context/hooks/db/useDBCurrentUserContext";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, TableCell, Typography } from "@mui/material";
@@ -12,7 +12,7 @@ import { diamondSumStyles } from "./styles";
 
 const DiamondsCell = () => {
   const { data: diamondsData, isError, isLoading } = useDiamondsContext();
-  const { currentUser } = useDBCurrentUserContext();
+  const { currentUser } = useCurrentUserContext();
 
   const isCurrentUser = currentUser.email === diamondsData?.email;
 
