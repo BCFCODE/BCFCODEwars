@@ -1,9 +1,12 @@
 import { DiamondsContextState } from "../../providers/diamonds/types";
 
-export type Action =
+export type DiamondsAction =
   | { type: "LOADING..." }
   | { type: "!SUCCESSFUL_RESPONSE" }
   | { type: "SET_DIAMONDS"; payload: DiamondsContextState }
   | { type: "SET_LOADING"; isLoading: boolean }
   | { type: "SET_ERROR"; isError: boolean }
-  | { type: "DIAMONDS_COLLECTED"; codewarsCollectedDiamonds: number };
+  | {
+      type: "INCREMENT_CODEWARS_DIAMONDS_SUM_AND_TOTAL";
+      codewarsCollectedDiamonds: number;
+    };

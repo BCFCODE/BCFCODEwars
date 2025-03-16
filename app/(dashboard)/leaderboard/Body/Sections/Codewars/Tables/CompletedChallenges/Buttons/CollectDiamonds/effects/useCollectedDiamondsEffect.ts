@@ -1,11 +1,11 @@
 import { Dispatch, useEffect } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
-import { Action } from "@/app/context/reducers/diamonds/types";
+import { DiamondsAction } from "@/app/context/reducers/diamonds/types";
 
 interface Props {
   isCollected: boolean;
   collectedDiamondsCount: number | undefined;
-  diamondsContextDispatch: Dispatch<Action>;
+  diamondsContextDispatch: Dispatch<DiamondsAction>;
   collectButtonDispatch: Dispatch<CollectButtonAction>;
 }
 
@@ -18,7 +18,7 @@ export default function useCollectedDiamondsEffect({
   useEffect(() => {
     if (isCollected && collectedDiamondsCount)
       diamondsContextDispatch({
-        type: "DIAMONDS_COLLECTED",
+        type: "INCREMENT_CODEWARS_DIAMONDS_SUM_AND_TOTAL",
         codewarsCollectedDiamonds: collectedDiamondsCount,
       }); // this is for Diamonds sum in header
     // Reset counter to avoid duplicate dispatches on subsequent renders

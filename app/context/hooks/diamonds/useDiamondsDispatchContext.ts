@@ -1,8 +1,8 @@
 import { Dispatch, useContext } from "react";
 import { DiamondsDispatchContext } from "../../providers/diamonds/DiamondsProvider";
-import { Action } from "../../reducers/diamonds/types";
+import { DiamondsAction } from "../../reducers/diamonds/types";
 
-const useDiamondsDispatchContext = (): Dispatch<Action> => {
+const useDiamondsDispatchContext = (): Dispatch<DiamondsAction> => {
   const context = useContext(DiamondsDispatchContext);
   if (!context) {
     throw new Error(

@@ -1,9 +1,9 @@
 import { DiamondsContextState } from "../../providers/diamonds/types";
-import { Action } from "./types";
+import { DiamondsAction } from "./types";
 
 const dbDiamondsReducer = (
   state: DiamondsContextState,
-  action: Action
+  action: DiamondsAction
 ): DiamondsContextState => {
   switch (action.type) {
     case "LOADING...":
@@ -16,7 +16,7 @@ const dbDiamondsReducer = (
       return { ...state, isLoading: action.isLoading };
     case "SET_ERROR":
       return { ...state, isError: action.isError };
-    case "DIAMONDS_COLLECTED":
+    case "INCREMENT_CODEWARS_DIAMONDS_SUM_AND_TOTAL":
       if (state.data)
         return {
           ...state,

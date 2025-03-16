@@ -4,7 +4,7 @@ import APIDiamondsService from "@/app/api/services/diamonds-service";
 import { Diamonds } from "@/types/db/diamonds";
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 import dbDiamondsReducer from "../../reducers/diamonds/diamondsReducer";
-import { Action } from "../../reducers/diamonds/types";
+import { DiamondsAction } from "../../reducers/diamonds/types";
 import { DiamondsContextState } from "./types";
 
 const { getDiamonds } = new APIDiamondsService();
@@ -23,7 +23,7 @@ const initialDiamondsState: DiamondsContextState = {
 
 export const DiamondsContext = createContext<DiamondsContextState | null>(null);
 export const DiamondsDispatchContext =
-  createContext<React.Dispatch<Action> | null>(null);
+  createContext<React.Dispatch<DiamondsAction> | null>(null);
 
 const DBDiamondsProvider = ({ children }: Props) => {
   const [DBDiamonds, dispatch] = useReducer(

@@ -1,5 +1,5 @@
 import { CodewarsAction } from "@/app/context/reducers/codewars/types";
-import { Action } from "@/app/context/reducers/diamonds/types";
+import { DiamondsAction } from "@/app/context/reducers/diamonds/types";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
@@ -15,8 +15,8 @@ const { collectDiamonds } = new DiamondsService();
 
 interface Props {
   success: boolean;
-  isDiamondIconButtonDisabled: boolean
-  diamondsContextDispatch: Dispatch<Action>;
+  isDiamondIconButtonDisabled: boolean;
+  diamondsContextDispatch: Dispatch<DiamondsAction>;
   collectButtonDispatch: Dispatch<CollectButtonAction>;
   codewarsContextDispatch: Dispatch<CodewarsAction>;
   completedChallengesRef: RefObject<CodewarsCompletedChallenge[] | undefined>;
@@ -36,7 +36,7 @@ const handleClick = async ({
   completedChallenges,
   currentUserDispatch,
   success,
-  isDiamondIconButtonDisabled
+  isDiamondIconButtonDisabled,
 }: Props) => {
   diamondsContextDispatch({ type: "LOADING..." });
 
