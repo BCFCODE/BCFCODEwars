@@ -15,7 +15,7 @@ import handleClick from "./utils/handleClick";
 import { RewardStatus } from "@/types/db/diamonds";
 import DiamondsService from "@/app/services/diamonds-service";
 
-const { calculateCodewarsDBdiamondsCount } = new DiamondsService();
+const { calculateCodewarsDiamondsCount } = new DiamondsService();
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
@@ -43,7 +43,9 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     return (
       <Box sx={diamondBoxStyles}>
         <Typography sx={counterStyles}>
-          {calculateCodewarsDBdiamondsCount(currentChallenge)}
+          {calculateCodewarsDiamondsCount(
+            currentChallenge.moreDetails?.rank.id ?? 8
+          )}
         </Typography>
         <DiamondIcon sx={collectedDiamondStyles} />
       </Box>
