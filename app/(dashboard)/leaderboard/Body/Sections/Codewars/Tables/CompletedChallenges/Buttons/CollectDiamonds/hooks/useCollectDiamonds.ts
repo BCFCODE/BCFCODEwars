@@ -5,7 +5,9 @@ import useClaimedChallenge from "./useClaimedChallenge";
 import useCollectButtonReducer from "./useCollectButtonReducer";
 import useCollectDiamondsContext from "./useCollectDiamondsContext";
 import useCodeChallengesListEffect from "../effects/useCodeChallengesListEffect";
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useDBCurrentUserDispatchContext";
+import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
+import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 
 export default function useCollectDiamonds() {
   const {
@@ -13,6 +15,7 @@ export default function useCollectDiamonds() {
     completedChallengesRef,
     currentUser,
     currentUserDispatch,
+    allUsersDispatch,
   } = useClaimedChallenge();
 
   const {
@@ -44,6 +47,7 @@ export default function useCollectDiamonds() {
   });
 
   useCollectedDiamondsEffect({
+    allUsersDispatch,
     currentUserDispatch,
     collectButtonDispatch,
     collectedDiamondsCount,
@@ -58,7 +62,7 @@ export default function useCollectDiamonds() {
     currentUser,
     currentUserDispatch,
     success,
-    isCollected
+    isCollected,
   });
 
   return {
@@ -76,5 +80,6 @@ export default function useCollectDiamonds() {
     completedChallenges,
     currentUserDispatch,
     success,
+    allUsersDispatch,
   };
 }

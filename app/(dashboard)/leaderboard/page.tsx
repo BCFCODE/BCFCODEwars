@@ -1,19 +1,19 @@
 "use client";
 
-import useDBAllUsersContext from "@/app/context/hooks/db/useDBAllUsersContext";
+import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
 import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter } from "next/navigation";
 import Body from "./Body";
 import LeaderboardLoadingError from "./Error";
 import LeaderboardHeader from "./Head/Header";
-import CodewarsProvider from "@/app/context/providers/codewars/CodewarsProvider";
+import CodewarsProvider from "@/app/context/providers/Codewars";
 
 export default function LeaderBoardPage() {
   const router = useRouter();
   // // Consume the error state from context to trigger re-render when it updates.
-  const { error } = useDBAllUsersContext();
+  const { error } = useAllUsersContext();
 
-  // console.log(">>>>>>>>>>>> useDBAllUsersContext error", error);
+  // console.log(">>>>>>>>>>>> useAllUsersContext error", error);
   // // Conditionally render the error UI when error is true.
   if (error)
     return <LeaderboardLoadingError onRetry={() => router.refresh()} />;

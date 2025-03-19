@@ -1,20 +1,23 @@
 "use client";
 
 import APIdbService from "@/app/api/services/db-service";
-import dbAllUsersReducer from "@/app/context/reducers/users/allUsers/dbAllUsersReducer";
-import { AllUsersAction } from "@/app/context/reducers/users/allUsers/types";
-import { CurrentUser, DBUser } from "@/types/db/users";
+import allUsersReducer, { AllUsersAction } from "@/app/context/reducers/allUsersReducer";
+import { CurrentUser } from "@/types/db/users";
 import {
   createContext,
   Dispatch,
   ReactNode,
   useEffect,
   useReducer,
-  useRef,
 } from "react";
-import { AllUsersContextType } from "./types";
 
 const { getUsers } = new APIdbService();
+
+export interface AllUsersContextType {
+  isLoading: boolean;
+  error: boolean;
+  allUsers: CurrentUser[];
+}
 
 interface Props {
   children: ReactNode;
@@ -33,7 +36,7 @@ export const AllUsersDispatchContext =
 
 const AllUsersProvider = ({ children }: Props) => {
   const [allUsersContext, dispatch] = useReducer(
-    dbAllUsersReducer,
+    allUsersReducer,
     initialDBAllUsersState
   );
 

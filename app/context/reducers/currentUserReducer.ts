@@ -1,6 +1,16 @@
-import { CurrentUserAction, CurrentUserState } from "./types";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { Diamonds } from "@/types/db/diamonds";
+import { CurrentUserContextState } from "../providers/CurrentUser";
 
-const dbCurrentUserReducer = (
+export type CurrentUserState = CurrentUserContextState;
+
+export type CurrentUserAction =
+  | { type: "UPDATE_CODE_CHALLENGES_LIST"; list: CodewarsCompletedChallenge[] }
+  | { type: "UPDATE_CODEWARS_DIAMONDS_SUM"; reward: number }
+  | { type: "SET_USER_DIAMONDS"; diamonds: Diamonds }
+  | { type: "SET_COLLAPSE_OPEN"; isCollapse: boolean };
+
+const currentUserReducer = (
   state: CurrentUserState,
   action: CurrentUserAction
 ): CurrentUserState => {
@@ -29,6 +39,7 @@ const dbCurrentUserReducer = (
             sum: {
               ...state.currentUser.diamonds.sum,
               codewars: state.currentUser.diamonds.sum.codewars + action.reward,
+              total: state.currentUser.diamonds.sum.total + action.reward,
             },
           },
         },
@@ -45,4 +56,4 @@ const dbCurrentUserReducer = (
   }
 };
 
-export default dbCurrentUserReducer;
+export default currentUserReducer;

@@ -1,7 +1,17 @@
-import { DiamondsContextState } from "../../providers/diamonds/types";
-import { DiamondsAction } from "./types";
+import { DiamondsContextState } from "../providers/Diamonds";
 
-const dbDiamondsReducer = (
+export type DiamondsAction =
+  | { type: "LOADING..." }
+  | { type: "!SUCCESSFUL_RESPONSE" }
+  | { type: "SET_DIAMONDS"; payload: DiamondsContextState }
+  | { type: "SET_LOADING"; isLoading: boolean }
+  | { type: "SET_ERROR"; isError: boolean }
+  | {
+      type: "INCREMENT_CODEWARS_DIAMONDS_SUM_AND_TOTAL";
+      codewarsCollectedDiamonds: number;
+    };
+
+const diamondsReducer = (
   state: DiamondsContextState,
   action: DiamondsAction
 ): DiamondsContextState => {
@@ -36,4 +46,4 @@ const dbDiamondsReducer = (
   }
 };
 
-export default dbDiamondsReducer;
+export default diamondsReducer;

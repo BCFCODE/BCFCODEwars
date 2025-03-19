@@ -2,7 +2,7 @@ import {
   codewarsCellStyles,
   textStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
-import useDBAllUsersContext from "@/app/context/hooks/db/useDBAllUsersContext";
+import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
 import { FormControlLabel, TableCell } from "@mui/material";
 import Switch from "@mui/material/Switch";
 import useSwitch from "./useSwitch";

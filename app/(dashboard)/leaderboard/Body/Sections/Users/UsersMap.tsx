@@ -1,5 +1,5 @@
-import useDBAllUsersContext from "@/app/context/hooks/db/useDBAllUsersContext";
-import CurrentUserProvider from "@/app/context/providers/db/currentUser/dbCurrentUserProvider";
+import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
+import CurrentUserProvider from "@/app/context/providers/CurrentUser";
 import { CurrentUser } from "@/types/db/users";
 import { ReactNode } from "react";
 
@@ -8,7 +8,7 @@ interface Props {
 }
 
 const UsersMap = ({ children }: Props) => {
-  const { allUsers } = useDBAllUsersContext();
+  const { allUsers } = useAllUsersContext();
 
   return allUsers.map((currentUser: CurrentUser) => (
     <CurrentUserProvider key={currentUser.email} context={{ currentUser }}>

@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { AllUsersContext } from "../../providers/db/allUsers/AllUsersProvider";
 import { AllUsersContextType } from "../../providers/db/allUsers/types";
+import { AllUsersContext } from "../../providers/AllUsers";
 
-const useDBAllUsersContext = (): AllUsersContextType => {
+const useAllUsersContext = (): AllUsersContextType => {
   const context = useContext(AllUsersContext);
 
   if (!context) {
@@ -13,4 +13,4 @@ const useDBAllUsersContext = (): AllUsersContextType => {
   return context;
 };
 
-export default useDBAllUsersContext;
+export default useAllUsersContext;

@@ -9,11 +9,14 @@ import { CollectButtonAction } from "../reducers/collectButtonReducer";
 // import useSelectedChallenge from "../hooks/CodewarsChallenges/useSelectedChallenge";
 import { RewardStatus } from "@/types/db/diamonds";
 import { CurrentUserAction } from "@/app/context/reducers/users/currentUser/types";
+import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
+import { AllUsersAction } from "@/app/context/reducers/users/allUsers/types";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
 
 interface Props {
+  allUsersDispatch: Dispatch<AllUsersAction>;
   success: boolean;
   isDiamondIconButtonDisabled: boolean;
   diamondsContextDispatch: Dispatch<DiamondsAction>;
@@ -37,7 +40,9 @@ const handleClick = async ({
   currentUserDispatch,
   success,
   isDiamondIconButtonDisabled,
+  allUsersDispatch,
 }: Props) => {
+  
   diamondsContextDispatch({ type: "LOADING..." });
 
   collectButtonDispatch({ type: "LOADING...", isLoading: true });

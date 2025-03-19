@@ -1,6 +1,6 @@
 import { Dispatch, useContext } from "react";
-import { CodewarsDispatchContext } from "../../providers/codewars/CodewarsProvider";
-import { CodewarsAction } from "../../reducers/codewars/types";
+import { CodewarsDispatchContext } from "../../providers/Codewars";
+import { CodewarsAction } from "../../reducers/codewarsReducer";
 
 const useCodewarsDispatchContext = (): Dispatch<CodewarsAction> => {
   const context = useContext(CodewarsDispatchContext);

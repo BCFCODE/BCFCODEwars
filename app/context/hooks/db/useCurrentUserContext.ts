@@ -1,6 +1,8 @@
 import { useContext } from "react";
-import { CurrentUserContextState } from "../../providers/db/currentUser/types";
-import { CurrentUserContext } from "../../providers/db/currentUser/dbCurrentUserProvider";
+import {
+  CurrentUserContext,
+  CurrentUserContextState,
+} from "../../providers/CurrentUser";
 
 const useCurrentUserContext = (): CurrentUserContextState => {
   const context = useContext(CurrentUserContext);

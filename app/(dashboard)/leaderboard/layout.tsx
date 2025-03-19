@@ -1,5 +1,5 @@
-import AllUsersProvider from "@/app/context/providers/db/allUsers/AllUsersProvider";
-import DBDiamondsProvider from "@/app/context/providers/diamonds/DiamondsProvider";
+import AllUsersProvider from "@/app/context/providers/AllUsers";
+import DBDiamondsProvider from "@/app/context/providers/Diamonds";
 import { ReactNode } from "react";
 
 interface Props {

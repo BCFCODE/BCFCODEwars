@@ -3,12 +3,24 @@
 import APIDiamondsService from "@/app/api/services/diamonds-service";
 import { Diamonds } from "@/types/db/diamonds";
 import { createContext, ReactNode, useEffect, useReducer } from "react";
-import dbDiamondsReducer from "../../reducers/diamonds/diamondsReducer";
-import { DiamondsAction } from "../../reducers/diamonds/types";
-import { DiamondsContextState } from "./types";
-import useCurrentUserContext from "../../hooks/db/useCurrentUserContext";
+import diamondsReducer, { DiamondsAction } from "../reducers/diamondsReducer";
 
 const { getDiamonds } = new APIDiamondsService();
+
+export interface Context {}
+
+export interface DiamondsContextState extends Context {
+  data?: Diamonds;
+  isDiamondIconButtonDisabled: boolean;
+  isLoading: boolean;
+  isError: boolean;
+  // success: boolean;
+  // error?: string;
+  // isCollected?: boolean;
+  // collectedCount?: number;
+  // sumCounter?: number;
+  // collectedCounter: number;
+}
 
 interface Props {
   children: ReactNode;
@@ -28,12 +40,12 @@ export const DiamondsDispatchContext =
 
 const DBDiamondsProvider = ({ children }: Props) => {
   const [DBDiamonds, dispatch] = useReducer(
-    dbDiamondsReducer,
+    diamondsReducer,
     initialDiamondsState
   );
 
   // const { currentUser } = useCurrentUserContext();
-  
+
   useEffect(() => {
     (async () => {
       const response = await getDiamonds({ cache: "no-store" });

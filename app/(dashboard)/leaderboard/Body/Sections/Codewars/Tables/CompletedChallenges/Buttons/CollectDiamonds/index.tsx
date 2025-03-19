@@ -37,6 +37,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     completedChallenges,
     currentUserDispatch,
     success,
+    allUsersDispatch,
   } = useCollectDiamonds();
 
   if (currentChallenge.rewardStatus === RewardStatus.ClaimedDiamonds)
@@ -74,6 +75,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                 currentUserDispatch,
                 success,
                 isDiamondIconButtonDisabled,
+                allUsersDispatch,
               })
             }
           >

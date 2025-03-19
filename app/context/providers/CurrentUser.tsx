@@ -1,7 +1,16 @@
 import { createContext, Dispatch, ReactNode, useReducer } from "react";
-import dbCurrentUserReducer from "../../../reducers/users/currentUser/dbCurrentUserReducer";
-import { CurrentUserAction } from "../../../reducers/users/currentUser/types";
-import { CurrentUserContextState } from "./types";
+import currentUserReducer, {
+  CurrentUserAction,
+} from "../reducers/currentUserReducer";
+import { CurrentUser } from "@/types/db/users";
+
+export type CurrentUserContext = {
+  currentUser: CurrentUser;
+};
+
+export interface CurrentUserContextState extends CurrentUserContext {
+  isCollapse?: boolean;
+}
 
 export const CurrentUserContext = createContext<CurrentUserContextState | null>(
   null
@@ -21,7 +30,7 @@ const CurrentUserProvider = ({
     isCollapse: false,
   };
   const [currentUserContext, dispatch] = useReducer(
-    dbCurrentUserReducer,
+    currentUserReducer,
     initialCurrentUserState
   );
   // console.log(context, "<<<<<<<<< CurrentUserProvider");
