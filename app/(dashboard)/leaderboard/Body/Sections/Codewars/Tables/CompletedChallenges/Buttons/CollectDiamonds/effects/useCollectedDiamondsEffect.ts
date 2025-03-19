@@ -1,9 +1,8 @@
-import { DiamondsAction } from "@/app/context/reducers/diamonds/types";
-import { CurrentUserAction } from "@/app/context/reducers/users/currentUser/types";
 import { Dispatch, useEffect } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import { AllUsersAction } from "@/app/context/reducers/users/allUsers/types";
+import { AllUsersAction } from "@/app/context/reducers/allUsersReducer";
+import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
+import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
 
 interface Props {
   isCollected: boolean;

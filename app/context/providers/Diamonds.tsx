@@ -38,7 +38,7 @@ export const DiamondsContext = createContext<DiamondsContextState | null>(null);
 export const DiamondsDispatchContext =
   createContext<React.Dispatch<DiamondsAction> | null>(null);
 
-const DBDiamondsProvider = ({ children }: Props) => {
+const DiamondsProvider = ({ children }: Props) => {
   const [DBDiamonds, dispatch] = useReducer(
     diamondsReducer,
     initialDiamondsState
@@ -74,4 +74,4 @@ const DBDiamondsProvider = ({ children }: Props) => {
   );
 };
 
-export default DBDiamondsProvider;
+export default DiamondsProvider;

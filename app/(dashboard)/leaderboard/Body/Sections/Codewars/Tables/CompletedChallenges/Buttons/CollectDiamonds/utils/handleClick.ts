@@ -1,5 +1,3 @@
-import { CodewarsAction } from "@/app/context/reducers/codewars/types";
-import { DiamondsAction } from "@/app/context/reducers/diamonds/types";
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
@@ -8,9 +6,11 @@ import { Dispatch, RefObject } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
 // import useSelectedChallenge from "../hooks/CodewarsChallenges/useSelectedChallenge";
 import { RewardStatus } from "@/types/db/diamonds";
-import { CurrentUserAction } from "@/app/context/reducers/users/currentUser/types";
 import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
-import { AllUsersAction } from "@/app/context/reducers/users/allUsers/types";
+import { AllUsersAction } from "@/app/context/reducers/allUsersReducer";
+import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
+import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
+import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
@@ -42,7 +42,6 @@ const handleClick = async ({
   isDiamondIconButtonDisabled,
   allUsersDispatch,
 }: Props) => {
-  
   diamondsContextDispatch({ type: "LOADING..." });
 
   collectButtonDispatch({ type: "LOADING...", isLoading: true });

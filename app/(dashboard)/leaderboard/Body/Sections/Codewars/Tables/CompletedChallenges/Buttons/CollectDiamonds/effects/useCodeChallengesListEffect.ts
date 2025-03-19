@@ -1,14 +1,10 @@
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext";
+import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
+import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
+import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/db/users";
 import { Dispatch, RefObject, useEffect } from "react";
-import useCollectButtonReducer from "../hooks/useCollectButtonReducer";
-import updateListAndSum from "../db/updateListAndSum";
-import DiamondsService from "@/app/services/diamonds-service";
-import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
-import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
-import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
 
 // const { calculateCodewarsDiamondsCount } = new DiamondsService();
 
@@ -34,7 +30,6 @@ export default function useCodeChallengesListEffect({
 }: Props) {
   // const {collectButtonState: {isCollected, success}} = useCollectButtonReducer()
   const { selectedChallenge } = useCodewarsContext();
-  const { allUsers } = useAllUsersContext();
 
   useEffect(() => {
     if (success && !isDiamondIconButtonDisabled) {
@@ -51,8 +46,6 @@ export default function useCodeChallengesListEffect({
         type: "UPDATE_CODE_CHALLENGES_LIST",
         list,
       });
-
-      updateListAndSum({ currentUser, list });
     }
   }, [success, isDiamondIconButtonDisabled]);
 
