@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { AllUsersDispatchContext } from "../../providers/AllUsers";
 import { Dispatch } from "react";
-import { AllUsersAction } from "../../reducers/users/allUsers/types";
+import { AllUsersAction } from "../../reducers/allUsersReducer";
+
 
 const useAllUsersDispatchContext = (): Dispatch<AllUsersAction> => {
   const context = useContext(AllUsersDispatchContext);
