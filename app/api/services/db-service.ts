@@ -1,4 +1,4 @@
-import { DBUser } from "@/types/users";
+import { CurrentUser, DBUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 
 interface GetUsersAPIResponseError {
@@ -11,13 +11,13 @@ interface GetUsersAPIResponse extends GetUsersAPIResponseError {
 }
 
 class APIdbService {
-  private endpoint = `${baseURL}/api/db/users`;
+  private endpoint = `${baseURL}/api/db`;
 
   // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
   getUsers = async (options?: RequestInit): Promise<GetUsersAPIResponse> => {
     try {
       // Fetch the data from your API
-      const response = await fetch(this.endpoint, {
+      const response = await fetch(`${this.endpoint}/users`, {
         ...options, // This will include things like { signal: controller.signal }
       });
       if (!response.ok) {
@@ -36,6 +36,31 @@ class APIdbService {
     } catch (error) {
       console.error("Error fetching user data from database");
       return { success: false, error: "Error fetching user data" };
+    }
+  };
+
+  postCurrentUser = async (currentUser: CurrentUser) => {
+    console.log(
+      "This is where you must save diamonds count and update (sync) list in one go",
+      currentUser
+    );
+
+    try {
+      const response = await fetch(`${this.endpoint}/currentUser`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(currentUser),
+      });
+
+      if (!response.ok) {
+        // Optionally handle non-200 status codes here.
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Error syncing diamond count:", error);
+      throw error; // or handle error appropriately
     }
   };
 }

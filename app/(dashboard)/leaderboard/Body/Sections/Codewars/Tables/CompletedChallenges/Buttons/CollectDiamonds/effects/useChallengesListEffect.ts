@@ -4,7 +4,9 @@ import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/users";
 import { Dispatch, RefObject, useEffect, useRef } from "react";
-import syncCurrentUserDiamondCountWithDB from "../utils/syncCurrentUserDiamondCountWithDB ";
+import APIdbService from "@/app/api/services/db-service";
+
+const { postCurrentUser } = new APIdbService();
 
 interface Props {
   collectedDiamondsCount: number | undefined;
@@ -38,7 +40,7 @@ export default function useChallengesListEffect({
       if (!isListUpdatedRef.current) {
         const userWithUpdatedList = { ...currentUser };
         userWithUpdatedList.codewars.codeChallenges.list = [...list];
-        syncCurrentUserDiamondCountWithDB(userWithUpdatedList);
+        postCurrentUser(userWithUpdatedList);
         isListUpdatedRef.current = true;
       }
 
