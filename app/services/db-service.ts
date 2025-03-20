@@ -165,8 +165,20 @@ class DBService {
     const { diamonds } = await this.getCollections();
     await diamonds.insertOne({
       email,
+      codewars: [],
       totals: {
-        codewars: 0,
+        codewars: {
+          ranks: {
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0,
+            5: 0,
+            6: 0,
+            7: 0,
+          },
+          total: 0,
+        },
         missions: 0,
         total: 0,
       },
@@ -182,17 +194,11 @@ class DBService {
   };
 
   updateCurrentUser = async (currentUser: CurrentUser) => {
-    const { db, client, session } = await this.startClientSession();
+    const { db, session } = await this.startClientSession();
     const { email } = currentUser;
+
     const list = currentUser.codewars.codeChallenges.list;
     const totals = currentUser.diamonds.totals;
-
-    console.log(
-      "updateCurrentUser in DB service",
-      currentUser,
-      "first challenge >",
-      currentUser.codewars.codeChallenges.list[0]
-    );
 
     try {
       session.startTransaction();
@@ -220,43 +226,6 @@ class DBService {
     } finally {
       session.endSession();
     }
-
-    //    // Start a session
-    // const session: ClientSession = db.client.startSession();
-
-    // try {
-    //   // Begin the transaction
-    //   session.startTransaction();
-
-    //   // Get collections
-    //   const usersCollection = db.collection("users");
-    //   const challengesCollection = db.collection("challenges");
-
-    //   // Update the user's rank in the "users" collection
-    //   await usersCollection.updateOne(
-    //     { id: userId },
-    //     { $set: { rank: newUserRank } },
-    //     { session }
-    //   );
-
-    //   // Update the user's challenge list in the "challenges" collection
-    //   await challengesCollection.updateOne(
-    //     { userId: userId },
-    //     { $set: { challengeList: newChallengeList } },
-    //     { upsert: true, session }
-    //   );
-
-    //   // Commit the transaction; both updates succeed together
-    //   await session.commitTransaction();
-    //   console.log("Transaction committed successfully.");
-    // } catch (error) {
-    //   // Abort the transaction if any operation fails
-    //   await session.abortTransaction();
-    //   console.error("Transaction failed and was aborted:", error);
-    // } finally {
-    //   // End the session
-    //   session.endSession();
-    // }
   };
 
   updateSingleCodewarsUser = async <T>(email: string = "", update: T) => {

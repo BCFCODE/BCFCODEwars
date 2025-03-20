@@ -9,6 +9,7 @@ const handleAddUserToDB = async ({ session, codewars }: StepProps) => {
   updateSingleCodewarsUser(session?.user.email, {
     ...codewars,
     isConnected: true,
+    
     codeChallenges: {
       ...codewars.codeChallenges,
       list: [],
