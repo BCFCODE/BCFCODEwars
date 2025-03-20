@@ -40,11 +40,6 @@ class APIdbService {
   };
 
   postCurrentUser = async (currentUser: CurrentUser) => {
-    console.log(
-      "This is where you must save diamonds count and update (sync) list in one go",
-      currentUser
-    );
-
     try {
       const response = await fetch(`${this.endpoint}/currentUser`, {
         method: "POST",
