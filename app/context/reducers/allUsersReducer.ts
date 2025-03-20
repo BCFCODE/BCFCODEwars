@@ -1,4 +1,4 @@
-import { CurrentUser } from "@/types/db/users";
+import { CurrentUser } from "@/types/users";
 import { AllUsersContextType } from "../providers/AllUsers";
 
 export type AllUsersState = AllUsersContextType;
@@ -35,8 +35,8 @@ const allUsersReducer = (
       const allUsers = state.allUsers.map((user) => {
         if (user.email === action.currentUser.email) {
           const newUser = { ...user };
-          newUser.diamonds.sum.codewars += action.collectedDiamondsCount;
-          newUser.diamonds.sum.total += action.collectedDiamondsCount;
+          newUser.diamonds.totals.codewars += action.collectedDiamondsCount;
+          newUser.diamonds.totals.total += action.collectedDiamondsCount;
           return newUser;
         } else return user;
       });

@@ -2,7 +2,8 @@
 
 import APIdbService from "@/app/api/services/db-service";
 import allUsersReducer, { AllUsersAction } from "@/app/context/reducers/allUsersReducer";
-import { CurrentUser } from "@/types/db/users";
+import { CurrentUser } from "@/types/users";
+
 import {
   createContext,
   Dispatch,

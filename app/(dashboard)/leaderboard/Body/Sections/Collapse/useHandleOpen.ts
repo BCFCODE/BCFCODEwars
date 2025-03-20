@@ -2,7 +2,7 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import fetchCompletedChallenges from "../fetchCompletedChallenges";
+import fetchCompletedChallenges from "../utils/fetchCompletedChallenges";
 import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 
 const useHandleOpen = () => {

@@ -1,4 +1,10 @@
-export interface Sum {
+export interface CodewarsDiamonds {
+  id: string;
+  rank: number;
+  diamondsEarned: number;
+}
+
+export interface DiamondsTotal {
   codewars: number;
   missions: number;
   total: number;
@@ -7,7 +13,8 @@ export interface Sum {
 export interface Diamonds {
   email: string;
   name: string;
-  sum: Sum;
+  codewars?: CodewarsDiamonds[];
+  totals: DiamondsTotal;
 }
 
 export interface APIdbDiamondsSuccessResponse {

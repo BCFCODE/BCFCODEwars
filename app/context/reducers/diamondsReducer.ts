@@ -33,11 +33,11 @@ const diamondsReducer = (
           isDiamondIconButtonDisabled: false,
           data: {
             ...state.data,
-            sum: {
-              ...state.data.sum,
+            totals: {
+              ...state.data.totals,
               codewars:
-                state.data.sum.codewars + action.codewarsCollectedDiamonds,
-              total: state.data.sum.total + action.codewarsCollectedDiamonds,
+                state.data.totals.codewars + action.codewarsCollectedDiamonds,
+              total: state.data.totals.total + action.codewarsCollectedDiamonds,
             },
           },
         };

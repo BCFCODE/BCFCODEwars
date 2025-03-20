@@ -1,16 +1,16 @@
 import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
-import { CurrentUser } from "@/types/db/users";
 import { Dispatch, RefObject } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
 // import useSelectedChallenge from "../hooks/CodewarsChallenges/useSelectedChallenge";
-import { RewardStatus } from "@/types/db/diamonds";
+import { RewardStatus } from "@/types/diamonds";
 import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
 import { AllUsersAction } from "@/app/context/reducers/allUsersReducer";
 import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
 import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
+import { CurrentUser } from "@/types/users";
 
 const { getSingleChallenge } = new CodewarsService();
 const { collectDiamonds } = new DiamondsService();
@@ -76,7 +76,7 @@ const handleClick = async ({
       type: "SET_SELECTED_CHALLENGE",
       selectedChallenge,
     });
-    console.log("selectedChallenge", selectedChallenge);
+    // console.log("selectedChallenge >>", selectedChallenge);
     // Update codeChallenges.list in codewars collection in db
     // const { codewarsUsers }: { codewarsUsers: CodewarsUser[] } =
     //   await useSelectedChallenge({

@@ -1,10 +1,10 @@
-import { CodewarsAction } from "@/app/context/reducers/codewars/types";
-import { CurrentUserAction } from "@/app/context/reducers/users/currentUser/types";
 import CodewarsService from "@/app/services/codewars-service";
-import { RewardStatus } from "@/types/db/diamonds";
-import { CurrentUser } from "@/types/db/users";
+import { RewardStatus } from "@/types/diamonds";
 import { Dispatch } from "react";
-import initializeCodeChallengesList from "./Collapse/initializeCodeChallengesList";
+import initializeCodeChallengesList from "../Collapse/initializeCodeChallengesList";
+import { CurrentUser } from "@/types/users";
+import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
+import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
 // import initializeCodeChallengesList from "./Collapse/initializeCodeChallengesList";
 
 const { getCompletedChallenges } = new CodewarsService();
@@ -34,7 +34,11 @@ export const fetchCompletedChallenges = async ({
       // console.log("isListEmpty", isListEmpty);
 
       if (isListEmpty)
-        initializeCodeChallengesList({ data, currentUserDispatch });
+        initializeCodeChallengesList({
+          data,
+          currentUser,
+          currentUserDispatch,
+        });
 
       codewarsDispatch({ type: "SET_ERROR", isError: false });
       // codewarsDispatch({

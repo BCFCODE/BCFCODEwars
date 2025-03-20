@@ -5,7 +5,7 @@ import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext"
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
-import fetchCompletedChallenges from "../../../fetchCompletedChallenges";
+import fetchCompletedChallenges from "../../../utils/fetchCompletedChallenges";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 
 const Error = () => {

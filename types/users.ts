@@ -1,6 +1,6 @@
-import { CodewarsUser } from "../codewars";
+import { CodewarsUser } from "./codewars";
 import { Diamonds } from "./diamonds";
-import { GoogleUser } from "../google";
+import { GoogleUser } from "./google";
 
 export interface NewDatabaseUser extends GoogleUser {
   createdAt: string;

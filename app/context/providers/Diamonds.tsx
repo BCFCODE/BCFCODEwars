@@ -1,9 +1,10 @@
 "use client";
 
 import APIDiamondsService from "@/app/api/services/diamonds-service";
-import { Diamonds } from "@/types/db/diamonds";
+import { Diamonds } from "@/types/diamonds";
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 import diamondsReducer, { DiamondsAction } from "../reducers/diamondsReducer";
+import useAllUsersContext from "../hooks/db/useAllUsersContext";
 
 const { getDiamonds } = new APIDiamondsService();
 
@@ -44,13 +45,11 @@ const DiamondsProvider = ({ children }: Props) => {
     initialDiamondsState
   );
 
-  // const { currentUser } = useCurrentUserContext();
-
   useEffect(() => {
     (async () => {
       const response = await getDiamonds({ cache: "no-store" });
 
-      if (response.success)
+      if (response.success) {
         dispatch({
           type: "SET_DIAMONDS",
           payload: {
@@ -58,7 +57,7 @@ const DiamondsProvider = ({ children }: Props) => {
             data: response.data,
           },
         });
-      else {
+      } else {
         dispatch({ type: "SET_LOADING", isLoading: true });
         dispatch({ type: "SET_ERROR", isError: true });
       }

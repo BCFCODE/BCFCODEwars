@@ -1,4 +1,4 @@
-import { RewardStatus } from "./db/diamonds";
+import { RewardStatus } from "./diamonds";
 
 // types/codewars.ts
 interface OverallRanks {

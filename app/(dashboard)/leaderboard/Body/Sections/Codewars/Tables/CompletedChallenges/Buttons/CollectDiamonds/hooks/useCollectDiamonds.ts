@@ -1,13 +1,9 @@
 import useCollectedDiamondsEffect from "../effects/useCollectedDiamondsEffect";
-
+import useChallengesListEffect from "../effects/useChallengesListEffect";
 import useCounterEffect from "../effects/useCounterEffect";
 import useClaimedChallenge from "./useClaimedChallenge";
 import useCollectButtonReducer from "./useCollectButtonReducer";
 import useCollectDiamondsContext from "./useCollectDiamondsContext";
-import useCodeChallengesListEffect from "../effects/useCodeChallengesListEffect";
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
-import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 
 export default function useCollectDiamonds() {
   const {
@@ -55,7 +51,7 @@ export default function useCollectDiamonds() {
     isCollected,
   });
 
-  useCodeChallengesListEffect({
+  useChallengesListEffect({
     collectedDiamondsCount,
     codewarsContextDispatch,
     isDiamondIconButtonDisabled,

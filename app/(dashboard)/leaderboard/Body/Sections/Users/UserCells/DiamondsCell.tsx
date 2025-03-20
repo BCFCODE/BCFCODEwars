@@ -22,7 +22,7 @@ const DiamondsCell = () => {
   // });
   const isCurrentUser = currentUser.email === diamondsData?.email;
 
-  const diamondsSum = isCurrentUser ? currentUser.diamonds.sum.total : 0;
+  const diamondsSum = isCurrentUser ? currentUser.diamonds.totals.total : 0;
   // const diamondsSum = isCurrentUser ? diamondsData.sum.total : 0;
 
   return (

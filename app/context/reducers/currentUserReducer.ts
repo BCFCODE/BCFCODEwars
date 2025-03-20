@@ -1,5 +1,5 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { Diamonds } from "@/types/db/diamonds";
+import { Diamonds } from "@/types/diamonds";
 import { CurrentUserContextState } from "../providers/CurrentUser";
 
 export type CurrentUserState = CurrentUserContextState;
@@ -24,7 +24,7 @@ const currentUserReducer = (
             ...state.currentUser.codewars,
             codeChallenges: {
               ...state.currentUser.codewars.codeChallenges,
-              list: action.list,
+              list: [...action.list],
             },
           },
         },
@@ -36,10 +36,11 @@ const currentUserReducer = (
           ...state.currentUser,
           diamonds: {
             ...state.currentUser.diamonds,
-            sum: {
-              ...state.currentUser.diamonds.sum,
-              codewars: state.currentUser.diamonds.sum.codewars + action.reward,
-              total: state.currentUser.diamonds.sum.total + action.reward,
+            totals: {
+              ...state.currentUser.diamonds.totals,
+              codewars:
+                state.currentUser.diamonds.totals.codewars + action.reward,
+              total: state.currentUser.diamonds.totals.total + action.reward,
             },
           },
         },

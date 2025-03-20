@@ -144,7 +144,7 @@ class DBService {
     const { diamonds } = await this.getCollections();
     await diamonds.insertOne({
       email,
-      sum: {
+      totals: {
         codewars: 0,
         missions: 0,
         total: 0,

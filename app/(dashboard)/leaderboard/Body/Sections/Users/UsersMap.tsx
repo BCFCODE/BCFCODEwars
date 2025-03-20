@@ -1,6 +1,6 @@
 import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
 import CurrentUserProvider from "@/app/context/providers/CurrentUser";
-import { CurrentUser } from "@/types/db/users";
+import { CurrentUser } from "@/types/users";
 import { ReactNode } from "react";
 
 interface Props {

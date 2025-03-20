@@ -1,4 +1,4 @@
-import { DBUser } from "@/types/db/users";
+import { DBUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 
 interface GetUsersAPIResponseError {

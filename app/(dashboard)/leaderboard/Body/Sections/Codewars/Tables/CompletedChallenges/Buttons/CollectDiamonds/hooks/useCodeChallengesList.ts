@@ -25,7 +25,7 @@
 //     const list = currentUser.codewars.codeChallenges.list.map((challenge) =>
 //       challenge.id === selectedChallenge?.id ? selectedChallenge : challenge
 //     );
-//     console.log("list in useCodeChallengesListEffect", list, selectedChallenge);
+//     console.log("list in useChallengesListEffect", list, selectedChallenge);
 //     currentUserDispatch({
 //       type: "UPDATE_CODE_CHALLENGES_LIST",
 //       list,

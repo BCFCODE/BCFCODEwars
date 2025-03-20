@@ -1,8 +1,5 @@
 import { Dispatch, useEffect, useRef, useState } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
-import { CurrentUser } from "@/types/db/users";
-import { CurrentUserAction } from "@/app/context/reducers/users/currentUser/types";
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 
 interface Props {
   // isLoading: boolean;

@@ -2,7 +2,7 @@ import { createContext, Dispatch, ReactNode, useReducer } from "react";
 import currentUserReducer, {
   CurrentUserAction,
 } from "../reducers/currentUserReducer";
-import { CurrentUser } from "@/types/db/users";
+import { CurrentUser } from "@/types/users";
 
 export type CurrentUserContext = {
   currentUser: CurrentUser;
