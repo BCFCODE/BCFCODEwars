@@ -4,6 +4,7 @@ import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/users";
 import { Dispatch, RefObject, useEffect, useRef } from "react";
+import syncCurrentUserDiamondCountWithDB from "../utils/syncCurrentUserDiamondCountWithDB ";
 
 interface Props {
   collectedDiamondsCount: number | undefined;
@@ -35,10 +36,9 @@ export default function useChallengesListEffect({
       );
 
       if (!isListUpdatedRef.current) {
-        console.log(
-          "This is where you must save diamonds count and update (sync) list in one go",
-          list, selectedChallenge
-        ); // I want a method that show this console.log only one time
+        const userWithUpdatedList = { ...currentUser };
+        userWithUpdatedList.codewars.codeChallenges.list = [...list];
+        syncCurrentUserDiamondCountWithDB(userWithUpdatedList);
         isListUpdatedRef.current = true;
       }
 
