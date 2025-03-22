@@ -1,5 +1,6 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import {
+  CodewarsDiamondsRecord,
   CodewarsRank,
   CodewarsRanks,
   CodewarsRankTotals,
@@ -56,8 +57,18 @@ const currentUserReducer = (
         total: state.currentUser.diamonds.totals.codewars.total + action.reward,
       };
 
+      const newCodewarsChallengeRecord: CodewarsDiamondsRecord = {
+        id: action.selectedChallenge.id,
+        rank: currentRankId,
+        diamondsEarned: action.reward,
+      };
+
       const updatedDiamonds: Diamonds = {
         ...state.currentUser.diamonds,
+        codewars: [
+          ...state.currentUser.diamonds.codewars,
+          newCodewarsChallengeRecord,
+        ],
         totals: {
           ...state.currentUser.diamonds.totals,
           codewars: updateCodewarsRanks,

@@ -199,6 +199,7 @@ class DBService {
 
     const list = currentUser.codewars.codeChallenges.list;
     const totals = currentUser.diamonds.totals;
+    const codewarsDiamondsRecords = currentUser.diamonds.codewars;
 
     try {
       session.startTransaction();
@@ -214,7 +215,12 @@ class DBService {
 
       await diamonds.updateOne(
         { email },
-        { $set: { totals: { ...totals,  } } },
+        {
+          $set: {
+            codewars: [...codewarsDiamondsRecords],
+            totals: { ...totals },
+          },
+        },
         { session }
       );
 

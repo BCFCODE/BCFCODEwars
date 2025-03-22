@@ -1,10 +1,11 @@
-export interface CodewarsDiamonds {
+export type CodewarsRank = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+
+export interface CodewarsDiamondsRecord {
   id: string;
-  rank: number;
+  rank: CodewarsRank;
   diamondsEarned: number;
 }
 
-export type CodewarsRank = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 export type CodewarsRanks = Record<CodewarsRank, number>;
 
 export interface CodewarsRankTotals {
@@ -21,7 +22,7 @@ export interface DiamondsTotal {
 export interface Diamonds {
   email: string;
   name: string;
-  codewars: CodewarsDiamonds[];
+  codewars: CodewarsDiamondsRecord[];
   totals: DiamondsTotal;
 }
 
