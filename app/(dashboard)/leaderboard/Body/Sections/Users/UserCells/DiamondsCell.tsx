@@ -17,7 +17,7 @@ const DiamondsCell = () => {
   // const { allUsers } = useAllUsersContext();
 
   // currentUserDispatch({
-  //   type: "UPDATE_CODEWARS_DIAMONDS_SUM",
+  //   type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
   //   reward: collectedDiamondsCount,
   // });
   const isCurrentUser = currentUser.email === diamondsData?.email;

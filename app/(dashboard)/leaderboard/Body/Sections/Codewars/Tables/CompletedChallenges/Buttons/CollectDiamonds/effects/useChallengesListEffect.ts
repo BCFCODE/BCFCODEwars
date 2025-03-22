@@ -13,12 +13,7 @@ const { postCurrentUser } = new APIdbService();
 interface Props {
   collectedDiamondsCount: number | undefined;
   success: boolean;
-  currentUser: CurrentUser;
-  currentUserDispatch: Dispatch<CurrentUserAction>;
   isDiamondIconButtonDisabled: boolean;
-  isCollected: boolean;
-  codewarsContextDispatch: Dispatch<CodewarsAction>;
-  completedChallengesRef: RefObject<CodewarsCompletedChallenge[] | undefined>;
 }
 export default function useChallengesListEffect({
   collectedDiamondsCount = 0,
@@ -50,11 +45,13 @@ export default function useChallengesListEffect({
       });
     }
 
-    if (success && !isDiamondsUpdatedRef.current) {
+    if (success && !isDiamondsUpdatedRef.current && selectedChallenge) {
       currentUserDispatch({
-        type: "UPDATE_CODEWARS_DIAMONDS_SUM",
+        type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
         reward: collectedDiamondsCount,
+        selectedChallenge,
       });
+      console.log("selectedChallenge", selectedChallenge);
       isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
     }
 
