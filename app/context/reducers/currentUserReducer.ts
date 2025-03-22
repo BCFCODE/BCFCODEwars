@@ -29,22 +29,28 @@ const currentUserReducer = (
           },
         },
       };
-    case "UPDATE_CODEWARS_DIAMONDS_SUM":
+    case "UPDATE_CODEWARS_DIAMONDS_SUM": {
+      const updatedDiamonds = {
+        ...state.currentUser.diamonds,
+        totals: {
+          ...state.currentUser.diamonds.totals,
+          codewars: {
+            ...state.currentUser.diamonds.totals.codewars,
+            total:
+              state.currentUser.diamonds.totals.codewars.total + action.reward,
+          },
+          total: state.currentUser.diamonds.totals.total + action.reward,
+        },
+      };
+      
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
-          diamonds: {
-            ...state.currentUser.diamonds,
-            totals: {
-              ...state.currentUser.diamonds.totals,
-              codewars:
-                state.currentUser.diamonds.totals.codewars + action.reward,
-              total: state.currentUser.diamonds.totals.total + action.reward,
-            },
-          },
+          diamonds: updatedDiamonds,
         },
       };
+    }
     case "SET_USER_DIAMONDS":
       return {
         ...state,

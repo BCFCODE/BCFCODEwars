@@ -5,6 +5,8 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/users";
 import { Dispatch, RefObject, useEffect, useRef } from "react";
 import APIdbService from "@/app/api/services/db-service";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 
 const { postCurrentUser } = new APIdbService();
 
@@ -20,16 +22,14 @@ interface Props {
 }
 export default function useChallengesListEffect({
   collectedDiamondsCount = 0,
-  codewarsContextDispatch,
-  completedChallengesRef,
-  currentUser,
-  currentUserDispatch,
   success,
   isDiamondIconButtonDisabled,
-  isCollected,
 }: Props) {
+  const { currentUser } = useCurrentUserContext();
   const { selectedChallenge } = useCodewarsContext();
+  const currentUserDispatch = useCurrentUserDispatchContext();
   const isListUpdatedRef = useRef(false);
+  const isDiamondsUpdatedRef = useRef(false);
 
   useEffect(() => {
     if (success && !isDiamondIconButtonDisabled) {
@@ -49,12 +49,18 @@ export default function useChallengesListEffect({
         list,
       });
     }
-  }, [success, isDiamondIconButtonDisabled]);
 
-  useEffect(() => {
-    currentUserDispatch({
-      type: "UPDATE_CODEWARS_DIAMONDS_SUM",
-      reward: collectedDiamondsCount,
-    });
-  }, [success]);
+    if (success && !isDiamondsUpdatedRef.current) {
+      currentUserDispatch({
+        type: "UPDATE_CODEWARS_DIAMONDS_SUM",
+        reward: collectedDiamondsCount,
+      });
+      isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
+    }
+
+    if (!success) {
+      isListUpdatedRef.current = false;
+      isDiamondsUpdatedRef.current = false;
+    }
+  }, [success, isDiamondIconButtonDisabled]);
 }

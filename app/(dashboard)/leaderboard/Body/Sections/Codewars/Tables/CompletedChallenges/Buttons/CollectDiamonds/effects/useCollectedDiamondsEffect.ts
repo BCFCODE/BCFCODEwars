@@ -24,11 +24,7 @@ export default function useCollectedDiamondsEffect({
   // const currentUserDispatch = useCurrentUserDispatchContext();
   useEffect(() => {
     if (isCollected && collectedDiamondsCount)
-      diamondsContextDispatch({
-        type: "INCREMENT_CODEWARS_DIAMONDS_SUM_AND_TOTAL",
-        codewarsCollectedDiamonds: collectedDiamondsCount,
-      }); // this is for Diamonds sum in header
-
+      diamondsContextDispatch({ type: "DISABLE_DIAMOND_ICON_BUTTON" }); 
     // Reset counter to avoid duplicate dispatches on subsequent renders
     collectButtonDispatch({ type: "RESET_COUNTER" });
   }, [isCollected, collectedDiamondsCount, diamondsContextDispatch]);

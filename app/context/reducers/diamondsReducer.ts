@@ -6,10 +6,7 @@ export type DiamondsAction =
   | { type: "SET_DIAMONDS"; payload: DiamondsContextState }
   | { type: "SET_LOADING"; isLoading: boolean }
   | { type: "SET_ERROR"; isError: boolean }
-  | {
-      type: "INCREMENT_CODEWARS_DIAMONDS_SUM_AND_TOTAL";
-      codewarsCollectedDiamonds: number;
-    };
+  | { type: "DISABLE_DIAMOND_ICON_BUTTON" };
 
 const diamondsReducer = (
   state: DiamondsContextState,
@@ -26,21 +23,10 @@ const diamondsReducer = (
       return { ...state, isLoading: action.isLoading };
     case "SET_ERROR":
       return { ...state, isError: action.isError };
-    case "INCREMENT_CODEWARS_DIAMONDS_SUM_AND_TOTAL":
-      if (state.data)
-        return {
-          ...state,
-          isDiamondIconButtonDisabled: false,
-          data: {
-            ...state.data,
-            totals: {
-              ...state.data.totals,
-              codewars:
-                state.data.totals.codewars + action.codewarsCollectedDiamonds,
-              total: state.data.totals.total + action.codewarsCollectedDiamonds,
-            },
-          },
-        };
+    case "DISABLE_DIAMOND_ICON_BUTTON":
+      if (state.data) {
+        return { ...state, isDiamondIconButtonDisabled: false };
+      }
     default:
       return state;
   }

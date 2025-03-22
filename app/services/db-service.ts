@@ -214,7 +214,7 @@ class DBService {
 
       await diamonds.updateOne(
         { email },
-        { $set: { totals: { ...totals } } },
+        { $set: { totals: { ...totals,  } } },
         { session }
       );
 

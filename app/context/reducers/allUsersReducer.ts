@@ -31,17 +31,17 @@ const allUsersReducer = (
       );
       return { ...state, allUsers };
     }
-    case "INCREASE_TOTAL_AND_CODEWARS_DIAMONDS_SUM": {
-      const allUsers = state.allUsers.map((user) => {
-        if (user.email === action.currentUser.email) {
-          const newUser = { ...user };
-          newUser.diamonds.totals.codewars += action.collectedDiamondsCount;
-          newUser.diamonds.totals.total += action.collectedDiamondsCount;
-          return newUser;
-        } else return user;
-      });
-      return { ...state, allUsers };
-    }
+    // case "INCREASE_TOTAL_AND_CODEWARS_DIAMONDS_SUM": {
+    //   const allUsers = state.allUsers.map((user) => {
+    //     if (user.email === action.currentUser.email) {
+    //       const newUser = { ...user };
+    //       newUser.diamonds.totals.codewars += action.collectedDiamondsCount;
+    //       newUser.diamonds.totals.total += action.collectedDiamondsCount;
+    //       return newUser;
+    //     } else return user;
+    //   });
+    //   return { ...state, allUsers };
+    // }
     default:
       return state;
   }
