@@ -1,6 +1,6 @@
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { TableCell } from "@mui/material";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import {
   collectedDiamondToggleStyles,
   diamondCellContainerStyles,

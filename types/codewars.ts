@@ -1,4 +1,4 @@
-import { RewardStatus } from "./diamonds";
+import { CodeChallengesFilter, RewardStatus } from "./diamonds";
 
 // types/codewars.ts
 interface OverallRanks {
@@ -35,6 +35,7 @@ export type CodewarsUser = {
   codeChallenges: {
     totalAuthored: number;
     totalCompleted: number;
+    challengeFilter: CodeChallengesFilter;
     list: CodewarsCompletedChallenge[];
   };
 };

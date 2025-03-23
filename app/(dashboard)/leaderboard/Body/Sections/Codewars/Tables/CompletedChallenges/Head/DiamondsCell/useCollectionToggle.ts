@@ -1,34 +1,38 @@
+import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { useRef } from "react";
 
 const useCollectionToggle = () => {
+  const currentUserDispatch = useCurrentUserDispatchContext();
   const collectionToggleState = useRef({
-    collected: true,
-    notCollected: false,
+    claimedDiamonds: true,
+    unclaimedDiamonds: false,
     both: false,
   });
 
-  const handle = {
-    selectNotCollectedDiamonds: () => {
-      const state = collectionToggleState.current;
+  const selectNotCollectedDiamonds = () => {
+    const state = collectionToggleState.current;
 
-      if (state.collected)
-        collectionToggleState.current.notCollected = !state.notCollected;
+    if (state.claimedDiamonds)
+      collectionToggleState.current.unclaimedDiamonds =
+        !state.unclaimedDiamonds;
 
-      collectionToggleState.current.both =
-        state.collected && state.notCollected;
-    },
-    selectCollectedDiamonds: () => {
-      const state = collectionToggleState.current;
+    collectionToggleState.current.both =
+      state.claimedDiamonds && state.unclaimedDiamonds;
+  };
+  const selectCollectedDiamonds = () => {
+    const state = collectionToggleState.current;
 
-      if (state.notCollected)
-        collectionToggleState.current.collected = !state.collected;
-      
-      collectionToggleState.current.both =
-        state.collected && state.notCollected;
-    },
+    if (state.unclaimedDiamonds)
+      collectionToggleState.current.claimedDiamonds = !state.claimedDiamonds;
+
+    collectionToggleState.current.both =
+      state.claimedDiamonds && state.unclaimedDiamonds;
   };
 
-  return { handle, collectionToggleState: collectionToggleState.current };
+  return {
+    handle: { selectCollectedDiamonds, selectNotCollectedDiamonds },
+    collectionToggleState: collectionToggleState.current,
+  };
 };
 
 export default useCollectionToggle;

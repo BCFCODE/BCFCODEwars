@@ -45,3 +45,9 @@ export enum RewardStatus {
   UnclaimedDiamonds = "unclaimedDiamonds",
   ClaimedDiamonds = "claimedDiamonds",
 }
+
+export enum CodeChallengesFilter {
+  UnclaimedDiamonds = "unclaimedDiamonds",
+  ClaimedDiamonds = "claimedDiamonds",
+  Both = "both",
+}
