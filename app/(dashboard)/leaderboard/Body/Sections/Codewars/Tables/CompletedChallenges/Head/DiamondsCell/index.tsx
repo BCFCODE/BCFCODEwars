@@ -9,9 +9,12 @@ import {
   notCollectedDiamondToggleStyles,
 } from "./styles";
 import useCollectionToggle from "./useCollectionToggle";
+import { CodeChallengesFilter } from "@/types/diamonds";
 
 const DiamondsCell = () => {
-  const [collection, setCollection] = useState(() => ["collected"]);
+  const [collection, setCollection] = useState(() => [
+    CodeChallengesFilter.ClaimedDiamonds,
+  ]);
   const { handle, collectionToggleState } = useCollectionToggle();
 
   const handleCollectionChange = (
@@ -19,8 +22,8 @@ const DiamondsCell = () => {
     newCollection: string[]
   ) => {
     if (newCollection.length) {
-      setCollection(newCollection);
-      console.log(collectionToggleState);
+      setCollection(newCollection as CodeChallengesFilter[]);
+      console.log(collectionToggleState, collection);
     }
   };
 
@@ -32,14 +35,14 @@ const DiamondsCell = () => {
         aria-label="diamond collection filter"
       >
         <DiamondToggleButton
-          value="collected"
+          value={CodeChallengesFilter.ClaimedDiamonds}
           aria-label="Show collected diamonds"
           onClick={handle.selectCollectedDiamonds}
         >
           <DiamondIcon sx={collectedDiamondToggleStyles} />
         </DiamondToggleButton>
         <DiamondToggleButton
-          value="notCollected"
+          value={CodeChallengesFilter.UnclaimedDiamonds}
           aria-label="Show uncollected diamonds"
           onClick={handle.selectNotCollectedDiamonds}
         >

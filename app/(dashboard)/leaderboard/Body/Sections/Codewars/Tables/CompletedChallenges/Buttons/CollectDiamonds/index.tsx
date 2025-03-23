@@ -12,7 +12,7 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import handleClick from "./utils/handleClick";
-import { RewardStatus } from "@/types/diamonds";
+import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 import DiamondsService from "@/app/services/diamonds-service";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
