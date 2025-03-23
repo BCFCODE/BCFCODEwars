@@ -15,7 +15,7 @@ const diamondSideMargin = 0.4;
 export const diamondCellContainerStyles = {
   ...textStyles,
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "right",
   // backgroundColor: "black",
   padding: 0,
   height: 51,
@@ -25,7 +25,7 @@ export const DiamondToggleGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   display: "flex",
   justifyContent: "center", // Ensures proper alignment
   alignItems: "center",
-  marginRight: 12.5,
+  marginRight: 8.5,
   // gap: theme.spacing(0.5), // Ensures consistent spacing
   minWidth: 80, // Restricts unnecessary width
 }));

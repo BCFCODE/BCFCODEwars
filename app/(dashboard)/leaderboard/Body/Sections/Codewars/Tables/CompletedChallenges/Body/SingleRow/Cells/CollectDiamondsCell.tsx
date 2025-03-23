@@ -8,7 +8,7 @@ interface Props {
 
 const CollectDiamondsCell = ({ children }: Props) => {
   return (
-    <TableCell sx={{...codewarsCellStyles}} align="right">
+    <TableCell sx={codewarsCellStyles} align="right">
       {children}
     </TableCell>
   );

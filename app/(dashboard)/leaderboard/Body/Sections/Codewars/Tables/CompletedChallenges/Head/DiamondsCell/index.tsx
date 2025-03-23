@@ -18,6 +18,7 @@ const DiamondsCell = () => {
   ) => {
     if (newCollection.length) {
       setCollection(newCollection);
+      console.log(collection)
     }
   };
 
