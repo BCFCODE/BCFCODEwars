@@ -15,3 +15,4 @@ const CollectDiamondsCell = ({ children }: Props) => {
 };
 
 export default CollectDiamondsCell;
+ 

@@ -1,5 +1,7 @@
 import { SxProps } from "@mui/material";
 
+export const diamondCollectedColor = "customPalette.roseGold";
+
 export const diamondStyles: SxProps = {
   marginTop: 0.4,
   color: "primary.main",
@@ -46,5 +48,3 @@ export const collectedDiamondStyles: SxProps = {
 export const iconButtonStyles: SxProps = {
   marginLeft: -1,
 };
-
-
