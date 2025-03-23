@@ -2,7 +2,7 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useRef } from "react";
-import useSwitch from "../Head/SwitchCell/useSwitch";
+import useSwitch from "../Head/DateCompletedCell/useSwitch";
 
 const useFilteredChallenges = () => {
   const { currentUser } = useCurrentUserContext();

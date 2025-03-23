@@ -1,6 +1,6 @@
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { TableCell } from "@mui/material";
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   collectedDiamondToggleStyles,
   diamondCellContainerStyles,
@@ -8,17 +8,19 @@ import {
   DiamondToggleGroup,
   notCollectedDiamondToggleStyles,
 } from "./styles";
+import useCollectionToggle from "./useCollectionToggle";
 
 const DiamondsCell = () => {
-  const [collection, setCollection] = React.useState(() => ["collected"]);
+  const [collection, setCollection] = useState(() => ["collected"]);
+  const { handle, collectionToggleState } = useCollectionToggle();
 
-  const handleCollections = (
+  const handleCollectionChange = (
     event: React.MouseEvent<HTMLElement>,
     newCollection: string[]
   ) => {
     if (newCollection.length) {
       setCollection(newCollection);
-      console.log(collection)
+      console.log(collectionToggleState);
     }
   };
 
@@ -26,18 +28,20 @@ const DiamondsCell = () => {
     <TableCell sx={diamondCellContainerStyles} align="center">
       <DiamondToggleGroup
         value={collection}
-        onChange={handleCollections}
+        onChange={handleCollectionChange}
         aria-label="diamond collection filter"
       >
         <DiamondToggleButton
           value="collected"
           aria-label="Show collected diamonds"
+          onClick={handle.selectCollectedDiamonds}
         >
           <DiamondIcon sx={collectedDiamondToggleStyles} />
         </DiamondToggleButton>
         <DiamondToggleButton
           value="notCollected"
           aria-label="Show uncollected diamonds"
+          onClick={handle.selectNotCollectedDiamonds}
         >
           <DiamondIcon sx={notCollectedDiamondToggleStyles} />
         </DiamondToggleButton>

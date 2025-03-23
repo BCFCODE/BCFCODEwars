@@ -1,19 +1,10 @@
-import {
-  codewarsCellStyles,
-  textStyles,
-} from "@/app/(dashboard)/leaderboard/styles";
-import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
-import { FormControlLabel, TableCell } from "@mui/material";
-import Switch from "@mui/material/Switch";
+import { textStyles } from "@/app/(dashboard)/leaderboard/styles";
+import { TableCell } from "@mui/material";
 
-const label = {
-  inputProps: { "aria-label": "Switch for collecting diamonds from codewars" },
-};
-
-export default function SwitchCell() {
+export default function DateCompletedCell() {
   return (
     <TableCell sx={textStyles} align="left">
-    Completed At
+      Completed At
     </TableCell>
   );
 }
