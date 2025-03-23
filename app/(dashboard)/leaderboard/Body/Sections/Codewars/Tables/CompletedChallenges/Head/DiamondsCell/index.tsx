@@ -15,7 +15,7 @@ const DiamondsCell = () => {
   const [collection, setCollection] = useState(() => [
     CodeChallengesFilter.ClaimedDiamonds,
   ]);
-  const { handle, collectionToggleState } = useCollectionToggle();
+  const { handle } = useCollectionToggle();
 
   const handleCollectionChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -23,7 +23,6 @@ const DiamondsCell = () => {
   ) => {
     if (newCollection.length) {
       setCollection(newCollection as CodeChallengesFilter[]);
-      console.log(collectionToggleState, collection);
     }
   };
 

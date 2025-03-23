@@ -1,5 +1,6 @@
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import { useRef } from "react";
+import { CodeChallengesFilter } from "@/types/diamonds";
+import { useEffect, useRef, useState } from "react";
 
 const useCollectionToggle = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
@@ -8,6 +9,21 @@ const useCollectionToggle = () => {
     unclaimedDiamonds: false,
     both: false,
   });
+
+  const [filterName, setFilterName] = useState<CodeChallengesFilter>(
+    CodeChallengesFilter.ClaimedDiamonds
+  );
+
+  const updateFilter = () => {
+    const state = collectionToggleState.current;
+    const newFilter = state.both
+      ? CodeChallengesFilter.Both
+      : state.claimedDiamonds
+        ? CodeChallengesFilter.ClaimedDiamonds
+        : CodeChallengesFilter.UnclaimedDiamonds;
+
+    newFilter !== filterName && setFilterName(newFilter);
+  };
 
   const selectNotCollectedDiamonds = () => {
     const state = collectionToggleState.current;
@@ -18,7 +34,10 @@ const useCollectionToggle = () => {
 
     collectionToggleState.current.both =
       state.claimedDiamonds && state.unclaimedDiamonds;
+
+    updateFilter(); // Update only when necessary
   };
+
   const selectCollectedDiamonds = () => {
     const state = collectionToggleState.current;
 
@@ -27,7 +46,13 @@ const useCollectionToggle = () => {
 
     collectionToggleState.current.both =
       state.claimedDiamonds && state.unclaimedDiamonds;
+
+    updateFilter(); // Update only when necessary
   };
+
+  useEffect(() => {
+    currentUserDispatch({ type: "UPDATE_COLLECTION_FILTER", filterName });
+  }, [filterName]);
 
   return {
     handle: { selectCollectedDiamonds, selectNotCollectedDiamonds },

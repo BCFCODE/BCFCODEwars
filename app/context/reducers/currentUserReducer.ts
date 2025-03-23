@@ -1,5 +1,6 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import {
+  CodeChallengesFilter,
   CodewarsDiamondsRecord,
   CodewarsRank,
   CodewarsRanks,
@@ -19,7 +20,7 @@ export type CurrentUserAction =
     }
   | { type: "SET_USER_DIAMONDS"; diamonds: Diamonds }
   | { type: "SET_COLLAPSE_OPEN"; isCollapse: boolean }
-  | { type: "UPDATE_COLLECTION_FILTER"; filterName: string };
+  | { type: "UPDATE_COLLECTION_FILTER"; filterName: CodeChallengesFilter };
 
 const currentUserReducer = (
   state: CurrentUserState,
@@ -93,15 +94,20 @@ const currentUserReducer = (
       };
     case "SET_COLLAPSE_OPEN":
       return { ...state, isCollapse: action.isCollapse };
-    case "UPDATE_COLLECTION_FILTER": {
-      // TODO
+    case "UPDATE_COLLECTION_FILTER":
       return {
         ...state,
         currentUser: {
           ...state.currentUser,
+          codewars: {
+            ...state.currentUser.codewars,
+            codeChallenges: {
+              ...state.currentUser.codewars.codeChallenges,
+              challengeFilter: action.filterName,
+            },
+          },
         },
       };
-    }
     default:
       return state;
   }

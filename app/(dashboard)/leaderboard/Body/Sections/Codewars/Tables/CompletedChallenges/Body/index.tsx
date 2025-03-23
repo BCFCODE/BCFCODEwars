@@ -25,7 +25,7 @@ export default function Body() {
   return (
     <>
       <TableBody>
-        {list.map((challenge) => (
+        {visibleChallenges.map((challenge) => (
           <SingleRow key={challenge.id} {...{ challenge }}>
             <CollectDiamondsCell>
               <CollectDiamonds currentChallenge={challenge} />
