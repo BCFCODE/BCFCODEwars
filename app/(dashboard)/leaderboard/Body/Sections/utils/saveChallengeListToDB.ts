@@ -16,5 +16,5 @@ export default async function saveChallengeListToDB({
   currentUser,
 }: Props) {
   const userId = currentUser.codewars.id;
-  saveChallengesList(list, userId);
+  saveChallengesList({ list, userId });
 }

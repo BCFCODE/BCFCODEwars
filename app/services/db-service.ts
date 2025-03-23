@@ -140,10 +140,13 @@ class DBService {
     await codewars.insertOne(newUser);
   };
 
-  saveChallengesList = async (
-    list: CodewarsCompletedChallenge[],
-    userId: string
-  ) => {
+  saveChallengesList = async ({
+    list,
+    userId,
+  }: {
+    list: CodewarsCompletedChallenge[];
+    userId: string;
+  }) => {
     const { db } = await this.getDatabase();
     const codewars: Collection<CodewarsUser> =
       db.collection<CodewarsUser>("codewars");
