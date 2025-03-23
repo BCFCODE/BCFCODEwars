@@ -61,6 +61,7 @@ const currentUserReducer = (
         id: action.selectedChallenge.id,
         rank: currentRankId,
         diamondsEarned: action.reward,
+        collectedAt: new Date(),
       };
 
       const updatedDiamonds: Diamonds = {

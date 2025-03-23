@@ -4,6 +4,7 @@ export interface CodewarsDiamondsRecord {
   id: string;
   rank: CodewarsRank;
   diamondsEarned: number;
+  collectedAt: Date;
 }
 
 export type CodewarsRanks = Record<CodewarsRank, number>;
