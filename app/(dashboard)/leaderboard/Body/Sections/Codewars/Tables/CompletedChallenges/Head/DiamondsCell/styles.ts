@@ -1,6 +1,7 @@
 import {
   diamondCollectedColor,
   diamondStyles,
+  textStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
 import {
   styled,
@@ -10,6 +11,15 @@ import {
 } from "@mui/material";
 
 const diamondSideMargin = 0.4;
+
+export const diamondCellContainerStyles = {
+  ...textStyles,
+  display: "flex",
+  justifyContent: "center",
+  // backgroundColor: "black",
+  padding: 0,
+  height: 51,
+};
 
 export const DiamondToggleGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   display: "flex",

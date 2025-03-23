@@ -1,9 +1,9 @@
-import { textStyles } from "@/app/(dashboard)/leaderboard/styles";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { TableCell } from "@mui/material";
 import React from "react";
 import {
   collectedDiamondToggleStyles,
+  diamondCellContainerStyles,
   DiamondToggleButton,
   DiamondToggleGroup,
   notCollectedDiamondToggleStyles,
@@ -22,17 +22,7 @@ const DiamondsCell = () => {
   };
 
   return (
-    <TableCell
-      sx={{
-        ...textStyles,
-        // backgroundColor: "black",
-        padding: 0,
-        display: "flex",
-        height: 51,
-        justifyContent: "center",
-      }}
-      align="center"
-    >
+    <TableCell sx={diamondCellContainerStyles} align="center">
       <DiamondToggleGroup
         value={collection}
         onChange={handleCollections}
