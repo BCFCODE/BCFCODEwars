@@ -6,14 +6,25 @@ import SingleRow from "./SingleRow";
 import CollectDiamondsCell from "./SingleRow/Cells/CollectDiamondsCell";
 import CollectDiamonds from "../Buttons/CollectDiamonds";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import { CodeChallengesFilter } from "@/types/diamonds";
 
 export default function Body() {
   const { currentUser } = useCurrentUserContext();
-console.log('currentUser in Body for filtering', currentUser)
+  console.log("currentUser in Body for filtering", currentUser);
+
+  const activeFilter: Omit<CodeChallengesFilter, "both"> =
+    currentUser.codewars.codeChallenges.challengeFilter;
+
+  const list = currentUser.codewars.codeChallenges.list;
+
+  const visibleChallenges = list.filter(
+    (challenge) => challenge.rewardStatus === activeFilter
+  );
+
   return (
     <>
       <TableBody>
-        {currentUser.codewars.codeChallenges.list.map((challenge) => (
+        {list.map((challenge) => (
           <SingleRow key={challenge.id} {...{ challenge }}>
             <CollectDiamondsCell>
               <CollectDiamonds currentChallenge={challenge} />
