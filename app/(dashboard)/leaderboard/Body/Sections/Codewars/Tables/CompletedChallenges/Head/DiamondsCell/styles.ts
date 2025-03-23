@@ -15,6 +15,7 @@ export const DiamondToggleGroup = styled(ToggleButtonGroup)(({ theme }) => ({
   display: "flex",
   justifyContent: "center", // Ensures proper alignment
   alignItems: "center",
+  marginRight: 12.5,
   // gap: theme.spacing(0.5), // Ensures consistent spacing
   minWidth: 80, // Restricts unnecessary width
 }));

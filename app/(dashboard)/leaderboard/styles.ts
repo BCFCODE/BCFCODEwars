@@ -30,7 +30,7 @@ export const codewarsCellStyles: SxProps = {
 
 export const diamondBoxStyles: SxProps = {
   display: "flex",
-  justifyContent: "flex-end",
+  justifyContent: "center",
   alignItems: "center",
   height: 5,
 };

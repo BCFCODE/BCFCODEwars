@@ -13,18 +13,7 @@ const label = {
 export default function SwitchCell() {
   return (
     <TableCell sx={textStyles} align="left">
-      <FormControlLabel
-        control={
-          <Switch
-            {...label}
-            // checked={showNewChallenges}
-            // onChange={() => setShowNewChallenges((prev) => !prev)}
-            color="primary"
-          />
-        }
-        label="Show New"
-        sx={{ color: "white" }}
-      />
+    Completed At
     </TableCell>
   );
 }

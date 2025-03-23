@@ -22,7 +22,17 @@ const DiamondsCell = () => {
   };
 
   return (
-    <TableCell sx={textStyles} align="center">
+    <TableCell
+      sx={{
+        ...textStyles,
+        // backgroundColor: "black",
+        padding: 0,
+        display: "flex",
+        height: 51,
+        justifyContent: "center",
+      }}
+      align="center"
+    >
       <DiamondToggleGroup
         value={collection}
         onChange={handleCollections}
