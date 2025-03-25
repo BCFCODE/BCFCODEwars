@@ -5,12 +5,12 @@ import React from "react";
 
 const MemberSinceCell = () => {
   const {
-    currentUser: { createdAt },
+    currentUser: { firstLogin },
   } = useCurrentUserContext();
 
   return (
     <TableCell sx={codewarsCellStyles} align="right">
-      {new Date(createdAt).toLocaleDateString()}
+      {new Date(firstLogin).toLocaleDateString()}
     </TableCell>
   );
 };

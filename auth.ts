@@ -85,6 +85,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const isPublicPage = request.nextUrl.pathname.startsWith("/public");
 
       if (isPublicPage || isLoggedIn) {
+        
         return true;
       }
 

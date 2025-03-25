@@ -1,6 +1,6 @@
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 import { GoogleUser } from "@/types/google";
-import { CurrentUser } from "@/types/users";
+import { CurrentUser, DatabaseUser } from "@/types/users";
 import {
   ClientSession,
   Collection,
@@ -104,8 +104,9 @@ class DBService {
             diamonds: 1,
             codewars: 1,
             image: 1,
-            createdAt: 1,
+            firstLogin: 1,
             lastLogin: 1,
+            activity: 1,
           },
         },
       ])
@@ -117,9 +118,9 @@ class DBService {
     return await codewars.find<CodewarsUser>({}).toArray();
   };
 
-  getUser = async (email: string): Promise<WithId<Document> | null> => {
+  getUser = async (email: string): Promise<DatabaseUser | null> => {
     const { users } = await this.getCollections();
-    return users.findOne({ email });
+    return users.findOne<DatabaseUser>({ email });
   };
 
   saveNewGoogleUser = async (user: GoogleUser) => {
@@ -128,9 +129,16 @@ class DBService {
       email: user.email,
       name: user.name,
       image: user.image,
-      createdAt: new Date().toISOString(),
-      lastLogin: new Date().toISOString(),
-      // codewars: { isConnected: false },
+      firstLogin: new Date(),
+      lastLogin: new Date(),
+      activity: {
+        firstLogin: new Date(),
+        lastLogin: new Date(),
+        lastLogout: undefined,
+        loginHistory: [new Date()],
+        logoutHistory: [],
+        isActiveSession: true,
+      },
     });
   };
 

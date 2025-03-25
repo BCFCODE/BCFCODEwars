@@ -17,7 +17,7 @@ export default function LeaderBoardPage() {
   // console.log(">>>>>>>>>>>> useAllUsersContext error", error);
   // // Conditionally render the error UI when error is true.
   
-  console.log('isError in loading leaderboard', error)
+  // console.log('isError in loading leaderboard', error)
   if (error)
     return <LeaderboardLoadingError onRetry={() => router.refresh()} />;
 

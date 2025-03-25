@@ -1,12 +1,13 @@
 import { GoogleUser } from "@/types/google";
 import DBService from "./db-service";
+import { DatabaseUser } from "@/types/users";
 
 const {
   initializeDiamonds,
-  updateSingleUser,
   saveNewGoogleUser,
   getUser,
   saveNewCodewarsUser,
+  updateSingleUser,
 } = new DBService();
 
 class GoogleService {
@@ -15,16 +16,24 @@ class GoogleService {
 
     const existingUser = await getUser(email);
 
-    if (existingUser) {
-      updateSingleUser(email, {
-        lastLogin: new Date().toISOString(),
-        image,
-        name,
-      });
-    } else {
+    // Check if user is repetitive or not
+    if (!existingUser) {
       initializeDiamonds(email);
       saveNewCodewarsUser(email);
       saveNewGoogleUser(user);
+    } else {
+      updateSingleUser(existingUser.email, {
+        ...existingUser,
+        name,
+        image,
+        lastLogin: new Date(),
+        activity: {
+          ...existingUser.activity,
+          lastLogin: new Date(),
+          loginHistory: [...existingUser.activity.loginHistory, new Date()],
+          isActiveSession: true,
+        },
+      });
     }
   };
 }

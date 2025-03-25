@@ -4,14 +4,14 @@ import GoogleService from "@/app/services/google-service";
 
 const { handleGoogleSignIn } = new GoogleService();
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await req.json();
+    const body = await request.json();
     const newUser = body.user;
+    // const processedUser =
+    await handleGoogleSignIn(newUser);
 
-    const processedUser = await handleGoogleSignIn(newUser);
-
-    return NextResponse.json({ user: processedUser });
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: any) {
     console.error("Error processing user data:", error);
     return NextResponse.json(
