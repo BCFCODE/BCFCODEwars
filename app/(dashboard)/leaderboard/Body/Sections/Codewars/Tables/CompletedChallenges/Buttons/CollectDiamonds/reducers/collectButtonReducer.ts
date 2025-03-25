@@ -64,15 +64,6 @@ export default function collectButtonReducer(
       return { ...state, success: false };
     case "ERROR?":
       return { ...state, isError: action.isError };
-    // case "RESET_COUNTER":
-    //   return {
-    //     ...state,
-    //     // isLoading: false,
-    //     // isError: false,
-    //     // isCollected: false,
-    //     // counter: 0,
-    //     // collectedDiamondsCount: undefined,
-    //   };
     default:
       return state;
   }

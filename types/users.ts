@@ -1,3 +1,4 @@
+import { Session } from "next-auth";
 import { CodewarsUser } from "./codewars";
 import { Diamonds } from "./diamonds";
 import { GoogleUser } from "./google";
@@ -16,7 +17,11 @@ export interface UserActivity {
   isActiveSession: boolean;
 }
 
-export interface DatabaseUser extends BaseUser {
+export interface CurrentUserState {
+  session?: Session;
+}
+
+export interface DatabaseUser extends BaseUser, CurrentUserState {
   codewars?: CodewarsUser;
   diamonds?: Diamonds;
   activity: UserActivity;

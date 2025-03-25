@@ -11,7 +11,7 @@ import { NextAppProvider } from "@toolpad/core/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
-import { signIn, signOut } from "next-auth/react";
+import { SessionProvider, signIn, signOut } from "next-auth/react";
 import { headers } from "next/headers";
 import Image from "next/image";
 import * as React from "react";
@@ -23,6 +23,8 @@ import DiamondsProvider from "./context/providers/Diamonds";
 import AllUsersProvider from "./context/providers/AllUsers";
 import LeaderBoardPage from "./(dashboard)/leaderboard/page";
 import useActivityTracker from "@/hooks/useActivityTracker";
+import { Session } from "next-auth";
+import CurrentUserProvider from "./context/providers/CurrentUser";
 
 export const metadata: Metadata = {
   title: {
@@ -131,13 +133,12 @@ interface Props {
 }
 
 export default async function RootLayout({ children }: Props) {
-  
   // Await headers() and ensure its operations are performed synchronously after awaiting
   const headersList = await headers();
   const forwardedProto = headersList.get("x-forwarded-proto");
 
   // Await the auth call after resolving headers
-  const session = await auth(); // Now fully async
+  const session: Session | null = await auth(); // Now fully async
 
   return (
     <html
@@ -156,9 +157,11 @@ export default async function RootLayout({ children }: Props) {
               authentication={AUTHENTICATION}
               theme={theme}
             >
-              <AllUsersProvider>
-                <DiamondsProvider>{children}</DiamondsProvider>
-              </AllUsersProvider>
+              <SessionProvider session={session}>
+                <AllUsersProvider>
+                  <DiamondsProvider>{children}</DiamondsProvider>
+                </AllUsersProvider>
+              </SessionProvider>
               <Analytics />
               <SpeedInsights />
             </NextAppProvider>

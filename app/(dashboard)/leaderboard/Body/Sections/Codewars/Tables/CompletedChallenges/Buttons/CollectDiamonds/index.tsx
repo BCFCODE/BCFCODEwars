@@ -39,7 +39,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     success,
     allUsersDispatch,
   } = useCollectDiamonds();
-
+  console.log("currentUser in CollectDiamonds", currentUser);
   if (currentChallenge.rewardStatus === RewardStatus.ClaimedDiamonds)
     return (
       <Box sx={diamondBoxStyles}>

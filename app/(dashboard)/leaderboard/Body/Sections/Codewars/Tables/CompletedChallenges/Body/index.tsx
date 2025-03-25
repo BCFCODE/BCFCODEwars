@@ -10,7 +10,7 @@ import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 
 export default function Body() {
   const { currentUser } = useCurrentUserContext();
-  console.log("currentUser in Body for filtering", currentUser);
+  // console.log("currentUser in Body for filtering", currentUser);
 
   const activeFilter: CodeChallengesFilter =
     currentUser.codewars.codeChallenges.challengeFilter;

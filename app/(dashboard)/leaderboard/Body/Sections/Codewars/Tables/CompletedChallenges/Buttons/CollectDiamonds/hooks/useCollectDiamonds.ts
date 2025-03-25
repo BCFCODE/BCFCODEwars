@@ -53,13 +53,8 @@ export default function useCollectDiamonds() {
 
   useChallengesListEffect({
     collectedDiamondsCount,
-    codewarsContextDispatch,
     isDiamondIconButtonDisabled,
-    completedChallengesRef,
-    currentUser,
-    currentUserDispatch,
     success,
-    isCollected,
   });
 
   return {
