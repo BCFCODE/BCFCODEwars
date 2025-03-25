@@ -1,4 +1,4 @@
-import DBService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db-service";
 import { auth } from "@/auth";
 import { CodewarsUser } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
@@ -8,7 +8,7 @@ import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect";
 import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
 
-const { getDatabase, getSingleCodewarsUser } = new DBService();
+const { getDatabase, getSingleCodewarsUser } = new DatabaseService();
 
 const WarsPage = async () => {
   const session = await auth();

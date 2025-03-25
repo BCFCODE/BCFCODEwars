@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 export default function SignIn() {
   // const { isLoading } = useAllUsersContext();
-
+  console.log("SignIn page focussed... (Logged out occurred)");
   // if (isLoading)
   //   return (
   //     <LoadingUI

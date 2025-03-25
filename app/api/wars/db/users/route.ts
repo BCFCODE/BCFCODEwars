@@ -1,9 +1,9 @@
 // app/api/wars/users/route.ts
 
-import DBService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db-service";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getUsers } = new DBService();
+const { getUsers } = new DatabaseService();
 
 export async function GET(request: NextRequest) {
   try {

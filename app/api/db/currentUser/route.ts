@@ -1,8 +1,8 @@
-import DBService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db-service";
 import { CurrentUser } from "@/types/users";
 import { NextRequest, NextResponse } from "next/server";
 
-const { updateCurrentUser } = new DBService();
+const { updateCurrentUser } = new DatabaseService();
 
 export async function POST(request: NextRequest) {
   try {

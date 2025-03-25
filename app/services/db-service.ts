@@ -10,7 +10,7 @@ import {
   WithId,
 } from "mongodb";
 
-class DBService {
+class DatabaseService {
   private clientPromise: Promise<MongoClient>;
 
   constructor() {
@@ -264,4 +264,4 @@ class DBService {
   };
 }
 
-export default DBService;
+export default DatabaseService;

@@ -33,7 +33,7 @@ export const providerMap = providers.map((provider) => ({
   name: provider.name,
 }));
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
   providers,
   secret: process.env.AUTH_SECRET,
   cookies: {
@@ -85,13 +85,29 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const isPublicPage = request.nextUrl.pathname.startsWith("/public");
 
       if (isPublicPage || isLoggedIn) {
-        
         return true;
       }
 
       return false;
     },
   },
+  events: {
+    async signOut(message) {
+      if ("token" in message && message.token) {
+        const token = message.token;
+        const email = token.email;
+        if (email) {
+          try {
+            await fetch(`${baseURL}/api/auth/logout`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email }),
+            });
+          } catch (error) {
+            console.error("Error logging sign-out:", error);
+          }
+        }
+      }
+    },
+  },
 });
-
-

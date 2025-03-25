@@ -1,10 +1,10 @@
 "use server";
 
-import DBService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/users";
 
-const { saveChallengesList } = new DBService();
+const { saveChallengesList } = new DatabaseService();
 
 interface Props {
   currentUser: CurrentUser;

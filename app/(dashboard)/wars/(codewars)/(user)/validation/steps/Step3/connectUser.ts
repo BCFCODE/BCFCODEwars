@@ -1,10 +1,10 @@
 "use server";
 
-import DBService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db-service";
 import { StepProps } from "../stepSwitch";
 import { CodeChallengesFilter } from "@/types/diamonds";
 
-const { updateSingleCodewarsUser } = new DBService();
+const { updateSingleCodewarsUser } = new DatabaseService();
 
 const handleAddUserToDB = async ({ session, codewars }: StepProps) => {
   updateSingleCodewarsUser(session?.user.email, {

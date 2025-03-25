@@ -1,5 +1,5 @@
 import { GoogleUser } from "@/types/google";
-import DBService from "./db-service";
+import DatabaseService from "./db-service";
 import { DatabaseUser } from "@/types/users";
 
 const {
@@ -8,7 +8,7 @@ const {
   getUser,
   saveNewCodewarsUser,
   updateSingleUser,
-} = new DBService();
+} = new DatabaseService();
 
 class GoogleService {
   handleGoogleSignIn = async (user: GoogleUser): Promise<void> => {

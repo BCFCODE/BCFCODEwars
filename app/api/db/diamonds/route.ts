@@ -1,9 +1,9 @@
 // app/api/db/diamonds/route.ts
 
-import DBService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db-service";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getDiamonds } = new DBService();
+const { getDiamonds } = new DatabaseService();
 
 export async function GET(request: NextRequest) {
   try {

@@ -1,9 +1,9 @@
-import DBService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db-service";
 import { MongoClient } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import seedData from "./data";
 
-const { getCollections } = new DBService();
+const { getCollections } = new DatabaseService();
 
 const uri: string | undefined = process.env.MONGODB_URI;
 

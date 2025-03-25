@@ -4,10 +4,10 @@ import {
 } from "@/types/codewars";
 import CodewarsService from "./codewars-service";
 import useDiamondsContext from "../context/hooks/diamonds/useDiamondsContext";
-import DBService from "./db-service";
+import DatabaseService from "./db-service";
 
 // const { getRank } = new CodewarsService();
-// const { saveChallengesList } = new DBService();
+// const { saveChallengesList } = new DatabaseService();
 
 interface ScoreMap {
   codewars: { [key: number]: number };
