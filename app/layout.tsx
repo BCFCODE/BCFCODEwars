@@ -22,6 +22,7 @@ import theme from "../theme";
 import DiamondsProvider from "./context/providers/Diamonds";
 import AllUsersProvider from "./context/providers/AllUsers";
 import LeaderBoardPage from "./(dashboard)/leaderboard/page";
+import useActivityTracker from "@/hooks/useActivityTracker";
 
 export const metadata: Metadata = {
   title: {
@@ -130,6 +131,7 @@ interface Props {
 }
 
 export default async function RootLayout({ children }: Props) {
+  
   // Await headers() and ensure its operations are performed synchronously after awaiting
   const headersList = await headers();
   const forwardedProto = headersList.get("x-forwarded-proto");

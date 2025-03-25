@@ -9,13 +9,13 @@ const Body = () => {
   console.log("allUsers in Body", allUsers);
   return (
     <TableBody>
-      {isLoading ? (
+      {/* {isLoading ? (
         <Skeleton />
-      ) : (
+      ) : ( */}
         <Users>
           <UsersSection />
         </Users>
-      )}
+      {/* )} */}
     </TableBody>
   );
 };

@@ -1,7 +1,10 @@
 "use client";
 
 import APIdbService from "@/app/api/services/db-service";
-import allUsersReducer, { AllUsersAction } from "@/app/context/reducers/allUsersReducer";
+import allUsersReducer, {
+  AllUsersAction,
+} from "@/app/context/reducers/allUsersReducer";
+import useActivityTracker from "@/hooks/useActivityTracker";
 import { CurrentUser } from "@/types/users";
 
 import {
@@ -36,6 +39,7 @@ export const AllUsersDispatchContext =
   createContext<Dispatch<AllUsersAction> | null>(null);
 
 const AllUsersProvider = ({ children }: Props) => {
+  const isActive = useActivityTracker();
   const [allUsersContext, dispatch] = useReducer(
     allUsersReducer,
     initialDBAllUsersState
@@ -49,7 +53,7 @@ const AllUsersProvider = ({ children }: Props) => {
         dispatch({ type: "SET_ERROR", error: false });
 
         const fetchedUsers = await getUsers({ cache: "no-store" });
-
+        
         if (!fetchedUsers.success || fetchedUsers.error) {
           console.log("error in AllUsersProvider");
           dispatch({ type: "SET_LOADING", loading: false });

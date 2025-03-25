@@ -5,7 +5,7 @@ import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
 
 const ButtonCell = () => {
   return (
-    <TableCell sx={{ ...codewarsCellStyles }} align="left">
+    <TableCell sx={{ ...codewarsCellStyles, maxWidth: 5 }} align="left">
       <OpenButton />
     </TableCell>
   );
