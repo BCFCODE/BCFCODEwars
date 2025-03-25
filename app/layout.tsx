@@ -21,6 +21,7 @@ import { montserrat } from "../lib/fonts";
 import theme from "../theme";
 import DiamondsProvider from "./context/providers/Diamonds";
 import AllUsersProvider from "./context/providers/AllUsers";
+import LeaderBoardPage from "./(dashboard)/leaderboard/page";
 
 export const metadata: Metadata = {
   title: {
@@ -153,7 +154,9 @@ export default async function RootLayout({ children }: Props) {
               authentication={AUTHENTICATION}
               theme={theme}
             >
-              {children}
+              <AllUsersProvider>
+                <DiamondsProvider>{children}</DiamondsProvider>
+              </AllUsersProvider>
               <Analytics />
               <SpeedInsights />
             </NextAppProvider>
