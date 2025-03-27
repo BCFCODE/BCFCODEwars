@@ -137,7 +137,7 @@ const UnderDevelopment = async ({ pageName }: Props) => {
           }}
         >
           You are currently viewing **version 1.2.1** of the site. The section
-          you're in is still under construction, but the **Codewars account
+          you&apos;re in is still under construction, but the **Codewars account
           connection** feature is ready! Click the button below to access it.
         </Typography>
         <Link href='/wars'>
