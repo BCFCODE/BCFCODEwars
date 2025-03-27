@@ -29,10 +29,10 @@ const { getUsers } = new APIdbService();
 export default async function SignIn() {
   const fetchedUsers = await getUsers({ cache: "no-store" });
   const allUsers = fetchedUsers.users as CurrentUser[];
-  console.log("SignIn page focussed... (Logged out occurred)");
-  console.log("allUsers in auth/signin", allUsers);
   const session = await auth();
-  // const { isLoading } = useAllUsersContext();
+  // console.log("SignIn page focussed... (Logged out occurred)");
+  // console.log("allUsers in auth/signin", allUsers);
+  // const { isLoading } = useAllUsersContext(); 
   // if (isLoading)
   //   return (
   //     <LoadingUI

@@ -50,7 +50,7 @@ const AllUsersProvider = ({ children }: Props) => {
     initialDBAllUsersState
   );
   // const sessionRef = useRef(session);
-  console.log("session in AllUsersProvider", session);
+  // console.log("session in AllUsersProvider", session);
   // if (session !== null) sessionRef.current = session;
 
   useEffect(() => {
