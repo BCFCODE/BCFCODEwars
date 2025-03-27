@@ -9,6 +9,8 @@ const Large = () => {
       variant="caption"
       sx={{
         m: 1,
+        // ml: 2,
+        mb: 0,
         whiteSpace: "nowrap",
         overflow: "hidden",
         textOverflow: "ellipsis",

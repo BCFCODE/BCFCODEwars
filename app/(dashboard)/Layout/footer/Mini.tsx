@@ -8,7 +8,7 @@ const Mini = () => {
       variant="caption"
       sx={{
         m: 1,
-        // mb: 1,
+        mb: 0,
         whiteSpace: "nowrap",
         overflow: "hidden",
         textOverflow: "ellipsis",
@@ -28,7 +28,7 @@ const Mini = () => {
           position: "absolute",
           bottom: 20,
           left: -6,
-          letterSpacing: -5,
+          letterSpacing: -3.5,
           fontSize: "0.95em",
         }}
       >
