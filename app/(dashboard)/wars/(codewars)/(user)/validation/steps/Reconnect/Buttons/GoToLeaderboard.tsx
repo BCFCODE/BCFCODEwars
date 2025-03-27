@@ -2,17 +2,15 @@
 
 import { Button } from "@mui/material";
 import Link from "next/link";
-import React from "react";
 
-const ReconnectButton = () => {
+const GoToLeaderboard = () => {
   return (
-    <Link href="/wars/validation/steps/1">
+    <Link href="/leaderboard">
       <Button
         variant="outlined"
         color="primary"
         size="large"
         sx={{
-          width: 210,
           mt: 2,
           px: 4,
           py: 1.5,
@@ -22,10 +20,10 @@ const ReconnectButton = () => {
           boxShadow: 3,
         }}
       >
-        Reconnect
+        Go to Leaderboard
       </Button>
     </Link>
   );
 };
 
-export default ReconnectButton;
+export default GoToLeaderboard;

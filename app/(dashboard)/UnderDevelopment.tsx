@@ -1,12 +1,19 @@
-
 import { auth } from "@/auth";
-import { Avatar, Box, CircularProgress, Fade, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  CircularProgress,
+  Fade,
+  Typography,
+} from "@mui/material";
+import Link from "next/link";
 interface Props {
   pageName: string;
 }
 
 const UnderDevelopment = async ({ pageName }: Props) => {
-  const session = await auth()
+  const session = await auth();
 
   return (
     <Box
@@ -111,7 +118,7 @@ const UnderDevelopment = async ({ pageName }: Props) => {
             letterSpacing: 1.5,
             textTransform: "uppercase",
             color: "primary.main", // Use primary color for more prominence
-            mb: 3,
+            mb: 1,
             textAlign: "center",
           }}
         >
@@ -123,17 +130,19 @@ const UnderDevelopment = async ({ pageName }: Props) => {
             fontSize: { xs: "0.5rem", sm: "0.7rem" },
             maxWidth: 700,
             textAlign: "center",
-            color: "text.secondary", // More subdued color for the description
-            fontWeight: 400, // Regular weight for description text
-            lineHeight: 1.6, // Improved line height for readability
+            color: "text.secondary",
+            fontWeight: 400,
+            lineHeight: 1.6,
             opacity: 0.85,
-            // mb: 4, // Adequate margin for spacing
           }}
         >
-          We are currently working on some exciting new features and enhancing
-          your experience on our website. Stay tuned for exciting updates coming
-          soon!
+          You are currently viewing **version 1.2.1** of the site. The section
+          you're in is still under construction, but the **Codewars account
+          connection** feature is ready! Click the button below to access it.
         </Typography>
+        <Link href='/wars'>
+          <Button>Go to wars!</Button>
+        </Link>
       </Box>
       {/* Inspirational Text */}
       <Fade in={Boolean(session)} timeout={1000}>

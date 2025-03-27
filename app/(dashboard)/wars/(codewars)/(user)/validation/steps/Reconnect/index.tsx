@@ -4,6 +4,7 @@ import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import ReconnectButton from "./Buttons/Reconnect";
 import Message from "./Message";
 import Tip from "./Tip";
+import GoToLeaderboard from "./Buttons/GoToLeaderboard";
 
 const Reconnect = ({
   session,
@@ -56,7 +57,10 @@ const Reconnect = ({
           <Tip />
 
           {/* Reconnect Button */}
-          <ReconnectButton />
+          <Box sx={{display: "flex", justifyContent: 'space-around'}}>
+            <GoToLeaderboard />
+            <ReconnectButton />
+          </Box>
         </Paper>
       </Box>
     </Box>
