@@ -1,3 +1,5 @@
+// auth.ts
+
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { baseURL } from "./utils/constants";
@@ -27,13 +29,13 @@ if (missingVars.length > 0) {
   const message = `The following environment variables are missing: ${missingVars.join(", ")}`;
   console.warn(`\u001b[33mwarn:\u001b[0m ${message}`);
 }
- 
+
 export const providerMap = providers.map((provider) => ({
   id: provider.id as "google",
   name: provider.name,
 }));
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
   providers,
   secret: process.env.AUTH_SECRET,
   cookies: {
@@ -89,6 +91,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       return false;
+    },
+  },
+  events: {
+    async signOut(message) {
+      if ("token" in message && message.token) {
+        const token = message.token;
+        const email = token.email;
+        if (email) {
+          try {
+            await fetch(`${baseURL}/api/auth/logout`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email }),
+            });
+          } catch (error) {
+            console.error("Error logging sign-out:", error);
+          }
+        }
+      }
     },
   },
 });

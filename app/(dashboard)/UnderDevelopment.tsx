@@ -1,13 +1,12 @@
-import * as React from "react";
-import { Box, Typography, CircularProgress, Avatar, Fade } from "@mui/material";
-import { auth } from "@/auth";
 
+import { auth } from "@/auth";
+import { Avatar, Box, CircularProgress, Fade, Typography } from "@mui/material";
 interface Props {
   pageName: string;
 }
 
 const UnderDevelopment = async ({ pageName }: Props) => {
-  const session = await auth();
+  const session = await auth()
 
   return (
     <Box
