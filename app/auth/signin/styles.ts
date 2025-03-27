@@ -1,7 +1,6 @@
 import { SxProps, Theme } from "@mui/material";
 import {
-  SignInPageLocaleText,
-  SlotProps
+  SignInPageLocaleText
 } from "@toolpad/core";
 
 export const leaderboardStyles: SxProps<Theme> = {
