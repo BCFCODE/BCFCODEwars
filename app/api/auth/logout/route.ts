@@ -1,10 +1,12 @@
 import DatabaseService from "@/app/services/db-service";
-import { error } from "console";
 import { NextRequest, NextResponse } from "next/server";
 
 const { getUser, updateSingleUser } = new DatabaseService();
 
-export async function POST(request: NextRequest, response: NextResponse) {
+export async function POST(
+  request: NextRequest,
+  response: NextResponse
+): Promise<NextResponse> {
   try {
     const { email } = await request.json();
 
@@ -13,10 +15,10 @@ export async function POST(request: NextRequest, response: NextResponse) {
     }
 
     const currentUser = await getUser(email);
-    console.log(
-      `>>>>User signed out and currentUser: ${email} at ${new Date()}`,
-      currentUser
-    );
+    // console.log(
+    //   `>>>>User signed out and currentUser: ${email} at ${new Date()}`,
+    //   currentUser
+    // );
 
     if (currentUser)
       updateSingleUser(email, {
