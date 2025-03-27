@@ -3,10 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const { getUser, updateSingleUser } = new DatabaseService();
 
-export async function POST(
-  request: NextRequest,
-  response: NextResponse
-): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const { email } = await request.json();
 
