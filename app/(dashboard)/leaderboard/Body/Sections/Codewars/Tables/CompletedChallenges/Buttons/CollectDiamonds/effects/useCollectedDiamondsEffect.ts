@@ -1,8 +1,8 @@
-import { Dispatch, useEffect } from "react";
-import { CollectButtonAction } from "../reducers/collectButtonReducer";
 import { AllUsersAction } from "@/app/context/reducers/allUsersReducer";
 import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
+import { Dispatch, useEffect } from "react";
+import { CollectButtonAction } from "../reducers/collectButtonReducer";
 
 interface Props {
   isCollected: boolean;
@@ -18,8 +18,6 @@ export default function useCollectedDiamondsEffect({
   collectButtonDispatch,
   diamondsContextDispatch,
   isCollected,
-  // currentUserDispatch,
-  allUsersDispatch,
 }: Props) {
   // const currentUserDispatch = useCurrentUserDispatchContext();
   useEffect(() => {

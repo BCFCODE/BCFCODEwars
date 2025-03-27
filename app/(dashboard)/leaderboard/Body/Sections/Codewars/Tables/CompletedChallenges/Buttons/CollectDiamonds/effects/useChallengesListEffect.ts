@@ -1,12 +1,8 @@
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
-import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { CurrentUser } from "@/types/users";
-import { Dispatch, RefObject, useEffect, useRef } from "react";
 import APIdbService from "@/app/api/services/db-service";
+import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { useEffect, useRef } from "react";
 
 const { postCurrentUser } = new APIdbService();
 

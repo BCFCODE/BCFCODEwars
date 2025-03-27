@@ -26,12 +26,6 @@ export type CollectButtonAction =
     }
   | { type: "ERROR?"; isError: boolean };
 
-// | { type: "START_LOADING" }
-// | { type: "!SUCCESSFUL_RESPONSE" }
-// | { type: "COLLECT_DIAMONDS"; collectedDiamondsCount?: number }
-// | { type: "UPDATE_COUNTER"; counter: number }
-// | { type: "RESET_COUNTER" };
-// | { type: "SET_ERROR"; isError: boolean }
 
 export default function collectButtonReducer(
   state: CollectDiamondsState,

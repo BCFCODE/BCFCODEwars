@@ -30,23 +30,19 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     isDiamondIconButtonDisabled,
     codewarsContextDispatch,
     collectButtonDispatch,
-    completedChallengesRef,
     diamondsContextDispatch,
     isError,
     currentUser,
-    completedChallenges,
-    currentUserDispatch,
     success,
-    allUsersDispatch,
   } = useCollectDiamonds();
-  console.log("currentUser in CollectDiamonds >>>>", currentUser);
+  // console.log("currentUser in CollectDiamonds >>>>", currentUser);
   const isUserOnPersonalDashboard =
     currentUser.session?.user.email === currentUser.email;
-  console.log(
-    "isUserOnPersonalDashboard in CollectDiamonds",
-    isUserOnPersonalDashboard,
-    currentUser
-  );
+  // console.log(
+  //   "isUserOnPersonalDashboard in CollectDiamonds",
+  //   isUserOnPersonalDashboard,
+  //   currentUser
+  // );
 
   if (currentChallenge.rewardStatus === RewardStatus.ClaimedDiamonds)
     return (
@@ -75,15 +71,9 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
               handleClick({
                 codewarsContextDispatch,
                 collectButtonDispatch,
-                completedChallengesRef,
                 currentChallenge,
                 diamondsContextDispatch,
                 currentUser,
-                completedChallenges,
-                currentUserDispatch,
-                success,
-                isDiamondIconButtonDisabled,
-                allUsersDispatch,
               })
             }
           >
