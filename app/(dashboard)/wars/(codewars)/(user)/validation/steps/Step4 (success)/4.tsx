@@ -14,7 +14,7 @@ const Step4 = ({ session }: StepProps) => {
   return (
     <Box
       sx={{
-        // backgroundColor: 'red',
+        // backgroundColor: &apos;red',
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -55,7 +55,7 @@ const Step4 = ({ session }: StepProps) => {
             variant="body1"
             sx={{ lineHeight: 1.8, color: "text.secondary" }}
           >
-            You're now ranked on the BCFCODE leaderboard! Check your stats, see
+            You&apos;re now ranked on the BCFCODE leaderboard! Check your stats, see
             where you stand, and push for the top.
           </Typography>
           <Typography variant="body1" sx={{ mt: 2, color: "text.secondary" }}>

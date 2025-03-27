@@ -71,7 +71,7 @@ const Step3 = ({
           }}
         >
           Confirm these details for your username update on the leaderboard. If
-          they're incorrect, go back and check!
+          they&apos;re incorrect, go back and check!
         </Typography>
       </Box>
 

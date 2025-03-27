@@ -18,7 +18,7 @@ const Message = async ({ isSynced, userName }: Props) => {
           textAlign: "left",
         }}
       >
-        It looks like you're already connected as {userName}. If that's not
+        It looks like you&apos;re already connected as {userName}. If that&apos;s not
         right, you can reconnect and update your username for a smoother
         experience!
       </Typography>
