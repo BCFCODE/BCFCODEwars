@@ -136,11 +136,11 @@ const UnderDevelopment = async ({ pageName }: Props) => {
             opacity: 0.85,
           }}
         >
-          You are currently viewing **version 1.2.1** of the site. The section
+          You are currently viewing **version 0.2.0** of the site. The section
           you&apos;re in is still under construction, but the **Codewars account
           connection** feature is ready! Click the button below to access it.
         </Typography>
-        <Link href='/wars'>
+        <Link href="/wars">
           <Button>Go to wars!</Button>
         </Link>
       </Box>
