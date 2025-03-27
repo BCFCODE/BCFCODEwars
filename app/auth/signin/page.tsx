@@ -2,7 +2,7 @@ import LeaderBoardPage from "@/app/(dashboard)/leaderboard/page";
 import { Box } from "@mui/material";
 import { SignInPage, SignInPageSlots } from "@toolpad/core/SignInPage";
 import { Metadata } from "next/types";
-import { providerMap } from "../../../auth";
+import { auth, providerMap } from "../../../auth";
 import { handleSignIn } from "./signInHandler";
 import {
   leaderboardStyles,
@@ -10,6 +10,10 @@ import {
   // signInSlotProps,
   signInText,
 } from "./styles";
+import { useReducer } from "react";
+
+import APIdbService from "@/app/api/services/db-service";
+import { CurrentUser } from "@/types/users";
 // import SubmitButton from "./SubmitButton";
 
 export const metadata: Metadata = {
@@ -20,9 +24,15 @@ export const metadata: Metadata = {
 //   submitButton: SubmitButton,
 // };
 
-export default function SignIn() {
-  // const { isLoading } = useAllUsersContext();
+const { getUsers } = new APIdbService();
+
+export default async function SignIn() {
+  const fetchedUsers = await getUsers({ cache: "no-store" });
+  const allUsers = fetchedUsers.users as CurrentUser[];
   console.log("SignIn page focussed... (Logged out occurred)");
+  console.log("allUsers in auth/signin", allUsers);
+  const session = await auth();
+  // const { isLoading } = useAllUsersContext();
   // if (isLoading)
   //   return (
   //     <LoadingUI
@@ -31,9 +41,9 @@ export default function SignIn() {
   //     />
   //   );
   return (
-    <>
+    <Box>
       <Box sx={leaderboardStyles}>
-        <LeaderBoardPage />
+        <LeaderBoardPage {...{ session, allUsersInSignInPage: allUsers }} />
       </Box>
       <SignInPage
         sx={signInPageContainerStyles}
@@ -43,6 +53,6 @@ export default function SignIn() {
         providers={providerMap}
         signIn={handleSignIn}
       />
-    </>
+    </Box>
   );
 }

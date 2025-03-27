@@ -45,12 +45,12 @@ export const AllUsersDispatchContext =
 
 const AllUsersProvider = ({ children }: Props) => {
   const session = useSession();
-  const [allUsersContext, dispatch] = useReducer(
+  const [allUsersContext, allUsersDispatch] = useReducer(
     allUsersReducer,
     initialDBAllUsersState
   );
   // const sessionRef = useRef(session);
-
+  console.log("session in AllUsersProvider", session);
   // if (session !== null) sessionRef.current = session;
 
   useEffect(() => {
@@ -58,20 +58,24 @@ const AllUsersProvider = ({ children }: Props) => {
     (async () => {
       try {
         // Reset loading and error before retrying.
-        dispatch({ type: "SET_LOADING", loading: true });
-        dispatch({ type: "SET_ERROR", error: false });
+        allUsersDispatch({ type: "SET_LOADING", loading: true });
+        allUsersDispatch({ type: "SET_ERROR", error: false });
 
         const fetchedUsers = await getUsers({ cache: "no-store" });
 
         if (!fetchedUsers.success || fetchedUsers.error) {
           // console.log("error in AllUsersProvider");
-          dispatch({ type: "SET_LOADING", loading: false });
-          dispatch({ type: "SET_ERROR", error: true });
+          allUsersDispatch({ type: "SET_LOADING", loading: false });
+          allUsersDispatch({ type: "SET_ERROR", error: true });
         }
 
         if (fetchedUsers.users) {
           const allUsers = fetchedUsers.users.map((user) => {
-            console.log(user.email, session.data);
+            console.log(
+              "in AllUsersProvider useEffect map",
+              user.email,
+              session.data
+            );
             return user.email === session.data?.user.email
               ? { ...user, session: session.data }
               : user;
@@ -81,7 +85,7 @@ const AllUsersProvider = ({ children }: Props) => {
 
           console.log("allUsers in AllUsersProvider", allUsers, session.data);
 
-          dispatch({
+          allUsersDispatch({
             type: "SET_ALL_USERS",
             payload: {
               allUsers,
@@ -91,19 +95,19 @@ const AllUsersProvider = ({ children }: Props) => {
           });
         }
       } catch (error) {
-        dispatch({ type: "SET_LOADING", loading: false });
-        dispatch({ type: "SET_ERROR", error: true });
+        allUsersDispatch({ type: "SET_LOADING", loading: false });
+        allUsersDispatch({ type: "SET_ERROR", error: true });
         // If an exception occurs, set the error flag.
-        // dispatch({ type: "SET_ERROR", error: true });
+        // allUsersDispatch({ type: "SET_ERROR", error: true });
         console.error("Error loading leaderboard data");
       } finally {
-        dispatch({ type: "SET_LOADING", loading: false });
+        allUsersDispatch({ type: "SET_LOADING", loading: false });
       }
     })();
   }, []);
 
   return (
-    <AllUsersDispatchContext.Provider value={dispatch}>
+    <AllUsersDispatchContext.Provider value={allUsersDispatch}>
       <AllUsersContext.Provider value={allUsersContext}>
         {children}
       </AllUsersContext.Provider>

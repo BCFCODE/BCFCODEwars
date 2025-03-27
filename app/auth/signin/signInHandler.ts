@@ -5,7 +5,6 @@
 import { signIn } from "@/auth";
 import type { AuthProvider } from "@toolpad/core";
 import { AuthError } from "next-auth";
-
 import { cookies } from "next/headers";
 
 export async function handleSignIn(

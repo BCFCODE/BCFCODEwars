@@ -21,7 +21,7 @@ export default function Body() {
     activeFilter === CodeChallengesFilter.Both
       ? list
       : list.filter((challenge) => challenge.rewardStatus === activeFilter);
-
+      // console.log("Parent re-rendered")
   return (
     <>
       <TableBody>

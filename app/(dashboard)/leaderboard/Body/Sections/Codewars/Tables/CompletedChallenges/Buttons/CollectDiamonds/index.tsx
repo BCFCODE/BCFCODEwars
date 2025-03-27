@@ -39,7 +39,15 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     success,
     allUsersDispatch,
   } = useCollectDiamonds();
-  console.log("currentUser in CollectDiamonds", currentUser);
+  console.log("currentUser in CollectDiamonds >>>>", currentUser);
+  const isUserOnPersonalDashboard =
+    currentUser.session?.user.email === currentUser.email;
+  console.log(
+    "isUserOnPersonalDashboard in CollectDiamonds",
+    isUserOnPersonalDashboard,
+    currentUser
+  );
+
   if (currentChallenge.rewardStatus === RewardStatus.ClaimedDiamonds)
     return (
       <Box sx={diamondBoxStyles}>
@@ -61,7 +69,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
         {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}
         {!isCollected && (
           <IconButton
-            disabled={isDiamondIconButtonDisabled}
+            disabled={isDiamondIconButtonDisabled || !isUserOnPersonalDashboard}
             sx={iconButtonStyles}
             onClick={() =>
               handleClick({

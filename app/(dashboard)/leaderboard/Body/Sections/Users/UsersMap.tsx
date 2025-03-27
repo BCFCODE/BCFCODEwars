@@ -10,6 +10,7 @@ interface Props {
 const UsersMap = ({ children }: Props) => {
   const { allUsers } = useAllUsersContext();
 
+  // console.log('allUsers in UsersMap', allUsers)
   return allUsers.map((currentUser: CurrentUser) => (
     <CurrentUserProvider key={currentUser.email} context={{ currentUser }}>
       {children}

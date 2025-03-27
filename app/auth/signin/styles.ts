@@ -6,6 +6,9 @@ import {
 
 export const leaderboardStyles: SxProps<Theme> = {
   margin: { xs: 0, sm: 1, md: 2, lg: 3, xl: 4 },
+  // position: 'absolute', 
+  // backgroundColor: 'greenyellow',
+  // width: '100%'
 };
 
 export const signInPageContainerStyles: SxProps = {
