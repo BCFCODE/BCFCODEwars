@@ -1,12 +1,12 @@
 import { Stack, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 
-const DailyStat = () => {
+const WeeklyStat = () => {
   return (
     <Stack>
       <Gauge
         height={200}
-        value={80}
+        value={50}
         startAngle={-110}
         endAngle={110}
         sx={{
@@ -18,9 +18,9 @@ const DailyStat = () => {
         // text={({ value, valueMax }) => `${value} / ${valueMax}`}
         text={({ value, valueMax }) => `${value}%`}
       />
-      <Typography sx={{ textAlign: "center" }}>1 in last 24Hours</Typography>
+      <Typography sx={{ textAlign: "center" }}>1 in 7Days</Typography>
     </Stack>
   );
 };
 
-export default DailyStat;
+export default WeeklyStat;
