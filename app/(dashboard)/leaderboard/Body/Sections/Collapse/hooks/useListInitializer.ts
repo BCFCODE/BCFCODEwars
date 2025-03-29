@@ -1,12 +1,9 @@
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import {
-  CodewarsChallengesApiResponse,
-  CodewarsChallengesResponse,
-  CodewarsCompletedChallenge,
-} from "@/types/codewars";
-import saveChallengeListToDB from "../../utils/saveChallengeListToDB";
+import { CodewarsChallengesResponse } from "@/types/codewars";
+import saveChallengeListToDB from "../utils/saveChallengeListToDB";
 import { applyRewardStatusToAll } from "../utils/applyRewardStatus";
+
 
 const useListInitializer = () => {
   const { currentUser } = useCurrentUserContext();
