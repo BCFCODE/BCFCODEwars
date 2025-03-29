@@ -1,6 +1,6 @@
 "use server";
 
-import DatabaseService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/users";
 

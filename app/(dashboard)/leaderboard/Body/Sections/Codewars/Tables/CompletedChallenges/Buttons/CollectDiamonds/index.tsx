@@ -13,7 +13,7 @@ import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import handleClick from "./utils/handleClick";
 import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
-import DiamondsService from "@/app/services/diamonds-service";
+import DiamondsService from "@/app/services/diamonds";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 

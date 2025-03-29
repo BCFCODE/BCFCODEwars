@@ -1,4 +1,4 @@
-import DatabaseService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db";
 import { auth } from "@/auth";
 import { CodewarsUser } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";

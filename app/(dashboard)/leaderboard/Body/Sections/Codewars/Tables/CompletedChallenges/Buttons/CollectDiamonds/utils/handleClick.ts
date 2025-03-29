@@ -1,4 +1,4 @@
-import DiamondsService from "@/app/services/diamonds-service";
+import DiamondsService from "@/app/services/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { Dispatch } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";

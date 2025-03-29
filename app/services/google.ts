@@ -1,5 +1,5 @@
 import { GoogleUser } from "@/types/google";
-import DatabaseService from "./db-service";
+import DatabaseService from "./db";
 import { DatabaseUser } from "@/types/users";
 
 const {
