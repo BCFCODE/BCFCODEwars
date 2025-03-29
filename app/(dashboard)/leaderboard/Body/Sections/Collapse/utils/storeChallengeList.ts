@@ -11,10 +11,7 @@ interface Props {
   list: CodewarsCompletedChallenge[];
 }
 
-export default async function saveChallengeListToDB({
-  list,
-  currentUser,
-}: Props) {
+export default async function storeChallengeList({ list, currentUser }: Props) {
   const userId = currentUser.codewars.id;
   saveChallengesList({ list, userId });
 }

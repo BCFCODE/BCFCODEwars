@@ -20,7 +20,11 @@ const useChallengeList = () => {
       );
 
       if ("data" in response) {
-        if (isListEmpty) initializeCodeChallengesList(response.data);
+        if (isListEmpty) {
+          initializeCodeChallengesList(response.data);
+        } else {
+          // Update the list with latest completed challenges
+        }
         codewarsDispatch({ type: "SET_ERROR", isError: false });
       } else {
         // TODO: Handle cases where data is missing
