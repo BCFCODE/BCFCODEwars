@@ -4,14 +4,15 @@ import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewars
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import initializeCodeChallengesList from "../utils/initializeCodeChallengesList";
+import useListInitializer from "./useListInitializer";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
 const useChallengeList = () => {
   const { currentUser } = useCurrentUserContext();
-  const currentUserDispatch = useCurrentUserDispatchContext();
   const { pageNumber } = useCodewarsContext();
   const codewarsDispatch = useCodewarsDispatchContext();
+  const { initializeCodeChallengesList, isListEmpty } = useListInitializer();
 
   const buildChallengeList = async () => {
     try {
@@ -22,15 +23,12 @@ const useChallengeList = () => {
 
       if ("data" in response) {
         const { data } = response.data;
-        const isListEmpty = !currentUser.codewars.codeChallenges.list.length;
-        // console.log("isListEmpty", isListEmpty);
-
-        if (isListEmpty)
-          initializeCodeChallengesList({
-            data,
-            currentUser,
-            currentUserDispatch,
-          });
+        if (isListEmpty) initializeCodeChallengesList(data);
+        // initializeCodeChallengesList({
+        //   data,
+        //   currentUser,
+        //   currentUserDispatch,
+        // });
 
         codewarsDispatch({ type: "SET_ERROR", isError: false });
         // codewarsDispatch({
