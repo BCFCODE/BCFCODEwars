@@ -1,9 +1,9 @@
 import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { RewardStatus } from "@/types/diamonds";
 import { CurrentUser } from "@/types/users";
 import { Dispatch } from "react";
 import saveChallengeListToDB from "../utils/saveChallengeListToDB";
+import { applyRewardStatusToAll } from "./utils/applyRewardStatus";
 
 interface Props {
   currentUser: CurrentUser;
@@ -16,10 +16,7 @@ const initializeCodeChallengesList = ({
   currentUser,
   currentUserDispatch,
 }: Props) => {
-  const list = data.map((challenge) => ({
-    ...challenge,
-    rewardStatus: RewardStatus.UnclaimedDiamonds,
-  }));
+  const list = applyRewardStatusToAll(data);
 
   currentUserDispatch({
     type: "UPDATE_CODE_CHALLENGES_LIST",
