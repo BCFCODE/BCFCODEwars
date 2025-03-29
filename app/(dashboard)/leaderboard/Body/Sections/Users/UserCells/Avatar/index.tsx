@@ -1,7 +1,8 @@
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import { TableCell, Typography } from "@mui/material";
+import { TableCell } from "@mui/material";
+import { tableCellStyles } from "./styles";
 import Badge from "./Badge";
-import { nameStyles, tableCellStyles } from "./styles";
+import Name from "./Name";
 
 export default function AvatarCell() {
   const {
@@ -11,9 +12,7 @@ export default function AvatarCell() {
   return (
     <TableCell sx={tableCellStyles} component="th" scope="row">
       <Badge imageUrl={image} />
-      <Typography variant="body2" sx={nameStyles}>
-        {name}
-      </Typography>
+      <Name text={name} />
     </TableCell>
   );
 }

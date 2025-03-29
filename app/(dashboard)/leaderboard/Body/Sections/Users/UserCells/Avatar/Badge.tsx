@@ -1,6 +1,7 @@
 import Avatar from "@mui/material/Avatar";
 import { StyledBadge } from "./styles";
 
+
 interface Props {
   imageUrl: string;
 }
