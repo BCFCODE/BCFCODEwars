@@ -2,12 +2,16 @@ import CodewarsAPIService from "@/app/api/services/codewars";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import extractListDiff from "../utils/extractListDiff";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { useRef } from "react";
+import { applyRewardStatusToAll } from "../utils/applyRewardStatus";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
 const useUpdateListDiff = () => {
   const { currentUser, isCollapsed } = useCurrentUserContext();
   const { pageNumber } = useCodewarsContext();
+  // const untrackedChallengesRef = useRef<CodewarsCompletedChallenge[]>(null);
 
   const diffAndUpdateList = async () => {
     if (!isCollapsed) {
@@ -24,9 +28,15 @@ const useUpdateListDiff = () => {
             previousChallenges,
             fetchedChallenges,
           });
-          console.log("untrackedChallenges", untrackedChallenges);
+
+          console.log(
+            "applyRewardStatusToAll(untrackedChallenges)",
+            applyRewardStatusToAll(untrackedChallenges)
+          );
         }
-      } catch (error) {}
+      } catch (error) {
+        // TODO
+      }
     }
   };
 
