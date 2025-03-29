@@ -2,20 +2,19 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import fetchCompletedChallenges from "../utils/fetchCompletedChallenges";
-import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
+import fetchCompletedChallenges from "../../utils/fetchCompletedChallenges";
+import useDispatchActions from "./useDispatchActions";
 
 const useHandleOpen = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
   const codewarsDispatch = useCodewarsDispatchContext();
-  const { isCollapse, currentUser } = useCurrentUserContext();
+  const { currentUser } = useCurrentUserContext();
   const { pageNumber } = useCodewarsContext();
-  const allUsersDispatch = useAllUsersDispatchContext();
+  const { dispatchActions } = useDispatchActions();
 
   const handleOpen = async () => {
-    allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
-    currentUserDispatch({ type: "SET_COLLAPSE_OPEN", isCollapse: !isCollapse });
-    codewarsDispatch({ type: "SET_LOADING", isLoading: true });
+    dispatchActions();
+
     fetchCompletedChallenges({
       currentUser,
       currentUserDispatch,

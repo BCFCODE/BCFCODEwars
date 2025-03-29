@@ -2,8 +2,8 @@ import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/users";
 import { Dispatch } from "react";
-import saveChallengeListToDB from "../utils/saveChallengeListToDB";
-import { applyRewardStatusToAll } from "./utils/applyRewardStatus";
+import saveChallengeListToDB from "../../utils/saveChallengeListToDB";
+import { applyRewardStatusToAll } from "./applyRewardStatus";
 
 interface Props {
   currentUser: CurrentUser;

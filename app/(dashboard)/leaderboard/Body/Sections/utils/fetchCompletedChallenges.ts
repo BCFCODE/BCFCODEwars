@@ -2,7 +2,7 @@ import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
 import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { CurrentUser } from "@/types/users";
 import { Dispatch } from "react";
-import initializeCodeChallengesList from "../Collapse/initializeCodeChallengesList";
+import initializeCodeChallengesList from "../Collapse/utils/initializeCodeChallengesList";
 import CodewarsAPIService from "@/app/api/services/codewars";
 // import initializeCodeChallengesList from "./Collapse/initializeCodeChallengesList";
 
