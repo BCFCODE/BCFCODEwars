@@ -38,14 +38,14 @@ export default function LeaderBoardPage({
           allUsers: allUsersInSignInPage,
         },
       });
-      console.log(
-        "LeaderBoardPage allUsersInSignInPage",
-        allUsersInSignInPage,
-        // isCollapsed,
-        // currentUser
-        "session",
-        session
-      );
+      // console.log(
+      //   "LeaderBoardPage allUsersInSignInPage",
+      //   allUsersInSignInPage,
+      //   // isCollapsed,
+      //   // currentUser
+      //   "session",
+      //   session
+      // );
     }
   }, [allUsersInSignInPage, dispatch]);
 

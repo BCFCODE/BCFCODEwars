@@ -6,7 +6,10 @@ import { CodeChallengesFilter } from "@/types/diamonds";
 
 const { updateSingleCodewarsUser } = new DatabaseService();
 
-const handleAddUserToDB = async ({ session, codewars }: StepProps) => {
+const initializeAndStoreNewUserToDatabase = async ({
+  session,
+  codewars,
+}: StepProps) => {
   updateSingleCodewarsUser(session?.user.email, {
     ...codewars,
     isConnected: true,
@@ -18,4 +21,4 @@ const handleAddUserToDB = async ({ session, codewars }: StepProps) => {
   });
 };
 
-export default handleAddUserToDB;
+export default initializeAndStoreNewUserToDatabase;

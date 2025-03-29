@@ -20,7 +20,11 @@ export type CurrentUserAction =
     }
   | { type: "SET_USER_DIAMONDS"; diamonds: Diamonds }
   | { type: "SET_COLLAPSE_OPEN"; isCollapsed: boolean }
-  | { type: "UPDATE_COLLECTION_FILTER"; filterName: CodeChallengesFilter };
+  | { type: "UPDATE_COLLECTION_FILTER"; filterName: CodeChallengesFilter }
+  | {
+      type: "ADD_UNTRACKED_CHALLENGES";
+      untrackedChallenges: CodewarsCompletedChallenge[];
+    };
 
 const currentUserReducer = (
   state: CurrentUserState,
@@ -87,14 +91,16 @@ const currentUserReducer = (
         },
       };
     }
-    case "SET_USER_DIAMONDS":
+    case "SET_USER_DIAMONDS": {
       return {
         ...state,
         currentUser: { ...state.currentUser, diamonds: action.diamonds },
       };
-    case "SET_COLLAPSE_OPEN":
+    }
+    case "SET_COLLAPSE_OPEN": {
       return { ...state, isCollapsed: action.isCollapsed };
-    case "UPDATE_COLLECTION_FILTER":
+    }
+    case "UPDATE_COLLECTION_FILTER": {
       return {
         ...state,
         currentUser: {
@@ -108,6 +114,35 @@ const currentUserReducer = (
           },
         },
       };
+    }
+    case "ADD_UNTRACKED_CHALLENGES": {
+      const isDifferent =
+        (state.currentUser.codewars.codeChallenges.untrackedChallenges ?? []).length !==
+        action.untrackedChallenges.length;
+      console.log(
+        "state.currentUser.codewars.codeChallenges.untrackedChallenges",
+        state.currentUser.codewars.codeChallenges.untrackedChallenges,
+        "action.untrackedChallenges",
+        action.untrackedChallenges,
+      );
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          codewars: {
+            ...state.currentUser.codewars,
+            codeChallenges: {
+              ...state.currentUser.codewars.codeChallenges,
+              list: [
+                ...(isDifferent ? action.untrackedChallenges : []),
+                ...state.currentUser.codewars.codeChallenges.list,
+              ],
+              untrackedChallenges: action.untrackedChallenges,
+            },
+          },
+        },
+      };
+    }
     default:
       return state;
   }

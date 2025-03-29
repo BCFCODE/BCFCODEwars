@@ -7,7 +7,7 @@ import storeChallengeList from "../utils/storeChallengeList";
 const useInitializeList = () => {
   const { currentUser } = useCurrentUserContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
-  const isListEmpty = !currentUser.codewars?.codeChallenges.list.length;
+  const isListEmpty = !currentUser.codewars?.codeChallenges?.list.length;
 
   const initializeCodeChallengesList = (
     response: CodewarsChallengesResponse

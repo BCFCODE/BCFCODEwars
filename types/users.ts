@@ -1,5 +1,5 @@
 import { Session } from "next-auth";
-import { CodewarsUser } from "./codewars";
+import { CodewarsCompletedChallenge, CodewarsUser } from "./codewars";
 import { Diamonds } from "./diamonds";
 import { GoogleUser } from "./google";
 

@@ -2,7 +2,7 @@
 
 import { Box, Link, Paper, Typography } from "@mui/material";
 import { StepProps } from "../stepSwitch";
-import handleAddUserToDB from "./connectUser";
+import initializeAndStoreNewUserToDatabase from "./connectUser";
 import Buttons from "./Buttons";
 import { useRouter } from "next/navigation";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
@@ -16,7 +16,12 @@ const Step3 = ({
   const router = useRouter();
 
   const handleOnYes = () => {
-    handleAddUserToDB({ currentStep, validatedUsername, session, codewars });
+    initializeAndStoreNewUserToDatabase({
+      currentStep,
+      validatedUsername,
+      session,
+      codewars,
+    });
     router.replace(`${currentStep + 1}`);
   };
 

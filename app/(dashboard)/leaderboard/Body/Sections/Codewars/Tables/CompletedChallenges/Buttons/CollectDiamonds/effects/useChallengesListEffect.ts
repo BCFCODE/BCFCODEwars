@@ -47,9 +47,9 @@ export default function useChallengesListEffect({
         reward: collectedDiamondsCount,
         selectedChallenge,
       });
-      console.log("selectedChallenge", selectedChallenge);
+      // console.log("selectedChallenge", selectedChallenge);
       isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
-      console.log("currentUser in useChallengesListEffect", currentUser);
+      // console.log("currentUser in useChallengesListEffect", currentUser);
     }
 
     if (!success) {
