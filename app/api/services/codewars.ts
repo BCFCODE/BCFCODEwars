@@ -1,13 +1,12 @@
 // app/services/codewars-service.ts
 
 import {
-  CodewarsSingleChallenge,
   CodewarsChallengesApiResponse,
-  CodewarsCompletedChallenge,
+  CodewarsSingleChallenge
 } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
 
-class APICodewarsService {
+class CodewarsAPIService {
   /* 
     TODO: CRUD
     
@@ -52,4 +51,4 @@ class APICodewarsService {
     ).then((res) => res.json());
 }
 
-export default APICodewarsService;
+export default CodewarsAPIService;

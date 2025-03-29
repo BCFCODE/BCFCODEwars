@@ -1,12 +1,11 @@
 "use client";
 
-import APIDiamondsService from "@/app/api/services/diamonds-service";
+import DiamondsAPIService from "@/app/api/services/diamonds";
 import { Diamonds } from "@/types/diamonds";
 import { createContext, ReactNode, useEffect, useReducer } from "react";
 import diamondsReducer, { DiamondsAction } from "../reducers/diamondsReducer";
-import useAllUsersContext from "../hooks/db/useAllUsersContext";
 
-const { getDiamonds } = new APIDiamondsService();
+const { getDiamonds } = new DiamondsAPIService();
 
 export interface Context {}
 

@@ -1,12 +1,10 @@
 "use client";
 
-import APIdbService from "@/app/api/services/db-service";
+import dbAPIService from "@/app/api/services/db";
 import allUsersReducer, {
   AllUsersAction,
 } from "@/app/context/reducers/allUsersReducer";
-import { auth } from "@/auth";
 import { CurrentUser } from "@/types/users";
-import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 
 import {
@@ -15,10 +13,9 @@ import {
   ReactNode,
   useEffect,
   useReducer,
-  useRef,
 } from "react";
 
-const { getUsers } = new APIdbService();
+const { getUsers } = new dbAPIService();
 
 export interface AllUsersContextType {
   isLoading: boolean;

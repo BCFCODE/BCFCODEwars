@@ -10,7 +10,7 @@ interface GetUsersAPIResponse extends GetUsersAPIResponseError {
   users?: DatabaseUser[];
 }
 
-class APIdbService {
+class dbAPIService {
   private endpoint = `${baseURL}/api/db`;
 
   // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
@@ -60,4 +60,4 @@ class APIdbService {
   };
 }
 
-export default APIdbService;
+export default dbAPIService;

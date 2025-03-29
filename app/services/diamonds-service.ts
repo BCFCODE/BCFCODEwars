@@ -1,6 +1,6 @@
 import { CodewarsSingleChallenge } from "@/types/codewars";
 
-// const { getRank } = new APICodewarsService();
+// const { getRank } = new CodewarsAPIService();
 // const { saveChallengesList } = new DatabaseService();
 
 interface ScoreMap {

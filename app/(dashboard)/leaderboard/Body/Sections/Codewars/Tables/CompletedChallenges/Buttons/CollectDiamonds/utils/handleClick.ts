@@ -2,13 +2,13 @@ import DiamondsService from "@/app/services/diamonds-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { Dispatch } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
-import APICodewarsService from "@/app/api/services/codewars";
+import CodewarsAPIService from "@/app/api/services/codewars";
 import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
 import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
 import { RewardStatus } from "@/types/diamonds";
 import { CurrentUser } from "@/types/users";
 
-const { getSingleChallenge } = new APICodewarsService();
+const { getSingleChallenge } = new CodewarsAPIService();
 const { collectDiamonds } = new DiamondsService();
 
 interface Props {

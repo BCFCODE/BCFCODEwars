@@ -1,6 +1,6 @@
 import LeaderBoardPage from "@/app/(dashboard)/leaderboard/page";
 import { Box } from "@mui/material";
-import { SignInPage, SignInPageSlots } from "@toolpad/core/SignInPage";
+import { SignInPage } from "@toolpad/core/SignInPage";
 import { Metadata } from "next/types";
 import { auth, providerMap } from "../../../auth";
 import { handleSignIn } from "./signInHandler";
@@ -10,10 +10,8 @@ import {
   // signInSlotProps,
   signInText,
 } from "./styles";
-import { useReducer } from "react";
-
-import APIdbService from "@/app/api/services/db-service";
 import { CurrentUser } from "@/types/users";
+import dbAPIService from "@/app/api/services/db";
 // import SubmitButton from "./SubmitButton";
 
 export const metadata: Metadata = {
@@ -24,7 +22,7 @@ export const metadata: Metadata = {
 //   submitButton: SubmitButton,
 // };
 
-const { getUsers } = new APIdbService();
+const { getUsers } = new dbAPIService();
 
 export default async function SignIn() {
   const fetchedUsers = await getUsers({ cache: "no-store" });
@@ -32,7 +30,7 @@ export default async function SignIn() {
   const session = await auth();
   // console.log("SignIn page focussed... (Logged out occurred)");
   // console.log("allUsers in auth/signin", allUsers);
-  // const { isLoading } = useAllUsersContext(); 
+  // const { isLoading } = useAllUsersContext();
   // if (isLoading)
   //   return (
   //     <LoadingUI

@@ -3,10 +3,10 @@ import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { CurrentUser } from "@/types/users";
 import { Dispatch } from "react";
 import initializeCodeChallengesList from "../Collapse/initializeCodeChallengesList";
-import APICodewarsService from "@/app/api/services/codewars";
+import CodewarsAPIService from "@/app/api/services/codewars";
 // import initializeCodeChallengesList from "./Collapse/initializeCodeChallengesList";
 
-const { getCompletedChallenges } = new APICodewarsService();
+const { getCompletedChallenges } = new CodewarsAPIService();
 
 interface Props {
   currentUser: CurrentUser;
