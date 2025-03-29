@@ -1,5 +1,5 @@
 import { TableRow } from "@mui/material";
-import AvatarCell from "./AvatarCell";
+import AvatarCell from "./Avatar";
 import ButtonCell from "./ButtonCell";
 import DiamondsCell from "./DiamondsCell";
 import LastLoginCell from "./LastLoginCell";
