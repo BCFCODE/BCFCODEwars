@@ -4,7 +4,7 @@ import { CodewarsChallengesResponse } from "@/types/codewars";
 import { applyRewardStatusToAll } from "../utils/applyRewardStatus";
 import storeChallengeList from "../utils/storeChallengeList";
 
-const useListInitializer = () => {
+const useInitializeList = () => {
   const { currentUser } = useCurrentUserContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
   const isListEmpty = !currentUser.codewars?.codeChallenges.list.length;
@@ -24,4 +24,4 @@ const useListInitializer = () => {
   return { initializeCodeChallengesList, isListEmpty };
 };
 
-export default useListInitializer;
+export default useInitializeList;

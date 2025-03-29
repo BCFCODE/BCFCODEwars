@@ -2,7 +2,7 @@ import CodewarsAPIService from "@/app/api/services/codewars";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import useListInitializer from "./useListInitializer";
+import useInitializeList from "./useInitializeList";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -10,7 +10,7 @@ const useChallengeList = () => {
   const codewarsDispatch = useCodewarsDispatchContext();
   const { currentUser } = useCurrentUserContext();
   const { pageNumber } = useCodewarsContext();
-  const { initializeCodeChallengesList, isListEmpty } = useListInitializer();
+  const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
 
   const buildChallengeList = async () => {
     try {
