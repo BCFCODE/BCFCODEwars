@@ -1,27 +1,27 @@
-// import { CodewarsCompletedChallenge } from "@/types/db/codewars";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { CodeChallengesFilter } from "@/types/diamonds";
 import { TableBody } from "@mui/material";
-import useCodewarsContext from "../../../../../../../../context/hooks/codewars/useCodewarsContext";
-// import CollectDiamonds from "../Buttons/CollectDiamonds";
+import CollectDiamonds from "../Buttons/CollectDiamonds";
 import SingleRow from "./SingleRow";
 import CollectDiamondsCell from "./SingleRow/Cells/CollectDiamondsCell";
-import CollectDiamonds from "../Buttons/CollectDiamonds";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
+import useFilter from "./useFilter";
 
 export default function Body() {
-  const { currentUser } = useCurrentUserContext();
-  // console.log("currentUser in Body for filtering", currentUser);
+  const { activeFilter, both, claimed, unClaimed } = useFilter();
 
-  const activeFilter: CodeChallengesFilter =
-    currentUser.codewars.codeChallenges.challengeFilter;
+  let visibleChallenges: CodewarsCompletedChallenge[];
 
-  const list = currentUser.codewars.codeChallenges.list;
-
-  const visibleChallenges =
-    activeFilter === CodeChallengesFilter.Both
-      ? list
-      : list.filter((challenge) => challenge.rewardStatus === activeFilter);
-      // console.log("Parent re-rendered")
+  switch (activeFilter) {
+    case CodeChallengesFilter.ClaimedDiamonds:
+      visibleChallenges = claimed;
+      break;
+    case CodeChallengesFilter.UnclaimedDiamonds:
+      visibleChallenges = unClaimed;
+      break;
+    default:
+      visibleChallenges = both;
+  }
+  
   return (
     <>
       <TableBody>
