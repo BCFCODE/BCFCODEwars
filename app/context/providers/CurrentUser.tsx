@@ -9,7 +9,7 @@ export type CurrentUserContext = {
 };
 
 export interface CurrentUserContextState extends CurrentUserContext {
-  isCollapse?: boolean;
+  isCollapsed?: boolean;
 }
 
 export const CurrentUserContext = createContext<CurrentUserContextState | null>(
@@ -27,7 +27,7 @@ const CurrentUserProvider = ({
 }) => {
   const initialCurrentUserState: CurrentUserContextState = {
     ...context,
-    isCollapse: false,
+    isCollapsed: false,
   };
   const [currentUserContext, dispatch] = useReducer(
     currentUserReducer,

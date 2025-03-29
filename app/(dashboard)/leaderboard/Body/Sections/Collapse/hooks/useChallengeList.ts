@@ -3,6 +3,7 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useInitializeList from "./useInitializeList";
+import useUpdateListDiff from "./useUpdateListDiff";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -11,6 +12,7 @@ const useChallengeList = () => {
   const { currentUser } = useCurrentUserContext();
   const { pageNumber } = useCodewarsContext();
   const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
+  const { diffAndUpdateList } = useUpdateListDiff();
 
   const buildChallengeList = async () => {
     try {
@@ -20,14 +22,12 @@ const useChallengeList = () => {
       );
 
       if ("data" in response) {
-        if (isListEmpty) {
-          initializeCodeChallengesList(response.data);
-        } else {
-          // Update the list with latest completed challenges
-        }
+        if (isListEmpty) initializeCodeChallengesList(response.data);
+
         codewarsDispatch({ type: "SET_ERROR", isError: false });
       } else {
         // TODO: Handle cases where data is missing
+        codewarsDispatch({ type: "SET_ERROR", isError: true });
       }
     } catch (error) {
       // TODO: Handle errors gracefully
@@ -35,6 +35,7 @@ const useChallengeList = () => {
       codewarsDispatch({ type: "SET_ERROR", isError: true });
       // setError(true);
     } finally {
+      diffAndUpdateList();
       codewarsDispatch({ type: "SET_LOADING", isLoading: false });
       // setIsLoading(false);
 

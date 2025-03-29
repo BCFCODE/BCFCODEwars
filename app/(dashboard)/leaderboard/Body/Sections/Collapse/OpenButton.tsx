@@ -5,7 +5,7 @@ import { IconButton } from "@mui/material";
 import useHandleOpen from "./hooks/useHandleOpen";
 
 const OpenButton = () => {
-  const { isCollapse, currentUser } = useCurrentUserContext();
+  const { isCollapsed, currentUser } = useCurrentUserContext();
   const { handleOpen } = useHandleOpen();
 
   return (
@@ -17,7 +17,7 @@ const OpenButton = () => {
           size="small"
           onClick={() => handleOpen()}
         >
-          {isCollapse ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          {isCollapsed ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
         </IconButton>
       )}
     </>

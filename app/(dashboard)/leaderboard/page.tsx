@@ -26,7 +26,7 @@ export default function LeaderBoardPage({
   // // Consume the error state from context to trigger re-render when it updates.
   const dispatch = useAllUsersDispatchContext();
   const { error, isLoading } = useAllUsersContext();
-  // const { isCollapse, currentUser } = useCurrentUserContext();
+  // const { isCollapsed, currentUser } = useCurrentUserContext();
 
   useEffect(() => {
     if (allUsersInSignInPage) {
@@ -41,7 +41,7 @@ export default function LeaderBoardPage({
       console.log(
         "LeaderBoardPage allUsersInSignInPage",
         allUsersInSignInPage,
-        // isCollapse,
+        // isCollapsed,
         // currentUser
         "session",
         session

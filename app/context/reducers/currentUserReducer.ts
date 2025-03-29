@@ -19,7 +19,7 @@ export type CurrentUserAction =
       selectedChallenge: CodewarsCompletedChallenge;
     }
   | { type: "SET_USER_DIAMONDS"; diamonds: Diamonds }
-  | { type: "SET_COLLAPSE_OPEN"; isCollapse: boolean }
+  | { type: "SET_COLLAPSE_OPEN"; isCollapsed: boolean }
   | { type: "UPDATE_COLLECTION_FILTER"; filterName: CodeChallengesFilter };
 
 const currentUserReducer = (
@@ -93,7 +93,7 @@ const currentUserReducer = (
         currentUser: { ...state.currentUser, diamonds: action.diamonds },
       };
     case "SET_COLLAPSE_OPEN":
-      return { ...state, isCollapse: action.isCollapse };
+      return { ...state, isCollapsed: action.isCollapsed };
     case "UPDATE_COLLECTION_FILTER":
       return {
         ...state,

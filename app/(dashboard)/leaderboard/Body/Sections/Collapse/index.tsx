@@ -7,11 +7,11 @@ interface Props {
 }
 
 const CollapseSection = ({ children }: Props) => {
-  const { isCollapse } = useCurrentUserContext();
+  const { isCollapsed } = useCurrentUserContext();
   return (
     <TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-        <Collapse in={isCollapse} timeout="auto" unmountOnExit>
+        <Collapse in={isCollapsed} timeout="auto" unmountOnExit>
           {children}
         </Collapse>
       </TableCell>
