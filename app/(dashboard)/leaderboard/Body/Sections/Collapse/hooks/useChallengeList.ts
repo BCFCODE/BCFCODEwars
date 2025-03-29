@@ -22,19 +22,8 @@ const useChallengeList = () => {
       );
 
       if ("data" in response) {
-        const { data } = response.data;
-        if (isListEmpty) initializeCodeChallengesList(data);
-        // initializeCodeChallengesList({
-        //   data,
-        //   currentUser,
-        //   currentUserDispatch,
-        // });
-
+        if (isListEmpty) initializeCodeChallengesList(response.data);
         codewarsDispatch({ type: "SET_ERROR", isError: false });
-        // codewarsDispatch({
-        //   type: "SET_COMPLETED_CHALLENGES",
-        //   completedChallenges,
-        // });
       } else {
         // TODO: Handle cases where data is missing
       }
