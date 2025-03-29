@@ -1,12 +1,6 @@
-import {
-  CodewarsCompletedChallenge,
-  CodewarsSingleChallenge,
-} from "@/types/codewars";
-import CodewarsService from "./codewars-service";
-import useDiamondsContext from "../context/hooks/diamonds/useDiamondsContext";
-import DatabaseService from "./db-service";
+import { CodewarsSingleChallenge } from "@/types/codewars";
 
-// const { getRank } = new CodewarsService();
+// const { getRank } = new APICodewarsService();
 // const { saveChallengesList } = new DatabaseService();
 
 interface ScoreMap {

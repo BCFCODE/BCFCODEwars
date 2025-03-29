@@ -1,13 +1,12 @@
-import CodewarsService from "@/app/services/codewars-service";
-import { RewardStatus } from "@/types/diamonds";
+import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
+import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
+import { CurrentUser } from "@/types/users";
 import { Dispatch } from "react";
 import initializeCodeChallengesList from "../Collapse/initializeCodeChallengesList";
-import { CurrentUser } from "@/types/users";
-import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
-import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
+import APICodewarsService from "@/app/api/services/codewars";
 // import initializeCodeChallengesList from "./Collapse/initializeCodeChallengesList";
 
-const { getCompletedChallenges } = new CodewarsService();
+const { getCompletedChallenges } = new APICodewarsService();
 
 interface Props {
   currentUser: CurrentUser;

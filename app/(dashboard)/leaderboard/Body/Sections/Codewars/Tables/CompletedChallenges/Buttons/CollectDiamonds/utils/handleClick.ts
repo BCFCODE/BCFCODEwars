@@ -1,17 +1,14 @@
-import CodewarsService from "@/app/services/codewars-service";
 import DiamondsService from "@/app/services/diamonds-service";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { Dispatch, RefObject } from "react";
+import { Dispatch } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
-// import useSelectedChallenge from "../hooks/CodewarsChallenges/useSelectedChallenge";
-import { AllUsersAction } from "@/app/context/reducers/allUsersReducer";
+import APICodewarsService from "@/app/api/services/codewars";
 import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
-import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
 import { RewardStatus } from "@/types/diamonds";
 import { CurrentUser } from "@/types/users";
 
-const { getSingleChallenge } = new CodewarsService();
+const { getSingleChallenge } = new APICodewarsService();
 const { collectDiamonds } = new DiamondsService();
 
 interface Props {
@@ -63,7 +60,6 @@ const handleClick = async ({
       type: "SET_SELECTED_CHALLENGE",
       selectedChallenge,
     });
-
   }
 
   if (!response.success) {
