@@ -16,7 +16,10 @@ const SingleRow = ({ challenge }: Props) => {
   return (
     <TableRow>
       <DateCompletedCell completedAt={challenge.completedAt} />
-      <NameCell challengeName={challenge.name} />
+      <NameCell
+        challengeName={challenge.name}
+        isUntracked={challenge.isUntracked ?? false}
+      />
       <RankCell {...{ challenge }} />
       <CollectDiamondsCell>
         <CollectDiamonds currentChallenge={challenge} />
