@@ -59,7 +59,7 @@ const Step1 = async ({ session, currentStep }: StepProps) => {
               color: "text.secondary",
               lineHeight: 1.6,
               // maxWidth: "80%",
-              textAlign: "left",
+              textAlign: "center",
             }}
           >
             An exciting journey awaits! By connecting to Codewars here, you’ll

@@ -11,20 +11,33 @@ const extractListDiff = ({
   fetchedChallenges,
 }: Props): CodewarsCompletedChallenge[] => {
   const [previousMostRecentChallenge] = previousChallenges;
+  const [mostRecentFetchedChallenge] = fetchedChallenges;
+  // console.log(
+  //   "previousChallenges",
+  //   previousChallenges,
+  //   "fetchedChallenges",
+  //   fetchedChallenges
+  // );
 
   const previousRecentIndex = previousChallenges.findIndex(
     (challenge) =>
-      challenge.id === previousMostRecentChallenge.id ||
       getTime(challenge.completedAt) <
-        getTime(previousMostRecentChallenge.completedAt)
+      getTime(previousMostRecentChallenge.completedAt)
   );
 
-  const untrackedChallenges =
-    previousRecentIndex < 0
-      ? []
-      : fetchedChallenges.slice(0, previousRecentIndex);
+  const isMostRecentChallengeSame =
+    previousMostRecentChallenge.id === mostRecentFetchedChallenge.id;
 
-  return untrackedChallenges;
+  const untrackedChallenges = fetchedChallenges.slice(0, previousRecentIndex);
+  // console.log(
+  //   "in extractListDiff >",
+
+  //   "previousRecentIndex",
+  //   previousRecentIndex,
+  //   "untrackedChallenges",
+  //   untrackedChallenges
+  // );
+  return isMostRecentChallengeSame ? [] : untrackedChallenges;
 };
 
 export default extractListDiff;
