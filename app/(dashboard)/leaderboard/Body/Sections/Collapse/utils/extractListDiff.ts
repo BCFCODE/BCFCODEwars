@@ -14,11 +14,15 @@ const extractListDiff = ({
 
   const previousRecentIndex = previousChallenges.findIndex(
     (challenge) =>
+      challenge.id === previousMostRecentChallenge.id ||
       getTime(challenge.completedAt) <
-      getTime(previousMostRecentChallenge.completedAt)
+        getTime(previousMostRecentChallenge.completedAt)
   );
 
-  const untrackedChallenges = fetchedChallenges.slice(0, previousRecentIndex);
+  const untrackedChallenges =
+    previousRecentIndex < 0
+      ? []
+      : fetchedChallenges.slice(0, previousRecentIndex);
 
   return untrackedChallenges;
 };
