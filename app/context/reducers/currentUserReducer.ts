@@ -68,6 +68,7 @@ const currentUserReducer = (
         rank: currentRankId,
         diamondsEarned: action.reward,
         collectedAt: new Date(),
+        completedAt: new Date(action.selectedChallenge.completedAt),
       };
 
       const updatedDiamonds: Diamonds = {
@@ -119,7 +120,7 @@ const currentUserReducer = (
       // const isDifferent =
       //   (state.currentUser.codewars.codeChallenges.untrackedChallenges ?? []).length !==
       //   action.untrackedChallenges.length;
-      
+
       // console.log(
       //   "state.currentUser.codewars.codeChallenges.untrackedChallenges",
       //   state.currentUser.codewars.codeChallenges.untrackedChallenges,

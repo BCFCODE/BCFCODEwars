@@ -7,12 +7,8 @@ const useFilter = () => {
 
   const { currentUser } = useCurrentUserContext();
 
-  let untrackedChallenges =
-    currentUser.codewars.codeChallenges.untrackedChallenges;
-
-  const { markedUntrackedChallenges } = useUntrackedChallenges(
-    untrackedChallenges ?? []
-  );
+  const { markedUntrackedChallenges, untrackedChallenges } =
+    useUntrackedChallenges(currentUser);
 
   console.log("markedUntrackedChallenges", markedUntrackedChallenges);
 

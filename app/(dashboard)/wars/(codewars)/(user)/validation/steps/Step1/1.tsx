@@ -49,7 +49,7 @@ const Step1 = async ({ session, currentStep }: StepProps) => {
               fontSize: { xs: "1.1rem", sm: "1.35rem" },
             }}
           >
-            Welcome to the BCFCODE Community, {session?.user?.name || "User"}!
+            Welcome, {session?.user?.name || "User"}!
           </Typography>
 
           {/* Welcome Message */}
@@ -59,16 +59,12 @@ const Step1 = async ({ session, currentStep }: StepProps) => {
               color: "text.secondary",
               lineHeight: 1.6,
               // maxWidth: "80%",
-              textAlign: "left",
+              textAlign: "center",
             }}
           >
-            You’re about to embark on the first step of your validation journey.
-            In just a few simple steps, we’ll connect you to your Codewars
-            account to unlock exclusive access to personalized insights,
-            detailed stats, and our vibrant leaderboard. We’re here to guide you
-            every step of the way. Ready to get started? Simply click Next, and
-            let’s make your coding adventure with BCFCODE even more exciting and
-            rewarding, {firstName}!
+            An exciting journey awaits! By connecting to Codewars here, you’ll
+            unlock exclusive insights, stats, and our leaderboard. Let’s make
+            this adventure yours, {firstName}—click Next to get started!
           </Typography>
         </Box>
 
