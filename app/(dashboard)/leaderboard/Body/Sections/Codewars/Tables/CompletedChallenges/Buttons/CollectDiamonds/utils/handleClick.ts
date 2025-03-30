@@ -54,7 +54,7 @@ const handleClick = async ({
       ...currentChallenge,
       rewardStatus: RewardStatus.ClaimedDiamonds,
       moreDetails: selectedSingleChallenge,
-      isUntracked: false,
+      isUntracked: currentChallenge.isUntracked ?? false,
     };
 
     codewarsContextDispatch({
