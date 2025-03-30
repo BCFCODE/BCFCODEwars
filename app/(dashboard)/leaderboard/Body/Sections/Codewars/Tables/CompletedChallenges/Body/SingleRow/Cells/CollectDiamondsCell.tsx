@@ -1,5 +1,5 @@
 import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
-import { TableCell } from "@mui/material";
+import { TableCell, Tooltip } from "@mui/material";
 import { ReactNode } from "react";
 
 interface Props {
@@ -15,4 +15,3 @@ const CollectDiamondsCell = ({ children }: Props) => {
 };
 
 export default CollectDiamondsCell;
- 

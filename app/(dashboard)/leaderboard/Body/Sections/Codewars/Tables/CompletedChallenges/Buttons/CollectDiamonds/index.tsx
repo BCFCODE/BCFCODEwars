@@ -10,10 +10,11 @@ import {
 import useCollectDiamonds from "@/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds/hooks/useCollectDiamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import DiamondIcon from "@mui/icons-material/Diamond";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Tooltip, Typography } from "@mui/material";
 import handleClick from "./utils/handleClick";
 import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 import DiamondsService from "@/app/services/diamonds";
+import UntrackedChallengeTooltip from "./components/Tooltips";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 
@@ -64,23 +65,35 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
 
         {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}
         {!isCollected && (
-          <IconButton
-            disabled={isDiamondIconButtonDisabled || !isUserOnPersonalDashboard}
-            sx={iconButtonStyles}
-            onClick={() =>
-              handleClick({
-                codewarsContextDispatch,
-                collectButtonDispatch,
-                currentChallenge,
-                diamondsContextDispatch,
-                currentUser,
-              })
+          <UntrackedChallengeTooltip
+            isUntracked={currentChallenge.isUntracked ?? false}
+            text={
+              isUserOnPersonalDashboard
+                ? "Oops! Let’s track this now!"
+                : "💎Diamonds await! Sign in to collect."
+
             }
           >
-            <DiamondIcon
-              sx={isLoading || isError ? fade(isError) : diamondStyles}
-            />
-          </IconButton>
+            <IconButton
+              disabled={
+                isDiamondIconButtonDisabled || !isUserOnPersonalDashboard
+              }
+              sx={iconButtonStyles}
+              onClick={() =>
+                handleClick({
+                  codewarsContextDispatch,
+                  collectButtonDispatch,
+                  currentChallenge,
+                  diamondsContextDispatch,
+                  currentUser,
+                })
+              }
+            >
+              <DiamondIcon
+                sx={isLoading || isError ? fade(isError) : diamondStyles}
+              />
+            </IconButton>
+          </UntrackedChallengeTooltip>
         )}
       </Box>
     );
