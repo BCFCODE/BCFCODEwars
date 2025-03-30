@@ -20,7 +20,7 @@ export const fade = (error: boolean): SxProps => ({
 
 export const textStyles: SxProps = {
   whiteSpace: "nowrap",
-  // fontSize: { xs: "0.75rem", sm: "1rem" },
+  // fontSize: { xs: "0.75rem", sm: "0.5rem" },
 };
 
 export const codewarsCellStyles: SxProps = {

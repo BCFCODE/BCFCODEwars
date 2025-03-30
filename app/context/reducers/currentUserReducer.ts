@@ -116,9 +116,10 @@ const currentUserReducer = (
       };
     }
     case "ADD_UNTRACKED_CHALLENGES": {
-      const isDifferent =
-        (state.currentUser.codewars.codeChallenges.untrackedChallenges ?? []).length !==
-        action.untrackedChallenges.length;
+      // const isDifferent =
+      //   (state.currentUser.codewars.codeChallenges.untrackedChallenges ?? []).length !==
+      //   action.untrackedChallenges.length;
+      
       // console.log(
       //   "state.currentUser.codewars.codeChallenges.untrackedChallenges",
       //   state.currentUser.codewars.codeChallenges.untrackedChallenges,
@@ -133,10 +134,10 @@ const currentUserReducer = (
             ...state.currentUser.codewars,
             codeChallenges: {
               ...state.currentUser.codewars.codeChallenges,
-              list: [
-                ...(isDifferent ? action.untrackedChallenges : []),
-                ...state.currentUser.codewars.codeChallenges.list,
-              ],
+              // list: [
+              //   ...(isDifferent ? action.untrackedChallenges : []),
+              //   ...state.currentUser.codewars.codeChallenges.list,
+              // ],
               untrackedChallenges: action.untrackedChallenges,
             },
           },

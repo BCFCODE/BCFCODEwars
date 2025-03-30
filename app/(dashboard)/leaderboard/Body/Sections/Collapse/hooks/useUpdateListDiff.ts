@@ -27,8 +27,6 @@ const useUpdateListDiff = () => {
           const previousChallenges = currentUser.codewars.codeChallenges.list;
           const { data: fetchedChallenges } = response.data;
 
-          
-
           const untrackedChallenges = extractListDiff({
             previousChallenges,
             fetchedChallenges,
@@ -43,8 +41,6 @@ const useUpdateListDiff = () => {
             "applyRewardStatusToAll(untrackedChallenges)",
             applyRewardStatusToAll(untrackedChallenges)
           );
-
-        
         } else {
           currentUserDispatch({
             type: "ADD_UNTRACKED_CHALLENGES",
@@ -53,10 +49,12 @@ const useUpdateListDiff = () => {
         }
       } catch (error) {
         // TODO
-        // currentUserDispatch({
-        //   type: "ADD_UNTRACKED_CHALLENGES",
-        //   untrackedChallenges: [],
-        // });
+        currentUserDispatch({
+          type: "ADD_UNTRACKED_CHALLENGES",
+          untrackedChallenges: [],
+        });
+      } finally {
+        console.log("currentUser", currentUser);
       }
     }
   };

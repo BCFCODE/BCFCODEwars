@@ -2,22 +2,28 @@ import { TableRow } from "@mui/material";
 import { ReactNode } from "react";
 import RankCell from "./Cells/RankCell";
 import SolvedOnCell from "./Cells/SolvedOnCell";
-import ChallengeNameCell from "./Cells/ChallengeNameCell";
+import NameCell from "./Cells/NameCell";
 import DateCompletedCell from "./Cells/DateCompletedCell";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
+import CollectDiamondsCell from "./Cells/CollectDiamondsCell";
+import CollectDiamonds from "../../Buttons/CollectDiamonds";
 
 interface Props {
   challenge: CodewarsCompletedChallenge;
-  children: ReactNode;
 }
 
-const SingleRow = ({ challenge, children }: Props) => {
+const SingleRow = ({ challenge }: Props) => {
   return (
     <TableRow>
       <DateCompletedCell completedAt={challenge.completedAt} />
-      <ChallengeNameCell challengeName={challenge.name} />
+      <NameCell
+        challengeName={challenge.name}
+        isUntracked={challenge.isUntracked ?? false}
+      />
       <RankCell {...{ challenge }} />
-      {children}
+      <CollectDiamondsCell>
+        <CollectDiamonds currentChallenge={challenge} />
+      </CollectDiamondsCell>
       <SolvedOnCell completedAt={challenge.completedAt} />
     </TableRow>
   );
