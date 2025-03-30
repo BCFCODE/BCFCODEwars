@@ -1,13 +1,12 @@
 // app/services/codewars-service.ts
 
 import {
-  CodewarsSingleChallenge,
   CodewarsChallengesApiResponse,
-  CodewarsCompletedChallenge,
+  CodewarsSingleChallenge
 } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
 
-class CodewarsService {
+class CodewarsAPIService {
   /* 
     TODO: CRUD
     
@@ -19,7 +18,6 @@ class CodewarsService {
 
     ...
   */
-  getRank = (challengeRankId: number): number => Math.abs(challengeRankId);
 
   // Read
   getCompletedChallenges = async (
@@ -51,7 +49,6 @@ class CodewarsService {
     await fetch(
       `${baseURL}/api/wars/codewars/challenges/single?username=${username}&challengeId=${id}`
     ).then((res) => res.json());
-
 }
 
-export default CodewarsService;
+export default CodewarsAPIService;

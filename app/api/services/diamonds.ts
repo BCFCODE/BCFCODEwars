@@ -1,7 +1,7 @@
 import { APIdbGetDiamondsResponse } from "@/types/diamonds";
 import { baseURL } from "@/utils/constants";
 
-class APIDiamondsService {
+class DiamondsAPIService {
   private endpoint = `${baseURL}/api/db/diamonds`;
 
   getDiamonds = async (
@@ -28,4 +28,4 @@ class APIDiamondsService {
   };
 }
 
-export default APIDiamondsService;
+export default DiamondsAPIService;

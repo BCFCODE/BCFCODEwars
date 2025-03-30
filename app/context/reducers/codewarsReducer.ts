@@ -20,18 +20,24 @@ const codewarsReducer = (
   action: CodewarsAction
 ): CodewarsState => {
   switch (action.type) {
-    case "UPDATE_CODEWARS_USERS":
+    case "UPDATE_CODEWARS_USERS": {
       return { ...state, codewarsUsers: action.codewarsUsers };
-    case "SET_COMPLETED_CHALLENGES":
+    }
+    case "SET_COMPLETED_CHALLENGES": {
       return { ...state, completedChallenges: action.completedChallenges };
-    case "SET_SELECTED_CHALLENGE":
+    }
+    case "SET_SELECTED_CHALLENGE": {
       return { ...state, selectedChallenge: action.selectedChallenge };
-    case "SET_LOADING":
+    }
+    case "SET_LOADING": {
       return { ...state, isLoading: action.isLoading };
-    case "SET_ERROR":
+    }
+    case "SET_ERROR": {
       return { ...state, isError: action.isError };
-    case "SET_PAGE_NUMBER":
+    }
+    case "SET_PAGE_NUMBER": {
       return { ...state, pageNumber: action.pageNumber };
+    }
     default:
       return state;
   }

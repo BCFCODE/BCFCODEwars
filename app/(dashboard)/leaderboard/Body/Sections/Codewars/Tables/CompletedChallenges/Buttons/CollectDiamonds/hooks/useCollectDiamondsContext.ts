@@ -8,7 +8,7 @@ export default function useCollectDiamondsContext() {
   const { isDiamondIconButtonDisabled } = useDiamondsContext();
   const diamondsContextDispatch = useDiamondsDispatchContext();
   const codewarsContextDispatch = useCodewarsDispatchContext();
-
+// console.log('useCollectDiamondsContext currentUser', currentUser)
   return {
     currentUser,
     isDiamondIconButtonDisabled,

@@ -1,12 +1,10 @@
 "use client";
 
-import APIdbService from "@/app/api/services/db-service";
+import dbAPIService from "@/app/api/services/db";
 import allUsersReducer, {
   AllUsersAction,
 } from "@/app/context/reducers/allUsersReducer";
-import { auth } from "@/auth";
 import { CurrentUser } from "@/types/users";
-import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 
 import {
@@ -15,10 +13,9 @@ import {
   ReactNode,
   useEffect,
   useReducer,
-  useRef,
 } from "react";
 
-const { getUsers } = new APIdbService();
+const { getUsers } = new dbAPIService();
 
 export interface AllUsersContextType {
   isLoading: boolean;
@@ -71,11 +68,11 @@ const AllUsersProvider = ({ children }: Props) => {
 
         if (fetchedUsers.users) {
           const allUsers = fetchedUsers.users.map((user) => {
-            console.log(
-              "in AllUsersProvider useEffect map",
-              user.email,
-              session.data
-            );
+            // console.log(
+            //   "in AllUsersProvider useEffect map",
+            //   user.email,
+            //   session.data
+            // );
             return user.email === session.data?.user.email
               ? { ...user, session: session.data }
               : user;
@@ -83,7 +80,7 @@ const AllUsersProvider = ({ children }: Props) => {
 
           // const allUsers = fetchedUsers.users as CurrentUser[]
 
-          console.log("allUsers in AllUsersProvider", allUsers, session.data);
+          // console.log("allUsers in AllUsersProvider", allUsers, session.data);
 
           allUsersDispatch({
             type: "SET_ALL_USERS",
@@ -99,7 +96,7 @@ const AllUsersProvider = ({ children }: Props) => {
         allUsersDispatch({ type: "SET_ERROR", error: true });
         // If an exception occurs, set the error flag.
         // allUsersDispatch({ type: "SET_ERROR", error: true });
-        console.error("Error loading leaderboard data");
+        // console.error("Error loading leaderboard data");
       } finally {
         allUsersDispatch({ type: "SET_LOADING", loading: false });
       }

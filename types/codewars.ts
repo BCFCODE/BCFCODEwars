@@ -37,6 +37,7 @@ export type CodewarsUser = {
     totalCompleted: number;
     challengeFilter: CodeChallengesFilter;
     list: CodewarsCompletedChallenge[];
+    untrackedChallenges: CodewarsCompletedChallenge[];
   };
 };
 

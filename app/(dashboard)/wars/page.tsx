@@ -1,4 +1,4 @@
-import DatabaseService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db";
 import { auth } from "@/auth";
 import { CodewarsUser } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
@@ -28,7 +28,7 @@ const WarsPage = async () => {
   if (email) {
     try {
       const currentCodewarsUser = await getSingleCodewarsUser(email);
-      console.log(currentCodewarsUser, "<<<<<< currentCodewarsUser");
+      // console.log(currentCodewarsUser, "<<<<<< currentCodewarsUser");
       /* Purpose: 
           This block of code checks if the Codewars account associated with the user 
           (stored in our database) is in sync with the current state on Codewars.com. 
@@ -62,10 +62,10 @@ const WarsPage = async () => {
       const codewarsUser: CodewarsUser = await response.json();
 
       const isDbUsernameSyncedWithCodewars = codewarsUser.success;
-      console.log(
-        currentCodewarsUser?.isConnected,
-        isDbUsernameSyncedWithCodewars
-      );
+      // console.log(
+      //   currentCodewarsUser?.isConnected,
+      //   isDbUsernameSyncedWithCodewars
+      // );
       isConnected =
         currentCodewarsUser?.isConnected ||
         !isDbUsernameSyncedWithCodewars ||
@@ -81,7 +81,7 @@ const WarsPage = async () => {
       console.error("Error fetching user data:", error);
     }
   }
-  console.log("isConnected (wars page)", isConnected);
+  // console.log("isConnected (wars page)", isConnected);
   if (!isConnected)
     return (
       <Box

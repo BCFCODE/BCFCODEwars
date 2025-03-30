@@ -1,6 +1,6 @@
 "use server";
 
-import DatabaseService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CurrentUser } from "@/types/users";
 
@@ -11,10 +11,7 @@ interface Props {
   list: CodewarsCompletedChallenge[];
 }
 
-export default async function saveChallengeListToDB({
-  list,
-  currentUser,
-}: Props) {
+export default async function storeChallengeList({ list, currentUser }: Props) {
   const userId = currentUser.codewars.id;
   saveChallengesList({ list, userId });
 }

@@ -26,7 +26,7 @@ export default function LeaderBoardPage({
   // // Consume the error state from context to trigger re-render when it updates.
   const dispatch = useAllUsersDispatchContext();
   const { error, isLoading } = useAllUsersContext();
-  // const { isCollapse, currentUser } = useCurrentUserContext();
+  // const { isCollapsed, currentUser } = useCurrentUserContext();
 
   useEffect(() => {
     if (allUsersInSignInPage) {
@@ -38,14 +38,14 @@ export default function LeaderBoardPage({
           allUsers: allUsersInSignInPage,
         },
       });
-      console.log(
-        "LeaderBoardPage allUsersInSignInPage",
-        allUsersInSignInPage,
-        // isCollapse,
-        // currentUser
-        "session",
-        session
-      );
+      // console.log(
+      //   "LeaderBoardPage allUsersInSignInPage",
+      //   allUsersInSignInPage,
+      //   // isCollapsed,
+      //   // currentUser
+      //   "session",
+      //   session
+      // );
     }
   }, [allUsersInSignInPage, dispatch]);
 

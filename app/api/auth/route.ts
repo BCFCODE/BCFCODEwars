@@ -1,6 +1,6 @@
 // app/api/auth/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import GoogleService from "@/app/services/google-service";
+import GoogleService from "@/app/services/google";
 
 const { handleGoogleSignIn } = new GoogleService();
 

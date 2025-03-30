@@ -3,13 +3,15 @@ import currentUserReducer, {
   CurrentUserAction,
 } from "../reducers/currentUserReducer";
 import { CurrentUser } from "@/types/users";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 
 export type CurrentUserContext = {
   currentUser: CurrentUser;
 };
 
 export interface CurrentUserContextState extends CurrentUserContext {
-  isCollapse?: boolean;
+  isCollapsed?: boolean;
+  // untrackedChallenges: CodewarsCompletedChallenge[];
 }
 
 export const CurrentUserContext = createContext<CurrentUserContextState | null>(
@@ -27,7 +29,7 @@ const CurrentUserProvider = ({
 }) => {
   const initialCurrentUserState: CurrentUserContextState = {
     ...context,
-    isCollapse: false,
+    isCollapsed: false,
   };
   const [currentUserContext, dispatch] = useReducer(
     currentUserReducer,
