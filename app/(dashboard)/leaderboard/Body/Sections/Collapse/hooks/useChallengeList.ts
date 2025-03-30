@@ -35,7 +35,7 @@ const useChallengeList = () => {
       codewarsDispatch({ type: "SET_ERROR", isError: true });
       // setError(true);
     } finally {
-      diffAndUpdateList();
+      // diffAndUpdateList();
       codewarsDispatch({ type: "SET_LOADING", isLoading: false });
       // setIsLoading(false);
 

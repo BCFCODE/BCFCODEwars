@@ -1,4 +1,5 @@
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
+import { Diamonds } from "@/types/diamonds";
 import { GoogleUser } from "@/types/google";
 import { CurrentUser, DatabaseUser } from "@/types/users";
 import {
@@ -253,9 +254,9 @@ class DatabaseService {
     );
   };
 
-  getDiamonds = async (): Promise<WithId<Document>[]> => {
+  getDiamonds = async (): Promise<Diamonds[]> => {
     const { diamonds } = await this.getCollections();
-    return diamonds.find({}).toArray();
+    return diamonds.find<Diamonds>({}).toArray();
   };
 
   closeConnection = async () => {

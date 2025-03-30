@@ -22,9 +22,9 @@ const DiamondsCell = () => {
   // });
   const isCurrentUser = currentUser.email === diamondsData?.email;
 
-  const diamondsSum = isCurrentUser ? currentUser.diamonds.totals.total : 0;
-  // const diamondsSum = isCurrentUser ? diamondsData.sum.total : 0;
-
+  // const diamondsSum = isCurrentUser ? currentUser.diamonds.totals.total : 0;
+  const diamondsSum = currentUser.diamonds.totals.total;
+  // console.log('diamondsSum', diamondsSum, currentUser.diamonds?.totals.total, currentUser.email, diamondsData)
   return (
     <TableCell sx={{ ...codewarsCellStyles }} align="right">
       <Box sx={diamondBoxStyles}>

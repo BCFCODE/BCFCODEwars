@@ -7,7 +7,7 @@ const { getDiamonds } = new DatabaseService();
 
 export async function GET(request: NextRequest) {
   try {
-    const [data] = await getDiamonds();
+    const data = await getDiamonds();
     return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error) {
     console.error(error);

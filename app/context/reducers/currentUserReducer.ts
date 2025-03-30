@@ -119,12 +119,12 @@ const currentUserReducer = (
       const isDifferent =
         (state.currentUser.codewars.codeChallenges.untrackedChallenges ?? []).length !==
         action.untrackedChallenges.length;
-      console.log(
-        "state.currentUser.codewars.codeChallenges.untrackedChallenges",
-        state.currentUser.codewars.codeChallenges.untrackedChallenges,
-        "action.untrackedChallenges",
-        action.untrackedChallenges,
-      );
+      // console.log(
+      //   "state.currentUser.codewars.codeChallenges.untrackedChallenges",
+      //   state.currentUser.codewars.codeChallenges.untrackedChallenges,
+      //   "action.untrackedChallenges",
+      //   action.untrackedChallenges,
+      // );
       return {
         ...state,
         currentUser: {
