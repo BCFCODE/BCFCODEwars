@@ -4,7 +4,7 @@ import { TableBody } from "@mui/material";
 import CollectDiamonds from "../Buttons/CollectDiamonds";
 import SingleRow from "./SingleRow";
 import CollectDiamondsCell from "./SingleRow/Cells/CollectDiamondsCell";
-import useFilter from "./useFilter";
+import useFilter from "./hooks/useFilter";
 
 export default function Body() {
   const { activeFilter, both, claimed, unClaimed } = useFilter();
@@ -21,16 +21,12 @@ export default function Body() {
     default:
       visibleChallenges = both;
   }
-  
+
   return (
     <>
       <TableBody>
         {visibleChallenges.map((challenge) => (
-          <SingleRow key={challenge.id} {...{ challenge }}>
-            <CollectDiamondsCell>
-              <CollectDiamonds currentChallenge={challenge} />
-            </CollectDiamondsCell>
-          </SingleRow>
+          <SingleRow key={challenge.id} {...{ challenge }} />
         ))}
       </TableBody>
     </>

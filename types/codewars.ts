@@ -64,6 +64,7 @@ export interface CodewarsCompletedChallenge {
   completedAt: string; // ISO 8601 date string representing when the challenge was completed
   rewardStatus: CodeChallengesFilter | RewardStatus;
   moreDetails?: CodewarsSingleChallenge;
+  isUntracked?: boolean
 }
 
 export interface CodewarsChallengesResponse {
