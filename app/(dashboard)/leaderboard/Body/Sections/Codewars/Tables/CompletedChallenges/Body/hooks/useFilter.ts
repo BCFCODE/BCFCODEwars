@@ -3,14 +3,14 @@ import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 import useUntrackedChallenges from "./useUntrackedChallenges";
 
 const useFilter = () => {
-  console.log("useFilter Rendered...");
+  // console.log("useFilter Rendered...");
 
   const { currentUser } = useCurrentUserContext();
 
   const { markedUntrackedChallenges, untrackedChallenges } =
     useUntrackedChallenges(currentUser);
 
-  console.log("markedUntrackedChallenges", markedUntrackedChallenges);
+  // console.log("markedUntrackedChallenges", markedUntrackedChallenges);
 
   const activeFilter: CodeChallengesFilter =
     currentUser.codewars.codeChallenges.challengeFilter;

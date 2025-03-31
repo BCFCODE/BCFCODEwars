@@ -37,10 +37,10 @@ const useUpdateListDiff = () => {
             untrackedChallenges,
           });
 
-          console.log(
-            "applyRewardStatusToAll(untrackedChallenges)",
-            applyRewardStatusToAll(untrackedChallenges)
-          );
+          // console.log(
+          //   "applyRewardStatusToAll(untrackedChallenges)",
+          //   applyRewardStatusToAll(untrackedChallenges)
+          // );
         } else {
           currentUserDispatch({
             type: "ADD_UNTRACKED_CHALLENGES",
@@ -54,7 +54,7 @@ const useUpdateListDiff = () => {
           untrackedChallenges: [],
         });
       } finally {
-        console.log("currentUser", currentUser);
+        // console.log("currentUser", currentUser);
       }
     }
   };

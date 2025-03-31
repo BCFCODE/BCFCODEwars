@@ -6,7 +6,7 @@ const useUntrackedChallenges = (currentUser: CurrentUser) => {
   const codeChallenges = currentUser.codewars.codeChallenges;
 
   let untrackedChallenges = codeChallenges.untrackedChallenges ?? []
-console.log('useUntrackedChallenges/untrackedChallenges', untrackedChallenges) 
+// console.log('useUntrackedChallenges/untrackedChallenges', untrackedChallenges) 
   const isFirstLogin = codeChallenges.list.every(
     (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
   );
