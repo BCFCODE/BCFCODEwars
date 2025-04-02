@@ -11,7 +11,7 @@ export default function AvatarCell() {
 
   return (
     <TableCell sx={tableCellStyles} component="th" scope="row">
-      <Badge imageUrl={image} />
+      <Badge imageUrl={image ?? ""} />
       <Name text={name} />
     </TableCell>
   );
