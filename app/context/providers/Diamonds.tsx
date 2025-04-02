@@ -1,15 +1,12 @@
 "use client";
 
-import DiamondsAPIService from "@/app/api/services/diamonds";
 import { Diamonds } from "@/types/diamonds";
-import { createContext, ReactNode, useEffect, useReducer } from "react";
-import diamondsReducer, {
+import { createContext, ReactNode } from "react";
+import {
   DiamondsAction,
   DiamondsContextState,
-  initialDiamondsState,
 } from "../reducers/diamondsReducer";
-
-const { getDiamonds } = new DiamondsAPIService();
+import useDiamonds from "./effects/useDiamonds";
 
 export const DiamondsContext = createContext<DiamondsContextState | null>(null);
 export const DiamondsDispatchContext =
@@ -21,32 +18,10 @@ interface Props {
 }
 
 const DiamondsProvider = ({ children }: Props) => {
-  const [DatabaseDiamonds, diamondsDispatch] = useReducer(
-    diamondsReducer,
-    initialDiamondsState
-  );
-
-  useEffect(() => {
-    (async () => {
-      const response = await getDiamonds({ cache: "no-store" });
-      // console.log('DiamondsProvider  getDiamonds({ cache: "no-store" }); response', response)
-      if (response.success) {
-        diamondsDispatch({
-          type: "SET_DIAMONDS",
-          payload: {
-            ...initialDiamondsState,
-            data: response.data,
-          },
-        });
-      } else {
-        diamondsDispatch({ type: "SET_LOADING", isLoading: true });
-        diamondsDispatch({ type: "SET_ERROR", isError: true });
-      }
-    })();
-  }, []);
+  const { diamondsState, diamondsDispatch } = useDiamonds();
 
   return (
-    <DiamondsContext.Provider value={DatabaseDiamonds}>
+    <DiamondsContext.Provider value={diamondsState}>
       <DiamondsDispatchContext.Provider value={diamondsDispatch}>
         {children}
       </DiamondsDispatchContext.Provider>
