@@ -28,13 +28,13 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     counter,
     collectedDiamondsCount,
     isCollected,
+    isError,
+    success,
     isDiamondIconButtonDisabled,
     codewarsContextDispatch,
-    collectButtonDispatch,
     diamondsContextDispatch,
-    isError,
+    collectButtonDispatch,
     currentUser,
-    success,
   } = useCollectDiamonds();
   // console.log("currentUser in CollectDiamonds >>>>", currentUser);
   const isUserOnPersonalDashboard =

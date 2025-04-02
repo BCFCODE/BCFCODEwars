@@ -26,6 +26,13 @@ export type CollectButtonAction =
     }
   | { type: "ERROR?"; isError: boolean };
 
+export const initialCollectDiamondsState: CollectDiamondsState = {
+  counter: 0,
+  isLoading: false,
+  isError: false,
+  isCollected: false,
+  success: false,
+};
 
 export default function collectButtonReducer(
   state: CollectDiamondsState,

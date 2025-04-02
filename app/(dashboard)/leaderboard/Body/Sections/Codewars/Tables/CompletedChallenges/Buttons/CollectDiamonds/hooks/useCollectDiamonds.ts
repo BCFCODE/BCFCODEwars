@@ -1,60 +1,57 @@
-import useCollectedDiamondsEffect from "../effects/useCollectedDiamondsEffect";
-import useChallengesListEffect from "../effects/useChallengesListEffect";
-import useCounterEffect from "../effects/useCounterEffect";
-import useClaimedChallenge from "./useClaimedChallenge";
-import useCollectButtonReducer from "./useCollectButtonReducer";
-import useCollectDiamondsContext from "./useCollectDiamondsContext";
+import { AuthenticatedUser } from "@/types/users";
+import useCollectEffects from "../effects";
+import { CollectDiamondsState } from "../reducers/collectButtonReducer";
+import useCollectButtonState, {
+  CollectButtonDispatch
+} from "./useCollectButtonState";
+import useCollectDiamondsContext, {
+  UseCollectDiamondsContext,
+} from "./useCollectDiamondsContext";
+import useUserCodewarsChallenges from "./useUserCodewarsChallenges";
 
-export default function useCollectDiamonds() {
-  const {
-    completedChallenges,
-    completedChallengesRef,
-    currentUser,
-    currentUserDispatch,
-    allUsersDispatch,
-  } = useClaimedChallenge();
+export interface UseCollectDiamonds
+  extends CollectDiamondsState,
+    UseCollectDiamondsContext {
+  collectButtonDispatch: CollectButtonDispatch;
+  currentUser: AuthenticatedUser;
+}
 
+export default function useCollectDiamonds(): UseCollectDiamonds {
+  // Extract data from contexts
+  const { allUsersDispatch, currentUser, currentUserDispatch } =
+    useUserCodewarsChallenges();
+
+  // Collect Button State
   const {
     codewarsContextDispatch,
     diamondsContextDispatch,
     isDiamondIconButtonDisabled,
   } = useCollectDiamondsContext();
 
+  // Collect Button State
+  const { collectState, collectButtonDispatch } = useCollectButtonState();
+
   const {
-    collectButtonState: {
-      isLoading,
-      counter,
-      isError,
-      isCollected,
-      collectedDiamondsCount,
-      success,
-    },
-    collectButtonDispatch,
-  } = useCollectButtonReducer();
-
-  useCounterEffect({
-    collectButtonDispatch,
-    collectedDiamondsCount,
     counter,
-    // isCollected,
+    isCollected,
     isError,
-    // isLoading,
+    isLoading,
     success,
-  });
+    collectedDiamondsCount,
+  } = collectState;
 
-  useCollectedDiamondsEffect({
+  // Run Effects
+  useCollectEffects({
+    counter,
+    isCollected,
+    isError,
+    success,
+    collectedDiamondsCount,
+    collectButtonDispatch,
     allUsersDispatch,
     currentUserDispatch,
-    collectButtonDispatch,
-    collectedDiamondsCount,
     diamondsContextDispatch,
-    isCollected,
-  });
-
-  useChallengesListEffect({
-    collectedDiamondsCount,
     isDiamondIconButtonDisabled,
-    success,
   });
 
   return {
@@ -64,14 +61,10 @@ export default function useCollectDiamonds() {
     isCollected,
     isDiamondIconButtonDisabled,
     codewarsContextDispatch,
-    collectButtonDispatch,
-    completedChallengesRef,
     diamondsContextDispatch,
     isError,
-    currentUser,
-    completedChallenges,
-    currentUserDispatch,
     success,
-    allUsersDispatch,
+    collectButtonDispatch,
+    currentUser,
   };
 }

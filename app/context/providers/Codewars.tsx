@@ -7,7 +7,7 @@ export interface Context {}
 
 export interface CodewarsState extends Context {
   codewarsUsers?: CodewarsUser[];
-  completedChallenges?: CodewarsCompletedChallenge[];
+  completedChallenges: CodewarsCompletedChallenge[];
   selectedChallenge?: CodewarsCompletedChallenge;
   pageNumber: number;
   isDisabled: boolean;
