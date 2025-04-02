@@ -12,7 +12,7 @@ export interface UseFilter {
 }
 
 const useFilter = (): UseFilter => {
-  console.log("useFilter Rendered...");
+  // console.log("useFilter Rendered...");
 
   const { currentUser } = useCurrentUserContext();
 
@@ -21,12 +21,12 @@ const useFilter = (): UseFilter => {
     untrackedChallenges,
   } = useUntrackedChallenges(currentUser);
 
-  console.log(
-    "useFilter/markedUntrackedChallenges",
-    markedUntrackedChallenges
-    // "useFilter/mostRecentUntrackedChallenge",
-    // mostRecentUntrackedChallenge
-  );
+  // console.log(
+  //   "useFilter/markedUntrackedChallenges",
+  //   markedUntrackedChallenges
+  //   // "useFilter/mostRecentUntrackedChallenge",
+  //   // mostRecentUntrackedChallenge
+  // );
 
   const activeFilter: CodeChallengesFilter =
     currentUser.codewars.codeChallenges.challengeFilter;

@@ -20,10 +20,10 @@ const RecentlySolvedChip = ({ challengeId }: Props) => {
     ? mostRecentUntrackedChallenge.id
     : "";
 
-  console.log(
-    "RecentlySolvedChip/mostRecentUntrackedChallenge",
-    mostRecentUntrackedChallenge
-  );
+  // console.log(
+  //   "RecentlySolvedChip/mostRecentUntrackedChallenge",
+  //   mostRecentUntrackedChallenge
+  // );
   return (
     <Chip
       // TODO

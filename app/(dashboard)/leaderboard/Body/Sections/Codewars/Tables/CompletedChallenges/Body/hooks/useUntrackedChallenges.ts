@@ -19,12 +19,12 @@ const useUntrackedChallenges = (
 
   useSetLatestUntrackedChallenge(untrackedChallenges);
 
-  console.log(
-    "useUntrackedChallenges/untrackedChallenges",
-    untrackedChallenges
-    // "mostRecentUntrackedChallenge",
-    // mostRecentUntrackedChallenge
-  );
+  // console.log(
+  //   "useUntrackedChallenges/untrackedChallenges",
+  //   untrackedChallenges
+  //   // "mostRecentUntrackedChallenge",
+  //   // mostRecentUntrackedChallenge
+  // );
 
   const isFirstLogin = codeChallenges.list.every(
     (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
