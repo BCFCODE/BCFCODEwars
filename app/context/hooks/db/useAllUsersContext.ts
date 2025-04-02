@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { AllUsersContext, AllUsersContextType } from "../../providers/AllUsers";
+import { AllUsersContextType } from "../../reducers/allUsersReducer";
+import { AllUsersContext } from "../../providers/contexts";
 
 const useAllUsersContext = (): AllUsersContextType => {
   const context = useContext(AllUsersContext);

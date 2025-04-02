@@ -1,16 +1,10 @@
-"use client";
+'use client'
 
-import {
-  AllUsersAction,
-  AllUsersContextType,
-} from "@/app/context/reducers/allUsersReducer";
+import { AllUsersContextType } from "@/app/context/reducers/allUsersReducer";
 
-import { createContext, Dispatch, ReactNode } from "react";
+import { ReactNode } from "react";
 import useAllUsers from "./effects/useAllUsers";
-
-export const AllUsersContext = createContext<AllUsersContextType | null>(null);
-export const AllUsersDispatchContext =
-  createContext<Dispatch<AllUsersAction> | null>(null);
+import { AllUsersContext, AllUsersDispatchContext } from "./contexts";
 
 interface Props {
   children: ReactNode;

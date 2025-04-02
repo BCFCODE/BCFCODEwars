@@ -1,3 +1,5 @@
+'use client'
+
 import dbAPIService from "@/app/api/services/db";
 import allUsersReducer, {
   AllUsersAction,

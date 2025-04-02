@@ -1,16 +1,10 @@
-"use client";
+'use client'
 
 import { Diamonds } from "@/types/diamonds";
-import { createContext, ReactNode } from "react";
-import {
-  DiamondsAction,
-  DiamondsContextState,
-} from "../reducers/diamondsReducer";
-import useDiamonds from "./effects/useDiamonds";
+import { ReactNode } from "react";
 
-export const DiamondsContext = createContext<DiamondsContextState | null>(null);
-export const DiamondsDispatchContext =
-  createContext<React.Dispatch<DiamondsAction> | null>(null);
+import { DiamondsContext, DiamondsDispatchContext } from "./contexts";
+import useDiamonds from "./effects/useDiamonds";
 
 interface Props {
   children: ReactNode;

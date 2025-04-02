@@ -1,14 +1,8 @@
-import { createContext, Dispatch, ReactNode, useReducer } from "react";
+import { ReactNode, useReducer } from "react";
 import currentUserReducer, {
-  CurrentUserAction,
   CurrentUserContext as CurrentUserContextType,
 } from "../reducers/currentUserReducer";
-
-export const CurrentUserContext = createContext<CurrentUserContextType | null>(
-  null
-);
-export const CurrentUserDispatchContext =
-  createContext<Dispatch<CurrentUserAction> | null>(null);
+import { CurrentUserContext, CurrentUserDispatchContext } from "./contexts";
 
 interface Props {
   children: ReactNode;

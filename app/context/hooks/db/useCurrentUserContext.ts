@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { CurrentUserContext } from "../../providers/CurrentUser";
 import { CurrentUserContext as Context } from "../../reducers/currentUserReducer";
+import { CurrentUserContext } from "../../providers/contexts";
 
 const useCurrentUserContext = (): Context => {
   const context = useContext(CurrentUserContext);

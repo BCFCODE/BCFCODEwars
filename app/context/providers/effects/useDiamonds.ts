@@ -1,3 +1,5 @@
+'use client'
+
 import DiamondsAPIService from "@/app/api/services/diamonds";
 import { Dispatch, useEffect, useReducer } from "react";
 import diamondsReducer, {
