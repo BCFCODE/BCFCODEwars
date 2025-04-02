@@ -4,7 +4,7 @@ import dbAPIService from "@/app/api/services/db";
 import allUsersReducer, {
   AllUsersAction,
 } from "@/app/context/reducers/allUsersReducer";
-import { CurrentUser } from "@/types/users";
+import { AuthenticatedUser } from "@/types/users";
 import { useSession } from "next-auth/react";
 
 import {
@@ -20,7 +20,7 @@ const { getUsers } = new dbAPIService();
 export interface AllUsersContextType {
   isLoading: boolean;
   error: boolean;
-  allUsers: CurrentUser[];
+  allUsers: AuthenticatedUser[];
 }
 
 interface Props {
@@ -76,9 +76,9 @@ const AllUsersProvider = ({ children }: Props) => {
             return user.email === session.data?.user.email
               ? { ...user, session: session.data }
               : user;
-          }) as CurrentUser[];
+          }) as AuthenticatedUser[];
 
-          // const allUsers = fetchedUsers.users as CurrentUser[]
+          // const allUsers = fetchedUsers.users as AuthenticatedUser[]
 
           // console.log("allUsers in AllUsersProvider", allUsers, session.data);
 

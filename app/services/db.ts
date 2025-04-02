@@ -1,7 +1,6 @@
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 import { Diamonds } from "@/types/diamonds";
-import { GoogleUser } from "@/types/google";
-import { CurrentUser, DatabaseUser } from "@/types/users";
+import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import {
   ClientSession,
   Collection,
@@ -205,7 +204,7 @@ class DatabaseService {
     );
   };
 
-  updateCurrentUser = async (currentUser: CurrentUser) => {
+  updateCurrentUser = async (currentUser: AuthenticatedUser) => {
     const { db, session } = await this.startClientSession();
     const { email } = currentUser;
 

@@ -4,7 +4,7 @@ import LoadingUI from "@/app/components/UI/LoadingUI";
 import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
 import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 import CodewarsProvider from "@/app/context/providers/Codewars";
-import { CurrentUser } from "@/types/users";
+import { AuthenticatedUser } from "@/types/users";
 import { Paper, Table, TableContainer } from "@mui/material";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
@@ -14,14 +14,11 @@ import LeaderboardLoadingError from "./Error";
 import LeaderboardHeader from "./Head/Header";
 
 interface Props {
-  allUsersInSignInPage: CurrentUser[];
-  session: Session | null;
+  allUsersInSignInPage: AuthenticatedUser[];
+  // session: Session | null;
 }
 
-export default function LeaderBoardPage({
-  allUsersInSignInPage,
-  session,
-}: Props) {
+export default function LeaderBoardPage({ allUsersInSignInPage }: Props) {
   const router = useRouter();
   // // Consume the error state from context to trigger re-render when it updates.
   const dispatch = useAllUsersDispatchContext();

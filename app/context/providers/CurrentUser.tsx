@@ -1,22 +1,21 @@
+import { AuthenticatedUser } from "@/types/users";
 import { createContext, Dispatch, ReactNode, useReducer } from "react";
 import currentUserReducer, {
   CurrentUserAction,
 } from "../reducers/currentUserReducer";
-import { CurrentUser } from "@/types/users";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { Session } from "next-auth";
 
-export type CurrentUserContext = {
-  currentUser: CurrentUser;
-};
-
-export interface CurrentUserContextState extends CurrentUserContext {
+export interface CurrentUserState {
+  session?: Session;
   isCollapsed?: boolean;
   // untrackedChallenges: CodewarsCompletedChallenge[];
 }
 
-export const CurrentUserContext = createContext<CurrentUserContextState | null>(
-  null
-);
+export interface CurrentUserContext extends CurrentUserState {
+  currentUser: AuthenticatedUser;
+}
+
+export const CurrentUserContext = createContext<CurrentUserContext | null>(null);
 export const CurrentUserDispatchContext =
   createContext<Dispatch<CurrentUserAction> | null>(null);
 
@@ -25,9 +24,9 @@ const CurrentUserProvider = ({
   context,
 }: {
   children: ReactNode;
-  context: CurrentUserContextState;
+  context: CurrentUserContext;
 }) => {
-  const initialCurrentUserState: CurrentUserContextState = {
+  const initialCurrentUserState: CurrentUserContext = {
     ...context,
     isCollapsed: false,
   };

@@ -1,4 +1,4 @@
-import { CurrentUser, DatabaseUser } from "@/types/users";
+import { AuthenticatedUser, DatabaseUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 
 interface GetUsersAPIResponseError {
@@ -39,7 +39,7 @@ class dbAPIService {
     }
   };
 
-  postCurrentUser = async (currentUser: CurrentUser) => {
+  postCurrentUser = async (currentUser: AuthenticatedUser) => {
     try {
       const response = await fetch(`${this.endpoint}/currentUser`, {
         method: "POST",

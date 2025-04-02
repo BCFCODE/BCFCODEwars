@@ -8,13 +8,13 @@ import {
 } from "@/app/(dashboard)/leaderboard/styles";
 
 import useCollectDiamonds from "@/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds/hooks/useCollectDiamonds";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
-import DiamondIcon from "@mui/icons-material/Diamond";
-import { Box, IconButton, Tooltip, Typography } from "@mui/material";
-import handleClick from "./utils/handleClick";
-import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 import DiamondsService from "@/app/services/diamonds";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { RewardStatus } from "@/types/diamonds";
+import DiamondIcon from "@mui/icons-material/Diamond";
+import { Box, IconButton, Typography } from "@mui/material";
 import UntrackedChallengeTooltip from "./components/Tooltips";
+import handleClick from "./utils/handleClick";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 

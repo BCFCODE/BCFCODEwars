@@ -7,9 +7,17 @@ import {
   CodewarsRankTotals,
   Diamonds,
 } from "@/types/diamonds";
-import { CurrentUserContextState } from "../providers/CurrentUser";
+import { AuthenticatedUser } from "@/types/users";
+import { Session } from "next-auth";
 
-export type CurrentUserState = CurrentUserContextState;
+export interface CurrentUserState {
+  isCollapsed?: boolean;
+  // untrackedChallenges: CodewarsCompletedChallenge[];
+}
+
+export interface CurrentUserContext extends CurrentUserState {
+  currentUser: AuthenticatedUser;
+}
 
 export type CurrentUserAction =
   | { type: "UPDATE_CODE_CHALLENGES_LIST"; list: CodewarsCompletedChallenge[] }
@@ -27,9 +35,9 @@ export type CurrentUserAction =
     };
 
 const currentUserReducer = (
-  state: CurrentUserState,
+  state: CurrentUserContext,
   action: CurrentUserAction
-): CurrentUserState => {
+): CurrentUserContext => {
   switch (action.type) {
     case "UPDATE_CODE_CHALLENGES_LIST":
       return {

@@ -1,6 +1,5 @@
-import { GoogleUser } from "@/types/google";
+import { GoogleUser } from "@/types/users";
 import DatabaseService from "./db";
-import { DatabaseUser } from "@/types/users";
 
 const {
   initializeDiamonds,

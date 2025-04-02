@@ -1,10 +1,8 @@
 import { useContext } from "react";
-import {
-  CurrentUserContext,
-  CurrentUserContextState,
-} from "../../providers/CurrentUser";
+import { CurrentUserContext } from "../../providers/CurrentUser";
+import { CurrentUserContext as Context } from "../../reducers/currentUserReducer";
 
-const useCurrentUserContext = (): CurrentUserContextState => {
+const useCurrentUserContext = (): Context => {
   const context = useContext(CurrentUserContext);
   if (!context) {
     throw new Error(

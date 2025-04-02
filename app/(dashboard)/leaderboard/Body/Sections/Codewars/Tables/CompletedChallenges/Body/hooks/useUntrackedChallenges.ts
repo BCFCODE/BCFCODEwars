@@ -1,8 +1,8 @@
-import { CurrentUser } from "@/types/users";
+import { AuthenticatedUser } from "@/types/users";
 import { markAllChallengesAsUntracked } from "../utils/markChallengeAsUntracked";
 import { RewardStatus } from "@/types/diamonds";
 
-const useUntrackedChallenges = (currentUser: CurrentUser) => {
+const useUntrackedChallenges = (currentUser: AuthenticatedUser) => {
   const codeChallenges = currentUser.codewars.codeChallenges;
 
   let untrackedChallenges = codeChallenges.untrackedChallenges ?? []
