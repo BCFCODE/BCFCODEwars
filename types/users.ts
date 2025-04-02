@@ -23,11 +23,11 @@ export interface BaseUser extends GoogleUser {
   lastLogin: Date;
 }
 
-export interface DatabaseUser extends BaseUser, CurrentUserState {
+export interface DatabaseUser extends BaseUser {
   activity: UserActivity;
 }
 
-export interface AuthenticatedUser extends DatabaseUser {
+export interface AuthenticatedUser extends DatabaseUser, CurrentUserState {
   codewars: CodewarsUser;
   diamonds: Diamonds;
   session: Session;
