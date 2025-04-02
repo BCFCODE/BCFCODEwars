@@ -39,7 +39,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   } = useCollectDiamonds();
   // console.log("currentUser in CollectDiamonds >>>>", currentUser);
   const isUserOnPersonalDashboard =
-    currentUser.session?.user.email === currentUser.email;
+    currentUser.session?.user?.email === currentUser.email;
   // console.log(
   //   "isUserOnPersonalDashboard in CollectDiamonds",
   //   isUserOnPersonalDashboard,

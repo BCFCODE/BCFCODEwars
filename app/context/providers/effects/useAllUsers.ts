@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import dbAPIService from "@/app/api/services/db";
 import allUsersReducer, {
@@ -47,7 +47,7 @@ const useAllUsers = (): UseAllUsers => {
             //   user.email,
             //   session.data
             // );
-            return user.email === session.data?.user.email
+            return user.email === session.data?.user?.email
               ? { ...user, session: session.data }
               : user;
           }) as AuthenticatedUser[];

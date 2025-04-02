@@ -14,7 +14,6 @@ export interface CurrentUserState {
   session?: Session;
   isCollapsed?: boolean;
   isUserOnPersonalDashboard?: boolean;
-  // untrackedChallenges: CodewarsCompletedChallenge[];
 }
 
 export interface CurrentUserContext extends CurrentUserState {
@@ -34,6 +33,10 @@ export type CurrentUserAction =
   | {
       type: "ADD_UNTRACKED_CHALLENGES";
       untrackedChallenges: CodewarsCompletedChallenge[];
+    }
+  | {
+      type: "SET_LATEST_UNTRACKED_CHALLENGE";
+      mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
     };
 
 const currentUserReducer = (
@@ -150,6 +153,23 @@ const currentUserReducer = (
               //   ...state.currentUser.codewars.codeChallenges.list,
               // ],
               untrackedChallenges: action.untrackedChallenges,
+            },
+          },
+        },
+      };
+    }
+    case "SET_LATEST_UNTRACKED_CHALLENGE": {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          codewars: {
+            ...state.currentUser.codewars,
+            codeChallenges: {
+              ...state.currentUser.codewars.codeChallenges,
+              mostRecentUntrackedChallenge: {
+                ...action.mostRecentUntrackedChallenge,
+              },
             },
           },
         },

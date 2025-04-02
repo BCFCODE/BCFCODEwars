@@ -13,6 +13,7 @@ interface Props {
 }
 
 const SingleRow = ({ challenge }: Props) => {
+  // console.log('SingleRow/challenge', challenge)
   return (
     <TableRow>
       <DateCompletedCell completedAt={challenge.completedAt} />
