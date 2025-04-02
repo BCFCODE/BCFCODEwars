@@ -1,12 +1,12 @@
 import DatabaseService from "@/app/services/db";
-import { CurrentUser } from "@/types/users";
+import { AuthenticatedUser } from "@/types/users";
 import { NextRequest, NextResponse } from "next/server";
 
 const { updateCurrentUser } = new DatabaseService();
 
 export async function POST(request: NextRequest) {
   try {
-    const currentUser: CurrentUser = await request.json();
+    const currentUser: AuthenticatedUser = await request.json();
 
     await updateCurrentUser(currentUser);
 
