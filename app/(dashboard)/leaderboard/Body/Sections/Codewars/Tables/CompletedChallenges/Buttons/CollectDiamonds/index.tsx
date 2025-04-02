@@ -15,6 +15,7 @@ import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import UntrackedChallengeTooltip from "./components/Tooltips";
 import handleClick from "./utils/handleClick";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 
@@ -23,6 +24,7 @@ interface Props {
 }
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
+  const { currentUser } = useCurrentUserContext();
   const {
     isLoading,
     counter,
@@ -34,7 +36,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     codewarsContextDispatch,
     diamondsContextDispatch,
     collectButtonDispatch,
-    currentUser,
   } = useCollectDiamonds();
   // console.log("currentUser in CollectDiamonds >>>>", currentUser);
   const isUserOnPersonalDashboard =
@@ -64,6 +65,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
         </Typography>
 
         {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}
+
         {!isCollected && (
           <UntrackedChallengeTooltip
             isUntracked={currentChallenge.isUntracked ?? false}
@@ -71,7 +73,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
               isUserOnPersonalDashboard
                 ? "Oops! Let’s track this now!"
                 : "💎Diamonds await! Sign in to collect."
-
             }
           >
             <IconButton

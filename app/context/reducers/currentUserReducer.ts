@@ -11,7 +11,9 @@ import { AuthenticatedUser } from "@/types/users";
 import { Session } from "next-auth";
 
 export interface CurrentUserState {
+  session?: Session;
   isCollapsed?: boolean;
+  isUserOnPersonalDashboard?: boolean;
   // untrackedChallenges: CodewarsCompletedChallenge[];
 }
 

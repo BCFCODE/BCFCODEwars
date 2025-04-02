@@ -1,5 +1,27 @@
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
-import { CodewarsState } from "../providers/Codewars";
+
+export interface Context {}
+
+export interface CodewarsState extends Context {
+  codewarsUsers?: CodewarsUser[];
+  completedChallenges: CodewarsCompletedChallenge[];
+  selectedChallenge?: CodewarsCompletedChallenge;
+  pageNumber: number;
+  isDisabled: boolean;
+  isError: boolean;
+  isLoading: boolean;
+  untrackedChallenges: CodewarsCompletedChallenge[];
+  // fetchCompletedChallenges: () => void;
+}
+
+export const initialCodewars: CodewarsState = {
+  completedChallenges: [],
+  isDisabled: false,
+  isError: false,
+  isLoading: false,
+  pageNumber: 0,
+  untrackedChallenges: [],
+};
 
 export type CodewarsAction =
   | { type: "UPDATE_CODEWARS_USERS"; codewarsUsers: CodewarsUser[] }

@@ -2,7 +2,7 @@ import { AuthenticatedUser } from "@/types/users";
 import useCollectEffects from "../effects";
 import { CollectDiamondsState } from "../reducers/collectButtonReducer";
 import useCollectButtonState, {
-  CollectButtonDispatch
+  CollectButtonDispatch,
 } from "./useCollectButtonState";
 import useCollectDiamondsContext, {
   UseCollectDiamondsContext,
@@ -13,13 +13,11 @@ export interface UseCollectDiamonds
   extends CollectDiamondsState,
     UseCollectDiamondsContext {
   collectButtonDispatch: CollectButtonDispatch;
-  currentUser: AuthenticatedUser;
 }
 
 export default function useCollectDiamonds(): UseCollectDiamonds {
   // Extract data from contexts
-  const { allUsersDispatch, currentUser, currentUserDispatch } =
-    useUserCodewarsChallenges();
+  const { allUsersDispatch, currentUserDispatch } = useUserCodewarsChallenges();
 
   // Collect Button State
   const {
@@ -65,6 +63,5 @@ export default function useCollectDiamonds(): UseCollectDiamonds {
     isError,
     success,
     collectButtonDispatch,
-    currentUser,
   };
 }

@@ -3,6 +3,8 @@
 import dbAPIService from "@/app/api/services/db";
 import allUsersReducer, {
   AllUsersAction,
+  AllUsersContextType,
+  initialDatabaseAllUsersState,
 } from "@/app/context/reducers/allUsersReducer";
 import { AuthenticatedUser } from "@/types/users";
 import { useSession } from "next-auth/react";
@@ -17,11 +19,9 @@ import {
 
 const { getUsers } = new dbAPIService();
 
-export interface AllUsersContextType {
-  isLoading: boolean;
-  error: boolean;
-  allUsers: AuthenticatedUser[];
-}
+export const AllUsersContext = createContext<AllUsersContextType | null>(null);
+export const AllUsersDispatchContext =
+  createContext<Dispatch<AllUsersAction> | null>(null);
 
 interface Props {
   children: ReactNode;
@@ -30,26 +30,13 @@ interface Props {
   // session: Session | null;
 }
 
-const initialDBAllUsersState = {
-  allUsers: [],
-  isLoading: true,
-  error: false,
-};
-
-export const AllUsersContext = createContext<AllUsersContextType | null>(null);
-export const AllUsersDispatchContext =
-  createContext<Dispatch<AllUsersAction> | null>(null);
-
 const AllUsersProvider = ({ children }: Props) => {
   const session = useSession();
   const [allUsersContext, allUsersDispatch] = useReducer(
     allUsersReducer,
-    initialDBAllUsersState
+    initialDatabaseAllUsersState
   );
-  // const sessionRef = useRef(session);
-  // console.log("session in AllUsersProvider", session);
-  // if (session !== null) sessionRef.current = session;
-
+  
   useEffect(() => {
     if (!session.data) return; // Wait for session to load
     (async () => {

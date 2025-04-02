@@ -1,39 +1,17 @@
 import { createContext, Dispatch, ReactNode, useReducer } from "react";
-import codewarsReducer, { CodewarsAction } from "../reducers/codewarsReducer";
-
-import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
-
-export interface Context {}
-
-export interface CodewarsState extends Context {
-  codewarsUsers?: CodewarsUser[];
-  completedChallenges: CodewarsCompletedChallenge[];
-  selectedChallenge?: CodewarsCompletedChallenge;
-  pageNumber: number;
-  isDisabled: boolean;
-  isError: boolean;
-  isLoading: boolean;
-  untrackedChallenges: CodewarsCompletedChallenge[]
-  // fetchCompletedChallenges: () => void;
-}
-
-interface Props {
-  children: ReactNode;
-  // context: CodewarsState;
-}
-
-const initialCodewars: CodewarsState = {
-  completedChallenges: [],
-  isDisabled: false,
-  isError: false,
-  isLoading: false,
-  pageNumber: 0,
-  untrackedChallenges: []
-};
+import codewarsReducer, {
+  CodewarsAction,
+  CodewarsState,
+  initialCodewars,
+} from "../reducers/codewarsReducer";
 
 export const CodewarsContext = createContext<CodewarsState | null>(null);
 export const CodewarsDispatchContext =
   createContext<Dispatch<CodewarsAction> | null>(null);
+
+interface Props {
+  children: ReactNode;
+}
 
 const CodewarsProvider = ({ children }: Props) => {
   const [codewarsState, dispatch] = useReducer(

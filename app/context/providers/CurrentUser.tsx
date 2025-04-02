@@ -1,32 +1,22 @@
-import { AuthenticatedUser } from "@/types/users";
 import { createContext, Dispatch, ReactNode, useReducer } from "react";
 import currentUserReducer, {
   CurrentUserAction,
+  CurrentUserContext as CurrentUserContextType,
 } from "../reducers/currentUserReducer";
-import { Session } from "next-auth";
 
-export interface CurrentUserState {
-  session?: Session;
-  isCollapsed?: boolean;
-  // untrackedChallenges: CodewarsCompletedChallenge[];
-}
-
-export interface CurrentUserContext extends CurrentUserState {
-  currentUser: AuthenticatedUser;
-}
-
-export const CurrentUserContext = createContext<CurrentUserContext | null>(null);
+export const CurrentUserContext = createContext<CurrentUserContextType | null>(
+  null
+);
 export const CurrentUserDispatchContext =
   createContext<Dispatch<CurrentUserAction> | null>(null);
 
-const CurrentUserProvider = ({
-  children,
-  context,
-}: {
+interface Props {
   children: ReactNode;
-  context: CurrentUserContext;
-}) => {
-  const initialCurrentUserState: CurrentUserContext = {
+  context: CurrentUserContextType;
+}
+
+const CurrentUserProvider = ({ children, context }: Props) => {
+  const initialCurrentUserState: CurrentUserContextType = {
     ...context,
     isCollapsed: false,
   };
