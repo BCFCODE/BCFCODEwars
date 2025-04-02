@@ -6,7 +6,7 @@ import CodewarsAPIService from "@/app/api/services/codewars";
 import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
 import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
 import { RewardStatus } from "@/types/diamonds";
-import { CurrentUser } from "@/types/users";
+import { AuthenticatedUser } from "@/types/users";
 
 const { getSingleChallenge } = new CodewarsAPIService();
 const { collectDiamonds } = new DiamondsService();
@@ -16,7 +16,7 @@ interface Props {
   diamondsContextDispatch: Dispatch<DiamondsAction>;
   codewarsContextDispatch: Dispatch<CodewarsAction>;
   currentChallenge: CodewarsCompletedChallenge;
-  currentUser: CurrentUser;
+  currentUser: AuthenticatedUser;
 }
 
 const handleClick = async ({

@@ -1,16 +1,32 @@
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 import useUntrackedChallenges from "./useUntrackedChallenges";
 
-const useFilter = () => {
-  // console.log("useFilter Rendered...");
+export interface UseFilter {
+  activeFilter: string;
+  both: CodewarsCompletedChallenge[];
+  claimed: CodewarsCompletedChallenge[];
+  unClaimed: CodewarsCompletedChallenge[];
+  untrackedChallenges: CodewarsCompletedChallenge[];
+}
+
+const useFilter = (): UseFilter => {
+  console.log("useFilter Rendered...");
 
   const { currentUser } = useCurrentUserContext();
 
-  const { markedUntrackedChallenges, untrackedChallenges } =
-    useUntrackedChallenges(currentUser);
+  const {
+    markedUntrackedChallenges,
+    untrackedChallenges,
+  } = useUntrackedChallenges(currentUser);
 
-  // console.log("markedUntrackedChallenges", markedUntrackedChallenges);
+  console.log(
+    "useFilter/markedUntrackedChallenges",
+    markedUntrackedChallenges
+    // "useFilter/mostRecentUntrackedChallenge",
+    // mostRecentUntrackedChallenge
+  );
 
   const activeFilter: CodeChallengesFilter =
     currentUser.codewars.codeChallenges.challengeFilter;
@@ -30,7 +46,13 @@ const useFilter = () => {
     ),
   ];
 
-  return { activeFilter, both, claimed, unClaimed, untrackedChallenges };
+  return {
+    activeFilter,
+    both,
+    claimed,
+    unClaimed,
+    untrackedChallenges,
+  };
 };
 
 export default useFilter;

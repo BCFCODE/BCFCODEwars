@@ -1,12 +1,7 @@
-import { Session } from "next-auth";
-import { CodewarsCompletedChallenge, CodewarsUser } from "./codewars";
+import { CurrentUserState } from "@/app/context/reducers/currentUserReducer";
+import { CodewarsUser } from "./codewars";
 import { Diamonds } from "./diamonds";
-import { GoogleUser } from "./google";
-
-export interface BaseUser extends GoogleUser {
-  firstLogin: Date;
-  lastLogin: Date;
-}
+import { Session } from "next-auth";
 
 export interface UserActivity {
   firstLogin: Date;
@@ -17,14 +12,23 @@ export interface UserActivity {
   isActiveSession: boolean;
 }
 
-export interface CurrentUserState {
-  session?: Session;
+export interface GoogleUser {
+  name: string;
+  email: string;
+  image?: string;
 }
 
-export interface DatabaseUser extends BaseUser, CurrentUserState {
-  codewars?: CodewarsUser;
-  diamonds?: Diamonds;
+export interface BaseUser extends GoogleUser {
+  firstLogin: Date;
+  lastLogin: Date;
+}
+
+export interface DatabaseUser extends BaseUser {
   activity: UserActivity;
 }
 
-export type CurrentUser = Required<DatabaseUser>;
+export interface AuthenticatedUser extends DatabaseUser, CurrentUserState {
+  codewars: CodewarsUser;
+  diamonds: Diamonds;
+  session: Session;
+}

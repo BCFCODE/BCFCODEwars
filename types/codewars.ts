@@ -38,6 +38,7 @@ export type CodewarsUser = {
     challengeFilter: CodeChallengesFilter;
     list: CodewarsCompletedChallenge[];
     untrackedChallenges: CodewarsCompletedChallenge[];
+    mostRecentUntrackedChallenge: CodewarsCompletedChallenge | null;
   };
 };
 
@@ -64,7 +65,7 @@ export interface CodewarsCompletedChallenge {
   completedAt: string; // ISO 8601 date string representing when the challenge was completed
   rewardStatus: CodeChallengesFilter | RewardStatus;
   moreDetails?: CodewarsSingleChallenge;
-  isUntracked?: boolean
+  isUntracked?: boolean;
 }
 
 export interface CodewarsChallengesResponse {

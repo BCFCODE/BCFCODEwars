@@ -12,7 +12,7 @@ const Reconnect = ({
   validatedUsername,
   isDbUsernameSyncedWithCodewars,
 }: Omit<StepProps, "currentStep">) => {
-  const userName = session?.user?.name.split(" ")[0] || "User";
+  const userName = (session?.user?.name ?? "").split(" ")[0] || "User";
   const isSynced = isDbUsernameSyncedWithCodewars ?? false;
 
   return (
@@ -57,7 +57,7 @@ const Reconnect = ({
           <Tip />
 
           {/* Reconnect Button */}
-          <Box sx={{display: "flex", justifyContent: 'space-around'}}>
+          <Box sx={{ display: "flex", justifyContent: "space-around" }}>
             <GoToLeaderboard />
             <ReconnectButton />
           </Box>

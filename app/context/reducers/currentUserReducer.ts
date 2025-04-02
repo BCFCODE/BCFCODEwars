@@ -7,9 +7,18 @@ import {
   CodewarsRankTotals,
   Diamonds,
 } from "@/types/diamonds";
-import { CurrentUserContextState } from "../providers/CurrentUser";
+import { AuthenticatedUser } from "@/types/users";
+import { Session } from "next-auth";
 
-export type CurrentUserState = CurrentUserContextState;
+export interface CurrentUserState {
+  session?: Session;
+  isCollapsed?: boolean;
+  isUserOnPersonalDashboard?: boolean;
+}
+
+export interface CurrentUserContext extends CurrentUserState {
+  currentUser: AuthenticatedUser;
+}
 
 export type CurrentUserAction =
   | { type: "UPDATE_CODE_CHALLENGES_LIST"; list: CodewarsCompletedChallenge[] }
@@ -24,12 +33,16 @@ export type CurrentUserAction =
   | {
       type: "ADD_UNTRACKED_CHALLENGES";
       untrackedChallenges: CodewarsCompletedChallenge[];
+    }
+  | {
+      type: "SET_LATEST_UNTRACKED_CHALLENGE";
+      mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
     };
 
 const currentUserReducer = (
-  state: CurrentUserState,
+  state: CurrentUserContext,
   action: CurrentUserAction
-): CurrentUserState => {
+): CurrentUserContext => {
   switch (action.type) {
     case "UPDATE_CODE_CHALLENGES_LIST":
       return {
@@ -140,6 +153,23 @@ const currentUserReducer = (
               //   ...state.currentUser.codewars.codeChallenges.list,
               // ],
               untrackedChallenges: action.untrackedChallenges,
+            },
+          },
+        },
+      };
+    }
+    case "SET_LATEST_UNTRACKED_CHALLENGE": {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          codewars: {
+            ...state.currentUser.codewars,
+            codeChallenges: {
+              ...state.currentUser.codewars.codeChallenges,
+              mostRecentUntrackedChallenge: {
+                ...action.mostRecentUntrackedChallenge,
+              },
             },
           },
         },

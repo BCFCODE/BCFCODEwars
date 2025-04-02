@@ -22,8 +22,13 @@ export default function useCollectedDiamondsEffect({
   // const currentUserDispatch = useCurrentUserDispatchContext();
   useEffect(() => {
     if (isCollected && collectedDiamondsCount)
-      diamondsContextDispatch({ type: "DISABLE_DIAMOND_ICON_BUTTON" }); 
+      diamondsContextDispatch({ type: "DISABLE_DIAMOND_ICON_BUTTON" });
     // Reset counter to avoid duplicate dispatches on subsequent renders
     collectButtonDispatch({ type: "RESET_COUNTER" });
-  }, [isCollected, collectedDiamondsCount, diamondsContextDispatch]);
+  }, [
+    isCollected,
+    collectedDiamondsCount,
+    diamondsContextDispatch,
+    collectButtonDispatch,
+  ]);
 }

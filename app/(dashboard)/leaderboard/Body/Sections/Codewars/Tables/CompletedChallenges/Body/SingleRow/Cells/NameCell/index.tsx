@@ -2,18 +2,21 @@ import { Box, TableCell } from "@mui/material";
 import ChallengeName from "./ChallengeName";
 import RecentlySolvedChip from "./RecentlySolvedChip";
 import { contentBoxStyles, nameCellStyles } from "./styles";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 
 interface Props {
-  challengeName: string;
+  currentChallenge: CodewarsCompletedChallenge;
   isUntracked: boolean;
 }
 
-const NameCell = ({ challengeName, isUntracked }: Props) => {
+const NameCell = ({ currentChallenge, isUntracked }: Props) => {
   return (
     <TableCell sx={nameCellStyles}>
       <Box sx={contentBoxStyles}>
-        <ChallengeName text={challengeName} length={55} />
-        {isUntracked && <RecentlySolvedChip />}
+        <ChallengeName text={currentChallenge.name} length={55} />
+        {isUntracked && (
+          <RecentlySolvedChip challengeId={currentChallenge.id} />
+        )}
       </Box>
     </TableCell>
   );

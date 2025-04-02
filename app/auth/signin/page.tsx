@@ -10,7 +10,7 @@ import {
   // signInSlotProps,
   signInText,
 } from "./styles";
-import { CurrentUser } from "@/types/users";
+import { AuthenticatedUser } from "@/types/users";
 import dbAPIService from "@/app/api/services/db";
 // import SubmitButton from "./SubmitButton";
 
@@ -26,8 +26,8 @@ const { getUsers } = new dbAPIService();
 
 export default async function SignIn() {
   const fetchedUsers = await getUsers({ cache: "no-store" });
-  const allUsers = fetchedUsers.users as CurrentUser[];
-  const session = await auth();
+  const allUsers = fetchedUsers.users as AuthenticatedUser[];
+
   // console.log("SignIn page focussed... (Logged out occurred)");
   // console.log("allUsers in auth/signin", allUsers);
   // const { isLoading } = useAllUsersContext();
@@ -41,7 +41,7 @@ export default async function SignIn() {
   return (
     <Box>
       <Box sx={leaderboardStyles}>
-        <LeaderBoardPage {...{ session, allUsersInSignInPage: allUsers }} />
+        <LeaderBoardPage {...{ allUsersInSignInPage: allUsers }} />
       </Box>
       <SignInPage
         sx={signInPageContainerStyles}

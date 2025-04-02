@@ -1,4 +1,20 @@
-import { DiamondsContextState } from "../providers/Diamonds";
+import { Diamonds } from "@/types/diamonds";
+
+export interface Context {}
+
+export interface DiamondsContextState extends Context {
+  data?: Diamonds;
+  isDiamondIconButtonDisabled: boolean;
+  isLoading: boolean;
+  isError: boolean;
+}
+
+// Default (synchronous) state for diamonds
+export const initialDiamondsState: DiamondsContextState = {
+  isDiamondIconButtonDisabled: false,
+  isLoading: false,
+  isError: false,
+};
 
 export type DiamondsAction =
   | { type: "LOADING..." }

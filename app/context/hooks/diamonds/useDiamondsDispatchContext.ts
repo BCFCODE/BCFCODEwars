@@ -1,12 +1,12 @@
 import { Dispatch, useContext } from "react";
-import { DiamondsDispatchContext } from "../../providers/Diamonds";
 import { DiamondsAction } from "../../reducers/diamondsReducer";
+import { DiamondsDispatchContext } from "../../providers/contexts";
 
 const useDiamondsDispatchContext = (): Dispatch<DiamondsAction> => {
   const context = useContext(DiamondsDispatchContext);
   if (!context) {
     throw new Error(
-      "useDiamondsDispatchContext must be used within a DiamondsProvider"
+      "useDiamondsDispatchContext must be used within a DiamondsDispatchContextProvider"
     );
   }
   return context;

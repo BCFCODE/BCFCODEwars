@@ -35,8 +35,6 @@ export default UserAvatar;
 export async function getServerSideProps(context: any) {
   const session = await auth(context.req); // Pass request context if needed
   return {
-    props: {
-      session,
-    },
+    props: { session },
   };
 }

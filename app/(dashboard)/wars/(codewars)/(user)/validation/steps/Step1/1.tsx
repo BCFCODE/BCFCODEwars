@@ -7,7 +7,7 @@ import Buttons from "./Buttons";
 
 const Step1 = async ({ session, currentStep }: StepProps) => {
   let firstName;
-  session && (firstName = session.user.name.split(" ")[0]);
+  session && (firstName = (session?.user?.name ?? "").split(" ")[0]);
 
   return (
     <>

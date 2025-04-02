@@ -1,13 +1,12 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { TableBody } from "@mui/material";
-import CollectDiamonds from "../Buttons/CollectDiamonds";
 import SingleRow from "./SingleRow";
-import CollectDiamondsCell from "./SingleRow/Cells/CollectDiamondsCell";
 import useFilter from "./hooks/useFilter";
 
 export default function Body() {
-  const { activeFilter, both, claimed, unClaimed } = useFilter();
+  const { activeFilter, both, claimed, unClaimed } =
+    useFilter();
 
   let visibleChallenges: CodewarsCompletedChallenge[];
 
@@ -21,6 +20,13 @@ export default function Body() {
     default:
       visibleChallenges = both;
   }
+
+  // const [mostRecentUntrackedChallenge] = untrackedChallenges;
+  // const currentUserDispatch = useCurrentUserDispatchContext();
+  // currentUserDispatch({
+  //   type: "SET_LATEST_UNTRACKED_CHALLENGE",
+  //   mostRecentUntrackedChallenge,
+  // });
 
   return (
     <>

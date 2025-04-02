@@ -2,12 +2,12 @@
 
 import DatabaseService from "@/app/services/db";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { CurrentUser } from "@/types/users";
+import { AuthenticatedUser } from "@/types/users";
 
 const { saveChallengesList } = new DatabaseService();
 
 interface Props {
-  currentUser: CurrentUser;
+  currentUser: AuthenticatedUser;
   list: CodewarsCompletedChallenge[];
 }
 

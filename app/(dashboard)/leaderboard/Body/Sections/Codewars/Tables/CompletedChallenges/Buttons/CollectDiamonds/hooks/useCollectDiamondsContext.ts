@@ -1,16 +1,22 @@
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext";
 import useDiamondsDispatchContext from "@/app/context/hooks/diamonds/useDiamondsDispatchContext";
+import { CodewarsAction } from "@/app/context/reducers/codewarsReducer";
+import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
+import { Dispatch } from "react";
 
-export default function useCollectDiamondsContext() {
-  const { currentUser } = useCurrentUserContext();
+export interface UseCollectDiamondsContext {
+  diamondsContextDispatch: Dispatch<DiamondsAction>;
+  isDiamondIconButtonDisabled: boolean;
+  codewarsContextDispatch: Dispatch<CodewarsAction>;
+}
+
+export default function useCollectDiamondsContext(): UseCollectDiamondsContext {
   const { isDiamondIconButtonDisabled } = useDiamondsContext();
   const diamondsContextDispatch = useDiamondsDispatchContext();
   const codewarsContextDispatch = useCodewarsDispatchContext();
-// console.log('useCollectDiamondsContext currentUser', currentUser)
+
   return {
-    currentUser,
     isDiamondIconButtonDisabled,
     diamondsContextDispatch,
     codewarsContextDispatch,

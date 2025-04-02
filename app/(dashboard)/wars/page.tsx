@@ -8,7 +8,7 @@ import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect";
 import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
 
-const { getDatabase, getSingleCodewarsUser } = new DatabaseService();
+const { getSingleCodewarsUser } = new DatabaseService();
 
 const WarsPage = async () => {
   const session = await auth();

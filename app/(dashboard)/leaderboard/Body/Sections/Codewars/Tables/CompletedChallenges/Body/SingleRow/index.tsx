@@ -13,11 +13,12 @@ interface Props {
 }
 
 const SingleRow = ({ challenge }: Props) => {
+  // console.log('SingleRow/challenge', challenge)
   return (
     <TableRow>
       <DateCompletedCell completedAt={challenge.completedAt} />
       <NameCell
-        challengeName={challenge.name}
+        currentChallenge={challenge}
         isUntracked={challenge.isUntracked ?? false}
       />
       <RankCell {...{ challenge }} />

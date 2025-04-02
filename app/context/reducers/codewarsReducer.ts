@@ -1,5 +1,29 @@
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
-import { CodewarsState } from "../providers/Codewars";
+
+export const initialCodewars: CodewarsState = {
+  completedChallenges: [],
+  isDisabled: false,
+  isError: false,
+  isLoading: false,
+  pageNumber: 0,
+  untrackedChallenges: [],
+  mostRecentUntrackedChallenge: null,
+};
+
+export interface Context {}
+
+export interface CodewarsState extends Context {
+  codewarsUsers?: CodewarsUser[];
+  completedChallenges: CodewarsCompletedChallenge[];
+  selectedChallenge?: CodewarsCompletedChallenge;
+  pageNumber: number;
+  isDisabled: boolean;
+  isError: boolean;
+  isLoading: boolean;
+  untrackedChallenges: CodewarsCompletedChallenge[];
+  mostRecentUntrackedChallenge: CodewarsCompletedChallenge | null;
+  // fetchCompletedChallenges: () => void;
+}
 
 export type CodewarsAction =
   | { type: "UPDATE_CODEWARS_USERS"; codewarsUsers: CodewarsUser[] }
@@ -13,7 +37,11 @@ export type CodewarsAction =
     }
   | { type: "SET_ERROR"; isError: boolean }
   | { type: "SET_LOADING"; isLoading: boolean }
-  | { type: "SET_PAGE_NUMBER"; pageNumber: number };
+  | { type: "SET_PAGE_NUMBER"; pageNumber: number }
+  // | {
+  //     type: "SET_LATEST_UNTRACKED_CHALLENGE";
+  //     mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
+  //   };
 
 const codewarsReducer = (
   state: CodewarsState,

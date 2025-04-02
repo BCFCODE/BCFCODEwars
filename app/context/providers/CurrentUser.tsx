@@ -1,33 +1,16 @@
-import { createContext, Dispatch, ReactNode, useReducer } from "react";
+import { ReactNode, useReducer } from "react";
 import currentUserReducer, {
-  CurrentUserAction,
+  CurrentUserContext as CurrentUserContextType,
 } from "../reducers/currentUserReducer";
-import { CurrentUser } from "@/types/users";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { CurrentUserContext, CurrentUserDispatchContext } from "./contexts";
 
-export type CurrentUserContext = {
-  currentUser: CurrentUser;
-};
-
-export interface CurrentUserContextState extends CurrentUserContext {
-  isCollapsed?: boolean;
-  // untrackedChallenges: CodewarsCompletedChallenge[];
+interface Props {
+  children: ReactNode;
+  context: CurrentUserContextType;
 }
 
-export const CurrentUserContext = createContext<CurrentUserContextState | null>(
-  null
-);
-export const CurrentUserActionContext =
-  createContext<Dispatch<CurrentUserAction> | null>(null);
-
-const CurrentUserProvider = ({
-  children,
-  context,
-}: {
-  children: ReactNode;
-  context: CurrentUserContextState;
-}) => {
-  const initialCurrentUserState: CurrentUserContextState = {
+const CurrentUserProvider = ({ children, context }: Props) => {
+  const initialCurrentUserState: CurrentUserContextType = {
     ...context,
     isCollapsed: false,
   };
@@ -38,9 +21,9 @@ const CurrentUserProvider = ({
   // console.log(context, "<<<<<<<<< CurrentUserProvider");
   return (
     <CurrentUserContext.Provider value={currentUserContext}>
-      <CurrentUserActionContext.Provider value={dispatch}>
+      <CurrentUserDispatchContext.Provider value={dispatch}>
         {children}
-      </CurrentUserActionContext.Provider>
+      </CurrentUserDispatchContext.Provider>
     </CurrentUserContext.Provider>
   );
 };
