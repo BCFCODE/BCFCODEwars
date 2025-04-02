@@ -8,7 +8,7 @@ const useAllUsersDispatchContext = (): Dispatch<AllUsersAction> => {
   const context = useContext(AllUsersDispatchContext);
   if (!context) {
     throw new Error(
-      "useAllUsersDispatchContext must be used within a AllUsersProvider"
+      "useAllUsersDispatchContext must be used within a AllUsersDispatchContextProvider"
     );
   }
   return context;

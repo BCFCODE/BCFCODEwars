@@ -104,11 +104,11 @@ const AllUsersProvider = ({ children }: Props) => {
   }, []);
 
   return (
-    <AllUsersDispatchContext.Provider value={allUsersDispatch}>
-      <AllUsersContext.Provider value={allUsersContext}>
+    <AllUsersContext.Provider value={allUsersContext}>
+      <AllUsersDispatchContext.Provider value={allUsersDispatch}>
         {children}
-      </AllUsersContext.Provider>
-    </AllUsersDispatchContext.Provider>
+      </AllUsersDispatchContext.Provider>
+    </AllUsersContext.Provider>
   );
 };
 

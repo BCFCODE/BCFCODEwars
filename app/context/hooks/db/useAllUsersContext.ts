@@ -6,7 +6,7 @@ const useAllUsersContext = (): AllUsersContextType => {
 
   if (!context) {
     throw new Error(
-      "useCurrentUserContext must be used within a useCurrentUserContext"
+      "useCurrentUserContext must be used within a CurrentUserContextProvider"
     );
   }
   return context;

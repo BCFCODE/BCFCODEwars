@@ -6,7 +6,7 @@ const useDiamondsDispatchContext = (): Dispatch<DiamondsAction> => {
   const context = useContext(DiamondsDispatchContext);
   if (!context) {
     throw new Error(
-      "useDiamondsDispatchContext must be used within a DiamondsProvider"
+      "useDiamondsDispatchContext must be used within a DiamondsDispatchContextProvider"
     );
   }
   return context;

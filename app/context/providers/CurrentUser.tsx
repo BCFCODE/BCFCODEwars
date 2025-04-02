@@ -17,7 +17,7 @@ export interface CurrentUserContextState extends CurrentUserContext {
 export const CurrentUserContext = createContext<CurrentUserContextState | null>(
   null
 );
-export const CurrentUserActionContext =
+export const CurrentUserDispatchContext =
   createContext<Dispatch<CurrentUserAction> | null>(null);
 
 const CurrentUserProvider = ({
@@ -38,9 +38,9 @@ const CurrentUserProvider = ({
   // console.log(context, "<<<<<<<<< CurrentUserProvider");
   return (
     <CurrentUserContext.Provider value={currentUserContext}>
-      <CurrentUserActionContext.Provider value={dispatch}>
+      <CurrentUserDispatchContext.Provider value={dispatch}>
         {children}
-      </CurrentUserActionContext.Provider>
+      </CurrentUserDispatchContext.Provider>
     </CurrentUserContext.Provider>
   );
 };

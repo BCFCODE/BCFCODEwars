@@ -8,7 +8,7 @@ const useDiamondsContext = (): DiamondsContextState => {
   const context = useContext(DiamondsContext);
   if (!context) {
     throw new Error(
-      "useDiamondsContext must be used within a DiamondsProvider"
+      "useDiamondsContext must be used within a DiamondsContextProvider"
     );
   }
   return context;
