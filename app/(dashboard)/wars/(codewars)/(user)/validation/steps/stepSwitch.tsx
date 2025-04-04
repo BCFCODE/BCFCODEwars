@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
 import { CodewarsUser } from "@/types/codewars";
-import { Typography } from "@mui/material";
 import Step1 from "./Step1/1";
 import Step2 from "./Step2/2";
 import Step3 from "./Step3/3";
@@ -10,7 +9,7 @@ import Step4 from "./Step4 (success)/4";
 interface Props {
   currentStep: number;
   validatedUsername: string;
-  isDbUsernameSyncedWithCodewars?: boolean
+  isUsernameSynced?: boolean;
 }
 
 export interface StepProps extends Props {

@@ -53,7 +53,7 @@ const Step3 = ({
         {/* User Info */}
         <UserInfoCard
           {...{
-            isDbUsernameSyncedWithCodewars: true,
+            isUsernameSynced: true,
             session,
             codewars,
             validatedUsername,
