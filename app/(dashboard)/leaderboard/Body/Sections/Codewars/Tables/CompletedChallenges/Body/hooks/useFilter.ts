@@ -17,14 +17,11 @@ const useFilter = (): UseFilter => {
 
   const { currentUser } = useCurrentUserContext();
 
-  const {
-    markedUntrackedChallenges,
-    untrackedChallenges,
-  } = useUntrackedChallenges(currentUser);
+  const { untrackedChallenges } = useUntrackedChallenges(currentUser);
 
   console.log(
-    "useFilter/markedUntrackedChallenges",
-    markedUntrackedChallenges
+    "useFilter/untrackedChallenges",
+    untrackedChallenges
     // "useFilter/mostRecentUntrackedChallenge",
     // mostRecentUntrackedChallenge
   );
@@ -34,14 +31,14 @@ const useFilter = (): UseFilter => {
 
   const list = currentUser.codewars.codeChallenges.list;
 
-  const both = [...(markedUntrackedChallenges ?? []), ...list];
+  const both = [...(untrackedChallenges ?? []), ...list];
 
   const claimed = list.filter(
     (challenge) => challenge.rewardStatus === RewardStatus.ClaimedDiamonds
   );
 
   const unClaimed = [
-    ...(markedUntrackedChallenges ?? []),
+    ...(untrackedChallenges ?? []),
     ...list.filter(
       (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
     ),

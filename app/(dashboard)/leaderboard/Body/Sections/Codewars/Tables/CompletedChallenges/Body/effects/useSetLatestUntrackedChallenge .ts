@@ -1,6 +1,7 @@
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useEffect } from "react";
+import { markChallengeAsUntracked } from "../utils/markChallengeAsUntracked";
 
 const useSetLatestUntrackedChallenge = (
   untrackedChallenges: CodewarsCompletedChallenge[]
@@ -14,7 +15,9 @@ const useSetLatestUntrackedChallenge = (
 
     currentUserDispatch({
       type: "SET_LATEST_UNTRACKED_CHALLENGE",
-      mostRecentUntrackedChallenge,
+      mostRecentUntrackedChallenge: markChallengeAsUntracked(
+        mostRecentUntrackedChallenge
+      ),
     });
   }, [untrackedChallenges, currentUserDispatch]);
 };

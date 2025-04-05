@@ -3,6 +3,7 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { useEffect, useRef } from "react";
+import { updateChallengeInListAsTracked } from "../utils/markChallengeAsTracked";
 
 const { postCurrentUser } = new dbAPIService();
 
@@ -47,6 +48,26 @@ export default function useChallengesListEffect({
         reward: collectedDiamondsCount,
         selectedChallenge,
       });
+const untrackedChallenges =  currentUser.codewars.codeChallenges.untrackedChallenges
+      // const untrackedChallenges = updateChallengeInListAsTracked(
+      //   selectedChallenge,
+      //   currentUser.codewars.codeChallenges.untrackedChallenges
+      // );
+      // currentUserDispatch({
+      //   type: "ADD_UNTRACKED_CHALLENGES",
+      //   untrackedChallenges: updateChallengeInListAsTracked(
+      //     selectedChallenge,
+      //     untrackedChallenges
+      //   ),
+      // });
+      // currentUserDispatch({type: })
+      console.log(
+        `useChallengesListEffect/currentUser and selectedChallenge`,
+        currentUser,
+        selectedChallenge,
+        untrackedChallenges,
+        updateChallengeInListAsTracked(selectedChallenge, untrackedChallenges)
+      );
       // console.log("selectedChallenge", selectedChallenge);
       isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
       // console.log("currentUser in useChallengesListEffect", currentUser);

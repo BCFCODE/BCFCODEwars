@@ -5,7 +5,7 @@ import useSetLatestUntrackedChallenge from "../effects/useSetLatestUntrackedChal
 import { markAllChallengesAsUntracked } from "../utils/markChallengeAsUntracked";
 
 export interface UseUntrackedChallenges {
-  markedUntrackedChallenges: CodewarsCompletedChallenge[];
+  // markedUntrackedChallenges: CodewarsCompletedChallenge[];
   untrackedChallenges: CodewarsCompletedChallenge[];
   // mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
 }
@@ -33,9 +33,9 @@ const useUntrackedChallenges = (
   const markedUntrackedChallenges = isFirstLogin
     ? []
     : markAllChallengesAsUntracked(untrackedChallenges);
+
   return {
-    markedUntrackedChallenges,
-    untrackedChallenges,
+    untrackedChallenges: markedUntrackedChallenges,
   };
 };
 

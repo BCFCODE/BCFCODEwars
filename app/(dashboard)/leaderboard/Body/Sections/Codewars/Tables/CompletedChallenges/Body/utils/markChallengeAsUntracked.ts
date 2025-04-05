@@ -12,4 +12,5 @@ export const markAllChallengesAsUntracked = (
 ): CodewarsCompletedChallenge[] => {
   return challenges.map(markChallengeAsUntracked);
 };
- 
+
+
