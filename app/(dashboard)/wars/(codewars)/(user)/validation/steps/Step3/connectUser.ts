@@ -10,6 +10,7 @@ const initializeAndStoreNewUserToDatabase = async ({
   session,
   codewars,
 }: StepProps) => {
+  
   updateSingleCodewarsUser((session?.user?.email ?? ''), {
     ...codewars,
     isConnected: true,

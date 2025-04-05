@@ -1,11 +1,12 @@
 "use client";
 
-import { Box, Link, Paper, Typography } from "@mui/material";
-import { StepProps } from "../stepSwitch";
-import initializeAndStoreNewUserToDatabase from "./connectUser";
-import Buttons from "./Buttons";
+import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
+import Buttons from "./Buttons";
+import initializeAndStoreNewUserToDatabase from "./connectUser";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 const Step3 = ({
   currentStep,
@@ -13,6 +14,8 @@ const Step3 = ({
   session,
   codewars,
 }: StepProps) => {
+  const {currentUser} = useCurrentUserContext()
+  console.log('currentUser', currentUser)
   const router = useRouter();
 
   const handleOnYes = () => {
