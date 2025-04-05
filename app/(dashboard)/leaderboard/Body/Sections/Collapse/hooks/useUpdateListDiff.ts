@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { applyRewardStatusToAll } from "../utils/applyRewardStatus";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { markAllChallengesAsUntracked } from "../../Codewars/Tables/CompletedChallenges/Body/utils/markChallengeAsUntracked";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -34,7 +35,8 @@ const useUpdateListDiff = () => {
 
           currentUserDispatch({
             type: "ADD_UNTRACKED_CHALLENGES",
-            untrackedChallenges,
+            untrackedChallenges:
+              markAllChallengesAsUntracked(untrackedChallenges),
           });
 
           console.log(

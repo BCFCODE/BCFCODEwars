@@ -3,6 +3,7 @@ import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 import useUntrackedChallenges from "./useUntrackedChallenges";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { useEffect } from "react";
 
 export interface UseFilter {
   activeFilter: string;
@@ -16,6 +17,7 @@ const useFilter = (): UseFilter => {
   console.log("useFilter Rendered...");
 
   const { currentUser } = useCurrentUserContext();
+  // const currentUserDispatch = useCurrentUserDispatchContext();
 
   const { untrackedChallenges } = useUntrackedChallenges(currentUser);
 
@@ -25,6 +27,7 @@ const useFilter = (): UseFilter => {
     // "useFilter/mostRecentUntrackedChallenge",
     // mostRecentUntrackedChallenge
   );
+
 
   const activeFilter: CodeChallengesFilter =
     currentUser.codewars.codeChallenges.challengeFilter;

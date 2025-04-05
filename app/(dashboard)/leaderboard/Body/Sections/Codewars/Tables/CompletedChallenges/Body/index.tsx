@@ -5,10 +5,17 @@ import SingleRow from "./SingleRow";
 import useFilter from "./hooks/useFilter";
 
 export default function Body() {
-  const { activeFilter, both, claimed, unClaimed } =
-    useFilter();
+  const { activeFilter, both, claimed, unClaimed } = useFilter();
 
   let visibleChallenges: CodewarsCompletedChallenge[];
+
+  // console.log('Body/untrackedChallenges', untrackedChallenges)
+  // useEffect(() => {
+  //   currentUserDispatch({
+  //     type: "ADD_UNTRACKED_CHALLENGES",
+  //     untrackedChallenges,
+  //   });
+  // }, [currentUserDispatch]);
 
   switch (activeFilter) {
     case CodeChallengesFilter.ClaimedDiamonds:

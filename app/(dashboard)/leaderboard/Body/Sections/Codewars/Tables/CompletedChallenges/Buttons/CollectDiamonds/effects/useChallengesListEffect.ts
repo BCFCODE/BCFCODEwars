@@ -48,18 +48,19 @@ export default function useChallengesListEffect({
         reward: collectedDiamondsCount,
         selectedChallenge,
       });
-const untrackedChallenges =  currentUser.codewars.codeChallenges.untrackedChallenges
+      const untrackedChallenges =
+        currentUser.codewars.codeChallenges.untrackedChallenges;
       // const untrackedChallenges = updateChallengeInListAsTracked(
       //   selectedChallenge,
       //   currentUser.codewars.codeChallenges.untrackedChallenges
       // );
-      // currentUserDispatch({
-      //   type: "ADD_UNTRACKED_CHALLENGES",
-      //   untrackedChallenges: updateChallengeInListAsTracked(
-      //     selectedChallenge,
-      //     untrackedChallenges
-      //   ),
-      // });
+      currentUserDispatch({
+        type: "ADD_UNTRACKED_CHALLENGES",
+        untrackedChallenges: updateChallengeInListAsTracked(
+          selectedChallenge,
+          untrackedChallenges
+        ),
+      });
       // currentUserDispatch({type: })
       console.log(
         `useChallengesListEffect/currentUser and selectedChallenge`,
