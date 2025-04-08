@@ -50,20 +50,16 @@ export default function useChallengesListEffect({
       });
       const untrackedChallenges =
         currentUser.codewars.codeChallenges.untrackedChallenges;
-      // const untrackedChallenges = addTrackedFlagsToChallenges(
-      //   selectedChallenge,
-      //   currentUser.codewars.codeChallenges.untrackedChallenges
-      // );
-      // currentUserDispatch({
-      //   type: "ADD_UNTRACKED_CHALLENGES",
-      //   untrackedChallenges: addTrackedFlagsToChallenges(
-      //     selectedChallenge,
-      //     untrackedChallenges
-      //   ),
-      // });
-      // currentUserDispatch({type: })
+
+      currentUserDispatch({
+        type: "COLLECT_DIAMOND_AND_FETCH_CHALLENGE_BEFORE_COUNTER_START",
+        updatedUntrackedChallenges: addTrackedFlagsToChallenges(
+          selectedChallenge,
+          untrackedChallenges
+        ),
+      });
       console.log(
-        `useChallengesListEffect/currentUser and selectedChallenge`,
+        `useChallengesListEffect/currentUser, selectedChallenge, and untrackedChallenges`,
         "currentUser >>",
         currentUser,
         "selectedChallenge >>",

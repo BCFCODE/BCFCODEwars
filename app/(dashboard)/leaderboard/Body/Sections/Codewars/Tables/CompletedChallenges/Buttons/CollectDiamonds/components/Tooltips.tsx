@@ -21,7 +21,7 @@ const UntrackedChallengeTooltip = ({
       setOpen(true);
       const timer = setTimeout(() => {
         setOpen(false);
-      }, 3000);
+      }, 4000);
       return () => clearTimeout(timer);
     }
   }, [isUntracked]);

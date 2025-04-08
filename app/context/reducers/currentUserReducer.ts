@@ -37,6 +37,10 @@ export type CurrentUserAction =
   | {
       type: "SET_LATEST_UNTRACKED_CHALLENGE";
       mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
+    }
+  | {
+      type: "COLLECT_DIAMOND_AND_FETCH_CHALLENGE_BEFORE_COUNTER_START";
+      updatedUntrackedChallenges: CodewarsCompletedChallenge[];
     };
 
 const currentUserReducer = (
@@ -170,6 +174,21 @@ const currentUserReducer = (
               mostRecentUntrackedChallenge: {
                 ...action.mostRecentUntrackedChallenge,
               },
+            },
+          },
+        },
+      };
+    }
+    case "COLLECT_DIAMOND_AND_FETCH_CHALLENGE_BEFORE_COUNTER_START": {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          codewars: {
+            ...state.currentUser.codewars,
+            codeChallenges: {
+              ...state.currentUser.codewars.codeChallenges,
+              untrackedChallenges: action.updatedUntrackedChallenges,
             },
           },
         },
