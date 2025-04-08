@@ -1,7 +1,7 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 import { AuthenticatedUser } from "@/types/users";
-import { updateChallengeInListAsTracked } from "../../Buttons/CollectDiamonds/utils/markChallengeAsTracked";
+import { addTrackedFlagsToChallenges } from "../../../../../Collapse/utils/addTrackedFlags";
 import { markAllChallengesAsUntracked } from "../../../../../Collapse/utils/addUntrackedFlags";
 
 interface Props {
@@ -23,7 +23,7 @@ const useMarkUntrackedChallenges = ({
   const markedUntrackedChallenges = isFirstLogin
     ? []
     : selectedChallenge
-      ? updateChallengeInListAsTracked(selectedChallenge, untrackedChallenges)
+      ? addTrackedFlagsToChallenges(selectedChallenge, untrackedChallenges)
       : markAllChallengesAsUntracked(untrackedChallenges);
   return { markedUntrackedChallenges };
 };

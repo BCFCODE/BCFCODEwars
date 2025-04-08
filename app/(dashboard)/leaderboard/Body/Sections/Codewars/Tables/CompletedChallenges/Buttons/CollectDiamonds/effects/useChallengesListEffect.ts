@@ -3,7 +3,7 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { useEffect, useRef } from "react";
-import { updateChallengeInListAsTracked } from "../utils/markChallengeAsTracked";
+import { addTrackedFlagsToChallenges } from "../../../../../../Collapse/utils/addTrackedFlags";
 
 const { postCurrentUser } = new dbAPIService();
 
@@ -48,14 +48,15 @@ export default function useChallengesListEffect({
         reward: collectedDiamondsCount,
         selectedChallenge,
       });
-const untrackedChallenges =  currentUser.codewars.codeChallenges.untrackedChallenges
-      // const untrackedChallenges = updateChallengeInListAsTracked(
+      const untrackedChallenges =
+        currentUser.codewars.codeChallenges.untrackedChallenges;
+      // const untrackedChallenges = addTrackedFlagsToChallenges(
       //   selectedChallenge,
       //   currentUser.codewars.codeChallenges.untrackedChallenges
       // );
       // currentUserDispatch({
       //   type: "ADD_UNTRACKED_CHALLENGES",
-      //   untrackedChallenges: updateChallengeInListAsTracked(
+      //   untrackedChallenges: addTrackedFlagsToChallenges(
       //     selectedChallenge,
       //     untrackedChallenges
       //   ),
@@ -63,10 +64,13 @@ const untrackedChallenges =  currentUser.codewars.codeChallenges.untrackedChalle
       // currentUserDispatch({type: })
       console.log(
         `useChallengesListEffect/currentUser and selectedChallenge`,
+        "currentUser >>",
         currentUser,
+        "selectedChallenge >>",
         selectedChallenge,
+        "untrackedChallenges >>",
         untrackedChallenges,
-        updateChallengeInListAsTracked(selectedChallenge, untrackedChallenges)
+        addTrackedFlagsToChallenges(selectedChallenge, untrackedChallenges)
       );
       // console.log("selectedChallenge", selectedChallenge);
       isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch

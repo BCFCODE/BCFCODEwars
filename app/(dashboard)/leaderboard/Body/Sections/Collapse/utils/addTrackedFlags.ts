@@ -1,19 +1,20 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 
-export const markChallengeAsTracked = (
+export const addTrackedFlagsToChallenge = (
   challenge: CodewarsCompletedChallenge
 ): CodewarsCompletedChallenge => ({
   ...challenge,
   isUntracked: false,
+  isLatestUntracked: false,
 });
 
-export const updateChallengeInListAsTracked = (
+export const addTrackedFlagsToChallenges = (
   challenge: CodewarsCompletedChallenge,
   list: CodewarsCompletedChallenge[]
 ): CodewarsCompletedChallenge[] => {
   return list.map((listChallenge) =>
     listChallenge.id === challenge.id
-      ? markChallengeAsTracked(listChallenge)
+      ? addTrackedFlagsToChallenge(listChallenge)
       : listChallenge
   );
 };
