@@ -14,9 +14,7 @@ const NameCell = ({ currentChallenge, isUntracked }: Props) => {
     <TableCell sx={nameCellStyles}>
       <Box sx={contentBoxStyles}>
         <ChallengeName text={currentChallenge.name} length={55} />
-        {isUntracked && (
-          <RecentlySolvedChip challengeId={currentChallenge.id} />
-        )}
+        {isUntracked && <RecentlySolvedChip challenge={currentChallenge} />}
       </Box>
     </TableCell>
   );

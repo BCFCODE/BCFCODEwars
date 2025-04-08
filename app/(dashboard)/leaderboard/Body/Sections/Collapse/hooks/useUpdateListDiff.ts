@@ -1,12 +1,8 @@
 import CodewarsAPIService from "@/app/api/services/codewars";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import extractListDiff from "../utils/extractListDiff";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { useRef } from "react";
-import { applyRewardStatusToAll } from "../utils/applyRewardStatus";
-import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import extractListDiff from "../utils/extractListDiff";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -37,10 +33,6 @@ const useUpdateListDiff = () => {
             untrackedChallenges,
           });
 
-          console.log(
-            "applyRewardStatusToAll(untrackedChallenges)",
-            applyRewardStatusToAll(untrackedChallenges)
-          );
         } else {
           currentUserDispatch({
             type: "ADD_UNTRACKED_CHALLENGES",

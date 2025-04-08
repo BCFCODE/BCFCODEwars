@@ -58,6 +58,8 @@ export type CodewarsUserResponse =
   | CodewarsUser;
 
 export interface CodewarsCompletedChallenge {
+  isUntracked: boolean;
+  isLatestUntracked: boolean;
   id: string; // Unique identifier for each challenge
   name: string; // Name of the challenge
   slug: string; // URL-friendly name of the challenge
@@ -65,7 +67,6 @@ export interface CodewarsCompletedChallenge {
   completedAt: string; // ISO 8601 date string representing when the challenge was completed
   rewardStatus: CodeChallengesFilter | RewardStatus;
   moreDetails?: CodewarsSingleChallenge;
-  isUntracked?: boolean;
 }
 
 export interface CodewarsChallengesResponse {

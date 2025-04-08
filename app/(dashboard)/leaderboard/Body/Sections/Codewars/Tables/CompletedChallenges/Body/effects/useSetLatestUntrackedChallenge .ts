@@ -1,25 +1,25 @@
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { useEffect } from "react";
-import { markChallengeAsUntracked } from "../utils/markChallengeAsUntracked";
+// import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+// import { CodewarsCompletedChallenge } from "@/types/codewars";
+// import { useEffect } from "react";
+// import { markChallengeAsUntracked } from "../utils/markChallengeAsUntracked";
 
-const useSetLatestUntrackedChallenge = (
-  untrackedChallenges: CodewarsCompletedChallenge[]
-) => {
-  const currentUserDispatch = useCurrentUserDispatchContext();
+// const useSetLatestUntrackedChallenge = (
+//   untrackedChallenges: CodewarsCompletedChallenge[]
+// ) => {
+//   const currentUserDispatch = useCurrentUserDispatchContext();
 
-  useEffect(() => {
-    if (untrackedChallenges.length === 0) return;
+//   useEffect(() => {
+//     if (untrackedChallenges.length === 0) return;
 
-    const [mostRecentUntrackedChallenge] = untrackedChallenges;
+//     const [mostRecentUntrackedChallenge] = untrackedChallenges;
 
-    currentUserDispatch({
-      type: "SET_LATEST_UNTRACKED_CHALLENGE",
-      mostRecentUntrackedChallenge: markChallengeAsUntracked(
-        mostRecentUntrackedChallenge
-      ),
-    });
-  }, [untrackedChallenges, currentUserDispatch]);
-};
+//     currentUserDispatch({
+//       type: "SET_LATEST_UNTRACKED_CHALLENGE",
+//       mostRecentUntrackedChallenge: markChallengeAsUntracked(
+//         mostRecentUntrackedChallenge
+//       ),
+//     });
+//   }, [untrackedChallenges, currentUserDispatch]);
+// };
 
-export default useSetLatestUntrackedChallenge;
+// export default useSetLatestUntrackedChallenge;

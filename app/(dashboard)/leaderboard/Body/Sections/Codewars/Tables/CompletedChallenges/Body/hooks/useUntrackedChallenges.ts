@@ -1,13 +1,10 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 import { AuthenticatedUser } from "@/types/users";
-import useSetLatestUntrackedChallenge from "../effects/useSetLatestUntrackedChallenge ";
-import { markAllChallengesAsUntracked } from "../utils/markChallengeAsUntracked";
+import { addUntrackedFlagsToChallenges } from "../../../../../Collapse/utils/addUntrackedFlags";
 
 export interface UseUntrackedChallenges {
-  // markedUntrackedChallenges: CodewarsCompletedChallenge[];
   untrackedChallenges: CodewarsCompletedChallenge[];
-  // mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
 }
 
 const useUntrackedChallenges = (
@@ -17,25 +14,22 @@ const useUntrackedChallenges = (
 
   const untrackedChallenges = codeChallenges.untrackedChallenges ?? [];
 
-  useSetLatestUntrackedChallenge(untrackedChallenges);
+  // const isFirstLogin = codeChallenges.list.every(
+  //   (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
+  // );
 
-  console.log(
-    "useUntrackedChallenges/untrackedChallenges",
-    untrackedChallenges
-    // "mostRecentUntrackedChallenge",
-    // mostRecentUntrackedChallenge
-  );
+  // const untrackedChallengesToDisplay = isFirstLogin ? [] : untrackedChallenges;
 
-  const isFirstLogin = codeChallenges.list.every(
-    (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
-  );
-
-  const markedUntrackedChallenges = isFirstLogin
-    ? []
-    : markAllChallengesAsUntracked(untrackedChallenges);
+  // console.log(
+  //   "useUntrackedChallenges/untrackedChallengesToDisplay",
+  //   untrackedChallengesToDisplay,
+    
+  //   // "mostRecentUntrackedChallenge",
+  //   // mostRecentUntrackedChallenge
+  // );
 
   return {
-    untrackedChallenges: markedUntrackedChallenges,
+    untrackedChallenges //: untrackedChallengesToDisplay,
   };
 };
 
