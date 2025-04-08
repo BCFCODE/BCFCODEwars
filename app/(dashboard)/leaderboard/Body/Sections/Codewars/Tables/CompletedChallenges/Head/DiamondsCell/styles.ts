@@ -55,3 +55,8 @@ export const notCollectedDiamondToggleStyles: SxProps = {
   ...toggleButtonStyles,
   marginRight: diamondSideMargin,
 };
+
+// export const recentlySolvedToggleStyles: SxProps = (theme) => ({
+//   ...toggleButtonStyles,
+//   color: theme.palette.info.main, // Use the 'info' color from the theme
+// });

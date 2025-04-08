@@ -34,13 +34,17 @@ export type CurrentUserAction =
       type: "ADD_UNTRACKED_CHALLENGES";
       untrackedChallenges: CodewarsCompletedChallenge[];
     }
-  | {
-      type: "SET_LATEST_UNTRACKED_CHALLENGE";
-      mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
-    }
+  // | {
+  //     type: "SET_LATEST_UNTRACKED_CHALLENGE";
+  //     mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
+  //   }
   | {
       type: "COLLECT_DIAMOND_AND_FETCH_CHALLENGE_BEFORE_COUNTER_START";
       updatedUntrackedChallenges: CodewarsCompletedChallenge[];
+    }
+  | {
+      type: "UPDATE_UNTRACKED_CHALLENGE_LIST_AFTER_DIAMONDS_COUNTER_ANIMATION";
+      selectedUntrackedChallenge: CodewarsCompletedChallenge;
     };
 
 const currentUserReducer = (
@@ -162,23 +166,23 @@ const currentUserReducer = (
         },
       };
     }
-    case "SET_LATEST_UNTRACKED_CHALLENGE": {
-      return {
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          codewars: {
-            ...state.currentUser.codewars,
-            codeChallenges: {
-              ...state.currentUser.codewars.codeChallenges,
-              mostRecentUntrackedChallenge: {
-                ...action.mostRecentUntrackedChallenge,
-              },
-            },
-          },
-        },
-      };
-    }
+    // case "SET_LATEST_UNTRACKED_CHALLENGE": {
+    //   return {
+    //     ...state,
+    //     currentUser: {
+    //       ...state.currentUser,
+    //       codewars: {
+    //         ...state.currentUser.codewars,
+    //         codeChallenges: {
+    //           ...state.currentUser.codewars.codeChallenges,
+    //           mostRecentUntrackedChallenge: {
+    //             ...action.mostRecentUntrackedChallenge,
+    //           },
+    //         },
+    //       },
+    //     },
+    //   };
+    // }
     case "COLLECT_DIAMOND_AND_FETCH_CHALLENGE_BEFORE_COUNTER_START": {
       return {
         ...state,
@@ -189,6 +193,24 @@ const currentUserReducer = (
             codeChallenges: {
               ...state.currentUser.codewars.codeChallenges,
               untrackedChallenges: action.updatedUntrackedChallenges,
+            },
+          },
+        },
+      };
+    }
+    case "UPDATE_UNTRACKED_CHALLENGE_LIST_AFTER_DIAMONDS_COUNTER_ANIMATION": {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          codewars: {
+            ...state.currentUser.codewars,
+            codeChallenges: {
+              ...state.currentUser.codewars.codeChallenges,
+              list: [
+                action.selectedUntrackedChallenge,
+                ...state.currentUser.codewars.codeChallenges.list,
+              ],
             },
           },
         },

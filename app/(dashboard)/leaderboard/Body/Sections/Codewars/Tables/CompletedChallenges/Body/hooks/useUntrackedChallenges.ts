@@ -1,7 +1,5 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { RewardStatus } from "@/types/diamonds";
 import { AuthenticatedUser } from "@/types/users";
-import { addUntrackedFlagsToChallenges } from "../../../../../Collapse/utils/addUntrackedFlags";
 
 export interface UseUntrackedChallenges {
   untrackedChallenges: CodewarsCompletedChallenge[];

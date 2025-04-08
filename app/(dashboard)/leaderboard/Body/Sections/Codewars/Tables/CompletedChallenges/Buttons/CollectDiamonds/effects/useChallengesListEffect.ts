@@ -3,7 +3,10 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { useEffect, useRef } from "react";
-import { addTrackedFlagsToChallenges } from "../../../../../../Collapse/utils/addTrackedFlags";
+import {
+  addTrackedFlagsToChallenge,
+  addTrackedFlagsToChallenges,
+} from "../../../../../../Collapse/utils/addTrackedFlags";
 
 const { postCurrentUser } = new dbAPIService();
 
@@ -57,6 +60,11 @@ export default function useChallengesListEffect({
           selectedChallenge,
           untrackedChallenges
         ),
+      });
+      currentUserDispatch({
+        type: "UPDATE_UNTRACKED_CHALLENGE_LIST_AFTER_DIAMONDS_COUNTER_ANIMATION",
+        selectedUntrackedChallenge:
+          addTrackedFlagsToChallenge(selectedChallenge),
       });
       console.log(
         `useChallengesListEffect/currentUser, selectedChallenge, and untrackedChallenges`,

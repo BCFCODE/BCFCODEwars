@@ -17,6 +17,19 @@ interface languagesRanks {
   };
 }
 
+export interface Ranks {
+  overall: OverallRanks;
+  languages: languagesRanks;
+}
+
+export interface CodeChallenges {
+  totalAuthored: number;
+  totalCompleted: number;
+  challengeFilter: CodeChallengesFilter;
+  list: CodewarsCompletedChallenge[];
+  untrackedChallenges: CodewarsCompletedChallenge[];
+}
+
 export type CodewarsUser = {
   success?: boolean;
   isConnected: boolean;
@@ -28,18 +41,8 @@ export type CodewarsUser = {
   clan: string | null;
   leaderboardPosition: number | null;
   skills: string[] | null;
-  ranks: {
-    overall: OverallRanks;
-    languages: languagesRanks;
-  };
-  codeChallenges: {
-    totalAuthored: number;
-    totalCompleted: number;
-    challengeFilter: CodeChallengesFilter;
-    list: CodewarsCompletedChallenge[];
-    untrackedChallenges: CodewarsCompletedChallenge[];
-    mostRecentUntrackedChallenge: CodewarsCompletedChallenge | null;
-  };
+  ranks: Ranks;
+  codeChallenges: CodeChallenges;
 };
 
 // export type InitialCodewarsUser = Pick<CodewarsUser, "email" | "isConnected">;

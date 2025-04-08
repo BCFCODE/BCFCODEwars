@@ -1,5 +1,6 @@
 import { Dispatch, useEffect, useRef, useState } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
+import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 
 interface Props {
   // isLoading: boolean;
@@ -9,6 +10,7 @@ interface Props {
   success: boolean;
   collectedDiamondsCount: number | undefined;
   collectButtonDispatch: Dispatch<CollectButtonAction>;
+  currentUserDispatch: Dispatch<CurrentUserAction>;
 }
 
 export default function useCounterEffect({
@@ -19,6 +21,7 @@ export default function useCounterEffect({
   isError,
   // isLoading,
   success,
+  currentUserDispatch
 }: Props) {
   const [isCounting, setIsCounting] = useState(true);
   const timeRef = useRef<NodeJS.Timeout | null>(null);
@@ -34,6 +37,10 @@ export default function useCounterEffect({
     if (counter === collectedDiamondsCount) {
       collectButtonDispatch({ type: "LOADING...", isLoading: false });
       collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
+      
+      console.log(
+        "COUNTER FINISHED COUNTING AND DIAMONDS COLLECTED SUCCESSFULLY"
+      );
       setIsCounting(false);
     }
 

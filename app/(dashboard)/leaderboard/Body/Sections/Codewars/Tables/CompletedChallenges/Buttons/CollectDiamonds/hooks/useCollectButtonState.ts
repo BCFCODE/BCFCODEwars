@@ -7,7 +7,9 @@ import collectButtonReducer, {
 
 // Alias for cleaner type usage
 export type CollectState = CollectDiamondsState;
+
 export type CollectButtonDispatch = Dispatch<CollectButtonAction>;
+
 export interface UseCollectButtonState {
   collectState: CollectState;
   collectButtonDispatch: CollectButtonDispatch;
