@@ -5,6 +5,8 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import { addTrackedFlagsToChallenges } from "../../../../../Collapse/utils/addTrackedFlags";
+import useCollectButtonState from "../../Buttons/CollectDiamonds/hooks/useCollectButtonState";
+import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext";
 
 export interface UseFilter {
   activeFilter: string;
@@ -16,20 +18,11 @@ export interface UseFilter {
 
 const useFilter = (): UseFilter => {
   console.log("useFilter Rendered...");
-
+  // const {  isCollected } = useDiamondsContext();
   const { currentUser } = useCurrentUserContext();
   const { selectedChallenge } = useCodewarsContext();
 
   const { untrackedChallenges } = useUntrackedChallenges(currentUser);
-
-  console.log(
-    "useFilter/untrackedChallenges",
-    untrackedChallenges,
-    "selectedChallenge",
-    selectedChallenge
-    // "useFilter/mostRecentUntrackedChallenge",
-    // mostRecentUntrackedChallenge
-  );
 
   const activeFilter: CodeChallengesFilter =
     currentUser.codewars.codeChallenges.challengeFilter;
@@ -53,6 +46,16 @@ const useFilter = (): UseFilter => {
       (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
     ),
   ];
+
+  console.log(
+    "useFilter/untrackedChallenges >>",
+    untrackedChallenges,
+    "selectedChallenge >>",
+    selectedChallenge,
+
+    // "useFilter/mostRecentUntrackedChallenge",
+    // mostRecentUntrackedChallenge
+  );
 
   return {
     activeFilter,

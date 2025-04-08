@@ -54,28 +54,34 @@ export default function useChallengesListEffect({
       const untrackedChallenges =
         currentUser.codewars.codeChallenges.untrackedChallenges;
 
-      currentUserDispatch({
-        type: "COLLECT_DIAMOND_AND_FETCH_CHALLENGE_BEFORE_COUNTER_START",
-        updatedUntrackedChallenges: addTrackedFlagsToChallenges(
+      if (
+        untrackedChallenges.some(
+          (untrackedChallenge) => untrackedChallenge.id === selectedChallenge.id
+        )
+      ) {
+        currentUserDispatch({
+          type: "COLLECT_DIAMOND_AND_FETCH_CHALLENGE_BEFORE_COUNTER_START",
+          updatedUntrackedChallenges: addTrackedFlagsToChallenges(
+            selectedChallenge,
+            untrackedChallenges
+          ),
+        });
+        currentUserDispatch({
+          type: "UPDATE_UNTRACKED_CHALLENGE_LIST_AFTER_DIAMONDS_COUNTER_ANIMATION",
+          selectedUntrackedChallenge:
+            addTrackedFlagsToChallenge(selectedChallenge),
+        });
+        console.log(
+          `useChallengesListEffect/currentUser, selectedChallenge, and untrackedChallenges`,
+          "currentUser >>",
+          currentUser,
+          "selectedChallenge >>",
           selectedChallenge,
-          untrackedChallenges
-        ),
-      });
-      currentUserDispatch({
-        type: "UPDATE_UNTRACKED_CHALLENGE_LIST_AFTER_DIAMONDS_COUNTER_ANIMATION",
-        selectedUntrackedChallenge:
-          addTrackedFlagsToChallenge(selectedChallenge),
-      });
-      console.log(
-        `useChallengesListEffect/currentUser, selectedChallenge, and untrackedChallenges`,
-        "currentUser >>",
-        currentUser,
-        "selectedChallenge >>",
-        selectedChallenge,
-        "untrackedChallenges >>",
-        untrackedChallenges,
-        addTrackedFlagsToChallenges(selectedChallenge, untrackedChallenges)
-      );
+          "untrackedChallenges >>",
+          untrackedChallenges,
+          addTrackedFlagsToChallenges(selectedChallenge, untrackedChallenges)
+        );
+      }
       // console.log("selectedChallenge", selectedChallenge);
       isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
       // console.log("currentUser in useChallengesListEffect", currentUser);

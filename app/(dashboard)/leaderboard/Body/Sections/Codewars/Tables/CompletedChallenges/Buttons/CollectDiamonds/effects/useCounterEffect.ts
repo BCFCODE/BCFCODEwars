@@ -28,6 +28,7 @@ export default function useCounterEffect({
 
   useEffect(() => {
     if (!isCounting) return;
+    
     if (success) {
       timeRef.current = setTimeout(() => {
         collectButtonDispatch({ type: "DIAMOND_COUNTS", counter: counter + 1 });

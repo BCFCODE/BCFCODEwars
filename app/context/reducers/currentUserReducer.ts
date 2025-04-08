@@ -199,6 +199,7 @@ const currentUserReducer = (
       };
     }
     case "UPDATE_UNTRACKED_CHALLENGE_LIST_AFTER_DIAMONDS_COUNTER_ANIMATION": {
+      
       return {
         ...state,
         currentUser: {
@@ -209,7 +210,7 @@ const currentUserReducer = (
               ...state.currentUser.codewars.codeChallenges,
               list: [
                 action.selectedUntrackedChallenge,
-                ...state.currentUser.codewars.codeChallenges.list,
+                ...state.currentUser.codewars.codeChallenges.list
               ],
             },
           },
