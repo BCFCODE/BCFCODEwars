@@ -7,6 +7,7 @@ import {
   DiamondToggleButton,
   DiamondToggleGroup,
   notCollectedDiamondToggleStyles,
+  recentlySolvedToggleStyles,
   // recentlySolvedToggleStyles,
 } from "./styles";
 import useCollectionToggle from "./useCollectionToggle";
@@ -42,13 +43,13 @@ const DiamondsCell = () => {
         >
           <DiamondIcon sx={collectedDiamondToggleStyles} />
         </DiamondToggleButton>
-        {/* <DiamondToggleButton
+        <DiamondToggleButton
           value={CodeChallengesFilter.ClaimedDiamonds}
           aria-label="Show collected diamonds"
           onClick={handle.selectCollectedDiamonds}
         >
           <TaskAltIcon sx={recentlySolvedToggleStyles} />
-        </DiamondToggleButton> */}
+        </DiamondToggleButton>
         <DiamondToggleButton
           value={CodeChallengesFilter.UnclaimedDiamonds}
           aria-label="Show uncollected diamonds"

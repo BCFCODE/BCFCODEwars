@@ -6,9 +6,12 @@ import {
 import {
   styled,
   SxProps,
+  // Theme,
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
+import { Theme } from "@mui/material/styles";
+
 
 const diamondSideMargin = 0.4;
 
@@ -41,22 +44,35 @@ export const DiamondToggleButton = styled(ToggleButton)(({ theme }) => ({
   },
 }));
 
-export const toggleButtonStyles: SxProps = {
+export const toggleButtonStyles = (theme: Theme): SxProps<Theme> => ({
   ...diamondStyles,
-};
+});
 
 export const collectedDiamondToggleStyles: SxProps = {
   ...toggleButtonStyles,
   color: diamondCollectedColor,
   marginLeft: diamondSideMargin,
+  height: 30,
 };
 
 export const notCollectedDiamondToggleStyles: SxProps = {
   ...toggleButtonStyles,
   marginRight: diamondSideMargin,
+  height: 30,
 };
 
-// export const recentlySolvedToggleStyles: SxProps = (theme) => ({
-//   ...toggleButtonStyles,
-//   color: theme.palette.info.main, // Use the 'info' color from the theme
-// });
+export const getToggleButtonStyles = (theme: Theme): SxProps<Theme> => ({
+  ...diamondStyles,
+  color: theme.palette.info.main,
+  
+});
+
+export const recentlySolvedToggleStyles: SxProps<Theme> = (theme: Theme) => ({
+  ...toggleButtonStyles,
+  // fontSize: 30,
+  // borderRadius: '50%',
+  // padding: 0.3,
+  height: 30,
+  marginX: 0,
+  color: theme.palette.warning.main, // Use the 'info' color from the theme
+});
