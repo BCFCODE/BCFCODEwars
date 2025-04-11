@@ -4,6 +4,7 @@ import NameCell from "./NameCell";
 import RankCell from "./RankCell";
 import SolveOnCell from "./SolveOnCell";
 import DateCompletedCell from "./SwitchCell";
+import StatusCell from "./StatusCell";
 
 export default function Head() {
   return (
@@ -12,6 +13,7 @@ export default function Head() {
         <TableRow>
           <DateCompletedCell />
           <NameCell />
+          <StatusCell />
           <RankCell />
           <DiamondsCell />
           <SolveOnCell />

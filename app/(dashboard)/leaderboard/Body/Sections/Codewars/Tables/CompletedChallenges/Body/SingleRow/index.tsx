@@ -7,6 +7,7 @@ import DateCompletedCell from "./Cells/DateCompletedCell";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import CollectDiamondsCell from "./Cells/CollectDiamondsCell";
 import CollectDiamonds from "../../Buttons/CollectDiamonds";
+import StatusCell from "./Cells/StatusCell";
 
 interface Props {
   challenge: CodewarsCompletedChallenge;
@@ -17,7 +18,8 @@ const SingleRow = ({ challenge }: Props) => {
   return (
     <TableRow>
       <DateCompletedCell completedAt={challenge.completedAt} />
-      <NameCell
+      <NameCell currentChallenge={challenge} />
+      <StatusCell
         currentChallenge={challenge}
         isUntracked={challenge.isUntracked ?? false}
       />

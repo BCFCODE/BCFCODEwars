@@ -1,7 +1,7 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import { Chip } from "@mui/material";
-import { chipIconStyles, chipStyles } from "./styles";
+import { chipIconStyles, chipStyles } from "../NameCell/styles";
 
 interface Props {
   challenge: CodewarsCompletedChallenge;
