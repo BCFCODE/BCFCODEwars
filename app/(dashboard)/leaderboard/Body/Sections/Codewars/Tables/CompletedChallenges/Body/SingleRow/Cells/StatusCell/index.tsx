@@ -1,9 +1,7 @@
 import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
-import { Box, TableCell } from "@mui/material";
-import StatusChip from "./StatusChip";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import ChallengeName from "../NameCell/ChallengeName";
-import { contentBoxStyles } from "../NameCell/styles";
+import { TableCell } from "@mui/material";
+import StatusChip from "./StatusChip";
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
