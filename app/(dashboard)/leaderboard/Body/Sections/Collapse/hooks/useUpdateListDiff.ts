@@ -28,10 +28,15 @@ const useDiffAndUpdateList = () => {
             fetchedChallenges,
           });
 
-          currentUserDispatch({
-            type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
-            untrackedChallenges,
-          });
+          const isEmpty = fetchedChallenges.length === 0;
+
+          if (!isEmpty) {
+            currentUserDispatch({
+              type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
+              untrackedChallenges,
+            });
+            
+          }
         } else {
           currentUserDispatch({
             type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",

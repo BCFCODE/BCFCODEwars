@@ -21,7 +21,7 @@ const SingleRow = ({ challenge }: Props) => {
       <NameCell currentChallenge={challenge} />
       <StatusCell
         currentChallenge={challenge}
-        isUntracked={challenge.isUntracked ?? false}
+        // isUntracked={challenge.isUntracked ?? false}
       />
       <RankCell {...{ challenge }} />
       <CollectDiamondsCell>

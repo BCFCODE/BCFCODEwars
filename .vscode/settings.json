@@ -1,3 +1,6 @@
 {
-  "cSpell.words": ["Anki", "Mahsa", "Morteza", "Sepehr"]
+  "cSpell.words": ["Anki", "Mahsa", "Morteza", "Sepehr"],
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }
