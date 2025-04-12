@@ -31,7 +31,8 @@ export const textStyles: SxProps = {
 };
 
 export const chipStyles: SxProps = {
-  // width: 200,
+  // width: '100%',
+  // textAlign: 'left'
   // fontSize: 13,
   // flexShrink: 0, // Prevents the chip from expanding the cell
 };

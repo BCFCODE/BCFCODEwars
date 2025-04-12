@@ -7,13 +7,14 @@ import { contentBoxStyles } from "../NameCell/styles";
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
-  isUntracked: boolean;
+  // isUntracked: boolean;
 }
 
-const StatusCell = ({ currentChallenge, isUntracked }: Props) => {
+const StatusCell = ({ currentChallenge }: Props) => {
   return (
     <TableCell sx={codewarsCellStyles} align="center">
-      {isUntracked && <RecentlySolvedChip challenge={currentChallenge} />}
+      {/* {isUntracked && <RecentlySolvedChip challenge={currentChallenge} />} */}
+      <RecentlySolvedChip challenge={currentChallenge} />
     </TableCell>
   );
 };
