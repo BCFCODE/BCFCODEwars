@@ -1,4 +1,4 @@
-import { CurrentUserState } from "@/app/context/reducers/currentUserReducer";
+import { CurrentUserState } from "@/app/context/reducers/currentUser";
 import { CodewarsUser } from "./codewars";
 import { Diamonds } from "./diamonds";
 import { Session } from "next-auth";

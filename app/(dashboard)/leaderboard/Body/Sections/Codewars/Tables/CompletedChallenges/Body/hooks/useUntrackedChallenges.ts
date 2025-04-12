@@ -1,5 +1,5 @@
 import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext";
-import filterUntrackedChallenges from "@/app/context/reducers/currentUser/filterUntrackedChallenges";
+// import filterUntrackedChallenges from "@/app/context/reducers/currentUser/filterUntrackedChallenges";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { AuthenticatedUser } from "@/types/users";
 
@@ -18,11 +18,11 @@ const useUntrackedChallenges = (
   console.log(
     "useUntrackedChallenges/isCollected >>",
     isCollected,
-    filterUntrackedChallenges(untrackedChallenges)
+    // filterUntrackedChallenges(untrackedChallenges)
   );
 
-  if (isCollected)
-    untrackedChallenges = filterUntrackedChallenges(untrackedChallenges);
+  // if (isCollected)
+  //   untrackedChallenges = filterUntrackedChallenges(untrackedChallenges);
 
   // const isFirstLogin = codeChallenges.list.every(
   //   (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds

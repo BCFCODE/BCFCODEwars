@@ -1,5 +1,5 @@
 import { Dispatch, useContext } from "react";
-import { CurrentUserAction } from "../../reducers/currentUserReducer";
+import { CurrentUserAction } from "../../reducers/currentUser";
 import { CurrentUserDispatchContext } from "../../providers/contexts";
 
 const useCurrentUserDispatchContext = (): Dispatch<CurrentUserAction> => {

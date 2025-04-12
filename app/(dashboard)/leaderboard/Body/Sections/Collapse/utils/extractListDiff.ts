@@ -1,5 +1,5 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { addUntrackedFlagsToChallenges } from "./addUntrackedFlags";
+// import { addUntrackedFlagsToChallenges } from "./addUntrackedFlags";
 
 interface Props {
   previousChallenges: CodewarsCompletedChallenge[];
@@ -24,8 +24,8 @@ const extractListDiff = ({
     (challenge) => challenge.id === previousMostRecentChallenge.id
   );
 
-  const challengesBeforeFlagging  = fetchedChallenges.slice(0, previousRecentIndex);
-  const untrackedChallenges = addUntrackedFlagsToChallenges(challengesBeforeFlagging )
+  const untrackedChallenges  = fetchedChallenges.slice(0, previousRecentIndex);
+  // const untrackedChallenges = addUntrackedFlagsToChallenges(challengesBeforeFlagging )
   console.log(
     "in extractListDiff >",
     "previousRecentIndex",

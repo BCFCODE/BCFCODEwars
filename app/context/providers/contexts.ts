@@ -9,7 +9,7 @@ import { CodewarsAction, CodewarsState } from "../reducers/codewarsReducer";
 import {
   CurrentUserAction,
   CurrentUserContext as CurrentUserContextType,
-} from "../reducers/currentUserReducer";
+} from "../reducers/currentUser";
 import {
   DiamondsAction,
   DiamondsContextState,

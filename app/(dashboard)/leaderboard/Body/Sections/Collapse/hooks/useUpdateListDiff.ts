@@ -6,7 +6,7 @@ import extractListDiff from "../utils/extractListDiff";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
-const useUpdateListDiff = () => {
+const useDiffAndUpdateList = () => {
   const { currentUser, isCollapsed } = useCurrentUserContext();
   const { pageNumber } = useCodewarsContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
@@ -29,20 +29,19 @@ const useUpdateListDiff = () => {
           });
 
           currentUserDispatch({
-            type: "ADD_UNTRACKED_CHALLENGES",
+            type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
             untrackedChallenges,
           });
-
         } else {
           currentUserDispatch({
-            type: "ADD_UNTRACKED_CHALLENGES",
+            type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
             untrackedChallenges: [],
           });
         }
       } catch (error) {
         // TODO
         currentUserDispatch({
-          type: "ADD_UNTRACKED_CHALLENGES",
+          type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
           untrackedChallenges: [],
         });
       } finally {
@@ -54,4 +53,4 @@ const useUpdateListDiff = () => {
   return { diffAndUpdateList };
 };
 
-export default useUpdateListDiff;
+export default useDiffAndUpdateList;

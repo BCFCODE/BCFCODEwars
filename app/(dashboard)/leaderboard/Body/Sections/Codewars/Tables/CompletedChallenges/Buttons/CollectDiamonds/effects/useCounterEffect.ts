@@ -1,6 +1,6 @@
 import { Dispatch, useEffect, useRef, useState } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
-import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
+import { CurrentUserAction } from "@/app/context/reducers/currentUser";
 
 interface Props {
   // isLoading: boolean;

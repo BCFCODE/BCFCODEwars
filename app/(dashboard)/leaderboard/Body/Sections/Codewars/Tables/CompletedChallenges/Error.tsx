@@ -2,10 +2,10 @@ import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContai
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
-import useChallengeList from "../../../Collapse/hooks/useChallengeList";
+import useChallengeList from "../../../Collapse/hooks/useDiffAndUpdateList";
 
 const Error = () => {
-  const { buildChallengeList } = useChallengeList();
+  const { fetchAndShowChallenges } = useChallengeList();
 
   return (
     <ErrorUI>
@@ -16,7 +16,11 @@ const Error = () => {
         try again!
       </Typography>
       <ErrorButtonContainer>
-        <Button variant="outlined" color="primary" onClick={buildChallengeList}>
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={fetchAndShowChallenges}
+        >
           Try Again
         </Button>
         <Link href="/wars/validation/steps/1" replace>
