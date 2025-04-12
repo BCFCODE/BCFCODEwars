@@ -2,18 +2,18 @@ import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext"
 import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 import useUntrackedChallenges from "./useUntrackedChallenges";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+// import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import { addTrackedFlagsToChallenges } from "../../../../../Collapse/utils/addTrackedFlags";
-import useCollectButtonState from "../../Buttons/CollectDiamonds/hooks/useCollectButtonState";
-import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext";
+// import { addTrackedFlagsToChallenges } from "../../../../../Collapse/utils/addTrackedFlags";
+// import useCollectButtonState from "../../Buttons/CollectDiamonds/hooks/useCollectButtonState";
+// import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext";
 
 export interface UseFilter {
   activeFilter: string;
   both: CodewarsCompletedChallenge[];
   claimed: CodewarsCompletedChallenge[];
   unClaimed: CodewarsCompletedChallenge[];
-  untrackedChallenges: CodewarsCompletedChallenge[];
+  // untrackedChallenges: CodewarsCompletedChallenge[];
 }
 
 const useFilter = (): UseFilter => {
@@ -27,12 +27,13 @@ const useFilter = (): UseFilter => {
   const activeFilter: CodeChallengesFilter =
     currentUser.codewars.codeChallenges.challengeFilter;
 
-  const list = selectedChallenge
-    ? addTrackedFlagsToChallenges(
-        selectedChallenge,
-        currentUser.codewars.codeChallenges.list
-      )
-    : currentUser.codewars.codeChallenges.list;
+  // const list = selectedChallenge
+  //   ? addTrackedFlagsToChallenges(
+  //       selectedChallenge,
+  //       currentUser.codewars.codeChallenges.list
+  //     )
+  //   : currentUser.codewars.codeChallenges.list;
+  const list = currentUser.codewars.codeChallenges.list;
 
   const both = [/* ...(untrackedChallenges ?? []), */ ...list];
 
@@ -51,7 +52,7 @@ const useFilter = (): UseFilter => {
     "useFilter/untrackedChallenges >>",
     untrackedChallenges,
     "selectedChallenge >>",
-    selectedChallenge,
+    selectedChallenge
 
     // "useFilter/mostRecentUntrackedChallenge",
     // mostRecentUntrackedChallenge
@@ -62,7 +63,7 @@ const useFilter = (): UseFilter => {
     both,
     claimed,
     unClaimed,
-    untrackedChallenges,
+    // untrackedChallenges,
   };
 };
 

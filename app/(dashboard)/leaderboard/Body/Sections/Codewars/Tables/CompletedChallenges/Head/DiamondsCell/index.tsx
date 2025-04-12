@@ -7,6 +7,7 @@ import {
   DiamondToggleButton,
   DiamondToggleGroup,
   notCollectedDiamondToggleStyles,
+  recentlySolvedToggleStyles,
   // recentlySolvedToggleStyles,
 } from "./styles";
 import useCollectionToggle from "./useCollectionToggle";

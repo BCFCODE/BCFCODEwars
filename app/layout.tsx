@@ -1,3 +1,4 @@
+import './styles/global.css'
 import { baseURL } from "@/utils/constants";
 import { Leaderboard } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";

@@ -1,8 +1,9 @@
 import { AllUsersAction } from "@/app/context/reducers/allUsersReducer";
-import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
+// import { CurrentUserAction } from "@/app/context/reducers/currentUserReducer";
 import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
 import { Dispatch, useEffect } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
+import { CurrentUserAction } from "@/app/context/reducers/currentUser";
 
 interface Props {
   isCollected: boolean;
