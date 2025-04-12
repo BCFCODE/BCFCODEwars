@@ -1,6 +1,6 @@
 import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
 import { Box, TableCell } from "@mui/material";
-import RecentlySolvedChip from "../StatusCell/RecentlySolvedChip";
+import StatusChip from "./StatusChip";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import ChallengeName from "../NameCell/ChallengeName";
 import { contentBoxStyles } from "../NameCell/styles";
@@ -13,8 +13,8 @@ interface Props {
 const StatusCell = ({ currentChallenge }: Props) => {
   return (
     <TableCell sx={codewarsCellStyles} align="center">
-      {/* {isUntracked && <RecentlySolvedChip challenge={currentChallenge} />} */}
-      <RecentlySolvedChip challenge={currentChallenge} />
+      {/* {isUntracked && <StatusChip challenge={currentChallenge} />} */}
+      <StatusChip challenge={currentChallenge} />
     </TableCell>
   );
 };
