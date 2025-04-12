@@ -8,7 +8,7 @@ interface Props {
 
 const SolvedOnCell = ({ completedAt }: Props) => {
   return (
-    <TableCell sx={codewarsCellStyles} align="right">
+    <TableCell sx={codewarsCellStyles} align="left">
       {new Date(completedAt).toLocaleTimeString()}
     </TableCell>
   );

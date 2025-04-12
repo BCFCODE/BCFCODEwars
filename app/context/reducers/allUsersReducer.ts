@@ -5,6 +5,7 @@ export interface AllUsersContextType {
   error: boolean;
   allUsers: AuthenticatedUser[];
 }
+
 export type AllUsersState = AllUsersContextType;
 
 export type AllUsersAction =

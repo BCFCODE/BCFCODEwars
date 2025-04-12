@@ -68,6 +68,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
 
         {!isCollected && (
           <UntrackedChallengeTooltip
+            isLatestUntracked={currentChallenge.isLatestUntracked}
             isUntracked={currentChallenge.isUntracked ?? false}
             text={
               isUserOnPersonalDashboard

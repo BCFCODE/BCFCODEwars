@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { CurrentUserContext as CurrentUserContextType } from "../../reducers/currentUserReducer";
+import { CurrentUserContext as CurrentUserContextType } from "../../reducers/currentUser";
 import { CurrentUserContext } from "../../providers/contexts";
 
 const useCurrentUserContext = (): CurrentUserContextType => {

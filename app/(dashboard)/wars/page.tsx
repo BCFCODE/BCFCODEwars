@@ -66,6 +66,13 @@ const WarsPage = async () => {
       //   currentCodewarsUser?.isConnected,
       //   isUsernameSynced
       // );
+      const isDbUsernameSyncedWithCodewars = codewarsUser.success;
+      console.log(
+        `currentCodewarsUser?.isConnected,
+        isDbUsernameSyncedWithCodewars`,
+        currentCodewarsUser?.isConnected,
+        isDbUsernameSyncedWithCodewars
+      );
       isConnected =
         currentCodewarsUser?.isConnected || !isUsernameSynced || false;
 

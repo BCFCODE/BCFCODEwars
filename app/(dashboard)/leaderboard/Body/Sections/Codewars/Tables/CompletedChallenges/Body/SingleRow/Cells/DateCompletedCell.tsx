@@ -8,7 +8,7 @@ interface Props {
 
 const DateCompletedCell = ({ completedAt }: Props) => {
   return (
-    <TableCell sx={codewarsCellStyles} component="th" scope="row">
+    <TableCell sx={codewarsCellStyles} align="right" component="th" scope="row">
       {new Date(completedAt).toLocaleDateString()}
     </TableCell>
   );

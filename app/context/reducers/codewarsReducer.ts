@@ -7,7 +7,7 @@ export const initialCodewars: CodewarsState = {
   isLoading: false,
   pageNumber: 0,
   untrackedChallenges: [],
-  mostRecentUntrackedChallenge: null,
+  // mostRecentUntrackedChallenge: null,
 };
 
 export interface Context {}
@@ -21,7 +21,7 @@ export interface CodewarsState extends Context {
   isError: boolean;
   isLoading: boolean;
   untrackedChallenges: CodewarsCompletedChallenge[];
-  mostRecentUntrackedChallenge: CodewarsCompletedChallenge | null;
+  // mostRecentUntrackedChallenge: CodewarsCompletedChallenge | null;
   // fetchCompletedChallenges: () => void;
 }
 
@@ -37,11 +37,11 @@ export type CodewarsAction =
     }
   | { type: "SET_ERROR"; isError: boolean }
   | { type: "SET_LOADING"; isLoading: boolean }
-  | { type: "SET_PAGE_NUMBER"; pageNumber: number }
-  // | {
-  //     type: "SET_LATEST_UNTRACKED_CHALLENGE";
-  //     mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
-  //   };
+  | { type: "SET_PAGE_NUMBER"; pageNumber: number };
+// | {
+//     type: "SET_LATEST_UNTRACKED_CHALLENGE";
+//     mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
+//   };
 
 const codewarsReducer = (
   state: CodewarsState,

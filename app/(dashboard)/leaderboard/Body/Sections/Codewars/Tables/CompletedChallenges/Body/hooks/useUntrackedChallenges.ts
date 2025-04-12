@@ -1,42 +1,44 @@
+import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext";
+// import filterUntrackedChallenges from "@/app/context/reducers/currentUser/filterUntrackedChallenges";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { RewardStatus } from "@/types/diamonds";
 import { AuthenticatedUser } from "@/types/users";
-import useSetLatestUntrackedChallenge from "../effects/useSetLatestUntrackedChallenge ";
-import { markAllChallengesAsUntracked } from "../utils/markChallengeAsUntracked";
 
 export interface UseUntrackedChallenges {
-  markedUntrackedChallenges: CodewarsCompletedChallenge[];
   untrackedChallenges: CodewarsCompletedChallenge[];
-  // mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
 }
 
 const useUntrackedChallenges = (
   currentUser: AuthenticatedUser
 ): UseUntrackedChallenges => {
+  const { isCollected } = useDiamondsContext();
   const codeChallenges = currentUser.codewars.codeChallenges;
 
-  const untrackedChallenges = codeChallenges.untrackedChallenges ?? [];
+  let untrackedChallenges = codeChallenges.untrackedChallenges ?? [];
 
-  useSetLatestUntrackedChallenge(untrackedChallenges);
+  console.log(
+    "useUntrackedChallenges/isCollected >>",
+    isCollected,
+    // filterUntrackedChallenges(untrackedChallenges)
+  );
+
+  // if (isCollected)
+  //   untrackedChallenges = filterUntrackedChallenges(untrackedChallenges);
+
+  // const isFirstLogin = codeChallenges.list.every(
+  //   (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
+  // );
+
+  // const untrackedChallengesToDisplay = isFirstLogin ? [] : untrackedChallenges;
 
   // console.log(
-  //   "useUntrackedChallenges/untrackedChallenges",
-  //   untrackedChallenges
+  //   "useUntrackedChallenges/untrackedChallengesToDisplay",
+  //   untrackedChallengesToDisplay,
+
   //   // "mostRecentUntrackedChallenge",
   //   // mostRecentUntrackedChallenge
   // );
 
-  const isFirstLogin = codeChallenges.list.every(
-    (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
-  );
-
-  const markedUntrackedChallenges = isFirstLogin
-    ? []
-    : markAllChallengesAsUntracked(untrackedChallenges);
-  return {
-    markedUntrackedChallenges,
-    untrackedChallenges,
-  };
+  return { untrackedChallenges };
 };
 
 export default useUntrackedChallenges;
