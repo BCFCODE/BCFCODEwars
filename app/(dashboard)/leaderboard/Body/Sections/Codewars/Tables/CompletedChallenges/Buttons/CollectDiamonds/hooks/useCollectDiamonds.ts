@@ -1,4 +1,3 @@
-import { AuthenticatedUser } from "@/types/users";
 import useCollectEffects from "../effects";
 import { CollectDiamondsState } from "../reducers/collectButtonReducer";
 import useCollectButtonState, {

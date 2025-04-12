@@ -1,18 +1,17 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 import { AuthenticatedUser } from "@/types/users";
-import { addTrackedFlagsToChallenges } from "../../../../../Collapse/utils/addTrackedFlags";
-import { markAllChallengesAsUntracked } from "../../../../../Collapse/utils/addUntrackedFlags";
+// import { markAllChallengesAsUntracked } from "../../../../../Collapse/utils/addUntrackedFlags";
 
 interface Props {
   currentUser: AuthenticatedUser;
   untrackedChallenges: CodewarsCompletedChallenge[];
-  selectedChallenge?: CodewarsCompletedChallenge;
+  // selectedChallenge?: CodewarsCompletedChallenge;
 }
 
 const useMarkUntrackedChallenges = ({
   currentUser,
-  selectedChallenge,
+  // selectedChallenge,
   untrackedChallenges,
 }: Props) => {
   const codeChallenges = currentUser.codewars.codeChallenges;
@@ -20,11 +19,7 @@ const useMarkUntrackedChallenges = ({
     (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
   );
 
-  const markedUntrackedChallenges = isFirstLogin
-    ? []
-    : selectedChallenge
-      ? addTrackedFlagsToChallenges(selectedChallenge, untrackedChallenges)
-      : markAllChallengesAsUntracked(untrackedChallenges);
+  const markedUntrackedChallenges = isFirstLogin ? [] : untrackedChallenges;
   return { markedUntrackedChallenges };
 };
 

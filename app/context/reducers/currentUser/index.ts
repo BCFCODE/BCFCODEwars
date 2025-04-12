@@ -1,10 +1,10 @@
-import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import {
   CodeChallengesFilter,
   CodewarsDiamondsRecord,
   CodewarsRanks,
   CodewarsRankTotals,
-  Diamonds,
+  Diamonds
 } from "@/types/diamonds";
 import { AuthenticatedUser } from "@/types/users";
 import { Session } from "next-auth";
@@ -23,6 +23,11 @@ export interface CurrentUserContext extends CurrentUserState {
 export type CurrentUserAction =
   | { type: "UPDATE_CODE_CHALLENGES_LIST"; list: CodewarsCompletedChallenge[] }
   | {
+      type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS";
+      reward: number;
+      selectedChallenge: CodewarsCompletedChallenge;
+    }
+  | {
       type: "USER_COLLECTED_CHALLENGE_REWARD_(BEFORE_COUNTER)";
       reward: number;
       selectedChallenge: CodewarsCompletedChallenge;
@@ -34,11 +39,6 @@ export type CurrentUserAction =
       type: "ADD_UNTRACKED_CHALLENGES_TO_LIST";
       untrackedChallenges: CodewarsCompletedChallenge[];
     }
-  // | {
-  //     type: "SET_LATEST_UNTRACKED_CHALLENGE";
-  //     mostRecentUntrackedChallenge: CodewarsCompletedChallenge;
-  //   }
-  // | { type: "SELECTED_CHALLENGE_MATCHES_LATEST_UNTRACKED" }
   | {
       type: "DIAMOND_COUNT_ANIMATION_COMPLETED";
       selectedChallenge: CodewarsCompletedChallenge;
@@ -63,50 +63,6 @@ const currentUserReducer = (
           },
         },
       };
-    case "USER_COLLECTED_CHALLENGE_REWARD_(BEFORE_COUNTER)": {
-      const currentRankId = getRank(action.selectedChallenge);
-
-      const ranks: CodewarsRanks = {
-        ...state.currentUser.diamonds.totals.codewars.ranks,
-        [currentRankId]:
-          state.currentUser.diamonds.totals.codewars.ranks[currentRankId] +
-          action.reward,
-      };
-
-      const updateCodewarsRanks: CodewarsRankTotals = {
-        ...state.currentUser.diamonds.totals.codewars,
-        ranks,
-        total: state.currentUser.diamonds.totals.codewars.total + action.reward,
-      };
-
-      const newCodewarsChallengeRecord: CodewarsDiamondsRecord = {
-        id: action.selectedChallenge.id,
-        rank: currentRankId,
-        diamondsEarned: action.reward,
-        collectedAt: new Date(),
-        completedAt: new Date(action.selectedChallenge.completedAt),
-      };
-
-      const diamonds: Diamonds = {
-        ...state.currentUser.diamonds,
-        codewars: [
-          ...state.currentUser.diamonds.codewars,
-          newCodewarsChallengeRecord,
-        ],
-        totals: {
-          ...state.currentUser.diamonds.totals,
-          codewars: updateCodewarsRanks,
-          total: state.currentUser.diamonds.totals.total + action.reward,
-        },
-      };
-
-      const currentUser: AuthenticatedUser = {
-        ...state.currentUser,
-        diamonds,
-      };
-
-      return { ...state, currentUser };
-    }
     case "SET_USER_DIAMONDS": {
       return {
         ...state,
@@ -150,64 +106,49 @@ const currentUserReducer = (
         },
       };
     }
-    // case "SET_LATEST_UNTRACKED_CHALLENGE": {
-    //   return {
-    //     ...state,
-    //     currentUser: {
-    //       ...state.currentUser,
-    //       codewars: {
-    //         ...state.currentUser.codewars,
-    //         codeChallenges: {
-    //           ...state.currentUser.codewars.codeChallenges,
-    //           mostRecentUntrackedChallenge: action.mostRecentUntrackedChallenge,
-    //         },
-    //       },
-    //     },
-    //   };
-    // }
-    // case "SELECTED_CHALLENGE_MATCHES_LATEST_UNTRACKED": {
-    //   return {
-    //     ...state,
-    //     currentUser: {
-    //       ...state.currentUser,
-    //       codewars: {
-    //         ...state.currentUser.codewars,
-    //         codeChallenges: {
-    //           ...state.currentUser.codewars.codeChallenges,
-    //           mostRecentUntrackedChallenge: null,
-    //         },
-    //       },
-    //     },
-    //   };
-    // }
-    case "DIAMOND_COUNT_ANIMATION_COMPLETED": {
-      // const list: CodewarsCompletedChallenge[] = [
-      //   action.selectedChallenge,
-      //   ...state.currentUser.codewars.codeChallenges.list,
-      // ];
+    case "UPDATE_DIAMONDS_TOTALS_AND_RANKS": {
+      const currentRankId = getRank(action.selectedChallenge);
 
-      // const untrackedChallenges: CodewarsCompletedChallenge[] =
-      //   state.currentUser.codewars.codeChallenges.untrackedChallenges.filter(
-      //     (challenge) => challenge.id !== action.selectedChallenge.id
-      //   );
+      const ranks: CodewarsRanks = {
+        ...state.currentUser.diamonds.totals.codewars.ranks,
+        [currentRankId]:
+          state.currentUser.diamonds.totals.codewars.ranks[currentRankId] +
+          action.reward,
+      };
 
-      // const codeChallenges: CodeChallenges = {
-      //   ...state.currentUser.codewars.codeChallenges,
-      //   list,
-      //   untrackedChallenges,
-      // };
+      const updateCodewarsRanks: CodewarsRankTotals = {
+        ...state.currentUser.diamonds.totals.codewars,
+        ranks,
+        total: state.currentUser.diamonds.totals.codewars.total + action.reward,
+      };
 
-      // const codewars: CodewarsUser = {
-      //   ...state.currentUser.codewars,
-      //   codeChallenges,
-      // };
+      const newCodewarsChallengeRecord: CodewarsDiamondsRecord = {
+        id: action.selectedChallenge.id,
+        rank: currentRankId,
+        diamondsEarned: action.reward,
+        collectedAt: new Date(),
+        completedAt: new Date(action.selectedChallenge.completedAt),
+      };
 
-      // const currentUser: AuthenticatedUser = {
-      //   ...state.currentUser,
-      //   codewars,
-      // };
+      const diamonds: Diamonds = {
+        ...state.currentUser.diamonds,
+        codewars: [
+          ...state.currentUser.diamonds.codewars,
+          newCodewarsChallengeRecord,
+        ],
+        totals: {
+          ...state.currentUser.diamonds.totals,
+          codewars: updateCodewarsRanks,
+          total: state.currentUser.diamonds.totals.total + action.reward,
+        },
+      };
 
-      return { ...state };
+      const currentUser: AuthenticatedUser = {
+        ...state.currentUser,
+        diamonds,
+      };
+
+      return { ...state, currentUser };
     }
     default:
       return state;
