@@ -26,13 +26,13 @@ const extractListDiff = ({
 
   const untrackedChallenges  = fetchedChallenges.slice(0, previousRecentIndex);
   // const untrackedChallenges = addUntrackedFlagsToChallenges(challengesBeforeFlagging )
-  console.log(
-    "in extractListDiff >",
-    "previousRecentIndex",
-    previousRecentIndex,
-    "untrackedChallenges",
-    untrackedChallenges
-  );
+  // console.log(
+  //   "in extractListDiff >",
+  //   "previousRecentIndex",
+  //   previousRecentIndex,
+  //   "untrackedChallenges",
+  //   untrackedChallenges
+  // );
   const isMostRecentChallengeSame =
     previousMostRecentChallenge.id === mostRecentFetchedChallenge.id;
   // console.log("isMostRecentChallengeSame", isMostRecentChallengeSame);

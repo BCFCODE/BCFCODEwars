@@ -39,9 +39,9 @@ export default function useCounterEffect({
       collectButtonDispatch({ type: "LOADING...", isLoading: false });
       collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
       
-      console.log(
-        "COUNTER FINISHED COUNTING AND DIAMONDS COLLECTED SUCCESSFULLY"
-      );
+      // console.log(
+      //   "COUNTER FINISHED COUNTING AND DIAMONDS COLLECTED SUCCESSFULLY"
+      // );
       setIsCounting(false);
     }
 

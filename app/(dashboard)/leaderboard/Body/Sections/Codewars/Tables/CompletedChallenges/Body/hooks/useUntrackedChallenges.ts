@@ -15,11 +15,11 @@ const useUntrackedChallenges = (
 
   let untrackedChallenges = codeChallenges.untrackedChallenges ?? [];
 
-  console.log(
-    "useUntrackedChallenges/isCollected >>",
-    isCollected,
-    // filterUntrackedChallenges(untrackedChallenges)
-  );
+  // console.log(
+  //   "useUntrackedChallenges/isCollected >>",
+  //   isCollected,
+  //   // filterUntrackedChallenges(untrackedChallenges)
+  // );
 
   // if (isCollected)
   //   untrackedChallenges = filterUntrackedChallenges(untrackedChallenges);

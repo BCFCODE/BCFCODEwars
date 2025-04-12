@@ -17,7 +17,7 @@ export interface UseFilter {
 }
 
 const useFilter = (): UseFilter => {
-  console.log("useFilter Rendered...");
+  // console.log("useFilter Rendered...");
   // const {  isCollected } = useDiamondsContext();
   const { currentUser } = useCurrentUserContext();
   const { selectedChallenge } = useCodewarsContext();
@@ -47,7 +47,7 @@ const useFilter = (): UseFilter => {
       (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
     ),
   ];
-
+  /* 
   console.log(
     "useFilter/untrackedChallenges >>",
     untrackedChallenges,
@@ -57,7 +57,7 @@ const useFilter = (): UseFilter => {
     // "useFilter/mostRecentUntrackedChallenge",
     // mostRecentUntrackedChallenge
   );
-
+ */
   return {
     activeFilter,
     both,
