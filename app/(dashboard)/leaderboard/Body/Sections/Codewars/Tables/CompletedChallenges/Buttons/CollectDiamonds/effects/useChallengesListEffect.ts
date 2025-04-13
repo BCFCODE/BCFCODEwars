@@ -59,27 +59,27 @@ export default function useChallengesListEffect({
       //     (untrackedChallenge) => untrackedChallenge.id === selectedChallenge.id
       //   )
       // ) {
-        // currentUserDispatch({
-        //   type: "COLLECT_DIAMOND_AND_FETCH_CHALLENGE_BEFORE_COUNTER_START",
-        //   updatedUntrackedChallenges: addTrackedFlagsToChallenges(
-        //     selectedChallenge,
-        //     untrackedChallenges
-        //   ),
-        // });
-        // currentUserDispatch({
-        //   type: "UPDATE_UNTRACKED_CHALLENGE_LIST_AFTER_DIAMONDS_COUNTER_ANIMATION",
-        //   selectedUntrackedChallenge:
-        //     addTrackedFlagsToChallenge(selectedChallenge),
-        // });
-        // console.log(
-        //   `useChallengesListEffect/currentUser, selectedChallenge, and untrackedChallenges`,
-        //   "currentUser >>",
-        //   currentUser,
-        //   "selectedChallenge >>",
-        //   selectedChallenge,
-          // "untrackedChallenges >>",
-          // untrackedChallenges,
-          // addTrackedFlagsToChallenges(selectedChallenge, untrackedChallenges)
+      // currentUserDispatch({
+      //   type: "COLLECT_DIAMOND_AND_FETCH_CHALLENGE_BEFORE_COUNTER_START",
+      //   updatedUntrackedChallenges: addTrackedFlagsToChallenges(
+      //     selectedChallenge,
+      //     untrackedChallenges
+      //   ),
+      // });
+      // currentUserDispatch({
+      //   type: "UPDATE_UNTRACKED_CHALLENGE_LIST_AFTER_DIAMONDS_COUNTER_ANIMATION",
+      //   selectedUntrackedChallenge:
+      //     addTrackedFlagsToChallenge(selectedChallenge),
+      // });
+      // console.log(
+      //   `useChallengesListEffect/currentUser, selectedChallenge, and untrackedChallenges`,
+      //   "currentUser >>",
+      //   currentUser,
+      //   "selectedChallenge >>",
+      //   selectedChallenge,
+      // "untrackedChallenges >>",
+      // untrackedChallenges,
+      // addTrackedFlagsToChallenges(selectedChallenge, untrackedChallenges)
       //   );
       // }
       // // console.log("selectedChallenge", selectedChallenge);
@@ -91,5 +91,12 @@ export default function useChallengesListEffect({
       isListUpdatedRef.current = false;
       isDiamondsUpdatedRef.current = false;
     }
-  }, [success, isDiamondIconButtonDisabled]);
+  }, [
+    success,
+    isDiamondIconButtonDisabled,
+    collectedDiamondsCount,
+    currentUser,
+    currentUserDispatch,
+    selectedChallenge,
+  ]);
 }

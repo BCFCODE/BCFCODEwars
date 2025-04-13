@@ -75,7 +75,8 @@ const useAllUsers = (): UseAllUsers => {
         allUsersDispatch({ type: "SET_LOADING", loading: false });
       }
     })();
-  }, []);
+  }, [session.data]);
+  
   return { allUsersContext, allUsersDispatch };
 };
 
