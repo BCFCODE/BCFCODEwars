@@ -1,4 +1,3 @@
-import './styles/global.css'
 import { baseURL } from "@/utils/constants";
 import { Leaderboard } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -12,6 +11,7 @@ import { NextAppProvider } from "@toolpad/core/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Metadata } from "next";
+import { Session } from "next-auth";
 import { SessionProvider, signIn, signOut } from "next-auth/react";
 import { headers } from "next/headers";
 import Image from "next/image";
@@ -20,12 +20,11 @@ import { ReactNode } from "react";
 import { auth } from "../auth";
 import { montserrat } from "../lib/fonts";
 import theme from "../theme";
-import DiamondsProvider from "./context/providers/Diamonds";
 import AllUsersProvider from "./context/providers/AllUsers";
-import LeaderBoardPage from "./(dashboard)/leaderboard/page";
-import useActivityTracker from "@/hooks/useActivityTracker";
-import { Session } from "next-auth";
-import CurrentUserProvider from "./context/providers/CurrentUser";
+import DiamondsProvider from "./context/providers/Diamonds";
+import "./styles/global.css";
+import { useUserStore } from "./store/user";
+import StoreInitializer from "./store/StoreInitializer";
 
 export const metadata: Metadata = {
   title: {
@@ -159,6 +158,7 @@ export default async function RootLayout({ children }: Props) {
               theme={theme}
             >
               <SessionProvider session={session}>
+                <StoreInitializer {...{ session }} />
                 <AllUsersProvider>
                   <DiamondsProvider>{children}</DiamondsProvider>
                 </AllUsersProvider>

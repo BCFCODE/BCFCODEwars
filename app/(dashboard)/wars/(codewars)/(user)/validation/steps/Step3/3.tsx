@@ -6,6 +6,9 @@ import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
 import initializeAndStoreNewUserToDatabase from "./connectUser";
+import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
+import { useSession } from "next-auth/react";
+// import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 // import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 const Step3 = ({
@@ -14,9 +17,10 @@ const Step3 = ({
   session,
   codewars,
 }: StepProps) => {
-  // const {currentUser} = useCurrentUserContext()
-  // console.log('currentUser', currentUser)
   const router = useRouter();
+  // const session = useSession();
+  const { allUsers } = useAllUsersContext();
+  console.log("Step3/allUsers", allUsers, "session", session);
 
   const handleOnYes = () => {
     initializeAndStoreNewUserToDatabase({

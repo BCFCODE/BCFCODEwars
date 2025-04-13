@@ -33,6 +33,7 @@ const useAllUsers = (): UseAllUsers => {
         allUsersDispatch({ type: "SET_ERROR", error: false });
 
         const fetchedUsers = await getUsers({ cache: "no-store" });
+        // const currentUser = await getUser({})
 
         if (!fetchedUsers.success || fetchedUsers.error) {
           // console.log("error in AllUsersProvider");
