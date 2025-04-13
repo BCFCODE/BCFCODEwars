@@ -3,7 +3,7 @@ import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewars
 import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 const { postCurrentUser } = new dbAPIService();
 
