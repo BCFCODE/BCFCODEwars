@@ -1,3 +1,4 @@
+import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { AuthenticatedUser, DatabaseUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 
@@ -15,6 +16,8 @@ class dbAPIService {
 
   // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
   getUsers = async (options?: RequestInit): Promise<GetUsersAPIResponse> => {
+    // const currentUserDispatch = useCurrentUserDispatchContext();
+
     try {
       // Fetch the data from your API
       const response = await fetch(`${this.endpoint}/users`, {
@@ -32,6 +35,8 @@ class dbAPIService {
       }
       const data = await response.json();
 
+      // currentUserDispatch({ type: "EMPTY_UNTRACKED_CHALLENGE_LIST" });
+
       return { success: true, users: data.users };
     } catch (error) {
       console.error("Error fetching user data from database");
@@ -39,7 +44,9 @@ class dbAPIService {
     }
   };
 
-  postCurrentUser = async (currentUser: AuthenticatedUser) => {
+  postCurrentUser = async (
+    currentUser: AuthenticatedUser
+  ): Promise<{ success: boolean }> => {
     try {
       const response = await fetch(`${this.endpoint}/currentUser`, {
         method: "POST",
@@ -49,13 +56,13 @@ class dbAPIService {
 
       if (!response.ok) {
         // Optionally handle non-200 status codes here.
-        throw new Error(`Request failed with status ${response.status}`);
+        // throw new Error(`Request failed with status ${response.status}`);
+        return { success: false };
       }
 
-      return await response.json();
+      return { success: true };
     } catch (error) {
-      console.error("Error syncing diamond count:", error);
-      throw error; // or handle error appropriately
+      return { success: false };
     }
   };
 }

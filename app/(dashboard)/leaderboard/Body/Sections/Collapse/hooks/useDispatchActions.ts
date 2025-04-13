@@ -1,7 +1,11 @@
+import dbAPIService from "@/app/api/services/db";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { useEffect } from "react";
+
+const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
   const { isCollapsed, currentUser } = useCurrentUserContext();
@@ -9,8 +13,44 @@ const useDispatchActions = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
   const codewarsDispatch = useCodewarsDispatchContext();
 
+  let untrackedChallengesAvailable =
+    currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false;
+  // useMemo(() => {
+  //   return (
+  //     currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false
+  //   );
+  // }, [currentUser]);
+
+  useEffect(() => {
+    if (isCollapsed && untrackedChallengesAvailable) {
+      // console.log(
+      //   "useDispatchActions/hasUntrackedChallengesWhenCollapsed/currentUser",
+      //   currentUser,
+      //   untrackedChallengesAvailable
+      // );
+      allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
+
+      // (async () => {
+      //   const { success } = await postCurrentUser(currentUser);
+      //   if (success) untrackedChallengesAvailable = false;
+      // })();
+
+      postCurrentUser(currentUser);
+
+      currentUserDispatch({
+        type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
+        untrackedChallengesAvailable: false,
+      });
+    }
+  }, [
+    currentUser,
+    isCollapsed,
+    allUsersDispatch,
+    untrackedChallengesAvailable,
+    currentUserDispatch,
+  ]);
+
   const dispatchActions = () => {
-    allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
     currentUserDispatch({
       type: "SET_COLLAPSE_OPEN",
       isCollapsed: !isCollapsed,

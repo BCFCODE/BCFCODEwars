@@ -6,8 +6,7 @@ import {
   Collection,
   Db,
   Document,
-  MongoClient,
-  WithId,
+  MongoClient
 } from "mongodb";
 
 class DatabaseService {

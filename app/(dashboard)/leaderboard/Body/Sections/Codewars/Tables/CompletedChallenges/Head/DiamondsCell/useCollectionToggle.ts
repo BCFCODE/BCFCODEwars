@@ -52,7 +52,7 @@ const useCollectionToggle = () => {
 
   useEffect(() => {
     currentUserDispatch({ type: "UPDATE_COLLECTION_FILTER", filterName });
-  }, [filterName]);
+  }, [filterName, currentUserDispatch]);
 
   return {
     handle: { selectCollectedDiamonds, selectNotCollectedDiamonds },

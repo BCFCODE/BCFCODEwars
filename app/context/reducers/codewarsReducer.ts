@@ -6,7 +6,7 @@ export const initialCodewars: CodewarsState = {
   isError: false,
   isLoading: false,
   pageNumber: 0,
-  untrackedChallenges: [],
+  // untrackedChallenges: [],
   // mostRecentUntrackedChallenge: null,
 };
 
@@ -20,7 +20,7 @@ export interface CodewarsState extends Context {
   isDisabled: boolean;
   isError: boolean;
   isLoading: boolean;
-  untrackedChallenges: CodewarsCompletedChallenge[];
+  // untrackedChallenges: CodewarsCompletedChallenge[];
   // mostRecentUntrackedChallenge: CodewarsCompletedChallenge | null;
   // fetchCompletedChallenges: () => void;
 }
