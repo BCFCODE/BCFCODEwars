@@ -23,7 +23,9 @@ const useChallengeList = () => {
 
       if ("data" in response) {
         if (isListEmpty) initializeCodeChallengesList(response.data);
-
+        
+        diffAndUpdateList();
+        
         codewarsDispatch({ type: "SET_ERROR", isError: false });
       } else {
         // TODO: Handle cases where data is missing
@@ -35,7 +37,6 @@ const useChallengeList = () => {
       codewarsDispatch({ type: "SET_ERROR", isError: true });
       // setError(true);
     } finally {
-      diffAndUpdateList();
       codewarsDispatch({ type: "SET_LOADING", isLoading: false });
       // setIsLoading(false);
 

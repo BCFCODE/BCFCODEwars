@@ -21,14 +21,14 @@ export default function useCounterEffect({
   isError,
   // isLoading,
   success,
-  currentUserDispatch
+  currentUserDispatch,
 }: Props) {
   const [isCounting, setIsCounting] = useState(true);
   const timeRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!isCounting) return;
-    
+
     if (success) {
       timeRef.current = setTimeout(() => {
         collectButtonDispatch({ type: "DIAMOND_COUNTS", counter: counter + 1 });
@@ -38,7 +38,7 @@ export default function useCounterEffect({
     if (counter === collectedDiamondsCount) {
       collectButtonDispatch({ type: "LOADING...", isLoading: false });
       collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
-      
+
       // console.log(
       //   "COUNTER FINISHED COUNTING AND DIAMONDS COLLECTED SUCCESSFULLY"
       // );
@@ -48,7 +48,14 @@ export default function useCounterEffect({
     return () => {
       timeRef.current && clearTimeout(timeRef.current);
     };
-  }, [isError, counter, success, isCounting, collectedDiamondsCount]);
+  }, [
+    isError,
+    counter,
+    success,
+    isCounting,
+    collectedDiamondsCount,
+    collectButtonDispatch,
+  ]);
 
   // console.log(Math.random(), "<<<<<<<<<<<<<", isCounting);
 }

@@ -1,9 +1,9 @@
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
-import useUntrackedChallenges from "./useUntrackedChallenges";
+// import useUntrackedChallenges from "./useUntrackedChallenges";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 // import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
+// import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 // import { addTrackedFlagsToChallenges } from "../../../../../Collapse/utils/addTrackedFlags";
 // import useCollectButtonState from "../../Buttons/CollectDiamonds/hooks/useCollectButtonState";
 // import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext";
@@ -20,9 +20,9 @@ const useFilter = (): UseFilter => {
   // console.log("useFilter Rendered...");
   // const {  isCollected } = useDiamondsContext();
   const { currentUser } = useCurrentUserContext();
-  const { selectedChallenge } = useCodewarsContext();
+  // const { selectedChallenge } = useCodewarsContext();
 
-  const { untrackedChallenges } = useUntrackedChallenges(currentUser);
+  // const { untrackedChallenges } = useUntrackedChallenges(currentUser);
 
   const activeFilter: CodeChallengesFilter =
     currentUser.codewars.codeChallenges.challengeFilter;

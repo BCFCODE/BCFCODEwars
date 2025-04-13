@@ -24,7 +24,7 @@ const extractListDiff = ({
     (challenge) => challenge.id === previousMostRecentChallenge.id
   );
 
-  const untrackedChallenges  = fetchedChallenges.slice(0, previousRecentIndex);
+  let untrackedChallenges = fetchedChallenges.slice(0, previousRecentIndex);
   // const untrackedChallenges = addUntrackedFlagsToChallenges(challengesBeforeFlagging )
   // console.log(
   //   "in extractListDiff >",
@@ -35,8 +35,11 @@ const extractListDiff = ({
   // );
   const isMostRecentChallengeSame =
     previousMostRecentChallenge.id === mostRecentFetchedChallenge.id;
-  // console.log("isMostRecentChallengeSame", isMostRecentChallengeSame);
-  return isMostRecentChallengeSame ? [] : untrackedChallenges;
+
+  untrackedChallenges = isMostRecentChallengeSame ? [] : untrackedChallenges;
+
+  
+  return untrackedChallenges;
 };
 
 export default extractListDiff;
