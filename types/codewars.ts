@@ -17,6 +17,19 @@ interface languagesRanks {
   };
 }
 
+export interface Ranks {
+  overall: OverallRanks;
+  languages: languagesRanks;
+}
+
+export interface CodeChallenges {
+  totalAuthored: number;
+  totalCompleted: number;
+  challengeFilter: CodeChallengesFilter;
+  list: CodewarsCompletedChallenge[];
+  untrackedChallenges: CodewarsCompletedChallenge[];
+}
+
 export type CodewarsUser = {
   success?: boolean;
   isConnected: boolean;
@@ -28,18 +41,8 @@ export type CodewarsUser = {
   clan: string | null;
   leaderboardPosition: number | null;
   skills: string[] | null;
-  ranks: {
-    overall: OverallRanks;
-    languages: languagesRanks;
-  };
-  codeChallenges: {
-    totalAuthored: number;
-    totalCompleted: number;
-    challengeFilter: CodeChallengesFilter;
-    list: CodewarsCompletedChallenge[];
-    untrackedChallenges: CodewarsCompletedChallenge[];
-    mostRecentUntrackedChallenge: CodewarsCompletedChallenge | null;
-  };
+  ranks: Ranks;
+  codeChallenges: CodeChallenges;
 };
 
 // export type InitialCodewarsUser = Pick<CodewarsUser, "email" | "isConnected">;
@@ -58,6 +61,8 @@ export type CodewarsUserResponse =
   | CodewarsUser;
 
 export interface CodewarsCompletedChallenge {
+  isUntracked: boolean;
+  isLatestUntracked: boolean;
   id: string; // Unique identifier for each challenge
   name: string; // Name of the challenge
   slug: string; // URL-friendly name of the challenge
@@ -65,7 +70,6 @@ export interface CodewarsCompletedChallenge {
   completedAt: string; // ISO 8601 date string representing when the challenge was completed
   rewardStatus: CodeChallengesFilter | RewardStatus;
   moreDetails?: CodewarsSingleChallenge;
-  isUntracked?: boolean;
 }
 
 export interface CodewarsChallengesResponse {

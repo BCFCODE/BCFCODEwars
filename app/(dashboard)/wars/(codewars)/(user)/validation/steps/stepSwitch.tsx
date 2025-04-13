@@ -9,7 +9,7 @@ import Step4 from "./Step4 (success)/4";
 interface Props {
   currentStep: number;
   validatedUsername: string;
-  isDbUsernameSyncedWithCodewars?: boolean
+  isUsernameSynced?: boolean;
 }
 
 export interface StepProps extends Props {

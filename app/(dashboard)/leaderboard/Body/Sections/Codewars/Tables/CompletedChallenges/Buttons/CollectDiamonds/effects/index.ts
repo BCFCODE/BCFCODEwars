@@ -32,6 +32,7 @@ const useCollectEffects = ({
     counter,
     isError,
     success,
+    currentUserDispatch,
   });
 
   useCollectedDiamondsEffect({

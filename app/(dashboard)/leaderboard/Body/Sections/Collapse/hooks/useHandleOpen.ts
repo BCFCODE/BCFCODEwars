@@ -1,13 +1,13 @@
-import useChallengeList from "./useChallengeList";
+import useChallengeList from "./useDiffAndUpdateList";
 import useDispatchActions from "./useDispatchActions";
 
 const useHandleOpen = () => {
   const { dispatchActions } = useDispatchActions();
-  const { buildChallengeList } = useChallengeList();
+  const { fetchAndShowChallenges } = useChallengeList();
 
   const handleOpen = async () => {
     dispatchActions();
-    buildChallengeList();
+    fetchAndShowChallenges();
   };
 
   return { handleOpen };

@@ -7,6 +7,7 @@ import DateCompletedCell from "./Cells/DateCompletedCell";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import CollectDiamondsCell from "./Cells/CollectDiamondsCell";
 import CollectDiamonds from "../../Buttons/CollectDiamonds";
+import TimeAgoCell from "./Cells/TimeAgoCell";
 
 interface Props {
   challenge: CodewarsCompletedChallenge;
@@ -16,16 +17,14 @@ const SingleRow = ({ challenge }: Props) => {
   // console.log('SingleRow/challenge', challenge)
   return (
     <TableRow>
+      <TimeAgoCell currentChallenge={challenge} />
+      <NameCell currentChallenge={challenge} />
       <DateCompletedCell completedAt={challenge.completedAt} />
-      <NameCell
-        currentChallenge={challenge}
-        isUntracked={challenge.isUntracked ?? false}
-      />
-      <RankCell {...{ challenge }} />
+      <SolvedOnCell completedAt={challenge.completedAt} />
       <CollectDiamondsCell>
         <CollectDiamonds currentChallenge={challenge} />
       </CollectDiamondsCell>
-      <SolvedOnCell completedAt={challenge.completedAt} />
+      <RankCell {...{ challenge }} />
     </TableRow>
   );
 };

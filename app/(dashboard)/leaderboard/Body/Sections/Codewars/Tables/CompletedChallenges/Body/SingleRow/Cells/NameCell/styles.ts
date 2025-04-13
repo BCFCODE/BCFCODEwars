@@ -14,15 +14,15 @@ export const contentBoxStyles: SxProps = {
   // whiteSpace: "wrap",
   display: "flex",
   alignItems: "center",
-  justifyContent: 'space-between',
+  justifyContent: "space-between",
   // gap: 1, // Creates spacing between text and chip
   // width: "80%",
   // overflow: "hidden",
-  fontSize: 'inherit'
+  fontSize: "inherit",
 };
 
 export const textStyles: SxProps = {
-  fontSize: 'inherit',
+  fontSize: "inherit",
   // overflow: "hidden",
   // textOverflow: "ellipsis",
   // whiteSpace: "nowrap",
@@ -31,12 +31,18 @@ export const textStyles: SxProps = {
 };
 
 export const chipStyles: SxProps = {
-  // width: 200,
-  // fontSize: 13,
-  // flexShrink: 0, // Prevents the chip from expanding the cell
+  // minWidth: 80,
+  // justifyContent: "center",
+  // ".MuiChip-label": {
+  //   width: "100%",
+  //   textAlign: "center",
+  //   display: "flex",
+  //   justifyContent: "center",
+  // },
 };
 
 export const chipIconStyles: SxProps = {
-  // height: 15,
+  // fontSize: 16,
+  // marginLeft: "4px",
   
-}
+};

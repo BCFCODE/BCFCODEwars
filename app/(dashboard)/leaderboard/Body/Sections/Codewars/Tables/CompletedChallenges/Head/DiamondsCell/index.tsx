@@ -7,9 +7,12 @@ import {
   DiamondToggleButton,
   DiamondToggleGroup,
   notCollectedDiamondToggleStyles,
+  recentlySolvedToggleStyles,
+  // recentlySolvedToggleStyles,
 } from "./styles";
 import useCollectionToggle from "./useCollectionToggle";
 import { CodeChallengesFilter } from "@/types/diamonds";
+import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 const DiamondsCell = () => {
   const [collection, setCollection] = useState(() => [
@@ -40,6 +43,13 @@ const DiamondsCell = () => {
         >
           <DiamondIcon sx={collectedDiamondToggleStyles} />
         </DiamondToggleButton>
+        {/* <DiamondToggleButton
+          value={CodeChallengesFilter.ClaimedDiamonds}
+          aria-label="Show collected diamonds"
+          onClick={handle.selectCollectedDiamonds}
+        >
+          <TaskAltIcon sx={recentlySolvedToggleStyles} />
+        </DiamondToggleButton> */}
         <DiamondToggleButton
           value={CodeChallengesFilter.UnclaimedDiamonds}
           aria-label="Show uncollected diamonds"

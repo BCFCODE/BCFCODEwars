@@ -1,14 +1,17 @@
 import {
   diamondCollectedColor,
+  diamondNotCollectedColor,
   diamondStyles,
   textStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
 import {
   styled,
   SxProps,
+  // Theme,
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
+import { Theme } from "@mui/material/styles";
 
 const diamondSideMargin = 0.4;
 
@@ -33,7 +36,8 @@ export const DiamondToggleGroup = styled(ToggleButtonGroup)(({ theme }) => ({
 export const DiamondToggleButton = styled(ToggleButton)(({ theme }) => ({
   // flex: 1, // Ensures equal button size
   minWidth: "30px", // Prevents shrinking
-  padding: theme.spacing(0),
+  padding: theme.spacing(0.2),
+  paddingTop: theme.spacing(0.6),
   border: "none",
   borderRadius: "35%",
   "&:not(:last-child)": {
@@ -41,17 +45,36 @@ export const DiamondToggleButton = styled(ToggleButton)(({ theme }) => ({
   },
 }));
 
-export const toggleButtonStyles: SxProps = {
+export const toggleButtonStyles = (theme: Theme): SxProps<Theme> => ({
   ...diamondStyles,
-};
+});
 
 export const collectedDiamondToggleStyles: SxProps = {
   ...toggleButtonStyles,
   color: diamondCollectedColor,
   marginLeft: diamondSideMargin,
+  // height: 30,
 };
 
 export const notCollectedDiamondToggleStyles: SxProps = {
+  // ...diamondStyles,
   ...toggleButtonStyles,
   marginRight: diamondSideMargin,
+  color: diamondNotCollectedColor,
+  // height: 30,
 };
+
+export const getToggleButtonStyles = (theme: Theme): SxProps<Theme> => ({
+  ...diamondStyles,
+  color: theme.palette.info.main,
+});
+
+export const recentlySolvedToggleStyles: SxProps<Theme> = (theme: Theme) => ({
+  ...toggleButtonStyles,
+  // fontSize: 30,
+  // borderRadius: '50%',
+  // padding: 0.3,
+  height: 30,
+  marginX: 0,
+  color: theme.palette.warning.main, // Use the 'info' color from the theme
+});

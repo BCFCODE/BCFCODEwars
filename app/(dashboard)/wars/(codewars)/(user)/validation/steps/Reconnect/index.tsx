@@ -10,10 +10,10 @@ const Reconnect = ({
   session,
   codewars,
   validatedUsername,
-  isDbUsernameSyncedWithCodewars,
+  isUsernameSynced,
 }: Omit<StepProps, "currentStep">) => {
   const userName = (session?.user?.name ?? "").split(" ")[0] || "User";
-  const isSynced = isDbUsernameSyncedWithCodewars ?? false;
+  const isSynced = isUsernameSynced ?? false;
 
   return (
     <Box>
@@ -49,7 +49,7 @@ const Reconnect = ({
               userName,
               codewars,
               validatedUsername,
-              isDbUsernameSyncedWithCodewars,
+              isUsernameSynced,
             }}
           />
 

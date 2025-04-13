@@ -1,7 +1,7 @@
 import { ReactNode, useReducer } from "react";
 import currentUserReducer, {
   CurrentUserContext as CurrentUserContextType,
-} from "../reducers/currentUserReducer";
+} from "../reducers/currentUser";
 import { CurrentUserContext, CurrentUserDispatchContext } from "./contexts";
 
 interface Props {

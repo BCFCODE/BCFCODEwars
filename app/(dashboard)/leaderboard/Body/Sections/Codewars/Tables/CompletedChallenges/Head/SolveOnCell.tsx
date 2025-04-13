@@ -4,7 +4,7 @@ import React from "react";
 
 const SolveOnCell = () => {
   return (
-    <TableCell sx={textStyles} align="right">
+    <TableCell sx={textStyles} align="left">
       Solved On
     </TableCell>
   );

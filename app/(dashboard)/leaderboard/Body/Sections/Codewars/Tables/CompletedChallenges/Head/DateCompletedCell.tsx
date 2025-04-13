@@ -3,7 +3,7 @@ import { TableCell } from "@mui/material";
 
 export default function DateCompletedCell() {
   return (
-    <TableCell sx={textStyles} align="left">
+    <TableCell sx={textStyles} align="right">
       Completed At
     </TableCell>
   );

@@ -1,23 +1,16 @@
-import { Box, TableCell } from "@mui/material";
-import ChallengeName from "./ChallengeName";
-import RecentlySolvedChip from "./RecentlySolvedChip";
-import { contentBoxStyles, nameCellStyles } from "./styles";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { TableCell } from "@mui/material";
+import ChallengeName from "./ChallengeName";
+import { nameCellStyles } from "./styles";
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
-  isUntracked: boolean;
 }
 
-const NameCell = ({ currentChallenge, isUntracked }: Props) => {
+const NameCell = ({ currentChallenge }: Props) => {
   return (
     <TableCell sx={nameCellStyles}>
-      <Box sx={contentBoxStyles}>
-        <ChallengeName text={currentChallenge.name} length={55} />
-        {isUntracked && (
-          <RecentlySolvedChip challengeId={currentChallenge.id} />
-        )}
-      </Box>
+      <ChallengeName text={currentChallenge.name} length={55} />
     </TableCell>
   );
 };
