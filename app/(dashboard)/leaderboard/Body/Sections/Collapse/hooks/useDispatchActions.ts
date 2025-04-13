@@ -23,11 +23,11 @@ const useDispatchActions = () => {
 
   useEffect(() => {
     if (isCollapsed && untrackedChallengesAvailable) {
-      console.log(
-        "useDispatchActions/hasUntrackedChallengesWhenCollapsed/currentUser",
-        currentUser,
-        untrackedChallengesAvailable
-      );
+      // console.log(
+      //   "useDispatchActions/hasUntrackedChallengesWhenCollapsed/currentUser",
+      //   currentUser,
+      //   untrackedChallengesAvailable
+      // );
       allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
 
       // (async () => {
@@ -47,6 +47,7 @@ const useDispatchActions = () => {
     isCollapsed,
     allUsersDispatch,
     untrackedChallengesAvailable,
+    currentUserDispatch,
   ]);
 
   const dispatchActions = () => {
