@@ -13,11 +13,13 @@ const useDispatchActions = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
   const codewarsDispatch = useCodewarsDispatchContext();
 
-  const untrackedChallengesAvailable = useMemo(() => {
-    return (
-      currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false
-    );
-  }, [currentUser]);
+  let untrackedChallengesAvailable =
+    currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false;
+  // useMemo(() => {
+  //   return (
+  //     currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false
+  //   );
+  // }, [currentUser]);
 
   useEffect(() => {
     if (isCollapsed && untrackedChallengesAvailable) {
@@ -28,9 +30,24 @@ const useDispatchActions = () => {
       );
       allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
 
+      // (async () => {
+      //   const { success } = await postCurrentUser(currentUser);
+      //   if (success) untrackedChallengesAvailable = false;
+      // })();
+
       postCurrentUser(currentUser);
+
+      currentUserDispatch({
+        type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
+        untrackedChallengesAvailable: false,
+      });
     }
-  }, [currentUser, isCollapsed, allUsersDispatch]);
+  }, [
+    currentUser,
+    isCollapsed,
+    allUsersDispatch,
+    untrackedChallengesAvailable,
+  ]);
 
   const dispatchActions = () => {
     currentUserDispatch({

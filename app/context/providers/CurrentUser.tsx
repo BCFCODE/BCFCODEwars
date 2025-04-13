@@ -13,15 +13,14 @@ const CurrentUserProvider = ({ children, context }: Props) => {
   const initialCurrentUserState: CurrentUserContextType = {
     ...context,
     isCollapsed: false,
-    // untrackedChallengesAvailable: false,
   };
-  const [state, dispatch] = useReducer(
+  const [currentUserContext, dispatch] = useReducer(
     currentUserReducer,
     initialCurrentUserState
   );
   // console.log(context, "<<<<<<<<< CurrentUserProvider");
   return (
-    <CurrentUserContext.Provider value={state}>
+    <CurrentUserContext.Provider value={currentUserContext}>
       <CurrentUserDispatchContext.Provider value={dispatch}>
         {children}
       </CurrentUserDispatchContext.Provider>

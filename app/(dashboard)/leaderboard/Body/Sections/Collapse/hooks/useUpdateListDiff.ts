@@ -28,9 +28,10 @@ const useDiffAndUpdateList = () => {
             fetchedChallenges,
           });
 
-          const isEmpty = fetchedChallenges.length === 0;
+          const isUntrackedChallengesListEmpty =
+            untrackedChallenges.length === 0;
 
-          if (!isEmpty) {
+          if (!isUntrackedChallengesListEmpty) {
             currentUserDispatch({
               type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
               untrackedChallengesAvailable: true,

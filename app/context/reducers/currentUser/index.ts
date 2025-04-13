@@ -11,8 +11,7 @@ import { Session } from "next-auth";
 import getRank from "./getRank";
 
 export interface CurrentUserState {
-  isCollapsed: boolean;
-  // untrackedChallengesAvailable?: boolean;
+  isCollapsed?: boolean;
   session?: Session;
   isUserOnPersonalDashboard?: boolean;
 }
