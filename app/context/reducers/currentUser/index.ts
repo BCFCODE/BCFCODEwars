@@ -4,15 +4,16 @@ import {
   CodewarsDiamondsRecord,
   CodewarsRanks,
   CodewarsRankTotals,
-  Diamonds
+  Diamonds,
 } from "@/types/diamonds";
 import { AuthenticatedUser } from "@/types/users";
 import { Session } from "next-auth";
 import getRank from "./getRank";
 
 export interface CurrentUserState {
+  isCollapsed: boolean;
+  // untrackedChallengesAvailable?: boolean;
   session?: Session;
-  isCollapsed?: boolean;
   isUserOnPersonalDashboard?: boolean;
 }
 
@@ -36,9 +37,14 @@ export type CurrentUserAction =
   | { type: "SET_COLLAPSE_OPEN"; isCollapsed: boolean }
   | { type: "UPDATE_COLLECTION_FILTER"; filterName: CodeChallengesFilter }
   | {
+      type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY";
+      untrackedChallengesAvailable: boolean;
+    }
+  | {
       type: "ADD_UNTRACKED_CHALLENGES_TO_LIST";
       untrackedChallenges: CodewarsCompletedChallenge[];
     }
+  | { type: "EMPTY_UNTRACKED_CHALLENGE_LIST" }
   | {
       type: "DIAMOND_COUNT_ANIMATION_COMPLETED";
       selectedChallenge: CodewarsCompletedChallenge;
@@ -87,6 +93,21 @@ const currentUserReducer = (
         },
       };
     }
+    case "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY": {
+      return {
+        ...state,
+        currentUser: {
+          ...state.currentUser,
+          codewars: {
+            ...state.currentUser.codewars,
+            codeChallenges: {
+              ...state.currentUser.codewars.codeChallenges,
+              untrackedChallengesAvailable: action.untrackedChallengesAvailable,
+            },
+          },
+        },
+      };
+    }
     case "ADD_UNTRACKED_CHALLENGES_TO_LIST": {
       return {
         ...state,
@@ -96,7 +117,6 @@ const currentUserReducer = (
             ...state.currentUser.codewars,
             codeChallenges: {
               ...state.currentUser.codewars.codeChallenges,
-              untrackedChallenges: action.untrackedChallenges,
               list: [
                 ...action.untrackedChallenges,
                 ...state.currentUser.codewars.codeChallenges.list,
@@ -106,6 +126,21 @@ const currentUserReducer = (
         },
       };
     }
+    // case "EMPTY_UNTRACKED_CHALLENGE_LIST": {
+    //   return {
+    //     ...state,
+    //     currentUser: {
+    //       ...state.currentUser,
+    //       codewars: {
+    //         ...state.currentUser.codewars,
+    //         codeChallenges: {
+    //           ...state.currentUser.codewars.codeChallenges,
+    //           untrackedChallenges: [],
+    //         },
+    //       },
+    //     },
+    //   };
+    // }
     case "UPDATE_DIAMONDS_TOTALS_AND_RANKS": {
       const currentRankId = getRank(action.selectedChallenge);
 

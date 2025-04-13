@@ -51,8 +51,8 @@ export default function useChallengesListEffect({
         reward: collectedDiamondsCount,
         selectedChallenge,
       });
-      const untrackedChallenges =
-        currentUser.codewars.codeChallenges.untrackedChallenges;
+      // const untrackedChallenges =
+      //   currentUser.codewars.codeChallenges.untrackedChallenges;
 
       // if (
       //   untrackedChallenges.some(

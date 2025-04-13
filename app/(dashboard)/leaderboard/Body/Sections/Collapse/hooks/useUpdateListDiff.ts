@@ -32,23 +32,31 @@ const useDiffAndUpdateList = () => {
 
           if (!isEmpty) {
             currentUserDispatch({
+              type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
+              untrackedChallengesAvailable: true,
+            });
+            currentUserDispatch({
               type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
               untrackedChallenges,
             });
-            
+          } else {
+            currentUserDispatch({
+              type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
+              untrackedChallengesAvailable: false,
+            });
           }
         } else {
-          currentUserDispatch({
-            type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
-            untrackedChallenges: [],
-          });
+          // currentUserDispatch({
+          //   type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
+          //   untrackedChallenges: [],
+          // });
         }
       } catch (error) {
         // TODO
-        currentUserDispatch({
-          type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
-          untrackedChallenges: [],
-        });
+        // currentUserDispatch({
+        //   type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
+        //   untrackedChallenges: [],
+        // });
       } finally {
         // console.log("currentUser", currentUser);
       }

@@ -1,8 +1,11 @@
+import dbAPIService from "@/app/api/services/db";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+
+const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
   const { isCollapsed, currentUser } = useCurrentUserContext();
@@ -10,18 +13,26 @@ const useDispatchActions = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
   const codewarsDispatch = useCodewarsDispatchContext();
 
-  // useEffect(() => {
-  //   const isListUpdatedAndUserCollapsedTheTable =
-  //     isCollapsed &&
-  //     "untrackedChallenges" in currentUser.codewars.codeChallenges;
-  //   if (isListUpdatedAndUserCollapsedTheTable) {
-  //     console.log("useDispatchActions/currentUser", currentUser);
-  //     allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
-  //   }
-  // }, [currentUser, isCollapsed, allUsersDispatch]);
+  const untrackedChallengesAvailable = useMemo(() => {
+    return (
+      currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false
+    );
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (isCollapsed && untrackedChallengesAvailable) {
+      console.log(
+        "useDispatchActions/hasUntrackedChallengesWhenCollapsed/currentUser",
+        currentUser,
+        untrackedChallengesAvailable
+      );
+      allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
+
+      postCurrentUser(currentUser);
+    }
+  }, [currentUser, isCollapsed, allUsersDispatch]);
 
   const dispatchActions = () => {
-    allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
     currentUserDispatch({
       type: "SET_COLLAPSE_OPEN",
       isCollapsed: !isCollapsed,
