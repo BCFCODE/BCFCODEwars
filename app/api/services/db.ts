@@ -1,3 +1,4 @@
+import { useLeaderBoardStore } from "@/app/store/leaderboard";
 import { AuthenticatedUser, DatabaseUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 
@@ -20,8 +21,8 @@ class dbAPIService {
 
   // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
   getUsers = async (options?: RequestInit) => {
+
     try {
-      // Fetch the data from your API
       const response = await fetch(`${this.endpoint}/users`, {
         ...options, // This will include things like { signal: controller.signal }
       });

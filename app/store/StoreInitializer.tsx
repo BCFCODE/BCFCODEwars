@@ -5,6 +5,7 @@ import { useUsersStore } from "./users";
 import { useEffect } from "react";
 import dbAPIService from "../api/services/db";
 import { AuthenticatedUser } from "@/types/users";
+import { useLeaderBoardStore } from "./leaderboard";
 
 const { getUsers } = new dbAPIService();
 
@@ -14,23 +15,45 @@ interface Props {
 
 const StoreInitializer = ({ session }: Props) => {
   const email = session?.user?.email;
-  // console.log("StoreInitializer/session", session, email);
-  const { setAllUsers, setCurrentUser } = useUsersStore((s) => s.actions);
+
+  const { setAllUsers, setCurrentUser } = useUsersStore(
+    (state) => state.actions
+  );
+  const { setIsError, setIsLoading } = useLeaderBoardStore(
+    (state) => state.actions
+  );
 
   useEffect(() => {
     if (!email) return;
 
     (async () => {
-      const { users } = await getUsers({ cache: "no-store" });
+      try {
+        setIsLoading(true);
+        setIsError(false);
 
-      const allUsers = (users as AuthenticatedUser[]).map((u) =>
-        u.email === email ? { ...u, session } : u
-      );
+        const { success, users } = await getUsers({ cache: "no-store" });
 
-      setAllUsers(allUsers);
-      setCurrentUser(email);
+        if (!success) {
+          setIsLoading(false);
+          setIsError(true);
+        }
 
-      // console.log("StoreInitializer/users", currentUser, allUsers);
+        if (success) {
+          const allUsers = (users as AuthenticatedUser[]).map((u) =>
+            u.email === email ? { ...u, session } : u
+          );
+
+          setAllUsers(allUsers);
+          setCurrentUser(email);
+          setIsLoading(false);
+          setIsError(false);
+        }
+      } catch (error) {
+        setIsLoading(false);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
     })();
   }, [email, session]);
 
