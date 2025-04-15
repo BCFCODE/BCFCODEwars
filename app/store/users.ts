@@ -13,6 +13,7 @@ import syncCurrentWithAllUsers from "./utils/syncCurrentWithAllUsers";
 
 interface Actions {
   setAllUsers: (users: AuthenticatedUser[]) => void;
+  setSelectedUser: (selectedUser: AuthenticatedUser) => void;
   initializeCurrentUser: (email: string) => void;
   updateCurrentUser: (currentUser: AuthenticatedUser) => void;
   updateCodeChallengesList: (list: CodewarsCompletedChallenge[]) => void;
@@ -28,26 +29,24 @@ interface Actions {
   addUntrackedChallengesToList: (
     untrackedChallenges: CodewarsCompletedChallenge[]
   ) => void;
-  setIsCollapsed: ({
-    isCollapsed,
-    email,
-  }: {
-    isCollapsed: boolean;
-    email: string;
-  }) => void;
+  setIsCollapsed: (isCollapsed: boolean) => void;
 }
 
 export interface UsersStore {
   currentUser: AuthenticatedUser | null;
   allUsers: AuthenticatedUser[];
+  selectedUser: AuthenticatedUser | null;
   actions: Actions;
 }
 
 export const useUsersStore = create<UsersStore>((set) => ({
-  allUsers: [],
   currentUser: null,
+  allUsers: [],
+  selectedUser: null,
   actions: {
     setAllUsers: (allUsers) => set((state) => ({ ...state, allUsers })),
+    setSelectedUser: (selectedUser) =>
+      set((state) => ({ ...state, selectedUser })),
     initializeCurrentUser: (email) =>
       set((state) => ({
         ...state,
@@ -180,16 +179,17 @@ export const useUsersStore = create<UsersStore>((set) => ({
         return syncCurrentWithAllUsers({ state, updatedUser });
       });
     },
-    setIsCollapsed: ({ isCollapsed, email }) => {
+    setIsCollapsed: (isCollapsed) => {
       set((state) => {
+        if(!state.currentUser) return state
         
         const currentUser =
-          state.currentUser?.email === email
+          state.currentUser?.email === state.selectedUser?.email
             ? { ...state.currentUser, isCollapsed }
             : state.currentUser;
 
         const allUsers: AuthenticatedUser[] = state.allUsers.map((u) =>
-          u.email === email ? { ...u, isCollapsed } : u
+          u.email === state.selectedUser?.email ? { ...u, isCollapsed } : u
         );
 
         return { ...state, currentUser, allUsers };

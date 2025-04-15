@@ -8,7 +8,7 @@ const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
   const currentUser = useCurrentUser();
-  // console.log('useDispatchActions/currentUser', currentUser)
+  
   const {
     actions: {
       checkUntrackedChallengesAvailability,
@@ -38,10 +38,7 @@ const useDispatchActions = () => {
   ]);
 
   const dispatchActions = () => {
-    setIsCollapsed({
-      isCollapsed: !currentUser.isCollapsed,
-      email: currentUser.email,
-    });
+    setIsCollapsed(!currentUser.isCollapsed);
     codewarsDispatch({ type: "SET_LOADING", isLoading: true });
   };
 
