@@ -8,7 +8,7 @@ interface Props {
 }
 
 const UsersMap = ({ children }: Props) => {
-  const allUsers = useUsersStore((state) => state.allUsers);
+  const allUsers = useUsersStore((s) => s.allUsers);
 
   return allUsers.map((currentUser: AuthenticatedUser) => (
     <CurrentUserProvider key={currentUser.email} context={{ currentUser }}>

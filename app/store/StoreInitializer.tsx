@@ -16,7 +16,7 @@ interface Props {
 const StoreInitializer = ({ session }: Props) => {
   const email = session?.user?.email;
 
-  const { setAllUsers, setCurrentUser } = useUsersStore(
+  const { setAllUsers, initializeCurrentUser } = useUsersStore(
     (state) => state.actions
   );
   const { setIsError, setIsLoading } = useLeaderBoardStore(
@@ -44,7 +44,7 @@ const StoreInitializer = ({ session }: Props) => {
           );
 
           setAllUsers(allUsers);
-          setCurrentUser(email);
+          initializeCurrentUser(email);
           setIsLoading(false);
           setIsError(false);
         }

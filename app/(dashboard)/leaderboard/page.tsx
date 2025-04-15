@@ -1,52 +1,20 @@
 "use client";
 
 import LoadingUI from "@/app/components/UI/LoadingUI";
-import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
-import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 import CodewarsProvider from "@/app/context/providers/Codewars";
-import { AuthenticatedUser } from "@/types/users";
+import { useLeaderBoardStore } from "@/app/store/leaderboard";
 import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import Body from "./Body";
 import LeaderboardLoadingError from "./Error";
 import LeaderboardHeader from "./Head/Header";
 
-interface Props {
-  allUsersInSignInPage: AuthenticatedUser[];
-}
-
-export default function LeaderBoardPage({ allUsersInSignInPage }: Props) {
+export default function LeaderBoardPage() {
   const router = useRouter();
-  const dispatch = useAllUsersDispatchContext();
-  const { error, isLoading } = useAllUsersContext();
 
-  useEffect(() => {
-    if (allUsersInSignInPage) {
-      dispatch({
-        type: "SET_ALL_USERS",
-        payload: {
-          error: false,
-          isLoading: false,
-          allUsers: allUsersInSignInPage,
-        },
-      });
-      // console.log(
-      //   "LeaderBoardPage allUsersInSignInPage",
-      //   allUsersInSignInPage,
-      //   // isCollapsed,
-      //   // currentUser
-      //   "session",
-      //   session
-      // );
-    }
-  }, [allUsersInSignInPage, dispatch]);
+  const { isError, isLoading } = useLeaderBoardStore((state) => state);
 
-  // console.log(">>>>>>>>>>>> useAllUsersContext error", error);
-  // // Conditionally render the error UI when error is true.
-
-  // console.log('isError in loading leaderboard', error)
-  if (error)
+  if (isError)
     return <LeaderboardLoadingError onRetry={() => router.refresh()} />;
 
   if (isLoading)
@@ -57,7 +25,7 @@ export default function LeaderBoardPage({ allUsersInSignInPage }: Props) {
       />
     );
 
-  if (!error)
+  if (!isError)
     return (
       <CodewarsProvider>
         <TableContainer component={Paper}>

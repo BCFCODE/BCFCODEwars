@@ -1,26 +1,26 @@
-'use client'
+// 'use client'
 
-import { AllUsersContextType } from "@/app/context/reducers/allUsersReducer";
+// import { AllUsersContextType } from "@/app/context/reducers/allUsersReducer";
 
-import { ReactNode } from "react";
-import useAllUsers from "./effects/useAllUsers";
-import { AllUsersContext, AllUsersDispatchContext } from "./contexts";
+// import { ReactNode } from "react";
+// import useAllUsers from "./effects/useAllUsers";
+// import { AllUsersContext, AllUsersDispatchContext } from "./contexts";
 
-interface Props {
-  children: ReactNode;
-  context?: AllUsersContextType;
-}
+// interface Props {
+//   children: ReactNode;
+//   context?: AllUsersContextType;
+// }
 
-const AllUsersProvider = ({ children }: Props) => {
-  const { allUsersContext, allUsersDispatch } = useAllUsers();
+// const AllUsersProvider = ({ children }: Props) => {
+//   const { allUsersContext, allUsersDispatch } = useAllUsers();
 
-  return (
-    <AllUsersContext.Provider value={allUsersContext}>
-      <AllUsersDispatchContext.Provider value={allUsersDispatch}>
-        {children}
-      </AllUsersDispatchContext.Provider>
-    </AllUsersContext.Provider>
-  );
-};
+//   return (
+//     <AllUsersContext.Provider value={allUsersContext}>
+//       <AllUsersDispatchContext.Provider value={allUsersDispatch}>
+//         {children}
+//       </AllUsersDispatchContext.Provider>
+//     </AllUsersContext.Provider>
+//   );
+// };
 
-export default AllUsersProvider;
+// export default AllUsersProvider;

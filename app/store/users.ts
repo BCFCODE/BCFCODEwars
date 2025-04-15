@@ -3,7 +3,8 @@ import { create } from "zustand";
 
 interface Actions {
   setAllUsers: (users: AuthenticatedUser[]) => void;
-  setCurrentUser: (email: string) => void;
+  initializeCurrentUser: (email: string) => void;
+  updateCurrentUser: (currentUser: AuthenticatedUser) => void;
 }
 
 interface UsersStore {
@@ -17,10 +18,18 @@ export const useUsersStore = create<UsersStore>((set) => ({
   currentUser: null,
   actions: {
     setAllUsers: (allUsers) => set({ allUsers }),
-    setCurrentUser: (email) =>
+    initializeCurrentUser: (email) =>
       set(({ allUsers }) => ({
         currentUser: allUsers.find((u) => u.email === email) ?? null,
       })),
+    updateCurrentUser: (currentUser) => {
+      set({ currentUser });
+      set(({ allUsers }) => ({
+        allUsers: allUsers.map((u) =>
+          u.email === currentUser.email ? currentUser : u
+        ),
+      }));
+    },
   },
 }));
 
@@ -34,7 +43,7 @@ export const useUsersStore = create<UsersStore>((set) => ({
   type UsersStore = {
     currentUser: AuthenticatedUser | null;
     allUsers: AuthenticatedUser[];
-    setCurrentUser: (user: AuthenticatedUser) => void;
+    initializeCurrentUser: (user: AuthenticatedUser) => void;
     clearCurrentUser: () => void;
     setAllUsers: (users: AuthenticatedUser[]) => void;
     addUser: (user: AuthenticatedUser) => void;
@@ -44,7 +53,7 @@ export const useUsersStore = create<UsersStore>((set) => ({
   export const useUsersStore = create<UsersStore>((set) => ({
     currentUser: null,
     allUsers: [],
-    setCurrentUser: (user) => set({ currentUser: user }),
+    initializeCurrentUser: (user) => set({ currentUser: user }),
     clearCurrentUser: () => set({ currentUser: null }),
     setAllUsers: (users) => set({ allUsers: users }),
     addUser: (user) =>

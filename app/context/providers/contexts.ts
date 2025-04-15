@@ -1,10 +1,6 @@
 "use client";
 
 import { createContext, Dispatch } from "react";
-import {
-  AllUsersAction,
-  AllUsersContextType,
-} from "@/app/context/reducers/allUsersReducer";
 import { CodewarsAction, CodewarsState } from "../reducers/codewarsReducer";
 import {
   CurrentUserAction,
@@ -15,9 +11,6 @@ import {
   DiamondsContextState,
 } from "../reducers/diamondsReducer";
 
-export const AllUsersContext = createContext<AllUsersContextType | null>(null);
-export const AllUsersDispatchContext =
-  createContext<Dispatch<AllUsersAction> | null>(null);
 
 export const CurrentUserContext = createContext<CurrentUserContextType | null>(
   null

@@ -1,39 +1,24 @@
 import dbAPIService from "@/app/api/services/db";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
-import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { useUsersStore } from "@/app/store/users";
 import { useEffect } from "react";
 
 const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
   const { isCollapsed, currentUser } = useCurrentUserContext();
-  const allUsersDispatch = useAllUsersDispatchContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
   const codewarsDispatch = useCodewarsDispatchContext();
+  const { updateCurrentUser } = useUsersStore((s) => s.actions);
 
   let untrackedChallengesAvailable =
     currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false;
-  // useMemo(() => {
-  //   return (
-  //     currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false
-  //   );
-  // }, [currentUser]);
 
   useEffect(() => {
     if (isCollapsed && untrackedChallengesAvailable) {
-      // console.log(
-      //   "useDispatchActions/hasUntrackedChallengesWhenCollapsed/currentUser",
-      //   currentUser,
-      //   untrackedChallengesAvailable
-      // );
-      allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
-
-      // (async () => {
-      //   const { success } = await postCurrentUser(currentUser);
-      //   if (success) untrackedChallengesAvailable = false;
-      // })();
+      updateCurrentUser(currentUser);
 
       postCurrentUser(currentUser);
 
@@ -45,7 +30,6 @@ const useDispatchActions = () => {
   }, [
     currentUser,
     isCollapsed,
-    allUsersDispatch,
     untrackedChallengesAvailable,
     currentUserDispatch,
   ]);

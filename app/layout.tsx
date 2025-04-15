@@ -20,7 +20,6 @@ import { ReactNode } from "react";
 import { auth } from "../auth";
 import { montserrat } from "../lib/fonts";
 import theme from "../theme";
-import AllUsersProvider from "./context/providers/AllUsers";
 import DiamondsProvider from "./context/providers/Diamonds";
 import StoreInitializer from "./store/StoreInitializer";
 import "./styles/global.css";
@@ -157,10 +156,8 @@ export default async function RootLayout({ children }: Props) {
               theme={theme}
             >
               <SessionProvider session={session}>
-                <StoreInitializer {...{ session }} />
-                <AllUsersProvider>
-                  <DiamondsProvider>{children}</DiamondsProvider>
-                </AllUsersProvider>
+                <StoreInitializer session={session} />
+                <DiamondsProvider>{children}</DiamondsProvider>
               </SessionProvider>
               <Analytics />
               <SpeedInsights />

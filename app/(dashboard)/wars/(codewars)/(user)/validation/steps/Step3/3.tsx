@@ -1,15 +1,13 @@
 "use client";
 
+import { useUsersStore } from "@/app/store/users";
+import { AuthenticatedUser } from "@/types/users";
 import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
 import initializeAndStoreNewUserToDatabase from "./connectUser";
-import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
-import { useSession } from "next-auth/react";
-import { useUsersStore } from "@/app/store/users";
-import { AuthenticatedUser } from "@/types/users";
 // import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 // import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 

@@ -21,7 +21,6 @@ const useCollectEffects = ({
   success,
   collectedDiamondsCount,
   collectButtonDispatch,
-  allUsersDispatch,
   currentUserDispatch,
   diamondsContextDispatch,
   isDiamondIconButtonDisabled,
@@ -36,7 +35,6 @@ const useCollectEffects = ({
   });
 
   useCollectedDiamondsEffect({
-    allUsersDispatch,
     currentUserDispatch,
     diamondsContextDispatch,
     collectButtonDispatch,
