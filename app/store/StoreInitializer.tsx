@@ -1,19 +1,35 @@
-'use client'
+"use client";
 
 import { Session } from "next-auth";
+import { useUserStore } from "./user";
+import { useEffect } from "react";
+import dbAPIService from "../api/services/db";
+
+const { getUser } = new dbAPIService();
 
 interface Props {
   session: Session | null;
 }
 
 const StoreInitializer = ({ session }: Props) => {
+  const email = session?.user?.email;
+  // console.log("StoreInitializer/session", session, email);
+  const setCurrentUser = useUserStore((s) => s.setCurrentUser);
+
+  useEffect(() => {
+    if (!email) return;
+
+    (async () => {
+      const { success, currentUser } = await getUser(email, {
+        cache: "no-store",
+      });
+      if (success) setCurrentUser({ ...currentUser, session });
+    })();
+    // TODO: Post a get request to currentUser api, with email, to fetch current user from api
+  }, [email, session]);
   /* 
     🔧 A Tiny Enhancement Suggestion
       If you also want to hydrate currentUser, not just the session, you could do this in the same place:
-
-      tsx
-      Copy
-      Edit
       'use client';
 
       import { useEffect } from 'react';
@@ -44,7 +60,7 @@ const StoreInitializer = ({ session }: Props) => {
         return null;
       }
   */
-  return null
+  return null;
 };
 
 export default StoreInitializer;

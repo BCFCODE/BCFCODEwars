@@ -1,22 +1,25 @@
 import { AuthenticatedUser, DatabaseUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 
-interface GetUsersAPIResponseError {
-  success: boolean;
-  error?: string;
-}
+// interface APIResponseError {
+//   success: boolean;
+//   error?: string;
+// }
 
-interface GetUsersAPIResponse extends GetUsersAPIResponseError {
-  users?: DatabaseUser[];
-}
+// interface GetUsersAPIResponse extends APIResponseError {
+//   users?: DatabaseUser[];
+// }
+
+// interface GetUserAPIResponse {
+//   success: boolean;
+//   currentUser?: DatabaseUser;
+// }
 
 class dbAPIService {
   private endpoint = `${baseURL}/api/db`;
 
   // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
-  getUsers = async (options?: RequestInit): Promise<GetUsersAPIResponse> => {
-    // const currentUserDispatch = useCurrentUserDispatchContext();
-
+  getUsers = async (options?: RequestInit)/* : Promise<GetUsersAPIResponse>  */=> {
     try {
       // Fetch the data from your API
       const response = await fetch(`${this.endpoint}/users`, {
@@ -38,7 +41,34 @@ class dbAPIService {
 
       return { success: true, users: data.users };
     } catch (error) {
-      console.error("Error fetching user data from database");
+      console.error("Error fetching user data from database", error);
+      return { success: false, error: "Error fetching user data" };
+    }
+  };
+
+  getUser = async (email: string, options?: RequestInit) => {
+    // console.log("dbAPIService/getUser", email);
+
+    try {
+      const url = new URL(`${this.endpoint}/currentUser`);
+      url.searchParams.append("email", email);
+
+      const response = await fetch(url.toString(), {
+        method: "GET",
+        ...options, // This will include things like { signal: controller.signal }
+      });
+      if (!response.ok) {
+        return {
+          success: false,
+          error:
+            "Failed to fetch currentUser data. Please check the console for details.",
+        };
+      }
+      // const currentUser = await response.json();
+      // console.log("dbAPIService/fetched data", data);
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching currentUser data from database", error);
       return { success: false, error: "Error fetching user data" };
     }
   };

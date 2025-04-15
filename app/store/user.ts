@@ -5,22 +5,22 @@ import { create } from "zustand";
 interface UserStore {
   currentUser: AuthenticatedUser | null;
   setCurrentUser: (user: AuthenticatedUser) => void;
-  setSession: (session: Session) => void;
+  // setSession: (session: Session) => void;
 }
 
 export const useUserStore = create<UserStore>((set) => ({
   currentUser: null,
   setCurrentUser: (currentUser) => set({ currentUser }),
-  setSession: (session) =>
-    set((state) => {
-      if (!state.currentUser) return {};
-      return {
-        currentUser: {
-          ...state.currentUser,
-          session,
-        },
-      };
-    }),
+  // setSession: (session) =>
+  //   set((state) => {
+  //     if (!state.currentUser) return {};
+  //     return {
+  //       currentUser: {
+  //         ...state.currentUser,
+  //         session,
+  //       },
+  //     };
+  //   }),
 }));
 
 /* 
