@@ -24,7 +24,7 @@ interface Props {
 }
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
-  const currentUser = useCurrentUser()
+  const currentUser = useCurrentUser();
 
   const {
     isLoading,
@@ -79,6 +79,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
               sx={iconButtonStyles}
               onClick={() =>
                 handleClick({
+                  currentUser,
                   codewarsContextDispatch,
                   collectButtonDispatch,
                   currentChallenge,

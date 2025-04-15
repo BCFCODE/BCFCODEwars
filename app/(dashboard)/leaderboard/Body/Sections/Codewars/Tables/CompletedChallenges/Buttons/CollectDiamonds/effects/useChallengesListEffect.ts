@@ -59,7 +59,9 @@ export default function useChallengesListEffect({
     success,
     isDiamondIconButtonDisabled,
     collectedDiamondsCount,
-
     selectedChallenge,
+    currentUser,
+    updateCodeChallengesList,
+    updateDiamondsAndRank,
   ]);
 }

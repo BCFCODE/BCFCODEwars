@@ -4,10 +4,9 @@ import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
 import DiamondsService from "@/app/services/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
+import { AuthenticatedUser } from "@/types/users";
 import { Dispatch } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
-import { useUsersStore } from "@/app/store/users";
-import { AuthenticatedUser } from "@/types/users";
 
 const { getSingleChallenge } = new CodewarsAPIService();
 const { collectDiamonds } = new DiamondsService();
@@ -17,15 +16,17 @@ interface Props {
   diamondsContextDispatch: Dispatch<DiamondsAction>;
   codewarsContextDispatch: Dispatch<CodewarsAction>;
   currentChallenge: CodewarsCompletedChallenge;
+  currentUser: AuthenticatedUser
 }
 
 const handleClick = async ({
+  currentUser,
   collectButtonDispatch,
   diamondsContextDispatch,
   codewarsContextDispatch,
   currentChallenge,
 }: Props) => {
-  const currentUser = useUsersStore((s) => s.currentUser) as AuthenticatedUser;
+  
   diamondsContextDispatch({ type: "LOADING..." });
 
   collectButtonDispatch({ type: "LOADING...", isLoading: true });
