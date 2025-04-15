@@ -8,19 +8,23 @@ import Buttons from "./Buttons";
 import initializeAndStoreNewUserToDatabase from "./connectUser";
 import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
 import { useSession } from "next-auth/react";
+import { useUsersStore } from "@/app/store/users";
+import { AuthenticatedUser } from "@/types/users";
 // import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 // import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 const Step3 = ({
   currentStep,
   validatedUsername,
-  session,
+  // session,
   codewars,
 }: StepProps) => {
   const router = useRouter();
-  // const session = useSession();
-  const { allUsers } = useAllUsersContext();
-  console.log("Step3/allUsers", allUsers, "session", session);
+  const { session } = useUsersStore(
+    (state) => state.currentUser as AuthenticatedUser
+  );
+  
+  console.log("Step3/session", session);
 
   const handleOnYes = () => {
     initializeAndStoreNewUserToDatabase({

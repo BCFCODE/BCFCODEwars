@@ -15,8 +15,7 @@ interface Props {
 const StoreInitializer = ({ session }: Props) => {
   const email = session?.user?.email;
   // console.log("StoreInitializer/session", session, email);
-  const setCurrentUser = useUsersStore((s) => s.setCurrentUser);
-  const setAllUsers = useUsersStore((s) => s.setAllUsers);
+  const { setAllUsers, setCurrentUser } = useUsersStore((s) => s.actions);
 
   useEffect(() => {
     if (!email) return;
@@ -27,13 +26,12 @@ const StoreInitializer = ({ session }: Props) => {
       const allUsers = (users as AuthenticatedUser[]).map((u) =>
         u.email === email ? { ...u, session } : u
       );
-      
+
       setAllUsers(allUsers);
       setCurrentUser(email);
 
       // console.log("StoreInitializer/users", currentUser, allUsers);
     })();
-    // TODO: Post a get request to currentUser api, with email, to fetch current user from api
   }, [email, session]);
 
   return null;

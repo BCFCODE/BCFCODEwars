@@ -22,9 +22,8 @@ import { montserrat } from "../lib/fonts";
 import theme from "../theme";
 import AllUsersProvider from "./context/providers/AllUsers";
 import DiamondsProvider from "./context/providers/Diamonds";
-import "./styles/global.css";
-import { useUsersStore } from "./store/users";
 import StoreInitializer from "./store/StoreInitializer";
+import "./styles/global.css";
 
 export const metadata: Metadata = {
   title: {

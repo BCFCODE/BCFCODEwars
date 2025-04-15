@@ -1,21 +1,27 @@
 import { AuthenticatedUser } from "@/types/users";
 import { create } from "zustand";
 
+interface Actions {
+  setAllUsers: (users: AuthenticatedUser[]) => void;
+  setCurrentUser: (email: string) => void;
+}
+
 interface UsersStore {
   currentUser: AuthenticatedUser | null;
   allUsers: AuthenticatedUser[];
-  setAllUsers: (users: AuthenticatedUser[]) => void;
-  setCurrentUser: (email: string) => void;
+  actions: Actions;
 }
 
 export const useUsersStore = create<UsersStore>((set) => ({
   allUsers: [],
   currentUser: null,
-  setAllUsers: (allUsers) => set({ allUsers }),
-  setCurrentUser: (email) =>
-    set(({ allUsers }) => ({
-      currentUser: allUsers.find((u) => u.email === email) ?? null,
-    })),
+  actions: {
+    setAllUsers: (allUsers) => set({ allUsers }),
+    setCurrentUser: (email) =>
+      set(({ allUsers }) => ({
+        currentUser: allUsers.find((u) => u.email === email) ?? null,
+      })),
+  },
 }));
 
 /* 

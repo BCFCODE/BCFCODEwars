@@ -6,7 +6,6 @@ import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispat
 import CodewarsProvider from "@/app/context/providers/Codewars";
 import { AuthenticatedUser } from "@/types/users";
 import { Paper, Table, TableContainer } from "@mui/material";
-import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Body from "./Body";

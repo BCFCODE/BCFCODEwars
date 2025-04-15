@@ -1,5 +1,5 @@
-import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
 import CurrentUserProvider from "@/app/context/providers/CurrentUser";
+import { useUsersStore } from "@/app/store/users";
 import { AuthenticatedUser } from "@/types/users";
 import { ReactNode } from "react";
 
@@ -8,9 +8,8 @@ interface Props {
 }
 
 const UsersMap = ({ children }: Props) => {
-  const { allUsers } = useAllUsersContext();
+  const allUsers = useUsersStore((state) => state.allUsers);
 
-  // console.log('allUsers in UsersMap', allUsers)
   return allUsers.map((currentUser: AuthenticatedUser) => (
     <CurrentUserProvider key={currentUser.email} context={{ currentUser }}>
       {children}
