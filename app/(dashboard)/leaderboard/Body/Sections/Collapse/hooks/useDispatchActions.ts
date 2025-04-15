@@ -1,30 +1,29 @@
+import { useCurrentUser } from "@/app/(dashboard)/leaderboard/context/CurrentUser";
 import dbAPIService from "@/app/api/services/db";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
-import { useLeaderBoardStore } from "@/app/store/leaderboard";
 import { useUsersStore } from "@/app/store/users";
-import { AuthenticatedUser } from "@/types/users";
 import { useEffect } from "react";
 
 const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
+  const currentUser = useCurrentUser();
+  // console.log('useDispatchActions/currentUser', currentUser)
   const {
-    currentUser,
-    actions: { checkUntrackedChallengesAvailability },
+    actions: {
+      checkUntrackedChallengesAvailability,
+      setIsCollapsed,
+      updateCurrentUser,
+    },
   } = useUsersStore((state) => state);
-  const {
-    currentUser: { isCollapsed },
-    actions: { setIsCollapsed },
-  } = useLeaderBoardStore((state) => state);
 
   const codewarsDispatch = useCodewarsDispatchContext();
-  const { updateCurrentUser } = useUsersStore((s) => s.actions);
 
   let untrackedChallengesAvailable =
     currentUser?.codewars.codeChallenges?.untrackedChallengesAvailable ?? false;
 
   useEffect(() => {
-    if (isCollapsed && untrackedChallengesAvailable && currentUser) {
+    if (currentUser && untrackedChallengesAvailable) {
       updateCurrentUser(currentUser);
 
       postCurrentUser(currentUser);
@@ -33,13 +32,16 @@ const useDispatchActions = () => {
     }
   }, [
     currentUser,
-    isCollapsed,
+    currentUser?.isCollapsed,
     untrackedChallengesAvailable,
     checkUntrackedChallengesAvailability,
   ]);
 
   const dispatchActions = () => {
-    setIsCollapsed(!isCollapsed);
+    setIsCollapsed({
+      isCollapsed: !currentUser.isCollapsed,
+      email: currentUser.email,
+    });
     codewarsDispatch({ type: "SET_LOADING", isLoading: true });
   };
 

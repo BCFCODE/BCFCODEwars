@@ -3,22 +3,22 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import { useLeaderBoardStore } from "@/app/store/leaderboard";
 import { useUsersStore } from "@/app/store/users";
 import extractListDiff from "../utils/extractListDiff";
+import { useCurrentUser } from "@/app/(dashboard)/leaderboard/context/CurrentUser";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
 const useDiffAndUpdateList = () => {
+  const currentUser = useCurrentUser();
   const {
-    currentUser,
     actions: {
       checkUntrackedChallengesAvailability,
       addUntrackedChallengesToList,
     },
   } = useUsersStore((state) => state);
-  const isCollapsed = useLeaderBoardStore((s) => s.currentUser.isCollapsed);
   const { pageNumber } = useCodewarsContext();
 
   const diffAndUpdateList = async () => {
-    if (!isCollapsed && currentUser) {
+    if (currentUser && !currentUser.isCollapsed) {
       const response = await getCompletedChallenges(
         currentUser.codewars.username,
         pageNumber

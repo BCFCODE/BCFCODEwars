@@ -1,7 +1,6 @@
-import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
-import { useUsersStore } from "@/app/store/users";
+import { useCurrentUser } from "@/app/(dashboard)/leaderboard/context/CurrentUser";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { AuthenticatedUser } from "@/types/users";
+import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 
 export interface UseFilter {
   activeFilter: string;
@@ -11,12 +10,12 @@ export interface UseFilter {
 }
 
 const useFilter = (): UseFilter => {
-  const currentUser = useUsersStore((s) => s.currentUser) as AuthenticatedUser;
+  const { codewars } = useCurrentUser();
 
   const activeFilter: CodeChallengesFilter =
-    currentUser.codewars.codeChallenges.challengeFilter;
+    codewars.codeChallenges.challengeFilter;
 
-  const list = currentUser.codewars.codeChallenges.list;
+  const list = codewars.codeChallenges.list;
 
   const both = [...list];
 
@@ -35,7 +34,6 @@ const useFilter = (): UseFilter => {
     both,
     claimed,
     unClaimed,
-    // untrackedChallenges,
   };
 };
 

@@ -5,11 +5,12 @@ import { useUsersStore } from "@/app/store/users";
 import { AuthenticatedUser } from "@/types/users";
 import useInitializeList from "./useInitializeList";
 import useDiffAndUpdateList from "./useUpdateListDiff";
+import { useCurrentUser } from "@/app/(dashboard)/leaderboard/context/CurrentUser";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
 const useChallengeList = () => {
-  const currentUser = useUsersStore(s => s.currentUser) as AuthenticatedUser
+  const currentUser = useCurrentUser()
   const codewarsDispatch = useCodewarsDispatchContext();
   const { pageNumber } = useCodewarsContext();
   const { initializeCodeChallengesList, isListEmpty } = useInitializeList();

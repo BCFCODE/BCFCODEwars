@@ -1,3 +1,4 @@
+import { useCurrentUser } from "@/app/(dashboard)/leaderboard/context/CurrentUser";
 import dbAPIService from "@/app/api/services/db";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import { useUsersStore } from "@/app/store/users";
@@ -16,12 +17,12 @@ export default function useChallengesListEffect({
   success,
   isDiamondIconButtonDisabled,
 }: Props) {
+  const currentUser = useCurrentUser();
   const {
-    currentUser,
     actions: { updateCodeChallengesList, updateDiamondsAndRank },
   } = useUsersStore((state) => state);
   const { selectedChallenge } = useCodewarsContext();
-  
+
   const isListUpdatedRef = useRef(false);
   const isDiamondsUpdatedRef = useRef(false);
 
@@ -42,7 +43,6 @@ export default function useChallengesListEffect({
     }
 
     if (success && !isDiamondsUpdatedRef.current && selectedChallenge) {
-
       updateDiamondsAndRank({
         selectedChallenge,
         reward: collectedDiamondsCount,
@@ -60,7 +60,6 @@ export default function useChallengesListEffect({
     isDiamondIconButtonDisabled,
     collectedDiamondsCount,
 
-    
     selectedChallenge,
   ]);
 }

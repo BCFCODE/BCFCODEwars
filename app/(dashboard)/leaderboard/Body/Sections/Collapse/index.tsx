@@ -1,14 +1,14 @@
-import { useLeaderBoardStore } from "@/app/store/leaderboard";
 import { Collapse, TableCell, TableRow } from "@mui/material";
 import { ReactNode } from "react";
+import { useCurrentUser } from "../../../context/CurrentUser";
 
 interface Props {
   children: ReactNode;
 }
 
 const CollapseSection = ({ children }: Props) => {
-  const isCollapsed = useLeaderBoardStore((s) => s.currentUser.isCollapsed);
-
+  const { isCollapsed } = useCurrentUser();
+  // console.log('CollapseSection/email', email, isCollapsed)
   return (
     <TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

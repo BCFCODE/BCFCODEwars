@@ -14,7 +14,7 @@ interface Props {
 }
 
 const SingleRow = ({ challenge }: Props) => {
-  // console.log('SingleRow/challenge', challenge)
+  
   return (
     <TableRow>
       <TimeAgoCell currentChallenge={challenge} />

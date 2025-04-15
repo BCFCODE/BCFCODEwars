@@ -1,3 +1,4 @@
+import { useCurrentUser } from "@/app/(dashboard)/leaderboard/context/CurrentUser";
 import useChallengeList from "./useDiffAndUpdateList";
 import useDispatchActions from "./useDispatchActions";
 

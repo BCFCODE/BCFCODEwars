@@ -2,10 +2,11 @@ import { useUsersStore } from "@/app/store/users";
 import { CodewarsChallengesResponse } from "@/types/codewars";
 import { applyDefaultTrackingAndRewardStatusToAll } from "../utils/applyRewardStatus";
 import storeChallengeList from "../utils/storeChallengeList";
+import { useCurrentUser } from "@/app/(dashboard)/leaderboard/context/CurrentUser";
 
 const useInitializeList = () => {
+  const currentUser = useCurrentUser()
   const {
-    currentUser,
     actions: { updateCodeChallengesList },
   } = useUsersStore((state) => state);
 

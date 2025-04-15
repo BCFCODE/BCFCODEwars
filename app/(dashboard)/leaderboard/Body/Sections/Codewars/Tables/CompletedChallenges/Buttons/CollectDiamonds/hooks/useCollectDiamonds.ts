@@ -14,10 +14,6 @@ export interface UseCollectDiamonds
 }
 
 export default function useCollectDiamonds(): UseCollectDiamonds {
-  // Extract data from contexts
-  
-
-  // Collect Button State
   const {
     codewarsContextDispatch,
     diamondsContextDispatch,
@@ -44,7 +40,6 @@ export default function useCollectDiamonds(): UseCollectDiamonds {
     success,
     collectedDiamondsCount,
     collectButtonDispatch,
-    
     diamondsContextDispatch,
     isDiamondIconButtonDisabled,
   });

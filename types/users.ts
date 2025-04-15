@@ -1,4 +1,3 @@
-import { CurrentUserState } from "@/app/context/reducers/currentUser";
 import { CodewarsUser } from "./codewars";
 import { Diamonds } from "./diamonds";
 import { Session } from "next-auth";
@@ -27,7 +26,11 @@ export interface DatabaseUser extends BaseUser {
   activity: UserActivity;
 }
 
-export interface AuthenticatedUser extends DatabaseUser, CurrentUserState {
+export interface LeaderboardState {
+  isCollapsed: boolean;
+}
+
+export interface AuthenticatedUser extends DatabaseUser, LeaderboardState {
   codewars: CodewarsUser;
   diamonds: Diamonds;
   session: Session;

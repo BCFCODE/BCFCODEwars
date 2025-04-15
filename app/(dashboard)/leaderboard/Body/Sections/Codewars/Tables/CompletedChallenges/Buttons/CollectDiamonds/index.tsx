@@ -8,11 +8,10 @@ import {
 } from "@/app/(dashboard)/leaderboard/styles";
 
 import useCollectDiamonds from "@/app/(dashboard)/leaderboard/Body/Sections/Codewars/Tables/CompletedChallenges/Buttons/CollectDiamonds/hooks/useCollectDiamonds";
+import { useCurrentUser } from "@/app/(dashboard)/leaderboard/context/CurrentUser";
 import DiamondsService from "@/app/services/diamonds";
-import { useUsersStore } from "@/app/store/users";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
-import { AuthenticatedUser } from "@/types/users";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import UntrackedChallengeTooltip from "./components/Tooltips";
@@ -25,7 +24,7 @@ interface Props {
 }
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
-  const currentUser = useUsersStore((s) => s.currentUser) as AuthenticatedUser;
+  const currentUser = useCurrentUser()
 
   const {
     isLoading,

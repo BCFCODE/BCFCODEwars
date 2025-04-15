@@ -6,6 +6,6 @@ export const CurrentUserContext = createContext<AuthenticatedUser | null>(null);
 export const useCurrentUser = (): AuthenticatedUser => {
   const context = useContext(CurrentUserContext);
   if (!context)
-    throw new Error("useCurrentUser must be withing a CurrentUserProvider");
+    throw new Error("useCurrentUser must be used within a CurrentUserProvider");
   return context;
 };

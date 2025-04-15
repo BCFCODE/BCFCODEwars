@@ -28,6 +28,13 @@ interface Actions {
   addUntrackedChallengesToList: (
     untrackedChallenges: CodewarsCompletedChallenge[]
   ) => void;
+  setIsCollapsed: ({
+    isCollapsed,
+    email,
+  }: {
+    isCollapsed: boolean;
+    email: string;
+  }) => void;
 }
 
 export interface UsersStore {
@@ -171,6 +178,21 @@ export const useUsersStore = create<UsersStore>((set) => ({
         };
 
         return syncCurrentWithAllUsers({ state, updatedUser });
+      });
+    },
+    setIsCollapsed: ({ isCollapsed, email }) => {
+      set((state) => {
+        
+        const currentUser =
+          state.currentUser?.email === email
+            ? { ...state.currentUser, isCollapsed }
+            : state.currentUser;
+
+        const allUsers: AuthenticatedUser[] = state.allUsers.map((u) =>
+          u.email === email ? { ...u, isCollapsed } : u
+        );
+
+        return { ...state, currentUser, allUsers };
       });
     },
   },
