@@ -35,6 +35,7 @@ const useDispatchActions = () => {
     currentUser?.isCollapsed,
     untrackedChallengesAvailable,
     checkUntrackedChallengesAvailability,
+    updateCurrentUser
   ]);
 
   const dispatchActions = () => {

@@ -55,7 +55,14 @@ const StoreInitializer = ({ session }: Props) => {
         setIsLoading(false);
       }
     })();
-  }, [email, session]);
+  }, [
+    email,
+    session,
+    initializeCurrentUser,
+    setAllUsers,
+    setIsError,
+    setIsLoading,
+  ]);
 
   return null;
 };
