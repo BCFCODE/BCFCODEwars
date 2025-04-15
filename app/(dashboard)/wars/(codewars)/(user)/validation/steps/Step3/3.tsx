@@ -8,20 +8,13 @@ import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
 import initializeAndStoreNewUserToDatabase from "./connectUser";
-// import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-// import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
-const Step3 = ({
-  currentStep,
-  validatedUsername,
-  // session,
-  codewars,
-}: StepProps) => {
+const Step3 = ({ currentStep, validatedUsername, codewars }: StepProps) => {
   const router = useRouter();
   const { session } = useUsersStore(
     (state) => state.currentUser as AuthenticatedUser
   );
-  
+
   console.log("Step3/session", session);
 
   const handleOnYes = () => {

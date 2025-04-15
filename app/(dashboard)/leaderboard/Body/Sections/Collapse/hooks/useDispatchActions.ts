@@ -1,44 +1,45 @@
 import dbAPIService from "@/app/api/services/db";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { useLeaderBoardStore } from "@/app/store/leaderboard";
 import { useUsersStore } from "@/app/store/users";
+import { AuthenticatedUser } from "@/types/users";
 import { useEffect } from "react";
 
 const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
-  const { isCollapsed, currentUser } = useCurrentUserContext();
-  const currentUserDispatch = useCurrentUserDispatchContext();
+  const {
+    currentUser,
+    actions: { checkUntrackedChallengesAvailability },
+  } = useUsersStore((state) => state);
+  const {
+    currentUser: { isCollapsed },
+    actions: { setIsCollapsed },
+  } = useLeaderBoardStore((state) => state);
+
   const codewarsDispatch = useCodewarsDispatchContext();
   const { updateCurrentUser } = useUsersStore((s) => s.actions);
 
   let untrackedChallengesAvailable =
-    currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false;
+    currentUser?.codewars.codeChallenges?.untrackedChallengesAvailable ?? false;
 
   useEffect(() => {
-    if (isCollapsed && untrackedChallengesAvailable) {
+    if (isCollapsed && untrackedChallengesAvailable && currentUser) {
       updateCurrentUser(currentUser);
 
       postCurrentUser(currentUser);
 
-      currentUserDispatch({
-        type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
-        untrackedChallengesAvailable: false,
-      });
+      checkUntrackedChallengesAvailability(false);
     }
   }, [
     currentUser,
     isCollapsed,
     untrackedChallengesAvailable,
-    currentUserDispatch,
+    checkUntrackedChallengesAvailability,
   ]);
 
   const dispatchActions = () => {
-    currentUserDispatch({
-      type: "SET_COLLAPSE_OPEN",
-      isCollapsed: !isCollapsed,
-    });
+    setIsCollapsed(!isCollapsed);
     codewarsDispatch({ type: "SET_LOADING", isLoading: true });
   };
 

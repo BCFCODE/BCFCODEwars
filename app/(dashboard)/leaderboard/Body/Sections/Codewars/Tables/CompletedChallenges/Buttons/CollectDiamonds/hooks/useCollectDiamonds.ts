@@ -6,7 +6,6 @@ import useCollectButtonState, {
 import useCollectDiamondsContext, {
   UseCollectDiamondsContext,
 } from "./useCollectDiamondsContext";
-import useUserCodewarsChallenges from "./useUserCodewarsChallenges";
 
 export interface UseCollectDiamonds
   extends CollectDiamondsState,
@@ -16,7 +15,7 @@ export interface UseCollectDiamonds
 
 export default function useCollectDiamonds(): UseCollectDiamonds {
   // Extract data from contexts
-  const { currentUserDispatch } = useUserCodewarsChallenges();
+  
 
   // Collect Button State
   const {
@@ -45,7 +44,7 @@ export default function useCollectDiamonds(): UseCollectDiamonds {
     success,
     collectedDiamondsCount,
     collectButtonDispatch,
-    currentUserDispatch,
+    
     diamondsContextDispatch,
     isDiamondIconButtonDisabled,
   });

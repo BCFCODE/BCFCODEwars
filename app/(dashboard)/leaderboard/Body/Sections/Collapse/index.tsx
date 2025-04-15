@@ -1,4 +1,4 @@
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import { useLeaderBoardStore } from "@/app/store/leaderboard";
 import { Collapse, TableCell, TableRow } from "@mui/material";
 import { ReactNode } from "react";
 
@@ -7,7 +7,8 @@ interface Props {
 }
 
 const CollapseSection = ({ children }: Props) => {
-  const { isCollapsed } = useCurrentUserContext();
+  const isCollapsed = useLeaderBoardStore((s) => s.currentUser.isCollapsed);
+
   return (
     <TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

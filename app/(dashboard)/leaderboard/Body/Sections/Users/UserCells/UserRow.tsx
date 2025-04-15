@@ -6,7 +6,7 @@ import LastLoginCell from "./LastLoginCell";
 import MemberSinceCell from "./MemberSinceCell";
 import RankCell from "./RankCell";
 
-const User = () => {
+const UserRow = () => {
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -21,4 +21,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default UserRow;

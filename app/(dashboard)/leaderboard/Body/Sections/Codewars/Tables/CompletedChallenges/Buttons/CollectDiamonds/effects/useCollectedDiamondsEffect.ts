@@ -1,4 +1,3 @@
-import { CurrentUserAction } from "@/app/context/reducers/currentUser";
 import { DiamondsAction } from "@/app/context/reducers/diamondsReducer";
 import { Dispatch, useEffect } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
@@ -8,7 +7,7 @@ interface Props {
   collectedDiamondsCount: number | undefined;
   diamondsContextDispatch: Dispatch<DiamondsAction>;
   collectButtonDispatch: Dispatch<CollectButtonAction>;
-  currentUserDispatch: Dispatch<CurrentUserAction>;
+  
 }
 
 export default function useCollectedDiamondsEffect({
@@ -17,7 +16,7 @@ export default function useCollectedDiamondsEffect({
   diamondsContextDispatch,
   isCollected,
 }: Props) {
-  // const currentUserDispatch = useCurrentUserDispatchContext();
+  
   useEffect(() => {
     if (isCollected && collectedDiamondsCount)
       diamondsContextDispatch({ type: "DISABLE_DIAMOND_ICON_BUTTON" });

@@ -1,27 +1,10 @@
-import { useLeaderBoardStore } from "@/app/store/leaderboard";
-import { AuthenticatedUser, DatabaseUser } from "@/types/users";
+import { AuthenticatedUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
-
-// interface APIResponseError {
-//   success: boolean;
-//   error?: string;
-// }
-
-// interface GetUsersAPIResponse extends APIResponseError {
-//   users?: DatabaseUser[];
-// }
-
-// interface GetUserAPIResponse {
-//   success: boolean;
-//   currentUser?: DatabaseUser;
-// }
 
 class dbAPIService {
   private endpoint = `${baseURL}/api/db`;
 
-  // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
   getUsers = async (options?: RequestInit) => {
-
     try {
       const response = await fetch(`${this.endpoint}/users`, {
         ...options, // This will include things like { signal: controller.signal }
@@ -45,8 +28,6 @@ class dbAPIService {
   };
 
   getUser = async (email: string, options?: RequestInit) => {
-    // console.log("dbAPIService/getUser", email);
-
     try {
       const url = new URL(`${this.endpoint}/currentUser`);
       url.searchParams.append("email", email);
@@ -62,8 +43,7 @@ class dbAPIService {
             "Failed to fetch currentUser data. Please check the console for details.",
         };
       }
-      // const currentUser = await response.json();
-      // console.log("dbAPIService/fetched data", data);
+ 
       return await response.json();
     } catch (error) {
       console.error("Error fetching currentUser data from database", error);

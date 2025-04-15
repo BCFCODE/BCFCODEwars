@@ -1,8 +1,9 @@
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import { useUsersStore } from "@/app/store/users";
+import { AuthenticatedUser } from "@/types/users";
 
 const useFilteredChallenges = () => {
-  const { currentUser } = useCurrentUserContext();
+  const currentUser = useUsersStore(s => s.currentUser) as AuthenticatedUser
   const { completedChallenges: collectedChallenges } = useCodewarsContext();
 
   const dbCodeChallengesList = currentUser.codewars.codeChallenges.list;
@@ -15,7 +16,7 @@ const useFilteredChallenges = () => {
   );
 
   return {
-    currentUser,
+    
     unCollectedChallenges,
     collectedChallenges,
     dbCodeChallengesList,

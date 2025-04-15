@@ -1,13 +1,36 @@
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { AuthenticatedUser } from "@/types/users";
 import { create } from "zustand";
+import getRank from "../context/reducers/currentUser/getRank";
+import {
+  CodeChallengesFilter,
+  CodewarsDiamondsRecord,
+  CodewarsRanks,
+  CodewarsRankTotals,
+  Diamonds,
+} from "@/types/diamonds";
+import syncCurrentWithAllUsers from "./utils/syncCurrentWithAllUsers";
 
 interface Actions {
   setAllUsers: (users: AuthenticatedUser[]) => void;
   initializeCurrentUser: (email: string) => void;
   updateCurrentUser: (currentUser: AuthenticatedUser) => void;
+  updateCodeChallengesList: (list: CodewarsCompletedChallenge[]) => void;
+  updateDiamondsAndRank: ({
+    selectedChallenge,
+    reward,
+  }: {
+    selectedChallenge: CodewarsCompletedChallenge;
+    reward: number;
+  }) => void;
+  updateCollectionFilter: (filterName: CodeChallengesFilter) => void;
+  checkUntrackedChallengesAvailability: (isAvailable: boolean) => void;
+  addUntrackedChallengesToList: (
+    untrackedChallenges: CodewarsCompletedChallenge[]
+  ) => void;
 }
 
-interface UsersStore {
+export interface UsersStore {
   currentUser: AuthenticatedUser | null;
   allUsers: AuthenticatedUser[];
   actions: Actions;
@@ -17,18 +40,138 @@ export const useUsersStore = create<UsersStore>((set) => ({
   allUsers: [],
   currentUser: null,
   actions: {
-    setAllUsers: (allUsers) => set({ allUsers }),
+    setAllUsers: (allUsers) => set((state) => ({ ...state, allUsers })),
     initializeCurrentUser: (email) =>
-      set(({ allUsers }) => ({
-        currentUser: allUsers.find((u) => u.email === email) ?? null,
+      set((state) => ({
+        ...state,
+        currentUser: state.allUsers.find((u) => u.email === email) ?? null,
       })),
     updateCurrentUser: (currentUser) => {
-      set({ currentUser });
-      set(({ allUsers }) => ({
-        allUsers: allUsers.map((u) =>
+      set((state) => ({ ...state, currentUser }));
+      set((state) => ({
+        ...state,
+        allUsers: state.allUsers.map((u) =>
           u.email === currentUser.email ? currentUser : u
         ),
       }));
+    },
+    updateCodeChallengesList: (list) =>
+      set((state) => {
+        if (!state.currentUser) return state;
+
+        const updatedUser: AuthenticatedUser = {
+          ...state.currentUser,
+          codewars: {
+            ...state.currentUser?.codewars,
+            codeChallenges: {
+              ...state.currentUser?.codewars.codeChallenges,
+              list,
+            },
+          },
+        };
+
+        return syncCurrentWithAllUsers({ state, updatedUser });
+      }),
+    updateDiamondsAndRank: ({ selectedChallenge, reward }) => {
+      set((state) => {
+        if (!state.currentUser) return state;
+
+        const currentRankId = getRank(selectedChallenge);
+
+        const ranks: CodewarsRanks = {
+          ...state.currentUser.diamonds.totals.codewars.ranks,
+          [currentRankId]:
+            state.currentUser.diamonds.totals.codewars.ranks[currentRankId] +
+            reward,
+        };
+
+        const updateCodewarsRanks: CodewarsRankTotals = {
+          ...state.currentUser.diamonds.totals.codewars,
+          ranks,
+          total: state.currentUser.diamonds.totals.codewars.total + reward,
+        };
+
+        const newCodewarsChallengeRecord: CodewarsDiamondsRecord = {
+          id: selectedChallenge.id,
+          rank: currentRankId,
+          diamondsEarned: reward,
+          collectedAt: new Date(),
+          completedAt: new Date(selectedChallenge.completedAt),
+        };
+
+        const diamonds: Diamonds = {
+          ...state.currentUser.diamonds,
+          codewars: [
+            ...state.currentUser.diamonds.codewars,
+            newCodewarsChallengeRecord,
+          ],
+          totals: {
+            ...state.currentUser.diamonds.totals,
+            codewars: updateCodewarsRanks,
+            total: state.currentUser.diamonds.totals.total + reward,
+          },
+        };
+
+        const updatedUser: AuthenticatedUser = {
+          ...state.currentUser,
+          diamonds,
+        };
+
+        return syncCurrentWithAllUsers({ state, updatedUser });
+      });
+    },
+    updateCollectionFilter: (filterName) => {
+      set((state) => {
+        if (!state.currentUser) return state;
+        const updatedUser: AuthenticatedUser = {
+          ...state.currentUser,
+          codewars: {
+            ...state.currentUser.codewars,
+            codeChallenges: {
+              ...state.currentUser.codewars.codeChallenges,
+              challengeFilter: filterName,
+            },
+          },
+        };
+        return syncCurrentWithAllUsers({ state, updatedUser });
+      });
+    },
+    checkUntrackedChallengesAvailability: (isAvailable) => {
+      set((state) => {
+        if (!state.currentUser) return state;
+        const updatedUser: AuthenticatedUser = {
+          ...state.currentUser,
+          codewars: {
+            ...state.currentUser.codewars,
+            codeChallenges: {
+              ...state.currentUser.codewars.codeChallenges,
+              untrackedChallengesAvailable: isAvailable,
+            },
+          },
+        };
+        return syncCurrentWithAllUsers({ state, updatedUser });
+      });
+    },
+    addUntrackedChallengesToList: (untrackedChallenges) => {
+      set((state) => {
+        if (!state.currentUser) return state;
+
+        const updatedUser: AuthenticatedUser = {
+          ...state.currentUser,
+          codewars: {
+            ...state.currentUser.codewars,
+            codeChallenges: {
+              ...state.currentUser.codewars.codeChallenges,
+              list: [
+                ...untrackedChallenges,
+                ...state.currentUser.codewars.codeChallenges.list,
+              ],
+            },
+          },
+        };
+
+        return syncCurrentWithAllUsers({ state, updatedUser });
+      });
     },
   },
 }));

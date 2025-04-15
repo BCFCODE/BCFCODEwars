@@ -1,9 +1,9 @@
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { useUsersStore } from "@/app/store/users";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { useEffect, useRef, useState } from "react";
 
 const useCollectionToggle = () => {
-  const currentUserDispatch = useCurrentUserDispatchContext();
+  const { updateCollectionFilter } = useUsersStore((s) => s.actions);
   const collectionToggleState = useRef({
     claimedDiamonds: true,
     unclaimedDiamonds: false,
@@ -51,8 +51,8 @@ const useCollectionToggle = () => {
   };
 
   useEffect(() => {
-    currentUserDispatch({ type: "UPDATE_COLLECTION_FILTER", filterName });
-  }, [filterName, currentUserDispatch]);
+    updateCollectionFilter(filterName);
+  }, [filterName, updateCollectionFilter]);
 
   return {
     handle: { selectCollectedDiamonds, selectNotCollectedDiamonds },

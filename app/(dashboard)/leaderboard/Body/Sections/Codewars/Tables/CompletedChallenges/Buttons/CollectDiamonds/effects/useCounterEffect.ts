@@ -10,18 +10,15 @@ interface Props {
   success: boolean;
   collectedDiamondsCount: number | undefined;
   collectButtonDispatch: Dispatch<CollectButtonAction>;
-  currentUserDispatch: Dispatch<CurrentUserAction>;
+  
 }
 
 export default function useCounterEffect({
   collectButtonDispatch,
   collectedDiamondsCount,
   counter,
-  // isCollected,
   isError,
-  // isLoading,
   success,
-  currentUserDispatch,
 }: Props) {
   const [isCounting, setIsCounting] = useState(true);
   const timeRef = useRef<NodeJS.Timeout | null>(null);

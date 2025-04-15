@@ -1,12 +1,8 @@
 import dbAPIService from "@/app/api/services/db";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { useUsersStore } from "@/app/store/users";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useEffect, useRef } from "react";
-// import {
-//   addTrackedFlagsToChallenge,
-//   addTrackedFlagsToChallenges,
-// } from "../../../../../../Collapse/utils/addTrackedFlags";
 
 const { postCurrentUser } = new dbAPIService();
 
@@ -20,17 +16,20 @@ export default function useChallengesListEffect({
   success,
   isDiamondIconButtonDisabled,
 }: Props) {
-  const { currentUser } = useCurrentUserContext();
+  const {
+    currentUser,
+    actions: { updateCodeChallengesList, updateDiamondsAndRank },
+  } = useUsersStore((state) => state);
   const { selectedChallenge } = useCodewarsContext();
-  const currentUserDispatch = useCurrentUserDispatchContext();
+  
   const isListUpdatedRef = useRef(false);
   const isDiamondsUpdatedRef = useRef(false);
 
   useEffect(() => {
-    if (success && !isDiamondIconButtonDisabled) {
-      const list = currentUser.codewars.codeChallenges.list.map((challenge) =>
+    if (success && !isDiamondIconButtonDisabled && currentUser) {
+      const list = currentUser?.codewars.codeChallenges.list.map((challenge) =>
         challenge.id === selectedChallenge?.id ? selectedChallenge : challenge
-      );
+      ) as CodewarsCompletedChallenge[];
 
       if (!isListUpdatedRef.current) {
         const userWithUpdatedList = { ...currentUser };
@@ -39,52 +38,17 @@ export default function useChallengesListEffect({
         isListUpdatedRef.current = true;
       }
 
-      currentUserDispatch({
-        type: "UPDATE_CODE_CHALLENGES_LIST",
-        list,
-      });
+      updateCodeChallengesList(list);
     }
 
     if (success && !isDiamondsUpdatedRef.current && selectedChallenge) {
-      currentUserDispatch({
-        type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
-        reward: collectedDiamondsCount,
-        selectedChallenge,
-      });
-      // const untrackedChallenges =
-      //   currentUser.codewars.codeChallenges.untrackedChallenges;
 
-      // if (
-      //   untrackedChallenges.some(
-      //     (untrackedChallenge) => untrackedChallenge.id === selectedChallenge.id
-      //   )
-      // ) {
-      // currentUserDispatch({
-      //   type: "COLLECT_DIAMOND_AND_FETCH_CHALLENGE_BEFORE_COUNTER_START",
-      //   updatedUntrackedChallenges: addTrackedFlagsToChallenges(
-      //     selectedChallenge,
-      //     untrackedChallenges
-      //   ),
-      // });
-      // currentUserDispatch({
-      //   type: "UPDATE_UNTRACKED_CHALLENGE_LIST_AFTER_DIAMONDS_COUNTER_ANIMATION",
-      //   selectedUntrackedChallenge:
-      //     addTrackedFlagsToChallenge(selectedChallenge),
-      // });
-      // console.log(
-      //   `useChallengesListEffect/currentUser, selectedChallenge, and untrackedChallenges`,
-      //   "currentUser >>",
-      //   currentUser,
-      //   "selectedChallenge >>",
-      //   selectedChallenge,
-      // "untrackedChallenges >>",
-      // untrackedChallenges,
-      // addTrackedFlagsToChallenges(selectedChallenge, untrackedChallenges)
-      //   );
-      // }
-      // // console.log("selectedChallenge", selectedChallenge);
+      updateDiamondsAndRank({
+        selectedChallenge,
+        reward: collectedDiamondsCount,
+      });
+
       isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
-      // console.log("currentUser in useChallengesListEffect", currentUser);
     }
 
     if (!success) {
@@ -95,8 +59,8 @@ export default function useChallengesListEffect({
     success,
     isDiamondIconButtonDisabled,
     collectedDiamondsCount,
-    currentUser,
-    currentUserDispatch,
+
+    
     selectedChallenge,
   ]);
 }
