@@ -19,7 +19,7 @@ class dbAPIService {
   private endpoint = `${baseURL}/api/db`;
 
   // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
-  getUsers = async (options?: RequestInit)/* : Promise<GetUsersAPIResponse>  */=> {
+  getUsers = async (options?: RequestInit) => {
     try {
       // Fetch the data from your API
       const response = await fetch(`${this.endpoint}/users`, {
@@ -35,11 +35,8 @@ class dbAPIService {
             "Failed to fetch user data. Please check the console for details.",
         };
       }
-      const data = await response.json();
 
-      // currentUserDispatch({ type: "EMPTY_UNTRACKED_CHALLENGE_LIST" });
-
-      return { success: true, users: data.users };
+      return await response.json();
     } catch (error) {
       console.error("Error fetching user data from database", error);
       return { success: false, error: "Error fetching user data" };

@@ -15,15 +15,12 @@ import LeaderboardHeader from "./Head/Header";
 
 interface Props {
   allUsersInSignInPage: AuthenticatedUser[];
-  // session: Session | null;
 }
 
 export default function LeaderBoardPage({ allUsersInSignInPage }: Props) {
   const router = useRouter();
-  // // Consume the error state from context to trigger re-render when it updates.
   const dispatch = useAllUsersDispatchContext();
   const { error, isLoading } = useAllUsersContext();
-  // const { isCollapsed, currentUser } = useCurrentUserContext();
 
   useEffect(() => {
     if (allUsersInSignInPage) {

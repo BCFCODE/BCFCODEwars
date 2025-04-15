@@ -1,26 +1,18 @@
 import { AuthenticatedUser } from "@/types/users";
-import { Session } from "next-auth";
 import { create } from "zustand";
 
-interface UserStore {
+interface UsersStore {
   currentUser: AuthenticatedUser | null;
+  allUsers: AuthenticatedUser[];
   setCurrentUser: (user: AuthenticatedUser) => void;
-  // setSession: (session: Session) => void;
+  setAllUsers: (users: AuthenticatedUser[]) => void;
 }
 
-export const useUserStore = create<UserStore>((set) => ({
+export const useUsersStore = create<UsersStore>((set) => ({
   currentUser: null,
+  allUsers: [],
   setCurrentUser: (currentUser) => set({ currentUser }),
-  // setSession: (session) =>
-  //   set((state) => {
-  //     if (!state.currentUser) return {};
-  //     return {
-  //       currentUser: {
-  //         ...state.currentUser,
-  //         session,
-  //       },
-  //     };
-  //   }),
+  setAllUsers: (allUsers) => set({ allUsers }),
 }));
 
 /* 
@@ -30,7 +22,7 @@ export const useUserStore = create<UserStore>((set) => ({
   import { create } from 'zustand';
   import { AuthenticatedUser } from '@/types/users';
 
-  type UserStore = {
+  type UsersStore = {
     currentUser: AuthenticatedUser | null;
     allUsers: AuthenticatedUser[];
     setCurrentUser: (user: AuthenticatedUser) => void;
@@ -40,7 +32,7 @@ export const useUserStore = create<UserStore>((set) => ({
     removeUser: (email: string) => void;
   };
 
-  export const useUserStore = create<UserStore>((set) => ({
+  export const useUsersStore = create<UsersStore>((set) => ({
     currentUser: null,
     allUsers: [],
     setCurrentUser: (user) => set({ currentUser: user }),
@@ -58,14 +50,14 @@ export const useUserStore = create<UserStore>((set) => ({
 
   💡 Usage Examples
   In a component:
-  const currentUser = useUserStore((state) => state.currentUser);
-  const allUsers = useUserStore((state) => state.allUsers);
+  const currentUser = useUsersStore((state) => state.currentUser);
+  const allUsers = useUsersStore((state) => state.allUsers);
 
-  const logout = useUserStore((state) => state.clearCurrentUser);
+  const logout = useUsersStore((state) => state.clearCurrentUser);
 
   Updating users:
 
-  useUserStore.getState().setAllUsers(usersFromApi);
+  useUsersStore.getState().setAllUsers(usersFromApi);
 
   
   🧠 Why This Works Well
@@ -80,7 +72,7 @@ export const useUserStore = create<UserStore>((set) => ({
 
   import { devtools, persist } from 'zustand/middleware';
 
-  export const useUserStore = create<UserStore>()(
+  export const useUsersStore = create<UsersStore>()(
     devtools(
       persist(
         (set) => ({

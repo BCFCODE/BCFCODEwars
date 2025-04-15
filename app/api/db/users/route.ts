@@ -16,6 +16,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(
       { error: "Unable to fetch users from database." },
       { status: 500 }
-    );
+  );
   }
 }

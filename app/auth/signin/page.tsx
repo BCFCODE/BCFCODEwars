@@ -25,23 +25,15 @@ export const metadata: Metadata = {
 const { getUsers } = new dbAPIService();
 
 export default async function SignIn() {
-  const fetchedUsers = await getUsers({ cache: "no-store" });
-  const allUsers = fetchedUsers.users as AuthenticatedUser[];
+  const { users } = await getUsers({
+    cache: "no-store",
+  });
+  // const allUsers = fetchedUsers.users as AuthenticatedUser[];
 
-  // console.log("SignIn page focussed... (Logged out occurred)");
-  // console.log("allUsers in auth/signin", allUsers);
-  // const { isLoading } = useAllUsersContext();
-  // if (isLoading)
-  //   return (
-  //     <LoadingUI
-  //       title="Loading Leaderboard..."
-  //       message="Hang tight! We're fetching the latest rankings. Sign in below to join and see your position."
-  //     />
-  //   );
   return (
     <Box>
       <Box sx={leaderboardStyles}>
-        <LeaderBoardPage {...{ allUsersInSignInPage: allUsers }} />
+        <LeaderBoardPage {...{ allUsersInSignInPage: users }} />
       </Box>
       <SignInPage
         sx={signInPageContainerStyles}

@@ -23,7 +23,7 @@ import theme from "../theme";
 import AllUsersProvider from "./context/providers/AllUsers";
 import DiamondsProvider from "./context/providers/Diamonds";
 import "./styles/global.css";
-import { useUserStore } from "./store/user";
+import { useUsersStore } from "./store/users";
 import StoreInitializer from "./store/StoreInitializer";
 
 export const metadata: Metadata = {
