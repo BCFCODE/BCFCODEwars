@@ -27,14 +27,11 @@ const StoreInitializer = ({ session }: Props) => {
       const allUsers = (users as AuthenticatedUser[]).map((u) =>
         u.email === email ? { ...u, session } : u
       );
+      
       setAllUsers(allUsers);
+      setCurrentUser(email);
 
-      const currentUser = allUsers.find(
-        (u) => u.email === email
-      ) as AuthenticatedUser;
-      setCurrentUser(currentUser);
-
-      console.log("StoreInitializer/users", currentUser, allUsers);
+      // console.log("StoreInitializer/users", currentUser, allUsers);
     })();
     // TODO: Post a get request to currentUser api, with email, to fetch current user from api
   }, [email, session]);

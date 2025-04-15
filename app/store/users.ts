@@ -4,15 +4,18 @@ import { create } from "zustand";
 interface UsersStore {
   currentUser: AuthenticatedUser | null;
   allUsers: AuthenticatedUser[];
-  setCurrentUser: (user: AuthenticatedUser) => void;
   setAllUsers: (users: AuthenticatedUser[]) => void;
+  setCurrentUser: (email: string) => void;
 }
 
 export const useUsersStore = create<UsersStore>((set) => ({
-  currentUser: null,
   allUsers: [],
-  setCurrentUser: (currentUser) => set({ currentUser }),
+  currentUser: null,
   setAllUsers: (allUsers) => set({ allUsers }),
+  setCurrentUser: (email) =>
+    set(({ allUsers }) => ({
+      currentUser: allUsers.find((u) => u.email === email) ?? null,
+    })),
 }));
 
 /* 
