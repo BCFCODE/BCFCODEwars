@@ -46,6 +46,7 @@ const useDispatchActions = () => {
     }
   }, [
     currentUser,
+    setCurrentUser,
     isCollapsed,
     allUsersDispatch,
     untrackedChallengesAvailable,
