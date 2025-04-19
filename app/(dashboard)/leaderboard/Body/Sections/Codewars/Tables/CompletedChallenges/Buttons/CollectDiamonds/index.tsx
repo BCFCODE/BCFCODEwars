@@ -13,7 +13,7 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
-import UntrackedChallengeTooltip from "./components/Tooltips";
+// import UntrackedChallengeTooltip from "./components/Tooltips";
 import handleClick from "./utils/handleClick";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
@@ -67,15 +67,15 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
         {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}
 
         {!isCollected && (
-          <UntrackedChallengeTooltip
-            isLatestUntracked={currentChallenge.isLatestUntracked}
-            isUntracked={currentChallenge.isUntracked ?? false}
-            text={
-              isUserOnPersonalDashboard
-                ? "Oops! Let’s track this now!"
-                : "💎Diamonds await! Sign in to collect."
-            }
-          >
+          // <UntrackedChallengeTooltip
+          //   isLatestUntracked={currentChallenge.isLatestUntracked}
+          //   // isUntracked={currentChallenge.isUntracked ?? false}
+          //   text={
+          //     isUserOnPersonalDashboard
+          //       ? "Oops! Let’s track this now!"
+          //       : "💎Diamonds await! Sign in to collect."
+          //   }
+          // >
             <IconButton
               disabled={
                 isDiamondIconButtonDisabled || !isUserOnPersonalDashboard
@@ -95,7 +95,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                 sx={isLoading || isError ? fade(isError) : diamondStyles}
               />
             </IconButton>
-          </UntrackedChallengeTooltip>
+          // </UntrackedChallengeTooltip>
         )}
       </Box>
     );
