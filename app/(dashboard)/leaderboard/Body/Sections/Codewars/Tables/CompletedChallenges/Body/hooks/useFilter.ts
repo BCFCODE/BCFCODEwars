@@ -34,6 +34,7 @@ const useFilter = (): UseFilter => {
   //     )
   //   : currentUser.codewars.codeChallenges.list;
   const list = currentUser.codewars.codeChallenges.list;
+  console.log(list)
 
   const both = [/* ...(untrackedChallenges ?? []), */ ...list];
 

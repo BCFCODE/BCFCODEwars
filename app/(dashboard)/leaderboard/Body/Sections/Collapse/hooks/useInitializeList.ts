@@ -1,7 +1,7 @@
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { CodewarsChallengesResponse } from "@/types/codewars";
-import { applyDefaultTrackingAndRewardStatusToAll } from "../utils/applyRewardStatus";
+// import { applyDefaultTrackingAndRewardStatusToAll } from "../utils/applyRewardStatus";
 import storeChallengeList from "../utils/storeChallengeList";
 
 const useInitializeList = () => {
@@ -12,7 +12,8 @@ const useInitializeList = () => {
   const initializeCodeChallengesList = (
     response: CodewarsChallengesResponse
   ) => {
-    const list = applyDefaultTrackingAndRewardStatusToAll(response.data);
+    // const list = applyDefaultTrackingAndRewardStatusToAll(response.data);
+    const list = response.data
 
     currentUserDispatch({
       type: "UPDATE_CODE_CHALLENGES_LIST",
