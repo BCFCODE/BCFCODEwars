@@ -6,8 +6,6 @@ export const applyDefaultTrackingAndRewardStatus = (
 ): CodewarsCompletedChallenge => ({
   ...challenge,
   rewardStatus: RewardStatus.UnclaimedDiamonds,
-  isUntracked: false,
-  isLatestUntracked: false,
 });
 
 export const applyDefaultTrackingAndRewardStatusToAll = (

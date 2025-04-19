@@ -61,8 +61,8 @@ export type CodewarsUserResponse =
   | CodewarsUser;
 
 export interface CodewarsCompletedChallenge {
-  isUntracked: boolean;
-  isLatestUntracked: boolean;
+  // isUntracked: boolean;
+  // isLatestUntracked: boolean;
   id: string; // Unique identifier for each challenge
   name: string; // Name of the challenge
   slug: string; // URL-friendly name of the challenge
