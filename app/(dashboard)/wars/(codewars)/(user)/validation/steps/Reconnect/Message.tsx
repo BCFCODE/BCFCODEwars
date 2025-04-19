@@ -1,11 +1,19 @@
-import { auth } from "@/auth";
 import { Typography } from "@mui/material";
-import React from "react";
 
 interface Props {
   userName: string;
   isSynced: boolean;
 }
+
+const Warning = () => (
+  <Typography
+    component="span"
+    sx={{ fontWeight: "bold", color: "error.main", display: "block", mt: 1 }}
+  >
+    ⚠️ Warning: If you reconnect, all your existing data in our database will be
+    erased and replaced with the new information. Please proceed with caution!
+  </Typography>
+);
 
 const Message = async ({ isSynced, userName }: Props) => {
   if (isSynced)
@@ -18,27 +26,27 @@ const Message = async ({ isSynced, userName }: Props) => {
           textAlign: "left",
         }}
       >
-        It looks like you&apos;re already connected as {userName}. If that&apos;s not
-        right, you can reconnect and update your username for a smoother
-        experience!
+        You're currently connected as {userName}. If that’s incorrect, feel free
+        to reconnect and update your username.
+        <Warning />
       </Typography>
     );
 
-  if (!isSynced)
-    return (
-      <Typography
-        variant="body1"
-        sx={{
-          color: "text.secondary",
-          textAlign: "left",
-          lineHeight: 1.6,
-          mt: 2,
-        }}
-      >
-        No worries—you can easily reconnect and revalidate your new username.
-        This helps us keep your data accurate and up to date.
-      </Typography>
-    );
+  return (
+    <Typography
+      variant="body1"
+      sx={{
+        color: "text.secondary",
+        textAlign: "left",
+        lineHeight: 1.6,
+        mt: 2,
+      }}
+    >
+      No worries—you can easily reconnect and revalidate your new username. This
+      helps us keep your data accurate and up to date.
+      <Warning />
+    </Typography>
+  );
 };
 
 export default Message;

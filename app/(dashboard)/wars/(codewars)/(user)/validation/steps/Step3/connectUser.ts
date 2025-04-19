@@ -7,7 +7,6 @@ import { CodeChallengesFilter } from "@/types/diamonds";
 const { updateSingleCodewarsUser } = new DatabaseService();
 
 const initializeAndStoreNewUserToDatabase = async ({
-  validatedUsername,
   session,
   codewars,
 }: StepProps) => {

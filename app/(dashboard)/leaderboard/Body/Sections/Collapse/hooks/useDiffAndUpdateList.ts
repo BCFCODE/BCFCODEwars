@@ -4,10 +4,12 @@ import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewars
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useInitializeList from "./useInitializeList";
 import useDiffAndUpdateList from "./useUpdateListDiff";
+import { useState } from "react";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
 const useChallengeList = () => {
+  const [tryAgain, setTryAgain] = useState({ isError: false, isLoading: false });
   const codewarsDispatch = useCodewarsDispatchContext();
   const { currentUser } = useCurrentUserContext();
   const { pageNumber } = useCodewarsContext();
@@ -16,6 +18,8 @@ const useChallengeList = () => {
 
   const fetchAndShowChallenges = async () => {
     try {
+      setTryAgain(() => ({ isError: false, isLoading: true }));
+
       const response = await getCompletedChallenges(
         currentUser.codewars.username,
         pageNumber
@@ -23,20 +27,24 @@ const useChallengeList = () => {
 
       if ("data" in response) {
         if (isListEmpty) initializeCodeChallengesList(response.data);
-        
+
         diffAndUpdateList();
-        
+
+        setTryAgain(() => ({ isError: false, isLoading: false }));
         codewarsDispatch({ type: "SET_ERROR", isError: false });
       } else {
         // TODO: Handle cases where data is missing
+        setTryAgain(() => ({ isError: true, isLoading: false }));
         codewarsDispatch({ type: "SET_ERROR", isError: true });
       }
     } catch (error) {
       // TODO: Handle errors gracefully
       // console.error("Error fetching challenges: ", error);
+      setTryAgain(() => ({ isError: true, isLoading: false }));
       codewarsDispatch({ type: "SET_ERROR", isError: true });
       // setError(true);
     } finally {
+      setTryAgain(() => ({ isError: false, isLoading: false }));
       codewarsDispatch({ type: "SET_LOADING", isLoading: false });
       // setIsLoading(false);
 
@@ -44,7 +52,7 @@ const useChallengeList = () => {
     }
   };
 
-  return { fetchAndShowChallenges };
+  return { fetchAndShowChallenges, tryAgain };
 };
 
 export default useChallengeList;
