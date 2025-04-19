@@ -9,7 +9,7 @@ import { useEffect } from "react";
 const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
-  const { updateCurrentUser } = useUsersStore((s) => s.actions);
+  const { setCurrentUser } = useUsersStore((s) => s.actions);
   const { isCollapsed, currentUser } = useCurrentUserContext();
   const allUsersDispatch = useAllUsersDispatchContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
@@ -31,7 +31,7 @@ const useDispatchActions = () => {
       //   untrackedChallengesAvailable
       // );
       allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
-      updateCurrentUser(currentUser);
+      setCurrentUser(currentUser);
       // (async () => {
       //   const { success } = await postCurrentUser(currentUser);
       //   if (success) untrackedChallengesAvailable = false;

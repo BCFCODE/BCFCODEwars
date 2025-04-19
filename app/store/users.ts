@@ -20,7 +20,7 @@ type UsersActions = {
     // setAllUsers: (users: AuthenticatedUser[]) => void;
     // setSelectedUser: (selectedUser: AuthenticatedUser) => void;
     // initializeCurrentUser: (email: string) => void;
-    updateCurrentUser: (currentUser: AuthenticatedUser) => void;
+    setCurrentUser: (currentUser: AuthenticatedUser) => void;
     // updateCodeChallengesList: (list: CodewarsCompletedChallenge[]) => void;
     // updateDiamondsAndRank: ({
     //   selectedChallenge,
@@ -45,7 +45,7 @@ export const useUsersStore = create<UsersStore>((set) => ({
   // allUsers: [],
   // selectedUser: null,
   actions: {
-    updateCurrentUser: (currentUser) => {
+    setCurrentUser: (currentUser) => {
       set((state) => ({ ...state, currentUser }));
       // set((state) => ({
       //   ...state,
