@@ -20,7 +20,7 @@ const GoToLeaderboard = () => {
           boxShadow: 3,
         }}
       >
-        Go to Leaderboard
+        Leaderboard
       </Button>
     </Link>
   );

@@ -12,7 +12,6 @@ const ReconnectButton = () => {
         color="primary"
         size="large"
         sx={{
-          width: 210,
           mt: 2,
           px: 4,
           py: 1.5,

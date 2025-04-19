@@ -57,7 +57,7 @@ const Reconnect = ({
           <Tip />
 
           {/* Reconnect Button */}
-          <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+          <Box sx={{ display: "flex", justifyContent: "space-around", gap: 1 }}>
             <GoToLeaderboard />
             <ReconnectButton />
           </Box>

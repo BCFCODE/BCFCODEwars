@@ -3,11 +3,13 @@ import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewars
 import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { useUsersStore } from "@/app/store/users";
 import { useEffect } from "react";
 
 const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
+  const { updateCurrentUser } = useUsersStore((s) => s.actions);
   const { isCollapsed, currentUser } = useCurrentUserContext();
   const allUsersDispatch = useAllUsersDispatchContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
@@ -29,7 +31,7 @@ const useDispatchActions = () => {
       //   untrackedChallengesAvailable
       // );
       allUsersDispatch({ type: "UPDATE_CURRENT_USER", currentUser });
-
+      updateCurrentUser(currentUser);
       // (async () => {
       //   const { success } = await postCurrentUser(currentUser);
       //   if (success) untrackedChallengesAvailable = false;

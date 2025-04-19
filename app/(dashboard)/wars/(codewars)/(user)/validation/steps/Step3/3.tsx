@@ -6,6 +6,7 @@ import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
 import initializeAndStoreNewUserToDatabase from "./connectUser";
+import { useUsersStore } from "@/app/store/users";
 // import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 const Step3 = ({
@@ -14,8 +15,8 @@ const Step3 = ({
   session,
   codewars,
 }: StepProps) => {
-  // const {currentUser} = useCurrentUserContext()
-  // console.log('currentUser', currentUser)
+  const { currentUser } = useUsersStore((state) => state);
+  console.log("Step3/currentUser", currentUser);
   const router = useRouter();
 
   const handleOnYes = () => {
