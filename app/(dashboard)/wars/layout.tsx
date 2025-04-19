@@ -6,7 +6,6 @@ interface Props {
 }
 
 const WarsPageLayout = ({ children }: Props) => {
-  
   return <Box>{children}</Box>;
 };
 

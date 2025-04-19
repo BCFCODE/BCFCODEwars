@@ -80,7 +80,7 @@ const Step4 = ({ session }: StepProps) => {
           }}
           onClick={handleNavigateToWars}
         >
-          Go to Leaderboard
+          Leaderboard
         </Button>
       </Paper>
     </Box>
