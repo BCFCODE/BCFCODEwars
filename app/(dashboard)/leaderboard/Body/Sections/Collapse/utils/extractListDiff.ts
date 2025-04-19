@@ -1,4 +1,5 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { applyDefaultTrackingAndRewardStatusToAll } from "./applyRewardStatus";
 // import { addUntrackedFlagsToChallenges } from "./addUntrackedFlags";
 
 interface Props {
@@ -24,21 +25,14 @@ const extractListDiff = ({
     (challenge) => challenge.id === previousMostRecentChallenge.id
   );
 
-  let untrackedChallenges = fetchedChallenges.slice(0, previousRecentIndex);
-  // const untrackedChallenges = addUntrackedFlagsToChallenges(challengesBeforeFlagging )
-  // console.log(
-  //   "in extractListDiff >",
-  //   "previousRecentIndex",
-  //   previousRecentIndex,
-  //   "untrackedChallenges",
-  //   untrackedChallenges
-  // );
+  let filtered = fetchedChallenges.slice(0, previousRecentIndex);
+  let untrackedChallenges = applyDefaultTrackingAndRewardStatusToAll(filtered);
+
   const isMostRecentChallengeSame =
     previousMostRecentChallenge.id === mostRecentFetchedChallenge.id;
 
   untrackedChallenges = isMostRecentChallengeSame ? [] : untrackedChallenges;
 
-  
   return untrackedChallenges;
 };
 
