@@ -1,8 +1,9 @@
 import LeaderBoardPage from "@/app/(dashboard)/leaderboard/page";
+import dbAPIService from "@/app/api/services/db";
 import { Box } from "@mui/material";
 import { SignInPage } from "@toolpad/core/SignInPage";
 import { Metadata } from "next/types";
-import { auth, providerMap } from "../../../auth";
+import { providerMap } from "../../../auth";
 import { handleSignIn } from "./signInHandler";
 import {
   leaderboardStyles,
@@ -10,8 +11,6 @@ import {
   // signInSlotProps,
   signInText,
 } from "./styles";
-import { AuthenticatedUser } from "@/types/users";
-import dbAPIService from "@/app/api/services/db";
 // import SubmitButton from "./SubmitButton";
 
 export const metadata: Metadata = {
@@ -26,22 +25,11 @@ const { getUsers } = new dbAPIService();
 
 export default async function SignIn() {
   const fetchedUsers = await getUsers({ cache: "no-store" });
-  const allUsers = fetchedUsers.users as AuthenticatedUser[];
 
-  // console.log("SignIn page focussed... (Logged out occurred)");
-  // console.log("allUsers in auth/signin", allUsers);
-  // const { isLoading } = useAllUsersContext();
-  // if (isLoading)
-  //   return (
-  //     <LoadingUI
-  //       title="Loading Leaderboard..."
-  //       message="Hang tight! We're fetching the latest rankings. Sign in below to join and see your position."
-  //     />
-  //   );
   return (
     <Box>
       <Box sx={leaderboardStyles}>
-        <LeaderBoardPage {...{ allUsersInSignInPage: allUsers }} />
+        <LeaderBoardPage />
       </Box>
       <SignInPage
         sx={signInPageContainerStyles}

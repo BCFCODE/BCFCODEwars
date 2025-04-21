@@ -27,19 +27,13 @@ const Step3 = ({
   );
 
   const handleOnYes = async () => {
-    // const { users, success } = await getUsers({ cache: "no-store" });
-    // console.log("fetchedUsers", users, users?.find((user) => user.email === codewars.email));
     initializeAndStoreNewUserToDatabase({
       currentStep,
       validatedUsername,
       session,
       codewars,
     });
-    // if (users)
-    //   dispatchAllUsers({
-    //     type: "SET_ALL_USERS",
-    //     payload: users.find((user) => user.email === codewars.email),
-    //   });
+
     router.replace(`${currentStep + 1}`);
   };
 

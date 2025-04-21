@@ -1,11 +1,10 @@
-import React from "react";
-import { CollectDiamondsState } from "../reducers/collectButtonReducer";
-import useCounterEffect from "./useCounterEffect";
-import useCollectedDiamondsEffect from "./useCollectedDiamondsEffect";
-import useChallengesListEffect from "./useChallengesListEffect";
 import { CollectButtonDispatch } from "../hooks/useCollectButtonState";
-import { UseUserCodewarsChallenges } from "../hooks/useUserCodewarsChallenges";
 import { UseCollectDiamondsContext } from "../hooks/useCollectDiamondsContext";
+import { UseUserCodewarsChallenges } from "../hooks/useUserCodewarsChallenges";
+import { CollectDiamondsState } from "../reducers/collectButtonReducer";
+import useChallengesListEffect from "./useChallengesListEffect";
+import useCollectedDiamondsEffect from "./useCollectedDiamondsEffect";
+import useCounterEffect from "./useCounterEffect";
 
 interface Props
   extends Omit<CollectDiamondsState, "isLoading">,
@@ -21,7 +20,6 @@ const useCollectEffects = ({
   success,
   collectedDiamondsCount,
   collectButtonDispatch,
-  allUsersDispatch,
   currentUserDispatch,
   diamondsContextDispatch,
   isDiamondIconButtonDisabled,
@@ -36,7 +34,6 @@ const useCollectEffects = ({
   });
 
   useCollectedDiamondsEffect({
-    allUsersDispatch,
     currentUserDispatch,
     diamondsContextDispatch,
     collectButtonDispatch,

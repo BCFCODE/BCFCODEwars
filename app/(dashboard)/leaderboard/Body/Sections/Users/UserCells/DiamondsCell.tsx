@@ -9,7 +9,6 @@ import useDiamondsContext from "@/app/context/hooks/diamonds/useDiamondsContext"
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, TableCell, Typography } from "@mui/material";
 import { diamondSumStyles } from "./styles";
-import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
 
 const DiamondsCell = () => {
   const { data: diamondsData, isError, isLoading } = useDiamondsContext();

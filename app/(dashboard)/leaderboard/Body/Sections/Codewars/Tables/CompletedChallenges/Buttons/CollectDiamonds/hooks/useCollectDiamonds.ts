@@ -16,7 +16,7 @@ export interface UseCollectDiamonds
 
 export default function useCollectDiamonds(): UseCollectDiamonds {
   // Extract data from contexts
-  const { allUsersDispatch, currentUserDispatch } = useUserCodewarsChallenges();
+  const { currentUserDispatch } = useUserCodewarsChallenges();
 
   // Collect Button State
   const {
@@ -45,7 +45,6 @@ export default function useCollectDiamonds(): UseCollectDiamonds {
     success,
     collectedDiamondsCount,
     collectButtonDispatch,
-    allUsersDispatch,
     currentUserDispatch,
     diamondsContextDispatch,
     isDiamondIconButtonDisabled,

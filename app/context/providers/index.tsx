@@ -1,4 +1,6 @@
-import "../../styles/global.css";
+import dbAPIService from "@/app/api/services/db";
+import { auth } from "@/auth";
+import theme from "@/theme";
 import { baseURL } from "@/utils/constants";
 import { Leaderboard } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -7,6 +9,11 @@ import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { LinearProgress } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import type { Navigation } from "@toolpad/core";
 import { NextAppProvider } from "@toolpad/core/nextjs";
 import { Analytics } from "@vercel/analytics/react";
@@ -18,17 +25,9 @@ import { headers } from "next/headers";
 import Image from "next/image";
 import * as React from "react";
 import { ReactNode } from "react";
-import ReactQueryProvider from "./ReactQuery";
-import theme from "@/theme";
-import { auth } from "@/auth";
-import AllUsersProvider from "./AllUsers";
+import "../../styles/global.css";
 import DiamondsProvider from "./Diamonds";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
-import dbAPIService from "@/app/api/services/db";
+import ReactQueryProvider from "./ReactQuery";
 
 const { getUsers } = new dbAPIService();
 
@@ -172,9 +171,7 @@ const Providers = async ({ children }: Props) => {
                   authentication={AUTHENTICATION}
                   theme={theme}
                 >
-                  <AllUsersProvider>
-                    <DiamondsProvider>{children}</DiamondsProvider>
-                  </AllUsersProvider>
+                  <DiamondsProvider>{children}</DiamondsProvider>
                   <Analytics />
                   <SpeedInsights />
                 </NextAppProvider>
