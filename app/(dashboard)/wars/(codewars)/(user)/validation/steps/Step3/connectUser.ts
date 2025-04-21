@@ -5,8 +5,7 @@ import { StepProps } from "../stepSwitch";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import dbAPIService from "@/app/api/services/db";
 
-const { updateSingleCodewarsUser, initializeDiamonds, reconnectCodewarsUser } =
-  new DatabaseService();
+const { reconnectCodewarsUser } = new DatabaseService();
 // const { getUsers } = new dbAPIService();
 const initializeAndStoreNewUserToDatabase = async ({
   validatedUsername,
@@ -32,7 +31,7 @@ const initializeAndStoreNewUserToDatabase = async ({
   // });
 
   // initializeDiamonds(email);
-  return 
+  return;
 };
 
 export default initializeAndStoreNewUserToDatabase;

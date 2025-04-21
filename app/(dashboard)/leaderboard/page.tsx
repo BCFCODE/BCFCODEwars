@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import Body from "./Body";
 import LeaderboardLoadingError from "./Error";
 import LeaderboardHeader from "./Head/Header";
+import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 
 interface Props {
   allUsersInSignInPage: AuthenticatedUser[];
@@ -22,7 +23,8 @@ export default function LeaderBoardPage({ allUsersInSignInPage }: Props) {
   const router = useRouter();
   // // Consume the error state from context to trigger re-render when it updates.
   const dispatch = useAllUsersDispatchContext();
-  const { error, isLoading } = useAllUsersContext();
+  // const { error, isLoading } = useAllUsersContext();
+  const { isError, isLoading } = useUsersQuery();
   // const { isCollapsed, currentUser } = useCurrentUserContext();
 
   useEffect(() => {
@@ -46,11 +48,7 @@ export default function LeaderBoardPage({ allUsersInSignInPage }: Props) {
     }
   }, [allUsersInSignInPage, dispatch]);
 
-  // console.log(">>>>>>>>>>>> useAllUsersContext error", error);
-  // // Conditionally render the error UI when error is true.
-
-  // console.log('isError in loading leaderboard', error)
-  if (error)
+  if (isError)
     return <LeaderboardLoadingError onRetry={() => router.refresh()} />;
 
   if (isLoading)
@@ -61,7 +59,7 @@ export default function LeaderBoardPage({ allUsersInSignInPage }: Props) {
       />
     );
 
-  if (!error)
+  if (!isError)
     return (
       <CodewarsProvider>
         <TableContainer component={Paper}>

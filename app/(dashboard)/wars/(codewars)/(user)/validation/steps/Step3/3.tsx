@@ -1,19 +1,13 @@
 "use client";
 
+import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
+import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
 import initializeAndStoreNewUserToDatabase from "./connectUser";
-import { useUsersStore } from "@/app/store/users";
-import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
-import dbAPIService from "@/app/api/services/db";
-import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
-// import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-
-// const { getUsers } = new dbAPIService();
 
 const Step3 = ({
   currentStep,
@@ -21,16 +15,17 @@ const Step3 = ({
   session,
   codewars,
 }: StepProps) => {
-  // const { data: allUsers } = useUsersQuery();
-  // const { data: currentUser } = useCurrentUserQuery();
-  
-  // console.log(
-  //   "Step3/currentUser and allUsers from useCurrentUserQuery and useUsersQuery ",
-  //   currentUser,
-  //   allUsers
-  // );
   const router = useRouter();
-  const dispatchAllUsers = useAllUsersDispatchContext();
+  const { data: allUsers } = useUsersQuery();
+  const { data: currentUser } = useCurrentUserQuery();
+
+  console.log(
+    "Step3/currentUser and allUsers from useCurrentUserQuery and useUsersQuery ",
+    currentUser,
+    allUsers,
+    codewars
+  );
+
   const handleOnYes = async () => {
     // const { users, success } = await getUsers({ cache: "no-store" });
     // console.log("fetchedUsers", users, users?.find((user) => user.email === codewars.email));

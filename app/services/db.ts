@@ -314,18 +314,6 @@ class DatabaseService {
 
       const codewarsCollection = db.collection("codewars");
       const diamondsCollection = db.collection("diamonds");
-      const usersCollection = db.collection("users");
-
-      await usersCollection.updateOne(
-        { email },
-        {
-          $set: {
-            // name: codewars.name,
-            "activity.isActiveSession": true,
-          },
-        },
-        { upsert: true, session }
-      );
 
       await diamondsCollection.replaceOne(
         { email },

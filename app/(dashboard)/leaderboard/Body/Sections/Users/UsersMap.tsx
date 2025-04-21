@@ -9,8 +9,8 @@ interface Props {
 }
 
 const UsersMap = ({ children }: Props) => {
-  // const {data: allUsers} = useUsersQuery()
-  const { allUsers } = useAllUsersContext();
+  const { data: allUsers } = useUsersQuery();
+  // const { allUsers } = useAllUsersContext();
 
   // console.log('allUsers in UsersMap', allUsers)
   return allUsers?.map((currentUser: AuthenticatedUser) => (

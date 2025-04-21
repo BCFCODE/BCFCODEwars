@@ -14,12 +14,7 @@ import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
 const DiamondsCell = () => {
   const { data: diamondsData, isError, isLoading } = useDiamondsContext();
   const { currentUser } = useCurrentUserContext();
-  // const { allUsers } = useAllUsersContext();
 
-  // currentUserDispatch({
-  //   type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
-  //   reward: collectedDiamondsCount,
-  // });
   const isCurrentUser = currentUser.email === diamondsData?.email;
 
   // const diamondsSum = isCurrentUser ? currentUser.diamonds.totals.total : 0;
