@@ -16,7 +16,7 @@ const useDispatchActions = () => {
   const codewarsDispatch = useCodewarsDispatchContext();
 
   let untrackedChallengesAvailable =
-    currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false;
+    currentUser.codewars?.codeChallenges?.untrackedChallengesAvailable ?? false;
   // useMemo(() => {
   //   return (
   //     currentUser.codewars.codeChallenges?.untrackedChallengesAvailable ?? false

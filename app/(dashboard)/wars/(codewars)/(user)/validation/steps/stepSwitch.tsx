@@ -24,7 +24,7 @@ const Steps = async ({ currentStep, validatedUsername }: Props) => {
     `https://www.codewars.com/api/v1/users/${validatedUsername}`,
     { cache: "no-store" }
   );
-
+  
   const codewars = await response.json();
 
   const stepProps: StepProps = {

@@ -7,7 +7,11 @@ import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
 import initializeAndStoreNewUserToDatabase from "./connectUser";
 import { useUsersStore } from "@/app/store/users";
+import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
+import dbAPIService from "@/app/api/services/db";
 // import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+
+// const { getUsers } = new dbAPIService();
 
 const Step3 = ({
   currentStep,
@@ -18,14 +22,21 @@ const Step3 = ({
   const { currentUser } = useUsersStore((state) => state);
   console.log("Step3/currentUser", currentUser);
   const router = useRouter();
-
-  const handleOnYes = () => {
+  const dispatchAllUsers = useAllUsersDispatchContext();
+  const handleOnYes = async () => {
+    // const { users, success } = await getUsers({ cache: "no-store" });
+    // console.log("fetchedUsers", users, users?.find((user) => user.email === codewars.email));
     initializeAndStoreNewUserToDatabase({
       currentStep,
       validatedUsername,
       session,
       codewars,
     });
+    // if (users)
+    //   dispatchAllUsers({
+    //     type: "SET_ALL_USERS",
+    //     payload: users.find((user) => user.email === codewars.email),
+    //   });
     router.replace(`${currentStep + 1}`);
   };
 

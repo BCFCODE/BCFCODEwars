@@ -1,13 +1,7 @@
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
-import { Diamonds } from "@/types/diamonds";
+import { CodeChallengesFilter, Diamonds } from "@/types/diamonds";
 import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
-import {
-  ClientSession,
-  Collection,
-  Db,
-  Document,
-  MongoClient
-} from "mongodb";
+import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
 
 class DatabaseService {
   private clientPromise: Promise<MongoClient>;
@@ -220,7 +214,7 @@ class DatabaseService {
       await codewars.updateOne(
         { email },
         { $set: { "codeChallenges.list": list } },
-        { session }
+        { upsert: true, session }
       );
 
       await diamonds.updateOne(
@@ -231,7 +225,7 @@ class DatabaseService {
             totals: { ...totals },
           },
         },
-        { session }
+        { upsert: true, session }
       );
 
       await session.commitTransaction();
@@ -239,6 +233,86 @@ class DatabaseService {
     } catch (error) {
       await session.abortTransaction();
       // console.error("Transaction failed and was aborted!", error);
+    } finally {
+      session.endSession();
+    }
+  };
+
+  reconnectCodewarsUser = async ({
+    email,
+    validatedUsername,
+    codewars,
+  }: {
+    email: string;
+    validatedUsername: string;
+    codewars: CodewarsUser;
+  }) => {
+    const { db, session } = await this.startClientSession();
+
+    try {
+      session.startTransaction();
+
+      const codewarsCollection = db.collection("codewars");
+      const diamondsCollection = db.collection("diamonds");
+      const usersCollection = db.collection("users");
+
+      await usersCollection.updateOne(
+        { email },
+        {
+          $set: {
+            // name: codewars.name,
+            "activity.isActiveSession": true,
+          },
+        },
+        { upsert: true, session }
+      );
+
+      await diamondsCollection.replaceOne(
+        { email },
+        {
+          email,
+          codewars: [],
+          totals: {
+            codewars: {
+              ranks: {
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 0,
+                6: 0,
+                7: 0,
+              },
+              total: 0,
+            },
+            missions: 0,
+            total: 0,
+          },
+        },
+        { upsert: true, session }
+      );
+
+      await codewarsCollection.replaceOne(
+        { email },
+        {
+          ...codewars,
+          isConnected: true,
+          clan: codewars.clan,
+          codeChallenges: {
+            ...codewars.codeChallenges,
+            challengeFilter: CodeChallengesFilter.ClaimedDiamonds,
+            list: [],
+          },
+          username: validatedUsername,
+        },
+        { upsert: true, session }
+      );
+
+      await session.commitTransaction();
+      console.log("Transaction committed successfully.");
+    } catch (error) {
+      await session.abortTransaction();
+      console.error("Transaction failed and was aborted!", error);
     } finally {
       session.endSession();
     }

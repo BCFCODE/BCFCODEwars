@@ -7,7 +7,7 @@ import useHandleOpen from "./hooks/useHandleOpen";
 const OpenButton = () => {
   const { isCollapsed, currentUser } = useCurrentUserContext();
   const { handleOpen } = useHandleOpen();
-
+console.log('OpenButton/currentUser.codewars?.isConnected', currentUser)
   return (
     <>
       {/* Expand/Collapse button */}
