@@ -3,18 +3,41 @@ import { auth } from "@/auth";
 import { AuthenticatedUser } from "@/types/users";
 import { NextRequest, NextResponse } from "next/server";
 
-const { updateCurrentUser } = new DatabaseService();
+const { updateCurrentUser, getCurrentUser } = new DatabaseService();
 
-export async function GET(request: NextRequest) {
-  
-  const session = await auth();
+export async function GET(request: NextRequest): Promise<
+  NextResponse<{
+    success: boolean;
+    currentUser?: AuthenticatedUser;
+    error?: string;
+  }>
+> {
+  const { searchParams } = new URL(request.url);
+  const email = searchParams.get("email");
+
+  if (!email) {
+    return NextResponse.json(
+      { success: false, error: "Missing email parameter" },
+      { status: 400 }
+    );
+  }
 
   try {
-    if (session)
-      return NextResponse.json({ success: true, session }, { status: 200 });
-    return NextResponse.json({ success: false, session }, { status: 401 });
+    const currentUser = await getCurrentUser(email);
+
+    if (!currentUser) {
+      return NextResponse.json(
+        { success: false, error: "currentUser not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ success: true, currentUser });
   } catch (error) {
-    return NextResponse.json({ success: false, session }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: "Server error" },
+      { status: 500 }
+    );
   }
 }
 

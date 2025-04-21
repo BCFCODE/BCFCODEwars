@@ -43,6 +43,40 @@ class dbAPIService {
     }
   };
 
+  getCurrentUser = async (
+    email: string,
+    options?: RequestInit
+  ): Promise<{
+    success: boolean;
+    currentUser?: AuthenticatedUser;
+    error?: string;
+  }> => {
+    try {
+      const response = await fetch(
+        `${this.endpoint}/currentUser?email=${encodeURIComponent(email)}`,
+        {
+          ...options,
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (!response.ok) {
+        console.error("Error: Unable to fetch currentUser.");
+        return {
+          success: false,
+          error:
+            "Failed to fetch user data. Please check the console for details.",
+        };
+      }
+      const { currentUser } = await response.json();
+
+      return { success: true, currentUser };
+    } catch (error) {
+      console.error("Error aggregate and fetching currentUser from database");
+      return { success: false, error: "Error fetching currentUser" };
+    }
+  };
+
   postCurrentUser = async (
     currentUser: AuthenticatedUser
   ): Promise<{ success: boolean }> => {
