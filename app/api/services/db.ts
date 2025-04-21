@@ -1,4 +1,3 @@
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { AuthenticatedUser, DatabaseUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 
@@ -44,6 +43,40 @@ class dbAPIService {
     }
   };
 
+  getCurrentUser = async (
+    email: string,
+    options?: RequestInit
+  ): Promise<{
+    success: boolean;
+    currentUser?: AuthenticatedUser;
+    error?: string;
+  }> => {
+    try {
+      const response = await fetch(
+        `${this.endpoint}/currentUser?email=${encodeURIComponent(email)}`,
+        {
+          ...options,
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (!response.ok) {
+        console.error("Error: Unable to fetch currentUser.");
+        return {
+          success: false,
+          error:
+            "Failed to fetch user data. Please check the console for details.",
+        };
+      }
+      const { currentUser } = await response.json();
+
+      return { success: true, currentUser };
+    } catch (error) {
+      console.error("Error aggregate and fetching currentUser from database");
+      return { success: false, error: "Error fetching currentUser" };
+    }
+  };
+
   postCurrentUser = async (
     currentUser: AuthenticatedUser
   ): Promise<{ success: boolean }> => {
@@ -65,6 +98,28 @@ class dbAPIService {
       return { success: false };
     }
   };
+
+  // getSession = async (
+  //   currentUser: AuthenticatedUser
+  // ): Promise<{ success: boolean }> => {
+  //   try {
+  //     const response = await fetch(`${this.endpoint}/currentUser`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(currentUser),
+  //     });
+
+  //     if (!response.ok) {
+  //       // Optionally handle non-200 status codes here.
+  //       // throw new Error(`Request failed with status ${response.status}`);
+  //       return { success: false };
+  //     }
+
+  //     return { success: true };
+  //   } catch (error) {
+  //     return { success: false };
+  //   }
+  // };
 }
 
 export default dbAPIService;

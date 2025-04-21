@@ -26,7 +26,7 @@ const Message = async ({ isSynced, userName }: Props) => {
           textAlign: "left",
         }}
       >
-        You're currently connected as {userName}. If that’s incorrect, feel free
+        You’re currently connected as {userName}. If that’s incorrect, feel free
         to reconnect and update your username.
         <Warning />
       </Typography>

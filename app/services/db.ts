@@ -116,6 +116,66 @@ class DatabaseService {
     return users.findOne<DatabaseUser>({ email });
   };
 
+  getCurrentUser = async (email: string): Promise<AuthenticatedUser | null> => {
+    const { users } = await this.getCollections();
+
+    const [currentUser] = await users
+      .aggregate<AuthenticatedUser>([
+        // 1. Only match the user we're interested in
+        { $match: { email } },
+
+        // 2. Join with diamonds collection
+        {
+          $lookup: {
+            from: "diamonds",
+            localField: "email",
+            foreignField: "email",
+            as: "diamonds",
+          },
+        },
+        {
+          $unwind: {
+            path: "$diamonds",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+
+        // 3. Join with codewars collection
+        {
+          $lookup: {
+            from: "codewars",
+            localField: "email",
+            foreignField: "email",
+            as: "codewars",
+          },
+        },
+        {
+          $unwind: {
+            path: "$codewars",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+
+        // 4. Shape the result to match AuthenticatedUser
+        {
+          $project: {
+            _id: 0,
+            email: 1,
+            name: 1,
+            image: 1,
+            firstLogin: 1,
+            lastLogin: 1,
+            activity: 1,
+            diamonds: 1,
+            codewars: 1,
+          },
+        },
+      ])
+      .toArray();
+
+    return currentUser ?? null;
+  };
+
   saveNewGoogleUser = async (user: GoogleUser) => {
     const { users } = await this.getCollections();
     await users.insertOne({
