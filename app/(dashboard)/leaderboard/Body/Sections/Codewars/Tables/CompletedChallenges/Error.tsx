@@ -17,7 +17,7 @@ const Error = () => {
         We couldn’t fetch your challenge list from Codewars. This might be due
         to a network issue or a temporary error on Codewars’ end.
         <br />
-        If you've recently changed your username or deleted your account, try
+        If you’ve recently changed your username or deleted your account, try
         reconnecting.
         <Typography
           component="span"
