@@ -9,6 +9,7 @@ import initializeAndStoreNewUserToDatabase from "./connectUser";
 import { useUsersStore } from "@/app/store/users";
 import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
 import dbAPIService from "@/app/api/services/db";
+import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 // import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 // const { getUsers } = new dbAPIService();
@@ -19,8 +20,13 @@ const Step3 = ({
   session,
   codewars,
 }: StepProps) => {
+  const { data: allUsers } = useUsersQuery();
   const { currentUser } = useUsersStore((state) => state);
-  console.log("Step3/currentUser", currentUser);
+  console.log(
+    "Step3/currentUser and allUsers from useUsersQuery",
+    currentUser,
+    allUsers
+  );
   const router = useRouter();
   const dispatchAllUsers = useAllUsersDispatchContext();
   const handleOnYes = async () => {

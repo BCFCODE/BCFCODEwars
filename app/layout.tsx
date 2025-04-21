@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { montserrat } from "../lib/fonts";
+import { montserrat } from "./styles/fonts";
 import Providers from "./context/providers";
 import "./styles/global.css";
 

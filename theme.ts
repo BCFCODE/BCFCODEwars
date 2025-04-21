@@ -1,7 +1,7 @@
 "use client";
 
 import { createTheme } from "@mui/material/styles";
-import { montserrat } from "./lib/fonts";
+import { montserrat } from "./app/styles/fonts";
 
 declare module "@mui/material/styles" {
   interface Palette {
@@ -30,7 +30,7 @@ const theme = createTheme({
     customPalette: {
       roseGold: "#B76E79", // A softer, modern take on luxury with a pinkish-gold hue.
       goldOchre: "#E1AD52", // A warm, muted golden-yellow that pairs luxuriously with rose gold.
-    /* 
+      /* 
       Elegant & Soft Yellow Tones (Best Matches with Rose Gold)
         Gold Ochre (#E1AD52) – A warm, muted golden-yellow that pairs luxuriously with rose gold.
         Amber Glow (#FFC76D) – A soft amber shade that gives a warning feel without being harsh.

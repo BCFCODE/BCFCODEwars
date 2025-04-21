@@ -1,4 +1,3 @@
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { AuthenticatedUser, DatabaseUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 
@@ -65,6 +64,28 @@ class dbAPIService {
       return { success: false };
     }
   };
+
+  // getSession = async (
+  //   currentUser: AuthenticatedUser
+  // ): Promise<{ success: boolean }> => {
+  //   try {
+  //     const response = await fetch(`${this.endpoint}/currentUser`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(currentUser),
+  //     });
+
+  //     if (!response.ok) {
+  //       // Optionally handle non-200 status codes here.
+  //       // throw new Error(`Request failed with status ${response.status}`);
+  //       return { success: false };
+  //     }
+
+  //     return { success: true };
+  //   } catch (error) {
+  //     return { success: false };
+  //   }
+  // };
 }
 
 export default dbAPIService;

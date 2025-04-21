@@ -23,6 +23,14 @@ import theme from "@/theme";
 import { auth } from "@/auth";
 import AllUsersProvider from "./AllUsers";
 import DiamondsProvider from "./Diamonds";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
+import dbAPIService from "@/app/api/services/db";
+
+const { getUsers } = new dbAPIService();
 
 export const metadata: Metadata = {
   title: {
@@ -131,34 +139,48 @@ interface Props {
 }
 
 const Providers = async ({ children }: Props) => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["allUsers"],
+    queryFn: async () => {
+      const { users: allUsers } = await getUsers({ cache: "no-store" });
+      return allUsers;
+    },
+  });
+
+  const dehydratedState = dehydrate(queryClient);
+
   // Await headers() and ensure its operations are performed synchronously after awaiting
   const headersList = await headers();
   const forwardedProto = headersList.get("x-forwarded-proto");
 
   // Await the auth call after resolving headers
   const session: Session | null = await auth(); // Now fully async
-
+  console.log("Providers/session", session);
   return (
     <body>
       <SessionProvider session={session}>
         <ReactQueryProvider>
-          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-            <React.Suspense fallback={<LinearProgress />}>
-              <NextAppProvider
-                navigation={NAVIGATION}
-                branding={BRANDING}
-                session={session}
-                authentication={AUTHENTICATION}
-                theme={theme}
-              >
-                <AllUsersProvider>
-                  <DiamondsProvider>{children}</DiamondsProvider>
-                </AllUsersProvider>
-                <Analytics />
-                <SpeedInsights />
-              </NextAppProvider>
-            </React.Suspense>
-          </AppRouterCacheProvider>
+          <HydrationBoundary state={dehydratedState}>
+            <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+              <React.Suspense fallback={<LinearProgress />}>
+                <NextAppProvider
+                  navigation={NAVIGATION}
+                  branding={BRANDING}
+                  session={session}
+                  authentication={AUTHENTICATION}
+                  theme={theme}
+                >
+                  <AllUsersProvider>
+                    <DiamondsProvider>{children}</DiamondsProvider>
+                  </AllUsersProvider>
+                  <Analytics />
+                  <SpeedInsights />
+                </NextAppProvider>
+              </React.Suspense>
+            </AppRouterCacheProvider>
+          </HydrationBoundary>
         </ReactQueryProvider>
       </SessionProvider>
     </body>
