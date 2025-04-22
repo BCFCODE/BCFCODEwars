@@ -225,6 +225,33 @@ class DatabaseService {
     return await codewars.findOne<CodewarsUser>({ email });
   };
 
+  resetDiamonds = async (email: string) => {
+    const { diamonds } = await this.getCollections();
+    await diamonds.replaceOne(
+      { email },
+      {
+        email,
+        codewars: [],
+        totals: {
+          codewars: {
+            ranks: {
+              1: 0,
+              2: 0,
+              3: 0,
+              4: 0,
+              5: 0,
+              6: 0,
+              7: 0,
+            },
+            total: 0,
+          },
+          missions: 0,
+          total: 0,
+        },
+      }
+    );
+  };
+
   initializeDiamonds = async (email: string) => {
     const { diamonds } = await this.getCollections();
     await diamonds.insertOne({
@@ -298,6 +325,71 @@ class DatabaseService {
     }
   };
 
+  connectCodewarsUser = async ({
+    email,
+    initializedCodewarsUser,
+  }: {
+    email: string;
+    initializedCodewarsUser: CodewarsUser;
+  }) => {
+    const { db, session } = await this.startClientSession();
+    console.log("initializedCodewarsUser", initializedCodewarsUser);
+    try {
+      session.startTransaction();
+
+      const usersCollection = db.collection("users");
+      const codewarsCollection = db.collection("codewars");
+      const diamondsCollection = db.collection("diamonds");
+
+      await usersCollection.updateOne(
+        { email },
+        { $set: { name: initializedCodewarsUser.name } }
+      );
+
+      await codewarsCollection.updateOne(
+        { email },
+        { $set: { ...initializedCodewarsUser } },
+        {
+          upsert: true,
+          session,
+        }
+      );
+
+      await diamondsCollection.replaceOne(
+        { email },
+        {
+          email,
+          codewars: [],
+          totals: {
+            codewars: {
+              ranks: {
+                1: 0,
+                2: 0,
+                3: 0,
+                4: 0,
+                5: 0,
+                6: 0,
+                7: 0,
+              },
+              total: 0,
+            },
+            missions: 0,
+            total: 0,
+          },
+        },
+        { upsert: true, session }
+      );
+
+      await session.commitTransaction();
+      console.log("Transaction committed successfully.");
+    } catch (error) {
+      await session.abortTransaction();
+      console.error("Transaction failed and was aborted!", error);
+    } finally {
+      session.endSession();
+    }
+  };
+
   reconnectCodewarsUser = async ({
     email,
     clan,
@@ -361,7 +453,7 @@ class DatabaseService {
       );
 
       await session.commitTransaction();
-      console.log("Transaction committed successfully.");
+      console.log("reconnectCodewarsUser Transaction committed successfully.");
     } catch (error) {
       await session.abortTransaction();
       console.error("Transaction failed and was aborted!", error);
@@ -370,7 +462,7 @@ class DatabaseService {
     }
   };
 
-  updateSingleCodewarsUser = async <T>(email: string = "", update: T) => {
+  updateSingleCodewarsUser = async <T>(email: string, update: T) => {
     const { codewars } = await this.getCollections();
     await codewars.updateOne(
       { email },
