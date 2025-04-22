@@ -333,7 +333,7 @@ class DatabaseService {
     initializedCodewarsUser: CodewarsUser;
   }) => {
     const { db, session } = await this.startClientSession();
-    console.log("initializedCodewarsUser", initializedCodewarsUser);
+    // console.log("initializedCodewarsUser", initializedCodewarsUser);
     try {
       session.startTransaction();
 
@@ -355,28 +355,30 @@ class DatabaseService {
         }
       );
 
-      await diamondsCollection.replaceOne(
-        { email },
-        {
-          email,
-          codewars: [],
-          totals: {
-            codewars: {
-              ranks: {
-                1: 0,
-                2: 0,
-                3: 0,
-                4: 0,
-                5: 0,
-                6: 0,
-                7: 0,
-              },
-              total: 0,
+      const initializeDiamonds = {
+        email,
+        codewars: [],
+        totals: {
+          codewars: {
+            ranks: {
+              1: 0,
+              2: 0,
+              3: 0,
+              4: 0,
+              5: 0,
+              6: 0,
+              7: 0,
             },
-            missions: 0,
             total: 0,
           },
+          missions: 0,
+          total: 0,
         },
+      };
+
+      await diamondsCollection.updateOne(
+        { email },
+        { $set: { ...initializeDiamonds } },
         { upsert: true, session }
       );
 

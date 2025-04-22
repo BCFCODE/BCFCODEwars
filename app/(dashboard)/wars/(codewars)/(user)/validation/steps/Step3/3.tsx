@@ -31,7 +31,7 @@ const Step3 = ({
   const handleOnYes = async () => {
     console.log("handleOnYes called!", codewars);
     if (codewars.isConnected) {
-      console.log("codewars is connected so reconnect");
+      // console.log("codewars is connected so reconnect");
       reconnect({
         name: codewars.name ?? "",
         username: validatedUsername,
