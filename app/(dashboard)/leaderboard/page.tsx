@@ -6,7 +6,7 @@ import CodewarsProvider from "@/app/context/providers/Codewars";
 import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter } from "next/navigation";
 import LeaderboardLoadingError from "./Error";
-import LeaderboardHeader from "./Head/Header";
+import LeaderboardHeader from "./UsersTable/Header";
 import UsersTable from "./UsersTable";
 
 export default function LeaderBoardPage() {
