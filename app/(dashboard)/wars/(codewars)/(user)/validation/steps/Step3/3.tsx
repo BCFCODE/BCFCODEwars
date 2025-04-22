@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
-import initializeAndStoreNewUserToDatabase from "./connectUser";
+import reconnect from "./reconnect";
+import connect from "./connect";
+import { CodeChallengesFilter } from "@/types/diamonds";
 
 const Step3 = ({
   currentStep,
@@ -16,24 +18,41 @@ const Step3 = ({
   codewars,
 }: StepProps) => {
   const router = useRouter();
-  const { data: allUsers } = useUsersQuery();
+  // const { data: allUsers } = useUsersQuery();
   const { data: currentUser } = useCurrentUserQuery();
 
-  console.log(
-    "Step3/currentUser and allUsers from useCurrentUserQuery and useUsersQuery ",
-    currentUser,
-    allUsers,
-    codewars
-  );
+  // console.log(
+  //   "Step3/currentUser and allUsers from useCurrentUserQuery and useUsersQuery ",
+  //   currentUser,
+  //   allUsers,
+  //   codewars
+  // );
 
   const handleOnYes = async () => {
-    initializeAndStoreNewUserToDatabase({
-      name: codewars.name ?? "",
-      username: validatedUsername,
-      email: session?.user?.email ?? "",
-      clan: codewars.clan ?? "",
-    });
-
+    console.log("handleOnYes called!", codewars);
+    if (codewars.isConnected) {
+      console.log("codewars is connected so reconnect");
+      reconnect({
+        name: codewars.name ?? "",
+        username: validatedUsername,
+        email: session?.user?.email ?? "",
+        clan: codewars.clan ?? "",
+      });
+    } else {
+      // console.log("codewars is not connected so connect");
+      const initializedCodewarsUser = {
+        ...codewars,
+        isConnected: true,
+        codeChallenges: {
+          ...codewars.codeChallenges,
+          challengeFilter: CodeChallengesFilter.ClaimedDiamonds,
+          list: [],
+        },
+        username: validatedUsername,
+      };
+      console.log("initializedCodewarsUser", initializedCodewarsUser);
+      connect({ email: currentUser?.email ?? "", initializedCodewarsUser });
+    }
     router.replace(`${currentStep + 1}`);
   };
 

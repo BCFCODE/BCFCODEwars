@@ -1,12 +1,10 @@
 "use server";
 
 import DatabaseService from "@/app/services/db";
-import { StepProps } from "../stepSwitch";
-import { Session } from "next-auth";
 
 const { reconnectCodewarsUser } = new DatabaseService();
 // const { getUsers } = new dbAPIService();
-const initializeAndStoreNewUserToDatabase = async ({
+const reconnect = async ({
   name,
   username,
   email,
@@ -18,8 +16,6 @@ const initializeAndStoreNewUserToDatabase = async ({
   clan: string;
 }) => {
   reconnectCodewarsUser({ email, name, username, clan });
-
-  return;
 };
 
-export default initializeAndStoreNewUserToDatabase;
+export default reconnect;

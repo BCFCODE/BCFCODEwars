@@ -156,7 +156,7 @@ const Providers = async ({ children }: Props) => {
 
   // Await the auth call after resolving headers
   const session: Session | null = await auth(); // Now fully async
-  console.log("Providers/session", session);
+  // console.log("Providers/session", session);
   return (
     <body>
       <SessionProvider session={session}>
