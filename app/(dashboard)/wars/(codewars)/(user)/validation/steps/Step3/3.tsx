@@ -28,10 +28,10 @@ const Step3 = ({
 
   const handleOnYes = async () => {
     initializeAndStoreNewUserToDatabase({
-      currentStep,
-      validatedUsername,
-      session,
-      codewars,
+      name: codewars.name ?? "",
+      username: validatedUsername,
+      email: session?.user?.email ?? "",
+      clan: codewars.clan ?? "",
     });
 
     router.replace(`${currentStep + 1}`);

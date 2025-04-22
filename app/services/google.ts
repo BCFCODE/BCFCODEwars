@@ -23,7 +23,7 @@ class GoogleService {
     } else {
       updateSingleUser(existingUser.email, {
         ...existingUser,
-        name,
+        // name,
         image,
         lastLogin: new Date(),
         activity: {

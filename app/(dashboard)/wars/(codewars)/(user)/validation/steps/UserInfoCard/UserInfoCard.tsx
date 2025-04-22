@@ -37,6 +37,12 @@ const UserInfoCard = ({
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Typography
             variant="body1"
+            sx={{ fontWeight: 500, color: "text.secondary" }}
+          >
+            <strong>Name:</strong> {codewars?.name ?? "N/A"}
+          </Typography>
+          <Typography
+            variant="body1"
             sx={{ fontWeight: 600, color: "text.primary" }}
           >
             <strong>User Name:</strong> {validatedUsername}
@@ -53,12 +59,7 @@ const UserInfoCard = ({
           >
             <strong>Overall Rank:</strong> {overallRank}
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontWeight: 500, color: "text.secondary" }}
-          >
-            <strong>Name:</strong> {codewars?.name ?? "N/A"}
-          </Typography>
+
           <Typography
             variant="body1"
             sx={{ fontWeight: 500, color: "text.secondary" }}

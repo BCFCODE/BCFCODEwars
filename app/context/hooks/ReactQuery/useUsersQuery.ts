@@ -4,14 +4,18 @@ import dbAPIService from "@/app/api/services/db";
 import { AuthenticatedUser } from "@/types/users";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const { getUsers } = new dbAPIService();
 
 const useUsersQuery = () => {
   const { data: session } = useSession();
+  const pathName = usePathname();
+
+  const shouldRefetch = pathName === "/leaderboard";
 
   return useQuery<AuthenticatedUser[]>({
-    queryKey: ["allUsers"],
+    queryKey: shouldRefetch ? ["allUsers", "leaderboard"] : ["allUsers"],
     queryFn: async () => {
       const response = await getUsers({ cache: "no-store" });
 

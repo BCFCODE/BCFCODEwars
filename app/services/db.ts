@@ -106,16 +106,6 @@ class DatabaseService {
       .toArray();
   };
 
-  getCodewarsUsers = async (): Promise<CodewarsUser[]> => {
-    const { codewars } = await this.getCollections();
-    return await codewars.find<CodewarsUser>({}).toArray();
-  };
-
-  getUser = async (email: string): Promise<DatabaseUser | null> => {
-    const { users } = await this.getCollections();
-    return users.findOne<DatabaseUser>({ email });
-  };
-
   getCurrentUser = async (email: string): Promise<AuthenticatedUser | null> => {
     const { users } = await this.getCollections();
 
@@ -174,6 +164,16 @@ class DatabaseService {
       .toArray();
 
     return currentUser ?? null;
+  };
+
+  getCodewarsUsers = async (): Promise<CodewarsUser[]> => {
+    const { codewars } = await this.getCollections();
+    return await codewars.find<CodewarsUser>({}).toArray();
+  };
+
+  getUser = async (email: string): Promise<DatabaseUser | null> => {
+    const { users } = await this.getCollections();
+    return users.findOne<DatabaseUser>({ email });
   };
 
   saveNewGoogleUser = async (user: GoogleUser) => {
@@ -300,22 +300,27 @@ class DatabaseService {
 
   reconnectCodewarsUser = async ({
     email,
-    validatedUsername,
-    codewars,
+    clan,
+    username,
+    name,
   }: {
     email: string;
-    validatedUsername: string;
-    codewars: CodewarsUser;
+    clan: string;
+    username: string;
+    name: string;
   }) => {
     const { db, session } = await this.startClientSession();
 
     try {
       session.startTransaction();
 
-      const codewarsCollection = db.collection("codewars");
-      const diamondsCollection = db.collection("diamonds");
+      const users = db.collection("users");
+      const codewars = db.collection("codewars");
+      const diamonds = db.collection("diamonds");
 
-      await diamondsCollection.replaceOne(
+      await users.updateOne({ email }, { $set: { name } });
+
+      await diamonds.replaceOne(
         { email },
         {
           email,
@@ -340,18 +345,17 @@ class DatabaseService {
         { upsert: true, session }
       );
 
-      await codewarsCollection.replaceOne(
+      await codewars.updateOne(
         { email },
         {
-          ...codewars,
-          isConnected: true,
-          clan: codewars.clan,
-          codeChallenges: {
-            ...codewars.codeChallenges,
-            challengeFilter: CodeChallengesFilter.ClaimedDiamonds,
-            list: [],
+          $set: {
+            isConnected: true,
+            clan,
+            "codeChallenges.challengeFilter":
+              CodeChallengesFilter.ClaimedDiamonds,
+            "codeChallenges.list": [],
+            username,
           },
-          username: validatedUsername,
         },
         { upsert: true, session }
       );

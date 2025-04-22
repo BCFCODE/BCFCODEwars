@@ -21,11 +21,7 @@ export const metadata: Metadata = {
 //   submitButton: SubmitButton,
 // };
 
-const { getUsers } = new dbAPIService();
-
 export default async function SignIn() {
-  const fetchedUsers = await getUsers({ cache: "no-store" });
-
   return (
     <Box>
       <Box sx={leaderboardStyles}>

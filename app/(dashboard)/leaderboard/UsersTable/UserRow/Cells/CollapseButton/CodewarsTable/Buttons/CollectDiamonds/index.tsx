@@ -16,6 +16,8 @@ import { Box, IconButton, Typography } from "@mui/material";
 import handleClick from "./utils/handleClick";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCollectDiamonds from "./hooks/useCollectDiamonds";
+import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
+import { useSession } from "next-auth/react";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 
@@ -24,6 +26,7 @@ interface Props {
 }
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
+  const session = useSession().data;
   const { currentUser } = useCurrentUserContext();
   const {
     isLoading,
@@ -38,8 +41,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     collectButtonDispatch,
   } = useCollectDiamonds();
   // console.log("currentUser in CollectDiamonds >>>>", currentUser);
-  const isUserOnPersonalDashboard =
-    currentUser.session?.user?.email === currentUser.email;
+  const isUserOnPersonalDashboard = session?.user?.email === currentUser.email;
   // console.log(
   //   "isUserOnPersonalDashboard in CollectDiamonds",
   //   isUserOnPersonalDashboard,
