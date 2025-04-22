@@ -6,7 +6,7 @@ interface Props {
   children: ReactNode;
 }
 
-const CollapseSection = ({ children }: Props) => {
+const CollapseBoundary = ({ children }: Props) => {
   const { isCollapsed } = useCurrentUserContext();
   return (
     <TableRow>
@@ -19,4 +19,4 @@ const CollapseSection = ({ children }: Props) => {
   );
 };
 
-export default CollapseSection;
+export default CollapseBoundary;

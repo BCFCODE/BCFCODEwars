@@ -1,11 +1,11 @@
+import { Box, Table } from "@mui/material";
 import LoadingUI from "@/app/components/UI/LoadingUI";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import { Table } from "@mui/material";
+import Head from "./Head";
 import Body from "./Body";
 import Error from "./Error";
-import Head from "./Head";
 
-const CompletedChallengesTable = () => {
+const CodewarsTable = () => {
   const { isError, isLoading } = useCodewarsContext();
 
   if (isError) return <Error />;
@@ -19,11 +19,13 @@ const CompletedChallengesTable = () => {
     );
 
   return (
-    <Table size="small" aria-label="completed challenges">
-      <Head />
-      <Body />
-    </Table>
+    <Box sx={{ margin: 1 }}>
+      <Table size="small" aria-label="completed challenges">
+        <Head />
+        <Body />
+      </Table>
+    </Box>
   );
 };
 
-export default CompletedChallengesTable;
+export default CodewarsTable;

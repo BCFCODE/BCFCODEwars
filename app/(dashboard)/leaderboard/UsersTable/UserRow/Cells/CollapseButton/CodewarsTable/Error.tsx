@@ -3,7 +3,7 @@ import ErrorUI from "@/app/components/UI/Error/ErrorUI";
 import { Button, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import Link from "next/link";
-import useChallengeList from "../../../Collapse/hooks/useDiffAndUpdateList";
+import useChallengeList from "../hooks/useDiffAndUpdateList";
 
 const Error = () => {
   const {

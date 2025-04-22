@@ -1,6 +1,6 @@
 import { TableCell } from "@mui/material";
 import React from "react";
-import OpenButton from "../../Collapse/OpenButton";
+import OpenButton from "./CollapseButton/OpenButton";
 import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
 
 const ButtonCell = () => {

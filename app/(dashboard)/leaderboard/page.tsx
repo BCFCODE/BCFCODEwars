@@ -5,9 +5,9 @@ import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 import CodewarsProvider from "@/app/context/providers/Codewars";
 import { Paper, Table, TableContainer } from "@mui/material";
 import { useRouter } from "next/navigation";
-import Body from "./Body";
 import LeaderboardLoadingError from "./Error";
 import LeaderboardHeader from "./Head/Header";
+import UsersTable from "./UsersTable";
 
 export default function LeaderBoardPage() {
   const router = useRouter();
@@ -31,7 +31,7 @@ export default function LeaderBoardPage() {
         <TableContainer component={Paper}>
           <Table aria-label="Leaderboard Table">
             <LeaderboardHeader />
-            <Body />
+            <UsersTable />
           </Table>
         </TableContainer>
       </CodewarsProvider>
