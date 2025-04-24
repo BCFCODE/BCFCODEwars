@@ -1,4 +1,4 @@
-import { AuthenticatedUser, DatabaseUser } from "@/types/users";
+import { AuthenticatedUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 import { GetUsersResponse } from "../db/users/route";
 
@@ -29,7 +29,10 @@ class dbAPIService {
 
       return (await response.json()) as GetUsersResponse;
     } catch (error) {
-      console.error("Error fetching user data from database");
+      console.error("Error fetching user data from database", error);
+      // throw new Error(
+      //   "Error: Unable to fetch user data. This might be due to a network issue, an invalid API endpoint, or server unavailability. Please check your internet connection and try again. If the problem persists, contact support or review the server status."
+      // );
       return { success: false, list: [], error: "Error fetching user data" };
     }
   };
@@ -52,12 +55,15 @@ class dbAPIService {
         }
       );
       if (!response.ok) {
-        console.error("Error: Unable to fetch currentUser.");
-        return {
-          success: false,
-          error:
-            "Failed to fetch user data. Please check the console for details.",
-        };
+        // console.error("Error: Unable to fetch currentUser.");
+        // return {
+        //   success: false,
+        //   error:
+        //     "Failed to fetch user data. Please check the console for details.",
+        // };
+        throw new Error(
+          "Failed to fetch user data. Please check the console for details."
+        );
       }
       const { currentUser } = await response.json();
 

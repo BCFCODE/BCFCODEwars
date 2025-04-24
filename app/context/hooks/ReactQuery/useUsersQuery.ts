@@ -17,7 +17,7 @@ const useUsersQuery = () => {
   return useQuery({
     queryKey: shouldRefetch ? ["allUsers", "leaderboard"] : ["allUsers"],
     queryFn: async () => {
-      const { success, list, currentUser, session } = await getUsers({
+      const { success, list, currentUser, session, error } = await getUsers({
         cache: "no-store",
       });
 
@@ -29,10 +29,11 @@ const useUsersQuery = () => {
         user.email === session?.user?.email ? currentUser : user
       ) as AuthenticatedUser[];
 
-      return { list: updatedList, currentUser, session };
+      return { list: updatedList, currentUser, session, error };
     },
     enabled: !!session?.user?.email, // Avoid calling if session isn't ready
     staleTime: 1000 * 60 * 5, // cache for 5 minutes
+    retry: 1,
   });
 };
 
