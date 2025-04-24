@@ -21,15 +21,16 @@ class dbAPIService {
         );
         return {
           success: false,
+          list: [],
           error:
             "Failed to fetch user data. Please check the console for details.",
         };
       }
 
-      return await response.json();
+      return (await response.json()) as GetUsersResponse;
     } catch (error) {
       console.error("Error fetching user data from database");
-      return { success: false, error: "Error fetching user data" };
+      return { success: false, list: [], error: "Error fetching user data" };
     }
   };
 

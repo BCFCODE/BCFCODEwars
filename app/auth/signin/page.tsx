@@ -1,5 +1,4 @@
 import LeaderBoardPage from "@/app/(dashboard)/leaderboard/page";
-import dbAPIService from "@/app/api/services/db";
 import { Box } from "@mui/material";
 import { SignInPage } from "@toolpad/core/SignInPage";
 import { Metadata } from "next/types";

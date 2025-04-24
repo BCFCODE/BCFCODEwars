@@ -6,8 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const { getUsers } = new DatabaseService();
 
-export interface GetUsersResponse {
-  data?: GetUsers;
+export interface GetUsersResponse extends GetUsers {
   error?: string;
   session?: Session;
   success: boolean;
@@ -16,15 +15,17 @@ export interface GetUsersResponse {
 export async function GET(
   request: NextRequest
 ): Promise<NextResponse<GetUsersResponse>> {
-  const data = await getUsers();
-
   try {
-    return NextResponse.json({ success: true, data }, { status: 200 });
+    const { list, currentUser, session } = await getUsers();
+    return NextResponse.json(
+      { success: true, list, currentUser, session },
+      { status: 200 }
+    );
   } catch (error) {
     return NextResponse.json(
       {
         success: false,
-        data,
+        list: [],
         error: "Unable to fetch users from database. " + error,
       },
       { status: 500 }

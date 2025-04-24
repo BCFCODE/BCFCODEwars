@@ -12,7 +12,8 @@ import UsersTable from "./UsersTable";
 export default function LeaderBoardPage() {
   const router = useRouter();
 
-  const { isError, isLoading } = useUsersQuery();
+  const { data, isError, isLoading } = useUsersQuery();
+  console.log('LeaderBoardPage/data', data?.list)
 
   if (isError)
     return <LeaderboardLoadingError onRetry={() => router.refresh()} />;
@@ -31,7 +32,7 @@ export default function LeaderBoardPage() {
         <TableContainer component={Paper}>
           <Table aria-label="Leaderboard Table">
             <LeaderboardHeader />
-            <UsersTable />
+            <UsersTable list={data?.list} />
           </Table>
         </TableContainer>
       </CodewarsProvider>
