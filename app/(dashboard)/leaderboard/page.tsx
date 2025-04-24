@@ -4,16 +4,15 @@ import LoadingUI from "@/app/components/UI/LoadingUI";
 import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 import CodewarsProvider from "@/app/context/providers/Codewars";
 import { Paper, Table, TableContainer } from "@mui/material";
-import { useRouter } from "next/navigation";
 import LeaderboardLoadingError from "./Error";
-import LeaderboardHeader from "./UsersTable/Header";
 import UsersTable from "./UsersTable";
+import LeaderboardHeader from "./UsersTable/Header";
 
 export default function LeaderBoardPage() {
-  const { data, isError, isLoading, refetch } = useUsersQuery();
-  console.log("LeaderBoardPage", data, isError);
+  const { data, isError, isLoading, refetch, error } = useUsersQuery();
+  console.log("LeaderBoardPage", data, isError, error);
 
-  if (isError || data?.error)
+  if (isError )
     return <LeaderboardLoadingError onRetry={refetch} />;
 
   if (isLoading)

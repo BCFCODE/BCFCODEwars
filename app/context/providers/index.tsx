@@ -143,6 +143,7 @@ const Providers = async ({ children }: Props) => {
   await queryClient.prefetchQuery({
     queryKey: ["allUsers"],
     queryFn: async () => await getUsers({ cache: "no-store" }),
+    retry: 1,
   });
 
   const dehydratedState = dehydrate(queryClient);
