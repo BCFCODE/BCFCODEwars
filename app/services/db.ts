@@ -3,6 +3,10 @@ import { CodeChallengesFilter, Diamonds } from "@/types/diamonds";
 import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
 
+interface GetUsers {
+
+}
+
 class DatabaseService {
   private clientPromise: Promise<MongoClient>;
 

@@ -6,8 +6,8 @@ interface GetUsersAPIResponseError {
   error?: string;
 }
 
-interface GetUsersAPIResponse extends GetUsersAPIResponseError {
-  users?: DatabaseUser[];
+interface GetUsersAPIResponse extends  GetUsersAPIResponseError {
+  users?: AuthenticatedUser[];
 }
 
 class dbAPIService {

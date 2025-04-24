@@ -14,7 +14,7 @@ const useUsersQuery = () => {
 
   const shouldRefetch = pathName === "/leaderboard";
 
-  return useQuery<AuthenticatedUser[]>({
+  return useQuery<{ allUsers: AuthenticatedUser[] }>({
     queryKey: shouldRefetch ? ["allUsers", "leaderboard"] : ["allUsers"],
     queryFn: async () => {
       const response = await getUsers({ cache: "no-store" });
@@ -23,9 +23,11 @@ const useUsersQuery = () => {
         throw new Error("Failed to fetch allUsers in useUsersQuery");
       }
 
-      return response.users.map((user) =>
+      const allUsers = response.users.map((user) =>
         user.email === session?.user?.email ? { ...user, session } : user
       ) as AuthenticatedUser[];
+
+      return { allUsers };
     },
     enabled: !!session?.user?.email, // Avoid calling if session isn't ready
     staleTime: 1000 * 60 * 5, // cache for 5 minutes
