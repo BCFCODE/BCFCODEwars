@@ -1,20 +1,12 @@
 import { AuthenticatedUser, DatabaseUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
-
-interface GetUsersAPIResponseError {
-  success: boolean;
-  error?: string;
-}
-
-interface GetUsersAPIResponse extends  GetUsersAPIResponseError {
-  users?: AuthenticatedUser[];
-}
+import { GetUsersResponse } from "../db/users/route";
 
 class dbAPIService {
   private endpoint = `${baseURL}/api/db`;
 
   // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
-  getUsers = async (options?: RequestInit): Promise<GetUsersAPIResponse> => {
+  getUsers = async (options?: RequestInit): Promise<GetUsersResponse> => {
     // const currentUserDispatch = useCurrentUserDispatchContext();
 
     try {
@@ -22,6 +14,7 @@ class dbAPIService {
       const response = await fetch(`${this.endpoint}/users`, {
         ...options, // This will include things like { signal: controller.signal }
       });
+
       if (!response.ok) {
         console.error(
           "Error: Unable to fetch user data. This might be due to a network issue, an invalid API endpoint, or server unavailability. Please check your internet connection and try again. If the problem persists, contact support or review the server status."
@@ -32,11 +25,8 @@ class dbAPIService {
             "Failed to fetch user data. Please check the console for details.",
         };
       }
-      const data = await response.json();
 
-      // currentUserDispatch({ type: "EMPTY_UNTRACKED_CHALLENGE_LIST" });
-
-      return { success: true, users: data.users };
+      return await response.json();
     } catch (error) {
       console.error("Error fetching user data from database");
       return { success: false, error: "Error fetching user data" };

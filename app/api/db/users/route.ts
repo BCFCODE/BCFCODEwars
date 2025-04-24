@@ -1,20 +1,32 @@
 // app/api/db/users/route.ts
 
-import DatabaseService from "@/app/services/db";
+import DatabaseService, { GetUsers } from "@/app/services/db";
+import { Session } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
 const { getUsers } = new DatabaseService();
 
-export async function GET(request: NextRequest) {
-  try {
-    const { list } = await getUsers();
+export interface GetUsersResponse {
+  data?: GetUsers;
+  error?: string;
+  session?: Session;
+  success: boolean;
+}
 
-    // Return the users as JSON
-    return NextResponse.json({ success: true, users: list }, { status: 200 });
+export async function GET(
+  request: NextRequest
+): Promise<NextResponse<GetUsersResponse>> {
+  const data = await getUsers();
+
+  try {
+    return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error) {
-    // console.error(error);
     return NextResponse.json(
-      { error: "Unable to fetch users from database." },
+      {
+        success: false,
+        data,
+        error: "Unable to fetch users from database. " + error,
+      },
       { status: 500 }
     );
   }

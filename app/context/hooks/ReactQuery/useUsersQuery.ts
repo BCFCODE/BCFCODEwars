@@ -17,13 +17,13 @@ const useUsersQuery = () => {
   return useQuery<{ allUsers: AuthenticatedUser[] }>({
     queryKey: shouldRefetch ? ["allUsers", "leaderboard"] : ["allUsers"],
     queryFn: async () => {
-      const response = await getUsers({ cache: "no-store" });
+      const { success, data } = await getUsers({ cache: "no-store" });
 
-      if (!response.success || !response.users) {
+      if (!success || !data?.list) {
         throw new Error("Failed to fetch allUsers in useUsersQuery");
       }
 
-      const allUsers = response.users.map((user) =>
+      const allUsers = data.list.map((user) =>
         user.email === session?.user?.email ? { ...user, session } : user
       ) as AuthenticatedUser[];
 

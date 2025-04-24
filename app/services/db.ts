@@ -5,7 +5,11 @@ import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
 import { Session } from "next-auth";
 
-interface GetUsers {}
+export interface GetUsers {
+  list: AuthenticatedUser[];
+  currentUser?: AuthenticatedUser;
+  session?: Session;
+}
 
 class DatabaseService {
   private clientPromise: Promise<MongoClient>;
@@ -57,11 +61,7 @@ class DatabaseService {
     return { users, diamonds, codewars };
   };
 
-  getUsers = async (): Promise<{
-    list: AuthenticatedUser[];
-    currentUser?: AuthenticatedUser;
-    session?: Session;
-  }> => {
+  getUsers = async (): Promise<GetUsers> => {
     const session = await auth();
     const { users } = await this.getCollections();
 
