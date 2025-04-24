@@ -1,7 +1,15 @@
+import { auth } from "@/auth";
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 import { CodeChallengesFilter, Diamonds } from "@/types/diamonds";
 import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
+import { Session } from "next-auth";
+
+export interface GetUsers {
+  list: AuthenticatedUser[];
+  currentUser?: AuthenticatedUser;
+  session?: Session;
+}
 
 class DatabaseService {
   private clientPromise: Promise<MongoClient>;
@@ -53,11 +61,12 @@ class DatabaseService {
     return { users, diamonds, codewars };
   };
 
-  getUsers = async (): Promise<Document[]> => {
+  getUsers = async (): Promise<GetUsers> => {
+    const session = await auth();
     const { users } = await this.getCollections();
 
-    return users
-      .aggregate([
+    const list = await users
+      .aggregate<AuthenticatedUser>([
         // Join with diamonds collection based on the email field
         {
           $lookup: {
@@ -104,6 +113,66 @@ class DatabaseService {
         },
       ])
       .toArray();
+
+    if (session) {
+      const email = session.user?.email ?? "";
+      const [currentUser] = await users
+        .aggregate<AuthenticatedUser>([
+          // 1. Only match the user we're interested in
+          { $match: { email } },
+
+          // 2. Join with diamonds collection
+          {
+            $lookup: {
+              from: "diamonds",
+              localField: "email",
+              foreignField: "email",
+              as: "diamonds",
+            },
+          },
+          {
+            $unwind: {
+              path: "$diamonds",
+              preserveNullAndEmptyArrays: true,
+            },
+          },
+
+          // 3. Join with codewars collection
+          {
+            $lookup: {
+              from: "codewars",
+              localField: "email",
+              foreignField: "email",
+              as: "codewars",
+            },
+          },
+          {
+            $unwind: {
+              path: "$codewars",
+              preserveNullAndEmptyArrays: true,
+            },
+          },
+
+          // 4. Shape the result to match AuthenticatedUser
+          {
+            $project: {
+              _id: 0,
+              email: 1,
+              name: 1,
+              image: 1,
+              firstLogin: 1,
+              lastLogin: 1,
+              activity: 1,
+              diamonds: 1,
+              codewars: 1,
+            },
+          },
+        ])
+        .toArray();
+      return { list, currentUser: { ...currentUser, session }, session };
+    }
+
+    return { list };
   };
 
   getCurrentUser = async (email: string): Promise<AuthenticatedUser | null> => {

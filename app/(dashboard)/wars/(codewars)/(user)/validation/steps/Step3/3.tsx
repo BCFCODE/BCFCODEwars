@@ -21,15 +21,7 @@ const Step3 = ({
   // const { data: allUsers } = useUsersQuery();
   const { data: currentUser } = useCurrentUserQuery();
 
-  // console.log(
-  //   "Step3/currentUser and allUsers from useCurrentUserQuery and useUsersQuery ",
-  //   currentUser,
-  //   allUsers,
-  //   codewars
-  // );
-
   const handleOnYes = async () => {
-    console.log("handleOnYes called!", codewars);
     if (codewars.isConnected) {
       // console.log("codewars is connected so reconnect");
       reconnect({

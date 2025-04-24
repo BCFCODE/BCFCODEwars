@@ -1,5 +1,6 @@
 "use client";
 
+import { GetUsersResponse } from "@/app/api/db/users/route";
 import dbAPIService from "@/app/api/services/db";
 import { AuthenticatedUser } from "@/types/users";
 import { useQuery } from "@tanstack/react-query";
@@ -14,21 +15,26 @@ const useUsersQuery = () => {
 
   const shouldRefetch = pathName === "/leaderboard";
 
-  return useQuery<AuthenticatedUser[]>({
+  return useQuery<GetUsersResponse>({
     queryKey: shouldRefetch ? ["allUsers", "leaderboard"] : ["allUsers"],
     queryFn: async () => {
-      const response = await getUsers({ cache: "no-store" });
+      const { success, list, currentUser, session, error } = await getUsers({
+        cache: "no-store",
+      });
 
-      if (!response.success || !response.users) {
-        throw new Error("Failed to fetch allUsers in useUsersQuery");
+      if (!success || !list || error) {
+        throw new Error("Failed to users data in useUsersQuery");
       }
 
-      return response.users.map((user) =>
-        user.email === session?.user?.email ? { ...user, session } : user
+      const updatedList = list.map((user) =>
+        user.email === session?.user?.email ? currentUser : user
       ) as AuthenticatedUser[];
+
+      return { list: updatedList, currentUser, session, error, success };
     },
     enabled: !!session?.user?.email, // Avoid calling if session isn't ready
     staleTime: 1000 * 60 * 5, // cache for 5 minutes
+    retry: 1,
   });
 };
 
