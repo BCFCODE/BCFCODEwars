@@ -27,17 +27,11 @@ const Step3 = ({
   const handleOnYes = async () => {
     // console.log("Yes it is me, clicked!", codewars, currentUser?.codewars);
     if (currentUser?.codewars.isConnected) {
-      console.log(
-        "codewars is connected so reconnect",
-        codewars,
-        currentUser.codewars
-      );
-      // reconnect({
-      //   name: codewars.name ?? "",
-      //   username: validatedUsername,
-      //   email: session?.user?.email ?? "",
-      //   clan: codewars.clan ?? "",
-      // });
+      // console.log(
+      //   "codewars is connected so reconnect",
+      //   codewars,
+      //   currentUser.codewars
+      // );
       reconnectToCodewars({
         name: codewars.name ?? "",
         username: validatedUsername,
@@ -57,19 +51,14 @@ const Step3 = ({
         },
         username: validatedUsername,
       };
-      console.log(
-        "codewars is not connected so connect",
-        codewars,
-        currentUser.codewars,
-        "initializedCodewarsUser",
-        initializedCodewarsUser
-      );
+      // console.log(
+      //   "codewars is not connected so connect",
+      //   codewars,
+      //   currentUser.codewars,
+      //   "initializedCodewarsUser",
+      //   initializedCodewarsUser
+      // );
 
-      // console.log("initializedCodewarsUser", initializedCodewarsUser);
-      // connect({
-      //   email: currentUser?.email ?? "",
-      //   initializedCodewarsUser,
-      // });
       connectToCodewars(initializedCodewarsUser);
     }
     router.replace(`${currentStep + 1}`);

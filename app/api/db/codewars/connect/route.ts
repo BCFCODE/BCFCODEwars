@@ -21,7 +21,7 @@ export async function POST(
   }
 
   const initializedCodewarsUser = validation.data;
-  console.log("POST/validation.data", validation.data);
+  // console.log("POST/validation.data", validation.data);
   try {
     const { success } = await connectCodewarsUser(initializedCodewarsUser);
     if (!success) {
