@@ -31,10 +31,10 @@ const Step3 = ({
         email: session?.user?.email ?? "",
         clan: codewars.clan ?? "",
       });
-    } else {
-      // console.log("codewars is not connected so connect");
+    } else if (currentUser) {
+      console.log("codewars is not connected so connect");
       const initializedCodewarsUser = {
-        ...codewars,
+        ...currentUser?.codewars,
         isConnected: true,
         codeChallenges: {
           ...codewars.codeChallenges,
@@ -43,7 +43,7 @@ const Step3 = ({
         },
         username: validatedUsername,
       };
-      // console.log("initializedCodewarsUser", initializedCodewarsUser);
+      console.log("initializedCodewarsUser", initializedCodewarsUser);
       connect({
         email: currentUser?.email ?? "",
         initializedCodewarsUser,
