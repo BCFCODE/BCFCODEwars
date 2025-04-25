@@ -45,8 +45,10 @@ const Step3 = ({
         clan: codewars.clan ?? "",
       });
     } else if (currentUser) {
+      const email = currentUser.email;
       const initializedCodewarsUser = {
         ...codewars,
+        email,
         isConnected: true,
         codeChallenges: {
           ...codewars.codeChallenges,
@@ -62,13 +64,13 @@ const Step3 = ({
         "initializedCodewarsUser",
         initializedCodewarsUser
       );
-      const email = currentUser?.email ?? "";
+
       // console.log("initializedCodewarsUser", initializedCodewarsUser);
       // connect({
       //   email: currentUser?.email ?? "",
       //   initializedCodewarsUser,
       // });
-      connectToCodewars({ email, initializedCodewarsUser });
+      connectToCodewars(initializedCodewarsUser);
     }
     router.replace(`${currentStep + 1}`);
   };

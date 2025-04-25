@@ -39,20 +39,14 @@ class dbAPIService {
     }
   };
   connectToCodewars = async (
-    {
-      email,
-      initializedCodewarsUser,
-    }: {
-      email: string;
-      initializedCodewarsUser: CodewarsUser;
-    },
+    initializedCodewarsUser: CodewarsUser,
     options?: RequestInit
   ) => {
     try {
       const response = await fetch(`${this.endpoint}/codewars/connect`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, initializedCodewarsUser }),
+        body: JSON.stringify(initializedCodewarsUser),
         ...options,
       });
 

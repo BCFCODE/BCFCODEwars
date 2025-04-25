@@ -325,14 +325,11 @@ class DatabaseService {
     }
   };
 
-  connectCodewarsUser = async ({
-    email,
-    initializedCodewarsUser,
-  }: {
-    email: string;
-    initializedCodewarsUser: CodewarsUser;
-  }): Promise<{ success: boolean }> => {
+  connectCodewarsUser = async (
+    initializedCodewarsUser: CodewarsUser
+  ): Promise<{ success: boolean }> => {
     const { db, session } = await this.startClientSession();
+    const { email, name } = initializedCodewarsUser;
     // console.log("initializedCodewarsUser", initializedCodewarsUser);
     try {
       session.startTransaction();
@@ -341,10 +338,7 @@ class DatabaseService {
       const codewarsCollection = db.collection("codewars");
       const diamondsCollection = db.collection("diamonds");
 
-      await usersCollection.updateOne(
-        { email },
-        { $set: { name: initializedCodewarsUser.name } }
-      );
+      await usersCollection.updateOne({ email }, { $set: { name } });
 
       await codewarsCollection.updateOne(
         { email },

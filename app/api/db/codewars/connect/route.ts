@@ -10,7 +10,7 @@ export async function POST(
   request: NextRequest
 ): Promise<NextResponse<ApiResponse>> {
   const body = await request.json();
-console.log('connect route body', body)
+  // console.log('connect route body', body)
   const validation = connectSchema.safeParse(body);
 
   if (!validation.success) {
@@ -20,15 +20,12 @@ console.log('connect route body', body)
     );
   }
 
-  const { email, initializedCodewarsUser } = validation.data;
-console.log('POST/validation.data', validation.data)
+  const initializedCodewarsUser = validation.data;
+  console.log("POST/validation.data", validation.data);
   try {
-    const { success } = await connectCodewarsUser({
-      email,
-      initializedCodewarsUser,
-    });
+    const { success } = await connectCodewarsUser(initializedCodewarsUser);
     if (!success) {
-      console.warn("Connect failed for:", { email, initializedCodewarsUser });
+      console.warn("Connect failed for:", initializedCodewarsUser);
       return NextResponse.json({ success: false });
     }
     return NextResponse.json({ success }, { status: 200 });
