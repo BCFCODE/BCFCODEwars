@@ -1,4 +1,5 @@
 "use client";
+
 import dbAPIService from "@/app/api/services/db";
 import { AuthenticatedUser } from "@/types/users";
 import { useQuery } from "@tanstack/react-query";
@@ -14,11 +15,11 @@ const useCurrentUserQuery = () => {
   return useQuery<AuthenticatedUser>({
     queryKey: ["currentUser"],
     queryFn: async () => {
-      const { currentUser, success } = await getCurrentUser(email, {
+      const { currentUser, success, error } = await getCurrentUser(email, {
         cache: "no-store",
       });
 
-      if (!success || !currentUser) {
+      if (!success || !currentUser || error) {
         throw new Error("Failed to fetch and aggregate currentUser.");
       }
 
