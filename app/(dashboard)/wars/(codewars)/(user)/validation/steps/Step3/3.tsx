@@ -7,8 +7,11 @@ import { useRouter } from "next/navigation";
 import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
-import connect from "./connect";
-import reconnect from "./reconnect";
+// import connect from "./connect";
+// import reconnect from "./reconnect";
+import dbAPIService from "@/app/api/services/db";
+
+const { connectToCodewars, reconnectToCodewars } = new dbAPIService();
 
 const Step3 = ({
   currentStep,
@@ -19,22 +22,31 @@ const Step3 = ({
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUserQuery();
-  // console.log("Step3/data useUsersQuery", currentUser);
+  // console.log("Step3/data useUsersQuery", codewars, currentUser);
 
   const handleOnYes = async () => {
     // console.log("Yes it is me, clicked!", codewars, currentUser?.codewars);
     if (currentUser?.codewars.isConnected) {
-      // console.log("codewars is connected so reconnect");
-      reconnect({
+      console.log(
+        "codewars is connected so reconnect",
+        codewars,
+        currentUser.codewars
+      );
+      // reconnect({
+      //   name: codewars.name ?? "",
+      //   username: validatedUsername,
+      //   email: session?.user?.email ?? "",
+      //   clan: codewars.clan ?? "",
+      // });
+      reconnectToCodewars({
         name: codewars.name ?? "",
         username: validatedUsername,
         email: session?.user?.email ?? "",
         clan: codewars.clan ?? "",
       });
     } else if (currentUser) {
-      console.log("codewars is not connected so connect");
       const initializedCodewarsUser = {
-        ...currentUser?.codewars,
+        ...codewars,
         isConnected: true,
         codeChallenges: {
           ...codewars.codeChallenges,
@@ -43,11 +55,20 @@ const Step3 = ({
         },
         username: validatedUsername,
       };
-      console.log("initializedCodewarsUser", initializedCodewarsUser);
-      connect({
-        email: currentUser?.email ?? "",
-        initializedCodewarsUser,
-      });
+      console.log(
+        "codewars is not connected so connect",
+        codewars,
+        currentUser.codewars,
+        "initializedCodewarsUser",
+        initializedCodewarsUser
+      );
+      const email = currentUser?.email ?? "";
+      // console.log("initializedCodewarsUser", initializedCodewarsUser);
+      // connect({
+      //   email: currentUser?.email ?? "",
+      //   initializedCodewarsUser,
+      // });
+      connectToCodewars({ email, initializedCodewarsUser });
     }
     router.replace(`${currentStep + 1}`);
   };
