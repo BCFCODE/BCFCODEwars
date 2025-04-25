@@ -10,6 +10,7 @@ import Buttons from "./Buttons";
 // import connect from "./connect";
 // import reconnect from "./reconnect";
 import dbAPIService from "@/app/api/services/db";
+import { useQueryClient } from "@tanstack/react-query";
 
 const { connectToCodewars, reconnectToCodewars } = new dbAPIService();
 
@@ -19,6 +20,7 @@ const Step3 = ({
   session,
   codewars,
 }: StepProps) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUserQuery();
@@ -51,13 +53,8 @@ const Step3 = ({
         },
         username: validatedUsername,
       };
-      // console.log(
-      //   "codewars is not connected so connect",
-      //   codewars,
-      //   currentUser.codewars,
-      //   "initializedCodewarsUser",
-      //   initializedCodewarsUser
-      // );
+
+      queryClient.invalidateQueries({ queryKey: ["allUsers"] });
 
       connectToCodewars(initializedCodewarsUser);
     }
