@@ -1,15 +1,14 @@
 "use client";
 
 import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
-import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
+import { CodeChallengesFilter } from "@/types/diamonds";
 import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
-import reconnect from "./reconnect";
 import connect from "./connect";
-import { CodeChallengesFilter } from "@/types/diamonds";
+import reconnect from "./reconnect";
 
 const Step3 = ({
   currentStep,
@@ -42,7 +41,7 @@ const Step3 = ({
         },
         username: validatedUsername,
       };
-      console.log("initializedCodewarsUser", initializedCodewarsUser);
+      // console.log("initializedCodewarsUser", initializedCodewarsUser);
       connect({ email: currentUser?.email ?? "", initializedCodewarsUser });
     }
     router.replace(`${currentStep + 1}`);

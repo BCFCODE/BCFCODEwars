@@ -524,7 +524,7 @@ class DatabaseService {
       );
 
       await session.commitTransaction();
-      console.log("reconnectCodewarsUser Transaction committed successfully.");
+      console.log("Transaction committed successfully.");
     } catch (error) {
       await session.abortTransaction();
       console.error("Transaction failed and was aborted!", error);
