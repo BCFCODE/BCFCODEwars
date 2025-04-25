@@ -18,7 +18,7 @@ const useUsersQuery = () => {
   return useQuery<GetUsersResponse>({
     queryKey: shouldRefetch ? ["allUsers", "leaderboard"] : ["allUsers"],
     queryFn: async () => {
-      const { success, list, currentUser, session, error } = await getUsers({
+      const { success, list, error } = await getUsers({
         cache: "no-store",
       });
 
@@ -27,10 +27,10 @@ const useUsersQuery = () => {
       }
 
       const updatedList = list.map((user) =>
-        user.email === session?.user?.email ? currentUser : user
+        user.email === session?.user?.email ? { ...user, session } : user
       ) as AuthenticatedUser[];
 
-      return { list: updatedList, currentUser, session, error, success };
+      return { list: updatedList, session, error, success };
     },
     enabled: !!session?.user?.email, // Avoid calling if session isn't ready
     staleTime: 1000 * 60 * 5, // cache for 5 minutes

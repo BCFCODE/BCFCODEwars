@@ -1,15 +1,15 @@
 "use client";
 
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
+import { CodeChallengesFilter } from "@/types/diamonds";
 import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
-import reconnect from "./reconnect";
 import connect from "./connect";
-import { CodeChallengesFilter } from "@/types/diamonds";
+import reconnect from "./reconnect";
+import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 
 const Step3 = ({
   currentStep,
@@ -19,13 +19,13 @@ const Step3 = ({
 }: StepProps) => {
   const router = useRouter();
   // const { data: allUsers } = useUsersQuery();
+  const {data: currentUser} = useCurrentUserQuery();
   const { data } = useUsersQuery();
-  console.log("Step3/data useUsersQuery", data);
+  console.log("Step3/data useUsersQuery", data, currentUser);
 
   const handleOnYes = async () => {
-    
     console.log("Yes it is me, clicked!", data, codewars);
-    if (data?.currentUser?.codewars.isConnected) {
+    if (currentUser?.codewars.isConnected) {
       console.log("codewars is connected so reconnect");
       reconnect({
         name: codewars.name ?? "",
@@ -47,7 +47,7 @@ const Step3 = ({
       };
       // console.log("initializedCodewarsUser", initializedCodewarsUser);
       connect({
-        email: data?.currentUser?.email ?? "",
+        email: currentUser?.email ?? "",
         initializedCodewarsUser,
       });
     }

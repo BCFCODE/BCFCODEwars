@@ -1,6 +1,5 @@
 "use client";
 
-import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 import { Box } from "@mui/material";
 import { ReactNode } from "react";
 
