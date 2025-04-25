@@ -138,6 +138,13 @@ interface Props {
 }
 
 const Providers = async ({ children }: Props) => {
+  // Await headers() and ensure its operations are performed synchronously after awaiting
+  const headersList = await headers();
+  const forwardedProto = headersList.get("x-forwarded-proto");
+
+  // Await the auth call after resolving headers
+  const session: Session | null = await auth(); // Now fully async
+  
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
@@ -148,12 +155,6 @@ const Providers = async ({ children }: Props) => {
 
   const dehydratedState = dehydrate(queryClient);
 
-  // Await headers() and ensure its operations are performed synchronously after awaiting
-  const headersList = await headers();
-  const forwardedProto = headersList.get("x-forwarded-proto");
-
-  // Await the auth call after resolving headers
-  const session: Session | null = await auth(); // Now fully async
   // console.log("Providers/session", session);
   return (
     <body>

@@ -9,11 +9,10 @@ import UsersTable from "./UsersTable";
 import LeaderboardHeader from "./UsersTable/Header";
 
 export default function LeaderBoardPage() {
-  const { data, isError, isLoading, refetch, error } = useUsersQuery();
-  console.log("LeaderBoardPage", data, isError, error);
+  const { data, isError, isLoading, refetch } = useUsersQuery();
+  // console.log("LeaderBoardPage", data);
 
-  if (isError )
-    return <LeaderboardLoadingError onRetry={refetch} />;
+  if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
   if (isLoading)
     return (

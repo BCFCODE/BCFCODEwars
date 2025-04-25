@@ -22,6 +22,7 @@ class dbAPIService {
         return {
           success: false,
           list: [],
+          session: null,
           error:
             "Failed to fetch user data. Please check the console for details.",
         };
@@ -33,7 +34,12 @@ class dbAPIService {
       // throw new Error(
       //   "Error: Unable to fetch user data. This might be due to a network issue, an invalid API endpoint, or server unavailability. Please check your internet connection and try again. If the problem persists, contact support or review the server status."
       // );
-      return { success: false, list: [], error: "Error fetching user data" };
+      return {
+        success: false,
+        list: [],
+        session: null,
+        error: "Error fetching user data",
+      };
     }
   };
 

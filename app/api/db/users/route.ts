@@ -8,7 +8,7 @@ const { getUsers } = new DatabaseService();
 
 export interface GetUsersResponse extends GetUsers {
   error?: string;
-  session?: Session;
+  session: Session | null;
   success: boolean;
 }
 
@@ -26,6 +26,7 @@ export async function GET(
       {
         success: false,
         list: [],
+        session: null,
         error: "Unable to fetch users from database. " + error,
       },
       { status: 500 }

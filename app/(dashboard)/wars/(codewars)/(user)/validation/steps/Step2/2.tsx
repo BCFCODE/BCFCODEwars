@@ -45,8 +45,6 @@ export default function Step2({ currentStep }: Props) {
     }
   };
 
-  const buttonProps = { loading, username, validateUsername };
-
   return (
     <>
       {/* <UserAvatar session={undefined}/> */}
@@ -84,7 +82,7 @@ export default function Step2({ currentStep }: Props) {
             sx={{ mb: 2 }}
           />
           {/* Validation Button */}
-          <ValidationButton {...buttonProps} />
+          <ValidationButton {...{ loading, username, validateUsername }} />
           {success && (
             <Typography variant="body1" color="green" sx={{ mt: 2 }}>
               {success}

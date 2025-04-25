@@ -1,6 +1,7 @@
 import CodewarsValidationStepper from "../topStepper";
 import Steps from "../stepSwitch";
 import { Box } from "@mui/material";
+import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 
 interface Props {
   params: Promise<{ stepNumber: number }>;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const StepNumberPage = async ({ params, searchParams }: Props) => {
+
   const { username } = await searchParams;
 
   const { stepNumber } = await params;

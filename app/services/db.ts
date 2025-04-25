@@ -8,7 +8,7 @@ import { Session } from "next-auth";
 export interface GetUsers {
   list: AuthenticatedUser[];
   currentUser?: AuthenticatedUser;
-  session?: Session;
+  session: Session | null;
 }
 
 class DatabaseService {
@@ -114,7 +114,7 @@ class DatabaseService {
       ])
       .toArray();
 
-    if (session) {
+    if (session?.user?.email) {
       const email = session.user?.email ?? "";
       const [currentUser] = await users
         .aggregate<AuthenticatedUser>([
@@ -170,9 +170,9 @@ class DatabaseService {
         ])
         .toArray();
       return { list, currentUser: { ...currentUser, session }, session };
+    } else {
+      return { list, session };
     }
-
-    return { list };
   };
 
   getCurrentUser = async (email: string): Promise<AuthenticatedUser | null> => {
