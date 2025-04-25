@@ -8,7 +8,7 @@ interface OverallRanks {
   score: number;
 }
 
-interface languagesRanks {
+interface LanguagesRanks {
   [language: string]: {
     rank: number;
     name: string;
@@ -19,7 +19,7 @@ interface languagesRanks {
 
 export interface Ranks {
   overall: OverallRanks;
-  languages: languagesRanks;
+  languages: LanguagesRanks;
 }
 
 export interface CodeChallenges {

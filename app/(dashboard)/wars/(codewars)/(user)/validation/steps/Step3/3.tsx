@@ -19,22 +19,22 @@ const Step3 = ({
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUserQuery();
-  console.log("Step3/data useUsersQuery", currentUser);
+  // console.log("Step3/data useUsersQuery", currentUser);
 
   const handleOnYes = async () => {
-    console.log("Yes it is me, clicked!", codewars, currentUser?.codewars);
+    // console.log("Yes it is me, clicked!", codewars, currentUser?.codewars);
     if (currentUser?.codewars.isConnected) {
-      console.log("codewars is connected so reconnect");
+      // console.log("codewars is connected so reconnect");
       reconnect({
         name: codewars.name ?? "",
         username: validatedUsername,
         email: session?.user?.email ?? "",
         clan: codewars.clan ?? "",
       });
-    } else {
-      // console.log("codewars is not connected so connect");
+    } else if (currentUser) {
+      console.log("codewars is not connected so connect");
       const initializedCodewarsUser = {
-        ...codewars,
+        ...currentUser?.codewars,
         isConnected: true,
         codeChallenges: {
           ...codewars.codeChallenges,
@@ -43,7 +43,7 @@ const Step3 = ({
         },
         username: validatedUsername,
       };
-      // console.log("initializedCodewarsUser", initializedCodewarsUser);
+      console.log("initializedCodewarsUser", initializedCodewarsUser);
       connect({
         email: currentUser?.email ?? "",
         initializedCodewarsUser,
