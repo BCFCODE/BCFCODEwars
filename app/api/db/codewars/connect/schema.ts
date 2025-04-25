@@ -90,9 +90,6 @@ const CodewarsUserSchema = z.object({
 
 export type CodewarsUser = z.infer<typeof CodewarsUserSchema>;
 
-const connectSchema = z.object({
-  email: z.string().email(),
-  initializedCodewarsUser: CodewarsUserSchema,
-});
+const connectSchema = CodewarsUserSchema;
 
 export default connectSchema;

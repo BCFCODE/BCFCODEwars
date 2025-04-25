@@ -1,16 +1,68 @@
 import { AuthenticatedUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 import { GetUsersResponse } from "../db/users/route";
+import { CodewarsUser } from "@/types/codewars";
 
 class dbAPIService {
   private endpoint = `${baseURL}/api/db`;
 
-  // CHANGE: Add an optional options parameter (of type RequestInit) so that you can pass a signal (or other fetch options).
-  getUsers = async (options?: RequestInit): Promise<GetUsersResponse> => {
-    // const currentUserDispatch = useCurrentUserDispatchContext();
-
+  reconnectToCodewars = async (
+    {
+      name,
+      username,
+      email,
+      clan,
+    }: {
+      name: string;
+      username: string;
+      email: string;
+      clan: string;
+    },
+    options?: RequestInit
+  ) => {
     try {
-      // Fetch the data from your API
+      const response = await fetch(`${this.endpoint}/codewars/reconnect`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, username, email, clan }),
+        ...options,
+      });
+
+      if (!response.ok) {
+        console.warn("reconnectToCodewars 404 or failure:", response.status);
+        return { success: false };
+      }
+
+      return { success: true };
+    } catch (error) {
+      return { success: false };
+    }
+  };
+  connectToCodewars = async (
+    initializedCodewarsUser: CodewarsUser,
+    options?: RequestInit
+  ) => {
+    try {
+      const response = await fetch(`${this.endpoint}/codewars/connect`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(initializedCodewarsUser),
+        ...options,
+      });
+
+      if (!response.ok) {
+        console.warn("connectToCodewars 404 or failure:", response.status);
+        return { success: false };
+      }
+
+      return { success: true };
+    } catch (error) {
+      return { success: false };
+    }
+  };
+
+  getUsers = async (options?: RequestInit): Promise<GetUsersResponse> => {
+    try {
       const response = await fetch(`${this.endpoint}/users`, {
         ...options, // This will include things like { signal: controller.signal }
       });
@@ -99,28 +151,6 @@ class dbAPIService {
       return { success: false };
     }
   };
-
-  // getSession = async (
-  //   currentUser: AuthenticatedUser
-  // ): Promise<{ success: boolean }> => {
-  //   try {
-  //     const response = await fetch(`${this.endpoint}/currentUser`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(currentUser),
-  //     });
-
-  //     if (!response.ok) {
-  //       // Optionally handle non-200 status codes here.
-  //       // throw new Error(`Request failed with status ${response.status}`);
-  //       return { success: false };
-  //     }
-
-  //     return { success: true };
-  //   } catch (error) {
-  //     return { success: false };
-  //   }
-  // };
 }
 
 export default dbAPIService;
