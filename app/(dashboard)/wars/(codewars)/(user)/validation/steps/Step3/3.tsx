@@ -17,11 +17,13 @@ const Step3 = ({
   codewars,
 }: StepProps) => {
   const router = useRouter();
-  // const { data: allUsers } = useUsersQuery();
+
   const { data: currentUser } = useCurrentUserQuery();
+  // console.log("Step3/data useUsersQuery", currentUser);
 
   const handleOnYes = async () => {
-    if (codewars.isConnected) {
+    // console.log("Yes it is me, clicked!", codewars, currentUser?.codewars);
+    if (currentUser?.codewars.isConnected) {
       // console.log("codewars is connected so reconnect");
       reconnect({
         name: codewars.name ?? "",
@@ -42,7 +44,10 @@ const Step3 = ({
         username: validatedUsername,
       };
       // console.log("initializedCodewarsUser", initializedCodewarsUser);
-      connect({ email: currentUser?.email ?? "", initializedCodewarsUser });
+      connect({
+        email: currentUser?.email ?? "",
+        initializedCodewarsUser,
+      });
     }
     router.replace(`${currentStep + 1}`);
   };

@@ -1,7 +1,7 @@
 "use client";
 
 import { Box, Button } from "@mui/material";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Props {
   currentStep: number;
@@ -9,14 +9,13 @@ interface Props {
 }
 
 const Buttons = ({ onYes, currentStep = 0 }: Props) => {
-  const router = useRouter();
-
   return (
     <>
       <Button
+        component={Link}
+        href={`/wars/validation/steps/${currentStep - 1}`}
         color="inherit"
         disabled={currentStep === 3}
-        onClick={() => router.push(`${currentStep - 1}`)}
         sx={{ mr: 1 }}
       >
         No

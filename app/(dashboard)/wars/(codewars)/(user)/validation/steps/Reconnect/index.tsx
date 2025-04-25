@@ -4,7 +4,7 @@ import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import ReconnectButton from "./Buttons/Reconnect";
 import Message from "./Message";
 import Tip from "./Tip";
-import GoToLeaderboard from "./Buttons/GoToLeaderboard";
+import GoToLeaderboard from "./Buttons/Leaderboard";
 
 const Reconnect = ({
   session,
