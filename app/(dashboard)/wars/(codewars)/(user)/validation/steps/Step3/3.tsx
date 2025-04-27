@@ -1,5 +1,6 @@
 "use client";
 
+import dbAPIService from "@/app/api/services/db";
 import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { Box, Typography } from "@mui/material";
@@ -7,11 +8,8 @@ import { useRouter } from "next/navigation";
 import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
-// import connect from "./connect";
-// import reconnect from "./reconnect";
-import dbAPIService from "@/app/api/services/db";
-
-const { connectToCodewars, reconnectToCodewars } = new dbAPIService();
+import useConnectMutation from "./hooks/useConnectMutation";
+import useReconnectMutation from "./hooks/useReconnectMutation";
 
 const Step3 = ({
   currentStep,
@@ -22,24 +20,23 @@ const Step3 = ({
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUserQuery();
-  // console.log("Step3/data useUsersQuery", codewars, currentUser);
+
+  const { mutateAsync: reconnect } = useReconnectMutation();
+  const { mutateAsync: connect } = useConnectMutation();
+
+  const email = currentUser?.email ?? "";
 
   const handleOnYes = async () => {
+    if (!currentUser) return;
     // console.log("Yes it is me, clicked!", codewars, currentUser?.codewars);
     if (currentUser?.codewars.isConnected) {
-      // console.log(
-      //   "codewars is connected so reconnect",
-      //   codewars,
-      //   currentUser.codewars
-      // );
-      reconnectToCodewars({
+      await reconnect({
         name: codewars.name ?? "",
         username: validatedUsername,
-        email: session?.user?.email ?? "",
+        email,
         clan: codewars.clan ?? "",
       });
-    } else if (currentUser) {
-      const email = currentUser.email;
+    } else {
       const initializedCodewarsUser = {
         ...codewars,
         email,
@@ -51,16 +48,10 @@ const Step3 = ({
         },
         username: validatedUsername,
       };
-      // console.log(
-      //   "codewars is not connected so connect",
-      //   codewars,
-      //   currentUser.codewars,
-      //   "initializedCodewarsUser",
-      //   initializedCodewarsUser
-      // );
 
-      connectToCodewars(initializedCodewarsUser);
+      await connect(initializedCodewarsUser);
     }
+
     router.replace(`${currentStep + 1}`);
   };
 

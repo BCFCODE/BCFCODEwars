@@ -2,6 +2,7 @@ import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 import { CodeChallengesFilter, Diamonds } from "@/types/diamonds";
 import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
+import { CodewarsReconnectRequest } from "../api/services/db";
 
 class DatabaseService {
   private clientPromise: Promise<MongoClient>;
@@ -393,12 +394,7 @@ class DatabaseService {
     clan,
     username,
     name,
-  }: {
-    email: string;
-    clan: string;
-    username: string;
-    name: string;
-  }): Promise<{ success: boolean }> => {
+  }: CodewarsReconnectRequest): Promise<{ success: boolean }> => {
     const { db, session } = await this.startClientSession();
 
     try {
