@@ -60,7 +60,7 @@ const NotFoundPage = () => {
         Oops! It seems the page you are looking for doesn't exist.
       </Typography>
       <Typography variant="body1" sx={{ color: 'text.secondary', mt: 2 }}>
-        Try checking the URL or head back to the homepage.
+        Try checking the URL or head back to the DashboardPage.
       </Typography>
     </Box>
   );
@@ -76,7 +76,7 @@ Colors are managed using Material-UI's theme settings, like bgcolor for backgrou
 Responsive and adaptive to different screen sizes.
 Additional Tips
 Custom Styling: You can use CSS-in-JS for more complex styling or switch to styled-components if you prefer.
-Button to Redirect: You can add a button to redirect back to the homepage if you want.
+Button to Redirect: You can add a button to redirect back to the DashboardPage if you want.
 Local GIF: If you have the GIF locally, put it in the public folder of your project and update the src to something like /john-travolta-confused.gif.
 How to Test
 Run your Next.js app:

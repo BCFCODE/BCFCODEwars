@@ -1,17 +1,9 @@
 import { auth } from "@/auth";
-import {
-  Avatar,
-  Box,
-  Button,
-  CircularProgress,
-  Fade,
-  Typography,
-} from "@mui/material";
-import Link from "next/link";
+import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 
 import DashboardStats from "./Stats";
 
-export default async function HomePage() {
+export default async function DashboardPage() {
   const pageName = "Dashboard";
   const session = await auth();
 

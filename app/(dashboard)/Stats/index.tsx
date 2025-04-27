@@ -1,32 +1,23 @@
 "use client";
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
-import WeeklyStat from "./Gauge/Weekly";
-import MonthlyStat from "./Gauge/Monthly";
-import YearlyStat from "./Gauge/YearlyStat";
 import DailyStat from "./Gauge/Daily";
+import MonthlyStat from "./Gauge/Monthly";
+import WeeklyStat from "./Gauge/Weekly";
+import YearlyStat from "./Gauge/YearlyStat";
+
+const stats = [DailyStat, WeeklyStat, MonthlyStat, YearlyStat];
 
 const DashboardStats = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2} columns={24}>
-        <Grid size={6}>
-          <DailyStat />
-        </Grid>
-
-        <Grid size={6}>
-          <WeeklyStat />
-        </Grid>
-
-        <Grid size={6}>
-          <MonthlyStat />
-        </Grid>
-
-        <Grid size={6}>
-          <YearlyStat />
-        </Grid>
+        {stats.map((Stat) => (
+          <Grid size={{ xs: 24, sm: 12, md: 8, lg: 6, xl: 6 }}>
+            <Stat />
+          </Grid>
+        ))}
       </Grid>
     </Box>
   );

@@ -1,6 +1,5 @@
 import { Stack, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
-// import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 
 const DailyStat = () => {
   return (
