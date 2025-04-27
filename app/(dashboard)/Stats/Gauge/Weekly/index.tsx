@@ -1,7 +1,18 @@
+import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
+import dayjs from "@/utils/dayjs";
 import { Stack, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 
 const WeeklyStat = () => {
+  const { data } = useCurrentUserQuery();
+  const list = data?.codewars.codeChallenges.list;
+  const targetPointAgo = dayjs().subtract(1, "week");
+
+  const challengesCompletedInLast7DaysAgo =
+    list?.filter((challenge) =>
+      dayjs(challenge.completedAt).isAfter(targetPointAgo)
+    ).length ?? 0;
+
   return (
     <Stack>
       <Gauge
