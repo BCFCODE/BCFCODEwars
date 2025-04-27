@@ -11,7 +11,7 @@ interface ConnectToCodewarsContext {
   prevData: GetUsersResponse | undefined;
 }
 
-const useCodewarsConnectMutation = () => {
+const useConnectMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation<
@@ -68,4 +68,4 @@ const useCodewarsConnectMutation = () => {
   });
 };
 
-export default useCodewarsConnectMutation;
+export default useConnectMutation;

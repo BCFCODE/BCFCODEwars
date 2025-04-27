@@ -8,23 +8,20 @@ export interface ConnectToCodewarsResponse {
   message?: string;
 }
 
+export interface CodewarsReconnectRequest {
+  name: string;
+  username: string;
+  email: string;
+  clan: string;
+}
+
 class dbAPIService {
   private endpoint = `${baseURL}/api/db`;
 
   reconnectToCodewars = async (
-    {
-      name,
-      username,
-      email,
-      clan,
-    }: {
-      name: string;
-      username: string;
-      email: string;
-      clan: string;
-    },
+    { name, username, email, clan }: CodewarsReconnectRequest,
     options?: RequestInit
-  ) => {
+  ): Promise<ConnectToCodewarsResponse> => {
     try {
       const response = await fetch(`${this.endpoint}/codewars/reconnect`, {
         method: "POST",
@@ -35,12 +32,16 @@ class dbAPIService {
 
       if (!response.ok) {
         console.warn("reconnectToCodewars 404 or failure:", response.status);
-        return { success: false };
+        return {
+          success: false,
+          message: `Failed with status ${response.status}`,
+        };
       }
 
       return { success: true };
     } catch (error) {
-      return { success: false };
+      console.error("reconnectToCodewars error:", error);
+      return { success: false, message: "Network error or server error." };
     }
   };
 

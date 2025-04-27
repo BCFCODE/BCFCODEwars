@@ -7,8 +7,17 @@ import { Paper, Table, TableContainer } from "@mui/material";
 import LeaderboardLoadingError from "./Error";
 import UsersTable from "./UsersTable";
 import LeaderboardHeader from "./UsersTable/Header";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
 
 export default function LeaderBoardPage() {
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
+  }, [queryClient]);
+
   const { data, isError, isLoading, refetch } = useUsersQuery();
   // console.log("LeaderBoardPage", data);
 
