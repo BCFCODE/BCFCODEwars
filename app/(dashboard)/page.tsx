@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
 
 import DashboardStats from "./Stats";
+import DailyTarget from "./Stats/DailyTarget";
 
 export default async function DashboardPage() {
   const pageName = "Dashboard";
@@ -88,6 +89,7 @@ export default async function DashboardPage() {
         )}
 
         <DashboardStats />
+        <DailyTarget />
       </Box>
     </Box>
   );
