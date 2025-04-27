@@ -5,7 +5,7 @@ import SingleRow from "./SingleRow";
 import useFilter from "./hooks/useFilter";
 
 export default function Body() {
-  const { activeFilter, both, claimed, unClaimed, /* untrackedChallenges */ } =
+  const { activeFilter, both, claimed, unClaimed /* untrackedChallenges */ } =
     useFilter();
 
   let visibleChallenges: CodewarsCompletedChallenge[];
@@ -25,14 +25,6 @@ export default function Body() {
     <>
       <TableBody>
         <>
-          {/* {(activeFilter === CodeChallengesFilter.UnclaimedDiamonds ||
-            activeFilter === CodeChallengesFilter.Both) &&
-            untrackedChallenges.map((untrackedChallenge) => (
-              <SingleRow
-                key={"UNTRACKED AND RECENTLY SOLVED!" + untrackedChallenge.id}
-                {...{ challenge: untrackedChallenge }}
-              />
-            ))} */}
           {visibleChallenges.map((challenge) => (
             <SingleRow key={challenge.id} {...{ challenge }} />
           ))}

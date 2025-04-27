@@ -4,6 +4,7 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import Head from "./Head";
 import Body from "./Body";
 import Error from "./Error";
+import Pagination from "./Pagination";
 
 const CodewarsTable = () => {
   const { isError, isLoading } = useCodewarsContext();
@@ -19,11 +20,19 @@ const CodewarsTable = () => {
     );
 
   return (
-    <Box sx={{ margin: 1 }}>
+    <Box
+      sx={{
+        margin: 1,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <Table size="small" aria-label="completed challenges">
         <Head />
         <Body />
       </Table>
+      <Pagination />
     </Box>
   );
 };
