@@ -10,7 +10,7 @@ class GoogleService {
     if (!existingUser) {
       await addNewUser(user);
     } else {
-      updateSingleUser(existingUser.email, {
+     await updateSingleUser(existingUser.email, {
         ...existingUser,
         // name,
         image: user.image,

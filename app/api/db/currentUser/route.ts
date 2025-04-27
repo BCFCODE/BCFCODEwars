@@ -1,5 +1,4 @@
 import DatabaseService from "@/app/services/db";
-import { auth } from "@/auth";
 import { AuthenticatedUser } from "@/types/users";
 import { NextRequest, NextResponse } from "next/server";
 

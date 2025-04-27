@@ -7,7 +7,7 @@ const { getUsers } = new DatabaseService();
 
 export async function GET(request: NextRequest) {
   try {
-    const users = getUsers();
+    const users = await getUsers();
 
     // Return the users as JSON
     return NextResponse.json({ users });
