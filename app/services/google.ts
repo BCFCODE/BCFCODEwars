@@ -15,11 +15,12 @@ class GoogleService {
 
     const existingUser = await getUser(email);
 
-    // Check if user is repetitive or not
+    
     if (!existingUser) {
       initializeDiamonds(email);
       saveNewCodewarsUser(email);
       saveNewGoogleUser(user);
+      // how here update the allUsers query? it doesn't update, and refresh required to see the latest change (see the new user in leaderboard table)
     } else {
       updateSingleUser(existingUser.email, {
         ...existingUser,
