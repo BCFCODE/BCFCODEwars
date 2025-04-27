@@ -13,5 +13,5 @@ interface Props {
 
 export default async function storeChallengeList({ list, currentUser }: Props) {
   const userId = currentUser.codewars.id;
-  saveChallengesList({ list, userId });
+  await saveChallengesList({ list, userId });
 }

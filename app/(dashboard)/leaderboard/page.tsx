@@ -3,14 +3,13 @@
 import LoadingUI from "@/app/components/UI/LoadingUI";
 import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 import CodewarsProvider from "@/app/context/providers/Codewars";
+import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
 import { Paper, Table, TableContainer } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 import LeaderboardLoadingError from "./Error";
 import UsersTable from "./UsersTable";
 import LeaderboardHeader from "./UsersTable/Header";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
-import { useSession } from "next-auth/react";
 
 export default function LeaderBoardPage() {
   const queryClient = useQueryClient();
