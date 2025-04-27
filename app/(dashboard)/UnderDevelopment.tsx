@@ -163,9 +163,6 @@ const UnderDevelopment = async ({ pageName }: Props) => {
             : "Hang tight, we're setting things up!"}
         </Typography>
       </Fade>
-
-      {/* Optional additional content */}
-      {/* <AnkiDecks /> */}
     </Box>
   );
 };
