@@ -10,15 +10,21 @@ import LeaderboardHeader from "./UsersTable/Header";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
+import { useSession } from "next-auth/react";
 
 export default function LeaderBoardPage() {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
-  }, [queryClient]);
+  // useEffect(() => {
+  //   queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
+  // }, [queryClient]);
 
   const { data, isError, isLoading, refetch } = useUsersQuery();
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "authenticated") refetch();
+  }, [status]);
   // console.log("LeaderBoardPage", data);
 
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
