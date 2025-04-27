@@ -13,7 +13,6 @@ const useInitializeList = () => {
     response: CodewarsChallengesResponse
   ) => {
     const list = applyDefaultTrackingAndRewardStatusToAll(response.data);
-    // const list = response.data
 
     currentUserDispatch({
       type: "UPDATE_CODE_CHALLENGES_LIST",

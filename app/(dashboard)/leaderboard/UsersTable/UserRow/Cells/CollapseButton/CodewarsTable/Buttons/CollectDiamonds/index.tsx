@@ -12,12 +12,10 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
-// import UntrackedChallengeTooltip from "./components/Tooltips";
-import handleClick from "./utils/handleClick";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import useCollectDiamonds from "./hooks/useCollectDiamonds";
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import { useSession } from "next-auth/react";
+import useCollectDiamonds from "./hooks/useCollectDiamonds";
+import handleClick from "./utils/handleClick";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 
@@ -40,13 +38,8 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     diamondsContextDispatch,
     collectButtonDispatch,
   } = useCollectDiamonds();
-  // console.log("currentUser in CollectDiamonds >>>>", currentUser);
+
   const isUserOnPersonalDashboard = session?.user?.email === currentUser.email;
-  // console.log(
-  //   "isUserOnPersonalDashboard in CollectDiamonds",
-  //   isUserOnPersonalDashboard,
-  //   currentUser
-  // );
 
   if (currentChallenge.rewardStatus === RewardStatus.ClaimedDiamonds)
     return (
@@ -69,15 +62,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
         {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}
 
         {!isCollected && (
-          // <UntrackedChallengeTooltip
-          //   isLatestUntracked={currentChallenge.isLatestUntracked}
-          //   // isUntracked={currentChallenge.isUntracked ?? false}
-          //   text={
-          //     isUserOnPersonalDashboard
-          //       ? "Oops! Let’s track this now!"
-          //       : "💎Diamonds await! Sign in to collect."
-          //   }
-          // >
           <IconButton
             disabled={isDiamondIconButtonDisabled || !isUserOnPersonalDashboard}
             sx={iconButtonStyles}
@@ -95,7 +79,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
               sx={isLoading || isError ? fade(isError) : diamondStyles}
             />
           </IconButton>
-          // </UntrackedChallengeTooltip>
         )}
       </Box>
     );

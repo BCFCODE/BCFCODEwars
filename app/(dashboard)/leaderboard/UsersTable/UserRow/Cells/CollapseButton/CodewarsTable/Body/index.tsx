@@ -5,8 +5,7 @@ import SingleRow from "./SingleRow";
 import useFilter from "./hooks/useFilter";
 
 export default function Body() {
-  const { activeFilter, both, claimed, unClaimed /* untrackedChallenges */ } =
-    useFilter();
+  const { activeFilter, both, claimed, unClaimed } = useFilter();
 
   let visibleChallenges: CodewarsCompletedChallenge[];
 

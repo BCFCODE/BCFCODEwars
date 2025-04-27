@@ -3,8 +3,10 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
 import useHandleOpen from "./hooks/useHandleOpen";
+import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 
 const OpenButton = () => {
+  // useCurrentUserQuery()
   const { isCollapsed, currentUser } = useCurrentUserContext();
   const { handleOpen } = useHandleOpen();
 // console.log('OpenButton/currentUser.codewars?.isConnected', currentUser)
