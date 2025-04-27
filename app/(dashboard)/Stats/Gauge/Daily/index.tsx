@@ -1,16 +1,20 @@
 import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import { Stack, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
-
-const millisecondsInADay = 86_400_000;
-
-const daysAgo = (numberOfDays: 1 | 7 | 30 | 365) =>
-  Date.now() - numberOfDays * millisecondsInADay;
+// import { getMillisecondsDaysAgo } from "../../utils/getMillisecondsDaysAgo";
+import dayjs from "@/utils/dayjs";
 
 const DailyStat = () => {
   const { data } = useCurrentUserQuery();
   const list = data?.codewars.codeChallenges.list;
-  console.log(daysAgo(1));
+  const targetPointAgo = dayjs().subtract(30, "day");
+  console.log(
+    ">>>>>>> Can I calculate this number with day.js? what is best practices? is this?",
+
+    list?.filter((challenge) =>
+      dayjs(challenge.completedAt).isAfter(targetPointAgo)
+    ).length ?? 0
+  );
   return (
     <Stack>
       <Gauge
