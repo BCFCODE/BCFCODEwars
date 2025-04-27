@@ -10,8 +10,7 @@ const useDiffAndUpdateList = () => {
   const { currentUser, isCollapsed } = useCurrentUserContext();
   const { pageNumber } = useCodewarsContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
-  // const untrackedChallengesRef = useRef<CodewarsCompletedChallenge[]>(null);
-
+  
   const diffAndUpdateList = async () => {
     if (!isCollapsed) {
       try {
