@@ -6,15 +6,17 @@ import { Box, Paper, Typography } from "@mui/material";
 interface Props {
   codewars: CodewarsUser;
   validatedUsername: string;
-  isDbUsernameSyncedWithCodewars: boolean | undefined;
+  isUsernameSynced: boolean | undefined;
 }
 
 const UserInfoCard = ({
   codewars,
   validatedUsername,
-  isDbUsernameSyncedWithCodewars,
+  isUsernameSynced,
 }: Props) => {
-  const overallRank = Math.abs(Number(codewars?.ranks?.overall.rank)).toString();
+  const overallRank = Math.abs(
+    Number(codewars?.ranks?.overall.rank)
+  ).toString();
   const userName = codewars?.name?.split(" ")[0] || "User";
   return (
     <Paper
@@ -31,8 +33,14 @@ const UserInfoCard = ({
         margin: "10px auto ",
       }}
     >
-      {isDbUsernameSyncedWithCodewars ? (
+      {isUsernameSynced ? (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Typography
+            variant="body1"
+            sx={{ fontWeight: 500, color: "text.secondary" }}
+          >
+            <strong>Name:</strong> {codewars?.name ?? "N/A"}
+          </Typography>
           <Typography
             variant="body1"
             sx={{ fontWeight: 600, color: "text.primary" }}
@@ -51,12 +59,7 @@ const UserInfoCard = ({
           >
             <strong>Overall Rank:</strong> {overallRank}
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontWeight: 500, color: "text.secondary" }}
-          >
-            <strong>Name:</strong> {codewars?.name ?? "N/A"}
-          </Typography>
+
           <Typography
             variant="body1"
             sx={{ fontWeight: 500, color: "text.secondary" }}

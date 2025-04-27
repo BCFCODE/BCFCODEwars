@@ -1,7 +1,7 @@
-import DatabaseService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db";
 import { NextRequest, NextResponse } from "next/server";
 
-const { getDatabase, getUser } = new DatabaseService();
+const { getUser } = new DatabaseService();
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       codewars: {
-        username: user.codewars ?? null,
+        username: user.name,
       },
     });
   } catch (error) {

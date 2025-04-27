@@ -1,15 +1,11 @@
 "use client";
+
 import { Box, Button, Paper, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
 import { StepProps } from "../stepSwitch";
+import Link from "next/link";
 
 const Step4 = ({ session }: StepProps) => {
-  const router = useRouter();
-  const userName = session?.user?.name.split(" ")[0] || "User";
-
-  const handleNavigateToWars = () => {
-    router.replace("/leaderboard");
-  };
+  const userName = (session?.user?.name ?? "").split(" ")[0] || "User";
 
   return (
     <Box
@@ -55,15 +51,19 @@ const Step4 = ({ session }: StepProps) => {
             variant="body1"
             sx={{ lineHeight: 1.8, color: "text.secondary" }}
           >
-            You&apos;re now ranked on the BCFCODE leaderboard! Check your stats, see
-            where you stand, and push for the top.
+            You&apos;re now ranked on the BCFCODE leaderboard! Check your stats,
+            see where you stand, and push for the top.
           </Typography>
           <Typography variant="body1" sx={{ mt: 2, color: "text.secondary" }}>
             Ready for the next challenge? Tap below to climb higher!
           </Typography>
         </Box>
         {/* Navigation Button */}
+
         <Button
+          component={Link}
+          href="/leaderboard"
+          replace
           variant="text"
           color="primary"
           size="large"
@@ -77,9 +77,8 @@ const Step4 = ({ session }: StepProps) => {
             boxShadow: 3,
             // borderRadius: 3,
           }}
-          onClick={handleNavigateToWars}
         >
-          Go to Leaderboard
+          Leaderboard
         </Button>
       </Paper>
     </Box>

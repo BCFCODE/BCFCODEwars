@@ -1,4 +1,4 @@
-import DatabaseService from "@/app/services/db-service";
+import DatabaseService from "@/app/services/db";
 import { auth } from "@/auth";
 import { CodewarsUser } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
@@ -8,7 +8,7 @@ import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect";
 import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
 import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
 
-const { getDatabase, getSingleCodewarsUser } = new DatabaseService();
+const { getSingleCodewarsUser } = new DatabaseService();
 
 const WarsPage = async () => {
   const session = await auth();
@@ -22,13 +22,13 @@ const WarsPage = async () => {
     codewars: {} as CodewarsUser,
     validatedUsername: "",
     session: session || null,
-    isDbUsernameSyncedWithCodewars: true,
+    isUsernameSynced: true,
   };
 
   if (email) {
     try {
       const currentCodewarsUser = await getSingleCodewarsUser(email);
-      console.log(currentCodewarsUser, "<<<<<< currentCodewarsUser");
+      // console.log(currentCodewarsUser, "<<<<<< currentCodewarsUser");
       /* Purpose: 
           This block of code checks if the Codewars account associated with the user 
           (stored in our database) is in sync with the current state on Codewars.com. 
@@ -40,7 +40,7 @@ const WarsPage = async () => {
           1. Retrieve the user's record from the database using their email address.
           2. Fetch the latest Codewars user data from our API, which queries Codewars.com,
             using the stored Codewars username.
-          3. Determine synchronization status (`isSyncWithDb`) based on the success 
+          3. Determine synchronization status (`isUsernameSynced`) based on the success 
             property returned by the Codewars API response.
           4. Update the `isConnected` status by checking if the user is already marked 
             as connected in the database OR if the Codewars data is successfully synced.
@@ -61,27 +61,32 @@ const WarsPage = async () => {
       );
       const codewarsUser: CodewarsUser = await response.json();
 
+      const isUsernameSynced = codewarsUser.success;
+      // console.log(
+      //   currentCodewarsUser?.isConnected,
+      //   isUsernameSynced
+      // );
       const isDbUsernameSyncedWithCodewars = codewarsUser.success;
-      console.log(
-        currentCodewarsUser?.isConnected,
-        isDbUsernameSyncedWithCodewars
-      );
+      // console.log(
+      //   `currentCodewarsUser?.isConnected,
+      //   isDbUsernameSyncedWithCodewars`,
+      //   currentCodewarsUser?.isConnected,
+      //   isDbUsernameSyncedWithCodewars
+      // );
       isConnected =
-        currentCodewarsUser?.isConnected ||
-        !isDbUsernameSyncedWithCodewars ||
-        false;
+        currentCodewarsUser?.isConnected || !isUsernameSynced || false;
 
       reconnectProps = {
         codewars: currentCodewarsUser ?? ({} as CodewarsUser),
         validatedUsername: currentCodewarsUser?.username ?? "",
         session,
-        isDbUsernameSyncedWithCodewars,
+        isUsernameSynced,
       };
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
   }
-  console.log("isConnected (wars page)", isConnected);
+  // console.log("isConnected (wars page)", isConnected);
   if (!isConnected)
     return (
       <Box

@@ -1,5 +1,10 @@
-import { CurrentUser } from "@/types/users";
-import { AllUsersContextType } from "../providers/AllUsers";
+import { AuthenticatedUser } from "@/types/users";
+
+export interface AllUsersContextType {
+  isLoading: boolean;
+  error: boolean;
+  allUsers: AuthenticatedUser[];
+}
 
 export type AllUsersState = AllUsersContextType;
 
@@ -7,12 +12,18 @@ export type AllUsersAction =
   | { type: "SET_ALL_USERS"; payload: AllUsersState }
   | { type: "SET_ERROR"; error: boolean }
   | { type: "SET_LOADING"; loading: boolean }
-  | { type: "UPDATE_CURRENT_USER"; currentUser: CurrentUser }
+  | { type: "UPDATE_CURRENT_USER"; currentUser: AuthenticatedUser }
   | {
       type: "INCREASE_TOTAL_AND_CODEWARS_DIAMONDS_SUM";
       collectedDiamondsCount: number;
-      currentUser: CurrentUser;
+      currentUser: AuthenticatedUser;
     };
+
+export const initialDatabaseAllUsersState = {
+  allUsers: [],
+  isLoading: true,
+  error: false,
+};
 
 const allUsersReducer = (
   state: AllUsersState,
@@ -31,17 +42,6 @@ const allUsersReducer = (
       );
       return { ...state, allUsers };
     }
-    // case "INCREASE_TOTAL_AND_CODEWARS_DIAMONDS_SUM": {
-    //   const allUsers = state.allUsers.map((user) => {
-    //     if (user.email === action.currentUser.email) {
-    //       const newUser = { ...user };
-    //       newUser.diamonds.totals.codewars += action.collectedDiamondsCount;
-    //       newUser.diamonds.totals.total += action.collectedDiamondsCount;
-    //       return newUser;
-    //     } else return user;
-    //   });
-    //   return { ...state, allUsers };
-    // }
     default:
       return state;
   }

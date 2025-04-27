@@ -1,60 +1,32 @@
 "use client";
 
 import LoadingUI from "@/app/components/UI/LoadingUI";
-import useAllUsersContext from "@/app/context/hooks/db/useAllUsersContext";
-import useAllUsersDispatchContext from "@/app/context/hooks/db/useAllUsersDispatchContext";
+import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 import CodewarsProvider from "@/app/context/providers/Codewars";
-import { CurrentUser } from "@/types/users";
+import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
 import { Paper, Table, TableContainer } from "@mui/material";
-import { Session } from "next-auth";
-import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import Body from "./Body";
 import LeaderboardLoadingError from "./Error";
-import LeaderboardHeader from "./Head/Header";
+import UsersTable from "./UsersTable";
+import LeaderboardHeader from "./UsersTable/Header";
 
-interface Props {
-  allUsersInSignInPage: CurrentUser[];
-  session: Session | null;
-}
-
-export default function LeaderBoardPage({
-  allUsersInSignInPage,
-  session,
-}: Props) {
-  const router = useRouter();
-  // // Consume the error state from context to trigger re-render when it updates.
-  const dispatch = useAllUsersDispatchContext();
-  const { error, isLoading } = useAllUsersContext();
-  // const { isCollapse, currentUser } = useCurrentUserContext();
+export default function LeaderBoardPage() {
+  const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (allUsersInSignInPage) {
-      dispatch({
-        type: "SET_ALL_USERS",
-        payload: {
-          error: false,
-          isLoading: false,
-          allUsers: allUsersInSignInPage,
-        },
-      });
-      console.log(
-        "LeaderBoardPage allUsersInSignInPage",
-        allUsersInSignInPage,
-        // isCollapse,
-        // currentUser
-        "session",
-        session
-      );
-    }
-  }, [allUsersInSignInPage, dispatch]);
+    queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
+  }, [queryClient]);
 
-  // console.log(">>>>>>>>>>>> useAllUsersContext error", error);
-  // // Conditionally render the error UI when error is true.
+  const { data, isError, isLoading, refetch } = useUsersQuery();
+  // const { status } = useSession();
 
-  // console.log('isError in loading leaderboard', error)
-  if (error)
-    return <LeaderboardLoadingError onRetry={() => router.refresh()} />;
+  // useEffect(() => {
+  //   if (status === "authenticated") refetch();
+  // }, [status, refetch]);
+  // console.log("LeaderBoardPage", data);
+
+  if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
   if (isLoading)
     return (
@@ -64,13 +36,13 @@ export default function LeaderBoardPage({
       />
     );
 
-  if (!error)
+  if (!isError)
     return (
       <CodewarsProvider>
         <TableContainer component={Paper}>
           <Table aria-label="Leaderboard Table">
             <LeaderboardHeader />
-            <Body />
+            <UsersTable list={data?.list} />
           </Table>
         </TableContainer>
       </CodewarsProvider>

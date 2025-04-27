@@ -1,11 +1,15 @@
 "use client";
 
-import { Box, Link, Paper, Typography } from "@mui/material";
-import { StepProps } from "../stepSwitch";
-import handleAddUserToDB from "./connectUser";
-import Buttons from "./Buttons";
+import dbAPIService from "@/app/api/services/db";
+import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
+import { CodeChallengesFilter } from "@/types/diamonds";
+import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
+import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
+import Buttons from "./Buttons";
+import useConnectMutation from "./hooks/useConnectMutation";
+import useReconnectMutation from "./hooks/useReconnectMutation";
 
 const Step3 = ({
   currentStep,
@@ -15,8 +19,39 @@ const Step3 = ({
 }: StepProps) => {
   const router = useRouter();
 
-  const handleOnYes = () => {
-    handleAddUserToDB({ currentStep, validatedUsername, session, codewars });
+  const { data: currentUser } = useCurrentUserQuery();
+
+  const { mutateAsync: reconnect } = useReconnectMutation();
+  const { mutateAsync: connect } = useConnectMutation();
+
+  const email = currentUser?.email ?? "";
+
+  const handleOnYes = async () => {
+    if (!currentUser) return;
+    // console.log("Yes it is me, clicked!", codewars, currentUser?.codewars);
+    if (currentUser?.codewars.isConnected) {
+      await reconnect({
+        name: codewars.name ?? "",
+        username: validatedUsername,
+        email,
+        clan: codewars.clan ?? "",
+      });
+    } else {
+      const initializedCodewarsUser = {
+        ...codewars,
+        email,
+        isConnected: true,
+        codeChallenges: {
+          ...codewars.codeChallenges,
+          challengeFilter: CodeChallengesFilter.ClaimedDiamonds,
+          list: [],
+        },
+        username: validatedUsername,
+      };
+
+      await connect(initializedCodewarsUser);
+    }
+
     router.replace(`${currentStep + 1}`);
   };
 
@@ -48,7 +83,7 @@ const Step3 = ({
         {/* User Info */}
         <UserInfoCard
           {...{
-            isDbUsernameSyncedWithCodewars: true,
+            isUsernameSynced: true,
             session,
             codewars,
             validatedUsername,

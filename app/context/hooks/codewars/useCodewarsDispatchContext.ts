@@ -6,7 +6,7 @@ const useCodewarsDispatchContext = (): Dispatch<CodewarsAction> => {
   const context = useContext(CodewarsDispatchContext);
   if (!context) {
     throw new Error(
-      "useCodewarsDispatchContext must be used within a CodewarsProvider"
+      "useCodewarsDispatchContext must be used within a CodewarsDispatchContextProvider"
     );
   }
   return context;

@@ -1,12 +1,12 @@
 import { Dispatch, useContext } from "react";
-import { CurrentUserActionContext } from "../../providers/CurrentUser";
-import { CurrentUserAction } from "../../reducers/currentUserReducer";
+import { CurrentUserAction } from "../../reducers/currentUser";
+import { CurrentUserDispatchContext } from "../../providers/contexts";
 
 const useCurrentUserDispatchContext = (): Dispatch<CurrentUserAction> => {
-  const context = useContext(CurrentUserActionContext);
+  const context = useContext(CurrentUserDispatchContext);
   if (!context) {
     throw new Error(
-      "useCurrentUserDispatchContext must be used within a useCurrentUserDispatchContext"
+      "useCurrentUserDispatchContext must be used within a CurrentUserDispatchContextProvider"
     );
   }
   return context;

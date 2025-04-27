@@ -1,10 +1,11 @@
 import { SxProps } from "@mui/material";
 
 export const diamondCollectedColor = "customPalette.roseGold";
+export const diamondNotCollectedColor = "primary.main";
 
 export const diamondStyles: SxProps = {
   marginTop: 0.4,
-  color: "primary.main",
+  color: diamondNotCollectedColor,
 };
 
 export const fade = (error: boolean): SxProps => ({
@@ -20,7 +21,7 @@ export const fade = (error: boolean): SxProps => ({
 
 export const textStyles: SxProps = {
   whiteSpace: "nowrap",
-  // fontSize: { xs: "0.75rem", sm: "1rem" },
+  // fontSize: { xs: "0.75rem", sm: "0.5rem" },
 };
 
 export const codewarsCellStyles: SxProps = {
@@ -42,7 +43,7 @@ export const counterStyles: SxProps = {
 export const collectedDiamondStyles: SxProps = {
   ...diamondStyles,
   mr: 1,
-  color: "customPalette.roseGold", // "#B76E79" A softer, modern take on luxury with a pinkish-gold hue.
+  color: diamondCollectedColor, // "#B76E79" A softer, modern take on luxury with a pinkish-gold hue.
 };
 
 export const iconButtonStyles: SxProps = {

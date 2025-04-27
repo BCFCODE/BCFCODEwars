@@ -1,14 +1,12 @@
 import { useContext } from "react";
-import {
-  CurrentUserContext,
-  CurrentUserContextState,
-} from "../../providers/CurrentUser";
+import { CurrentUserContext as CurrentUserContextType } from "../../reducers/currentUser";
+import { CurrentUserContext } from "../../providers/contexts";
 
-const useCurrentUserContext = (): CurrentUserContextState => {
+const useCurrentUserContext = (): CurrentUserContextType => {
   const context = useContext(CurrentUserContext);
   if (!context) {
     throw new Error(
-      "useCurrentUserContext must be used within a useCurrentUserContext"
+      "useCurrentUserContext must be used within a CurrentUserContextProvider"
     );
   }
   return context;
