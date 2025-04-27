@@ -11,12 +11,9 @@ const { getUsers } = new dbAPIService();
 
 const useUsersQuery = () => {
   const { data: session } = useSession();
-  // const pathName = usePathname();
-
-  // const shouldRefetch = pathName === "/leaderboard";
 
   return useQuery<GetUsersResponse>({
-    queryKey: /* shouldRefetch ? ["allUsers", "leaderboard"] : */ ["allUsers"],
+    queryKey: ["allUsers"],
     queryFn: async () => {
       const { success, list, error } = await getUsers({
         cache: "no-store",

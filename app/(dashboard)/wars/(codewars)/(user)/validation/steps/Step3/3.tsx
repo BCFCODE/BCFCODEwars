@@ -7,10 +7,8 @@ import { useRouter } from "next/navigation";
 import { StepProps } from "../stepSwitch";
 import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
-// import connect from "./connect";
-// import reconnect from "./reconnect";
 import dbAPIService from "@/app/api/services/db";
-import { useQueryClient } from "@tanstack/react-query";
+import useCodewarsConnectMutation from "./hooks/useCodewarsConnectMutation";
 
 const { connectToCodewars, reconnectToCodewars } = new dbAPIService();
 
@@ -20,28 +18,24 @@ const Step3 = ({
   session,
   codewars,
 }: StepProps) => {
-  const queryClient = useQueryClient();
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUserQuery();
+  const { mutateAsync} = useCodewarsConnectMutation();
   // console.log("Step3/data useUsersQuery", codewars, currentUser);
+  const email = currentUser?.email ?? "";
 
   const handleOnYes = async () => {
+    if (!currentUser) return;
     // console.log("Yes it is me, clicked!", codewars, currentUser?.codewars);
     if (currentUser?.codewars.isConnected) {
-      // console.log(
-      //   "codewars is connected so reconnect",
-      //   codewars,
-      //   currentUser.codewars
-      // );
-      reconnectToCodewars({
+      await reconnectToCodewars({
         name: codewars.name ?? "",
         username: validatedUsername,
-        email: session?.user?.email ?? "",
+        email,
         clan: codewars.clan ?? "",
       });
-    } else if (currentUser) {
-      const email = currentUser.email;
+    } else {
       const initializedCodewarsUser = {
         ...codewars,
         email,
@@ -54,10 +48,9 @@ const Step3 = ({
         username: validatedUsername,
       };
 
-      queryClient.invalidateQueries({ queryKey: ["allUsers"] });
-
-      connectToCodewars(initializedCodewarsUser);
+      await mutateAsync(initializedCodewarsUser);
     }
+
     router.replace(`${currentStep + 1}`);
   };
 

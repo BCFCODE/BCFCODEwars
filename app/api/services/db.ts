@@ -3,6 +3,11 @@ import { baseURL } from "@/utils/constants";
 import { GetUsersResponse } from "../db/users/route";
 import { CodewarsUser } from "@/types/codewars";
 
+export interface ConnectToCodewarsResponse {
+  success: boolean;
+  message?: string;
+}
+
 class dbAPIService {
   private endpoint = `${baseURL}/api/db`;
 
@@ -38,10 +43,11 @@ class dbAPIService {
       return { success: false };
     }
   };
+
   connectToCodewars = async (
     initializedCodewarsUser: CodewarsUser,
     options?: RequestInit
-  ) => {
+  ): Promise<ConnectToCodewarsResponse> => {
     try {
       const response = await fetch(`${this.endpoint}/codewars/connect`, {
         method: "POST",
@@ -52,12 +58,16 @@ class dbAPIService {
 
       if (!response.ok) {
         console.warn("connectToCodewars 404 or failure:", response.status);
-        return { success: false };
+        return {
+          success: false,
+          message: `Failed with status ${response.status}`,
+        };
       }
 
       return { success: true };
     } catch (error) {
-      return { success: false };
+      console.error("connectToCodewars error:", error);
+      return { success: false, message: "Network error or server error." };
     }
   };
 
