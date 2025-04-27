@@ -13,18 +13,18 @@ import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
 import { useSession } from "next-auth/react";
 
 export default function LeaderBoardPage() {
-  // const queryClient = useQueryClient();
-
-  // useEffect(() => {
-  //   queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
-  // }, [queryClient]);
-
-  const { data, isError, isLoading, refetch } = useUsersQuery();
-  const { status } = useSession();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
-    if (status === "authenticated") refetch();
-  }, [status]);
+    queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
+  }, [queryClient]);
+
+  const { data, isError, isLoading, refetch } = useUsersQuery();
+  // const { status } = useSession();
+
+  // useEffect(() => {
+  //   if (status === "authenticated") refetch();
+  // }, [status, refetch]);
   // console.log("LeaderBoardPage", data);
 
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;

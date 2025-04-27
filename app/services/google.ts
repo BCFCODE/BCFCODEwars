@@ -1,31 +1,19 @@
 import { GoogleUser } from "@/types/users";
 import DatabaseService from "./db";
 
-const {
-  initializeDiamonds,
-  saveNewGoogleUser,
-  getUser,
-  saveNewCodewarsUser,
-  updateSingleUser,
-} = new DatabaseService();
+const { getUser, updateSingleUser, addNewUser } = new DatabaseService();
 
 class GoogleService {
   handleGoogleSignIn = async (user: GoogleUser): Promise<void> => {
-    const { email, name, image } = user;
+    const existingUser = await getUser(user.email);
 
-    const existingUser = await getUser(email);
-
-    
     if (!existingUser) {
-      initializeDiamonds(email);
-      saveNewCodewarsUser(email);
-      saveNewGoogleUser(user);
-      // how here update the allUsers query? it doesn't update, and refresh required to see the latest change (see the new user in leaderboard table)
+      await addNewUser(user);
     } else {
       updateSingleUser(existingUser.email, {
         ...existingUser,
         // name,
-        image,
+        image: user.image,
         lastLogin: new Date(),
         activity: {
           ...existingUser.activity,
