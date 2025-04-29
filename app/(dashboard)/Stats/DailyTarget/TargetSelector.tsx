@@ -66,8 +66,8 @@ export default function TargetSelector() {
       size="large"
       sx={{ display: "flex", justifyContent: "center" }}
     >
-      {icons.map(({ value, Icon, color, title }) => (
-        <Tooltip title={title}>
+      {icons.map(({ value, Icon, color, title }, i) => (
+        <Tooltip title={title} key={i}>
           <ToggleButton value={value} sx={{ padding: 0.2, border: "none" }}>
             <Icon
               sx={{ fontSize: 40 }}
