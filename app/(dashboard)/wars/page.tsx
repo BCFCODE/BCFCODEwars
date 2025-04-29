@@ -14,8 +14,6 @@ const WarsPage = async () => {
   const session = await auth();
   const email = session?.user?.email;
 
-  // const { currentUser } = useCurrentUserContext();
-
   let isConnected = false;
 
   let reconnectProps: Omit<StepProps, "currentStep"> = {

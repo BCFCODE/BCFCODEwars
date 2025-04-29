@@ -499,7 +499,7 @@ class DatabaseService {
             isConnected: true,
             clan,
             "codeChallenges.challengeFilter":
-              CodeChallengesFilter.ClaimedDiamonds,
+              CodeChallengesFilter.Both,
             "codeChallenges.list": [],
             username,
           },

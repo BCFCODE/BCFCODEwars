@@ -136,7 +136,7 @@ const UnderDevelopment = async ({ pageName }: Props) => {
             opacity: 0.85,
           }}
         >
-          You are currently viewing **version 0.2.4** of the site. The section
+          You are currently viewing **version 0.3.0** of the site. The section
           you&apos;re in is still under construction, but the **Codewars account
           connection** feature is ready! Click the button below to access it.
         </Typography>
@@ -163,9 +163,6 @@ const UnderDevelopment = async ({ pageName }: Props) => {
             : "Hang tight, we're setting things up!"}
         </Typography>
       </Fade>
-
-      {/* Optional additional content */}
-      {/* <AnkiDecks /> */}
     </Box>
   );
 };
