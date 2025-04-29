@@ -1,9 +1,49 @@
 "use client";
+import { SvgIconComponent } from "@mui/icons-material";
 import LooksOneIcon from "@mui/icons-material/LooksOne";
 import LooksTwoIcon from "@mui/icons-material/LooksTwo";
 import WhatshotIcon from "@mui/icons-material/Whatshot"; // Or BoltIcon
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
+import { OverridableStringUnion } from "@mui/types";
 import useTargetStore, { TargetLevel } from "./store/useTargetStore";
+
+type IconColor = OverridableStringUnion<
+  | "success"
+  | "warning"
+  | "error"
+  | "primary"
+  | "secondary"
+  | "info"
+  | "disabled"
+>;
+
+interface Icon {
+  title: string;
+  Icon: SvgIconComponent;
+  color: IconColor;
+  value: TargetLevel;
+}
+
+const icons: Icon[] = [
+  {
+    title: "1 problem/day",
+    Icon: LooksOneIcon,
+    color: "success",
+    value: 1,
+  },
+  {
+    title: "2 problems/day",
+    Icon: LooksTwoIcon,
+    color: "warning",
+    value: 2,
+  },
+  {
+    title: "3+ problems/day",
+    Icon: WhatshotIcon,
+    color: "error",
+    value: 3,
+  },
+];
 
 export default function TargetSelector() {
   const { target, setTarget } = useTargetStore();
@@ -22,23 +62,15 @@ export default function TargetSelector() {
       onChange={handleChange}
       color="primary"
       size="large"
-      sx={{ display: "flex", justifyContent: "center", fontSize: 100 }}
+      sx={{ display: "flex", justifyContent: "center" }}
     >
-      <Tooltip title="1 problem/day">
-        <ToggleButton value={1} sx={{ padding: 0.2, border: "none" }}>
-          <LooksOneIcon color={target === 1 ? "success" : "disabled"} />
-        </ToggleButton>
-      </Tooltip>
-      <Tooltip title="2 problems/day">
-        <ToggleButton value={2} sx={{ padding: 0.2, border: "none" }}>
-          <LooksTwoIcon color={target === 2 ? "warning" : "disabled"} />
-        </ToggleButton>
-      </Tooltip>
-      <Tooltip title="3+ problems/day">
-        <ToggleButton value={3} sx={{ padding: 0.2, border: "none" }}>
-          <WhatshotIcon color={target === 3 ? "error" : "disabled"} />
-        </ToggleButton>
-      </Tooltip>
+      {icons.map(({ value, Icon, color, title }) => (
+        <Tooltip title={title}>
+          <ToggleButton value={value} sx={{ padding: 0.2, border: "none" }}>
+            <Icon color={target === value ? color : "disabled"} />
+          </ToggleButton>
+        </Tooltip>
+      ))}
     </ToggleButtonGroup>
   );
 }

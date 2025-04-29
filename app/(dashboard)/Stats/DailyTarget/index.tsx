@@ -2,17 +2,13 @@
 
 import {
   Box,
-  CircularProgress,
-  Skeleton,
-  SxProps,
-  Typography,
+  SxProps
 } from "@mui/material";
 import Fade from "./Fade";
+import Loading from "./Loading";
 import Target from "./Target";
 import TargetSelector from "./TargetSelector";
 import useTargetStore from "./store/useTargetStore";
-import LoadingWrapper from "./Loading";
-import Loading from "./Loading";
 
 const RelativeCenter: SxProps = {
   position: "relative",
