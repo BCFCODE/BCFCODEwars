@@ -1,9 +1,8 @@
 "use client";
-import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
 import LooksOneIcon from "@mui/icons-material/LooksOne";
 import LooksTwoIcon from "@mui/icons-material/LooksTwo";
 import WhatshotIcon from "@mui/icons-material/Whatshot"; // Or BoltIcon
-import { useState } from "react";
+import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
 import useTargetStore, { TargetLevel } from "./store/useTargetStore";
 
 export default function TargetSelector() {
