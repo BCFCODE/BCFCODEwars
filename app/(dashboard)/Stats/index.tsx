@@ -13,9 +13,9 @@ const DashboardStats = () => {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2} columns={24}>
         {[inLast24Hour, inLast7Days, inLast30Days, inLast365Days].map(
-          (inLastDayAgo, index) => (
+          (inLastDaysAgo, index) => (
             <Grid size={{ xs: 24, sm: 12, md: 8, lg: 6, xl: 6 }} key={index}>
-              <CodewarsStatGauge completedChallenges={inLastDayAgo} />
+              <CodewarsStatGauge completedChallenges={inLastDaysAgo} />
             </Grid>
           )
         )}

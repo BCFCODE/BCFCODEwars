@@ -31,6 +31,7 @@ const Loading = ({ children, isLoading }: Props) => {
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
         fontWeight: 500,
+        mt: 2
       }}
     >
       Locking in your goal...

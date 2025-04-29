@@ -1,8 +1,9 @@
 import { Stack, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
+import { ChallengeSummary } from "./hooks/useChallengeCountsByPeriod";
 
 interface Props {
-  completedChallenges: number;
+  completedChallenges: ChallengeSummary;
 }
 
 const CodewarsStatGauge = ({ completedChallenges }: Props) => {
@@ -23,7 +24,7 @@ const CodewarsStatGauge = ({ completedChallenges }: Props) => {
         text={({ value, valueMax }) => `${value}%`}
       />
       <Typography sx={{ textAlign: "center" }}>
-        {completedChallenges} in last 365Days
+        {completedChallenges.count} in last 365Days
       </Typography>
     </Stack>
   );
