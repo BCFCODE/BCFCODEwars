@@ -1,14 +1,22 @@
 "use client";
 
-import { Box, SxProps } from "@mui/material";
-import { useState } from "react";
+import {
+  Box,
+  CircularProgress,
+  Skeleton,
+  SxProps,
+  Typography,
+} from "@mui/material";
 import Fade from "./Fade";
 import Target from "./Target";
 import TargetSelector from "./TargetSelector";
+import useTargetStore from "./store/useTargetStore";
+import LoadingWrapper from "./Loading";
+import Loading from "./Loading";
 
 const RelativeCenter: SxProps = {
   position: "relative",
-  backgroundColor: "yellowgreen",
+  // backgroundColor: "yellowgreen",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -16,32 +24,36 @@ const RelativeCenter: SxProps = {
 
 const AbsoluteCenter: SxProps = {
   position: "absolute",
-  top: 0,
+  top: {
+    xs: 0,
+    sm: "initial",
+  },
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
 };
 
 export default function DailyTarget() {
-  const [isHovering, setIsHovering] = useState<boolean>(false);
-  
+  const { isLoading, target, isHovering, setIsHovering } = useTargetStore();
+
   return (
     <Box
       sx={RelativeCenter}
-      onMouseEnter={() => setIsHovering(true)}
+      onMouseOver={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 1 : 0 }}>
-        <Fade fade={isHovering ? "in" : "out"}>
-          {/* <TargetPickerSlider /> */}
-          <TargetSelector />
-        </Fade>
-      </Box>
-      <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 0 : 1 }}>
-        <Fade fade={isHovering ? "out" : "in"}>
-          <Target value={3} />
-        </Fade>
-      </Box>
+      <Loading isLoading={isLoading}>
+        <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 1 : 0 }}>
+          <Fade fade={isHovering ? "in" : "out"}>
+            <TargetSelector />
+          </Fade>
+        </Box>
+        <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 0 : 1 }}>
+          <Fade fade={isHovering ? "out" : "in"}>
+            <Target value={target} />
+          </Fade>
+        </Box>
+      </Loading>
     </Box>
   );
 }

@@ -1,7 +1,11 @@
-import SignalCellularAlt1BarIcon from "@mui/icons-material/SignalCellularAlt1Bar";
-import SignalCellularAlt2BarIcon from "@mui/icons-material/SignalCellularAlt2Bar";
-import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
-import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
+import LooksOneIcon from "@mui/icons-material/LooksOne";
+import LooksTwoIcon from "@mui/icons-material/LooksTwo";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
+import { SxProps } from "@mui/material";
+
+const style: SxProps = {
+  fontSize: 40,
+};
 
 interface Props {
   value: number;
@@ -9,12 +13,18 @@ interface Props {
 
 const Target = ({ value }: Props) => {
   switch (value) {
-    case 0:
-      return <SignalCellularAlt1BarIcon sx={{ fontSize: 100 }} />;
     case 1:
-      return <SignalCellularAlt2BarIcon sx={{ fontSize: 100 }} />;
+      return (
+        <LooksOneIcon sx={style} color={value === 1 ? "success" : "disabled"} />
+      );
     case 2:
-      return <SignalCellularAltIcon sx={{ fontSize: 100 }} />;
+      return (
+        <LooksTwoIcon sx={style} color={value === 2 ? "warning" : "disabled"} />
+      );
+    case 3:
+      return (
+        <WhatshotIcon sx={style} color={value === 3 ? "error" : "disabled"} />
+      );
   }
 };
 

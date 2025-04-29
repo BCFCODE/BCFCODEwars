@@ -41,6 +41,7 @@ export default async function DashboardPage() {
           <Box
             sx={{
               color: "text.secondary", // More subtle tone for the title
+              fontSize: '0.9rem'
             }}
           >
             Welcome to BCFCODE {pageName}
@@ -48,6 +49,7 @@ export default async function DashboardPage() {
           <Box
             sx={{
               color: "text.secondary", // Consistent color for user's name
+              fontSize: '0.9rem'
             }}
           >
             {session?.user?.name || "User"}!
