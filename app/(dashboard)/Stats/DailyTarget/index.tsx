@@ -1,44 +1,47 @@
 "use client";
-import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
-import LooksOneIcon from "@mui/icons-material/LooksOne";
-import LooksTwoIcon from "@mui/icons-material/LooksTwo";
-import WhatshotIcon from "@mui/icons-material/Whatshot"; // Or BoltIcon
+
+import { Box, SxProps } from "@mui/material";
 import { useState } from "react";
+import Fade from "./Fade";
+import Target from "./Target";
+import TargetSelector from "./TargetSelector";
 
-export default function TargetSelector() {
-  const [target, setTarget] = useState<number>(3);
+const RelativeCenter: SxProps = {
+  position: "relative",
+  backgroundColor: "yellowgreen",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+};
 
-  const handleChange = (
-    _: React.MouseEvent<HTMLElement>,
-    newValue: number | null
-  ) => {
-    if (newValue !== null) setTarget(newValue);
-  };
+const AbsoluteCenter: SxProps = {
+  position: "absolute",
+  top: 0,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
 
+export default function DailyTarget() {
+  const [isHovering, setIsHovering] = useState<boolean>(false);
+  
   return (
-    <ToggleButtonGroup
-      value={target}
-      exclusive
-      onChange={handleChange}
-      color="primary"
-      size="large"
-      sx={{ display: "flex", justifyContent: "center", height: "auto" }}
+    <Box
+      sx={RelativeCenter}
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
     >
-      <Tooltip title="1 problem/day">
-        <ToggleButton value={1}>
-          <LooksOneIcon color={target === 1 ? "success" : "inherit"} />
-        </ToggleButton>
-      </Tooltip>
-      <Tooltip title="2 problems/day">
-        <ToggleButton value={2}>
-          <LooksTwoIcon color={target === 2 ? "info" : "inherit"} />
-        </ToggleButton>
-      </Tooltip>
-      <Tooltip title="3+ problems/day">
-        <ToggleButton value={3}>
-          <WhatshotIcon color={target === 3 ? "warning" : "inherit"} />
-        </ToggleButton>
-      </Tooltip>
-    </ToggleButtonGroup>
+      <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 1 : 0 }}>
+        <Fade fade={isHovering ? "in" : "out"}>
+          {/* <TargetPickerSlider /> */}
+          <TargetSelector />
+        </Fade>
+      </Box>
+      <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 0 : 1 }}>
+        <Fade fade={isHovering ? "out" : "in"}>
+          <Target value={3} />
+        </Fade>
+      </Box>
+    </Box>
   );
 }
