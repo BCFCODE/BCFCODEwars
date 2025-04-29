@@ -52,7 +52,9 @@ export default function TargetSelector() {
     _: React.MouseEvent<HTMLElement>,
     newValue: TargetLevel | null
   ) => {
-    if (newValue !== null) setTarget(newValue);
+    if (newValue !== null) {
+      setTarget(newValue);
+    }
   };
 
   return (

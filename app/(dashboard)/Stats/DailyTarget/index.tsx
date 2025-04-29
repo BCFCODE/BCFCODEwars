@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  Box,
-  SxProps
-} from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import Fade from "./Fade";
 import Loading from "./Loading";
 import Target from "./Target";
@@ -12,7 +9,6 @@ import useTargetStore from "./store/useTargetStore";
 
 const RelativeCenter: SxProps = {
   position: "relative",
-  // backgroundColor: "yellowgreen",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
