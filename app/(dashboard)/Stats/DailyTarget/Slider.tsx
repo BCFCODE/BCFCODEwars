@@ -1,28 +1,6 @@
 import { Box, Slider } from "@mui/material";
 import React from "react";
-import SignalCellularAlt1BarIcon from "@mui/icons-material/SignalCellularAlt1Bar";
-import SignalCellularAlt2BarIcon from "@mui/icons-material/SignalCellularAlt2Bar";
-import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
-import TipsAndUpdatesIcon from "@mui/icons-material/TipsAndUpdates";
-
-const marks = [
-  {
-    value: 0,
-    label: <SignalCellularAlt1BarIcon color="error" sx={{ fontSize: 20 }} />,
-  },
-  {
-    value: 20,
-    label: <SignalCellularAlt2BarIcon color="warning" sx={{ fontSize: 20 }} />,
-  },
-  {
-    value: 37,
-    label: <SignalCellularAltIcon color="info" sx={{ fontSize: 20 }} />,
-  },
-  {
-    value: 100,
-    label: <TipsAndUpdatesIcon color="success" sx={{ fontSize: 20 }} />,
-  },
-];
+import marks from "./Marks";
 
 function formatValue(value: number, index: number) {
   switch (value) {
@@ -52,7 +30,7 @@ const TargetPickerSlider = () => {
     <Box sx={{ width: 300, mt: 5 }}>
       <Slider
         value={value}
-        aria-label="Custom marks"
+        aria-label="Select your daily target problem solving"
         // defaultValue={value}
         valueLabelFormat={formatValue}
         getAriaValueText={formatValue}
