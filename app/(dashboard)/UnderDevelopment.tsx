@@ -136,9 +136,20 @@ const UnderDevelopment = async ({ pageName }: Props) => {
             opacity: 0.85,
           }}
         >
-          You are currently viewing **version 0.3.0** of the site. The section
-          you&apos;re in is still under construction, but the **Codewars account
-          connection** feature is ready! Click the button below to access it.
+          You're viewing **Version 0.3.0** — an exciting update packed with new
+          features to fuel your coding journey! In this release, we've
+          introduced powerful stats for your Codewars challenges, giving you
+          daily, weekly, monthly, and yearly progress metrics.
+          {/* <br /> */}
+          <br />
+          To get started, simply connect your Codewars account by clicking the
+          button below. Once connected, head over to your **Dashboard** to see
+          your progress and track your achievements.
+          {/* <br /> */}
+          <br />
+          While the **Missions** and **Orders** sections are still under
+          construction, the **Dashboard** is fully ready for Codewars users.
+          Start tracking your progress now!
         </Typography>
         <Link href="/wars">
           <Button>Go to wars!</Button>
@@ -149,6 +160,7 @@ const UnderDevelopment = async ({ pageName }: Props) => {
         <Typography
           variant="h6"
           sx={{
+            mt: -6.5,
             textAlign: "center",
             maxWidth: 600,
             mb: 3,
@@ -156,6 +168,7 @@ const UnderDevelopment = async ({ pageName }: Props) => {
             fontStyle: "italic",
             opacity: 0.8,
             fontWeight: "500",
+            fontSize: "0.7rem",
           }}
         >
           {session
