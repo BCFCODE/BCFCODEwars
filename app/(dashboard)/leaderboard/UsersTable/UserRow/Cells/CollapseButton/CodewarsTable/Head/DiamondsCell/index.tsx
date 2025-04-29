@@ -1,3 +1,4 @@
+import { CodeChallengesFilter } from "@/types/diamonds";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { TableCell } from "@mui/material";
 import React, { useState } from "react";
@@ -7,18 +8,15 @@ import {
   DiamondToggleButton,
   DiamondToggleGroup,
   notCollectedDiamondToggleStyles,
-  recentlySolvedToggleStyles,
-  // recentlySolvedToggleStyles,
 } from "./styles";
-import useCollectionToggle from "./useCollectionToggle";
-import { CodeChallengesFilter } from "@/types/diamonds";
-import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import useToggleCollection from "./useCollectionToggle";
 
 const DiamondsCell = () => {
   const [collection, setCollection] = useState(() => [
     CodeChallengesFilter.ClaimedDiamonds,
+    CodeChallengesFilter.UnclaimedDiamonds,
   ]);
-  const { handle } = useCollectionToggle();
+  const { handle } = useToggleCollection();
 
   const handleCollectionChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -39,21 +37,14 @@ const DiamondsCell = () => {
         <DiamondToggleButton
           value={CodeChallengesFilter.ClaimedDiamonds}
           aria-label="Show collected diamonds"
-          onClick={handle.selectCollectedDiamonds}
+          onClick={handle.onClaimedDiamondIcon}
         >
           <DiamondIcon sx={collectedDiamondToggleStyles} />
         </DiamondToggleButton>
-        {/* <DiamondToggleButton
-          value={CodeChallengesFilter.ClaimedDiamonds}
-          aria-label="Show collected diamonds"
-          onClick={handle.selectCollectedDiamonds}
-        >
-          <TaskAltIcon sx={recentlySolvedToggleStyles} />
-        </DiamondToggleButton> */}
         <DiamondToggleButton
           value={CodeChallengesFilter.UnclaimedDiamonds}
           aria-label="Show uncollected diamonds"
-          onClick={handle.selectNotCollectedDiamonds}
+          onClick={handle.onUnclaimedDiamondIcon}
         >
           <DiamondIcon sx={notCollectedDiamondToggleStyles} />
         </DiamondToggleButton>
