@@ -38,7 +38,7 @@ const CodewarsStatGauge = ({ completedChallenges }: Props) => {
           },
           [`& .${gaugeClasses.valueArc}`]: {
             fill:
-              completedChallenges.percent === -1
+              completedChallenges.percent === -1 || completedChallenges.percent >= 100
                 ? `#76FF03`
                 : theme.palette[colorKey].main,
           },

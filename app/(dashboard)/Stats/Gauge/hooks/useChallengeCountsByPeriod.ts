@@ -1,8 +1,6 @@
 import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import { completedAfterThreshold } from "@/utils/dayjs";
 import useTargetStore from "../../DailyTarget/store/useTargetStore";
-import { count } from "console";
-import { number } from "zod";
 
 export interface ChallengeSummary {
   count: number;
@@ -12,7 +10,7 @@ export interface ChallengeSummary {
 }
 
 const useChallengeCountsByPeriod = (): {
-  inLast24Hour: ChallengeSummary;
+  inLast24Hours: ChallengeSummary;
   inLast7Days: ChallengeSummary;
   inLast30Days: ChallengeSummary;
   inLast365Days: ChallengeSummary;
@@ -37,7 +35,7 @@ const useChallengeCountsByPeriod = (): {
     Math.floor((count * 100) / (timeframeDays * target));
 
   const [
-    lastDayPercent,
+    last24HoursPercent,
     last7DaysPercent,
     last30DaysPercent,
     last365DaysPercent,
@@ -49,34 +47,60 @@ const useChallengeCountsByPeriod = (): {
   ];
 
   const percents = [
-    lastDayPercent,
+    last24HoursPercent,
     last7DaysPercent,
     last30DaysPercent,
     last365DaysPercent,
   ];
 
   return {
-    inLast24Hour: {
+    inLast24Hours: {
       count: countInLast24Hour,
-      message: percents.some((percent) => percent >= 100)
-        ? `Daily target reached!`
+      message: percents.slice(0).some((percent) => percent > 100)
+        ? `Daily target reached! ${last24HoursPercent >= 100 ? `${countInLast24Hour}/30Days` : ""}`
         : `${countInLast24Hour} in last 24Hours`,
-      percent: percents.some((percent) => percent >= 100) ? -1 : lastDayPercent,
+      percent:
+        last24HoursPercent >= 100
+          ? last24HoursPercent
+          : percents.slice(0).some((percent) => percent > 100)
+            ? -1
+            : last24HoursPercent,
     },
     inLast7Days: {
       count: countInLast7Days,
-      message: `${countInLast7Days} in last 7Days`,
-      percent: last7DaysPercent,
+      message: percents.slice(1).some((percent) => percent > 100)
+        ? `Weekly target reached! ${last7DaysPercent >= 100 ? `${countInLast7Days}/30Days` : ""}`
+        : `${countInLast7Days} in last 7Days`,
+      percent:
+        last7DaysPercent >= 100
+          ? last7DaysPercent
+          : percents.slice(1).some((percent) => percent > 100)
+            ? -1
+            : last7DaysPercent,
     },
     inLast30Days: {
       count: countInLast30Days,
-      message: `${countInLast30Days} in last 30Days`,
-      percent: last30DaysPercent,
+      message: percents.slice(2).some((percent) => percent > 100)
+        ? `Monthly target reached! ${last30DaysPercent >= 100 ? `${countInLast30Days}/30Days` : ""}`
+        : `${countInLast30Days} in last 30Days`,
+      percent:
+        last30DaysPercent >= 100
+          ? last30DaysPercent
+          : percents.slice(2).some((percent) => percent > 100)
+            ? -1
+            : last30DaysPercent,
     },
     inLast365Days: {
       count: countInLast365Days,
-      message: `${countInLast365Days} in last 365Days`,
-      percent: last365DaysPercent,
+      message: percents.slice(3).some((percent) => percent > 100)
+        ? `Yearly target reached!`
+        : `${countInLast365Days} in last 365Days ${last365DaysPercent >= 100 ? `${countInLast365Days}/30Days` : ""}`,
+      percent:
+        last365DaysPercent >= 100
+          ? last365DaysPercent
+          : percents.slice(3).some((percent) => percent > 100)
+            ? -1
+            : last365DaysPercent,
     },
   };
 };
