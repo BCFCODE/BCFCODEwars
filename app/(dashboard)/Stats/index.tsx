@@ -2,10 +2,10 @@
 
 import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import DailyStat from "./Gauge/Daily";
-import MonthlyStat from "./Gauge/Monthly";
-import WeeklyStat from "./Gauge/Weekly";
-import YearlyStat from "./Gauge/YearlyStat";
+import DailyStat from "./Gauge/Stats/Daily";
+import MonthlyStat from "./Gauge/Stats/Monthly";
+import WeeklyStat from "./Gauge/Stats/Weekly";
+import YearlyStat from "./Gauge/Stats/Yearly";
 
 const stats = [DailyStat, WeeklyStat, MonthlyStat, YearlyStat];
 

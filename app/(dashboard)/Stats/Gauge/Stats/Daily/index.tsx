@@ -1,17 +1,9 @@
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import { Stack, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
-import dayjs from "@/utils/dayjs";
+import useChallengeCountsByPeriod from "../../hooks/useChallengeCountsByPeriod";
 
 const DailyStat = () => {
-  const { data } = useCurrentUserQuery();
-  const list = data?.codewars.codeChallenges.list;
-  const targetPointAgo = dayjs().subtract(1, "day");
-
-  const challengesCompletedInLast24Hours =
-    list?.filter((challenge) =>
-      dayjs(challenge.completedAt).isAfter(targetPointAgo)
-    ).length ?? 0;
+  const { inLast24Hour } = useChallengeCountsByPeriod();
 
   return (
     <Stack>
@@ -29,7 +21,9 @@ const DailyStat = () => {
         // text={({ value, valueMax }) => `${value} / ${valueMax}`}
         text={({ value, valueMax }) => `${value}%`}
       />
-      <Typography sx={{ textAlign: "center" }}>1 in last 24Hours</Typography>
+      <Typography sx={{ textAlign: "center" }}>
+        {inLast24Hour} in last 24Hours
+      </Typography>
     </Stack>
   );
 };
