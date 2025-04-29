@@ -67,7 +67,10 @@ export default function TargetSelector() {
       {icons.map(({ value, Icon, color, title }) => (
         <Tooltip title={title}>
           <ToggleButton value={value} sx={{ padding: 0.2, border: "none" }}>
-            <Icon color={target === value ? color : "disabled"} />
+            <Icon
+              sx={{ fontSize: 40 }}
+              color={target === value ? color : "disabled"}
+            />
           </ToggleButton>
         </Tooltip>
       ))}
