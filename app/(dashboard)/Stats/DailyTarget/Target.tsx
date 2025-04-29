@@ -15,8 +15,6 @@ const Target = ({ value }: Props) => {
       return <SignalCellularAlt2BarIcon sx={{ fontSize: 100 }} />;
     case 2:
       return <SignalCellularAltIcon sx={{ fontSize: 100 }} />;
-    case 3:
-      return <TipsAndUpdatesIcon sx={{ fontSize: 100 }} />;
   }
 };
 

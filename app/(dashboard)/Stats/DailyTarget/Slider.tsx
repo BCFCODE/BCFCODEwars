@@ -1,14 +1,29 @@
 import { Box, Slider } from "@mui/material";
 import React from "react";
-import marks from "./Marks";
+import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
+import SignalCellularAlt1BarIcon from "@mui/icons-material/SignalCellularAlt1Bar";
+import SignalCellularAlt2BarIcon from "@mui/icons-material/SignalCellularAlt2Bar";
+
+const marks = [
+  {
+    value: 0,
+    label: <SignalCellularAlt1BarIcon color="error" sx={{ fontSize: 20 }} />,
+  },
+  {
+    value: 50,
+    label: <SignalCellularAlt2BarIcon color="warning" sx={{ fontSize: 20 }} />,
+  },
+  {
+    value: 100,
+    label: <SignalCellularAltIcon color="info" sx={{ fontSize: 20 }} />,
+  },
+];
 
 function formatValue(value: number, index: number) {
   switch (value) {
     case 0:
-      return String(0);
-    case 20:
       return String(1);
-    case 37:
+    case 50:
       return String(2);
     case 100:
       return String(3);
@@ -18,7 +33,7 @@ function formatValue(value: number, index: number) {
 }
 
 const TargetPickerSlider = () => {
-  const [value, setValue] = React.useState<number>(20);
+  const [value, setValue] = React.useState<number>(0);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     if (typeof newValue === "number") {

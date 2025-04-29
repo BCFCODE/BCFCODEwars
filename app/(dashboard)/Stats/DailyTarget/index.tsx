@@ -1,46 +1,44 @@
 "use client";
-
+import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
+import LooksOneIcon from "@mui/icons-material/LooksOne";
+import LooksTwoIcon from "@mui/icons-material/LooksTwo";
+import WhatshotIcon from "@mui/icons-material/Whatshot"; // Or BoltIcon
 import { useState } from "react";
-import TargetPickerSlider from "./Slider";
-import Target from "./Target";
-import { Box, SxProps } from "@mui/material";
-import Fade from "./Fade";
 
-const RelativeCenter: SxProps = {
-  position: "relative",
-  backgroundColor: "yellowgreen",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-};
+export default function TargetSelector() {
+  const [target, setTarget] = useState<number>(3);
 
-const AbsoluteCenter: SxProps = {
-  position: "absolute",
-  top: 0,
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
+  const handleChange = (
+    _: React.MouseEvent<HTMLElement>,
+    newValue: number | null
+  ) => {
+    if (newValue !== null) setTarget(newValue);
+  };
 
-export default function DailyTarget() {
-  const [isHovering, setIsHovering] = useState<boolean>(false);
-  // console.log(">>>>>>>>>", isHovering);
   return (
-    <Box
-      sx={RelativeCenter}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+    <ToggleButtonGroup
+      value={target}
+      exclusive
+      onChange={handleChange}
+      color="primary"
+      size="large"
+      sx={{ display: "flex", justifyContent: "center", height: "auto" }}
     >
-      <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 1 : 0 }}>
-        <Fade fade={isHovering ? "in" : "out"}>
-          <TargetPickerSlider />
-        </Fade>
-      </Box>
-      <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 0 : 1 }}>
-        <Fade fade={isHovering ? "out" : "in"}>
-          <Target value={3} />
-        </Fade>
-      </Box>
-    </Box>
+      <Tooltip title="1 problem/day">
+        <ToggleButton value={1}>
+          <LooksOneIcon color={target === 1 ? "success" : "inherit"} />
+        </ToggleButton>
+      </Tooltip>
+      <Tooltip title="2 problems/day">
+        <ToggleButton value={2}>
+          <LooksTwoIcon color={target === 2 ? "info" : "inherit"} />
+        </ToggleButton>
+      </Tooltip>
+      <Tooltip title="3+ problems/day">
+        <ToggleButton value={3}>
+          <WhatshotIcon color={target === 3 ? "warning" : "inherit"} />
+        </ToggleButton>
+      </Tooltip>
+    </ToggleButtonGroup>
   );
 }
