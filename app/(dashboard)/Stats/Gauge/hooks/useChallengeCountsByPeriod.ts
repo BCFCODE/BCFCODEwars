@@ -9,13 +9,14 @@ export interface ChallengeSummary {
 }
 
 const useChallengeCountsByPeriod = (): {
+  isLoading: boolean
   isListEmpty: boolean;
   inLast24Hours: ChallengeSummary;
   inLast7Days: ChallengeSummary;
   inLast30Days: ChallengeSummary;
   inLast365Days: ChallengeSummary;
 } => {
-  const { data } = useCurrentUserQuery();
+  const { data, isLoading } = useCurrentUserQuery();
   const { target } = useTargetStore();
 
   const isConnectedToCodewars = data?.codewars.isConnected;
@@ -59,6 +60,7 @@ const useChallengeCountsByPeriod = (): {
   ];
 
   return {
+    isLoading,
     isListEmpty,
     inLast24Hours: {
       count: countInLast24Hour,
