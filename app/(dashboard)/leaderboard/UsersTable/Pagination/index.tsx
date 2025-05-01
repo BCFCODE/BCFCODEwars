@@ -1,9 +1,20 @@
-import * as React from "react";
+import { PaginationQuery } from "@/app/services/db";
 import TablePagination from "@mui/material/TablePagination";
+import * as React from "react";
 
-export default function Pagination() {
-  const [page, setPage] = React.useState(2);
+interface Props {
+  onPaginationQueryChange: (paginationQuery: PaginationQuery) => void;
+}
+
+export default function Pagination({ onPaginationQueryChange }: Props) {
+  const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const skip = page * rowsPerPage;
+  const limit = skip + rowsPerPage;
+
+  React.useEffect(() => {
+    onPaginationQueryChange({ skip, limit });
+  }, [page, rowsPerPage]);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,

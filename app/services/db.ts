@@ -4,6 +4,11 @@ import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
 import { CodewarsReconnectRequest } from "../api/services/db";
 
+export interface PaginationQuery {
+  skip: number;
+  limit: number;
+}
+
 class DatabaseService {
   private clientPromise: Promise<MongoClient>;
 
@@ -54,7 +59,10 @@ class DatabaseService {
     return { users, diamonds, codewars };
   };
 
-  getUsers = async (skip = 0, limit = 10): Promise<AuthenticatedUser[]> => {
+  getUsers = async ({
+    skip,
+    limit,
+  }: PaginationQuery): Promise<AuthenticatedUser[]> => {
     const { users } = await this.getCollections();
 
     return await users

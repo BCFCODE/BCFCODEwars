@@ -2,6 +2,7 @@ import { AuthenticatedUser } from "@/types/users";
 import { baseURL } from "@/utils/constants";
 import { GetUsersResponse } from "../db/users/route";
 import { CodewarsUser } from "@/types/codewars";
+import { PaginationQuery } from "@/app/services/db";
 
 export interface ConnectToCodewarsResponse {
   success: boolean;
@@ -72,11 +73,17 @@ class dbAPIService {
     }
   };
 
-  getUsers = async (options?: RequestInit): Promise<GetUsersResponse> => {
+  getUsers = async (
+    { skip, limit }: PaginationQuery,
+    options?: RequestInit
+  ): Promise<GetUsersResponse> => {
     try {
-      const response = await fetch(`${this.endpoint}/users`, {
-        ...options, // This will include things like { signal: controller.signal }
-      });
+      const response = await fetch(
+        `${this.endpoint}/users?skip=${skip}&limit=${limit}`,
+        {
+          ...options, // This will include things like { signal: controller.signal }
+        }
+      );
 
       if (!response.ok) {
         console.error(
