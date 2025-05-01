@@ -10,75 +10,77 @@ const Step4 = ({ session }: StepProps) => {
   return (
     <Box
       sx={{
-        // backgroundColor: &apos;red',
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         textAlign: "center",
         gap: 3,
         px: 3,
-        // pt: 5,
       }}
     >
-      {/* Main Content */}
       <Paper
-        elevation={4}
+        elevation={6}
         sx={{
-          p: 4,
-          maxWidth: "600px",
-          textAlign: "left",
-          backgroundColor: "background.default",
-          borderRadius: 3,
-          boxShadow: 5,
-          display: "flex",
-          flexDirection: "column",
-          // justifyItems: 'center'
+          p: { xs: 3, sm: 4 },
+          maxWidth: 600,
+          width: "100%",
+          borderRadius: 4,
+          boxShadow: 6,
+          backgroundColor: "background.paper",
         }}
       >
-        <Box>
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: 600,
-              mb: 2,
-              color: "text.primary",
-              textAlign: "center",
-            }}
-          >
-            🎉 Nice work, {userName}!
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{ lineHeight: 1.8, color: "text.secondary" }}
-          >
-            You&apos;re now ranked on the BCFCODE leaderboard! Check your stats,
-            see where you stand, and push for the top.
-          </Typography>
-          <Typography variant="body1" sx={{ mt: 2, color: "text.secondary" }}>
-            Ready for the next challenge? Tap below to climb higher!
-          </Typography>
-        </Box>
-        {/* Navigation Button */}
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: 700,
+            mb: 2,
+            color: "text.primary",
+            textAlign: "center",
+          }}
+        >
+          🎉 Nice work, {userName}!
+        </Typography>
+
+        <Typography
+          variant="body1"
+          sx={{
+            fontSize: { xs: "0.9rem", sm: "1rem" },
+            color: "text.secondary",
+            lineHeight: 1.7,
+            mb: 3,
+          }}
+        >
+          You&apos;re now connected to your Codewars account!
+          <br />
+          Head to the <strong>Leaderboard</strong> — you’ll see a small arrow
+          next to your avatar on the left. Click it to reveal your solved
+          challenges.
+          <br />
+          To activate your dashboard stats, click on your collected diamonds. 💎
+          <br />
+          All your stats are powered by those shiny diamonds!
+        </Typography>
 
         <Button
           component={Link}
           href="/leaderboard"
           replace
           variant="text"
-          color="primary"
           size="large"
+          color="primary"
           sx={{
-            mt: 3,
-            px: 4,
+            px: 5,
             py: 1.5,
             textTransform: "none",
-            // fontWeight: 600,
-            // fontSize: "1rem",
+            fontWeight: 600,
+            borderRadius: 1,
             boxShadow: 3,
-            // borderRadius: 3,
+            "&:hover": {
+              boxShadow: 6,
+            },
           }}
         >
-          Leaderboard
+          Go to Leaderboard
         </Button>
       </Paper>
     </Box>

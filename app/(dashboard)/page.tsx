@@ -1,8 +1,7 @@
 import { auth } from "@/auth";
-import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 
 import DashboardStats from "./Stats";
-import DailyTarget from "./Stats/DailyTarget";
 
 export default async function DashboardPage() {
   const pageName = "Dashboard";
@@ -41,7 +40,7 @@ export default async function DashboardPage() {
           <Box
             sx={{
               color: "text.secondary", // More subtle tone for the title
-              fontSize: '0.9rem'
+              fontSize: "0.9rem",
             }}
           >
             Welcome to BCFCODE {pageName}
@@ -49,7 +48,7 @@ export default async function DashboardPage() {
           <Box
             sx={{
               color: "text.secondary", // Consistent color for user's name
-              fontSize: '0.9rem'
+              fontSize: "0.9rem",
             }}
           >
             {session?.user?.name || "User"}!
@@ -76,22 +75,8 @@ export default async function DashboardPage() {
           />
         )}
 
-        {/* Loading Indicator if no session is found */}
-        {!session && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              mb: 3,
-            }}
-          >
-            <CircularProgress color="primary" size={60} />
-          </Box>
-        )}
-
+        {/* Codewars Stats */}
         <DashboardStats />
-        <DailyTarget />
       </Box>
     </Box>
   );
