@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import LeaderboardLoadingError from "./Error";
 import UsersTable from "./UsersTable";
 import LeaderboardHeader from "./UsersTable/Header";
+import Pagination from "./UsersTable/Pagination";
 
 export default function LeaderBoardPage() {
   const queryClient = useQueryClient();
@@ -39,11 +40,19 @@ export default function LeaderBoardPage() {
   if (!isError)
     return (
       <CodewarsProvider>
-        <TableContainer component={Paper}>
+        <TableContainer
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+          component={Paper}
+        >
           <Table aria-label="Leaderboard Table">
             <LeaderboardHeader />
             <UsersTable list={data?.list} />
           </Table>
+          <Pagination />
         </TableContainer>
       </CodewarsProvider>
     );

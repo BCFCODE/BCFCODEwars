@@ -13,6 +13,7 @@ const UsersTable = ({ list }: Props) => {
       <TableBody>
         <UserRow />
       </TableBody>
+      
     </CurrentUserProvider>
   ));
 };

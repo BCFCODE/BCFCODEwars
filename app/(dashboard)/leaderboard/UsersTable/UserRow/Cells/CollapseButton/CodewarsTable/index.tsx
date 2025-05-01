@@ -4,8 +4,7 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import Head from "./Head";
 import Body from "./Body";
 import Error from "./Error";
-import DailyTargetGauges from "@/app/(dashboard)/Stats/Gauge/DailyTargetGauges";
-// import Pagination from "./Pagination";
+import Pagination from "../../../../Pagination";
 
 const CodewarsTable = () => {
   const { isError, isLoading } = useCodewarsContext();
