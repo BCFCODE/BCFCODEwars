@@ -54,7 +54,7 @@ class DatabaseService {
     return { users, diamonds, codewars };
   };
 
-  getUsers = async (): Promise<AuthenticatedUser[]> => {
+  getUsers = async (skip = 0, limit = 10): Promise<AuthenticatedUser[]> => {
     const { users } = await this.getCollections();
 
     return await users
@@ -103,6 +103,8 @@ class DatabaseService {
             activity: 1,
           },
         },
+        { $skip: skip },
+        { $limit: limit },
       ])
       .toArray();
   };
@@ -498,8 +500,7 @@ class DatabaseService {
           $set: {
             isConnected: true,
             clan,
-            "codeChallenges.challengeFilter":
-              CodeChallengesFilter.Both,
+            "codeChallenges.challengeFilter": CodeChallengesFilter.Both,
             "codeChallenges.list": [],
             username,
           },

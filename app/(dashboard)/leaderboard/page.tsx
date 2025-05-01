@@ -20,12 +20,6 @@ export default function LeaderBoardPage() {
   }, [queryClient]);
 
   const { data, isError, isLoading, refetch } = useUsersQuery();
-  // const { status } = useSession();
-
-  // useEffect(() => {
-  //   if (status === "authenticated") refetch();
-  // }, [status, refetch]);
-  // console.log("LeaderBoardPage", data);
 
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
