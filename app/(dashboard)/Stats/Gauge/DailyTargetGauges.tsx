@@ -10,7 +10,11 @@ const DailyTargetGauges = () => {
     <Grid container spacing={2} columns={24}>
       {[inLast24Hours, inLast7Days, inLast30Days, inLast365Days].map(
         (inLastDaysAgo, index) => (
-          <Grid size={{ xs: 24, sm: 12, md: 8, lg: 6, xl: 6 }} key={index}>
+          <Grid
+            sx={{ touchAction: "pan-y", WebkitOverflowScrolling: "touch" }}
+            size={{ xs: 24, sm: 12, md: 8, lg: 6, xl: 6 }}
+            key={index}
+          >
             <SingleGauge completedChallenges={inLastDaysAgo} />
           </Grid>
         )
