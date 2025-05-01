@@ -32,6 +32,7 @@ const SingleGauge = ({ completedChallenges }: Props) => {
         endAngle={110}
         valueMax={110}
         sx={(theme) => ({
+          pointerEvents: 'none',
           [`& .${gaugeClasses.valueText}`]: {
             fontSize: 40,
             transform: "translate(0px, 0px)",
@@ -48,7 +49,7 @@ const SingleGauge = ({ completedChallenges }: Props) => {
           // },
         })}
         // text={({ value, valueMax }) => `${value} / ${valueMax}`}
-        text={({ value, valueMax }) =>
+        text={({ value, valueMax}) =>
           `${completedChallenges.percent === -1 ? "Done!" : `${completedChallenges.percent}%`}`
         }
       />
