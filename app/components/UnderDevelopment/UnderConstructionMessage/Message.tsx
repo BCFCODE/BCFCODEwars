@@ -3,6 +3,8 @@ import Link from "next/link";
 import React from "react";
 
 const Message = () => {
+  const version = "0.3.0";
+
   return (
     <Box>
       <Typography
@@ -17,16 +19,14 @@ const Message = () => {
           opacity: 0.85,
         }}
       >
-        Youd&apos;re viewing **Version 0.3.0** — an exciting update packed with
-        new features to fuel your coding journey! In this release, wed&apos;ve
-        introduced powerful stats for your Codewars challenges, giving you
-        daily, weekly, monthly, and yearly progress metrics.
-        {/* <br /> */}
+        You&apos;re viewing **Version {version}** — an exciting update packed
+        with new features to fuel your coding journey! In this release,
+        wed&apos;ve introduced powerful stats for your Codewars challenges,
+        giving you daily, weekly, monthly, and yearly progress metrics.
         <br />
         To get started, simply connect your Codewars account by clicking the
         button below. Once connected, head over to your **Dashboard** to see
         your progress and track your achievements.
-        {/* <br /> */}
         <br />
         While the **Missions** and **Orders** sections are still under
         construction, the **Dashboard** is fully ready for Codewars users. Start

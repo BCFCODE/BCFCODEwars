@@ -15,7 +15,7 @@ interface Props {
   completedChallenges: ChallengeSummary;
 }
 
-const CodewarsStatGauge = ({ completedChallenges }: Props) => {
+const SingleGauge = ({ completedChallenges }: Props) => {
   const colorKey = getColorKey(completedChallenges.percent);
 
   return (
@@ -38,7 +38,8 @@ const CodewarsStatGauge = ({ completedChallenges }: Props) => {
           },
           [`& .${gaugeClasses.valueArc}`]: {
             fill:
-              completedChallenges.percent === -1 || completedChallenges.percent >= 100
+              completedChallenges.percent === -1 ||
+              completedChallenges.percent >= 100
                 ? `#76FF03`
                 : theme.palette[colorKey].main,
           },
@@ -58,4 +59,4 @@ const CodewarsStatGauge = ({ completedChallenges }: Props) => {
   );
 };
 
-export default CodewarsStatGauge;
+export default SingleGauge;

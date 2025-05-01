@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { Avatar, Box, CircularProgress, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 
 import DashboardStats from "./Stats";
 
@@ -75,19 +75,6 @@ export default async function DashboardPage() {
           />
         )}
 
-        {/* Loading Indicator if no session is found */}
-        {!session && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              mb: 3,
-            }}
-          >
-            <CircularProgress color="primary" size={60} />
-          </Box>
-        )}
         {/* Codewars Stats */}
         <DashboardStats />
       </Box>
