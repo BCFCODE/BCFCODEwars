@@ -1,6 +1,5 @@
 "use client";
 
-import dbAPIService from "@/app/api/services/db";
 import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { Box, Typography } from "@mui/material";
@@ -43,7 +42,7 @@ const Step3 = ({
         isConnected: true,
         codeChallenges: {
           ...codewars.codeChallenges,
-          challengeFilter: CodeChallengesFilter.ClaimedDiamonds,
+          challengeFilter: CodeChallengesFilter.Both,
           list: [],
         },
         username: validatedUsername,

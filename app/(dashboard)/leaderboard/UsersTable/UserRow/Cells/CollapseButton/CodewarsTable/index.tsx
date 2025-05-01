@@ -4,7 +4,8 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import Head from "./Head";
 import Body from "./Body";
 import Error from "./Error";
-import Pagination from "./Pagination";
+import DailyTargetGauges from "@/app/(dashboard)/Stats/Gauge/DailyTargetGauges";
+// import Pagination from "./Pagination";
 
 const CodewarsTable = () => {
   const { isError, isLoading } = useCodewarsContext();
@@ -28,11 +29,12 @@ const CodewarsTable = () => {
         alignItems: "center",
       }}
     >
+        <DailyTargetGauges />
       <Table size="small" aria-label="completed challenges">
         <Head />
         <Body />
       </Table>
-      <Pagination />
+      {/* <Pagination /> */}
     </Box>
   );
 };

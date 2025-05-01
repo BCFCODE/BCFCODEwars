@@ -74,7 +74,7 @@ const useReconnectMutation = () => {
                       username: payload.username,
                       codeChallenges: {
                         ...oldUser.codewars.codeChallenges,
-                        challengeFilter: CodeChallengesFilter.ClaimedDiamonds,
+                        challengeFilter: CodeChallengesFilter.Both,
                         list: [],
                       },
                     },
