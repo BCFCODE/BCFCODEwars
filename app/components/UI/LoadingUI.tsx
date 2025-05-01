@@ -44,7 +44,7 @@ const LoadingUI = ({ title, message }: Props) => {
           fontSize: {
             xs: "0.4rem",
             sm: "0.8rem",
-            md: "1.3rem",
+            md: "1rem",
           },
         }}
       >
