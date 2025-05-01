@@ -53,7 +53,7 @@ const UnderDevelopment = async ({ pageName }: Props) => {
         </Box>
         <Box
           sx={{
-            color: "text.secondary", // Consistent color for user's name
+            color: "text.secondary", // Consistent color for userd&apos;s name
           }}
         >
           {session?.user?.name || "User"}!
@@ -136,8 +136,8 @@ const UnderDevelopment = async ({ pageName }: Props) => {
             opacity: 0.85,
           }}
         >
-          You're viewing **Version 0.3.0** — an exciting update packed with new
-          features to fuel your coding journey! In this release, we've
+          Youd&apos;re viewing **Version 0.3.0** — an exciting update packed with new
+          features to fuel your coding journey! In this release, wed&apos;ve
           introduced powerful stats for your Codewars challenges, giving you
           daily, weekly, monthly, and yearly progress metrics.
           {/* <br /> */}
@@ -172,8 +172,8 @@ const UnderDevelopment = async ({ pageName }: Props) => {
           }}
         >
           {session
-            ? "Let's embark on this exciting journey together!"
-            : "Hang tight, we're setting things up!"}
+            ? "Letd&apos;s embark on this exciting journey together!"
+            : "Hang tight, wed&apos;re setting things up!"}
         </Typography>
       </Fade>
     </Box>
