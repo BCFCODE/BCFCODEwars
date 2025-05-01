@@ -5,11 +5,11 @@ import useTargetStore from "../../DailyTarget/store/useTargetStore";
 export interface ChallengeSummary {
   count: number;
   message: string;
-  // target: number;
   percent: number;
 }
 
 const useChallengeCountsByPeriod = (): {
+  isListEmpty: boolean;
   inLast24Hours: ChallengeSummary;
   inLast7Days: ChallengeSummary;
   inLast30Days: ChallengeSummary;
@@ -17,7 +17,12 @@ const useChallengeCountsByPeriod = (): {
 } => {
   const { data } = useCurrentUserQuery();
   const { target } = useTargetStore();
-  const list = data?.codewars.codeChallenges.list;
+
+  const isConnectedToCodewars = data?.codewars.isConnected;
+
+  const list = isConnectedToCodewars ? data.codewars.codeChallenges.list : [];
+
+  const isListEmpty = list.length === 0;
 
   const [
     countInLast24Hour,
@@ -54,6 +59,7 @@ const useChallengeCountsByPeriod = (): {
   ];
 
   return {
+    isListEmpty,
     inLast24Hours: {
       count: countInLast24Hour,
       message: percents.slice(0).some((percent) => percent > 100)

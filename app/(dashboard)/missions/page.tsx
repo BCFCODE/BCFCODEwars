@@ -1,10 +1,8 @@
-import React from 'react'
-import UnderDevelopment from '../UnderDevelopment'
+import React from "react";
+import UnderDevelopment from "../../components/UnderDevelopment";
 
 const MissionsPage = () => {
-  return (
-    <UnderDevelopment pageName="Missions" />
-  )
-}
+  return <UnderDevelopment pageName="Missions" />;
+};
 
-export default MissionsPage
+export default MissionsPage;

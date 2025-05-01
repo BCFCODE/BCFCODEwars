@@ -4,11 +4,18 @@ import { Box } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CodewarsStatGauge from "./Gauge";
 import useChallengeCountsByPeriod from "./Gauge/hooks/useChallengeCountsByPeriod";
+import DailyTarget from "./DailyTarget";
 
 const DashboardStats = () => {
-  const { inLast24Hours, inLast7Days, inLast30Days, inLast365Days } =
-    useChallengeCountsByPeriod();
+  const {
+    isListEmpty,
+    inLast24Hours,
+    inLast7Days,
+    inLast30Days,
+    inLast365Days,
+  } = useChallengeCountsByPeriod();
 
+  // if(isListEmpty) return 'Oh'
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2} columns={24}>
@@ -20,6 +27,7 @@ const DashboardStats = () => {
           )
         )}
       </Grid>
+      <DailyTarget />
     </Box>
   );
 };

@@ -1,5 +1,5 @@
-import UnderDevelopment from "../UnderDevelopment";
+import UnderDevelopment from "../../components/UnderDevelopment";
 
 export default function OrdersPage() {
-  return <UnderDevelopment pageName="Orders"/>;
+  return <UnderDevelopment pageName="Orders" />;
 }
