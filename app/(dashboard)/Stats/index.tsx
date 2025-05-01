@@ -21,7 +21,14 @@ const DashboardStats = () => {
   if (isListEmpty)
     return (
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          touchAction: "pan-y",
+          overflowY: "auto",
+          WebkitOverflowScrolling: "touch",
+        }}
       >
         <Typography
           variant="body1"
@@ -66,7 +73,14 @@ const DashboardStats = () => {
     );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box
+      sx={{
+        flexGrow: 1,
+        touchAction: "pan-y",
+        overflowY: "auto",
+        WebkitOverflowScrolling: "touch",
+      }}
+    >
       <DailyTargetGauges />
       <DailyTarget />
     </Box>
