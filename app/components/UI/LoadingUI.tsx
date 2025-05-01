@@ -26,7 +26,7 @@ const LoadingUI = ({ title, message }: Props) => {
         color="text.primary"
         sx={{
           fontSize: {
-            xs: "0.5rem",
+            xs: "0.7rem",
             sm: "1rem",
             md: "1.3rem", 
             // lg: '1.75rem',// 28px
@@ -42,7 +42,7 @@ const LoadingUI = ({ title, message }: Props) => {
         sx={{
           marginTop: 1,
           fontSize: {
-            xs: "0.4rem",
+            xs: "0.6rem",
             sm: "0.8rem",
             md: "1rem",
           },
