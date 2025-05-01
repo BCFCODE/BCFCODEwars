@@ -5,9 +5,18 @@ import Link from "next/link";
 import DailyTarget from "./DailyTarget";
 import DailyTargetGauges from "./Gauge/DailyTargetGauges";
 import useChallengeCountsByPeriod from "./Gauge/hooks/useChallengeCountsByPeriod";
+import LoadingUI from "@/app/components/UI/LoadingUI";
 
 const DashboardStats = () => {
-  const { isListEmpty } = useChallengeCountsByPeriod();
+  const { isListEmpty, isLoading } = useChallengeCountsByPeriod();
+
+  if (isLoading)
+    return (
+      <LoadingUI
+        title="Calculating your coding victories on Codewars..."
+        message="Preparing personalized stats from your Codewars journey..."
+      />
+    );
 
   if (isListEmpty)
     return (
