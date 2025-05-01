@@ -50,7 +50,7 @@ const Step4 = ({ session }: StepProps) => {
             mb: 3,
           }}
         >
-          You're now connected to your Codewars account!
+          You&apos;re now connected to your Codewars account!
           <br />
           Head to the <strong>Leaderboard</strong> — you’ll see a small arrow
           next to your avatar on the left. Click it to reveal your solved
