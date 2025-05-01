@@ -172,7 +172,7 @@ const UnderDevelopment = async ({ pageName }: Props) => {
           }}
         >
           {session
-            ? "Letd&apos;s embark on this exciting journey together!"
+            ? "Let's embark on this exciting journey together!"
             : "Hang tight, wed&apos;re setting things up!"}
         </Typography>
       </Fade>
