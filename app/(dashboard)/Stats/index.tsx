@@ -33,7 +33,7 @@ const DashboardStats = () => {
           👉 If you haven’t connected yet, click <strong>Connect</strong> to
           link your account.
           {/* <br /> */}
-          👉 If you're already connected, head over to the{" "}
+          👉 If you&apos;re already connected, head over to the{" "}
           <strong>Leaderboard</strong>, click the arrow next to your avatar, and
           collect your diamonds to activate your stats.
         </Typography>
