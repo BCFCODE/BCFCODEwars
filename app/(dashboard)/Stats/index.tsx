@@ -26,7 +26,7 @@ const DashboardStats = () => {
           flexDirection: "column",
           alignItems: "center",
           touchAction: "pan-y",
-          overflowY: "auto",
+          // overflowY: "auto",
           WebkitOverflowScrolling: "touch",
         }}
       >
@@ -76,9 +76,10 @@ const DashboardStats = () => {
     <Box
       sx={{
         flexGrow: 1,
+        // overflowY: "auto",
         touchAction: "pan-y",
-        overflowY: "auto",
         WebkitOverflowScrolling: "touch",
+        paddingBottom: 5
       }}
     >
       <DailyTargetGauges />
