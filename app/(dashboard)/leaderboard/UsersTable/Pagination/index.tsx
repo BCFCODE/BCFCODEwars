@@ -59,6 +59,7 @@ export default function Pagination({ totalPageCount }: Props) {
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          labelRowsPerPage=''
         />
       )}
     </>
