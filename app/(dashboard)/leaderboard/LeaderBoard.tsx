@@ -3,7 +3,7 @@
 import LoadingUI from "@/app/components/UI/LoadingUI";
 import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 import CodewarsProvider from "@/app/context/providers/Codewars";
-import { Paper, Table, TableContainer } from "@mui/material";
+import { Box, Paper, Table, TableContainer } from "@mui/material";
 import LeaderboardLoadingError from "./Error";
 import UsersTable from "./UsersTable";
 import usePaginationStore from "./UsersTable/context/store/usePaginationStore";
@@ -21,26 +21,26 @@ export default function Leaderboard() {
     return (
       <LoadingUI
         title="Loading Leaderboard..."
-        message="Hang tight! We're fetching the latest rankings. Sign in below to join and see your position."
+        message="Hang tight! We're fetching the latest rankings."
       />
     );
 
   if (!isError)
     return (
       <CodewarsProvider>
-        <TableContainer
-          component={Paper}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
+        <TableContainer component={Paper}>
           <Table aria-label="Leaderboard Table">
             <LeaderboardHeader />
             <UsersTable list={data?.list} />
           </Table>
-          <Pagination totalPageCount={data?.totalUsers} />
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Pagination totalPageCount={data?.totalUsers} />
+          </Box>
         </TableContainer>
       </CodewarsProvider>
     );
