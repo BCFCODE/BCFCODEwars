@@ -21,7 +21,7 @@ const useInitializeList = () => {
         list,
       });
 
-      storeChallengeList({ list, currentUser });
+      storeChallengeList({ list, currentUser, response });
     }
   };
   return { initializeCodeChallengesList, isListEmpty };

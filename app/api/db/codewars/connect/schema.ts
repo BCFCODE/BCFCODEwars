@@ -66,11 +66,12 @@ const RanksSchema = z.object({
 });
 
 const CodeChallengesSchema = z.object({
+  totalPages: z.number(),
+  totalItems: z.number(),
   totalAuthored: z.number(),
   totalCompleted: z.number(),
   challengeFilter: z.nativeEnum(CodeChallengesFilter),
   list: z.array(CodewarsCompletedChallengeSchema),
-  untrackedChallengesAvailable: z.boolean().optional(),
 });
 
 const CodewarsUserSchema = z.object({

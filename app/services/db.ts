@@ -3,6 +3,7 @@ import { CodeChallengesFilter, Diamonds } from "@/types/diamonds";
 import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
 import { CodewarsReconnectRequest } from "../api/services/db";
+import { GetCompletedChallengesResponse } from "../api/codewars/challenges/all/route";
 
 export interface PaginationQuery {
   skip: number;
@@ -220,9 +221,11 @@ class DatabaseService {
   saveChallengesList = async ({
     list,
     userId,
+    response,
   }: {
     list: CodewarsCompletedChallenge[];
     userId: string;
+    response: Required<GetCompletedChallengesResponse>;
   }) => {
     const { db } = await this.getDatabase();
     const codewars: Collection<CodewarsUser> =
@@ -230,7 +233,14 @@ class DatabaseService {
 
     await codewars.findOneAndUpdate(
       { id: userId },
-      { $set: { "codeChallenges.list": list } }
+      {
+        $set: {
+          "codeChallenges.totalItems": response.data.totalItems,
+          "codeChallenges.totalPages": response.data.totalPages,
+          "codeChallenges.totalCompleted": response.data.totalItems,
+          "codeChallenges.list": list,
+        },
+      }
     );
   };
 

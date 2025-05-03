@@ -23,11 +23,13 @@ export interface Ranks {
 }
 
 export interface CodeChallenges {
+  totalPages: number; 
+  totalItems: number; 
   totalAuthored: number;
   totalCompleted: number;
   challengeFilter: CodeChallengesFilter;
   list: CodewarsCompletedChallenge[];
-  untrackedChallengesAvailable?: boolean;
+  untrackedChallengesAvailable: boolean
 }
 
 export type CodewarsUser = {

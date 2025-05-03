@@ -6,7 +6,7 @@ import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route
 
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;
-
+  
   // Read
   getCompletedChallenges = async (
     username: string,
@@ -21,7 +21,7 @@ class CodewarsAPIService {
         if (!response.ok) {
           throw new Error(`Failed to fetch completed challenges`);
         }
-        return response.json();
+        return response.json() 
       })
       .catch((error) => {
         // console.error(error);
