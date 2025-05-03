@@ -3,7 +3,11 @@ import * as React from "react";
 import usePaginationStore from "../context/store/usePaginationStore";
 import Loading from "./Loading";
 
-export default function Pagination() {
+interface Props {
+  totalPageCount: number | undefined;
+}
+
+export default function Pagination({ totalPageCount }: Props) {
   const {
     page,
     setPage,
@@ -48,11 +52,11 @@ export default function Pagination() {
   return (
     <>
       {isLoading ? (
-        <Loading message="Loading..."/>
+        <Loading message="Loading..." />
       ) : (
         <TablePagination
           component="div"
-          count={100}
+          count={totalPageCount ?? 100}
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}

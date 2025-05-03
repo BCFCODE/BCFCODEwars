@@ -62,10 +62,13 @@ class DatabaseService {
   getUsers = async ({
     skip,
     limit,
-  }: PaginationQuery): Promise<AuthenticatedUser[]> => {
+  }: PaginationQuery): Promise<{
+    list: AuthenticatedUser[];
+    totalUsers: number;
+  }> => {
     const { users } = await this.getCollections();
-
-    return await users
+    const totalUsers = await users.estimatedDocumentCount();
+    const list = await users
       .aggregate<AuthenticatedUser>([
         // Join with diamonds collection based on the email field
         {
@@ -115,6 +118,8 @@ class DatabaseService {
         { $limit: limit },
       ])
       .toArray();
+
+    return { list, totalUsers };
   };
 
   getCurrentUser = async (email: string): Promise<AuthenticatedUser | null> => {

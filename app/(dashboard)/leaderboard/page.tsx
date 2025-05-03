@@ -15,7 +15,7 @@ import Pagination from "./UsersTable/Pagination";
 
 export default function LeaderBoardPage() {
   const { paginationQuery } = usePaginationStore((state) => state);
-  console.log("paginationQuery", paginationQuery);
+  
   const { data, isError, isLoading, refetch } = useUsersQuery(paginationQuery);
 
   const queryClient = useQueryClient();
@@ -50,7 +50,7 @@ export default function LeaderBoardPage() {
             <LeaderboardHeader />
             <UsersTable list={data?.list} />
           </Table>
-          <Pagination />
+          <Pagination totalPageCount={data?.totalUsers}/>
         </TableContainer>
       </CodewarsProvider>
     );

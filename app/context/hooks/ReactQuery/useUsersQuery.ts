@@ -16,9 +16,12 @@ const useUsersQuery = (paginationQuery: PaginationQuery) => {
   return useQuery<GetUsersResponse>({
     queryKey: [usersQueryKeys.allUsers, paginationQuery],
     queryFn: async () => {
-      const { success, list, error } = await getUsers(paginationQuery, {
-        cache: "no-store",
-      });
+      const { success, list, error, totalUsers } = await getUsers(
+        paginationQuery,
+        {
+          cache: "no-store",
+        }
+      );
 
       if (!success || !list || error) {
         throw new Error("Failed to users data in useUsersQuery");
@@ -28,7 +31,7 @@ const useUsersQuery = (paginationQuery: PaginationQuery) => {
         user.email === session?.user?.email ? { ...user, session } : user
       ) as AuthenticatedUser[];
 
-      return { list: updatedList, session, error, success };
+      return { list: updatedList, session, error, success, totalUsers };
     },
     enabled: !!session?.user?.email, // Avoid calling if session isn't ready
     staleTime: 1000 * 30, // cache for 30 seconds

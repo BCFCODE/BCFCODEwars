@@ -92,6 +92,7 @@ class dbAPIService {
         return {
           success: false,
           list: [],
+          totalUsers: 0,
           error:
             "Failed to fetch user data. Please check the console for details.",
         };
@@ -106,6 +107,7 @@ class dbAPIService {
       return {
         success: false,
         list: [],
+        totalUsers: 0,
         error: "Error fetching user data",
       };
     }
