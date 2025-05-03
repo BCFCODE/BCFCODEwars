@@ -2,7 +2,7 @@
 
 import { Box, SxProps } from "@mui/material";
 import Fade from "./Fade";
-import Loading from "./Loading";
+import Loading from "../../leaderboard/UsersTable/Pagination/Loading";
 import Target from "./Target";
 import TargetSelector from "./TargetSelector";
 import useTargetStore from "../context/store/useTargetStore";
@@ -34,18 +34,16 @@ export default function DailyTarget() {
       onMouseOver={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
-      <Loading isLoading={isLoading}>
-        <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 1 : 0 }}>
-          <Fade fade={isHovering ? "in" : "out"}>
-            <TargetSelector />
-          </Fade>
-        </Box>
-        <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 0 : 1 }}>
-          <Fade fade={isHovering ? "out" : "in"}>
-            <Target value={target} />
-          </Fade>
-        </Box>
-      </Loading>
+      <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 1 : 0 }}>
+        <Fade fade={isHovering ? "in" : "out"}>
+          <TargetSelector />
+        </Fade>
+      </Box>
+      <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 0 : 1 }}>
+        <Fade fade={isHovering ? "out" : "in"}>
+          <Target value={target} />
+        </Fade>
+      </Box>
     </Box>
   );
 }

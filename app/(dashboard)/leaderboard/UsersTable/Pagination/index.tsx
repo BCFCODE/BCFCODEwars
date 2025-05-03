@@ -1,6 +1,7 @@
 import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
 import usePaginationStore from "../context/store/usePaginationStore";
+import Loading from "./Loading";
 
 export default function Pagination() {
   const {
@@ -9,6 +10,7 @@ export default function Pagination() {
     rowsPerPage,
     setRowsPerPage,
     setPaginationQuery,
+    isLoading,
   } = usePaginationStore((state) => state);
 
   // console.log("Pagination", page, rowsPerPage, paginationQuery);
@@ -44,13 +46,19 @@ export default function Pagination() {
   };
 
   return (
-    <TablePagination
-      component="div"
-      count={100}
-      page={page}
-      onPageChange={handleChangePage}
-      rowsPerPage={rowsPerPage}
-      onRowsPerPageChange={handleChangeRowsPerPage}
-    />
+    <>
+      {isLoading ? (
+        <Loading message="Loading..."/>
+      ) : (
+        <TablePagination
+          component="div"
+          count={100}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      )}
+    </>
   );
 }
