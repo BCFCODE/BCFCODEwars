@@ -9,7 +9,10 @@ import { useState } from "react";
 const { getCompletedChallenges } = new CodewarsAPIService();
 
 const useChallengeList = () => {
-  const [tryAgain, setTryAgain] = useState({ isError: false, isLoading: false });
+  const [tryAgain, setTryAgain] = useState({
+    isError: false,
+    isLoading: false,
+  });
   const codewarsDispatch = useCodewarsDispatchContext();
   const { currentUser } = useCurrentUserContext();
   const { pageNumber } = useCodewarsContext();
@@ -22,11 +25,12 @@ const useChallengeList = () => {
 
       const response = await getCompletedChallenges(
         currentUser.codewars.username,
-        pageNumber
+        pageNumber,
+        { cache: "no-store" }
       );
 
       if ("data" in response) {
-        if (isListEmpty) initializeCodeChallengesList(response.data);
+        if (isListEmpty) initializeCodeChallengesList(response);
 
         diffAndUpdateList();
 

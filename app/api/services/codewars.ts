@@ -1,10 +1,8 @@
 // app/services/codewars-service.ts
 
-import {
-  CodewarsChallengesApiResponse,
-  CodewarsSingleChallenge,
-} from "@/types/codewars";
+import { CodewarsSingleChallenge } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
+import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route";
 
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;
@@ -12,11 +10,12 @@ class CodewarsAPIService {
   // Read
   getCompletedChallenges = async (
     username: string,
-    pageNumber: number
-  ): Promise<CodewarsChallengesApiResponse> =>
+    pageNumber: number,
+    options?: RequestInit
+  ): Promise<GetCompletedChallengesResponse> =>
     await fetch(
       `${this.endpoint}/challenges/all?username=${username}&pageNumber=${pageNumber}`,
-      { cache: "no-store" }
+      { ...options }
     )
       .then((response) => {
         if (!response.ok) {
@@ -31,13 +30,15 @@ class CodewarsAPIService {
 
   getSingleChallenge = async (
     username: string,
-    id: string
+    id: string,
+    options?: RequestInit
   ): Promise<
     | { success: true; data: CodewarsSingleChallenge }
     | { success: false; reason: string }
   > =>
     await fetch(
-      `${this.endpoint}/challenges/single?username=${username}&challengeId=${id}`
+      `${this.endpoint}/challenges/single?username=${username}&challengeId=${id}`,
+      { ...options }
     )
       .then((res) => res.json())
       .catch((error) => {

@@ -72,22 +72,6 @@ export interface CodewarsCompletedChallenge {
   moreDetails?: CodewarsSingleChallenge;
 }
 
-export interface CodewarsChallengesResponse {
-  totalPages: number; // Total number of pages in the response
-  totalItems: number; // Total number of items across all pages
-  data: CodewarsCompletedChallenge[]; // Array of completed challenges
-}
-
-export type CodewarsChallengesApiResponse =
-  | {
-      success: boolean;
-      data: CodewarsChallengesResponse;
-    }
-  | {
-      success: boolean;
-      reason: string;
-    };
-
 export interface CodewarsSingleChallenge {
   id: string; // Unique identifier for the challenge
   name: string; // Name of the challenge

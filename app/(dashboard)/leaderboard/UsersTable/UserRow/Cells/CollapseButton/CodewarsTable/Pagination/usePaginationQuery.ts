@@ -1,7 +1,38 @@
-import React from 'react'
+"use client";
 
-const usePaginationQuery = () => {
-  
-}
+import { GetUsersResponse } from "@/app/api/db/users/route";
+import CodewarsAPIService from "@/app/api/services/codewars";
+import dbAPIService from "@/app/api/services/db";
+import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
+import { PaginationQuery } from "@/app/services/db";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
 
-export default usePaginationQuery
+const { getCompletedChallenges } = new CodewarsAPIService();
+
+const usePaginationQuery = (paginationQuery: PaginationQuery) => {
+  const { data: session, status } = useSession();
+
+  return useQuery<GetUsersResponse>({
+    queryKey: [usersQueryKeys.codewars, paginationQuery],
+    queryFn: async () => {
+      await getCompletedChallenges()
+      // const { success, list, error, totalUsers } = await getUsers(
+      //   paginationQuery,
+      //   {
+      //     cache: "no-store",
+      //   }
+      // );
+
+      // if (!success || !list || error) {
+      //   throw new Error("Failed to users data in usePaginationQuery");
+      // }
+
+      return;
+    },
+    staleTime: 1000 * 60 * 10, // 10m
+    retry: 1,
+  });
+};
+
+export default usePaginationQuery;

@@ -1,8 +1,8 @@
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import { CodewarsChallengesResponse } from "@/types/codewars";
 import { applyDefaultTrackingAndRewardStatusToAll } from "../utils/applyRewardStatus";
 import storeChallengeList from "../utils/storeChallengeList";
+import { GetCompletedChallengesResponse } from "@/app/api/codewars/challenges/all/route";
 
 const useInitializeList = () => {
   const { currentUser } = useCurrentUserContext();
@@ -10,16 +10,19 @@ const useInitializeList = () => {
   const isListEmpty = !currentUser.codewars?.codeChallenges?.list.length;
 
   const initializeCodeChallengesList = (
-    response: CodewarsChallengesResponse
+    response: GetCompletedChallengesResponse
   ) => {
-    const list = applyDefaultTrackingAndRewardStatusToAll(response.data);
+    if (response.data) {
+      const { data } = response.data;
+      const list = applyDefaultTrackingAndRewardStatusToAll(data);
 
-    currentUserDispatch({
-      type: "UPDATE_CODE_CHALLENGES_LIST",
-      list,
-    });
+      currentUserDispatch({
+        type: "UPDATE_CODE_CHALLENGES_LIST",
+        list,
+      });
 
-    storeChallengeList({ list, currentUser });
+      storeChallengeList({ list, currentUser });
+    }
   };
   return { initializeCodeChallengesList, isListEmpty };
 };

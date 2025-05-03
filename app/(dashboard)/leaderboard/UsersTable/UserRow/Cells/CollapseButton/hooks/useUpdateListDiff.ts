@@ -10,18 +10,19 @@ const useDiffAndUpdateList = () => {
   const { currentUser, isCollapsed } = useCurrentUserContext();
   const { pageNumber } = useCodewarsContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
-  
+
   const diffAndUpdateList = async () => {
     if (!isCollapsed) {
       try {
         const response = await getCompletedChallenges(
           currentUser.codewars.username,
-          pageNumber
+          pageNumber,
+          { cache: "no-store" }
         );
-        if ("data" in response) {
+        if ("data" in response && response.data && 'data' in response.data) {
           const previousChallenges = currentUser.codewars.codeChallenges.list;
           const { data: fetchedChallenges } = response.data;
-
+          
           const untrackedChallenges = extractListDiff({
             previousChallenges,
             fetchedChallenges,
