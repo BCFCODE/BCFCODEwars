@@ -15,7 +15,9 @@ export default async function RootLayout({ children }: Props) {
       data-toolpad-color-scheme="light"
       suppressHydrationWarning
     >
-      <Providers>{children}</Providers>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

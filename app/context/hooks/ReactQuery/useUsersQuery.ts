@@ -11,7 +11,7 @@ import { usersQueryKeys } from "../../providers/ReactQuery/queryKeys";
 const { getUsers } = new dbAPIService();
 
 const useUsersQuery = (paginationQuery: PaginationQuery) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   return useQuery<GetUsersResponse>({
     queryKey: [usersQueryKeys.allUsers, paginationQuery],
@@ -33,7 +33,7 @@ const useUsersQuery = (paginationQuery: PaginationQuery) => {
 
       return { list: updatedList, session, error, success, totalUsers };
     },
-    enabled: !!session?.user?.email, // Avoid calling if session isn't ready
+    enabled: status === "authenticated", // Avoid calling if session isn't ready
     staleTime: 1000 * 30, // cache for 30 seconds
     retry: 1,
   });
