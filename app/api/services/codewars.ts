@@ -8,17 +8,6 @@ import { baseURL } from "@/utils/constants";
 
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;
-  /* 
-    TODO: CRUD
-    
-    get challenges
-
-    get users
-
-    get challenge
-
-    ...
-  */
 
   // Read
   getCompletedChallenges = async (
@@ -49,7 +38,12 @@ class CodewarsAPIService {
   > =>
     await fetch(
       `${this.endpoint}/challenges/single?username=${username}&challengeId=${id}`
-    ).then((res) => res.json());
+    )
+      .then((res) => res.json())
+      .catch((error) => {
+        // console.error(error);
+        throw new Error("Failed to fetch completed challenges");
+      });
 }
 
 export default CodewarsAPIService;

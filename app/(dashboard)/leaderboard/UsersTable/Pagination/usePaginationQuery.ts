@@ -5,11 +5,11 @@ import dbAPIService from "@/app/api/services/db";
 import { PaginationQuery } from "@/app/services/db";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { usersQueryKeys } from "../../providers/ReactQuery/queryKeys";
+import { usersQueryKeys } from "../../../../context/providers/ReactQuery/queryKeys";
 
 const { getUsers } = new dbAPIService();
 
-const useUsersQuery = (paginationQuery: PaginationQuery) => {
+const usePaginationQuery = (paginationQuery: PaginationQuery) => {
   const { data: session, status } = useSession();
 
   return useQuery<GetUsersResponse>({
@@ -23,7 +23,7 @@ const useUsersQuery = (paginationQuery: PaginationQuery) => {
       );
 
       if (!success || !list || error) {
-        throw new Error("Failed to users data in useUsersQuery");
+        throw new Error("Failed to users data in usePaginationQuery");
       }
 
       const updatedListWithAddedSessionToAuthenticatedUser = list.map((user) =>
@@ -62,4 +62,4 @@ const useUsersQuery = (paginationQuery: PaginationQuery) => {
   });
 };
 
-export default useUsersQuery;
+export default usePaginationQuery;
