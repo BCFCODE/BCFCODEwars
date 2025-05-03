@@ -1,7 +1,7 @@
 import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
 import usePaginationStore from "./usePaginationStore";
-import Loading from "./Loading";
+
 
 interface Props {
   totalPageCount: number | undefined;
@@ -17,25 +17,21 @@ export default function Pagination({ totalPageCount }: Props) {
     isLoading,
   } = usePaginationStore((state) => state);
 
-  const getNewQueryAndSetPaginationQuery = (
-    page: number,
-    rowsPerPage: number
-  ) => {
-    const skip = page * rowsPerPage;
-    const limit = rowsPerPage;
-    setPaginationQuery({ skip, limit });
-  };
-
-  // React.useEffect(() => {
-  //   onPaginationQueryChange({ skip, limit });
-  // }, [page, rowsPerPage]);
+  // const getNewQueryAndSetPaginationQuery = (
+  //   page: number,
+  //   rowsPerPage: number
+  // ) => {
+  //   const skip = page * rowsPerPage;
+  //   const limit = rowsPerPage;
+  //   setPaginationQuery({ skip, limit });
+  // };
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
-    getNewQueryAndSetPaginationQuery(newPage, rowsPerPage);
+    // getNewQueryAndSetPaginationQuery(newPage, rowsPerPage);
   };
 
   const handleChangeRowsPerPage = (
@@ -44,24 +40,20 @@ export default function Pagination({ totalPageCount }: Props) {
     const [page, rowsPerPage] = [0, parseInt(event.target.value, 10)];
     setPage(page);
     setRowsPerPage(rowsPerPage);
-    getNewQueryAndSetPaginationQuery(0, rowsPerPage);
+    // getNewQueryAndSetPaginationQuery(0, rowsPerPage);
   };
 
   return (
     <>
-      {isLoading ? (
-        <Loading message="Loading..." />
-      ) : (
-        <TablePagination
-          component="div"
-          count={totalPageCount ?? 100}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          labelRowsPerPage=""
-        />
-      )}
+      <TablePagination
+        component="div"
+        count={totalPageCount ?? 100}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        labelRowsPerPage=""
+      />
     </>
   );
 }

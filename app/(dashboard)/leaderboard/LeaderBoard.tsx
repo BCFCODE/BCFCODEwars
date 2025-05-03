@@ -6,9 +6,9 @@ import CodewarsProvider from "@/app/context/providers/Codewars";
 import { Box, Paper, Table, TableContainer } from "@mui/material";
 import LeaderboardLoadingError from "./Error";
 import UsersTable from "./UsersTable";
-import usePaginationStore from "./UsersTable/context/store/usePaginationStore";
 import LeaderboardHeader from "./UsersTable/Header";
 import Pagination from "./UsersTable/Pagination";
+import usePaginationStore from "./UsersTable/Pagination/usePaginationStore";
 
 export default function Leaderboard() {
   const { paginationQuery } = usePaginationStore((state) => state);

@@ -4,7 +4,8 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import Head from "./Head";
 import Body from "./Body";
 import Error from "./Error";
-import Pagination from "../../../../Pagination";
+import Pagination from "./Pagination";
+
 
 const CodewarsTable = () => {
   const { isError, isLoading } = useCodewarsContext();
@@ -33,7 +34,14 @@ const CodewarsTable = () => {
         <Head />
         <Body />
       </Table>
-      {/* <Pagination /> */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Pagination totalPageCount={100} />
+      </Box>
     </Box>
   );
 };

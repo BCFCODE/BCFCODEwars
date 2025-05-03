@@ -27,17 +27,9 @@ export const usePaginationStore = create<PaginationStore>()(
       setIsLoading: (isLoading) => set(() => ({ isLoading })),
     }),
     {
-      name: PERSIST_KEYS.paginationQuery,
+      name: PERSIST_KEYS.usersPaginationQuery,
       // partialize: (state) => ({ paginationQuery: state.paginationQuery }),
       onRehydrateStorage: () => (state) => {
-        // if (state) {
-        //   // state.setPage(state.page);
-        //   // state.setRowsPerPage(state.rowsPerPage);
-        //   console.log('onRehydrateStorage', state.page, state.rowsPerPage)
-        //   const skip = state.page * state.rowsPerPage;
-        //   const limit = skip + state.rowsPerPage;
-        //   state.setPaginationQuery({ skip, limit });
-        // }
         state?.setIsLoading(false);
       },
     }

@@ -2,7 +2,7 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { TableBody } from "@mui/material";
 import SingleRow from "./SingleRow";
-import useFilter from "./hooks/useFilter";
+import useFilter from "../../hooks/useFilter";
 
 export default function Body() {
   const { activeFilter, both, claimed, unClaimed } = useFilter();

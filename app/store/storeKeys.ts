@@ -1,9 +1,11 @@
 interface PersistKeys {
   dailyTarget: string;
-  paginationQuery: string;
+  usersPaginationQuery: string;
+  codewarsTablePaginationQuery: string;
 }
 
 export const PERSIST_KEYS: PersistKeys = {
   dailyTarget: "zustand:daily-target",
-  paginationQuery: "zustand:pagination-query",
+  usersPaginationQuery: "zustand:users-pagination-query",
+  codewarsTablePaginationQuery: "zustand:codewars-table-pagination-query",
 };
