@@ -17,8 +17,6 @@ export default function Pagination({ totalPageCount }: Props) {
     isLoading,
   } = usePaginationStore((state) => state);
 
-  // console.log("Pagination", page, rowsPerPage, paginationQuery);
-
   const getNewQueryAndSetPaginationQuery = (
     page: number,
     rowsPerPage: number

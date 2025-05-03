@@ -27,7 +27,7 @@ const Step3 = ({
 
   const handleOnYes = async () => {
     if (!currentUser) return;
-    // console.log("Yes it is me, clicked!", codewars, currentUser?.codewars);
+    
     if (currentUser?.codewars.isConnected) {
       await reconnect({
         name: codewars.name ?? "",

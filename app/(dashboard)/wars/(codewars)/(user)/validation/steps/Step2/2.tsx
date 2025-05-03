@@ -30,7 +30,7 @@ export default function Step2({ currentStep }: Props) {
         { cache: "no-store" }
       );
       const data = await response.json();
-      // console.log(data, response, "<<<<<<<<<<");
+  
 
       if (response.ok) {
         setSuccess(`Username "${username}" is valid!`);

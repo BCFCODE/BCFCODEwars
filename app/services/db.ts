@@ -393,10 +393,10 @@ class DatabaseService {
       );
 
       await session.commitTransaction();
-      // console.log("Transaction committed successfully.");
+      console.log("Transaction committed successfully.");
     } catch (error) {
       await session.abortTransaction();
-      // console.error("Transaction failed and was aborted!", error);
+      console.error("Transaction failed and was aborted!", error);
     } finally {
       session.endSession();
     }

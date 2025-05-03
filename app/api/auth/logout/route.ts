@@ -12,10 +12,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     const currentUser = await getUser(email);
-    // console.log(
-    //   `>>>>User signed out and currentUser: ${email} at ${new Date()}`,
-    //   currentUser
-    // );
 
     if (currentUser)
       updateSingleUser(email, {
