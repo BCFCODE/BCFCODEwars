@@ -28,6 +28,8 @@ import { ReactNode } from "react";
 import "../../styles/global.css";
 import DiamondsProvider from "./Diamonds";
 import ReactQueryProvider from "./ReactQuery";
+import getQueryClient from "./ReactQuery/queryClient";
+import { usersQueryKeys } from "./ReactQuery/queryKeys";
 
 const { getUsers } = new dbAPIService();
 
@@ -145,10 +147,10 @@ const Providers = async ({ children }: Props) => {
   // Await the auth call after resolving headers
   const session: Session | null = await auth(); // Now fully async
 
-  const queryClient = new QueryClient();
+  const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["allUsers"],
+    queryKey: [usersQueryKeys.allUsers],
     queryFn: async () =>
       await getUsers({ skip: 0, limit: 10 }, { cache: "no-store" }),
     retry: 1,
@@ -156,7 +158,6 @@ const Providers = async ({ children }: Props) => {
 
   const dehydratedState = dehydrate(queryClient);
 
-  console.log("Providers/session", session);
   return (
     <SessionProvider session={session}>
       <ReactQueryProvider>
