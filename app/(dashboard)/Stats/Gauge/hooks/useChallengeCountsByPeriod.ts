@@ -70,7 +70,7 @@ const useChallengeCountsByPeriod = (): {
       percent:
         last24HoursPercent >= 100
           ? last24HoursPercent
-          : percents.slice(0).some((percent) => percent > 100)
+          : percents.slice(0).some((percent) => percent >= 100)
             ? -1
             : last24HoursPercent,
     },
@@ -82,7 +82,7 @@ const useChallengeCountsByPeriod = (): {
       percent:
         last7DaysPercent >= 100
           ? last7DaysPercent
-          : percents.slice(1).some((percent) => percent > 100)
+          : percents.slice(1).some((percent) => percent >= 100)
             ? -1
             : last7DaysPercent,
     },
@@ -94,7 +94,7 @@ const useChallengeCountsByPeriod = (): {
       percent:
         last30DaysPercent >= 100
           ? last30DaysPercent
-          : percents.slice(2).some((percent) => percent > 100)
+          : percents.slice(2).some((percent) => percent >= 100)
             ? -1
             : last30DaysPercent,
     },
@@ -106,7 +106,7 @@ const useChallengeCountsByPeriod = (): {
       percent:
         last365DaysPercent >= 100
           ? last365DaysPercent
-          : percents.slice(3).some((percent) => percent > 100)
+          : percents.slice(3).some((percent) => percent >= 100)
             ? -1
             : last365DaysPercent,
     },

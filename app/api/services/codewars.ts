@@ -25,7 +25,7 @@ class CodewarsAPIService {
     pageNumber: number
   ): Promise<CodewarsChallengesApiResponse> =>
     await fetch(
-      `${baseURL}/api/wars/codewars/challenges/all?username=${username}&pageNumber=${pageNumber}`,
+      `${baseURL}/api/codewars/challenges/all?username=${username}&pageNumber=${pageNumber}`,
       { cache: "no-store" }
     )
       .then((response) => {
@@ -47,7 +47,7 @@ class CodewarsAPIService {
     | { success: false; reason: string }
   > =>
     await fetch(
-      `${baseURL}/api/wars/codewars/challenges/single?username=${username}&challengeId=${id}`
+      `${baseURL}/api/codewars/challenges/single?username=${username}&challengeId=${id}`
     ).then((res) => res.json());
 }
 

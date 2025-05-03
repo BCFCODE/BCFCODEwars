@@ -23,7 +23,7 @@ const SingleGauge = ({ completedChallenges }: Props) => {
       <Gauge
         height={200}
         value={
-          completedChallenges.percent > 110 ||
+          completedChallenges.percent >= 110 ||
           completedChallenges.percent === -1
             ? 110
             : completedChallenges.percent

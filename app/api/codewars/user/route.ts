@@ -1,4 +1,4 @@
-// app/api/wars/codewars/user/route.ts
+// app/api/codewars/user/route.ts
 
 import { CodewarsUserResponse } from "@/types/codewars";
 import { NextResponse } from "next/server";

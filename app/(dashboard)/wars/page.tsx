@@ -55,7 +55,7 @@ const WarsPage = async () => {
       */
 
       const response = await fetch(
-        `${baseURL}/api/wars/codewars/user?username=${currentCodewarsUser?.username}`
+        `${baseURL}/api/codewars/user?username=${currentCodewarsUser?.username}`
       );
       const codewarsUser: CodewarsUser = await response.json();
 
