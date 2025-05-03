@@ -1,33 +1,46 @@
-import { PaginationQuery } from "@/app/services/db";
 import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
+import usePaginationStore from "../context/store/usePaginationStore";
 
-interface Props {
-  onPaginationQueryChange: (paginationQuery: PaginationQuery) => void;
-}
+export default function Pagination() {
+  const {
+    page,
+    setPage,
+    rowsPerPage,
+    setRowsPerPage,
+    setPaginationQuery,
+  } = usePaginationStore((state) => state);
 
-export default function Pagination({ onPaginationQueryChange }: Props) {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const skip = page * rowsPerPage;
-  const limit = skip + rowsPerPage;
+  // console.log("Pagination", page, rowsPerPage, paginationQuery);
 
-  React.useEffect(() => {
-    onPaginationQueryChange({ skip, limit });
-  }, [page, rowsPerPage]);
+  const getNewQueryAndSetPaginationQuery = (
+    page: number,
+    rowsPerPage: number
+  ) => {
+    const skip = page * rowsPerPage;
+    const limit = rowsPerPage;
+    setPaginationQuery({ skip, limit });
+  };
+
+  // React.useEffect(() => {
+  //   onPaginationQueryChange({ skip, limit });
+  // }, [page, rowsPerPage]);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
+    getNewQueryAndSetPaginationQuery(newPage, rowsPerPage);
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    const [page, rowsPerPage] = [0, parseInt(event.target.value, 10)];
+    setPage(page);
+    setRowsPerPage(rowsPerPage);
+    getNewQueryAndSetPaginationQuery(0, rowsPerPage);
   };
 
   return (

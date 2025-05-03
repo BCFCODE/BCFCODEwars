@@ -6,18 +6,17 @@ import CodewarsProvider from "@/app/context/providers/Codewars";
 import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
 import { Paper, Table, TableContainer } from "@mui/material";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import LeaderboardLoadingError from "./Error";
 import UsersTable from "./UsersTable";
+import usePaginationStore from "./UsersTable/context/store/usePaginationStore";
 import LeaderboardHeader from "./UsersTable/Header";
 import Pagination from "./UsersTable/Pagination";
-import { PaginationQuery } from "@/app/services/db";
 
 export default function LeaderBoardPage() {
-  const [paginationQuery, setPaginationQuery] = useState<PaginationQuery>({
-    skip: 0,
-    limit: 10,
-  });
+  const { paginationQuery } = usePaginationStore((state) => state);
+  console.log("paginationQuery", paginationQuery);
+  const { data, isError, isLoading, refetch } = useUsersQuery(paginationQuery);
 
   const queryClient = useQueryClient();
 
@@ -25,8 +24,7 @@ export default function LeaderBoardPage() {
     queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
   }, [queryClient]);
 
-  const { data, isError, isLoading, refetch } = useUsersQuery(paginationQuery);
-
+  console.log("LeaderBoardPage/data", data);
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
   if (isLoading)
@@ -52,12 +50,7 @@ export default function LeaderBoardPage() {
             <LeaderboardHeader />
             <UsersTable list={data?.list} />
           </Table>
-          <Pagination
-            onPaginationQueryChange={({ skip, limit }) => {
-              setPaginationQuery({ skip, limit });
-              // console.log(skip, limit);
-            }}
-          />
+          <Pagination />
         </TableContainer>
       </CodewarsProvider>
     );

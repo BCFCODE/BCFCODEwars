@@ -6,6 +6,7 @@ import { PaginationQuery } from "@/app/services/db";
 import { AuthenticatedUser } from "@/types/users";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { usersQueryKeys } from "../../providers/ReactQuery/queryKeys";
 
 const { getUsers } = new dbAPIService();
 
@@ -13,7 +14,7 @@ const useUsersQuery = (paginationQuery: PaginationQuery) => {
   const { data: session } = useSession();
 
   return useQuery<GetUsersResponse>({
-    queryKey: ["allUsers", paginationQuery],
+    queryKey: [usersQueryKeys.allUsers, paginationQuery],
     queryFn: async () => {
       const { success, list, error } = await getUsers(paginationQuery, {
         cache: "no-store",

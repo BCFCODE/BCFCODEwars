@@ -1,6 +1,6 @@
 import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import { completedAfterThreshold } from "@/utils/dayjs";
-import useTargetStore from "../../DailyTarget/store/useTargetStore";
+import useTargetStore from "../../context/store/useTargetStore";
 
 export interface ChallengeSummary {
   count: number;
@@ -9,7 +9,7 @@ export interface ChallengeSummary {
 }
 
 const useChallengeCountsByPeriod = (): {
-  isLoading: boolean
+  isLoading: boolean;
   isListEmpty: boolean;
   inLast24Hours: ChallengeSummary;
   inLast7Days: ChallengeSummary;
