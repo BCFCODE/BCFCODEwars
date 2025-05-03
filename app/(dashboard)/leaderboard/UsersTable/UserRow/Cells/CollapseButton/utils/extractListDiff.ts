@@ -13,13 +13,6 @@ const extractListDiff = ({
 }: Props): CodewarsCompletedChallenge[] => {
   const [previousMostRecentChallenge] = previousChallenges;
   const [mostRecentFetchedChallenge] = fetchedChallenges;
-  // console.log(
-  //   "in extractListDiff >",
-  //   "previousChallenges",
-  //   previousChallenges,
-  //   "fetchedChallenges",
-  //   fetchedChallenges
-  // );
 
   const previousRecentIndex = fetchedChallenges.findIndex(
     (challenge) => challenge.id === previousMostRecentChallenge.id

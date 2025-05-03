@@ -18,7 +18,7 @@ const CurrentUserProvider = ({ children, context }: Props) => {
     currentUserReducer,
     initialCurrentUserState
   );
-  // console.log(context, "<<<<<<<<< CurrentUserProvider");
+  
   return (
     <CurrentUserContext.Provider value={currentUserContext}>
       <CurrentUserDispatchContext.Provider value={dispatch}>

@@ -5,7 +5,7 @@ import LooksTwoIcon from "@mui/icons-material/LooksTwo";
 import WhatshotIcon from "@mui/icons-material/Whatshot"; // Or BoltIcon
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
 import { OverridableStringUnion } from "@mui/types";
-import useTargetStore, { TargetLevel } from "./store/useTargetStore";
+import useTargetStore, { TargetLevel } from "../context/store/useTargetStore";
 
 type IconColor = OverridableStringUnion<
   | "success"

@@ -44,14 +44,7 @@ class DiamondsService {
   }> => {
     const rankId = selectedSingleChallenge.rank.id;
     const collectedDiamondsCount = this.calculateCodewarsDiamondsCount(rankId);
-    // console.log(
-    //   "diamonds-service, challenge >>",
-    //   selectedSingleChallenge,
-    //   "Number of diamonds: ",
-    //   collectedDiamondsCount
-    // );
-    // saveChallengesList()
-
+  
     return { collectedDiamondsCount };
   };
 }

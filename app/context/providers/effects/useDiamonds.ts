@@ -24,7 +24,7 @@ const useDiamonds = (): UseDiamonds => {
   useEffect(() => {
     (async () => {
       const response = await getDiamonds({ cache: "no-store" });
-      // console.log('DiamondsProvider  getDiamonds({ cache: "no-store" }); response', response)
+      
       if (response.success) {
         diamondsDispatch({
           type: "SET_DIAMONDS",

@@ -43,7 +43,7 @@ const handleClick = async ({
       selectedSingleChallenge
     );
 
-    // console.log("selectedSingleChallenge", selectedSingleChallenge);
+    
     collectButtonDispatch({
       type: "SUCCESSFUL_RESPONSE",
       collectedDiamondsCount,

@@ -2,34 +2,62 @@
 
 import { GetUsersResponse } from "@/app/api/db/users/route";
 import dbAPIService from "@/app/api/services/db";
-import { AuthenticatedUser } from "@/types/users";
+import { PaginationQuery } from "@/app/services/db";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import { usersQueryKeys } from "../../providers/ReactQuery/queryKeys";
 
 const { getUsers } = new dbAPIService();
 
-const useUsersQuery = () => {
-  const { data: session } = useSession();
+const useUsersQuery = (paginationQuery: PaginationQuery) => {
+  const { data: session, status } = useSession();
 
   return useQuery<GetUsersResponse>({
-    queryKey: ["allUsers"],
+    queryKey: [usersQueryKeys.allUsers, paginationQuery],
     queryFn: async () => {
-      const { success, list, error } = await getUsers({
-        cache: "no-store",
-      });
+      const { success, list, error, totalUsers } = await getUsers(
+        paginationQuery,
+        {
+          cache: "no-store",
+        }
+      );
 
       if (!success || !list || error) {
         throw new Error("Failed to users data in useUsersQuery");
       }
 
-      const updatedList = list.map((user) =>
+      const updatedListWithAddedSessionToAuthenticatedUser = list.map((user) =>
         user.email === session?.user?.email ? { ...user, session } : user
-      ) as AuthenticatedUser[];
+      );
 
-      return { list: updatedList, session, error, success };
+      return {
+        list:
+          status === "authenticated"
+            ? updatedListWithAddedSessionToAuthenticatedUser
+            : list,
+        session,
+        error,
+        success,
+        totalUsers,
+      };
     },
-    enabled: !!session?.user?.email, // Avoid calling if session isn't ready
-    staleTime: 1000 * 30, // cache for 30 seconds
+    enabled: true,
+    /* 
+      ✅ Always enabled — this hook needs to fetch and render leaderboard data 
+      even when the user is not authenticated (e.g., on the sign-in page). 
+      ❗Important: We intentionally do NOT depend on session loading status here.
+      Waiting for `status === "authenticated"` would block the initial render 
+      and skip hydration from server-prefetched data when there's no active session.
+      
+      This ensures:
+      - The leaderboard loads for both guests and logged-in users.
+      - The server-prefetched cache (via HydrationBoundary) is used immediately.
+      - No extra suspense boundaries or conditional hooks are needed.
+      
+      If authentication is required for the request, the API layer (`getUsers`) 
+      should handle that gracefully (e.g., by returning filtered data or 401).
+    */
+    staleTime: 1000 * 60 * 60 * 24, // 24h
     retry: 1,
   });
 };

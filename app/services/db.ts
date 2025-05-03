@@ -4,6 +4,11 @@ import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
 import { CodewarsReconnectRequest } from "../api/services/db";
 
+export interface PaginationQuery {
+  skip: number;
+  limit: number;
+}
+
 class DatabaseService {
   private clientPromise: Promise<MongoClient>;
 
@@ -54,10 +59,16 @@ class DatabaseService {
     return { users, diamonds, codewars };
   };
 
-  getUsers = async (): Promise<AuthenticatedUser[]> => {
+  getUsers = async ({
+    skip,
+    limit,
+  }: PaginationQuery): Promise<{
+    list: AuthenticatedUser[];
+    totalUsers: number;
+  }> => {
     const { users } = await this.getCollections();
-
-    return await users
+    const totalUsers = await users.estimatedDocumentCount();
+    const list = await users
       .aggregate<AuthenticatedUser>([
         // Join with diamonds collection based on the email field
         {
@@ -103,8 +114,12 @@ class DatabaseService {
             activity: 1,
           },
         },
+        { $skip: skip },
+        { $limit: limit },
       ])
       .toArray();
+
+    return { list, totalUsers };
   };
 
   getCurrentUser = async (email: string): Promise<AuthenticatedUser | null> => {
@@ -378,10 +393,10 @@ class DatabaseService {
       );
 
       await session.commitTransaction();
-      // console.log("Transaction committed successfully.");
+      console.log("Transaction committed successfully.");
     } catch (error) {
       await session.abortTransaction();
-      // console.error("Transaction failed and was aborted!", error);
+      console.error("Transaction failed and was aborted!", error);
     } finally {
       session.endSession();
     }
@@ -498,8 +513,7 @@ class DatabaseService {
           $set: {
             isConnected: true,
             clan,
-            "codeChallenges.challengeFilter":
-              CodeChallengesFilter.Both,
+            "codeChallenges.challengeFilter": CodeChallengesFilter.Both,
             "codeChallenges.list": [],
             username,
           },

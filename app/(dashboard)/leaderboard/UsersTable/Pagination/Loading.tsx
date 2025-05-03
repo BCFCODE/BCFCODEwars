@@ -15,26 +15,27 @@ const wave = keyframes`
 `;
 
 interface Props {
-  isLoading: boolean;
-  children: ReactNode;
+  message: string;
 }
 
-const Loading = ({ children, isLoading }: Props) => {
-  if (!isLoading) return children;
+const Loading = ({ message }: Props) => {
   return (
     <Typography
       sx={{
-        display: "inline-block",
+        display: "flex",             // enable flex
+        alignItems: "center",        // vertical centering
+        justifyContent: "center",    // horizontal centering (optional)
         background: "linear-gradient(90deg, #ccc 25%, #e0e0e0 50%, #ccc 75%)",
         backgroundSize: "200% 100%",
-        animation: `${wave} 1.6s linear 0.5s infinite`,
+        animation: `${wave} 500ms linear infinite`,
         WebkitBackgroundClip: "text",
         WebkitTextFillColor: "transparent",
         fontWeight: 500,
-        mt: 2
+        textAlign: "center",
+        height: 50,
       }}
     >
-      Locking in your goal...
+      {message}
     </Typography>
   );
 };

@@ -42,7 +42,7 @@ const LoadingUI = ({ title, message }: Props) => {
         sx={{
           marginTop: 1,
           fontSize: {
-            xs: "0.6rem",
+            xs: "0.5rem",
             sm: "0.8rem",
             md: "1rem",
           },

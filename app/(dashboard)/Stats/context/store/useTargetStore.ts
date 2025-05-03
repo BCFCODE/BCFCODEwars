@@ -1,3 +1,4 @@
+import { PERSIST_KEYS } from "@/app/store/storeKeys";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -23,7 +24,7 @@ const useTargetStore = create<TargetStore>()(
       setIsLoading: (isLoading: boolean) => set({ isLoading }),
     }),
     {
-      name: "daily-target",
+      name: PERSIST_KEYS.dailyTarget,
       // ✅ Only persist `target`, ignore `isHovering`
       partialize: (state) => ({ target: state.target }),
       onRehydrateStorage: () => (state) => {

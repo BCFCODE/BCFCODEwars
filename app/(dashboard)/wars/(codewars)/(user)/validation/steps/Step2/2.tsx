@@ -26,11 +26,11 @@ export default function Step2({ currentStep }: Props) {
 
     try {
       const response = await fetch(
-        `${baseURL}/api/wars/codewars/user?username=${username}`,
+        `${baseURL}/api/codewars/user?username=${username}`,
         { cache: "no-store" }
       );
       const data = await response.json();
-      // console.log(data, response, "<<<<<<<<<<");
+  
 
       if (response.ok) {
         setSuccess(`Username "${username}" is valid!`);

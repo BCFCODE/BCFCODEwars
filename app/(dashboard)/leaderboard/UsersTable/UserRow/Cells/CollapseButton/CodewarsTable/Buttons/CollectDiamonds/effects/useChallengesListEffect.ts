@@ -49,7 +49,6 @@ export default function useChallengesListEffect({
       });
      
       isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
-      // console.log("currentUser in useChallengesListEffect", currentUser);
     }
 
     if (!success) {
