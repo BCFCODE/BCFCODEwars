@@ -1,5 +1,5 @@
 import { PaginationQuery } from "@/app/services/db";
-import { PERSIST_KEYS } from "@/app/store/storeKeys";
+import { PERSIST_KEYS } from "@/app/context/store/storeKeys";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

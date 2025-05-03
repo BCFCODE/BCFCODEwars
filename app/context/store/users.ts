@@ -6,7 +6,7 @@ import {
 } from "@/types/diamonds";
 import { AuthenticatedUser } from "@/types/users";
 import { create } from "zustand";
-import getRank from "../context/reducers/currentUser/getRank";
+
 // import syncCurrentWithAllUsers from "./utils/syncCurrentWithAllUsers";
 
 type UsersState = {
