@@ -1,14 +1,20 @@
 "use client";
 
+import LoadingUI from "@/app/components/UI/LoadingUI";
+import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import DailyTarget from "./DailyTarget";
 import DailyTargetGauges from "./Gauge/DailyTargetGauges";
-import useChallengeCountsByPeriod from "./Gauge/hooks/useChallengeCountsByPeriod";
-import LoadingUI from "@/app/components/UI/LoadingUI";
 
 const DashboardStats = () => {
-  const { isListEmpty, isLoading } = useChallengeCountsByPeriod();
+  const { data, isLoading } = useCurrentUserQuery();
+
+  const isConnectedToCodewars = data?.codewars.isConnected;
+
+  const list = isConnectedToCodewars ? data.codewars.codeChallenges.list : [];
+
+  const isListEmpty = list.length === 0;
 
   if (isLoading)
     return (
@@ -53,7 +59,7 @@ const DashboardStats = () => {
           <strong>Leaderboard</strong>, click the arrow next to your avatar, and
           collect your diamonds to activate your stats.
         </Typography>
-        <DailyTargetGauges />
+        <DailyTargetGauges list={list} />
         <Box
           sx={{
             width: "100%",
@@ -79,10 +85,10 @@ const DashboardStats = () => {
         // overflowY: "auto",
         touchAction: "pan-y",
         WebkitOverflowScrolling: "touch",
-        paddingBottom: 5
+        paddingBottom: 5,
       }}
     >
-      <DailyTargetGauges />
+      <DailyTargetGauges list={list} />
       <DailyTarget />
     </Box>
   );

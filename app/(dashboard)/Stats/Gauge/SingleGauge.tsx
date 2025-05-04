@@ -1,6 +1,8 @@
 import { Stack, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import { ChallengeSummary } from "./hooks/useChallengeCountsByPeriod";
+import useGaugeData from "./useGaugeData";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 
 const getColorKey = (
   percent: number
@@ -13,9 +15,12 @@ const getColorKey = (
 
 interface Props {
   completedChallenges: ChallengeSummary;
+  list: CodewarsCompletedChallenge[];
+  index: number
 }
 
-const SingleGauge = ({ completedChallenges }: Props) => {
+const SingleGauge = ({ completedChallenges, list, index }: Props) => {
+  const { counts, percents } = useGaugeData({ list });
   const colorKey = getColorKey(completedChallenges.percent);
 
   return (
@@ -32,7 +37,7 @@ const SingleGauge = ({ completedChallenges }: Props) => {
         endAngle={110}
         valueMax={110}
         sx={(theme) => ({
-          pointerEvents: 'none',
+          pointerEvents: "none",
           [`& .${gaugeClasses.valueText}`]: {
             fontSize: 40,
             transform: "translate(0px, 0px)",
@@ -49,7 +54,7 @@ const SingleGauge = ({ completedChallenges }: Props) => {
           // },
         })}
         // text={({ value, valueMax }) => `${value} / ${valueMax}`}
-        text={({ value, valueMax}) =>
+        text={({ value, valueMax }) =>
           `${completedChallenges.percent === -1 ? "Done!" : `${completedChallenges.percent}%`}`
         }
       />

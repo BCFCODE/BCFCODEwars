@@ -1,6 +1,7 @@
 import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import { completedAfterThreshold } from "@/utils/dayjs";
 import useTargetStore from "../../context/store/useTargetStore";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 
 export interface ChallengeSummary {
   count: number;
@@ -8,22 +9,19 @@ export interface ChallengeSummary {
   percent: number;
 }
 
-const useChallengeCountsByPeriod = (): {
-  isLoading: boolean;
-  isListEmpty: boolean;
+interface Props {
+  list: CodewarsCompletedChallenge[];
+}
+
+const useChallengeCountsByPeriod = ({
+  list,
+}: Props): {
   inLast24Hours: ChallengeSummary;
   inLast7Days: ChallengeSummary;
   inLast30Days: ChallengeSummary;
   inLast365Days: ChallengeSummary;
 } => {
-  const { data, isLoading } = useCurrentUserQuery();
   const { target } = useTargetStore();
-
-  const isConnectedToCodewars = data?.codewars.isConnected;
-
-  const list = isConnectedToCodewars ? data.codewars.codeChallenges.list : [];
-
-  const isListEmpty = list.length === 0;
 
   const [
     countInLast24Hour,
@@ -60,8 +58,6 @@ const useChallengeCountsByPeriod = (): {
   ];
 
   return {
-    isLoading,
-    isListEmpty,
     inLast24Hours: {
       count: countInLast24Hour,
       message: percents.slice(0).some((percent) => percent > 100)
