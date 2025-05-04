@@ -26,7 +26,10 @@ const SingleGauge = ({ list, index, type }: Props) => {
   const [count, percent] = [counts, percents].map((data) => data[index]);
   const colorKey = getColorKey(percent);
   const slicedPercents = percents.slice(index + 1);
-  console.log(percent, slicedPercents);
+  const isOtherReachedTheTarget = slicedPercents.some(
+    (percent) => percent >= 100
+  );
+  console.log(percent, isOtherReachedTheTarget);
   switch (type) {
     case "daily":
       return (
@@ -55,7 +58,7 @@ const SingleGauge = ({ list, index, type }: Props) => {
             })}
             // text={({ value, valueMax }) => `${value} / ${valueMax}`}
             text={({ value, valueMax }) =>
-              `${percent === -1 ? "Done!" : `${percent}%`}`
+              `${isOtherReachedTheTarget ? "Done!" : `${percent}%`}`
             }
           />
           <Typography sx={{ textAlign: "center" }}>Message</Typography>
@@ -88,7 +91,7 @@ const SingleGauge = ({ list, index, type }: Props) => {
             })}
             // text={({ value, valueMax }) => `${value} / ${valueMax}`}
             text={({ value, valueMax }) =>
-              `${percent === -1 ? "Done!" : `${percent}%`}`
+              `${isOtherReachedTheTarget ? "Done!" : `${percent}%`}`
             }
           />
           <Typography sx={{ textAlign: "center" }}>Message</Typography>
@@ -121,7 +124,7 @@ const SingleGauge = ({ list, index, type }: Props) => {
             })}
             // text={({ value, valueMax }) => `${value} / ${valueMax}`}
             text={({ value, valueMax }) =>
-              `${percent === -1 ? "Done!" : `${percent}%`}`
+              `${isOtherReachedTheTarget ? "Done!" : `${percent}%`}`
             }
           />
           <Typography sx={{ textAlign: "center" }}>Message</Typography>
@@ -153,11 +156,11 @@ const SingleGauge = ({ list, index, type }: Props) => {
               // },
             })}
             // text={({ value, valueMax }) => `${value} / ${valueMax}`}
-            text={({ value, valueMax }) =>
-              `${percent === -1 ? "Done!" : `${percent}%`}`
-            }
+            text={({ value, valueMax }) => `${percent}%`}
           />
-          <Typography sx={{ textAlign: "center" }}>{count} in last 365Days</Typography>
+          <Typography sx={{ textAlign: "center" }}>
+            {count} in last 365Days
+          </Typography>
           {/* <Typography sx={{ textAlign: "center" }}>{count}/30Days</Typography> */}
         </Stack>
       );
