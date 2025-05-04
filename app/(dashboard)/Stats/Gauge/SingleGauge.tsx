@@ -1,8 +1,8 @@
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { Stack, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
-import { ChallengeSummary } from "./hooks/useChallengeCountsByPeriod";
+import useTargetStore from "../context/store/useTargetStore";
 import useGaugeData from "./useGaugeData";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
 
 const getColorKey = (
   percent: number
@@ -22,6 +22,7 @@ interface Props {
 }
 
 const SingleGauge = ({ list, index, type }: Props) => {
+  const { target } = useTargetStore((state) => state);
   const { counts, percents } = useGaugeData({ list });
   const [count, percent] = [counts, percents].map((data) => data[index]);
   const colorKey = getColorKey(percent);
@@ -36,7 +37,7 @@ const SingleGauge = ({ list, index, type }: Props) => {
         <Stack>
           <Gauge
             height={200}
-            value={percent >= 110 || percent === -1 ? 110 : percent}
+            value={isOtherReachedTheTarget || percent >= 110 ? 110 : percent}
             startAngle={-110}
             endAngle={110}
             valueMax={110}
@@ -61,7 +62,14 @@ const SingleGauge = ({ list, index, type }: Props) => {
               `${isOtherReachedTheTarget ? "Done!" : `${percent}%`}`
             }
           />
-          <Typography sx={{ textAlign: "center" }}>Message</Typography>
+          <Typography sx={{ textAlign: "center" }}>
+            Daily target reached!
+          </Typography>
+          {!isOtherReachedTheTarget && (
+            <Typography sx={{ textAlign: "center" }}>
+              {count} / {target * 1}
+            </Typography>
+          )}
         </Stack>
       );
     case "weekly":
@@ -69,7 +77,7 @@ const SingleGauge = ({ list, index, type }: Props) => {
         <Stack>
           <Gauge
             height={200}
-            value={percent >= 110 || percent === -1 ? 110 : percent}
+            value={isOtherReachedTheTarget || percent >= 110 ? 110 : percent}
             startAngle={-110}
             endAngle={110}
             valueMax={110}
@@ -94,7 +102,14 @@ const SingleGauge = ({ list, index, type }: Props) => {
               `${isOtherReachedTheTarget ? "Done!" : `${percent}%`}`
             }
           />
-          <Typography sx={{ textAlign: "center" }}>Message</Typography>
+          <Typography sx={{ textAlign: "center" }}>
+            Weekly target reached!
+          </Typography>
+          {!isOtherReachedTheTarget && (
+            <Typography sx={{ textAlign: "center" }}>
+              {count} / {target * 7}
+            </Typography>
+          )}
         </Stack>
       );
     case "monthly":
@@ -102,7 +117,7 @@ const SingleGauge = ({ list, index, type }: Props) => {
         <Stack>
           <Gauge
             height={200}
-            value={percent >= 110 || percent === -1 ? 110 : percent}
+            value={isOtherReachedTheTarget || percent >= 110 ? 110 : percent}
             startAngle={-110}
             endAngle={110}
             valueMax={110}
@@ -127,7 +142,14 @@ const SingleGauge = ({ list, index, type }: Props) => {
               `${isOtherReachedTheTarget ? "Done!" : `${percent}%`}`
             }
           />
-          <Typography sx={{ textAlign: "center" }}>Message</Typography>
+          <Typography sx={{ textAlign: "center" }}>
+            Monthly target reached!
+          </Typography>
+          {!isOtherReachedTheTarget && (
+            <Typography sx={{ textAlign: "center" }}>
+              {count} / {target * 30}
+            </Typography>
+          )}
         </Stack>
       );
     case "yearly":
@@ -135,7 +157,7 @@ const SingleGauge = ({ list, index, type }: Props) => {
         <Stack>
           <Gauge
             height={200}
-            value={percent >= 110 || percent === -1 ? 110 : percent}
+            value={isOtherReachedTheTarget || percent >= 110 ? 110 : percent}
             startAngle={-110}
             endAngle={110}
             valueMax={110}
@@ -158,10 +180,17 @@ const SingleGauge = ({ list, index, type }: Props) => {
             // text={({ value, valueMax }) => `${value} / ${valueMax}`}
             text={({ value, valueMax }) => `${percent}%`}
           />
+          {percent >= 100 && (
+            <Typography sx={{ textAlign: "center" }}>
+              Yearly target reached!
+            </Typography>
+          )}
           <Typography sx={{ textAlign: "center" }}>
             {count} in last 365Days
           </Typography>
-          {/* <Typography sx={{ textAlign: "center" }}>{count}/30Days</Typography> */}
+          <Typography sx={{ textAlign: "center" }}>
+            {count} / {target * 365}
+          </Typography>
         </Stack>
       );
   }
