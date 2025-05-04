@@ -30,8 +30,7 @@ const useGaugeData = ({
   const percents = dayCounts.map((dayCount, i) =>
     getPercent(counts[i], dayCount)
   );
-  // setPercents(percents);
-  // console.log(">>>>>>>>>", percents.slice(3));
+
   return { counts, percents };
 };
 
