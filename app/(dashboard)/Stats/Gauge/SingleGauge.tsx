@@ -13,25 +13,26 @@ const getColorKey = (
   return "success";
 };
 
+export type GaugeTypes = "daily" | "weekly" | "monthly" | "yearly";
+
 interface Props {
-  completedChallenges: ChallengeSummary;
+  type: GaugeTypes
   list: CodewarsCompletedChallenge[];
-  index: number
+  index: number;
 }
 
-const SingleGauge = ({ completedChallenges, list, index }: Props) => {
+const SingleGauge = ({ list, index , type}: Props) => {
   const { counts, percents } = useGaugeData({ list });
-  const colorKey = getColorKey(completedChallenges.percent);
+  const colorKey = getColorKey(percents[index]);
 
   return (
     <Stack>
       <Gauge
         height={200}
         value={
-          completedChallenges.percent >= 110 ||
-          completedChallenges.percent === -1
+          percents[index] >= 110 || percents[index] === -1
             ? 110
-            : completedChallenges.percent
+            : percents[index]
         }
         startAngle={-110}
         endAngle={110}
@@ -44,8 +45,7 @@ const SingleGauge = ({ completedChallenges, list, index }: Props) => {
           },
           [`& .${gaugeClasses.valueArc}`]: {
             fill:
-              completedChallenges.percent === -1 ||
-              completedChallenges.percent >= 100
+              percents[index] === -1 || percents[index] >= 100
                 ? `#76FF03`
                 : theme.palette[colorKey].main,
           },
@@ -55,12 +55,10 @@ const SingleGauge = ({ completedChallenges, list, index }: Props) => {
         })}
         // text={({ value, valueMax }) => `${value} / ${valueMax}`}
         text={({ value, valueMax }) =>
-          `${completedChallenges.percent === -1 ? "Done!" : `${completedChallenges.percent}%`}`
+          `${percents[index] === -1 ? "Done!" : `${percents[index]}%`}`
         }
       />
-      <Typography sx={{ textAlign: "center" }}>
-        {completedChallenges.message}
-      </Typography>
+      <Typography sx={{ textAlign: "center" }}>Message</Typography>
     </Stack>
   );
 };
