@@ -19,6 +19,8 @@ const useInitializeList = () => {
       currentUserDispatch({
         type: "UPDATE_CODE_CHALLENGES_LIST",
         list,
+        totalItems: response.data.totalItems,
+        totalPages: response.data.totalPages,
       });
 
       storeChallengeList({ list, currentUser, response });

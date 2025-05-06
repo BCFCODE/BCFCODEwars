@@ -225,23 +225,24 @@ class DatabaseService {
   }: {
     list: CodewarsCompletedChallenge[];
     userId: string;
-    response: Required<GetCompletedChallengesResponse>;
+    response: GetCompletedChallengesResponse;
   }) => {
     const { db } = await this.getDatabase();
     const codewars: Collection<CodewarsUser> =
       db.collection<CodewarsUser>("codewars");
 
-    await codewars.findOneAndUpdate(
-      { id: userId },
-      {
-        $set: {
-          "codeChallenges.totalItems": response.data.totalItems,
-          "codeChallenges.totalPages": response.data.totalPages,
-          "codeChallenges.totalCompleted": response.data.totalItems,
-          "codeChallenges.list": list,
-        },
-      }
-    );
+    if (response.data)
+      await codewars.findOneAndUpdate(
+        { id: userId },
+        {
+          $set: {
+            "codeChallenges.totalItems": response.data.totalItems,
+            "codeChallenges.totalPages": response.data.totalPages,
+            "codeChallenges.totalCompleted": response.data.totalItems,
+            "codeChallenges.list": list,
+          },
+        }
+      );
   };
 
   getSingleCodewarsUser = async (

@@ -19,5 +19,6 @@ export default async function storeChallengeList({
   response,
 }: Props) {
   const userId = currentUser.codewars.id;
+  
   await saveChallengesList({ list, userId, response });
 }

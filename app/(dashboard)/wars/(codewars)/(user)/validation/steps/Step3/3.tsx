@@ -9,6 +9,7 @@ import UserInfoCard from "../UserInfoCard/UserInfoCard";
 import Buttons from "./Buttons";
 import useConnectMutation from "./hooks/useConnectMutation";
 import useReconnectMutation from "./hooks/useReconnectMutation";
+import { CodewarsUser } from "@/types/codewars";
 
 const Step3 = ({
   currentStep,
@@ -27,7 +28,7 @@ const Step3 = ({
 
   const handleOnYes = async () => {
     if (!currentUser) return;
-    
+
     if (currentUser?.codewars.isConnected) {
       await reconnect({
         name: codewars.name ?? "",
@@ -36,12 +37,14 @@ const Step3 = ({
         clan: codewars.clan ?? "",
       });
     } else {
-      const initializedCodewarsUser = {
+      const initializedCodewarsUser: CodewarsUser = {
         ...codewars,
         email,
         isConnected: true,
         codeChallenges: {
           ...codewars.codeChallenges,
+          totalItems: codewars.codeChallenges.totalCompleted,
+          totalPages: 0,
           challengeFilter: CodeChallengesFilter.Both,
           list: [],
         },

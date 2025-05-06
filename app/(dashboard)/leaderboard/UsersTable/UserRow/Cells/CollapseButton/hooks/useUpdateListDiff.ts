@@ -19,10 +19,10 @@ const useDiffAndUpdateList = () => {
           pageNumber,
           { cache: "no-store" }
         );
-        if ("data" in response && response.data && 'data' in response.data) {
+        if ("data" in response && response.data && "data" in response.data) {
           const previousChallenges = currentUser.codewars.codeChallenges.list;
           const { data: fetchedChallenges } = response.data;
-          
+
           const untrackedChallenges = extractListDiff({
             previousChallenges,
             fetchedChallenges,
@@ -39,6 +39,8 @@ const useDiffAndUpdateList = () => {
             currentUserDispatch({
               type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
               untrackedChallenges,
+              totalItems: response.data.totalItems,
+              totalPages: response.data.totalPages,
             });
           } else {
             currentUserDispatch({

@@ -21,7 +21,12 @@ export interface CurrentUserContext extends CurrentUserState {
 }
 
 export type CurrentUserAction =
-  | { type: "UPDATE_CODE_CHALLENGES_LIST"; list: CodewarsCompletedChallenge[] }
+  | {
+      type: "UPDATE_CODE_CHALLENGES_LIST";
+      list: CodewarsCompletedChallenge[];
+      totalPages: number;
+      totalItems: number;
+    }
   | {
       type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS";
       reward: number;
@@ -42,6 +47,8 @@ export type CurrentUserAction =
   | {
       type: "ADD_UNTRACKED_CHALLENGES_TO_LIST";
       untrackedChallenges: CodewarsCompletedChallenge[];
+      totalPages: number;
+      totalItems: number;
     }
   | { type: "EMPTY_UNTRACKED_CHALLENGE_LIST" }
   | {
@@ -54,7 +61,7 @@ const currentUserReducer = (
   action: CurrentUserAction
 ): CurrentUserContext => {
   switch (action.type) {
-    case "UPDATE_CODE_CHALLENGES_LIST":
+    case "UPDATE_CODE_CHALLENGES_LIST": {
       return {
         ...state,
         currentUser: {
@@ -63,11 +70,14 @@ const currentUserReducer = (
             ...state.currentUser.codewars,
             codeChallenges: {
               ...state.currentUser.codewars.codeChallenges,
+              totalItems: action.totalItems,
+              totalPages: action.totalPages,
               list: [...action.list],
             },
           },
         },
       };
+    }
     case "SET_USER_DIAMONDS": {
       return {
         ...state,
@@ -116,6 +126,8 @@ const currentUserReducer = (
             ...state.currentUser.codewars,
             codeChallenges: {
               ...state.currentUser.codewars.codeChallenges,
+              totalItems: action.totalItems,
+              totalPages: action.totalPages,
               list: [
                 ...action.untrackedChallenges,
                 ...state.currentUser.codewars.codeChallenges.list,
