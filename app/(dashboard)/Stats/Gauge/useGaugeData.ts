@@ -8,7 +8,7 @@ const useGaugeData = (): {
 } => {
   const { data } = useCurrentUserQuery();
   const { target } = useTargetStore();
-  const list = data?.codewars.codeChallenges.list;
+  const list = data?.codewars.codeChallenges?.list ?? [];
 
   const dayCounts = [1, 7, 30, 365];
 
