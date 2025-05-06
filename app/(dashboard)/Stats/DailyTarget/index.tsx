@@ -5,7 +5,7 @@ import Fade from "./Fade";
 import Loading from "../../leaderboard/UsersTable/Pagination/Loading";
 import Target from "./Target";
 import TargetSelector from "./TargetSelector";
-import useTargetStore from "../context/store/useTargetStore";
+import useTargetStore from "./useTargetStore";
 
 const RelativeCenter: SxProps = {
   position: "relative",

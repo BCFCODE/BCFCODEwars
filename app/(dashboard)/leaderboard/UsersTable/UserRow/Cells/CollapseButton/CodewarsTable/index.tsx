@@ -28,7 +28,7 @@ const CodewarsTable = () => {
         alignItems: "center",
       }}
     >
-      {/* <DailyTargetGauges /> */}
+      {/* <CodewarsTargetGauges /> */}
       <Table size="small" aria-label="completed challenges">
         <Head />
         <Body />

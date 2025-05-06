@@ -1,12 +1,7 @@
-import { CodewarsCompletedChallenge } from "@/types/codewars";
 import Grid from "@mui/material/Grid";
-import SingleGauge, { GaugeTypes } from "./SingleGauge";
+import GaugeSwitch, { GaugeTypes } from "./Switch";
 
-interface Props {
-  list: CodewarsCompletedChallenge[];
-}
-
-const DailyTargetGauges = ({ list }: Props) => {
+const CodewarsTargetGauges = () => {
   const gaugeTypes: GaugeTypes[] = ["daily", "weekly", "monthly", "yearly"];
 
   return (
@@ -17,15 +12,11 @@ const DailyTargetGauges = ({ list }: Props) => {
           size={{ xs: 24, sm: 12, md: 8, lg: 6, xl: 6 }}
           key={i}
         >
-          <SingleGauge
-            index={i}
-            list={list}
-            type={kind}
-          />
+          <GaugeSwitch index={i} type={kind} />
         </Grid>
       ))}
     </Grid>
   );
 };
 
-export default DailyTargetGauges;
+export default CodewarsTargetGauges;

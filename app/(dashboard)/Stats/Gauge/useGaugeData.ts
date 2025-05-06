@@ -1,19 +1,14 @@
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 import { completedAfterThreshold } from "@/utils/dayjs";
-import useTargetStore from "../context/store/useTargetStore";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import useTargetStore from "../DailyTarget/useTargetStore";
+import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 
-interface Props {
-  list: CodewarsCompletedChallenge[];
-}
-
-const useGaugeData = ({
-  list,
-}: Props): {
+const useGaugeData = (): {
   counts: number[];
   percents: number[];
 } => {
+  const { data } = useCurrentUserQuery();
   const { target } = useTargetStore();
+  const list = data?.codewars.codeChallenges.list;
 
   const dayCounts = [1, 7, 30, 365];
 
