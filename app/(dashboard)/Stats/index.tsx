@@ -5,7 +5,7 @@ import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQu
 import { Box, Button, Typography } from "@mui/material";
 import Link from "next/link";
 import DailyTarget from "./DailyTarget";
-import DailyTargetGauges from "./Gauge/DailyTargetGauges";
+import CodewarsTargetGauges from "./Gauge";
 
 const DashboardStats = () => {
   const { data, isLoading } = useCurrentUserQuery();
@@ -59,7 +59,7 @@ const DashboardStats = () => {
           <strong>Leaderboard</strong>, click the arrow next to your avatar, and
           collect your diamonds to activate your stats.
         </Typography>
-        <DailyTargetGauges list={list} />
+        <CodewarsTargetGauges />
         <Box
           sx={{
             width: "100%",
@@ -88,7 +88,7 @@ const DashboardStats = () => {
         paddingBottom: 5,
       }}
     >
-      <DailyTargetGauges list={list} />
+      <CodewarsTargetGauges />
       <DailyTarget />
     </Box>
   );
