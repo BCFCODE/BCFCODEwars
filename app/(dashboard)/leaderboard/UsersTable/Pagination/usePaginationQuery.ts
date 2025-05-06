@@ -2,10 +2,10 @@
 
 import { GetUsersResponse } from "@/app/api/db/users/route";
 import dbAPIService from "@/app/api/services/db";
+import usersQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/users";
 import { PaginationQuery } from "@/app/services/db";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { usersQueryKeys } from "../../../../context/providers/ReactQuery/queryKeys";
 
 const { getUsers } = new dbAPIService();
 

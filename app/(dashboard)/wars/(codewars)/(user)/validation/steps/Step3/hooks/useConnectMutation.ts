@@ -2,7 +2,7 @@
 
 import { GetUsersResponse } from "@/app/api/db/users/route";
 import dbAPIService, { ConnectToCodewarsResponse } from "@/app/api/services/db";
-import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
+import usersQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/users";
 import { CodewarsUser } from "@/types/codewars";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 const { connectToCodewars } = new dbAPIService();

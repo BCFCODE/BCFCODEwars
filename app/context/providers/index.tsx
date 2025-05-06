@@ -29,7 +29,7 @@ import "../../styles/global.css";
 import DiamondsProvider from "./Diamonds";
 import ReactQueryProvider from "./ReactQuery";
 import getQueryClient from "./ReactQuery/queryClient";
-import { usersQueryKeys } from "./ReactQuery/queryKeys";
+import usersQueryKeys from "./ReactQuery/queryKeys/users";
 
 const { getUsers } = new dbAPIService();
 

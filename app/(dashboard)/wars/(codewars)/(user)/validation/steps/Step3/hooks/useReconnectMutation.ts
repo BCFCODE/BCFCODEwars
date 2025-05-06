@@ -3,7 +3,7 @@ import dbAPIService, {
   CodewarsReconnectRequest,
   ConnectToCodewarsResponse,
 } from "@/app/api/services/db";
-import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
+import usersQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/users";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
