@@ -6,8 +6,6 @@
 // interface GaugeStore {
 //   list: CodewarsCompletedChallenge[];
 //   setList: (list: CodewarsCompletedChallenge[]) => void;
-//   // percents: number[];
-//   // setPercents: (percents: number[]) => void;
 // }
 
 // const useGaugeStore = create<GaugeStore>()(
@@ -15,8 +13,6 @@
 //     (set) => ({
 //       list: [] as CodewarsCompletedChallenge[],
 //       setList: (list) => set({ list }),
-//       // percents: [0, 0, 0, 0],
-//       // setPercents: (percents) => set({ percents }),
 //     }),
 //     {
 //       name: PERSIST_KEYS.codewarsGauges,

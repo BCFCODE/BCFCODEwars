@@ -1,8 +1,6 @@
-import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
-import useTargetStore from "../context/store/useTargetStore";
-import useGaugeData from "./useGaugeData";
+import { ReactNode } from "react";
 
 const getColorKey = (
   percent: number
@@ -13,187 +11,53 @@ const getColorKey = (
   return "success";
 };
 
-export type GaugeTypes = "daily" | "weekly" | "monthly" | "yearly";
-
-interface Props {
-  type: GaugeTypes;
-  list: CodewarsCompletedChallenge[];
-  index: number;
+interface GaugeQuery {
+  didLaterPeriodMeetTarget: boolean;
+  percent: number;
 }
 
-const SingleGauge = ({ list, index, type }: Props) => {
-  const { target } = useTargetStore((state) => state);
-  const { counts, percents } = useGaugeData({ list });
-  const [count, percent] = [counts, percents].map((data) => data[index]);
+interface Props {
+  children: ReactNode;
+  gaugeQuery: GaugeQuery;
+}
+
+const SingleGauge = ({
+  children,
+  gaugeQuery: { didLaterPeriodMeetTarget, percent },
+}: Props) => {
   const colorKey = getColorKey(percent);
-  const slicedPercents = percents.slice(index + 1);
-  const isOtherReachedTheTarget = slicedPercents.some(
-    (percent) => percent >= 100
+  return (
+    <Stack>
+      <Gauge
+        height={200}
+        value={didLaterPeriodMeetTarget || percent >= 110 ? 110 : percent}
+        startAngle={-110}
+        endAngle={110}
+        valueMax={110}
+        sx={(theme) => ({
+          pointerEvents: "none",
+          [`& .${gaugeClasses.valueText}`]: {
+            fontSize: 40,
+            transform: "translate(0px, 0px)",
+          },
+          [`& .${gaugeClasses.valueArc}`]: {
+            fill:
+              didLaterPeriodMeetTarget || percent >= 100
+                ? `#76FF03`
+                : theme.palette[colorKey].main,
+          },
+          // [`& .${gaugeClasses.referenceArc}`]: {
+          //   fill: theme.palette.text.disabled,
+          // },
+        })}
+        // text={({ value, valueMax }) => `${value} / ${valueMax}`}
+        text={({ value, valueMax }) =>
+          `${didLaterPeriodMeetTarget ? "Done!" : `${percent}%`}`
+        }
+      />
+      {children}
+    </Stack>
   );
-  console.log(percent, isOtherReachedTheTarget);
-  switch (type) {
-    case "daily":
-      return (
-        <Stack>
-          <Gauge
-            height={200}
-            value={isOtherReachedTheTarget || percent >= 110 ? 110 : percent}
-            startAngle={-110}
-            endAngle={110}
-            valueMax={110}
-            sx={(theme) => ({
-              pointerEvents: "none",
-              [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 40,
-                transform: "translate(0px, 0px)",
-              },
-              [`& .${gaugeClasses.valueArc}`]: {
-                fill:
-                  percent === -1 || percent >= 100
-                    ? `#76FF03`
-                    : theme.palette[colorKey].main,
-              },
-              // [`& .${gaugeClasses.referenceArc}`]: {
-              //   fill: theme.palette.text.disabled,
-              // },
-            })}
-            // text={({ value, valueMax }) => `${value} / ${valueMax}`}
-            text={({ value, valueMax }) =>
-              `${isOtherReachedTheTarget ? "Done!" : `${percent}%`}`
-            }
-          />
-          <Typography sx={{ textAlign: "center" }}>
-            Daily target reached!
-          </Typography>
-          {!isOtherReachedTheTarget && (
-            <Typography sx={{ textAlign: "center" }}>
-              {count} / {target * 1}
-            </Typography>
-          )}
-        </Stack>
-      );
-    case "weekly":
-      return (
-        <Stack>
-          <Gauge
-            height={200}
-            value={isOtherReachedTheTarget || percent >= 110 ? 110 : percent}
-            startAngle={-110}
-            endAngle={110}
-            valueMax={110}
-            sx={(theme) => ({
-              pointerEvents: "none",
-              [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 40,
-                transform: "translate(0px, 0px)",
-              },
-              [`& .${gaugeClasses.valueArc}`]: {
-                fill:
-                  percent === -1 || percent >= 100
-                    ? `#76FF03`
-                    : theme.palette[colorKey].main,
-              },
-              // [`& .${gaugeClasses.referenceArc}`]: {
-              //   fill: theme.palette.text.disabled,
-              // },
-            })}
-            // text={({ value, valueMax }) => `${value} / ${valueMax}`}
-            text={({ value, valueMax }) =>
-              `${isOtherReachedTheTarget ? "Done!" : `${percent}%`}`
-            }
-          />
-          <Typography sx={{ textAlign: "center" }}>
-            Weekly target reached!
-          </Typography>
-          {!isOtherReachedTheTarget && (
-            <Typography sx={{ textAlign: "center" }}>
-              {count} / {target * 7}
-            </Typography>
-          )}
-        </Stack>
-      );
-    case "monthly":
-      return (
-        <Stack>
-          <Gauge
-            height={200}
-            value={isOtherReachedTheTarget || percent >= 110 ? 110 : percent}
-            startAngle={-110}
-            endAngle={110}
-            valueMax={110}
-            sx={(theme) => ({
-              pointerEvents: "none",
-              [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 40,
-                transform: "translate(0px, 0px)",
-              },
-              [`& .${gaugeClasses.valueArc}`]: {
-                fill:
-                  percent === -1 || percent >= 100
-                    ? `#76FF03`
-                    : theme.palette[colorKey].main,
-              },
-              // [`& .${gaugeClasses.referenceArc}`]: {
-              //   fill: theme.palette.text.disabled,
-              // },
-            })}
-            // text={({ value, valueMax }) => `${value} / ${valueMax}`}
-            text={({ value, valueMax }) =>
-              `${isOtherReachedTheTarget ? "Done!" : `${percent}%`}`
-            }
-          />
-          <Typography sx={{ textAlign: "center" }}>
-            Monthly target reached!
-          </Typography>
-          {!isOtherReachedTheTarget && (
-            <Typography sx={{ textAlign: "center" }}>
-              {count} / {target * 30}
-            </Typography>
-          )}
-        </Stack>
-      );
-    case "yearly":
-      return (
-        <Stack>
-          <Gauge
-            height={200}
-            value={isOtherReachedTheTarget || percent >= 110 ? 110 : percent}
-            startAngle={-110}
-            endAngle={110}
-            valueMax={110}
-            sx={(theme) => ({
-              pointerEvents: "none",
-              [`& .${gaugeClasses.valueText}`]: {
-                fontSize: 40,
-                transform: "translate(0px, 0px)",
-              },
-              [`& .${gaugeClasses.valueArc}`]: {
-                fill:
-                  percent === -1 || percent >= 100
-                    ? `#76FF03`
-                    : theme.palette[colorKey].main,
-              },
-              // [`& .${gaugeClasses.referenceArc}`]: {
-              //   fill: theme.palette.text.disabled,
-              // },
-            })}
-            // text={({ value, valueMax }) => `${value} / ${valueMax}`}
-            text={({ value, valueMax }) => `${percent}%`}
-          />
-          {percent >= 100 && (
-            <Typography sx={{ textAlign: "center" }}>
-              Yearly target reached!
-            </Typography>
-          )}
-          <Typography sx={{ textAlign: "center" }}>
-            {count} in last 365Days
-          </Typography>
-          <Typography sx={{ textAlign: "center" }}>
-            {count} / {target * 365}
-          </Typography>
-        </Stack>
-      );
-  }
 };
 
 export default SingleGauge;
