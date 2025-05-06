@@ -376,7 +376,7 @@ class DatabaseService {
     const { db, session } = await this.startClientSession();
     const { email } = currentUser;
 
-    const list = currentUser.codewars.codeChallenges.list;
+    const codeChallenges = currentUser.codewars.codeChallenges;
     const totals = currentUser.diamonds.totals;
     const codewarsDiamondsRecords = currentUser.diamonds.codewars;
 
@@ -388,7 +388,14 @@ class DatabaseService {
 
       await codewars.updateOne(
         { email },
-        { $set: { "codeChallenges.list": list } },
+        {
+          $set: {
+            "codeChallenges.totalItems": codeChallenges.totalItems,
+            "codeChallenges.totalPages": codeChallenges.totalPages,
+            "codeChallenges.totalCompleted": codeChallenges.totalCompleted,
+            "codeChallenges.list": codeChallenges.list,
+          },
+        },
         { upsert: true, session }
       );
 
