@@ -16,6 +16,9 @@
     "@typescript-eslint/no-floating-promises": "warn",
     "require-await": "warn",
     "promise/catch-or-return": "warn",
-    "promise/always-return": "warn"
+    "promise/always-return": "warn",
+    "prefer-const": "warn",
+    "@typescript-eslint/no-unused-expressions": "warn",
+    "react-hooks/exhaustive-deps": "warn"
   }
 }
