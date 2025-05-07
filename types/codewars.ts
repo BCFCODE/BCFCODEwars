@@ -29,7 +29,7 @@ export interface CodeChallenges {
   totalCompleted: number;
   challengeFilter: CodeChallengesFilter;
   list: CodewarsCompletedChallenge[];
-  untrackedChallengesAvailable: boolean
+  untrackedChallengesAvailable?: boolean
 }
 
 export type CodewarsUser = {
