@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "corepack enable && corepack prepare pnpm@10.10.0 --activate"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
