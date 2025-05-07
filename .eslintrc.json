@@ -23,6 +23,8 @@
     "prefer-const": "warn",
     "@typescript-eslint/no-unused-expressions": "warn",
     "react-hooks/exhaustive-deps": "warn",
-    "@typescript-eslint/no-explicit-any": "warn" // Similarly for any other rule you'd like to warn on
+    "@typescript-eslint/no-explicit-any": "warn", 
+    "no-console": ["warn", { "allow": ["warn", "error"] }],
+    "no-unused-vars": "warn"
   }
 }

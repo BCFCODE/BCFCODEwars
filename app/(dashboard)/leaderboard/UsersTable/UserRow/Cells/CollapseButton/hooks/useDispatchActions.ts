@@ -12,7 +12,7 @@ const useDispatchActions = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
   // const codewarsDispatch = useCodewarsDispatchContext();
 
-  let untrackedChallengesAvailable =
+  const untrackedChallengesAvailable =
     currentUser.codewars?.codeChallenges?.untrackedChallengesAvailable ?? false;
 
   useEffect(() => {
