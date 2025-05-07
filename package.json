@@ -1,12 +1,13 @@
 {
   "name": "bcfcode",
   "version": "0.1.0",
+  "packageManager": "pnpm@10.10.0",
+
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "prepare": "corepack enable && corepack prepare pnpm@10.10.0 --activate"
+    "lint": "next lint"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
