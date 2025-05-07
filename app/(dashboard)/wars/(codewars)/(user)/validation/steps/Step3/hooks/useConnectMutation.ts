@@ -24,14 +24,14 @@ const useConnectMutation = () => {
       return await connectToCodewars(initializedCodewarsUser);
     },
     onMutate: async (newCodewarsUser) => {
-      await queryClient.cancelQueries({ queryKey: usersQueryKeys.allUsers });
+      await queryClient.cancelQueries({ queryKey: [usersQueryKeys.allUsers] });
 
-      const prevData = queryClient.getQueryData<GetUsersResponse>(
-        usersQueryKeys.allUsers
-      );
+      const prevData = queryClient.getQueryData<GetUsersResponse>([
+        usersQueryKeys.allUsers,
+      ]);
 
       queryClient.setQueryData<GetUsersResponse>(
-        usersQueryKeys.allUsers,
+        [usersQueryKeys.allUsers],
         (oldData) => {
           if (!oldData) return oldData;
 
@@ -56,14 +56,14 @@ const useConnectMutation = () => {
     },
     onError: (_error, _newCodewarsUser, context) => {
       if (context?.prevData) {
-        queryClient.setQueryData(usersQueryKeys.allUsers, context.prevData);
+        queryClient.setQueryData([usersQueryKeys.allUsers], context.prevData);
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
+      queryClient.invalidateQueries({ queryKey: [usersQueryKeys.allUsers] });
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
+      queryClient.invalidateQueries({ queryKey: [usersQueryKeys.allUsers] });
     },
   });
 };
