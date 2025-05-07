@@ -24,14 +24,15 @@ const useListQuery = ({ username, pageNumber, options }: ListQuery) => {
     Error,
     CompletedChallengesQueryData
   >({
-    queryKey: [codewarsQueryKeys.codewars, username, pageNumber],
+    queryKey: username
+      ? [codewarsQueryKeys.codewars, { username, pageNumber }]
+      : [codewarsQueryKeys.codewars],
     queryFn: async () => {
-      const { list, totalItems, totalPages } =
-        await getCompletedChallenges({
-          username,
-          pageNumber,
-          options,
-        });
+      const { list, totalItems, totalPages } = await getCompletedChallenges({
+        username,
+        pageNumber,
+        options,
+      });
 
       return { list, totalItems, totalPages };
     },
