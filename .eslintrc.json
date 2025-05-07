@@ -22,6 +22,7 @@
     "promise/always-return": "warn",
     "prefer-const": "warn",
     "@typescript-eslint/no-unused-expressions": "warn",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/no-explicit-any": "warn" // Similarly for any other rule you'd like to warn on
   }
 }
