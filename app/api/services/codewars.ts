@@ -2,8 +2,14 @@
 
 import { CodewarsSingleChallenge } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
-import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route";
-import { ListQuery } from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/hooks/ReactQuery/useListQuery";
+import {
+  CodewarsChallengesResponse,
+  GetCompletedChallengesResponse,
+} from "../codewars/challenges/all/route";
+import {
+  CompletedChallengesQueryData,
+  ListQuery,
+} from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/hooks/ReactQuery/useListQuery";
 
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;
@@ -12,11 +18,19 @@ class CodewarsAPIService {
     pageNumber,
     username,
     options,
-  }: ListQuery): Promise<GetCompletedChallengesResponse> =>
+  }: ListQuery): Promise<CompletedChallengesQueryData> =>
     await fetch(
       `${this.endpoint}/challenges/all?username=${username}&pageNumber=${pageNumber}`,
       { ...options }
-    ).then((res) => res.json());
+    ).then(async (response) => {
+      const {
+        data: list,
+        totalItems,
+        totalPages,
+      } = (await response.json()) as GetCompletedChallengesResponse;
+
+      return { list, totalItems, totalPages };
+    });
 
   getSingleChallenge = async (
     username: string,

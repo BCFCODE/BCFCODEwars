@@ -2,15 +2,13 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
 export interface CodewarsChallengesResponse {
-  totalPages: number; // Total number of pages in the response
-  totalItems: number; // Total number of items across all pages
-  data: CodewarsCompletedChallenge[]; // Array of completed challenges
+  totalPages: number;
+  totalItems: number;
+  data: CodewarsCompletedChallenge[];
 }
 
-export interface GetCompletedChallengesResponse {
-  totalItems: number;
-  totalPages: number;
-  list: CodewarsCompletedChallenge[];
+export interface GetCompletedChallengesResponse
+  extends CodewarsChallengesResponse {
   error?: string;
 }
 
@@ -26,7 +24,7 @@ export async function GET(
     return NextResponse.json(
       {
         error: "challengeId field is required to fetch codewars challenge.",
-        list: [],
+        data: [],
         totalItems: 0,
         totalPages: 0,
       },
@@ -42,7 +40,7 @@ export async function GET(
     if (!response.ok)
       return NextResponse.json(
         {
-          list: [],
+          data: [],
           totalItems: 0,
           totalPages: 0,
           error:
@@ -51,20 +49,17 @@ export async function GET(
         { status: 404 }
       );
 
-    const {
-      data: list,
-      totalItems,
-      totalPages,
-    } = (await response.json()) as CodewarsChallengesResponse;
+    const { data, totalItems, totalPages } =
+      (await response.json()) as CodewarsChallengesResponse;
 
-    return NextResponse.json({ list, totalItems, totalPages }, { status: 200 });
+    return NextResponse.json({ data, totalItems, totalPages }, { status: 200 });
   } catch (error) {
     console.error("Error fetching codewars completed challenges", error);
     return NextResponse.json(
       {
         error:
           "An unknown network error occurred while fetching codewars completed challenges.",
-        list: [],
+        data: [],
         totalItems: 0,
         totalPages: 0,
       },

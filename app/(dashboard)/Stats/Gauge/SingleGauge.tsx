@@ -51,7 +51,7 @@ const SingleGauge = ({
           // },
         })}
         // text={({ value, valueMax }) => `${value} / ${valueMax}`}
-        text={({ value, valueMax }) =>
+        text={(/* { value, valueMax } */) =>
           `${didLaterPeriodMeetTarget ? "Done!" : `${percent}%`}`
         }
       />

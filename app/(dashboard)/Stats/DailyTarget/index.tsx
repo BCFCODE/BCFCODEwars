@@ -2,7 +2,6 @@
 
 import { Box, SxProps } from "@mui/material";
 import Fade from "./Fade";
-import Loading from "../../leaderboard/UsersTable/Pagination/Loading";
 import Target from "./Target";
 import TargetSelector from "./TargetSelector";
 import useTargetStore from "./useTargetStore";
@@ -26,7 +25,7 @@ const AbsoluteCenter: SxProps = {
 };
 
 export default function DailyTarget() {
-  const { isLoading, target, isHovering, setIsHovering } = useTargetStore();
+  const { target, isHovering, setIsHovering } = useTargetStore();
 
   return (
     <Box

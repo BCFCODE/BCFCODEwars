@@ -5,10 +5,18 @@ import Head from "./Head";
 import Body from "./Body";
 import Error from "./Error";
 import Pagination from "./Pagination";
-
+import useListQuery from "../hooks/ReactQuery/useListQuery";
+import { useUsersStore } from "@/app/context/store/users";
 
 const CodewarsTable = () => {
-  const { isError, isLoading } = useCodewarsContext();
+  const { selectedUser } = useUsersStore((state) => state);
+
+  const { pageNumber } = useCodewarsContext();
+
+  const { isError, isLoading } = useListQuery({
+    pageNumber,
+    username: selectedUser?.codewars.username ?? "",
+  });
 
   if (isError) return <Error />;
 

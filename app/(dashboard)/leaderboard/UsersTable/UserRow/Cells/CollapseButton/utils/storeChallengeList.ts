@@ -4,21 +4,22 @@ import { GetCompletedChallengesResponse } from "@/app/api/codewars/challenges/al
 import DatabaseService from "@/app/services/db";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { AuthenticatedUser } from "@/types/users";
+import { CompletedChallengesQueryData } from "../hooks/ReactQuery/useListQuery";
 
 const { saveChallengesList } = new DatabaseService();
 
 interface Props {
   currentUser: AuthenticatedUser;
   list: CodewarsCompletedChallenge[];
-  data: GetCompletedChallengesResponse;
+  queryData: CompletedChallengesQueryData;
 }
 
 export default async function storeChallengeList({
   list,
   currentUser,
-  data,
+  queryData,
 }: Props) {
   const userId = currentUser.codewars.id;
   
-  await saveChallengesList({ list, userId, data });
+  await saveChallengesList({ list, userId, queryData });
 }

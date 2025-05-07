@@ -33,7 +33,7 @@ const useChallengeList = () => {
         diffAndUpdateList();
 
         setTryAgain(() => ({ isError: false, isLoading: false }));
-        codewarsDispatch({ type: "SET_ERROR", isError: false });
+        codewarsDispatch({ type: "SET_ERROR", isError });
       } else {
         // TODO: Handle cases where data is missing
         setTryAgain(() => ({ isError: true, isLoading: false }));

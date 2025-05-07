@@ -27,7 +27,7 @@ const useInitializeList = () => {
         totalPages: data.totalPages,
       });
 
-      storeChallengeList({ list, currentUser, data });
+      storeChallengeList({ list, currentUser, queryData: data });
     }
   };
   return { initializeCodeChallengesList, isListEmpty };

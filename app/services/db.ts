@@ -4,6 +4,7 @@ import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
 import { CodewarsReconnectRequest } from "../api/services/db";
 import { GetCompletedChallengesResponse } from "../api/codewars/challenges/all/route";
+import { CompletedChallengesQueryData } from "../(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/hooks/ReactQuery/useListQuery";
 
 export interface PaginationQuery {
   skip: number;
@@ -221,24 +222,24 @@ class DatabaseService {
   saveChallengesList = async ({
     list,
     userId,
-    data,
+    queryData,
   }: {
     list: CodewarsCompletedChallenge[];
     userId: string;
-    data: GetCompletedChallengesResponse;
+    queryData: CompletedChallengesQueryData;
   }) => {
     const { db } = await this.getDatabase();
     const codewars: Collection<CodewarsUser> =
       db.collection<CodewarsUser>("codewars");
 
-    if (data)
+    if (queryData)
       await codewars.findOneAndUpdate(
         { id: userId },
         {
           $set: {
-            "codeChallenges.totalItems": data.totalItems,
-            "codeChallenges.totalPages": data.totalPages,
-            "codeChallenges.totalCompleted": data.totalItems,
+            "codeChallenges.totalItems": queryData.totalItems,
+            "codeChallenges.totalPages": queryData.totalPages,
+            "codeChallenges.totalCompleted": queryData.totalItems,
             "codeChallenges.list": list,
           },
         }
