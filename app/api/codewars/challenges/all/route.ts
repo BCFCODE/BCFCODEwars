@@ -8,9 +8,10 @@ export interface CodewarsChallengesResponse {
 }
 
 export interface GetCompletedChallengesResponse {
-  success: boolean;
+  totalItems: number;
+  totalPages: number;
+  list: CodewarsCompletedChallenge[];
   error?: string;
-  data?: CodewarsChallengesResponse
 }
 
 export async function GET(
@@ -24,8 +25,10 @@ export async function GET(
   if (!pageNumber) {
     return NextResponse.json(
       {
-        success: false,
         error: "challengeId field is required to fetch codewars challenge.",
+        list: [],
+        totalItems: 0,
+        totalPages: 0,
       },
       { status: 400 }
     );
@@ -36,26 +39,34 @@ export async function GET(
       `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=${pageNumber}`
     );
 
-    const data = await response.json();
-
     if (!response.ok)
       return NextResponse.json(
         {
-          success: false,
+          list: [],
+          totalItems: 0,
+          totalPages: 0,
           error:
             "An error occurred while fetching codewars completed challenge list, username not found and it is probably because of invalid username...",
         },
         { status: 404 }
       );
 
-    return NextResponse.json({ success: true, data }, { status: 200 });
+    const {
+      data: list,
+      totalItems,
+      totalPages,
+    } = (await response.json()) as CodewarsChallengesResponse;
+
+    return NextResponse.json({ list, totalItems, totalPages }, { status: 200 });
   } catch (error) {
     console.error("Error fetching codewars completed challenges", error);
     return NextResponse.json(
       {
-        success: false,
         error:
           "An unknown network error occurred while fetching codewars completed challenges.",
+        list: [],
+        totalItems: 0,
+        totalPages: 0,
       },
       { status: 500 }
     );

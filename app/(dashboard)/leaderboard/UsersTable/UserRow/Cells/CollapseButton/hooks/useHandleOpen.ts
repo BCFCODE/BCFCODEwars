@@ -6,7 +6,7 @@ const useHandleOpen = () => {
   const { fetchAndShowChallenges } = useChallengeList();
 
   const handleOpen = async () => {
-     fetchAndShowChallenges();
+    fetchAndShowChallenges();
     dispatchActions();
   };
 

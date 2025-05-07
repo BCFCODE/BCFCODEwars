@@ -3,30 +3,20 @@
 import { CodewarsSingleChallenge } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
 import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route";
+import { ListQuery } from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/hooks/ReactQuery/useListQuery";
 
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;
-  
-  // Read
-  getCompletedChallenges = async (
-    username: string,
-    pageNumber: number,
-    options?: RequestInit
-  ): Promise<GetCompletedChallengesResponse> =>
+
+  getCompletedChallenges = async ({
+    pageNumber,
+    username,
+    options,
+  }: ListQuery): Promise<GetCompletedChallengesResponse> =>
     await fetch(
       `${this.endpoint}/challenges/all?username=${username}&pageNumber=${pageNumber}`,
       { ...options }
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to fetch completed challenges`);
-        }
-        return response.json() 
-      })
-      .catch((error) => {
-        // console.error(error);
-        throw new Error("Failed to fetch completed challenges");
-      });
+    ).then((res) => res.json());
 
   getSingleChallenge = async (
     username: string,

@@ -1,29 +1,33 @@
+import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { applyDefaultTrackingAndRewardStatusToAll } from "../utils/applyRewardStatus";
 import storeChallengeList from "../utils/storeChallengeList";
-import { GetCompletedChallengesResponse } from "@/app/api/codewars/challenges/all/route";
+import useListQuery from "./ReactQuery/useListQuery";
 
 const useInitializeList = () => {
   const { currentUser } = useCurrentUserContext();
+  const { pageNumber } = useCodewarsContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
   const isListEmpty = !currentUser.codewars?.codeChallenges?.list.length;
 
-  const initializeCodeChallengesList = (
-    response: GetCompletedChallengesResponse
-  ) => {
-    if (response.data) {
-      const { data } = response.data;
-      const list = applyDefaultTrackingAndRewardStatusToAll(data);
+  const { data, isSuccess } = useListQuery({
+    pageNumber,
+    username: currentUser.codewars.username,
+  });
+
+  const initializeCodeChallengesList = () => {
+    if (isSuccess) {
+      const list = applyDefaultTrackingAndRewardStatusToAll(data.list);
 
       currentUserDispatch({
         type: "UPDATE_CODE_CHALLENGES_LIST",
         list,
-        totalItems: response.data.totalItems,
-        totalPages: response.data.totalPages,
+        totalItems: data.totalItems,
+        totalPages: data.totalPages,
       });
 
-      storeChallengeList({ list, currentUser, response });
+      storeChallengeList({ list, currentUser, data });
     }
   };
   return { initializeCodeChallengesList, isListEmpty };

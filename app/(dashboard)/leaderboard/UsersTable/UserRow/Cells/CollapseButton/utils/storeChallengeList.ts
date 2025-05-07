@@ -10,15 +10,15 @@ const { saveChallengesList } = new DatabaseService();
 interface Props {
   currentUser: AuthenticatedUser;
   list: CodewarsCompletedChallenge[];
-  response: GetCompletedChallengesResponse;
+  data: GetCompletedChallengesResponse;
 }
 
 export default async function storeChallengeList({
   list,
   currentUser,
-  response,
+  data,
 }: Props) {
   const userId = currentUser.codewars.id;
   
-  await saveChallengesList({ list, userId, response });
+  await saveChallengesList({ list, userId, data });
 }

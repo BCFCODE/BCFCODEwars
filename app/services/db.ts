@@ -221,24 +221,24 @@ class DatabaseService {
   saveChallengesList = async ({
     list,
     userId,
-    response,
+    data,
   }: {
     list: CodewarsCompletedChallenge[];
     userId: string;
-    response: GetCompletedChallengesResponse;
+    data: GetCompletedChallengesResponse;
   }) => {
     const { db } = await this.getDatabase();
     const codewars: Collection<CodewarsUser> =
       db.collection<CodewarsUser>("codewars");
 
-    if (response.data)
+    if (data)
       await codewars.findOneAndUpdate(
         { id: userId },
         {
           $set: {
-            "codeChallenges.totalItems": response.data.totalItems,
-            "codeChallenges.totalPages": response.data.totalPages,
-            "codeChallenges.totalCompleted": response.data.totalItems,
+            "codeChallenges.totalItems": data.totalItems,
+            "codeChallenges.totalPages": data.totalPages,
+            "codeChallenges.totalCompleted": data.totalItems,
             "codeChallenges.list": list,
           },
         }

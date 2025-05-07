@@ -72,6 +72,7 @@ const currentUserReducer = (
               ...state.currentUser.codewars.codeChallenges,
               totalItems: action.totalItems,
               totalPages: action.totalPages,
+              totalCompleted: action.totalItems,
               list: [...action.list],
             },
           },
@@ -128,6 +129,7 @@ const currentUserReducer = (
               ...state.currentUser.codewars.codeChallenges,
               totalItems: action.totalItems,
               totalPages: action.totalPages,
+              totalCompleted: action.totalItems,
               list: [
                 ...action.untrackedChallenges,
                 ...state.currentUser.codewars.codeChallenges.list,

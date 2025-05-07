@@ -5,8 +5,7 @@ import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext"
 import useInitializeList from "./useInitializeList";
 import useDiffAndUpdateList from "./useUpdateListDiff";
 import { useState } from "react";
-
-const { getCompletedChallenges } = new CodewarsAPIService();
+import useListQuery from "./ReactQuery/useListQuery";
 
 const useChallengeList = () => {
   const [tryAgain, setTryAgain] = useState({
@@ -19,18 +18,17 @@ const useChallengeList = () => {
   const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
   const { diffAndUpdateList } = useDiffAndUpdateList();
 
+  const { isSuccess, isError, isLoading } = useListQuery({
+    pageNumber,
+    username: currentUser.codewars.username,
+  });
+
   const fetchAndShowChallenges = async () => {
     try {
       setTryAgain(() => ({ isError: false, isLoading: true }));
 
-      const response = await getCompletedChallenges(
-        currentUser.codewars.username,
-        pageNumber,
-        { cache: "no-store" }
-      );
-
-      if ("data" in response) {
-        if (isListEmpty) initializeCodeChallengesList(response);
+      if (isSuccess) {
+        if (isListEmpty) initializeCodeChallengesList();
 
         diffAndUpdateList();
 
