@@ -7,7 +7,7 @@ interface Props {
   totalPageCount: number | undefined;
 }
 
-export default function Pagination({ totalPageCount }: Props) {
+export default function Pagination({ totalPageCount = 0 }: Props) {
   const {
     page,
     setPage,
@@ -45,7 +45,7 @@ export default function Pagination({ totalPageCount }: Props) {
     <>
       <TablePagination
         component="div"
-        count={totalPageCount ?? 100}
+        count={totalPageCount}
         page={page}
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}

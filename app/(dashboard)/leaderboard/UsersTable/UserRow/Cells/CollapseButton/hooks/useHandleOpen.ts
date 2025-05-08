@@ -1,13 +1,16 @@
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useChallengeList from "./useDiffAndUpdateList";
 import useDispatchActions from "./useDispatchActions";
 
 const useHandleOpen = () => {
+  
   const { dispatchActions } = useDispatchActions();
   const { fetchAndShowChallenges } = useChallengeList();
 
   const handleOpen = async () => {
     fetchAndShowChallenges();
     dispatchActions();
+    
   };
 
   return { handleOpen };

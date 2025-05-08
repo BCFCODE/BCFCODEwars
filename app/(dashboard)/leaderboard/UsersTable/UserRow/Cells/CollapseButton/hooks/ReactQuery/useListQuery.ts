@@ -37,7 +37,7 @@ const useListQuery = ({ username, pageNumber, options }: ListQuery) => {
       return { list, totalItems, totalPages };
     },
     staleTime: 1 * 1000 * 60, // 1m
-    retry: 1,
+    // retry: 1,
   });
 };
 

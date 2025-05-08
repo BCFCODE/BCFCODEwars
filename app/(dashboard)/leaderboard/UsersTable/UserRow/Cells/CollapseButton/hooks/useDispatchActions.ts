@@ -39,6 +39,8 @@ const useDispatchActions = () => {
       type: "SET_COLLAPSE_OPEN",
       isCollapsed: !isCollapsed,
     });
+
+    if (!isCollapsed) setSelectedUser(currentUser);
     // codewarsDispatch({ type: "SET_LOADING", isLoading: false });
   };
 

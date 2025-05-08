@@ -34,7 +34,8 @@ export async function GET(
 
   try {
     const response = await fetch(
-      `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=${pageNumber}`
+      `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=${pageNumber}`,
+      { cache: "no-store" }
     );
 
     if (!response.ok)

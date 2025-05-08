@@ -13,11 +13,18 @@ const CodewarsTable = () => {
 
   const { pageNumber } = useCodewarsContext();
 
-  const { isError, isLoading } = useListQuery({
+  const { isError, isLoading, data } = useListQuery({
     pageNumber,
     username: selectedUser?.codewars.username ?? "",
   });
 
+  console.log(
+    "data?.totalItems >>>>",
+    data?.totalItems,
+    selectedUser?.codewars.username,
+    selectedUser
+  );
+  
   if (isError) return <Error />;
 
   if (isLoading)
@@ -48,7 +55,7 @@ const CodewarsTable = () => {
           justifyContent: "center",
         }}
       >
-        <Pagination totalPageCount={100} />
+        <Pagination totalPageCount={data?.totalItems} />
       </Box>
     </Box>
   );
