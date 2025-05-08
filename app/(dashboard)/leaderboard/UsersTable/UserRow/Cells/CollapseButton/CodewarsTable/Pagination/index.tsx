@@ -1,7 +1,7 @@
 import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
 import usePaginationStore from "./usePaginationStore";
-
+import setQuerySkipAndLimit from "@/app/(dashboard)/leaderboard/UsersTable/utils/setQuerySkipAndLimit";
 
 interface Props {
   totalPageCount: number | undefined;
@@ -15,23 +15,19 @@ export default function Pagination({ totalPageCount }: Props) {
     setRowsPerPage,
     setPaginationQuery,
     isLoading,
+    paginationQuery,
   } = usePaginationStore((state) => state);
 
-  // const getNewQueryAndSetPaginationQuery = (
-  //   page: number,
-  //   rowsPerPage: number
-  // ) => {
-  //   const skip = page * rowsPerPage;
-  //   const limit = rowsPerPage;
-  //   setPaginationQuery({ skip, limit });
-  // };
+  console.log(">>>>>>>", page, rowsPerPage, paginationQuery, isLoading);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
     setPage(newPage);
-    // getNewQueryAndSetPaginationQuery(newPage, rowsPerPage);
+    const newQuery = { page: newPage, rowsPerPage };
+    const paginationQuery = setQuerySkipAndLimit(newQuery);
+    setPaginationQuery(paginationQuery);
   };
 
   const handleChangeRowsPerPage = (
@@ -40,7 +36,9 @@ export default function Pagination({ totalPageCount }: Props) {
     const [page, rowsPerPage] = [0, parseInt(event.target.value, 10)];
     setPage(page);
     setRowsPerPage(rowsPerPage);
-    // getNewQueryAndSetPaginationQuery(0, rowsPerPage);
+    const newQuery = { page: 0, rowsPerPage };
+    const paginationQuery = setQuerySkipAndLimit(newQuery);
+    setPaginationQuery(paginationQuery);
   };
 
   return (
