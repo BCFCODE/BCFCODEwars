@@ -8,10 +8,10 @@ interface Props {
 }
 
 const UsersTable = ({ list }: Props) => {
-  return list?.map((currentUser: AuthenticatedUser) => (
-    <CurrentUserProvider key={currentUser.email} context={{ currentUser }}>
+  return list?.map((user: AuthenticatedUser) => (
+    <CurrentUserProvider key={user.email} context={{ currentUser: user }}>
       <TableBody>
-        <UserRow />
+        <UserRow key={user.email} currentUser={user} />
       </TableBody>
     </CurrentUserProvider>
   ));

@@ -14,6 +14,7 @@ export interface CurrentUserState {
   isCollapsed?: boolean;
   session?: Session;
   isUserOnPersonalDashboard?: boolean;
+  untrackedChallengesAvailable?: boolean
 }
 
 export interface CurrentUserContext extends CurrentUserState {

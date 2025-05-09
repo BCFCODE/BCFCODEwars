@@ -1,4 +1,3 @@
-import { CurrentUserState } from "@/app/context/reducers/currentUser";
 import { CodewarsUser } from "./codewars";
 import { Diamonds } from "./diamonds";
 import { Session } from "next-auth";
@@ -25,6 +24,13 @@ export interface BaseUser extends GoogleUser {
 
 export interface DatabaseUser extends BaseUser {
   activity: UserActivity;
+}
+
+export interface CurrentUserState {
+  isCollapsed: boolean;
+  session?: Session;
+  isUserOnPersonalDashboard?: boolean;
+  untrackedChallengesAvailable?: boolean
 }
 
 export interface AuthenticatedUser extends DatabaseUser, CurrentUserState {
