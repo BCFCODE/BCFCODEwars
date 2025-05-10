@@ -4,10 +4,10 @@ import usePaginationStore from "./usePaginationStore";
 import setQuerySkipAndLimit from "@/app/(dashboard)/leaderboard/UsersTable/utils/setQuerySkipAndLimit";
 
 interface Props {
-  totalPageCount: number | undefined;
+  totalItems: number | undefined;
 }
 
-export default function Pagination({ totalPageCount = 0 }: Props) {
+export default function Pagination({ totalItems = 0 }: Props) {
   const {
     pagination: { page, rowsPerPage },
     setPage,
@@ -44,7 +44,7 @@ export default function Pagination({ totalPageCount = 0 }: Props) {
     <>
       <TablePagination
         component="div"
-        count={totalPageCount}
+        count={totalItems}
         page={page}
         onPageChange={handleChangePage}
         rowsPerPage={rowsPerPage}

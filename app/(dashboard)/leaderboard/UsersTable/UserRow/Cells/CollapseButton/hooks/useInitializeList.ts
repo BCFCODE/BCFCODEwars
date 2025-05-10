@@ -7,14 +7,10 @@ import useListQuery from "./ReactQuery/useListQuery";
 
 const useInitializeList = () => {
   const { currentUser } = useCurrentUserContext();
-  const { pageNumber } = useCodewarsContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
   const isListEmpty = !currentUser.codewars?.codeChallenges?.list.length;
 
-  const { data, isSuccess } = useListQuery({
-    pageNumber,
-    username: currentUser.codewars.username,
-  });
+  const { data, isSuccess } = useListQuery();
 
   const initializeCodeChallengesList = () => {
     if (isSuccess) {

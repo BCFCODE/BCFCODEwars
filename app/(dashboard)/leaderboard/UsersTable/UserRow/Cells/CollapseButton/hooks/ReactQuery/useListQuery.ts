@@ -1,8 +1,9 @@
-import { CodewarsChallengesResponse } from "@/app/api/codewars/challenges/all/route";
 import CodewarsAPIService from "@/app/api/services/codewars";
 import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/codewars";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useQuery } from "@tanstack/react-query";
+import usePaginationStore from "../../CodewarsTable/Pagination/usePaginationStore";
+import { useUsersStore } from "@/app/context/store/users";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -13,25 +14,34 @@ export interface CompletedChallengesQueryData {
 }
 
 export interface ListQuery {
+  apiPageNumber: number;
   username: string;
-  pageNumber: number;
-  options?: RequestInit;
 }
 
-const useListQuery = ({ username, pageNumber, options }: ListQuery) => {
+const useListQuery = () => {
+  const {
+    user: { selectedUser },
+  } = useUsersStore((state) => state);
+  const {
+    pagination: { apiPageNumber },
+  } = usePaginationStore((state) => state);
+
+  const username = selectedUser?.codewars?.username ?? "";
+
+  const queryKey = username
+    ? [codewarsQueryKeys.codewars, { username, apiPageNumber }]
+    : [codewarsQueryKeys.codewars];
+
   return useQuery<
     CompletedChallengesQueryData,
     Error,
     CompletedChallengesQueryData
   >({
-    queryKey: username
-      ? [codewarsQueryKeys.codewars, { username, pageNumber }]
-      : [codewarsQueryKeys.codewars],
+    queryKey,
     queryFn: async () => {
       const { list, totalItems, totalPages } = await getCompletedChallenges({
         username,
-        pageNumber,
-        options,
+        apiPageNumber,
       });
 
       return { list, totalItems, totalPages };

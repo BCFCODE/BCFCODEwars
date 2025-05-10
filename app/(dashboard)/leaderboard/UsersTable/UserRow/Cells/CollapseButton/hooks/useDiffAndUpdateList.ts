@@ -1,11 +1,8 @@
-import CodewarsAPIService from "@/app/api/services/codewars";
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import useInitializeList from "./useInitializeList";
-import useDiffAndUpdateList from "./useUpdateListDiff";
 import { useState } from "react";
 import useListQuery from "./ReactQuery/useListQuery";
+import useInitializeList from "./useInitializeList";
+import useDiffAndUpdateList from "./useUpdateListDiff";
 
 const useChallengeList = () => {
   const [tryAgain, setTryAgain] = useState({
@@ -13,15 +10,10 @@ const useChallengeList = () => {
     isLoading: false,
   });
   const codewarsDispatch = useCodewarsDispatchContext();
-  const { currentUser } = useCurrentUserContext();
-  const { pageNumber } = useCodewarsContext();
   const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
   const { diffAndUpdateList } = useDiffAndUpdateList();
 
-  const { isSuccess, isError, isLoading } = useListQuery({
-    pageNumber,
-    username: currentUser.codewars.username,
-  });
+  const { isSuccess, isError, isLoading } = useListQuery();
 
   const fetchAndShowChallenges = async () => {
     try {

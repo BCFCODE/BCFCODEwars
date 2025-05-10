@@ -1,24 +1,13 @@
-import { Box, Table } from "@mui/material";
 import LoadingUI from "@/app/components/UI/LoadingUI";
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import Head from "./Head";
+import { Box, Table } from "@mui/material";
+import useListQuery from "../hooks/ReactQuery/useListQuery";
 import Body from "./Body";
 import Error from "./Error";
+import Head from "./Head";
 import Pagination from "./Pagination";
-import useListQuery from "../hooks/ReactQuery/useListQuery";
-import { useUsersStore } from "@/app/context/store/users";
 
 const CodewarsTable = () => {
-  const {
-    user: { selectedUser },
-  } = useUsersStore((state) => state);
-
-  const { pageNumber } = useCodewarsContext();
-
-  const { isError, isLoading, data } = useListQuery({
-    pageNumber,
-    username: selectedUser?.codewars.username ?? "",
-  });
+  const { isError, isLoading, data } = useListQuery();
 
   // console.log(
   //   "data?.totalItems >>>>",
@@ -57,7 +46,7 @@ const CodewarsTable = () => {
           justifyContent: "center",
         }}
       >
-        <Pagination totalPageCount={data?.totalItems} />
+        <Pagination totalItems={data?.totalItems} />
       </Box>
     </Box>
   );

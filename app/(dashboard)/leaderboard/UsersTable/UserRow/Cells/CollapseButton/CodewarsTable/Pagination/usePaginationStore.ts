@@ -7,6 +7,7 @@ import { immer } from "zustand/middleware/immer";
 export interface Pagination {
   page: number;
   rowsPerPage: number;
+  apiPageNumber: number;
 }
 
 interface PaginationStore {
@@ -22,7 +23,7 @@ interface PaginationStore {
 export const usePaginationStore = create<PaginationStore>()(
   persist(
     immer((set) => ({
-      pagination: { page: 0, rowsPerPage: 10 },
+      pagination: { page: 0, rowsPerPage: 10, apiPageNumber: 0 },
       setPage: (page) =>
         set((state) => {
           state.pagination.page = page;

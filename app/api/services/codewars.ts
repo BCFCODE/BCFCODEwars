@@ -15,11 +15,11 @@ class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;
 
   getCompletedChallenges = async ({
-    pageNumber,
+    apiPageNumber,
     username,
   }: ListQuery): Promise<CompletedChallengesQueryData> =>
     await fetch(
-      `${this.endpoint}/challenges/all?username=${username}&pageNumber=${pageNumber}`,
+      `${this.endpoint}/challenges/all?username=${username}&pageNumber=${apiPageNumber}`,
       { cache: "no-store" }
     ).then(async (response) => {
       const {
