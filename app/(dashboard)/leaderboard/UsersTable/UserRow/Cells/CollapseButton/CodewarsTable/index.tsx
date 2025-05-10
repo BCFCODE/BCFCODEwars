@@ -9,7 +9,9 @@ import useListQuery from "../hooks/ReactQuery/useListQuery";
 import { useUsersStore } from "@/app/context/store/users";
 
 const CodewarsTable = () => {
-  const { selectedUser } = useUsersStore((state) => state);
+  const {
+    user: { selectedUser },
+  } = useUsersStore((state) => state);
 
   const { pageNumber } = useCodewarsContext();
 
@@ -18,13 +20,13 @@ const CodewarsTable = () => {
     username: selectedUser?.codewars.username ?? "",
   });
 
-  console.log(
-    "data?.totalItems >>>>",
-    data?.totalItems,
-    selectedUser?.codewars.username,
-    selectedUser
-  );
-  
+  // console.log(
+  //   "data?.totalItems >>>>",
+  //   data?.totalItems,
+  //   selectedUser?.codewars.username,
+  //   selectedUser
+  // );
+
   if (isError) return <Error />;
 
   if (isLoading)
