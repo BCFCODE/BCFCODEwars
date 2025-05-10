@@ -4,9 +4,11 @@ import { immer } from "zustand/middleware/immer";
 // import syncCurrentWithAllUsers from "./utils/syncCurrentWithAllUsers";
 
 type Store = {
-  selectedUser: AuthenticatedUser | null;
+  user: {
+    selectedUser?: AuthenticatedUser;
+    currentUserState: CurrentUserState;
+  };
   setSelectedUser: (selectedUser: AuthenticatedUser) => void;
-  currentUserState: CurrentUserState;
   setIsCollapsed: (isCollapsed: boolean) => void;
   // currentUser: AuthenticatedUser | null;
   // allUsers: AuthenticatedUser[];
@@ -14,15 +16,17 @@ type Store = {
 
 export const useUsersStore = create<Store>()(
   immer((set) => ({
-    selectedUser: null,
+    user: {
+      selectedUser: {} as AuthenticatedUser,
+      currentUserState: { isCollapsed: true },
+    },
     setSelectedUser: (selectedUser) =>
       set((state) => {
-        state.selectedUser = selectedUser;
+        state.user.selectedUser = selectedUser;
       }),
-    currentUserState: { isCollapsed: true },
     setIsCollapsed: (isCollapsed) =>
       set((state) => {
-        state.currentUserState.isCollapsed = isCollapsed;
+        state.user.currentUserState.isCollapsed = isCollapsed;
       }),
   }))
 );

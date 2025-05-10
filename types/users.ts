@@ -28,8 +28,8 @@ export interface DatabaseUser extends BaseUser {
 
 export interface CurrentUserState {
   isCollapsed: boolean;
-  session?: Session;
   isUserOnPersonalDashboard?: boolean;
+  session?: Session;
   untrackedChallengesAvailable?: boolean
 }
 
