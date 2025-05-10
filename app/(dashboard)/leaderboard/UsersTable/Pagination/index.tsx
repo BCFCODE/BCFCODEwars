@@ -10,9 +10,8 @@ interface Props {
 
 export default function Pagination({ totalPageCount }: Props) {
   const {
-    page,
+    pagination: { page, rowsPerPage },
     setPage,
-    rowsPerPage,
     setRowsPerPage,
     setPaginationQuery,
     isLoading,

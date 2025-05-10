@@ -2,9 +2,8 @@ import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 import { CodeChallengesFilter, Diamonds } from "@/types/diamonds";
 import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
-import { CodewarsReconnectRequest } from "../api/services/db";
-import { GetCompletedChallengesResponse } from "../api/codewars/challenges/all/route";
 import { CompletedChallengesQueryData } from "../(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/hooks/ReactQuery/useListQuery";
+import { CodewarsReconnectRequest } from "../api/services/db";
 
 export interface PaginationQuery {
   skip: number;

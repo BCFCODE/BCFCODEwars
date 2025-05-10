@@ -2,30 +2,46 @@ import { PaginationQuery } from "@/app/services/db";
 import { PERSIST_KEYS } from "@/app/context/store/storeKeys";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+
+export interface Pagination {
+  page: number;
+  rowsPerPage: number;
+}
 
 interface PaginationStore {
   paginationQuery: PaginationQuery;
-  setPaginationQuery: (query: PaginationQuery) => void;
-  page: number;
+  pagination: Pagination;
   setPage: (page: number) => void;
-  rowsPerPage: number;
   setRowsPerPage: (rowsPerPage: number) => void;
+  setPaginationQuery: (query: PaginationQuery) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
 }
 
 export const usePaginationStore = create<PaginationStore>()(
   persist(
-    (set) => ({
+    immer((set) => ({
+      pagination: { page: 0, rowsPerPage: 10 },
+      setPage: (page) =>
+        set((state) => {
+          state.pagination.page = page;
+        }),
+      setRowsPerPage: (rowsPerPage) =>
+        set((state) => {
+          state.pagination.rowsPerPage = rowsPerPage;
+        }),
       paginationQuery: { skip: 0, limit: 10 },
-      setPaginationQuery: (paginationQuery) => set(() => ({ paginationQuery })),
-      page: 0,
-      setPage: (page) => set(() => ({ page })),
-      rowsPerPage: 10,
-      setRowsPerPage: (rowsPerPage) => set(() => ({ rowsPerPage })),
+      setPaginationQuery: (paginationQuery) =>
+        set((state) => {
+          state.paginationQuery = paginationQuery;
+        }),
       isLoading: true,
-      setIsLoading: (isLoading) => set(() => ({ isLoading })),
-    }),
+      setIsLoading: (isLoading) =>
+        set((state) => {
+          state.isLoading = isLoading;
+        }),
+    })),
     {
       name: PERSIST_KEYS.usersPaginationQuery,
       // partialize: (state) => ({ paginationQuery: state.paginationQuery }),
@@ -35,9 +51,5 @@ export const usePaginationStore = create<PaginationStore>()(
     }
   )
 );
-
-usePaginationStore.getState().setIsLoading = (isLoading: boolean) => {
-  usePaginationStore.setState({ isLoading });
-};
 
 export default usePaginationStore;

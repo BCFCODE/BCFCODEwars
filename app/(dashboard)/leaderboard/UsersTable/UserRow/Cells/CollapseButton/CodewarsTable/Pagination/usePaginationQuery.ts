@@ -3,6 +3,7 @@
 // import { GetUsersResponse } from "@/app/api/db/users/route";
 // import CodewarsAPIService from "@/app/api/services/codewars";
 // import dbAPIService from "@/app/api/services/db";
+// import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
 // import { codewarsQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
 // import { PaginationQuery } from "@/app/services/db";
 // import { useQuery } from "@tanstack/react-query";
@@ -11,12 +12,13 @@
 // const { getCompletedChallenges } = new CodewarsAPIService();
 
 // const usePaginationQuery = (paginationQuery: PaginationQuery) => {
+//   const { data } = useCurrentUserQuery();
 //   const { data: session, status } = useSession();
 
 //   return useQuery<GetUsersResponse>({
 //     queryKey: [codewarsQueryKeys.codewars, paginationQuery],
 //     queryFn: async () => {
-//       await getCompletedChallenges()
+//       await getCompletedChallenges();
 //       // const { success, list, error, totalUsers } = await getUsers(
 //       //   paginationQuery,
 //       //   {
