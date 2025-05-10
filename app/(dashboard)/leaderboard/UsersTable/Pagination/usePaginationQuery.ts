@@ -6,10 +6,12 @@ import usersQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/users";
 import { PaginationQuery } from "@/app/services/db";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import usePaginationStore from "./usePaginationStore";
 
 const { getUsers } = new dbAPIService();
 
-const usePaginationQuery = (paginationQuery: PaginationQuery) => {
+const usePaginationQuery = () => {
+  const { paginationQuery } = usePaginationStore((state) => state);
   const { data: session, status } = useSession();
 
   return useQuery<GetUsersResponse>({
