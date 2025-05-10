@@ -10,8 +10,7 @@ import LeaderboardHeader from "./UsersTable/Header";
 import Pagination from "./UsersTable/Pagination";
 
 export default function Leaderboard() {
-  const { data, isError, isLoading, refetch } =
-    usePaginationQuery();
+  const { data, isError, isLoading, refetch } = usePaginationQuery();
 
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
