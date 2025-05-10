@@ -73,16 +73,14 @@ class dbAPIService {
     }
   };
 
-  getUsers = async (
-    { skip, limit }: PaginationQuery,
-    options?: RequestInit
-  ): Promise<GetUsersResponse> => {
+  getUsers = async ({
+    skip,
+    limit,
+  }: PaginationQuery): Promise<GetUsersResponse> => {
     try {
       const response = await fetch(
         `${this.endpoint}/users?skip=${skip}&limit=${limit}`,
-        {
-          ...options, // This will include things like { signal: controller.signal }
-        }
+        { cache: "no-store" }
       );
 
       if (!response.ok) {

@@ -16,12 +16,8 @@ const usePaginationQuery = () => {
   return useQuery<GetUsersResponse>({
     queryKey: [usersQueryKeys.allUsers, paginationQuery],
     queryFn: async () => {
-      const { success, list, error, totalUsers } = await getUsers(
-        paginationQuery,
-        {
-          cache: "no-store",
-        }
-      );
+      const { success, list, error, totalUsers } =
+        await getUsers(paginationQuery);
 
       if (!success || !list || error) {
         throw new Error("Failed to users data in usePaginationQuery");
