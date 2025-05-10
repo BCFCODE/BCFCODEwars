@@ -10,7 +10,9 @@ import usePaginationStore from "./usePaginationStore";
 const { getUsers } = new dbAPIService();
 
 const usePaginationQuery = () => {
-  const { paginationQuery } = usePaginationStore((state) => state);
+  const { paginationQuery, setUsersCount } = usePaginationStore(
+    (state) => state
+  );
   const { data: session, status } = useSession();
 
   return useQuery<GetUsersResponse>({
@@ -22,6 +24,8 @@ const usePaginationQuery = () => {
       if (!success || !list || error) {
         throw new Error("Failed to users data in usePaginationQuery");
       }
+
+      setUsersCount(totalUsers);
 
       const updatedListWithAddedSessionToAuthenticatedUser = list.map((user) =>
         user.email === session?.user?.email ? { ...user, session } : user

@@ -1,4 +1,3 @@
-import { PaginationQuery } from "@/app/services/db";
 import { PERSIST_KEYS } from "@/app/context/store/storeKeys";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -11,11 +10,11 @@ export interface Pagination {
 }
 
 interface PaginationStore {
-  paginationQuery: PaginationQuery;
+  // paginationQuery: PaginationQuery;
   pagination: Pagination;
   setPage: (page: number) => void;
   setRowsPerPage: (rowsPerPage: number) => void;
-  setPaginationQuery: (query: PaginationQuery) => void;
+  // setPaginationQuery: (query: PaginationQuery) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
 }
@@ -32,11 +31,11 @@ export const usePaginationStore = create<PaginationStore>()(
         set((state) => {
           state.pagination.rowsPerPage = rowsPerPage;
         }),
-      paginationQuery: { skip: 0, limit: 10 },
-      setPaginationQuery: (paginationQuery) =>
-        set((state) => {
-          state.paginationQuery = paginationQuery;
-        }),
+      // paginationQuery: { skip: 0, limit: 10 },
+      // setPaginationQuery: (paginationQuery) =>
+      //   set((state) => {
+      //     state.paginationQuery = paginationQuery;
+      //   }),
       isLoading: true,
       setIsLoading: (isLoading) =>
         set((state) => {
@@ -45,7 +44,7 @@ export const usePaginationStore = create<PaginationStore>()(
     })),
     {
       name: PERSIST_KEYS.codewarsTablePaginationQuery,
-      // partialize: (state) => ({ paginationQuery: state.paginationQuery }),
+      partialize: (state) => ({}),
       onRehydrateStorage: () => (state) => {
         state?.setIsLoading(false);
       },

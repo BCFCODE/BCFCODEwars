@@ -1,41 +1,43 @@
-// "use client";
+"use client";
 
-// import { GetUsersResponse } from "@/app/api/db/users/route";
-// import CodewarsAPIService from "@/app/api/services/codewars";
-// import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
-// import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/codewars";
-// import { PaginationQuery } from "@/app/services/db";
-// import { useQuery } from "@tanstack/react-query";
-// import { useSession } from "next-auth/react";
-// import usePaginationStore from "./usePaginationStore";
+import CodewarsAPIService from "@/app/api/services/codewars";
+import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
+import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/codewars";
+import { useUsersStore } from "@/app/context/store/users";
+import { useQuery } from "@tanstack/react-query";
+import { useSession } from "next-auth/react";
+import usePaginationStore from "./usePaginationStore";
 
-// const { getCompletedChallenges } = new CodewarsAPIService();
+const { getCompletedChallenges } = new CodewarsAPIService();
 
-// const usePaginationQuery = (paginationQuery: PaginationQuery) => {
-//   const {} = usePaginationStore((state) => state);
-//   const { data } = useCurrentUserQuery();
-//   const { data: session, status } = useSession();
+const usePaginationQuery = () => {
+  const {
+    user: { selectedUser },
+  } = useUsersStore((state) => state);
+  const {
+    pagination: { page, rowsPerPage, apiPageNumber },
+  } = usePaginationStore((state) => state);
+  const { data } = useCurrentUserQuery();
+  const { data: session, status } = useSession();
 
-//   return useQuery<GetUsersResponse>({
-//     queryKey: [codewarsQueryKeys.codewars, paginationQuery],
-//     queryFn: async () => {
-//       // await getCompletedChallenges();
-//       // const { success, list, error, totalUsers } = await getUsers(
-//       //   paginationQuery,
-//       //   {
-//       //     cache: "no-store",
-//       //   }
-//       // );
+  const list = data?.codewars.codeChallenges.list;
 
-//       // if (!success || !list || error) {
-//       //   throw new Error("Failed to users data in usePaginationQuery");
-//       // }
+  const username = selectedUser?.codewars.username ?? "";
 
-//       return;
-//     },
-//     staleTime: 1000 * 60 * 10, // 10m
-//     retry: 1,
-//   });
-// };
+  return useQuery({
+    queryKey: [codewarsQueryKeys.codewars, apiPageNumber],
+    queryFn: async () => {
+      // await getCompletedChallenges({ apiPageNumber, username });
+      console.log("useQuery/pagination", page, rowsPerPage);
+      // if (!success || !list || error) {
+      //   throw new Error("Failed to users data in usePaginationQuery");
+      // }
 
-// export default usePaginationQuery;
+      return { list };
+    },
+    staleTime: 1000 * 60 * 10, // 10m
+    retry: 1,
+  });
+};
+
+export default usePaginationQuery;

@@ -4,13 +4,9 @@ import usePaginationStore from "./usePaginationStore";
 import Loading from "./Loading";
 import setQuerySkipAndLimit from "../utils/setQuerySkipAndLimit";
 
-interface Props {
-  totalPageCount: number | undefined;
-}
-
-export default function Pagination({ totalPageCount }: Props) {
+export default function Pagination() {
   const {
-    pagination: { page, rowsPerPage },
+    pagination: { page, rowsPerPage, usersCount },
     setPage,
     setRowsPerPage,
     setPaginationQuery,
@@ -46,7 +42,7 @@ export default function Pagination({ totalPageCount }: Props) {
       ) : (
         <TablePagination
           component="div"
-          count={totalPageCount ?? 100}
+          count={usersCount}
           page={page}
           onPageChange={handleChangePage}
           rowsPerPage={rowsPerPage}

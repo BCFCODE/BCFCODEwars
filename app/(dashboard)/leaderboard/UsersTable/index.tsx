@@ -2,16 +2,14 @@ import CurrentUserProvider from "@/app/context/providers/CurrentUser";
 import { AuthenticatedUser } from "@/types/users";
 import { TableBody } from "@mui/material";
 import UserRow from "./UserRow";
+import usePaginationQuery from "./Pagination/usePaginationQuery";
 
-interface Props {
-  list?: AuthenticatedUser[];
-}
-
-const UsersTable = ({ list }: Props) => {
-  return list?.map((user: AuthenticatedUser) => (
+const UsersTable = () => {
+  const { data } = usePaginationQuery();
+  return data?.list.map((user: AuthenticatedUser) => (
     <CurrentUserProvider key={user.email} context={{ currentUser: user }}>
       <TableBody>
-        <UserRow key={user.email} currentUser={user} />
+        <UserRow key={user.email} />
       </TableBody>
     </CurrentUserProvider>
   ));

@@ -7,13 +7,15 @@ import { immer } from "zustand/middleware/immer";
 export interface Pagination {
   page: number;
   rowsPerPage: number;
+  usersCount: number;
 }
 
 interface PaginationStore {
-  paginationQuery: PaginationQuery;
   pagination: Pagination;
   setPage: (page: number) => void;
   setRowsPerPage: (rowsPerPage: number) => void;
+  setUsersCount: (totalUsers: number) => void;
+  paginationQuery: PaginationQuery;
   setPaginationQuery: (query: PaginationQuery) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
@@ -22,7 +24,7 @@ interface PaginationStore {
 export const usePaginationStore = create<PaginationStore>()(
   persist(
     immer((set) => ({
-      pagination: { page: 0, rowsPerPage: 10 },
+      pagination: { page: 0, rowsPerPage: 10, usersCount: 0 },
       setPage: (page) =>
         set((state) => {
           state.pagination.page = page;
@@ -30,6 +32,10 @@ export const usePaginationStore = create<PaginationStore>()(
       setRowsPerPage: (rowsPerPage) =>
         set((state) => {
           state.pagination.rowsPerPage = rowsPerPage;
+        }),
+      setUsersCount: (totalUsers) =>
+        set((state) => {
+          state.pagination.usersCount = totalUsers;
         }),
       paginationQuery: { skip: 0, limit: 10 },
       setPaginationQuery: (paginationQuery) =>

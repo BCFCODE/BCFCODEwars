@@ -12,9 +12,9 @@ export default function Pagination({ totalItems = 0 }: Props) {
     pagination: { page, rowsPerPage },
     setPage,
     setRowsPerPage,
-    setPaginationQuery,
+    // setPaginationQuery,
     isLoading,
-    paginationQuery,
+    // paginationQuery,
   } = usePaginationStore((state) => state);
 
   // console.log(">>>>>>>", page, rowsPerPage, paginationQuery, isLoading);
@@ -25,8 +25,8 @@ export default function Pagination({ totalItems = 0 }: Props) {
   ) => {
     setPage(newPage);
     const newQuery = { page: newPage, rowsPerPage };
-    const paginationQuery = setQuerySkipAndLimit(newQuery);
-    setPaginationQuery(paginationQuery);
+    // const paginationQuery = setQuerySkipAndLimit(newQuery);
+    // setPaginationQuery(paginationQuery);
   };
 
   const handleChangeRowsPerPage = (
@@ -36,8 +36,8 @@ export default function Pagination({ totalItems = 0 }: Props) {
     setPage(page);
     setRowsPerPage(rowsPerPage);
     const newQuery = { page: 0, rowsPerPage };
-    const paginationQuery = setQuerySkipAndLimit(newQuery);
-    setPaginationQuery(paginationQuery);
+    // const paginationQuery = setQuerySkipAndLimit(newQuery);
+    // setPaginationQuery(paginationQuery);
   };
 
   return (

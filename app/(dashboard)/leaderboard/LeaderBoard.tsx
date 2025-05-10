@@ -10,7 +10,7 @@ import LeaderboardHeader from "./UsersTable/Header";
 import Pagination from "./UsersTable/Pagination";
 
 export default function Leaderboard() {
-  const { data, isError, isLoading, refetch } = usePaginationQuery();
+  const { isError, isLoading, refetch } = usePaginationQuery();
 
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
@@ -28,7 +28,7 @@ export default function Leaderboard() {
         <TableContainer component={Paper}>
           <Table aria-label="Leaderboard Table">
             <LeaderboardHeader />
-            <UsersTable list={data?.list} />
+            <UsersTable />
           </Table>
           <Box
             sx={{
@@ -36,7 +36,7 @@ export default function Leaderboard() {
               justifyContent: "center",
             }}
           >
-            <Pagination totalPageCount={data?.totalUsers} />
+            <Pagination />
           </Box>
         </TableContainer>
       </CodewarsProvider>
