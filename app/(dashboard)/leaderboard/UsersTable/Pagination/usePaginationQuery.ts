@@ -13,11 +13,11 @@ const { getUsers } = new dbAPIService();
 const usePaginationQuery = () => {
   const pagination = usePaginationStore((state) => state.pagination);
   const { data: session, status } = useSession();
-  console.log(
-    "usePaginationQuery/pagination",
-    pagination.skip,
-    pagination.limit
-  );
+  // console.log(
+  //   "usePaginationQuery/pagination",
+  //   pagination.skip,
+  //   pagination.limit
+  // );
   return useQuery<GetUsersResponse>({
     queryKey: [usersQueryKeys.allUsers, pagination.skip, pagination.limit],
     queryFn: async () => {

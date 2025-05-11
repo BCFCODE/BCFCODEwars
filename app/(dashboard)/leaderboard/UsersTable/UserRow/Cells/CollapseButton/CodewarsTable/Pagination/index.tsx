@@ -9,12 +9,11 @@ interface Props {
 
 export default function Pagination({ totalPageCount = 0 }: Props) {
   const {
-    setPaginationQuery,
-    isLoading,
     pagination: { page, rowsPerPage },
+    setPaginationQuery,
   } = usePaginationStore((state) => state);
 
-  console.log(">>>>>>>", page, rowsPerPage, isLoading);
+  // console.log(">>>>>>>", page, rowsPerPage, isLoading);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
