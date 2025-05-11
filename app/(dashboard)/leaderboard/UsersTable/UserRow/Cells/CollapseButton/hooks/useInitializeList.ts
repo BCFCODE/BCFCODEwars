@@ -3,7 +3,7 @@ import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext"
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { applyDefaultTrackingAndRewardStatusToAll } from "../utils/applyRewardStatus";
 import storeChallengeList from "../utils/storeChallengeList";
-import useListQuery from "./ReactQuery/useListQuery";
+import useCodewarsListQuery from "../CodewarsTable/Pagination/useCodewarsListQuery";
 
 const useInitializeList = () => {
   const { currentUser } = useCurrentUserContext();
@@ -11,7 +11,7 @@ const useInitializeList = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
   const isListEmpty = !currentUser.codewars?.codeChallenges?.list.length;
 
-  const { data, isSuccess } = useListQuery({
+  const { data, isSuccess } = useCodewarsListQuery({
     pageNumber,
     username: currentUser.codewars.username,
   });

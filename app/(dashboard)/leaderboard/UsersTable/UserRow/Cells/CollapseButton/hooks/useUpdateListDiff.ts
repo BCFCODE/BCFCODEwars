@@ -2,14 +2,14 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import extractListDiff from "../utils/extractListDiff";
-import useListQuery from "./ReactQuery/useListQuery";
+import useCodewarsListQuery from "../CodewarsTable/Pagination/useCodewarsListQuery";
 
 const useDiffAndUpdateList = () => {
   const { currentUser, isCollapsed } = useCurrentUserContext();
   const { pageNumber } = useCodewarsContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
 
-  const { data, isSuccess } = useListQuery({
+  const { data, isSuccess } = useCodewarsListQuery({
     pageNumber,
     username: currentUser.codewars.username,
   });

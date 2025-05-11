@@ -9,7 +9,7 @@ import {
 import {
   CompletedChallengesQueryData,
   ListQuery,
-} from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/hooks/ReactQuery/useListQuery";
+} from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/useCodewarsListQuery";
 
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;

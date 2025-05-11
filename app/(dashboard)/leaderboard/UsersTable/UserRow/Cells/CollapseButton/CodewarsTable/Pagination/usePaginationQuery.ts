@@ -10,15 +10,15 @@
 
 // const { getCompletedChallenges } = new CodewarsAPIService();
 
-// const usePaginationQuery = (paginationQuery: PaginationQuery) => {
+// const usePaginationQuery = (pagination: PaginationQuery) => {
 //   const { data: session, status } = useSession();
 
 //   return useQuery<GetUsersResponse>({
-//     queryKey: [codewarsQueryKeys.codewars, paginationQuery],
+//     queryKey: [codewarsQueryKeys.codewars, pagination],
 //     queryFn: async () => {
 //       await getCompletedChallenges()
 //       // const { success, list, error, totalUsers } = await getUsers(
-//       //   paginationQuery,
+//       //   pagination,
 //       //   {
 //       //     cache: "no-store",
 //       //   }

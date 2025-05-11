@@ -6,21 +6,22 @@ import usersQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/users";
 import { PaginationQuery } from "@/app/services/db";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import usePaginationStore from "./usePaginationStore";
 
 const { getUsers } = new dbAPIService();
 
-const usePaginationQuery = (paginationQuery: PaginationQuery) => {
+const usePaginationQuery = () => {
+  const pagination = usePaginationStore((state) => state.pagination);
   const { data: session, status } = useSession();
-
+  console.log(
+    "usePaginationQuery/pagination",
+    pagination.skip,
+    pagination.limit
+  );
   return useQuery<GetUsersResponse>({
-    queryKey: [usersQueryKeys.allUsers, paginationQuery],
+    queryKey: [usersQueryKeys.allUsers, pagination.skip, pagination.limit],
     queryFn: async () => {
-      const { success, list, error, totalUsers } = await getUsers(
-        paginationQuery,
-        {
-          cache: "no-store",
-        }
-      );
+      const { success, list, error, totalUsers } = await getUsers(pagination);
 
       if (!success || !list || error) {
         throw new Error("Failed to users data in usePaginationQuery");
@@ -41,7 +42,9 @@ const usePaginationQuery = (paginationQuery: PaginationQuery) => {
         totalUsers,
       };
     },
-    enabled: true,
+    enabled: [pagination.skip, pagination.limit].every(
+      (query) => typeof query === "number"
+    ),
     /* 
       ✅ Always enabled — this hook needs to fetch and render leaderboard data 
       even when the user is not authenticated (e.g., on the sign-in page). 

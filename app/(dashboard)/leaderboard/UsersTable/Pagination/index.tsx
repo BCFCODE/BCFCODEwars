@@ -2,7 +2,7 @@ import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
 import usePaginationStore from "./usePaginationStore";
 import Loading from "./Loading";
-import setQuerySkipAndLimit from "../utils/setQuerySkipAndLimit";
+import createPaginatedQuery from "../utils/createPaginatedQuery";
 
 interface Props {
   totalPageCount: number | undefined;
@@ -10,9 +10,8 @@ interface Props {
 
 export default function Pagination({ totalPageCount }: Props) {
   const {
-    page,
+    pagination: { page, rowsPerPage },
     setPage,
-    rowsPerPage,
     setRowsPerPage,
     setPaginationQuery,
     isLoading,
@@ -23,11 +22,11 @@ export default function Pagination({ totalPageCount }: Props) {
     newPage: number
   ) => {
     setPage(newPage);
-    const paginationQuery = setQuerySkipAndLimit({
+    const pagination = createPaginatedQuery({
       page: newPage,
       rowsPerPage,
     });
-    setPaginationQuery(paginationQuery);
+    setPaginationQuery(pagination);
   };
 
   const handleChangeRowsPerPage = (
@@ -36,8 +35,8 @@ export default function Pagination({ totalPageCount }: Props) {
     const [page, rowsPerPage] = [0, parseInt(event.target.value, 10)];
     setPage(page);
     setRowsPerPage(rowsPerPage);
-    const paginationQuery = setQuerySkipAndLimit({ page: 0, rowsPerPage });
-    setPaginationQuery(paginationQuery);
+    const pagination = createPaginatedQuery({ page: 0, rowsPerPage });
+    setPaginationQuery(pagination);
   };
 
   return (

@@ -1,20 +1,16 @@
 "use client";
 
-import LoadingUI from "@/app/components/UI/LoadingUI";
 import usePaginationQuery from "@/app/(dashboard)/leaderboard/UsersTable/Pagination/usePaginationQuery";
+import LoadingUI from "@/app/components/UI/LoadingUI";
 import CodewarsProvider from "@/app/context/providers/Codewars";
 import { Box, Paper, Table, TableContainer } from "@mui/material";
 import LeaderboardLoadingError from "./Error";
 import UsersTable from "./UsersTable";
 import LeaderboardHeader from "./UsersTable/Header";
 import Pagination from "./UsersTable/Pagination";
-import usePaginationStore from "./UsersTable/Pagination/usePaginationStore";
 
 export default function Leaderboard() {
-  const { paginationQuery } = usePaginationStore((state) => state);
-
-  const { data, isError, isLoading, refetch } =
-    usePaginationQuery(paginationQuery);
+  const { data, isError, isLoading, refetch } = usePaginationQuery();
 
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 

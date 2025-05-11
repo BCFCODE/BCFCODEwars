@@ -5,7 +5,7 @@ import Head from "./Head";
 import Body from "./Body";
 import Error from "./Error";
 import Pagination from "./Pagination";
-import useListQuery from "../hooks/ReactQuery/useListQuery";
+import useCodewarsListQuery from "./Pagination/useCodewarsListQuery";
 import { useUsersStore } from "@/app/context/store/users";
 
 const CodewarsTable = () => {
@@ -13,7 +13,7 @@ const CodewarsTable = () => {
 
   const { pageNumber } = useCodewarsContext();
 
-  const { isError, isLoading, data } = useListQuery({
+  const { isError, isLoading, data } = useCodewarsListQuery({
     pageNumber,
     username: selectedUser?.codewars.username ?? "",
   });
@@ -24,7 +24,7 @@ const CodewarsTable = () => {
     selectedUser?.codewars.username,
     selectedUser
   );
-  
+
   if (isError) return <Error />;
 
   if (isLoading)

@@ -1,4 +1,3 @@
-import { CodewarsChallengesResponse } from "@/app/api/codewars/challenges/all/route";
 import CodewarsAPIService from "@/app/api/services/codewars";
 import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/codewars";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
@@ -18,7 +17,7 @@ export interface ListQuery {
   options?: RequestInit;
 }
 
-const useListQuery = ({ username, pageNumber, options }: ListQuery) => {
+const useCodewarsListQuery = ({ username, pageNumber, options }: ListQuery) => {
   return useQuery<
     CompletedChallengesQueryData,
     Error,
@@ -41,4 +40,4 @@ const useListQuery = ({ username, pageNumber, options }: ListQuery) => {
   });
 };
 
-export default useListQuery;
+export default useCodewarsListQuery;

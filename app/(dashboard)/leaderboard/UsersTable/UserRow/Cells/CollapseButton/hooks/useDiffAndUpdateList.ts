@@ -5,7 +5,7 @@ import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext"
 import useInitializeList from "./useInitializeList";
 import useDiffAndUpdateList from "./useUpdateListDiff";
 import { useState } from "react";
-import useListQuery from "./ReactQuery/useListQuery";
+import useCodewarsListQuery from "../CodewarsTable/Pagination/useCodewarsListQuery";
 
 const useChallengeList = () => {
   const [tryAgain, setTryAgain] = useState({
@@ -18,7 +18,7 @@ const useChallengeList = () => {
   const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
   const { diffAndUpdateList } = useDiffAndUpdateList();
 
-  const { isSuccess, isError, isLoading } = useListQuery({
+  const { isSuccess, isError, isLoading } = useCodewarsListQuery({
     pageNumber,
     username: currentUser.codewars.username,
   });
