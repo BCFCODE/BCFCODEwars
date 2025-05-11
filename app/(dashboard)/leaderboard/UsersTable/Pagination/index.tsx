@@ -1,8 +1,7 @@
 import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
-import usePaginationStore from "./usePaginationStore";
 import Loading from "./Loading";
-import createPaginatedQuery from "../utils/createPaginatedQuery";
+import usePaginationStore from "./usePaginationStore";
 
 interface Props {
   totalPageCount: number | undefined;
@@ -11,8 +10,6 @@ interface Props {
 export default function Pagination({ totalPageCount }: Props) {
   const {
     pagination: { page, rowsPerPage },
-    setPage,
-    setRowsPerPage,
     setPaginationQuery,
     isLoading,
   } = usePaginationStore((state) => state);
@@ -21,22 +18,15 @@ export default function Pagination({ totalPageCount }: Props) {
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
-    setPage(newPage);
-    const pagination = createPaginatedQuery({
-      page: newPage,
-      rowsPerPage,
-    });
-    setPaginationQuery(pagination);
+    const newQuery = { page: newPage, rowsPerPage };
+    setPaginationQuery(newQuery);
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const [page, rowsPerPage] = [0, parseInt(event.target.value, 10)];
-    setPage(page);
-    setRowsPerPage(rowsPerPage);
-    const pagination = createPaginatedQuery({ page: 0, rowsPerPage });
-    setPaginationQuery(pagination);
+    const newQuery = { page: 0, rowsPerPage: parseInt(event.target.value, 10) };
+    setPaginationQuery(newQuery);
   };
 
   return (

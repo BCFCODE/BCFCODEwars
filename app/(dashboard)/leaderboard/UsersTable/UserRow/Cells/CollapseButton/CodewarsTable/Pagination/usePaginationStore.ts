@@ -3,12 +3,11 @@ import { PERSIST_KEYS } from "@/app/context/store/storeKeys";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
+import createPaginatedQuery from "@/app/(dashboard)/leaderboard/UsersTable/utils/createPaginatedQuery";
 
 interface PaginationStore {
   pagination: PaginationQuery;
-  setPaginationQuery: (query: PaginationQuery) => void;
-  setPage: (page: number) => void;
-  setRowsPerPage: (rowsPerPage: number) => void;
+  setPaginationQuery: (query: { page: number; rowsPerPage: number }) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
 }
@@ -23,18 +22,10 @@ export const usePaginationStore = create<PaginationStore>()(
         limit: 10,
         apiPageNumber: 0,
       },
-      setPaginationQuery: (pagination) =>
+      setPaginationQuery: (query) =>
         set((state) => {
-          state.pagination = pagination;
-        }),
-
-      setPage: (page) =>
-        set((state) => {
-          state.pagination.page = page;
-        }),
-      setRowsPerPage: (rowsPerPage) =>
-        set((state) => {
-          state.pagination.rowsPerPage = rowsPerPage;
+          const newQuery = { page: query.page, rowsPerPage: query.rowsPerPage };
+          Object.assign(state.pagination, createPaginatedQuery(newQuery));
         }),
       isLoading: true,
       setIsLoading: (isLoading) => set(() => ({ isLoading })),

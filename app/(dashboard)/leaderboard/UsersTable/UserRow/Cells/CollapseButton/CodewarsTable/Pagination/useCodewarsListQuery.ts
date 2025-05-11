@@ -35,6 +35,7 @@ const useCodewarsListQuery = ({ username, pageNumber, options }: ListQuery) => {
 
       return { list, totalItems, totalPages };
     },
+    enabled: !!username,
     staleTime: 1 * 1000 * 60, // 1m
     // retry: 1,
   });

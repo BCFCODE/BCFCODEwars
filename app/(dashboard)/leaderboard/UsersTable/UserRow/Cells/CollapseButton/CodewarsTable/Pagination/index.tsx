@@ -9,8 +9,6 @@ interface Props {
 
 export default function Pagination({ totalPageCount = 0 }: Props) {
   const {
-    setPage,
-    setRowsPerPage,
     setPaginationQuery,
     isLoading,
     pagination: { page, rowsPerPage },
@@ -22,21 +20,15 @@ export default function Pagination({ totalPageCount = 0 }: Props) {
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
-    setPage(newPage);
     const newQuery = { page: newPage, rowsPerPage };
-    const pagination = createPaginatedQuery(newQuery);
-    setPaginationQuery(pagination);
+    setPaginationQuery(newQuery);
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const [page, rowsPerPage] = [0, parseInt(event.target.value, 10)];
-    setPage(page);
-    setRowsPerPage(rowsPerPage);
-    const newQuery = { page: 0, rowsPerPage };
-    const pagination = createPaginatedQuery(newQuery);
-    setPaginationQuery(pagination);
+    const newQuery = { page: 0, rowsPerPage: parseInt(event.target.value, 10) };
+    setPaginationQuery(newQuery);
   };
 
   return (
