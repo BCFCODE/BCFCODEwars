@@ -1,15 +1,9 @@
 // app/services/codewars-service.ts
 
+import { CompletedChallengesQueryData } from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/useCodewarsListQuery";
 import { CodewarsSingleChallenge } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
-import {
-  CodewarsChallengesResponse,
-  GetCompletedChallengesResponse,
-} from "../codewars/challenges/all/route";
-import {
-  CompletedChallengesQueryData,
-  ListQuery,
-} from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/useCodewarsListQuery";
+import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route";
 
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;

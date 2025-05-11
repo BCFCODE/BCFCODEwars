@@ -9,9 +9,7 @@ const useInitializeList = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
   const isListEmpty = !currentUser.codewars?.codeChallenges?.list.length;
 
-  const { data, isSuccess } = useCodewarsListQuery({
-    username: currentUser.codewars.username,
-  });
+  const { data, isSuccess } = useCodewarsListQuery();
 
   const initializeCodeChallengesList = () => {
     if (isSuccess) {

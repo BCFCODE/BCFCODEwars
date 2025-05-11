@@ -8,11 +8,7 @@ import Pagination from "./Pagination";
 import useCodewarsListQuery from "./Pagination/useCodewarsListQuery";
 
 const CodewarsTable = () => {
-  const { currentUser } = useCurrentUserContext();
-
-  const { isError, isLoading, data } = useCodewarsListQuery({
-    username: currentUser.codewars.username,
-  });
+  const { isError, isLoading, data } = useCodewarsListQuery();
 
   // console.log(
   //   "data?.totalItems >>>>",

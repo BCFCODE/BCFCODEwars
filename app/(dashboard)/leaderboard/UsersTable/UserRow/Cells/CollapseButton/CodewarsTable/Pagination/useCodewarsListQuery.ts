@@ -4,6 +4,7 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useQuery } from "@tanstack/react-query";
 import usePaginationStore from "./usePaginationStore";
 import { useUsersStore } from "@/app/context/store/users";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -13,11 +14,9 @@ export interface CompletedChallengesQueryData {
   list: CodewarsCompletedChallenge[];
 }
 
-export interface ListQuery {
-  username: string;
-}
-
-const useCodewarsListQuery = ({ username }: ListQuery) => {
+const useCodewarsListQuery = () => {
+  const { currentUser } = useCurrentUserContext();
+  const username = currentUser.codewars.username;
   const pagination = usePaginationStore((state) => state.pagination);
   return useQuery<
     CompletedChallengesQueryData,
