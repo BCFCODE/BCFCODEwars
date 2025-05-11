@@ -17,11 +17,13 @@ class CodewarsAPIService {
   getCompletedChallenges = async ({
     pageNumber,
     username,
-    options,
-  }: ListQuery): Promise<CompletedChallengesQueryData> =>
+  }: {
+    pageNumber: number;
+    username: string;
+  }): Promise<CompletedChallengesQueryData> =>
     await fetch(
       `${this.endpoint}/challenges/all?username=${username}&pageNumber=${pageNumber}`,
-      { ...options }
+      { cache: "no-store" }
     ).then(async (response) => {
       const {
         data: list,

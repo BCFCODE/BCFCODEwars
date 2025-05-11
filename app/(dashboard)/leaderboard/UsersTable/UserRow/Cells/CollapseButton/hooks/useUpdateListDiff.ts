@@ -10,7 +10,6 @@ const useDiffAndUpdateList = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
 
   const { data, isSuccess } = useCodewarsListQuery({
-    pageNumber,
     username: currentUser.codewars.username,
   });
 

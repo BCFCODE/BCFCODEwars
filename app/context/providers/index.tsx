@@ -152,7 +152,13 @@ const Providers = async ({ children }: Props) => {
   await queryClient.prefetchQuery({
     queryKey: [usersQueryKeys.allUsers],
     queryFn: async () =>
-      await getUsers({ skip: 0, limit: 10 }, { cache: "no-store" }),
+      await getUsers({
+        skip: 0,
+        limit: 10,
+        page: 0,
+        rowsPerPage: 10,
+        apiPageNumber: 0,
+      }),
     retry: 1,
   });
 

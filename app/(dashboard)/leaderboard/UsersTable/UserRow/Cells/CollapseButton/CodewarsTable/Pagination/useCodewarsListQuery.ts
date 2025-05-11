@@ -2,6 +2,8 @@ import CodewarsAPIService from "@/app/api/services/codewars";
 import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/codewars";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useQuery } from "@tanstack/react-query";
+import usePaginationStore from "./usePaginationStore";
+import { useUsersStore } from "@/app/context/store/users";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -13,24 +15,22 @@ export interface CompletedChallengesQueryData {
 
 export interface ListQuery {
   username: string;
-  pageNumber: number;
-  options?: RequestInit;
 }
 
-const useCodewarsListQuery = ({ username, pageNumber, options }: ListQuery) => {
+const useCodewarsListQuery = ({ username }: ListQuery) => {
+  const pagination = usePaginationStore((state) => state.pagination);
   return useQuery<
     CompletedChallengesQueryData,
     Error,
     CompletedChallengesQueryData
   >({
     queryKey: username
-      ? [codewarsQueryKeys.codewars, { username, pageNumber }]
+      ? [codewarsQueryKeys.codewars, username, pagination.apiPageNumber]
       : [codewarsQueryKeys.codewars],
     queryFn: async () => {
       const { list, totalItems, totalPages } = await getCompletedChallenges({
         username,
-        pageNumber,
-        options,
+        pageNumber: pagination.apiPageNumber,
       });
 
       return { list, totalItems, totalPages };

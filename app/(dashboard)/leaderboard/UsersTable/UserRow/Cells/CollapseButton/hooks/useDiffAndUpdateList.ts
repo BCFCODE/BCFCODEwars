@@ -14,12 +14,10 @@ const useChallengeList = () => {
   });
   const codewarsDispatch = useCodewarsDispatchContext();
   const { currentUser } = useCurrentUserContext();
-  const { pageNumber } = useCodewarsContext();
   const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
   const { diffAndUpdateList } = useDiffAndUpdateList();
 
   const { isSuccess, isError, isLoading } = useCodewarsListQuery({
-    pageNumber,
     username: currentUser.codewars.username,
   });
 

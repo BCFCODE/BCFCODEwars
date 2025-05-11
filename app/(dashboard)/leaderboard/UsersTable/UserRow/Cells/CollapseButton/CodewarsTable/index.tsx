@@ -1,29 +1,25 @@
-import { Box, Table } from "@mui/material";
 import LoadingUI from "@/app/components/UI/LoadingUI";
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import Head from "./Head";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import { Box, Table } from "@mui/material";
 import Body from "./Body";
 import Error from "./Error";
+import Head from "./Head";
 import Pagination from "./Pagination";
 import useCodewarsListQuery from "./Pagination/useCodewarsListQuery";
-import { useUsersStore } from "@/app/context/store/users";
 
 const CodewarsTable = () => {
-  const { selectedUser } = useUsersStore((state) => state);
-
-  const { pageNumber } = useCodewarsContext();
+  const { currentUser } = useCurrentUserContext();
 
   const { isError, isLoading, data } = useCodewarsListQuery({
-    pageNumber,
-    username: selectedUser?.codewars.username ?? "",
+    username: currentUser.codewars.username,
   });
 
-  console.log(
-    "data?.totalItems >>>>",
-    data?.totalItems,
-    selectedUser?.codewars.username,
-    selectedUser
-  );
+  // console.log(
+  //   "data?.totalItems >>>>",
+  //   data?.totalItems,
+  //   selectedUser?.codewars.username,
+  //   selectedUser
+  // );
 
   if (isError) return <Error />;
 
