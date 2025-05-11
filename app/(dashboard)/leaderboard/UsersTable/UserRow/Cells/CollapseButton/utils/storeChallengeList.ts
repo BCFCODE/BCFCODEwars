@@ -4,7 +4,7 @@ import { GetCompletedChallengesResponse } from "@/app/api/codewars/challenges/al
 import DatabaseService from "@/app/services/db";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { AuthenticatedUser } from "@/types/users";
-import { CompletedChallengesQueryData } from "../CodewarsTable/Pagination/useCodewarsListQuery";
+import { CompletedChallengesQueryData } from "../CodewarsTable/Pagination/usePaginationQuery";
 
 const { saveChallengesList } = new DatabaseService();
 

@@ -1,7 +1,7 @@
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import { useState } from "react";
-import useCodewarsListQuery from "../CodewarsTable/Pagination/useCodewarsListQuery";
+import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
 import useInitializeList from "./useInitializeList";
 import useDiffAndUpdateList from "./useUpdateListDiff";
 
@@ -14,7 +14,7 @@ const useChallengeList = () => {
   const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
   const { diffAndUpdateList } = useDiffAndUpdateList();
 
-  const { isSuccess, isError } = useCodewarsListQuery();
+  const { isSuccess, isError } = usePaginationQuery();
 
   const fetchAndShowChallenges = async () => {
     try {

@@ -2,7 +2,7 @@ import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 import { CodeChallengesFilter, Diamonds } from "@/types/diamonds";
 import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
-import { CompletedChallengesQueryData } from "../(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/useCodewarsListQuery";
+import { CompletedChallengesQueryData } from "../(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/usePaginationQuery";
 import { CodewarsReconnectRequest } from "../api/services/db";
 
 export interface PaginationQuery {

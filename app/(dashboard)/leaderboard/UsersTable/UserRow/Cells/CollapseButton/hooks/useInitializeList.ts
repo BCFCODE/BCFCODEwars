@@ -1,6 +1,6 @@
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import useCodewarsListQuery from "../CodewarsTable/Pagination/useCodewarsListQuery";
+import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
 import { applyDefaultTrackingAndRewardStatusToAll } from "../utils/applyRewardStatus";
 import storeChallengeList from "../utils/storeChallengeList";
 
@@ -9,7 +9,7 @@ const useInitializeList = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
   const isListEmpty = !currentUser.codewars?.codeChallenges?.list.length;
 
-  const { data, isSuccess } = useCodewarsListQuery();
+  const { data, isSuccess } = usePaginationQuery();
 
   const initializeCodeChallengesList = () => {
     if (isSuccess) {

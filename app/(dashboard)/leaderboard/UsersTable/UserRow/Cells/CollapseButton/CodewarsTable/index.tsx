@@ -5,10 +5,10 @@ import Body from "./Body";
 import Error from "./Error";
 import Head from "./Head";
 import Pagination from "./Pagination";
-import useCodewarsListQuery from "./Pagination/useCodewarsListQuery";
+import usePaginationQuery from "./Pagination/usePaginationQuery";
 
 const CodewarsTable = () => {
-  const { isError, isLoading, data } = useCodewarsListQuery();
+  const { isError, isLoading, data } = usePaginationQuery();
 
   // console.log(
   //   "data?.totalItems >>>>",
