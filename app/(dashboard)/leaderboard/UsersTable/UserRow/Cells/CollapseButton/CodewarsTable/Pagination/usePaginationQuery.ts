@@ -1,10 +1,9 @@
 import CodewarsAPIService from "@/app/api/services/codewars";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/codewars";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useQuery } from "@tanstack/react-query";
 import usePaginationStore from "./usePaginationStore";
-import { useUsersStore } from "@/app/context/store/users";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 

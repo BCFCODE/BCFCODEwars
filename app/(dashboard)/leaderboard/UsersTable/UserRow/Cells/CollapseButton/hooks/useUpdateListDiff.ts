@@ -3,15 +3,19 @@ import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext"
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
 import extractListDiff from "../utils/extractListDiff";
+import { useUsersStore } from "@/app/context/store/users";
 
 const useDiffAndUpdateList = () => {
-  const { currentUser, isCollapsed } = useCurrentUserContext();
+    const isCollapsed = useUsersStore(
+      (state) => state.user.selectedUser?.isCollapsed
+    );
+  const { currentUser } = useCurrentUserContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
 
   const { data, isSuccess } = usePaginationQuery();
 
   const diffAndUpdateList = async () => {
-    if (!isCollapsed) {
+    if (isCollapsed === false) {
       try {
         if (isSuccess) {
           const previousChallenges = currentUser.codewars.codeChallenges.list;

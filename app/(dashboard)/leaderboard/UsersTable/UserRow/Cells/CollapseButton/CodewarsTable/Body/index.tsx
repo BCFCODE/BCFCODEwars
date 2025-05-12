@@ -26,7 +26,7 @@ export default function Body() {
   const list = visibleChallenges.slice(
     pagination.skip,
     pagination.skip + pagination.limit
-  );
+  )
 
   return (
     <>

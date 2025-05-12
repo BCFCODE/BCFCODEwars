@@ -10,7 +10,10 @@ const { postCurrentUser } = new dbAPIService();
 const useDispatchActions = () => {
   const { setPagination } = usePaginationStore((state) => state);
   const { setSelectedUser } = useUsersStore((state) => state);
-  const { isCollapsed, currentUser } = useCurrentUserContext();
+  const isCollapsed = useUsersStore(
+    (state) => state.user.selectedUser?.isCollapsed
+  );
+  const { currentUser } = useCurrentUserContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
   // const codewarsDispatch = useCodewarsDispatchContext();
 
@@ -18,8 +21,8 @@ const useDispatchActions = () => {
     currentUser.codewars?.codeChallenges?.untrackedChallengesAvailable ?? false;
 
   useEffect(() => {
-    if (isCollapsed && untrackedChallengesAvailable) {
-      setSelectedUser(currentUser);
+    if (isCollapsed === false && untrackedChallengesAvailable) {
+      setSelectedUser({ ...currentUser, isCollapsed: false });
 
       postCurrentUser(currentUser);
 
@@ -37,17 +40,14 @@ const useDispatchActions = () => {
   ]);
 
   const dispatchActions = () => {
-    currentUserDispatch({
-      type: "SET_COLLAPSE_OPEN",
-      isCollapsed: !isCollapsed,
-    });
+    // currentUserDispatch({
+    //   type: "SET_COLLAPSE_OPEN",
+    //   isCollapsed: !isCollapsed,
+    // });
 
-    if (!isCollapsed) {
-      // console.log(currentUser.email)
-      // setPagination({ page: 0, rowsPerPage: 10 });
-      setSelectedUser(currentUser);
-    }
-    // codewarsDispatch({ type: "SET_LOADING", isLoading: false });
+    // setIsCollapsed(!isCollapsed);
+
+    setSelectedUser({ ...currentUser, isCollapsed: !Boolean(isCollapsed) });
   };
 
   return { dispatchActions };

@@ -8,10 +8,19 @@ import LeaderboardLoadingError from "./Error";
 import UsersTable from "./UsersTable";
 import LeaderboardHeader from "./UsersTable/Header";
 import Pagination from "./UsersTable/Pagination";
+import { useUsersStore } from "@/app/context/store/users";
 
 export default function Leaderboard() {
+  const selectedUser = useUsersStore((state) => state.user.selectedUser);
   const { data, isError, isLoading, refetch } = usePaginationQuery();
 
+  // const list = data?.list.map((user) =>
+  //   user.email === selectedUser?.email
+  //     ? { ...user, isCollapsed: selectedUser.isCollapsed }
+  //     : { ...user, isCollapsed: true }
+  // );
+
+  console.log("selectedUser for mapping is collapsed", selectedUser);
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
   if (isLoading)
