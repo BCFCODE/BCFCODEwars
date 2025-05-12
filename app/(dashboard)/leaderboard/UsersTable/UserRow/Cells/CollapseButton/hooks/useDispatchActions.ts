@@ -3,10 +3,12 @@ import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext"
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { useUsersStore } from "@/app/context/store/users";
 import { useEffect } from "react";
+import usePaginationStore from "../CodewarsTable/Pagination/usePaginationStore";
 
 const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
+  const { setPagination } = usePaginationStore((state) => state);
   const { setSelectedUser } = useUsersStore((state) => state);
   const { isCollapsed, currentUser } = useCurrentUserContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
@@ -40,7 +42,11 @@ const useDispatchActions = () => {
       isCollapsed: !isCollapsed,
     });
 
-    if (!isCollapsed) setSelectedUser(currentUser);
+    if (!isCollapsed) {
+      // console.log(currentUser.email)
+      // setPagination({ page: 0, rowsPerPage: 10 });
+      setSelectedUser(currentUser);
+    }
     // codewarsDispatch({ type: "SET_LOADING", isLoading: false });
   };
 

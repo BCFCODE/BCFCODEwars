@@ -18,15 +18,13 @@ export default function Pagination({ totalPageCount = 0 }: Props) {
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
-    const newQuery = { page: newPage, rowsPerPage };
-    setPagination(newQuery);
+    setPagination({ page: newPage, rowsPerPage });
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const newQuery = { page: 0, rowsPerPage: parseInt(event.target.value, 10) };
-    setPagination(newQuery);
+    setPagination({ page: 0, rowsPerPage: parseInt(event.target.value, 10) });
   };
 
   return (
