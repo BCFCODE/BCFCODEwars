@@ -7,7 +7,7 @@ import createPaginatedQuery from "../utils/createPaginatedQuery";
 
 interface PaginationStore {
   pagination: PaginationQuery;
-  setPaginationQuery: (query: { page: number; rowsPerPage: number }) => void;
+  setPagination: (query: { page: number; rowsPerPage: number }) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
 }
@@ -22,10 +22,12 @@ export const usePaginationStore = create<PaginationStore>()(
         limit: 10,
         apiPageNumber: 0,
       },
-      setPaginationQuery: (query) =>
+      setPagination: (query) =>
         set((state) => {
           const newQuery = { page: query.page, rowsPerPage: query.rowsPerPage };
-          Object.assign(state.pagination, createPaginatedQuery(newQuery));
+          Object.assign(state.pagination, {
+            ...createPaginatedQuery(newQuery),
+          });
         }),
       isLoading: true,
       setIsLoading: (isLoading) => set(() => ({ isLoading })),

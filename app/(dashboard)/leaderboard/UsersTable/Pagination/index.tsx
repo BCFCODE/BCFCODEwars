@@ -10,7 +10,7 @@ interface Props {
 export default function Pagination({ totalPageCount }: Props) {
   const {
     pagination: { page, rowsPerPage },
-    setPaginationQuery,
+    setPagination,
     isLoading,
   } = usePaginationStore((state) => state);
 
@@ -19,14 +19,14 @@ export default function Pagination({ totalPageCount }: Props) {
     newPage: number
   ) => {
     const newQuery = { page: newPage, rowsPerPage };
-    setPaginationQuery(newQuery);
+    setPagination(newQuery);
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const newQuery = { page: 0, rowsPerPage: parseInt(event.target.value, 10) };
-    setPaginationQuery(newQuery);
+    setPagination(newQuery);
   };
 
   return (
