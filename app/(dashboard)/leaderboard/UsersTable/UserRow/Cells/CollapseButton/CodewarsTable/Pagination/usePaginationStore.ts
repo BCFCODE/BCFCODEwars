@@ -5,47 +5,52 @@ import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import createPaginatedQuery from "@/app/(dashboard)/leaderboard/UsersTable/utils/createPaginatedQuery";
 
+export const defaultPagination = {
+  page: 0,
+  rowsPerPage: 10,
+  skip: 0,
+  limit: 10,
+  apiPageNumber: 0,
+};
+
 interface PaginationStore {
-  pagination: PaginationQuery;
-  setPagination: (query: { page: number; rowsPerPage: number }) => void;
+  pagination: Record<string, PaginationQuery>;
+  setPagination: (
+    username: string,
+    query: { page: number; rowsPerPage: number }
+  ) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
-  resetPagination: () => void;
+  resetPagination: (username: string) => void;
 }
 
 export const usePaginationStore = create<PaginationStore>()(
   persist(
     immer((set) => ({
-      pagination: {
-        page: 0,
-        rowsPerPage: 10,
-        skip: 0,
-        limit: 10,
-        apiPageNumber: 0,
-      },
-      setPagination: (query) =>
+      pagination: {},
+      setPagination: (username, query) =>
         set((state) => {
+          if (!state.pagination[username]) {
+            state.pagination[username] = { ...defaultPagination };
+          }
           const newQuery = { page: query.page, rowsPerPage: query.rowsPerPage };
-          Object.assign(state.pagination, {
+          Object.assign(state.pagination[username], {
             ...createPaginatedQuery(newQuery),
           });
         }),
-      resetPagination: () =>
+      resetPagination: (username) =>
         set((state) => {
-          state.pagination = {
-            page: 0,
-            rowsPerPage: 10,
-            skip: 0,
-            limit: 10,
-            apiPageNumber: 0,
-          };
+          state.pagination[username] = { ...defaultPagination };
         }),
       isLoading: true,
-      setIsLoading: (isLoading) => set(() => ({ isLoading })),
+      setIsLoading: (isLoading) =>
+        set((state) => {
+          state.isLoading = isLoading;
+        }),
     })),
     {
       name: PERSIST_KEYS.codewarsTablePaginationQuery,
-      // partialize: (state) => ({ pagination: state.pagination }),
+      partialize: (state) => ({ pagination: state.pagination }),
       onRehydrateStorage: () => (state) => {
         state?.setIsLoading(false);
       },

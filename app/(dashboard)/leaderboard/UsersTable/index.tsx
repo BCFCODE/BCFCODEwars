@@ -54,7 +54,9 @@ const UsersTable = ({ list }: Props) => {
           //   "selectedUser.isCollapsed",
           //   selectedUser?.isCollapsed
           // );
-          resetCodewarsPagination();
+          console.log('resetCodewarsPagination(currentUser.codewars.username)', currentUser.codewars.username)
+          // if(selectedUser)
+          // resetCodewarsPagination(selectedUser?.codewars.username);
           onLeaveTimerRef.current = setTimeout(() => {
             // console.log("User/onMouseLeave", currentUser.email);
             setIsCollapsed(true);
