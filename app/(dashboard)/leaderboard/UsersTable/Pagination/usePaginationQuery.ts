@@ -19,7 +19,7 @@ const usePaginationQuery = () => {
   //   pagination.limit
   // );
   return useQuery<GetUsersResponse>({
-    queryKey: [usersQueryKeys.allUsers, pagination.skip, pagination.limit],
+    queryKey: [usersQueryKeys.usersList, pagination.skip, pagination.limit],
     queryFn: async () => {
       const { success, list, error, totalUsers } = await getUsers(pagination);
 

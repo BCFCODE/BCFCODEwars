@@ -1,5 +1,5 @@
 const usersQueryKeys = {
-  allUsers: "allUsers" as const,
+  usersList: "usersList" as const,
 };
 
 export default usersQueryKeys;

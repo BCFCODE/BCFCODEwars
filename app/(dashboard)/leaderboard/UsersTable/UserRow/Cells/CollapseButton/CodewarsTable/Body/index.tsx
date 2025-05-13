@@ -38,11 +38,9 @@ export default function Body() {
   return (
     <>
       <TableBody>
-        <>
-          {list.map((challenge) => (
-            <SingleRow key={challenge.id} {...{ challenge }} />
-          ))}
-        </>
+        {list.map((challenge) => (
+          <SingleRow key={challenge.id} {...{ challenge }} />
+        ))}
       </TableBody>
     </>
   );
