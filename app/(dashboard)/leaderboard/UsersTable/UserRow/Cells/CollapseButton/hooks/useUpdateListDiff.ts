@@ -6,10 +6,10 @@ import extractListDiff from "../utils/extractListDiff";
 import { useUsersStore } from "@/app/context/store/users";
 
 const useDiffAndUpdateList = () => {
-    const isCollapsed = useUsersStore(
-      (state) => state.user.selectedUser?.isCollapsed
-    );
   const { currentUser } = useCurrentUserContext();
+  const isCollapsed = useUsersStore(
+    (state) => state.user.isCollapsed[currentUser.email] ?? true
+  );
   const currentUserDispatch = useCurrentUserDispatchContext();
 
   const { data, isSuccess } = usePaginationQuery();

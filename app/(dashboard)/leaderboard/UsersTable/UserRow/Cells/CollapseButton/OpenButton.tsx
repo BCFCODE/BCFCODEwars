@@ -6,8 +6,11 @@ import useHandleOpen from "./hooks/useHandleOpen";
 import { useUsersStore } from "@/app/context/store/users";
 
 const OpenButton = () => {
-  const selectedUser = useUsersStore((state) => state.user.selectedUser);
   const { currentUser } = useCurrentUserContext();
+  const setSelectedUser = useUsersStore((state) => state.setSelectedUser);
+  const isCollapsed = useUsersStore(
+    (state) => state.user.isCollapsed[currentUser.email] ?? true
+  );
   const { handleOpen } = useHandleOpen();
 
   return (
@@ -19,8 +22,10 @@ const OpenButton = () => {
           size="small"
           onClick={() => handleOpen()}
         >
-          {!selectedUser?.isCollapsed &&
-          currentUser.email === selectedUser?.email ? (
+          {!isCollapsed 
+          // &&  currentUser.email === selectedUser?.email 
+          ? 
+          (
             <KeyboardArrowUpIcon />
           ) : (
             <KeyboardArrowDownIcon />

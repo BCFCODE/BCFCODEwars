@@ -9,8 +9,9 @@ interface Props {
 
 const CollapseBoundary = ({ children }: Props) => {
   const { currentUser } = useCurrentUserContext();
+  // const { setSelectedUser } = useUsersStore((state) => state);
   const isCollapsed = useUsersStore(
-    (state) => state.user.selectedUser?.isCollapsed
+    (state) => state.user.isCollapsed[currentUser.email] ?? true
   );
   const selectedUser = useUsersStore((state) => state.user.selectedUser);
   // console.log(

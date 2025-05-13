@@ -37,7 +37,8 @@ const UsersTable = ({ list }: Props) => {
           if (currentUser.email !== selectedUser?.email) {
             onEnterTimerRef.current = setTimeout(() => {
               // console.log("User/onMouseEnter/currentUser", currentUser.email);
-              setSelectedUser({ ...currentUser, isCollapsed: true });
+              setSelectedUser({ ...currentUser });
+              setIsCollapsed(currentUser.email, true);
             }, 300);
           }
           if (onLeaveTimerRef.current) {
@@ -45,27 +46,30 @@ const UsersTable = ({ list }: Props) => {
             onLeaveTimerRef.current = null;
           }
         }}
-        onMouseLeave={() => {
-          // console.log(
-          //   "User/onMouseLeave",
-          //   currentUser.email,
-          //   selectedUser?.email,
-          //   currentUser.email === selectedUser?.email,
-          //   "selectedUser.isCollapsed",
-          //   selectedUser?.isCollapsed
-          // );
-          console.log('resetCodewarsPagination(currentUser.codewars.username)', currentUser.codewars.username)
-          // if(selectedUser)
-          // resetCodewarsPagination(selectedUser?.codewars.username);
-          onLeaveTimerRef.current = setTimeout(() => {
-            // console.log("User/onMouseLeave", currentUser.email);
-            setIsCollapsed(true);
-          }, 1500);
-          if (onEnterTimerRef.current) {
-            clearTimeout(onEnterTimerRef.current);
-            onEnterTimerRef.current = null;
-          }
-        }}
+        // onMouseLeave={() => {
+        //   // console.log(
+        //   //   "User/onMouseLeave",
+        //   //   currentUser.email,
+        //   //   selectedUser?.email,
+        //   //   currentUser.email === selectedUser?.email,
+        //   //   "selectedUser.isCollapsed",
+        //   //   selectedUser?.isCollapsed
+        //   // );
+        //   console.log(
+        //     "resetCodewarsPagination(currentUser.codewars.username)",
+        //     currentUser.codewars.username
+        //   );
+        //   // if(selectedUser)
+        //   // resetCodewarsPagination(selectedUser?.codewars.username);
+        //   onLeaveTimerRef.current = setTimeout(() => {
+        //     // console.log("User/onMouseLeave", currentUser.email);
+        //     setIsCollapsed(true);
+        //   }, 1500);
+        //   if (onEnterTimerRef.current) {
+        //     clearTimeout(onEnterTimerRef.current);
+        //     onEnterTimerRef.current = null;
+        //   }
+        // }}
       >
         <UserRow />
       </TableBody>

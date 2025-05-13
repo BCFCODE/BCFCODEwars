@@ -11,7 +11,7 @@ import { Session } from "next-auth";
 import getRank from "./getRank";
 
 export interface CurrentUserState {
-  isCollapsed?: boolean;
+  // isCollapsed?: boolean;
   session?: Session;
   isUserOnPersonalDashboard?: boolean;
 }
@@ -38,7 +38,7 @@ export type CurrentUserAction =
       selectedChallenge: CodewarsCompletedChallenge;
     }
   | { type: "SET_USER_DIAMONDS"; diamonds: Diamonds }
-  | { type: "SET_COLLAPSE_OPEN"; isCollapsed: boolean }
+  // | { type: "SET_COLLAPSE_OPEN"; isCollapsed: boolean }
   | { type: "UPDATE_COLLECTION_FILTER"; filterName: CodeChallengesFilter }
   | {
       type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY";
@@ -85,9 +85,9 @@ const currentUserReducer = (
         currentUser: { ...state.currentUser, diamonds: action.diamonds },
       };
     }
-    case "SET_COLLAPSE_OPEN": {
-      return { ...state, isCollapsed: action.isCollapsed };
-    }
+    // case "SET_COLLAPSE_OPEN": {
+    //   return { ...state, isCollapsed: action.isCollapsed };
+    // }
     case "UPDATE_COLLECTION_FILTER": {
       return {
         ...state,

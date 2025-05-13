@@ -7,12 +7,12 @@ import { useEffect } from "react";
 const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
-  // const { setPagination } = usePaginationStore((state) => state);
+  const { currentUser } = useCurrentUserContext();
   const { setSelectedUser } = useUsersStore((state) => state);
   const isCollapsed = useUsersStore(
-    (state) => state.user.selectedUser?.isCollapsed
+    (state) => state.user.isCollapsed[currentUser.email] ?? true
   );
-  const { currentUser } = useCurrentUserContext();
+  const setIsCollapsed = useUsersStore((state) => state.setIsCollapsed);
   const currentUserDispatch = useCurrentUserDispatchContext();
   // const codewarsDispatch = useCodewarsDispatchContext();
 
@@ -20,8 +20,9 @@ const useDispatchActions = () => {
     currentUser.codewars?.codeChallenges?.untrackedChallengesAvailable ?? false;
 
   useEffect(() => {
-    if (isCollapsed === false && untrackedChallengesAvailable) {
-      setSelectedUser({ ...currentUser, isCollapsed: false });
+    if (!isCollapsed && untrackedChallengesAvailable) {
+      setSelectedUser({ ...currentUser });
+      setIsCollapsed(currentUser.email, false);
 
       postCurrentUser(currentUser);
 
@@ -46,7 +47,8 @@ const useDispatchActions = () => {
 
     // setIsCollapsed(!isCollapsed);
 
-    setSelectedUser({ ...currentUser, isCollapsed: !Boolean(isCollapsed) });
+    setSelectedUser({ ...currentUser });
+    setIsCollapsed(currentUser.email, !isCollapsed);
   };
 
   return { dispatchActions };
