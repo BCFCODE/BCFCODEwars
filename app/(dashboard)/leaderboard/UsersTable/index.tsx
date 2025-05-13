@@ -25,27 +25,27 @@ const UsersTable = ({ list }: Props) => {
     <CurrentUserProvider key={currentUser.email} context={{ currentUser }}>
       <TableBody
         key={currentUser.email}
-        onMouseEnter={() => {
-          // console.log(
-          //   "onMouseEnter/selectedUser",
-          //   currentUser.email,
-          //   selectedUser?.email,
-          //   currentUser.email === selectedUser?.email,
-          //   "selectedUser.isCollapsed",
-          //   selectedUser?.isCollapsed
-          // );
-          if (currentUser.email !== selectedUser?.email) {
-            onEnterTimerRef.current = setTimeout(() => {
-              // console.log("User/onMouseEnter/currentUser", currentUser.email);
-              setSelectedUser({ ...currentUser });
-              setIsCollapsed(currentUser.email, true);
-            }, 300);
-          }
-          if (onLeaveTimerRef.current) {
-            clearTimeout(onLeaveTimerRef.current);
-            onLeaveTimerRef.current = null;
-          }
-        }}
+        // onMouseEnter={() => {
+        //   // console.log(
+        //   //   "onMouseEnter/selectedUser",
+        //   //   currentUser.email,
+        //   //   selectedUser?.email,
+        //   //   currentUser.email === selectedUser?.email,
+        //   //   "selectedUser.isCollapsed",
+        //   //   selectedUser?.isCollapsed
+        //   // );
+        //   if (currentUser.email !== selectedUser?.email) {
+        //     onEnterTimerRef.current = setTimeout(() => {
+        //       // console.log("User/onMouseEnter/currentUser", currentUser.email);
+        //       setSelectedUser({ ...currentUser });
+        //       // setIsCollapsed(currentUser.email, true);
+        //     }, 300);
+        //   }
+        //   if (onLeaveTimerRef.current) {
+        //     clearTimeout(onLeaveTimerRef.current);
+        //     onLeaveTimerRef.current = null;
+        //   }
+        // }}
         // onMouseLeave={() => {
         //   // console.log(
         //   //   "User/onMouseLeave",
