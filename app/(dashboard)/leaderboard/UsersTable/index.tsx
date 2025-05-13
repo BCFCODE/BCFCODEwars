@@ -5,6 +5,7 @@ import UserRow from "./UserRow";
 import { useRef, useState } from "react";
 import { useUsersStore } from "@/app/context/store/users";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import usePaginationStore from "./UserRow/Cells/CollapseButton/CodewarsTable/Pagination/usePaginationStore";
 
 interface Props {
   list?: AuthenticatedUser[];
@@ -13,21 +14,31 @@ interface Props {
 const UsersTable = ({ list }: Props) => {
   const onEnterTimerRef = useRef<NodeJS.Timeout | null>(null);
   const onLeaveTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const [isOnHover, setIsOnHover] = useState<boolean>();
   const setSelectedUser = useUsersStore((state) => state.setSelectedUser);
+  const selectedUser = useUsersStore((state) => state.user.selectedUser);
   const setIsCollapsed = useUsersStore((state) => state.setIsCollapsed);
+  const resetCodewarsPagination = usePaginationStore(
+    (state) => state.resetPagination
+  );
 
   return list?.map((currentUser: AuthenticatedUser) => (
     <CurrentUserProvider key={currentUser.email} context={{ currentUser }}>
       <TableBody
         key={currentUser.email}
         onMouseEnter={() => {
-          if (isOnHover === true) {
+          // console.log(
+          //   "onMouseEnter/selectedUser",
+          //   currentUser.email,
+          //   selectedUser?.email,
+          //   currentUser.email === selectedUser?.email,
+          //   "selectedUser.isCollapsed",
+          //   selectedUser?.isCollapsed
+          // );
+          if (currentUser.email !== selectedUser?.email) {
             onEnterTimerRef.current = setTimeout(() => {
-              console.log("User/onMouseEnter", currentUser.email);
+              // console.log("User/onMouseEnter/currentUser", currentUser.email);
               setSelectedUser({ ...currentUser, isCollapsed: true });
-              setIsOnHover(() => false);
-            }, 50);
+            }, 300);
           }
           if (onLeaveTimerRef.current) {
             clearTimeout(onLeaveTimerRef.current);
@@ -35,11 +46,19 @@ const UsersTable = ({ list }: Props) => {
           }
         }}
         onMouseLeave={() => {
+          // console.log(
+          //   "User/onMouseLeave",
+          //   currentUser.email,
+          //   selectedUser?.email,
+          //   currentUser.email === selectedUser?.email,
+          //   "selectedUser.isCollapsed",
+          //   selectedUser?.isCollapsed
+          // );
+          resetCodewarsPagination();
           onLeaveTimerRef.current = setTimeout(() => {
-            console.log("User/onMouseLeave", currentUser.email);
+            // console.log("User/onMouseLeave", currentUser.email);
             setIsCollapsed(true);
-            setIsOnHover(false);
-          }, 1000);
+          }, 1500);
           if (onEnterTimerRef.current) {
             clearTimeout(onEnterTimerRef.current);
             onEnterTimerRef.current = null;

@@ -8,7 +8,7 @@ import usePaginationStore from "../CodewarsTable/Pagination/usePaginationStore";
 const { postCurrentUser } = new dbAPIService();
 
 const useDispatchActions = () => {
-  const { setPagination } = usePaginationStore((state) => state);
+  // const { setPagination } = usePaginationStore((state) => state);
   const { setSelectedUser } = useUsersStore((state) => state);
   const isCollapsed = useUsersStore(
     (state) => state.user.selectedUser?.isCollapsed

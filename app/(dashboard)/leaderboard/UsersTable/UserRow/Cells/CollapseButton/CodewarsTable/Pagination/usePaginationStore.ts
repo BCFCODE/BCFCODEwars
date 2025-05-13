@@ -10,6 +10,7 @@ interface PaginationStore {
   setPagination: (query: { page: number; rowsPerPage: number }) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
+  resetPagination: () => void;
 }
 
 export const usePaginationStore = create<PaginationStore>()(
@@ -29,12 +30,22 @@ export const usePaginationStore = create<PaginationStore>()(
             ...createPaginatedQuery(newQuery),
           });
         }),
+      resetPagination: () =>
+        set((state) => {
+          state.pagination = {
+            page: 0,
+            rowsPerPage: 10,
+            skip: 0,
+            limit: 10,
+            apiPageNumber: 0,
+          };
+        }),
       isLoading: true,
       setIsLoading: (isLoading) => set(() => ({ isLoading })),
     })),
     {
       name: PERSIST_KEYS.codewarsTablePaginationQuery,
-      partialize: (state) => ({ pagination: state.pagination }),
+      // partialize: (state) => ({ pagination: state.pagination }),
       onRehydrateStorage: () => (state) => {
         state?.setIsLoading(false);
       },
