@@ -3,10 +3,17 @@ import { CodeChallengesFilter } from "@/types/diamonds";
 import { TableBody } from "@mui/material";
 import SingleRow from "./SingleRow";
 import useFilter from "../../hooks/useFilter";
-import usePaginationStore from "../Pagination/usePaginationStore";
+import usePaginationStore, {
+  defaultPagination,
+} from "../Pagination/usePaginationStore";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 export default function Body() {
-  const pagination = usePaginationStore((state) => state.pagination);
+  const { currentUser } = useCurrentUserContext();
+  const username = currentUser.codewars.username;
+  const pagination = usePaginationStore(
+    (state) => state.pagination[username] ?? defaultPagination
+  );
 
   const { activeFilter, both, claimed, unClaimed } = useFilter();
 
@@ -26,7 +33,7 @@ export default function Body() {
   const list = visibleChallenges.slice(
     pagination.skip,
     pagination.skip + pagination.limit
-  )
+  );
 
   return (
     <>
