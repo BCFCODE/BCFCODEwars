@@ -31,11 +31,12 @@ const usePaginationQuery = () => {
   >({
     queryKey,
     queryFn: async () => {
+      console.log("usePaginationQuery queryFn called...");
       const { list, totalItems, totalPages } = await getCompletedChallenges({
         username,
         pageNumber: pagination.apiPageNumber,
       });
-
+      console.log("usePaginationQuery/list", list);
       return { list, totalItems, totalPages };
     },
     enabled: !!username,
