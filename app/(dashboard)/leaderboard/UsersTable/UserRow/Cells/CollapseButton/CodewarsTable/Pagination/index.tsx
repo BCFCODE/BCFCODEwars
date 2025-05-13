@@ -1,30 +1,38 @@
 import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
-import usePaginationStore from "./usePaginationStore";
+import usePaginationStore, { defaultPagination } from "./usePaginationStore";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 
 interface Props {
   totalPageCount: number | undefined;
 }
 
 export default function Pagination({ totalPageCount = 0 }: Props) {
-  const {
-    pagination: { page, rowsPerPage },
-    setPagination,
-  } = usePaginationStore((state) => state);
+  const { currentUser } = useCurrentUserContext();
 
-  // console.log(">>>>>>>", page, rowsPerPage, isLoading);
+  const username = currentUser.codewars.username;
+  const pagination = usePaginationStore(
+    (state) => state.pagination[username] ?? defaultPagination
+  );
+  const setPagination = usePaginationStore((state) => state.setPagination);
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
-    setPagination({ page: newPage, rowsPerPage });
+    setPagination(username, {
+      page: newPage,
+      rowsPerPage: pagination.rowsPerPage,
+    });
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setPagination({ page: 0, rowsPerPage: parseInt(event.target.value, 10) });
+    setPagination(username, {
+      page: 0,
+      rowsPerPage: parseInt(event.target.value, 10),
+    });
   };
 
   return (
@@ -32,9 +40,9 @@ export default function Pagination({ totalPageCount = 0 }: Props) {
       <TablePagination
         component="div"
         count={totalPageCount}
-        page={page}
+        page={pagination.page}
         onPageChange={handleChangePage}
-        rowsPerPage={rowsPerPage}
+        rowsPerPage={pagination.rowsPerPage}
         onRowsPerPageChange={handleChangeRowsPerPage}
         labelRowsPerPage=""
       />
