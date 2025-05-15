@@ -40,13 +40,6 @@ const useDispatchActions = () => {
   ]);
 
   const dispatchActions = () => {
-    // currentUserDispatch({
-    //   type: "SET_COLLAPSE_OPEN",
-    //   isCollapsed: !isCollapsed,
-    // });
-
-    // setIsCollapsed(!isCollapsed);
-
     setSelectedUser({ ...currentUser });
     setIsCollapsed(currentUser.email, !isCollapsed);
   };
