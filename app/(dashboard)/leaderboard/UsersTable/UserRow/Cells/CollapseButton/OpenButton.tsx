@@ -7,7 +7,6 @@ import { useUsersStore } from "@/app/context/store/users";
 
 const OpenButton = () => {
   const { currentUser } = useCurrentUserContext();
-  const setSelectedUser = useUsersStore((state) => state.setSelectedUser);
   const isCollapsed = useUsersStore(
     (state) => state.user.isCollapsed[currentUser.email] ?? true
   );
