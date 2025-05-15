@@ -19,12 +19,12 @@ const Message = () => {
           opacity: 0.85,
         }}
       >
-        You're viewing <strong>Version {version}</strong> — a thrilling update
+        You&apos;re viewing <strong>Version {version}</strong> — a thrilling update
         that puts performance, personalization, and progress at your fingertips!
         💥
         <br />
         <br />
-        🚀 <strong>What's New?</strong>
+        🚀 <strong>What&apos;s New?</strong>
       </Typography>
       <Typography
         variant="body1"
@@ -39,8 +39,8 @@ const Message = () => {
         }}
       >
         <br />
-        🔹 We’ve introduced <strong>independent pagination</strong> for each
-        user's Codewars challenges — now you can explore your challenge history
+        🔹 We&apos;ve introduced <strong>independent pagination</strong> for each
+        user&apos;s Codewars challenges — now you can explore your challenge history
         without affecting others.
         <br />
         🔹 Your pagination state (page, rows per page) is now stored{" "}
