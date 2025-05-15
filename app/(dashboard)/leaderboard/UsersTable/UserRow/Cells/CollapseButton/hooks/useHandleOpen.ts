@@ -9,6 +9,7 @@ const useHandleOpen = () => {
   const handleOpen = async () => {
     fetchAndShowChallenges();
     dispatchActions();
+    
   };
 
   return { handleOpen };

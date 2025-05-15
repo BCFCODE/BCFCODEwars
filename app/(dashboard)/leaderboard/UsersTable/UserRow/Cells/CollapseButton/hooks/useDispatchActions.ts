@@ -22,25 +22,21 @@ const useDispatchActions = () => {
   );
   const setIsCollapsed = useUsersStore((state) => state.setIsCollapsed);
   const currentUserDispatch = useCurrentUserDispatchContext();
-  // const codewarsDispatch = useCodewarsDispatchContext();
-
-  // const untrackedChallengesAvailable =
-  //   currentUser.codewars?.codeChallenges?.untrackedChallengesAvailable ?? false;
 
   useEffect(() => {
-    if (!isCollapsed && untrackedChallengesAvailable) {
-      setSelectedUser({ ...currentUser });
-      setIsCollapsed(currentUser.email, false);
+    (async () => {
+      if (!isCollapsed && untrackedChallengesAvailable) {
+        setSelectedUser({ ...currentUser });
+        setIsCollapsed(currentUser.email, false);
+        console.log("useDispatchActions/useEffect", currentUser);
+        await postCurrentUser(currentUser);
 
-      postCurrentUser(currentUser);
-
-      checkUntrackedChallengesAvailability(currentUser.email, false);
-      // currentUserDispatch({
-      //   type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
-      //   untrackedChallengesAvailable: false,
-      // });
-    }
+        checkUntrackedChallengesAvailability(currentUser.email, false);
+      }
+    })();
   }, [
+    setIsCollapsed,
+    checkUntrackedChallengesAvailability,
     currentUser,
     setSelectedUser,
     isCollapsed,

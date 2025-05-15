@@ -1,5 +1,5 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { applyDefaultTrackingAndRewardStatusToAll } from "./applyRewardStatus";
+import { applyDefaultRewardStatusToAll } from "./applyRewardStatus";
 // import { addUntrackedFlagsToChallenges } from "./addUntrackedFlags";
 
 interface Props {
@@ -19,7 +19,7 @@ const extractListDiff = ({
   );
 
   const filtered = fetchedChallenges.slice(0, previousRecentIndex);
-  let untrackedChallenges = applyDefaultTrackingAndRewardStatusToAll(filtered);
+  let untrackedChallenges = applyDefaultRewardStatusToAll(filtered);
 
   const isMostRecentChallengeSame =
     previousMostRecentChallenge.id === mostRecentFetchedChallenge.id;

@@ -1,15 +1,15 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 
-export const applyDefaultTrackingAndRewardStatus = (
+export const applyDefaultRewardStatus = (
   challenge: CodewarsCompletedChallenge
 ): CodewarsCompletedChallenge => ({
   ...challenge,
   rewardStatus: RewardStatus.UnclaimedDiamonds,
 });
 
-export const applyDefaultTrackingAndRewardStatusToAll = (
+export const applyDefaultRewardStatusToAll = (
   list: CodewarsCompletedChallenge[]
 ): CodewarsCompletedChallenge[] => {
-  return list.map(applyDefaultTrackingAndRewardStatus);
+  return list.map(applyDefaultRewardStatus);
 };

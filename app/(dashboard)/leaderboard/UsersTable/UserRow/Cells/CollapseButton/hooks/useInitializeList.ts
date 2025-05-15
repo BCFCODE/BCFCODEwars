@@ -1,7 +1,7 @@
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
-import { applyDefaultTrackingAndRewardStatusToAll } from "../utils/applyRewardStatus";
+import { applyDefaultRewardStatusToAll } from "../utils/applyRewardStatus";
 import storeChallengeList from "../utils/storeChallengeList";
 
 const useInitializeList = () => {
@@ -11,9 +11,9 @@ const useInitializeList = () => {
 
   const { data, isSuccess } = usePaginationQuery();
 
-  const initializeCodeChallengesList = () => {
+  const initializeCodeChallengesList = async () => {
     if (isSuccess) {
-      const list = applyDefaultTrackingAndRewardStatusToAll(data.list);
+      const list = applyDefaultRewardStatusToAll(data.list);
 
       currentUserDispatch({
         type: "UPDATE_CODE_CHALLENGES_LIST",
@@ -22,7 +22,7 @@ const useInitializeList = () => {
         totalPages: data.totalPages,
       });
 
-      storeChallengeList({ list, currentUser, queryData: data });
+      await storeChallengeList({ list, currentUser, queryData: data });
     }
   };
   return { initializeCodeChallengesList, isListEmpty };
