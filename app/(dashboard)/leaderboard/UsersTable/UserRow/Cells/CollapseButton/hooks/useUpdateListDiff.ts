@@ -1,4 +1,4 @@
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
+// import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
@@ -18,7 +18,8 @@ const useDiffAndUpdateList = () => {
   const { data, isSuccess } = usePaginationQuery();
 
   const diffAndUpdateList = async () => {
-    if (isCollapsed === false) {
+    console.log('diffAndUpdateList called...')
+    if (isCollapsed) {
       try {
         if (isSuccess) {
           const previousChallenges = currentUser.codewars.codeChallenges.list;
@@ -28,6 +29,8 @@ const useDiffAndUpdateList = () => {
             previousChallenges,
             fetchedChallenges,
           });
+
+          console.log('untrackedChallenges',untrackedChallenges)
 
           const isUntrackedChallengesListEmpty =
             untrackedChallenges.length === 0;
