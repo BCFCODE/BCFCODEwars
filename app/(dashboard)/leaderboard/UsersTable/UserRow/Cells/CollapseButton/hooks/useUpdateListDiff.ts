@@ -10,6 +10,9 @@ const useDiffAndUpdateList = () => {
   const isCollapsed = useUsersStore(
     (state) => state.user.isCollapsed[currentUser.email] ?? true
   );
+  const checkUntrackedChallengesAvailability = useUsersStore(
+    (state) => state.checkUntrackedChallengesAvailability
+  );
   const currentUserDispatch = useCurrentUserDispatchContext();
 
   const { data, isSuccess } = usePaginationQuery();
@@ -30,10 +33,11 @@ const useDiffAndUpdateList = () => {
             untrackedChallenges.length === 0;
 
           if (!isUntrackedChallengesListEmpty) {
-            currentUserDispatch({
-              type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
-              untrackedChallengesAvailable: true,
-            });
+            checkUntrackedChallengesAvailability(currentUser.email, true)
+            // currentUserDispatch({
+            //   type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
+            //   untrackedChallengesAvailable: true,
+            // });
             currentUserDispatch({
               type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
               untrackedChallenges,
@@ -41,10 +45,11 @@ const useDiffAndUpdateList = () => {
               totalPages: data.totalPages,
             });
           } else {
-            currentUserDispatch({
-              type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
-              untrackedChallengesAvailable: false,
-            });
+            checkUntrackedChallengesAvailability(currentUser.email, false)
+            // currentUserDispatch({
+            //   type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
+            //   untrackedChallengesAvailable: false,
+            // });
           }
         } else {
           // currentUserDispatch({

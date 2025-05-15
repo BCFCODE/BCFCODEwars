@@ -29,7 +29,6 @@ export interface CodeChallenges {
   totalCompleted: number;
   challengeFilter: CodeChallengesFilter;
   list: CodewarsCompletedChallenge[];
-  untrackedChallengesAvailable?: boolean
 }
 
 export type CodewarsUser = {

@@ -36,7 +36,7 @@ export const useUsersStore = create<Store>()(
         untrackedChallengesAvailable
       ) =>
         set((state) => {
-          if (state.user.selectedUser)
+          if (state.user.untrackedChallengesAvailable)
             state.user.untrackedChallengesAvailable[email] =
               untrackedChallengesAvailable;
         }),

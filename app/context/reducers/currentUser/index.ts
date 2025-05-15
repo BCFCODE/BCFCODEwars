@@ -40,10 +40,10 @@ export type CurrentUserAction =
   | { type: "SET_USER_DIAMONDS"; diamonds: Diamonds }
   // | { type: "SET_COLLAPSE_OPEN"; isCollapsed: boolean }
   | { type: "UPDATE_COLLECTION_FILTER"; filterName: CodeChallengesFilter }
-  | {
-      type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY";
-      untrackedChallengesAvailable: boolean;
-    }
+  // | {
+  //     type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY";
+  //     untrackedChallengesAvailable: boolean;
+  //   }
   | {
       type: "ADD_UNTRACKED_CHALLENGES_TO_LIST";
       untrackedChallenges: CodewarsCompletedChallenge[];
@@ -103,21 +103,21 @@ const currentUserReducer = (
         },
       };
     }
-    case "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY": {
-      return {
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          codewars: {
-            ...state.currentUser.codewars,
-            codeChallenges: {
-              ...state.currentUser.codewars.codeChallenges,
-              untrackedChallengesAvailable: action.untrackedChallengesAvailable,
-            },
-          },
-        },
-      };
-    }
+    // case "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY": {
+    //   return {
+    //     ...state,
+    //     currentUser: {
+    //       ...state.currentUser,
+    //       codewars: {
+    //         ...state.currentUser.codewars,
+    //         codeChallenges: {
+    //           ...state.currentUser.codewars.codeChallenges,
+    //           untrackedChallengesAvailable: action.untrackedChallengesAvailable,
+    //         },
+    //       },
+    //     },
+    //   };
+    // }
     case "ADD_UNTRACKED_CHALLENGES_TO_LIST": {
       return {
         ...state,
