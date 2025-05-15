@@ -18,7 +18,7 @@ const extractListDiff = ({
     (challenge) => challenge.id === previousMostRecentChallenge.id
   );
 
-  let filtered = fetchedChallenges.slice(0, previousRecentIndex);
+  const filtered = fetchedChallenges.slice(0, previousRecentIndex);
   let untrackedChallenges = applyDefaultTrackingAndRewardStatusToAll(filtered);
 
   const isMostRecentChallengeSame =

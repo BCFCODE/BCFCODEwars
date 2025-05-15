@@ -1,3 +1,5 @@
-export const usersQueryKeys = {
-  allUsers: ["allUsers"] as const,
+const usersQueryKeys = {
+  usersList: "usersList" as const,
 };
+
+export default usersQueryKeys;

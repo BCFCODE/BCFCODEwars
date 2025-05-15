@@ -1,20 +1,20 @@
 "use client";
 
+import usePaginationQuery from "@/app/(dashboard)/leaderboard/UsersTable/Pagination/usePaginationQuery";
 import LoadingUI from "@/app/components/UI/LoadingUI";
-import useUsersQuery from "@/app/context/hooks/ReactQuery/useUsersQuery";
 import CodewarsProvider from "@/app/context/providers/Codewars";
 import { Box, Paper, Table, TableContainer } from "@mui/material";
 import LeaderboardLoadingError from "./Error";
 import UsersTable from "./UsersTable";
-import usePaginationStore from "./UsersTable/context/store/usePaginationStore";
 import LeaderboardHeader from "./UsersTable/Header";
 import Pagination from "./UsersTable/Pagination";
+// import { useUsersStore } from "@/app/context/store/users";
 
 export default function Leaderboard() {
-  const { paginationQuery } = usePaginationStore((state) => state);
+  // const selectedUser = useUsersStore((state) => state.user.selectedUser);
+  const { data, isError, isLoading, refetch } = usePaginationQuery();
 
-  const { data, isError, isLoading, refetch } = useUsersQuery(paginationQuery);
-
+  // console.log("selectedUser for mapping is collapsed", selectedUser);
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
   if (isLoading)

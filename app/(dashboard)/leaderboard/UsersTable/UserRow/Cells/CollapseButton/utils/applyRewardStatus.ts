@@ -9,7 +9,7 @@ export const applyDefaultTrackingAndRewardStatus = (
 });
 
 export const applyDefaultTrackingAndRewardStatusToAll = (
-  challenges: CodewarsCompletedChallenge[]
+  list: CodewarsCompletedChallenge[]
 ): CodewarsCompletedChallenge[] => {
-  return challenges.map(applyDefaultTrackingAndRewardStatus);
+  return list.map(applyDefaultTrackingAndRewardStatus);
 };

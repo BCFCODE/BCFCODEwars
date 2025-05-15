@@ -3,11 +3,13 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
 import useHandleOpen from "./hooks/useHandleOpen";
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
+import { useUsersStore } from "@/app/context/store/users";
 
 const OpenButton = () => {
-  // useCurrentUserQuery()
-  const { isCollapsed, currentUser } = useCurrentUserContext();
+  const { currentUser } = useCurrentUserContext();
+  const isCollapsed = useUsersStore(
+    (state) => state.user.isCollapsed[currentUser.email] ?? true
+  );
   const { handleOpen } = useHandleOpen();
 
   return (
@@ -19,7 +21,14 @@ const OpenButton = () => {
           size="small"
           onClick={() => handleOpen()}
         >
-          {isCollapsed ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          {!isCollapsed 
+          // &&  currentUser.email === selectedUser?.email 
+          ? 
+          (
+            <KeyboardArrowUpIcon />
+          ) : (
+            <KeyboardArrowDownIcon />
+          )}
         </IconButton>
       )}
     </>

@@ -29,7 +29,7 @@ import "../../styles/global.css";
 import DiamondsProvider from "./Diamonds";
 import ReactQueryProvider from "./ReactQuery";
 import getQueryClient from "./ReactQuery/queryClient";
-import { usersQueryKeys } from "./ReactQuery/queryKeys";
+import usersQueryKeys from "./ReactQuery/queryKeys/users";
 
 const { getUsers } = new dbAPIService();
 
@@ -150,9 +150,15 @@ const Providers = async ({ children }: Props) => {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: [usersQueryKeys.allUsers],
+    queryKey: [usersQueryKeys.usersList],
     queryFn: async () =>
-      await getUsers({ skip: 0, limit: 10 }, { cache: "no-store" }),
+      await getUsers({
+        skip: 0,
+        limit: 10,
+        page: 0,
+        rowsPerPage: 10,
+        apiPageNumber: 0,
+      }),
     retry: 1,
   });
 

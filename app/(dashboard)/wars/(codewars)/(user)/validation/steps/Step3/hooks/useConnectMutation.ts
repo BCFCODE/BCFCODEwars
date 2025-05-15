@@ -2,7 +2,7 @@
 
 import { GetUsersResponse } from "@/app/api/db/users/route";
 import dbAPIService, { ConnectToCodewarsResponse } from "@/app/api/services/db";
-import { usersQueryKeys } from "@/app/context/providers/ReactQuery/queryKeys";
+import usersQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/users";
 import { CodewarsUser } from "@/types/codewars";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 const { connectToCodewars } = new dbAPIService();
@@ -24,14 +24,14 @@ const useConnectMutation = () => {
       return await connectToCodewars(initializedCodewarsUser);
     },
     onMutate: async (newCodewarsUser) => {
-      await queryClient.cancelQueries({ queryKey: usersQueryKeys.allUsers });
+      await queryClient.cancelQueries({ queryKey: [usersQueryKeys.usersList] });
 
-      const prevData = queryClient.getQueryData<GetUsersResponse>(
-        usersQueryKeys.allUsers
-      );
+      const prevData = queryClient.getQueryData<GetUsersResponse>([
+        usersQueryKeys.usersList,
+      ]);
 
       queryClient.setQueryData<GetUsersResponse>(
-        usersQueryKeys.allUsers,
+        [usersQueryKeys.usersList],
         (oldData) => {
           if (!oldData) return oldData;
 
@@ -56,14 +56,14 @@ const useConnectMutation = () => {
     },
     onError: (_error, _newCodewarsUser, context) => {
       if (context?.prevData) {
-        queryClient.setQueryData(usersQueryKeys.allUsers, context.prevData);
+        queryClient.setQueryData([usersQueryKeys.usersList], context.prevData);
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
+      queryClient.invalidateQueries({ queryKey: [usersQueryKeys.usersList] });
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: usersQueryKeys.allUsers });
+      queryClient.invalidateQueries({ queryKey: [usersQueryKeys.usersList] });
     },
   });
 };

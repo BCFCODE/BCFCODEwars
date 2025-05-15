@@ -1,5 +1,5 @@
 import { Box, SxProps } from "@mui/material";
-import React, { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 
 const FadeSX: { in: SxProps; out: SxProps } = {
   in: {

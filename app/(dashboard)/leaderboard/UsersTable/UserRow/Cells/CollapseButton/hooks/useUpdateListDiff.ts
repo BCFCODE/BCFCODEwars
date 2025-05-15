@@ -1,26 +1,25 @@
-import CodewarsAPIService from "@/app/api/services/codewars";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
 import extractListDiff from "../utils/extractListDiff";
-
-const { getCompletedChallenges } = new CodewarsAPIService();
+import { useUsersStore } from "@/app/context/store/users";
 
 const useDiffAndUpdateList = () => {
-  const { currentUser, isCollapsed } = useCurrentUserContext();
-  const { pageNumber } = useCodewarsContext();
+  const { currentUser } = useCurrentUserContext();
+  const isCollapsed = useUsersStore(
+    (state) => state.user.isCollapsed[currentUser.email] ?? true
+  );
   const currentUserDispatch = useCurrentUserDispatchContext();
-  
+
+  const { data, isSuccess } = usePaginationQuery();
+
   const diffAndUpdateList = async () => {
-    if (!isCollapsed) {
+    if (isCollapsed === false) {
       try {
-        const response = await getCompletedChallenges(
-          currentUser.codewars.username,
-          pageNumber
-        );
-        if ("data" in response) {
+        if (isSuccess) {
           const previousChallenges = currentUser.codewars.codeChallenges.list;
-          const { data: fetchedChallenges } = response.data;
+          const { list: fetchedChallenges } = data;
 
           const untrackedChallenges = extractListDiff({
             previousChallenges,
@@ -38,6 +37,8 @@ const useDiffAndUpdateList = () => {
             currentUserDispatch({
               type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
               untrackedChallenges,
+              totalItems: data.totalItems,
+              totalPages: data.totalPages,
             });
           } else {
             currentUserDispatch({

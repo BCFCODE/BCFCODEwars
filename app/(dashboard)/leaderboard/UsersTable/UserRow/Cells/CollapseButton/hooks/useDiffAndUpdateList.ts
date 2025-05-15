@@ -1,37 +1,32 @@
-import CodewarsAPIService from "@/app/api/services/codewars";
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import { useState } from "react";
+import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
 import useInitializeList from "./useInitializeList";
 import useDiffAndUpdateList from "./useUpdateListDiff";
-import { useState } from "react";
-
-const { getCompletedChallenges } = new CodewarsAPIService();
 
 const useChallengeList = () => {
-  const [tryAgain, setTryAgain] = useState({ isError: false, isLoading: false });
+  const [tryAgain, setTryAgain] = useState({
+    isError: false,
+    isLoading: false,
+  });
   const codewarsDispatch = useCodewarsDispatchContext();
-  const { currentUser } = useCurrentUserContext();
-  const { pageNumber } = useCodewarsContext();
   const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
   const { diffAndUpdateList } = useDiffAndUpdateList();
+
+  const { isSuccess, isError } = usePaginationQuery();
 
   const fetchAndShowChallenges = async () => {
     try {
       setTryAgain(() => ({ isError: false, isLoading: true }));
 
-      const response = await getCompletedChallenges(
-        currentUser.codewars.username,
-        pageNumber
-      );
-
-      if ("data" in response) {
-        if (isListEmpty) initializeCodeChallengesList(response.data);
+      if (isSuccess) {
+        if (isListEmpty) initializeCodeChallengesList();
 
         diffAndUpdateList();
 
         setTryAgain(() => ({ isError: false, isLoading: false }));
-        codewarsDispatch({ type: "SET_ERROR", isError: false });
+        codewarsDispatch({ type: "SET_ERROR", isError });
       } else {
         // TODO: Handle cases where data is missing
         setTryAgain(() => ({ isError: true, isLoading: false }));

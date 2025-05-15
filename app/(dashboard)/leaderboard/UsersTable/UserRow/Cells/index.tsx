@@ -8,16 +8,14 @@ import RankCell from "./RankCell";
 
 const User = () => {
   return (
-    <>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <ButtonCell />
-        <AvatarCell />
-        <MemberSinceCell />
-        <LastLoginCell />
-        <DiamondsCell />
-        <RankCell />
-      </TableRow>
-    </>
+    <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <ButtonCell />
+      <AvatarCell />
+      <MemberSinceCell />
+      <LastLoginCell />
+      <DiamondsCell />
+      <RankCell />
+    </TableRow>
   );
 };
 

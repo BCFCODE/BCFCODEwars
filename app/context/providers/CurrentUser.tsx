@@ -12,7 +12,7 @@ interface Props {
 const CurrentUserProvider = ({ children, context }: Props) => {
   const initialCurrentUserState: CurrentUserContextType = {
     ...context,
-    isCollapsed: false,
+    // isCollapsed: false,
   };
   const [currentUserContext, dispatch] = useReducer(
     currentUserReducer,

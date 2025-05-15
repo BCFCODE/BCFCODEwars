@@ -1,6 +1,6 @@
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import { CodewarsChallengesResponse } from "@/types/codewars";
+import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
 import { applyDefaultTrackingAndRewardStatusToAll } from "../utils/applyRewardStatus";
 import storeChallengeList from "../utils/storeChallengeList";
 
@@ -9,17 +9,21 @@ const useInitializeList = () => {
   const currentUserDispatch = useCurrentUserDispatchContext();
   const isListEmpty = !currentUser.codewars?.codeChallenges?.list.length;
 
-  const initializeCodeChallengesList = (
-    response: CodewarsChallengesResponse
-  ) => {
-    const list = applyDefaultTrackingAndRewardStatusToAll(response.data);
+  const { data, isSuccess } = usePaginationQuery();
 
-    currentUserDispatch({
-      type: "UPDATE_CODE_CHALLENGES_LIST",
-      list,
-    });
+  const initializeCodeChallengesList = () => {
+    if (isSuccess) {
+      const list = applyDefaultTrackingAndRewardStatusToAll(data.list);
 
-    storeChallengeList({ list, currentUser });
+      currentUserDispatch({
+        type: "UPDATE_CODE_CHALLENGES_LIST",
+        list,
+        totalItems: data.totalItems,
+        totalPages: data.totalPages,
+      });
+
+      storeChallengeList({ list, currentUser, queryData: data });
+    }
   };
   return { initializeCodeChallengesList, isListEmpty };
 };

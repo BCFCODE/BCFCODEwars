@@ -2,11 +2,15 @@ import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 import { CodeChallengesFilter, Diamonds } from "@/types/diamonds";
 import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
 import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
+import { CompletedChallengesQueryData } from "../(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/usePaginationQuery";
 import { CodewarsReconnectRequest } from "../api/services/db";
 
 export interface PaginationQuery {
+  page: number;
+  rowsPerPage: number;
   skip: number;
   limit: number;
+  apiPageNumber: number;
 }
 
 class DatabaseService {
@@ -62,7 +66,7 @@ class DatabaseService {
   getUsers = async ({
     skip,
     limit,
-  }: PaginationQuery): Promise<{
+  }: Pick<PaginationQuery, "skip" | "limit">): Promise<{
     list: AuthenticatedUser[];
     totalUsers: number;
   }> => {
@@ -220,18 +224,28 @@ class DatabaseService {
   saveChallengesList = async ({
     list,
     userId,
+    queryData,
   }: {
     list: CodewarsCompletedChallenge[];
     userId: string;
+    queryData: CompletedChallengesQueryData;
   }) => {
     const { db } = await this.getDatabase();
     const codewars: Collection<CodewarsUser> =
       db.collection<CodewarsUser>("codewars");
 
-    await codewars.findOneAndUpdate(
-      { id: userId },
-      { $set: { "codeChallenges.list": list } }
-    );
+    if (queryData)
+      await codewars.findOneAndUpdate(
+        { id: userId },
+        {
+          $set: {
+            "codeChallenges.totalItems": queryData.totalItems,
+            "codeChallenges.totalPages": queryData.totalPages,
+            "codeChallenges.totalCompleted": queryData.totalItems,
+            "codeChallenges.list": list,
+          },
+        }
+      );
   };
 
   getSingleCodewarsUser = async (
@@ -365,7 +379,7 @@ class DatabaseService {
     const { db, session } = await this.startClientSession();
     const { email } = currentUser;
 
-    const list = currentUser.codewars.codeChallenges.list;
+    const codeChallenges = currentUser.codewars.codeChallenges;
     const totals = currentUser.diamonds.totals;
     const codewarsDiamondsRecords = currentUser.diamonds.codewars;
 
@@ -377,7 +391,14 @@ class DatabaseService {
 
       await codewars.updateOne(
         { email },
-        { $set: { "codeChallenges.list": list } },
+        {
+          $set: {
+            "codeChallenges.totalItems": codeChallenges.totalItems,
+            "codeChallenges.totalPages": codeChallenges.totalPages,
+            "codeChallenges.totalCompleted": codeChallenges.totalCompleted,
+            "codeChallenges.list": codeChallenges.list,
+          },
+        },
         { upsert: true, session }
       );
 

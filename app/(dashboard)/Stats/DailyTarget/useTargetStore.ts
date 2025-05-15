@@ -1,6 +1,7 @@
-import { PERSIST_KEYS } from "@/app/store/storeKeys";
+import { PERSIST_KEYS } from "@/app/context/store/storeKeys";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
 
 export type TargetLevel = 1 | 2 | 3;
 

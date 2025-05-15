@@ -38,6 +38,8 @@ export default function useChallengesListEffect({
       currentUserDispatch({
         type: "UPDATE_CODE_CHALLENGES_LIST",
         list,
+        totalItems: currentUser.codewars.codeChallenges.totalItems,
+        totalPages: currentUser.codewars.codeChallenges.totalPages,
       });
     }
 
@@ -47,7 +49,7 @@ export default function useChallengesListEffect({
         reward: collectedDiamondsCount,
         selectedChallenge,
       });
-     
+
       isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
     }
 

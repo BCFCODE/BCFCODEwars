@@ -2,6 +2,7 @@ import useChallengeList from "./useDiffAndUpdateList";
 import useDispatchActions from "./useDispatchActions";
 
 const useHandleOpen = () => {
+  
   const { dispatchActions } = useDispatchActions();
   const { fetchAndShowChallenges } = useChallengeList();
 
