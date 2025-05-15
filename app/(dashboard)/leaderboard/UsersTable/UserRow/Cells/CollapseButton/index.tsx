@@ -9,8 +9,9 @@ interface Props {
 
 const CollapseBoundary = ({ children }: Props) => {
   const { currentUser } = useCurrentUserContext();
+  // const { setSelectedUser } = useUsersStore((state) => state);
   const isCollapsed = useUsersStore(
-    (state) => state.user.selectedUser?.isCollapsed
+    (state) => state.user.isCollapsed[currentUser.email] ?? true
   );
   const selectedUser = useUsersStore((state) => state.user.selectedUser);
   // console.log(
@@ -23,7 +24,8 @@ const CollapseBoundary = ({ children }: Props) => {
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse
           in={
-            !Boolean(isCollapsed) && selectedUser?.email === currentUser.email
+            !isCollapsed 
+            // && selectedUser?.email === currentUser.email
           }
           timeout="auto"
           unmountOnExit

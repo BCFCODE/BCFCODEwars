@@ -26,14 +26,14 @@ const useReconnectMutation = () => {
       return await reconnectToCodewars(payload);
     },
     onMutate: async (payload) => {
-      await queryClient.cancelQueries({ queryKey: [usersQueryKeys.allUsers] });
+      await queryClient.cancelQueries({ queryKey: [usersQueryKeys.usersList] });
 
       const prevData = queryClient.getQueryData<GetUsersResponse>([
-        usersQueryKeys.allUsers,
+        usersQueryKeys.usersList,
       ]);
 
       queryClient.setQueryData<GetUsersResponse>(
-        [usersQueryKeys.allUsers],
+        [usersQueryKeys.usersList],
         (oldData) => {
           if (!oldData) return oldData;
 
@@ -89,14 +89,14 @@ const useReconnectMutation = () => {
     },
     onError: (_error, _payload, context) => {
       if (context?.prevData) {
-        queryClient.setQueryData([usersQueryKeys.allUsers], context.prevData);
+        queryClient.setQueryData([usersQueryKeys.usersList], context.prevData);
       }
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [usersQueryKeys.allUsers] });
+      queryClient.invalidateQueries({ queryKey: [usersQueryKeys.usersList] });
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [usersQueryKeys.allUsers] });
+      queryClient.invalidateQueries({ queryKey: [usersQueryKeys.usersList] });
     },
   });
 };

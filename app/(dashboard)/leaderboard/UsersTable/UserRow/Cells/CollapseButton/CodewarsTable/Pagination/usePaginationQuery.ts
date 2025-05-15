@@ -16,13 +16,17 @@ export interface CompletedChallengesQueryData {
 const usePaginationQuery = () => {
   const { currentUser } = useCurrentUserContext();
   const username = currentUser.codewars.username;
-  const pagination = usePaginationStore(
+  const apiPageNumber = usePaginationStore(
     (state) => state.pagination[username] ?? defaultPagination
-  );
+  ).apiPageNumber;
 
   const queryKey = username
-    ? [codewarsQueryKeys.codewars, username, pagination.apiPageNumber]
-    : [codewarsQueryKeys.codewars];
+    ? [
+        codewarsQueryKeys.pagination,
+        `username: ${username}`,
+        `apiPageNumber: ${apiPageNumber}`,
+      ]
+    : [codewarsQueryKeys.pagination];
 
   return useQuery<
     CompletedChallengesQueryData,
@@ -31,12 +35,12 @@ const usePaginationQuery = () => {
   >({
     queryKey,
     queryFn: async () => {
-      console.log("usePaginationQuery queryFn called...");
+      // console.log("usePaginationQuery queryFn called...");
       const { list, totalItems, totalPages } = await getCompletedChallenges({
         username,
-        pageNumber: pagination.apiPageNumber,
+        apiPageNumber,
       });
-      console.log("usePaginationQuery/list", list);
+      // console.log("usePaginationQuery/list", list);
       return { list, totalItems, totalPages };
     },
     enabled: !!username,
