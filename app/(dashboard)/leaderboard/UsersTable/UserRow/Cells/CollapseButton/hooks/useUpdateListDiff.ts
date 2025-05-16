@@ -4,21 +4,29 @@ import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUser
 import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
 import extractListDiff from "../utils/extractListDiff";
 import { useUsersStore } from "@/app/context/store/users";
+import dbAPIService from "@/app/api/services/db";
+
+const { postCurrentUser } = new dbAPIService();
 
 const useDiffAndUpdateList = () => {
   const { currentUser } = useCurrentUserContext();
-  const isCollapsed = useUsersStore(
-    (state) => state.user.isCollapsed[currentUser.email] ?? true
+  const untrackedChallengesAvailable = useUsersStore((state) =>
+    state.user.untrackedChallengesAvailable
+      ? state.user.untrackedChallengesAvailable[currentUser.email]
+      : false
   );
   const checkUntrackedChallengesAvailability = useUsersStore(
     (state) => state.checkUntrackedChallengesAvailability
+  );
+  const isCollapsed = useUsersStore(
+    (state) => state.user.isCollapsed[currentUser.email] ?? true
   );
   const currentUserDispatch = useCurrentUserDispatchContext();
 
   const { data, isSuccess } = usePaginationQuery();
 
   const diffAndUpdateList = async () => {
-    console.log('diffAndUpdateList called...')
+    console.log("diffAndUpdateList called...");
     if (isCollapsed) {
       try {
         if (isSuccess) {
@@ -30,17 +38,26 @@ const useDiffAndUpdateList = () => {
             fetchedChallenges,
           });
 
-          console.log('untrackedChallenges',untrackedChallenges)
+          console.log("untrackedChallenges >>>", untrackedChallenges);
 
           const isUntrackedChallengesListEmpty =
             untrackedChallenges.length === 0;
 
           if (!isUntrackedChallengesListEmpty) {
-            checkUntrackedChallengesAvailability(currentUser.email, true)
-            // currentUserDispatch({
-            //   type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
-            //   untrackedChallengesAvailable: true,
-            // });
+            checkUntrackedChallengesAvailability(currentUser.email, true);
+
+            // (async () => {
+            //   console.log("Posting...");
+            //   const { success } = await postCurrentUser(currentUser);
+
+            //   if (success) {
+            //     console.log("user posted successfully...");
+            //     checkUntrackedChallengesAvailability(currentUser.email, false);
+            //   } else {
+            //     checkUntrackedChallengesAvailability(currentUser.email, true);
+            //   }
+            // })();
+
             currentUserDispatch({
               type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
               untrackedChallenges,
@@ -48,7 +65,7 @@ const useDiffAndUpdateList = () => {
               totalPages: data.totalPages,
             });
           } else {
-            checkUntrackedChallengesAvailability(currentUser.email, false)
+            checkUntrackedChallengesAvailability(currentUser.email, false);
             // currentUserDispatch({
             //   type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
             //   untrackedChallengesAvailable: false,
