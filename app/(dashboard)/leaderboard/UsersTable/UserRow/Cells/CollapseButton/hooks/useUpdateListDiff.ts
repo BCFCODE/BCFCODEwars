@@ -18,53 +18,27 @@ const useDiffAndUpdateList = () => {
   const { data, isSuccess } = usePaginationQuery();
 
   const diffAndUpdateList = async () => {
-    if (isCollapsed === false) {
-      try {
-        if (isSuccess) {
-          const previousChallenges = currentUser.codewars.codeChallenges.list;
-          const { list: fetchedChallenges } = data;
+    if (isSuccess) {
+      const previousChallenges = currentUser.codewars.codeChallenges.list;
+      const { list: fetchedChallenges } = data;
 
-          const untrackedChallenges = extractListDiff({
-            previousChallenges,
-            fetchedChallenges,
-          });
+      const untrackedChallenges = extractListDiff({
+        previousChallenges,
+        fetchedChallenges,
+      });
 
-          const isUntrackedChallengesListEmpty =
-            untrackedChallenges.length === 0;
+      const isUntrackedChallengesListEmpty = untrackedChallenges.length === 0;
 
-          if (!isUntrackedChallengesListEmpty) {
-            checkUntrackedChallengesAvailability(currentUser.email, true)
-            // currentUserDispatch({
-            //   type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
-            //   untrackedChallengesAvailable: true,
-            // });
-            currentUserDispatch({
-              type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
-              untrackedChallenges,
-              totalItems: data.totalItems,
-              totalPages: data.totalPages,
-            });
-          } else {
-            checkUntrackedChallengesAvailability(currentUser.email, false)
-            // currentUserDispatch({
-            //   type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
-            //   untrackedChallengesAvailable: false,
-            // });
-          }
-        } else {
-          // currentUserDispatch({
-          //   type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
-          //   untrackedChallenges: [],
-          // });
-        }
-      } catch (error) {
-        // TODO
-        // currentUserDispatch({
-        //   type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
-        //   untrackedChallenges: [],
-        // });
-      } finally {
-        // console.log("currentUser", currentUser);
+      if (!isUntrackedChallengesListEmpty) {
+        checkUntrackedChallengesAvailability(currentUser.email, true);
+        currentUserDispatch({
+          type: "ADD_UNTRACKED_CHALLENGES_TO_LIST",
+          untrackedChallenges,
+          totalItems: data.totalItems,
+          totalPages: data.totalPages,
+        });
+      } else {
+        checkUntrackedChallengesAvailability(currentUser.email, false);
       }
     }
   };
