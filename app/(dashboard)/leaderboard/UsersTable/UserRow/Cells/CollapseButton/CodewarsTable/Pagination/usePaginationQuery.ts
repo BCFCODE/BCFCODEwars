@@ -4,6 +4,10 @@ import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/code
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useQuery } from "@tanstack/react-query";
 import usePaginationStore, { defaultPagination } from "./usePaginationStore";
+import getQueryKey from "./utils/getQueryKey";
+import mergeListsAvoidingDuplicates from "./utils/mergeListsAvoidingDuplicates";
+import { sortByCompletedAtDesc } from "@/utils/dayjs";
+import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -15,18 +19,13 @@ export interface CompletedChallengesQueryData {
 
 const usePaginationQuery = () => {
   const { currentUser } = useCurrentUserContext();
+  const currentUserDispatch = useCurrentUserDispatchContext();
   const username = currentUser.codewars.username;
   const apiPageNumber = usePaginationStore(
     (state) => state.pagination[username] ?? defaultPagination
   ).apiPageNumber;
 
-  const queryKey = username
-    ? [
-        codewarsQueryKeys.pagination,
-        `username: ${username}`,
-        `apiPageNumber: ${apiPageNumber}`,
-      ]
-    : [codewarsQueryKeys.pagination];
+  const { queryKey } = getQueryKey({ username, apiPageNumber });
 
   return useQuery<
     CompletedChallengesQueryData,
@@ -35,12 +34,26 @@ const usePaginationQuery = () => {
   >({
     queryKey,
     queryFn: async () => {
-      // console.log("usePaginationQuery queryFn called...");
       const { list, totalItems, totalPages } = await getCompletedChallenges({
         username,
         apiPageNumber,
       });
-      // console.log("usePaginationQuery/list", list);
+
+      const mergedList = mergeListsAvoidingDuplicates({
+        oldList: currentUser.codewars.codeChallenges.list,
+        newList: list,
+      });
+
+      const sortedList = sortByCompletedAtDesc(mergedList);
+
+      currentUserDispatch({
+        type: "UPDATE_CODE_CHALLENGES_LIST",
+        list: sortedList,
+        totalItems: totalItems,
+        totalPages: totalPages,
+      });
+
+      console.log("usePaginationQuery/sortedList", sortedList);
       return { list, totalItems, totalPages };
     },
     enabled: !!username,

@@ -1,7 +1,8 @@
 import dbAPIService from "@/app/api/services/db";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import { useUsersStore } from "@/app/context/store/users";
+import { useUsersStore } from "@/app/store/users";
+
 import { useEffect } from "react";
 
 const { postCurrentUser } = new dbAPIService();
@@ -12,12 +13,20 @@ const useDispatchActions = () => {
   const isCollapsed = useUsersStore(
     (state) => state.user.isCollapsed[currentUser.email] ?? true
   );
+  const untrackedChallengesAvailable = useUsersStore((state) => {
+    state.user.untrackedChallengesAvailable
+      ? state.user.untrackedChallengesAvailable[currentUser.email]
+      : false;
+  });
+  const checkUntrackedChallengesAvailability = useUsersStore(
+    (state) => state.checkUntrackedChallengesAvailability
+  );
   const setIsCollapsed = useUsersStore((state) => state.setIsCollapsed);
   const currentUserDispatch = useCurrentUserDispatchContext();
   // const codewarsDispatch = useCodewarsDispatchContext();
 
-  const untrackedChallengesAvailable =
-    currentUser.codewars?.codeChallenges?.untrackedChallengesAvailable ?? false;
+  // const untrackedChallengesAvailable =
+  //   currentUser.codewars?.codeChallenges?.untrackedChallengesAvailable ?? false;
 
   useEffect(() => {
     if (!isCollapsed && untrackedChallengesAvailable) {
@@ -26,10 +35,11 @@ const useDispatchActions = () => {
 
       postCurrentUser(currentUser);
 
-      currentUserDispatch({
-        type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
-        untrackedChallengesAvailable: false,
-      });
+      checkUntrackedChallengesAvailability(currentUser.email, false);
+      // currentUserDispatch({
+      //   type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY",
+      //   untrackedChallengesAvailable: false,
+      // });
     }
   }, [
     currentUser,
