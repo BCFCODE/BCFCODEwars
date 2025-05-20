@@ -1,7 +1,8 @@
 import dbAPIService from "@/app/api/services/db";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
-import { useUsersStore } from "@/app/context/store/users";
+import { useUsersStore } from "@/app/store/users";
+
 import { useEffect } from "react";
 
 const { postCurrentUser } = new dbAPIService();

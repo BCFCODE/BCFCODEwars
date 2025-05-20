@@ -1,11 +1,9 @@
 import CurrentUserProvider from "@/app/context/providers/CurrentUser";
+import { useUsersStore } from "@/app/store/users";
 import { AuthenticatedUser } from "@/types/users";
 import { TableBody } from "@mui/material";
+import { useRef } from "react";
 import UserRow from "./UserRow";
-import { useRef, useState } from "react";
-import { useUsersStore } from "@/app/context/store/users";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import usePaginationStore from "./UserRow/Cells/CollapseButton/CodewarsTable/Pagination/usePaginationStore";
 
 interface Props {
   list?: AuthenticatedUser[];

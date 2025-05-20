@@ -1,9 +1,8 @@
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { useUsersStore } from "@/app/store/users";
 import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
 import extractListDiff from "../utils/extractListDiff";
-import { useUsersStore } from "@/app/context/store/users";
 
 const useDiffAndUpdateList = () => {
   const { currentUser } = useCurrentUserContext();

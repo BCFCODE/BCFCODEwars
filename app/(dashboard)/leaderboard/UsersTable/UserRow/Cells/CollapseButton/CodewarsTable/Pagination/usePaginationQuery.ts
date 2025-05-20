@@ -4,6 +4,7 @@ import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/code
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useQuery } from "@tanstack/react-query";
 import usePaginationStore, { defaultPagination } from "./usePaginationStore";
+import getQueryKey from "./utils/getQueryKey";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -20,13 +21,7 @@ const usePaginationQuery = () => {
     (state) => state.pagination[username] ?? defaultPagination
   ).apiPageNumber;
 
-  const queryKey = username
-    ? [
-        codewarsQueryKeys.pagination,
-        `username: ${username}`,
-        `apiPageNumber: ${apiPageNumber}`,
-      ]
-    : [codewarsQueryKeys.pagination];
+  const { queryKey } = getQueryKey({ username, apiPageNumber });
 
   return useQuery<
     CompletedChallengesQueryData,
