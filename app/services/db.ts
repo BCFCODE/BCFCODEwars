@@ -118,9 +118,11 @@ class DatabaseService {
             activity: 1,
           },
         },
+        { $sort: { "diamonds.totals.total": -1 } },
         { $skip: skip },
         { $limit: limit },
       ])
+      .sort({ "diamonds.totals.total": -1 })
       .toArray();
 
     return { list, totalUsers };
