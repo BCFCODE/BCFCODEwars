@@ -196,31 +196,6 @@ class DatabaseService {
     return users.findOne<DatabaseUser>({ email });
   };
 
-  // saveNewGoogleUser = async (user: GoogleUser) => {
-  //   const { users } = await this.getCollections();
-  //   await users.insertOne({
-  //     email: user.email,
-  //     name: user.name,
-  //     image: user.image,
-  //     firstLogin: new Date(),
-  //     lastLogin: new Date(),
-  //     activity: {
-  //       firstLogin: new Date(),
-  //       lastLogin: new Date(),
-  //       lastLogout: undefined,
-  //       loginHistory: [new Date()],
-  //       logoutHistory: [],
-  //       isActiveSession: true,
-  //     },
-  //   });
-  // };
-
-  // saveNewCodewarsUser = async (email: string) => {
-  //   const { codewars } = await this.getCollections();
-  //   const newUser = { email, isConnected: false };
-  //   await codewars.insertOne(newUser);
-  // };
-
   saveChallengesList = async ({
     list,
     userId,

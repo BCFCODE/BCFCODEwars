@@ -1,4 +1,5 @@
 import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/codewars";
+import { QueryKey } from "@tanstack/react-query";
 
 /**
  * Generates a unique React Query `queryKey` for paginated Codewars data per user.
@@ -21,19 +22,23 @@ import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/code
  * This key structure ensures that pagination state is isolated per user,
  * which allows efficient caching and avoids accidental query overlap.
  */
+
 interface Props {
   username: string;
   apiPageNumber: number;
 }
 
-const getQueryKey = ({ username, apiPageNumber }: Props) => {
+const getQueryKey = ({
+  username,
+  apiPageNumber,
+}: Props): { queryKey: QueryKey } => {
   const queryKey = username
-    ? [
+    ? ([
         codewarsQueryKeys.pagination,
         `username: ${username}`,
         `apiPageNumber: ${apiPageNumber}`,
-      ]
-    : [codewarsQueryKeys.pagination];
+      ] as const)
+    : ([codewarsQueryKeys.pagination] as const);
 
   return { queryKey };
 };

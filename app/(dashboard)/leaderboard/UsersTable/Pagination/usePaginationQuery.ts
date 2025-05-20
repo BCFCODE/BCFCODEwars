@@ -1,14 +1,14 @@
 "use client";
 
 import { GetUsersResponse } from "@/app/api/db/users/route";
-import dbAPIService from "@/app/api/services/db";
+import DatabaseAPIService from "@/app/api/services/db";
 import usersQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/users";
 import { PaginationQuery } from "@/app/services/db";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import usePaginationStore from "./usePaginationStore";
 
-const { getUsers } = new dbAPIService();
+const { getUsers } = new DatabaseAPIService();
 
 const usePaginationQuery = () => {
   const pagination = usePaginationStore((state) => state.pagination);

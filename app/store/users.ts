@@ -43,9 +43,7 @@ export const useUsersStore = create<Store>()(
     })),
     {
       name: PERSIST_KEYS.users,
-      partialize: (state) => ({
-        user: { isCollapsed: state.user.isCollapsed },
-      }),
+      partialize: (state) => ({}),
     }
   )
 );

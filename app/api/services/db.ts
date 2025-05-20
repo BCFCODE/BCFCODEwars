@@ -16,7 +16,7 @@ export interface CodewarsReconnectRequest {
   clan: string;
 }
 
-class dbAPIService {
+class DatabaseAPIService {
   private endpoint = `${baseURL}/api/db`;
 
   reconnectToCodewars = async (
@@ -171,4 +171,4 @@ class dbAPIService {
   };
 }
 
-export default dbAPIService;
+export default DatabaseAPIService;

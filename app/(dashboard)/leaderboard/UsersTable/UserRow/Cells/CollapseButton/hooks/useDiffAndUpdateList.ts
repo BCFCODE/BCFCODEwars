@@ -2,7 +2,7 @@ import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewars
 // import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import { useState } from "react";
 import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
-import useInitializeList from "./useInitializeList";
+// import useInitializeList from "./useInitializeList";
 // import useDiffAndUpdateList from "./useUpdateListDiff";
 
 const useChallengeList = () => {
@@ -11,7 +11,7 @@ const useChallengeList = () => {
     isLoading: false,
   });
   const codewarsDispatch = useCodewarsDispatchContext();
-  const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
+  // const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
   // const { diffAndUpdateList } = useDiffAndUpdateList();
 
   const { isSuccess, isError } = usePaginationQuery();
@@ -21,7 +21,7 @@ const useChallengeList = () => {
       setTryAgain(() => ({ isError: false, isLoading: true }));
 
       if (isSuccess) {
-        if (isListEmpty) initializeCodeChallengesList();
+        // if (isListEmpty) initializeCodeChallengesList();
 
         // diffAndUpdateList();
 
