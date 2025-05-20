@@ -72,7 +72,6 @@ const CodeChallengesSchema = z.object({
   totalCompleted: z.number(),
   challengeFilter: z.nativeEnum(CodeChallengesFilter),
   list: z.array(CodewarsCompletedChallengeSchema),
-  untrackedChallengesAvailable: z.boolean().optional(),
 });
 
 const CodewarsUserSchema = z.object({

@@ -1,12 +1,12 @@
 import LoadingUI from "@/app/components/UI/LoadingUI";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import { useUsersStore } from "@/app/store/users";
 import { Box, Table } from "@mui/material";
 import Body from "./Body";
 import Error from "./Error";
 import Head from "./Head";
 import Pagination from "./Pagination";
 import usePaginationQuery from "./Pagination/usePaginationQuery";
-import { useUsersStore } from "@/app/context/store/users";
 
 const CodewarsTable = () => {
   const { currentUser } = useCurrentUserContext();

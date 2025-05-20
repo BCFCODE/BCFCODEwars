@@ -1,9 +1,9 @@
 import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+// import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import { useState } from "react";
 import usePaginationQuery from "../CodewarsTable/Pagination/usePaginationQuery";
-import useInitializeList from "./useInitializeList";
-import useDiffAndUpdateList from "./useUpdateListDiff";
+// import useInitializeList from "./useInitializeList";
+// import useDiffAndUpdateList from "./useUpdateListDiff";
 
 const useChallengeList = () => {
   const [tryAgain, setTryAgain] = useState({
@@ -11,8 +11,8 @@ const useChallengeList = () => {
     isLoading: false,
   });
   const codewarsDispatch = useCodewarsDispatchContext();
-  const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
-  const { diffAndUpdateList } = useDiffAndUpdateList();
+  // const { initializeCodeChallengesList, isListEmpty } = useInitializeList();
+  // const { diffAndUpdateList } = useDiffAndUpdateList();
 
   const { isSuccess, isError } = usePaginationQuery();
 
@@ -21,9 +21,9 @@ const useChallengeList = () => {
       setTryAgain(() => ({ isError: false, isLoading: true }));
 
       if (isSuccess) {
-        if (isListEmpty) initializeCodeChallengesList();
+        // if (isListEmpty) initializeCodeChallengesList();
 
-        diffAndUpdateList();
+        // diffAndUpdateList();
 
         setTryAgain(() => ({ isError: false, isLoading: false }));
         codewarsDispatch({ type: "SET_ERROR", isError });

@@ -1,4 +1,4 @@
-import dbAPIService from "@/app/api/services/db";
+import DatabaseAPIService from "@/app/api/services/db";
 import { auth } from "@/auth";
 import theme from "@/theme";
 import { baseURL } from "@/utils/constants";
@@ -31,7 +31,7 @@ import ReactQueryProvider from "./ReactQuery";
 import getQueryClient from "./ReactQuery/queryClient";
 import usersQueryKeys from "./ReactQuery/queryKeys/users";
 
-const { getUsers } = new dbAPIService();
+const { getUsers } = new DatabaseAPIService();
 
 export const metadata: Metadata = {
   title: {

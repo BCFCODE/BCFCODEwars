@@ -40,16 +40,16 @@ export type CurrentUserAction =
   | { type: "SET_USER_DIAMONDS"; diamonds: Diamonds }
   // | { type: "SET_COLLAPSE_OPEN"; isCollapsed: boolean }
   | { type: "UPDATE_COLLECTION_FILTER"; filterName: CodeChallengesFilter }
-  | {
-      type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY";
-      untrackedChallengesAvailable: boolean;
-    }
-  | {
-      type: "ADD_UNTRACKED_CHALLENGES_TO_LIST";
-      untrackedChallenges: CodewarsCompletedChallenge[];
-      totalPages: number;
-      totalItems: number;
-    }
+  // | {
+  //     type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY";
+  //     untrackedChallengesAvailable: boolean;
+  //   }
+  // | {
+  //     type: "ADD_UNTRACKED_CHALLENGES_TO_LIST";
+  //     untrackedChallenges: CodewarsCompletedChallenge[];
+  //     totalPages: number;
+  //     totalItems: number;
+  //   }
   | { type: "EMPTY_UNTRACKED_CHALLENGE_LIST" }
   | {
       type: "DIAMOND_COUNT_ANIMATION_COMPLETED";
@@ -85,9 +85,6 @@ const currentUserReducer = (
         currentUser: { ...state.currentUser, diamonds: action.diamonds },
       };
     }
-    // case "SET_COLLAPSE_OPEN": {
-    //   return { ...state, isCollapsed: action.isCollapsed };
-    // }
     case "UPDATE_COLLECTION_FILTER": {
       return {
         ...state,
@@ -103,43 +100,7 @@ const currentUserReducer = (
         },
       };
     }
-    case "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY": {
-      return {
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          codewars: {
-            ...state.currentUser.codewars,
-            codeChallenges: {
-              ...state.currentUser.codewars.codeChallenges,
-              untrackedChallengesAvailable: action.untrackedChallengesAvailable,
-            },
-          },
-        },
-      };
-    }
-    case "ADD_UNTRACKED_CHALLENGES_TO_LIST": {
-      return {
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          codewars: {
-            ...state.currentUser.codewars,
-            codeChallenges: {
-              ...state.currentUser.codewars.codeChallenges,
-              totalItems: action.totalItems,
-              totalPages: action.totalPages,
-              totalCompleted: action.totalItems,
-              list: [
-                ...action.untrackedChallenges,
-                ...state.currentUser.codewars.codeChallenges.list,
-              ],
-            },
-          },
-        },
-      };
-    }
-    // case "EMPTY_UNTRACKED_CHALLENGE_LIST": {
+    // case "ADD_UNTRACKED_CHALLENGES_TO_LIST": {
     //   return {
     //     ...state,
     //     currentUser: {
@@ -148,7 +109,13 @@ const currentUserReducer = (
     //         ...state.currentUser.codewars,
     //         codeChallenges: {
     //           ...state.currentUser.codewars.codeChallenges,
-    //           untrackedChallenges: [],
+    //           totalItems: action.totalItems,
+    //           totalPages: action.totalPages,
+    //           totalCompleted: action.totalItems,
+    //           list: [
+    //             ...action.untrackedChallenges,
+    //             ...state.currentUser.codewars.codeChallenges.list,
+    //           ],
     //         },
     //       },
     //     },

@@ -1,5 +1,5 @@
 import { PaginationQuery } from "@/app/services/db";
-import { PERSIST_KEYS } from "@/app/context/store/storeKeys";
+import { PERSIST_KEYS } from "@/app/store/storeKeys";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
@@ -50,7 +50,7 @@ export const usePaginationStore = create<PaginationStore>()(
     })),
     {
       name: PERSIST_KEYS.codewarsTablePaginationQuery,
-      partialize: (state) => ({ pagination: state.pagination }),
+      partialize: (state) => ({}),
       onRehydrateStorage: () => (state) => {
         state?.setIsLoading(false);
       },

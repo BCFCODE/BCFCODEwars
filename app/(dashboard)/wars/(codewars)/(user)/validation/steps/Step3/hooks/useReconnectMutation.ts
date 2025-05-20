@@ -1,5 +1,5 @@
 import { GetUsersResponse } from "@/app/api/db/users/route";
-import dbAPIService, {
+import DatabaseAPIService, {
   CodewarsReconnectRequest,
   ConnectToCodewarsResponse,
 } from "@/app/api/services/db";
@@ -7,7 +7,7 @@ import usersQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/users";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const { reconnectToCodewars } = new dbAPIService();
+const { reconnectToCodewars } = new DatabaseAPIService();
 
 interface ReconnectToCodewarsContext {
   prevData: GetUsersResponse | undefined;

@@ -1,10 +1,10 @@
-import dbAPIService from "@/app/api/services/db";
+import DatabaseAPIService from "@/app/api/services/db";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { useEffect, useRef } from "react";
 
-const { postCurrentUser } = new dbAPIService();
+const { postCurrentUser } = new DatabaseAPIService();
 
 interface Props {
   collectedDiamondsCount: number | undefined;

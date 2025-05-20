@@ -1,11 +1,17 @@
 import CodewarsAPIService from "@/app/api/services/codewars";
+import DatabaseAPIService from "@/app/api/services/db";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/codewars";
+import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { useQuery } from "@tanstack/react-query";
+import { sortByCompletedAtDesc } from "@/utils/dayjs";
+import { QueryKey, useQuery } from "@tanstack/react-query";
 import usePaginationStore, { defaultPagination } from "./usePaginationStore";
+import getQueryKey from "./utils/getQueryKey";
+import mergeListsAvoidingDuplicates from "./utils/mergeListsAvoidingDuplicates";
+import { applyDefaultTrackingAndRewardStatusToAll } from "../../utils/applyRewardStatus";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
+const { postCurrentUser } = new DatabaseAPIService();
 
 export interface CompletedChallengesQueryData {
   totalPages: number; // Total number of pages in the response
@@ -15,36 +21,49 @@ export interface CompletedChallengesQueryData {
 
 const usePaginationQuery = () => {
   const { currentUser } = useCurrentUserContext();
+  const currentUserDispatch = useCurrentUserDispatchContext();
   const username = currentUser.codewars.username;
   const apiPageNumber = usePaginationStore(
     (state) => state.pagination[username] ?? defaultPagination
   ).apiPageNumber;
 
-  const queryKey = username
-    ? [
-        codewarsQueryKeys.pagination,
-        `username: ${username}`,
-        `apiPageNumber: ${apiPageNumber}`,
-      ]
-    : [codewarsQueryKeys.pagination];
+  const { queryKey } = getQueryKey({ username, apiPageNumber });
 
   return useQuery<
     CompletedChallengesQueryData,
     Error,
-    CompletedChallengesQueryData
+    CompletedChallengesQueryData,
+    QueryKey
   >({
     queryKey,
     queryFn: async () => {
-      // console.log("usePaginationQuery queryFn called...");
       const { list, totalItems, totalPages } = await getCompletedChallenges({
         username,
         apiPageNumber,
       });
-      // console.log("usePaginationQuery/list", list);
+
+      const mergedList = mergeListsAvoidingDuplicates({
+        oldList: currentUser.codewars.codeChallenges.list,
+        newList: applyDefaultTrackingAndRewardStatusToAll(list),
+      });
+
+      const sortedList = sortByCompletedAtDesc(mergedList);
+
+      currentUserDispatch({
+        type: "UPDATE_CODE_CHALLENGES_LIST",
+        list: sortedList,
+        totalItems: totalItems,
+        totalPages: totalPages,
+      });
+
+      // console.log("usePaginationQuery/sortedList", sortedList, currentUser);
+
+      await postCurrentUser(currentUser);
+
       return { list, totalItems, totalPages };
     },
     enabled: !!username,
-    staleTime: 1 * 1000 * 60, // 1m
+    // staleTime: 10 * 1000 * 60, // 10m
     // retry: 1,
   });
 };

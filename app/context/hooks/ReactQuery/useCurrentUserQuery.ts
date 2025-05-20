@@ -1,12 +1,12 @@
 "use client";
 
-import dbAPIService from "@/app/api/services/db";
+import DatabaseAPIService from "@/app/api/services/db";
 import { AuthenticatedUser } from "@/types/users";
 import { useQuery } from "@tanstack/react-query";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 
-const { getCurrentUser } = new dbAPIService();
+const { getCurrentUser } = new DatabaseAPIService();
 
 const useCurrentUserQuery = () => {
   const session = useSession().data as Session;

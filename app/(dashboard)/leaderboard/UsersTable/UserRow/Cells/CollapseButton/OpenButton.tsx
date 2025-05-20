@@ -3,7 +3,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
 import useHandleOpen from "./hooks/useHandleOpen";
-import { useUsersStore } from "@/app/context/store/users";
+import { useUsersStore } from "@/app/store/users";
 
 const OpenButton = () => {
   const { currentUser } = useCurrentUserContext();
@@ -21,10 +21,8 @@ const OpenButton = () => {
           size="small"
           onClick={() => handleOpen()}
         >
-          {!isCollapsed 
-          // &&  currentUser.email === selectedUser?.email 
-          ? 
-          (
+          {!isCollapsed ? (
+            // &&  currentUser.email === selectedUser?.email
             <KeyboardArrowUpIcon />
           ) : (
             <KeyboardArrowDownIcon />
