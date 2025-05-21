@@ -53,5 +53,4 @@ export default function useCounterEffect({
     collectedDiamondsCount,
     collectButtonDispatch,
   ]);
-
 }
