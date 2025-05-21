@@ -2,6 +2,7 @@ import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
 import usePaginationStore, { defaultPagination } from "./usePaginationStore";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import Loading from "@/app/(dashboard)/leaderboard/UI/Loading";
 
 interface Props {
   totalPageCount: number | undefined;
@@ -35,17 +36,22 @@ export default function Pagination({ totalPageCount = 0 }: Props) {
     });
   };
 
+
   return (
     <>
-      <TablePagination
-        component="div"
-        count={totalPageCount}
-        page={pagination.page}
-        onPageChange={handleChangePage}
-        rowsPerPage={pagination.rowsPerPage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage=""
-      />
+      {totalPageCount === 0 ? (
+        <Loading message="Loading..." />
+      ) : (
+        <TablePagination
+          component="div"
+          count={totalPageCount}
+          page={pagination.page}
+          onPageChange={handleChangePage}
+          rowsPerPage={pagination.rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+          labelRowsPerPage=""
+        />
+      )}
     </>
   );
 }

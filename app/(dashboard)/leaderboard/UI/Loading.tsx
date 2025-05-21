@@ -22,9 +22,9 @@ const Loading = ({ message }: Props) => {
   return (
     <Typography
       sx={{
-        display: "flex",             // enable flex
-        alignItems: "center",        // vertical centering
-        justifyContent: "center",    // horizontal centering (optional)
+        display: "flex", // enable flex
+        alignItems: "center", // vertical centering
+        justifyContent: "center", // horizontal centering (optional)
         background: "linear-gradient(90deg, #ccc 25%, #e0e0e0 50%, #ccc 75%)",
         backgroundSize: "200% 100%",
         animation: `${wave} 500ms linear infinite`,

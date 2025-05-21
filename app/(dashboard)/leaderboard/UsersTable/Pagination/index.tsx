@@ -1,6 +1,6 @@
 import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
-import Loading from "./Loading";
+import Loading from "../../UI/Loading";
 import usePaginationStore from "./usePaginationStore";
 
 interface Props {

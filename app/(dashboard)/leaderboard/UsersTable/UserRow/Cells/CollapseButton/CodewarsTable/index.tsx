@@ -11,7 +11,7 @@ import usePaginationQuery from "./Pagination/usePaginationQuery";
 const CodewarsTable = () => {
   const { currentUser } = useCurrentUserContext();
   const selectedUser = useUsersStore((state) => state.user.selectedUser);
-  const { isError, isLoading, data } = usePaginationQuery();
+  const { isError, isLoading, data, error } = usePaginationQuery();
 
   // console.log(
   //   "data?.totalItems >>>>",
@@ -20,7 +20,8 @@ const CodewarsTable = () => {
   //   selectedUser
   // );
 
-  if (isError) return <Error />;
+  if (isError || (error && currentUser.email === selectedUser?.email))
+    return <Error />;
 
   if (isLoading && currentUser.email === selectedUser?.email)
     return (
