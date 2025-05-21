@@ -5,6 +5,10 @@ import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 type Store = {
+  diamonds: {
+    counter: Record<string, number>;
+    isCollected: Record<string, boolean>;
+  };
   // user: {
   //   selectedUser?: AuthenticatedUser;
   //   isCollapsed: Record<string, boolean>;
@@ -21,6 +25,7 @@ type Store = {
 export const useCollectButtonStore = create<Store>()(
   persist(
     immer((set) => ({
+      diamonds: { counter: {}, isCollected: {} },
       // user: { isCollapsed: {}, untrackedChallengesAvailable: {} },
       // setSelectedUser: (selectedUser) =>
       //   set((state) => {
