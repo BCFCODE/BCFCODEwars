@@ -30,7 +30,7 @@ BCFCODE is a place for tech enthusiasts who value creativity and collaboration. 
 
 <p align="center">
   <a href="https://github.com/BCFCODEteam">
-    <img src="/public/BCFCODE-LOGO.jpg" alt="BCFCODE LOGO">
+    <img src="https://res.cloudinary.com/ds8pptoh2/image/upload/v1747825921/BCFCODE-LOGO_vtfegn.jpg" alt="BCFCODE LOGO">
   </a>
 </p>
 
