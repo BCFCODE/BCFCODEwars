@@ -21,12 +21,7 @@ const OpenButton = () => {
           size="small"
           onClick={() => handleOpen()}
         >
-          {!isCollapsed ? (
-            // &&  currentUser.email === selectedUser?.email
-            <KeyboardArrowUpIcon />
-          ) : (
-            <KeyboardArrowDownIcon />
-          )}
+          {!isCollapsed ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
         </IconButton>
       )}
     </>

@@ -1,14 +1,18 @@
-import useChallengeList from "./useDiffAndUpdateList";
-import useDispatchActions from "./useDispatchActions";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import { useUsersStore } from "@/app/store/users";
 
 const useHandleOpen = () => {
-  
-  const { dispatchActions } = useDispatchActions();
-  const { fetchAndShowChallenges } = useChallengeList();
+  const { currentUser } = useCurrentUserContext();
+  const { setSelectedUser } = useUsersStore((state) => state);
+  const isCollapsed = useUsersStore(
+    (state) => state.user.isCollapsed[currentUser.email] ?? true
+  );
+  const setIsCollapsed = useUsersStore((state) => state.setIsCollapsed);
+
 
   const handleOpen = async () => {
-    fetchAndShowChallenges();
-    dispatchActions();
+    setSelectedUser({ ...currentUser });
+    setIsCollapsed(currentUser.email, !isCollapsed);
   };
 
   return { handleOpen };
