@@ -4,6 +4,7 @@ interface PersistKeys {
   codewarsTablePaginationQuery: string;
   users: string;
   codewars: string;
+  collectButton: string;
 }
 
 export const PERSIST_KEYS: PersistKeys = {
@@ -12,4 +13,5 @@ export const PERSIST_KEYS: PersistKeys = {
   codewarsTablePaginationQuery: "zustand:codewars-table-pagination-query",
   users: "zustand:users",
   codewars: "zustand:codewars",
+  collectButton: "zustand:collect-diamonds-button",
 };
