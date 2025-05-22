@@ -85,6 +85,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                 diamondsContextDispatch({ type: "SET_ERROR", isError: false });
 
                 const { data: selectedSingleChallenge } = response;
+                
                 const collectedDiamondsCount = calculateDiamondsFromChallenge(
                   selectedSingleChallenge
                 );
