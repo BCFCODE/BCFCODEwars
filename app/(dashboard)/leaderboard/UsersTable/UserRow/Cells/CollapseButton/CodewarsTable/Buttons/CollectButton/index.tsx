@@ -7,7 +7,6 @@ import {
   iconButtonStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
 
-import DiamondsService from "@/app/services/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 import DiamondIcon from "@mui/icons-material/Diamond";
@@ -15,13 +14,14 @@ import { Box, IconButton, Typography } from "@mui/material";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import { useSession } from "next-auth/react";
 import useCollectDiamonds from "./hooks/useCollectDiamonds";
-
 import CodewarsAPIService from "@/app/api/services/codewars";
 import { useCodewarsStore } from "@/app/store/codewars";
+import {
+  calculateDiamondsFromChallenge,
+  getDiamondsByCodewarsRank,
+} from "./utils";
 
-const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
-const { collectDiamonds } = new DiamondsService();
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
@@ -51,7 +51,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     return (
       <Box sx={diamondBoxStyles}>
         <Typography sx={counterStyles}>
-          {calculateCodewarsDiamondsCount(
+          {getDiamondsByCodewarsRank(
             currentChallenge.moreDetails?.rank.id ?? 8
           )}
         </Typography>
@@ -85,7 +85,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                 diamondsContextDispatch({ type: "SET_ERROR", isError: false });
 
                 const { data: selectedSingleChallenge } = response;
-                const { collectedDiamondsCount } = await collectDiamonds(
+                const collectedDiamondsCount = calculateDiamondsFromChallenge(
                   selectedSingleChallenge
                 );
 
