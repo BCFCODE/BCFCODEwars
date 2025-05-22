@@ -1,5 +1,5 @@
 const codewarsQueryKeys = {
-  pagination: "codeChallenges.list/pagination",
+  pagination: "codewars-list-pagination",
   getSingleChallenge: "codewars-getSingleChallenge"
 } as const;
 

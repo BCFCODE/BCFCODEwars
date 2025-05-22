@@ -1,11 +1,14 @@
 import CodewarsAPIService from "@/app/api/services/codewars";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 
 const { getSingleChallenge } = new CodewarsAPIService();
 
-const useCollectButtonQuery = () => {
+const useCollectButtonQuery = (
+  currentChallenge: CodewarsCompletedChallenge
+) => {
   const { currentUser } = useCurrentUserContext();
   return useQuery({
     queryKey: [],

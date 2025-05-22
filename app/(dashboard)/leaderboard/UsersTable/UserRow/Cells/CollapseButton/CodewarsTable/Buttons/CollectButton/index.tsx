@@ -41,7 +41,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     isError,
     success,
     isDiamondIconButtonDisabled,
-    codewarsContextDispatch,
     diamondsContextDispatch,
     collectButtonDispatch,
   } = useCollectDiamonds();
@@ -105,10 +104,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                   };
 
                 setSelectedChallenge(selectedChallenge);
-                // codewarsContextDispatch({
-                //   type: "SET_SELECTED_CHALLENGE",
-                //   selectedChallenge,
-                // });
               }
 
               if (!response.success) {
