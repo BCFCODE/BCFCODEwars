@@ -15,7 +15,7 @@ export interface Context {}
 export interface CodewarsState extends Context {
   codewarsUsers?: CodewarsUser[];
   completedChallenges: CodewarsCompletedChallenge[];
-  selectedChallenge?: CodewarsCompletedChallenge;
+  // selectedChallenge?: CodewarsCompletedChallenge;
   pageNumber: number;
   isDisabled: boolean;
   isError: boolean;
@@ -31,10 +31,10 @@ export type CodewarsAction =
       type: "SET_COMPLETED_CHALLENGES";
       completedChallenges: CodewarsCompletedChallenge[];
     }
-  | {
-      type: "SET_SELECTED_CHALLENGE";
-      selectedChallenge: CodewarsCompletedChallenge;
-    }
+  // | {
+  //     type: "SET_SELECTED_CHALLENGE";
+  //     selectedChallenge: CodewarsCompletedChallenge;
+  //   }
   | { type: "SET_ERROR"; isError: boolean }
   | { type: "SET_LOADING"; isLoading: boolean }
   | { type: "SET_PAGE_NUMBER"; pageNumber: number };
@@ -54,9 +54,9 @@ const codewarsReducer = (
     case "SET_COMPLETED_CHALLENGES": {
       return { ...state, completedChallenges: action.completedChallenges };
     }
-    case "SET_SELECTED_CHALLENGE": {
-      return { ...state, selectedChallenge: action.selectedChallenge };
-    }
+    // case "SET_SELECTED_CHALLENGE": {
+    //   return { ...state, selectedChallenge: action.selectedChallenge };
+    // }
     case "SET_LOADING": {
       return { ...state, isLoading: action.isLoading };
     }

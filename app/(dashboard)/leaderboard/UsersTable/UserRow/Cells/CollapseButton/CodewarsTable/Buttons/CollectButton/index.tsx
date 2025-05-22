@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import useCollectDiamonds from "./hooks/useCollectDiamonds";
 
 import CodewarsAPIService from "@/app/api/services/codewars";
+import { useCodewarsStore } from "@/app/store/codewars";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
@@ -29,6 +30,9 @@ interface Props {
 const CollectDiamonds = ({ currentChallenge }: Props) => {
   const session = useSession().data;
   const { currentUser } = useCurrentUserContext();
+  const setSelectedChallenge = useCodewarsStore(
+    (state) => state.setSelectedChallenge
+  );
   const {
     isLoading,
     counter,
@@ -100,10 +104,11 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                     // isUntracked: currentChallenge.isUntracked ?? false,
                   };
 
-                codewarsContextDispatch({
-                  type: "SET_SELECTED_CHALLENGE",
-                  selectedChallenge,
-                });
+                setSelectedChallenge(selectedChallenge);
+                // codewarsContextDispatch({
+                //   type: "SET_SELECTED_CHALLENGE",
+                //   selectedChallenge,
+                // });
               }
 
               if (!response.success) {
