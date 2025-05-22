@@ -3,7 +3,6 @@ import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext"
 import diamondsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 
 const { getSingleChallenge } = new CodewarsAPIService();
 
