@@ -115,13 +115,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                 });
                 collectButtonDispatch({ type: "RESET_COUNTER" });
               }
-              // handleClick({
-              //   codewarsContextDispatch,
-              //   collectButtonDispatch,
-              //   currentChallenge,
-              //   diamondsContextDispatch,
-              //   currentUser,
-              // });
             }}
           >
             <DiamondIcon

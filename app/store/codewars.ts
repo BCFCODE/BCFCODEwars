@@ -6,12 +6,9 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 
 type Store = {
   challenge: {
-    selectedChallenge: Record<string, CodewarsCompletedChallenge>;
+    selectedChallenge?: CodewarsCompletedChallenge;
   };
-  setSelectedChallenge: (payload: {
-    username: string;
-    selectedChallenge: CodewarsCompletedChallenge;
-  }) => void;
+  setSelectedChallenge: (selectedChallenge: CodewarsCompletedChallenge) => void;
   // setIsCollapsed: (username: string, isCollapsed: boolean) => void;
   // checkUntrackedChallengesAvailability: (
   //   email: string,
@@ -22,10 +19,10 @@ type Store = {
 export const useCodewarsStore = create<Store>()(
   persist(
     immer((set) => ({
-      challenge: { selectedChallenge: {} },
-      setSelectedChallenge: ({ username, selectedChallenge }) =>
+      challenge: {},
+      setSelectedChallenge: (selectedChallenge) =>
         set((state) => {
-          state.challenge.selectedChallenge[username] = selectedChallenge;
+          state.challenge.selectedChallenge = selectedChallenge;
         }),
       // setIsCollapsed: (email, isCollapsed) =>
       //   set((state) => {
