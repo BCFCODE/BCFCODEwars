@@ -3,7 +3,6 @@ import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext"
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { useQuery } from "@tanstack/react-query";
 import { getQueryKey } from "../utils";
-import { useCollectButtonStore } from "../../store/collectButton";
 
 const { getSingleChallenge } = new CodewarsAPIService();
 
@@ -11,11 +10,11 @@ const useCollectButtonQuery = (
   currentChallenge: CodewarsCompletedChallenge
 ) => {
   const { currentUser } = useCurrentUserContext();
-  const isClicked = useCollectButtonStore((state) => state.button.isClicked);
+  // const isClicked = useCollectButtonStore((state) => state.button.isClicked);
 
   const queryKey = getQueryKey({ currentUser, currentChallenge });
 
-  return useQuery({
+  return useQuery<CodewarsCompletedChallenge>({
     queryKey,
     queryFn: async () => {
       const { success, data, error } = await getSingleChallenge(
@@ -23,12 +22,12 @@ const useCollectButtonQuery = (
         currentChallenge.id
       );
 
-      if (!success || error)
+      if (!success || error || !data)
         throw new Error("Failed to fetch single challenge.");
 
       return data;
     },
-    enabled: isClicked,
+    enabled: false,
   });
 };
 

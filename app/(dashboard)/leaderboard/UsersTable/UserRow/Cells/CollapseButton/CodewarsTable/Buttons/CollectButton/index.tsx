@@ -20,6 +20,7 @@ import {
   calculateDiamondsFromChallenge,
   getDiamondsByCodewarsRank,
 } from "./utils";
+import useCollectButtonQuery from "./hooks/useCollectButtonQuery";
 
 const { getSingleChallenge } = new CodewarsAPIService();
 
@@ -33,6 +34,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   const setSelectedChallenge = useCodewarsStore(
     (state) => state.setSelectedChallenge
   );
+  const {data} = useCollectButtonQuery(currentChallenge)
   const {
     isLoading,
     counter,
