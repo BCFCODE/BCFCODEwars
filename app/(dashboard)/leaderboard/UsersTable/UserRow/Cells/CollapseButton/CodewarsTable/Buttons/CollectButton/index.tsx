@@ -34,7 +34,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   const setSelectedChallenge = useCodewarsStore(
     (state) => state.setSelectedChallenge
   );
-  const {data} = useCollectButtonQuery(currentChallenge)
+  const { data } = useCollectButtonQuery(currentChallenge);
   const {
     isLoading,
     counter,
@@ -88,25 +88,27 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
 
                 const { data: selectedSingleChallenge } = response;
 
-                const collectedDiamondsCount = calculateDiamondsFromChallenge(
-                  selectedSingleChallenge
-                );
+                if (selectedSingleChallenge) {
+                  const collectedDiamondsCount = calculateDiamondsFromChallenge(
+                    selectedSingleChallenge
+                  );
 
-                collectButtonDispatch({
-                  type: "SUCCESSFUL_RESPONSE",
-                  collectedDiamondsCount,
-                  success: true,
-                });
+                  collectButtonDispatch({
+                    type: "SUCCESSFUL_RESPONSE",
+                    collectedDiamondsCount,
+                    success: true,
+                  });
 
-                const selectedChallenge: Required<CodewarsCompletedChallenge> =
-                  {
-                    ...currentChallenge,
-                    rewardStatus: RewardStatus.ClaimedDiamonds,
-                    moreDetails: selectedSingleChallenge,
-                    // isUntracked: currentChallenge.isUntracked ?? false,
-                  };
+                  const selectedChallenge: Required<CodewarsCompletedChallenge> =
+                    {
+                      ...currentChallenge,
+                      rewardStatus: RewardStatus.ClaimedDiamonds,
+                      moreDetails: selectedSingleChallenge,
+                      // isUntracked: currentChallenge.isUntracked ?? false,
+                    };
 
-                setSelectedChallenge(selectedChallenge);
+                  setSelectedChallenge(selectedChallenge);
+                }
               }
 
               if (!response.success) {

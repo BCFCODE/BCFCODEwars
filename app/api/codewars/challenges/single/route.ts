@@ -1,9 +1,12 @@
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import {
+  CodewarsCompletedChallenge,
+  CodewarsSingleChallenge,
+} from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
 export interface GetSingleChallengeResponse {
   success: boolean;
-  data?: CodewarsCompletedChallenge
+  data?: CodewarsSingleChallenge;
   error?: string;
 }
 
@@ -38,7 +41,7 @@ export async function GET(
 
     return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error) {
-    console.error("Failed to fetch single challenge");
+    // console.error("Failed to fetch single challenge");
     return NextResponse.json(
       {
         success: false,
