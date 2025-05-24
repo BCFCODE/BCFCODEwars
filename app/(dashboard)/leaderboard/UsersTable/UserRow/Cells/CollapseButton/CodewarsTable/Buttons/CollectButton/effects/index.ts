@@ -14,7 +14,7 @@ interface Props
 }
 
 const useCollectEffects = ({
-  counter,
+  // counter,
   isCollected,
   isError,
   success,
@@ -27,7 +27,7 @@ const useCollectEffects = ({
   useCounterEffect({
     collectButtonDispatch,
     collectedDiamondsCount,
-    counter,
+    // counter,
     isError,
     success,
     currentUserDispatch,

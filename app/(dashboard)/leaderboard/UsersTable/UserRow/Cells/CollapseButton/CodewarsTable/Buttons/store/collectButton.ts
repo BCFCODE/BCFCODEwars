@@ -18,6 +18,7 @@ type Store = {
     isCollected: boolean;
   };
   increaseCounter: () => void;
+  resetCounter: () => void;
 };
 
 export const useCollectButtonStore = create<Store>()(
@@ -39,6 +40,10 @@ export const useCollectButtonStore = create<Store>()(
       increaseCounter: () =>
         set((state) => {
           state.button.counter++;
+        }),
+      resetCounter: () =>
+        set((state) => {
+          state.button.counter = 0;
         }),
     })),
     {

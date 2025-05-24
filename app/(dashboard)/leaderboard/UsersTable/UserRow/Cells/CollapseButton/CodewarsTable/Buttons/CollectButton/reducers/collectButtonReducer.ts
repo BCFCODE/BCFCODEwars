@@ -2,18 +2,18 @@ export interface CollectDiamondsState {
   isLoading: boolean;
   isError: boolean;
   isCollected: boolean;
-  counter: number;
+  // counter: number;
   collectedDiamondsCount?: number;
   success: boolean;
 }
 
 export type CollectButtonAction =
   | { type: "LOADING..."; isLoading: boolean }
-  | {
-      type: "DIAMOND_COUNTS";
-      counter: number;
-    }
-  | { type: "RESET_COUNTER" }
+  // | {
+  //     type: "DIAMOND_COUNTS";
+  //     counter: number;
+  //   }
+  // | { type: "RESET_COUNTER" }
   | { type: "DIAMONDS_COLLECTED" }
   | {
       type: "SUCCESSFUL_RESPONSE";
@@ -27,7 +27,7 @@ export type CollectButtonAction =
   | { type: "ERROR?"; isError: boolean };
 
 export const initialCollectDiamondsState: CollectDiamondsState = {
-  counter: 0,
+  // counter: 0,
   isLoading: false,
   isError: false,
   isCollected: false,
@@ -45,13 +45,13 @@ export default function collectButtonReducer(
         isLoading: action.isLoading,
         isError: !action.isLoading, // if loading is true set isError to false
       };
-    case "DIAMOND_COUNTS":
-      return {
-        ...state,
-        counter: action.counter,
-      };
-    case "RESET_COUNTER":
-      return { ...state, counter: 0 };
+    // case "DIAMOND_COUNTS":
+    //   return {
+    //     ...state,
+    //     counter: action.counter,
+    //   };
+    // case "RESET_COUNTER":
+    //   return { ...state, counter: 0 };
     case "DIAMONDS_COLLECTED":
       return { ...state, isCollected: true };
     case "SUCCESSFUL_RESPONSE":

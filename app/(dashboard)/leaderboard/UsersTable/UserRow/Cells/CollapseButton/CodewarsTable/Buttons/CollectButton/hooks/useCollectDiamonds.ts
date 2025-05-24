@@ -29,7 +29,7 @@ export default function useCollectDiamonds(): UseCollectDiamonds {
   const { collectState, collectButtonDispatch } = useCollectButtonState();
 
   const {
-    counter,
+    // counter,
     isCollected,
     isError,
     isLoading,
@@ -39,7 +39,7 @@ export default function useCollectDiamonds(): UseCollectDiamonds {
 
   // Run Effects
   useCollectEffects({
-    counter,
+    // counter,
     isCollected,
     isError,
     success,
@@ -52,7 +52,7 @@ export default function useCollectDiamonds(): UseCollectDiamonds {
 
   return {
     isLoading,
-    counter,
+    // counter,
     collectedDiamondsCount,
     isCollected,
     isDiamondIconButtonDisabled,

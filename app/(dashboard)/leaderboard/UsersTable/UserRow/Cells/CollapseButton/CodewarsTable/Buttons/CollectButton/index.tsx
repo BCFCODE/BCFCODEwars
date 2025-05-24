@@ -29,9 +29,11 @@ interface Props {
 }
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
+  const counter = useCollectButtonStore((state) => state.button.counter);
   const increaseCounter = useCollectButtonStore(
     (state) => state.increaseCounter
   );
+  const resetCounter = useCollectButtonStore((state) => state.resetCounter);
   const session = useSession().data;
   const { currentUser } = useCurrentUserContext();
   const setSelectedChallenge = useCodewarsStore(
@@ -39,7 +41,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   );
   const {
     isLoading,
-    counter,
+    // counter,
     collectedDiamondsCount,
     isCollected,
     isError,
@@ -120,7 +122,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                   type: "!SUCCESSFUL_RESPONSE",
                   success: false,
                 });
-                collectButtonDispatch({ type: "RESET_COUNTER" });
+                resetCounter();
               }
             }}
           >

@@ -1,10 +1,11 @@
 import { Dispatch, useEffect, useRef, useState } from "react";
 import { CollectButtonAction } from "../reducers/collectButtonReducer";
 import { CurrentUserAction } from "@/app/context/reducers/currentUser";
+import { useCollectButtonStore } from "../../store/collectButton";
 
 interface Props {
   // isLoading: boolean;
-  counter: number;
+  // counter: number;
   isError: boolean;
   // isCollected: boolean;
   success: boolean;
@@ -16,13 +17,15 @@ interface Props {
 export default function useCounterEffect({
   collectButtonDispatch,
   collectedDiamondsCount,
-  counter,
+  // counter,
   // isCollected,
   isError,
   // isLoading,
   success,
   currentUserDispatch,
 }: Props) {
+  const counter = useCollectButtonStore((state) => state.button.counter);
+  const increaseCounter = useCollectButtonStore((state) => state.increaseCounter);
   const [isCounting, setIsCounting] = useState(true);
   const timeRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -31,7 +34,8 @@ export default function useCounterEffect({
 
     if (success) {
       timeRef.current = setTimeout(() => {
-        collectButtonDispatch({ type: "DIAMOND_COUNTS", counter: counter + 1 });
+        increaseCounter()
+        // collectButtonDispatch({ type: "DIAMOND_COUNTS", counter: counter + 1 });
       }, 50);
     }
 
