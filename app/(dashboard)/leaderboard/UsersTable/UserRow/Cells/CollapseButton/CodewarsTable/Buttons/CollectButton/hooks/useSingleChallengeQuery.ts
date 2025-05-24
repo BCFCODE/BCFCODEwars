@@ -1,31 +1,45 @@
 import CodewarsAPIService from "@/app/api/services/codewars";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/codewars";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import {
+  CodewarsCompletedChallenge,
+  CodewarsSingleChallenge,
+} from "@/types/codewars";
 import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
 
 const { getSingleChallenge } = new CodewarsAPIService();
 
-interface TQueryFnData {
-  isUserOnPersonalDashboard: boolean;
-}
-
-interface Props {
+interface UseSingleChallengeQueryProps {
   currentChallenge: CodewarsCompletedChallenge;
 }
 
-const useSingleChallengeQuery = ({ currentChallenge }: Props) => {
+const useSingleChallengeQuery = ({
+  currentChallenge,
+}: UseSingleChallengeQueryProps) => {
   const { currentUser } = useCurrentUserContext();
 
-  return useQuery<TQueryFnData, Error>({
-    queryKey: [codewarsQueryKeys.singleChallenge],
+  const username = currentUser?.codewars?.username;
+  const challengeId = currentChallenge?.id;
+
+  return useQuery<CodewarsSingleChallenge, Error, CodewarsSingleChallenge>({
+    queryKey: [codewarsQueryKeys.singleChallenge, username, challengeId],
     queryFn: async () => {
-      const response = await getSingleChallenge(
-        currentUser.codewars.username,
-        currentChallenge.id
+      if (!username || !challengeId) {
+        throw new Error("Missing username or challenge ID");
+      }
+
+      const { success, data, error } = await getSingleChallenge(
+        username,
+        challengeId
       );
-      return 
+
+      if (!success || !data || error) {
+        throw new Error(
+          `Failed to fetch challenge: ${error ?? "Unknown error"}`
+        );
+      }
+
+      return data;
     },
     enabled: false,
   });
