@@ -20,6 +20,7 @@ import {
   calculateDiamondsFromChallenge,
   getDiamondsByCodewarsRank,
 } from "./utils";
+import { useCollectButtonStore } from "../store/collectButton";
 
 const { getSingleChallenge } = new CodewarsAPIService();
 
@@ -28,6 +29,9 @@ interface Props {
 }
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
+  const increaseCounter = useCollectButtonStore(
+    (state) => state.increaseCounter
+  );
   const session = useSession().data;
   const { currentUser } = useCurrentUserContext();
   const setSelectedChallenge = useCodewarsStore(
@@ -85,26 +89,28 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                 diamondsContextDispatch({ type: "SET_ERROR", isError: false });
 
                 const { data: selectedSingleChallenge } = response;
-                
-                const collectedDiamondsCount = calculateDiamondsFromChallenge(
-                  selectedSingleChallenge
-                );
 
-                collectButtonDispatch({
-                  type: "SUCCESSFUL_RESPONSE",
-                  collectedDiamondsCount,
-                  success: true,
-                });
+                if (selectedSingleChallenge) {
+                  const collectedDiamondsCount = calculateDiamondsFromChallenge(
+                    selectedSingleChallenge
+                  );
 
-                const selectedChallenge: Required<CodewarsCompletedChallenge> =
-                  {
-                    ...currentChallenge,
-                    rewardStatus: RewardStatus.ClaimedDiamonds,
-                    moreDetails: selectedSingleChallenge,
-                    // isUntracked: currentChallenge.isUntracked ?? false,
-                  };
+                  collectButtonDispatch({
+                    type: "SUCCESSFUL_RESPONSE",
+                    collectedDiamondsCount,
+                    success: true,
+                  });
 
-                setSelectedChallenge(selectedChallenge);
+                  const selectedChallenge: Required<CodewarsCompletedChallenge> =
+                    {
+                      ...currentChallenge,
+                      rewardStatus: RewardStatus.ClaimedDiamonds,
+                      moreDetails: selectedSingleChallenge,
+                      // isUntracked: currentChallenge.isUntracked ?? false,
+                    };
+
+                  setSelectedChallenge(selectedChallenge);
+                }
               }
 
               if (!response.success) {

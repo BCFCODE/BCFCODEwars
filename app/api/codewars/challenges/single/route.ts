@@ -1,9 +1,9 @@
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { CodewarsSingleChallenge } from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
 export interface GetSingleChallengeResponse {
   success: boolean;
-  data?: CodewarsCompletedChallenge
+  data?: CodewarsSingleChallenge
   error?: string;
 }
 

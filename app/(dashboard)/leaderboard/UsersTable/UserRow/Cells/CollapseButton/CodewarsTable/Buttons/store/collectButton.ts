@@ -7,7 +7,6 @@ type Store = {
   button: {
     isLoading: boolean;
     isError: boolean;
-    isCollected: boolean;
     counter: number;
     collectedDiamondsCount?: number;
     success: boolean;
@@ -18,10 +17,7 @@ type Store = {
     isError: boolean;
     isCollected: boolean;
   };
-  // button: {
-  //   isClicked: boolean;
-  // };
-  // setIsClicked: (isClicked: boolean) => void;
+  increaseCounter: () => void;
 };
 
 export const useCollectButtonStore = create<Store>()(
@@ -31,7 +27,7 @@ export const useCollectButtonStore = create<Store>()(
         counter: 0,
         isLoading: false,
         isError: false,
-        isCollected: false,
+        // isCollected: false,
         success: false,
       },
       diamonds: {
@@ -40,11 +36,10 @@ export const useCollectButtonStore = create<Store>()(
         isError: false,
         isCollected: false,
       },
-      // button: { isClicked: false },
-      // setIsClicked: (isClicked) =>
-      //   set((state) => {
-      //     state.button.isClicked = isClicked;
-      //   }),
+      increaseCounter: () =>
+        set((state) => {
+          state.button.counter++;
+        }),
     })),
     {
       name: PERSIST_KEYS.collectButton,
