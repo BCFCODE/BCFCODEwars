@@ -21,6 +21,7 @@ import {
   getDiamondsByCodewarsRank,
 } from "./utils";
 import { useCollectButtonStore } from "../store/collectButton";
+import useSingleChallengeQuery from "./hooks/useSingleChallengeQuery";
 
 const { getSingleChallenge } = new CodewarsAPIService();
 
@@ -29,13 +30,13 @@ interface Props {
 }
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
-  const counter = useCollectButtonStore((state) => state.button.counter);
-  const increaseCounter = useCollectButtonStore(
-    (state) => state.increaseCounter
-  );
-  const resetCounter = useCollectButtonStore((state) => state.resetCounter);
   const session = useSession().data;
   const { currentUser } = useCurrentUserContext();
+  const isUserOnPersonalDashboard = session?.user?.email === currentUser.email;
+  const counter = useCollectButtonStore((state) => state.button.counter);
+  const resetCounter = useCollectButtonStore((state) => state.resetCounter);
+  const { data, refetch } = useSingleChallengeQuery({ currentChallenge });
+
   const setSelectedChallenge = useCodewarsStore(
     (state) => state.setSelectedChallenge
   );
@@ -50,8 +51,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     diamondsContextDispatch,
     collectButtonDispatch,
   } = useCollectDiamonds();
-
-  const isUserOnPersonalDashboard = session?.user?.email === currentUser.email;
 
   if (currentChallenge.rewardStatus === RewardStatus.ClaimedDiamonds)
     return (
@@ -78,6 +77,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
             disabled={isDiamondIconButtonDisabled || !isUserOnPersonalDashboard}
             sx={iconButtonStyles}
             onClick={async () => {
+              refetch();
               diamondsContextDispatch({ type: "LOADING..." });
 
               collectButtonDispatch({ type: "LOADING...", isLoading: true });
