@@ -1,15 +1,23 @@
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export interface GetSingleChallengeResponse {
+  success: boolean;
+  data?: CodewarsCompletedChallenge
+  error?: string;
+}
+
+export async function GET(
+  request: NextRequest
+): Promise<NextResponse<GetSingleChallengeResponse>> {
   const { searchParams } = new URL(request.url);
   const challengeId = searchParams.get("challengeId");
 
-  // Validate input
   if (!challengeId) {
     return NextResponse.json(
       {
         success: false,
-        reason: "challengeId field is required to fetch codewars challenge.",
+        error: "challengeId field is required to fetch codewars challenge.",
       },
       { status: 400 }
     );
@@ -24,7 +32,7 @@ export async function GET(request: NextRequest) {
 
     if (!response.ok)
       return NextResponse.json(
-        { success: false, reason: data.reason },
+        { success: false, error: data.reason },
         { status: 404 }
       );
 
@@ -34,7 +42,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        reason:
+        error:
           "An unknown network error occurred while fetching codewars challenge.",
       },
       { status: 500 }

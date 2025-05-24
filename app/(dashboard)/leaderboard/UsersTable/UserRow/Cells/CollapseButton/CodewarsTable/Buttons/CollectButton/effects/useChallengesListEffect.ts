@@ -2,6 +2,7 @@ import DatabaseAPIService from "@/app/api/services/db";
 import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import { useCodewarsStore } from "@/app/store/codewars";
 import { useEffect, useRef } from "react";
 
 const { postCurrentUser } = new DatabaseAPIService();
@@ -17,7 +18,10 @@ export default function useChallengesListEffect({
   isDiamondIconButtonDisabled,
 }: Props) {
   const { currentUser } = useCurrentUserContext();
-  const { selectedChallenge } = useCodewarsContext();
+  const selectedChallenge = useCodewarsStore(
+    (state) => state.challenge.selectedChallenge
+  );
+  // const { selectedChallenge } = useCodewarsContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
   const isListUpdatedRef = useRef(false);
   const isDiamondsUpdatedRef = useRef(false);

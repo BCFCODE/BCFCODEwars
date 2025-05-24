@@ -4,6 +4,7 @@ import { CompletedChallengesQueryData } from "@/app/(dashboard)/leaderboard/User
 import { CodewarsSingleChallenge } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
 import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route";
+import { GetSingleChallengeResponse } from "../codewars/challenges/single/route";
 
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;
@@ -30,21 +31,32 @@ class CodewarsAPIService {
 
   getSingleChallenge = async (
     username: string,
-    id: string,
-    options?: RequestInit
-  ): Promise<
-    | { success: true; data: CodewarsSingleChallenge }
-    | { success: false; reason: string }
-  > =>
-    await fetch(
-      `${this.endpoint}/challenges/single?username=${username}&challengeId=${id}`,
-      { ...options }
-    )
-      .then((res) => res.json())
-      .catch((error) => {
-        // console.error(error);
-        throw new Error("Failed to fetch completed challenges");
+    challengeId: string
+  ): Promise<GetSingleChallengeResponse> => {
+    const url = new URL(`${this.endpoint}/challenges/single`);
+    url.searchParams.set("username", username);
+    url.searchParams.set("challengeId", challengeId);
+
+    try {
+      const response = await fetch(url.toString(), {
+        method: "GET",
+        cache: "no-store",
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Failed to fetch challenge: ${response.status} ${response.statusText} - ${errorText}`
+        );
+      }
+
+      const { data }: GetSingleChallengeResponse = await response.json();
+      return { success: true, data };
+    } catch (error) {
+      // console.error("getSingleChallenge error:", error);
+      throw new Error("Failed to fetch single Codewars challenge.");
+    }
+  };
 }
 
 export default CodewarsAPIService;
