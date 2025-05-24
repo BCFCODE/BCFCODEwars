@@ -1,29 +1,50 @@
 import { PERSIST_KEYS } from "@/app/store/storeKeys";
-import { AuthenticatedUser } from "@/types/users";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 type Store = {
   button: {
-    isClicked: boolean;
+    isLoading: boolean;
+    isError: boolean;
+    isCollected: boolean;
+    counter: number;
+    collectedDiamondsCount?: number;
+    success: boolean;
   };
   diamonds: {
-    counter: number;
+    isDiamondIconButtonDisabled: boolean;
+    isLoading: boolean;
+    isError: boolean;
     isCollected: boolean;
   };
-  setIsClicked: (isClicked: boolean) => void;
+  // button: {
+  //   isClicked: boolean;
+  // };
+  // setIsClicked: (isClicked: boolean) => void;
 };
 
 export const useCollectButtonStore = create<Store>()(
   persist(
     immer((set) => ({
-      diamonds: { counter: 0, isCollected: false },
-      button: { isClicked: false },
-      setIsClicked: (isClicked) =>
-        set((state) => {
-          state.button.isClicked = isClicked;
-        }),
+      button: {
+        counter: 0,
+        isLoading: false,
+        isError: false,
+        isCollected: false,
+        success: false,
+      },
+      diamonds: {
+        isDiamondIconButtonDisabled: false,
+        isLoading: false,
+        isError: false,
+        isCollected: false,
+      },
+      // button: { isClicked: false },
+      // setIsClicked: (isClicked) =>
+      //   set((state) => {
+      //     state.button.isClicked = isClicked;
+      //   }),
     })),
     {
       name: PERSIST_KEYS.collectButton,
