@@ -3,7 +3,6 @@
 import DatabaseAPIService from "@/app/api/services/db";
 import { auth } from "@/auth";
 import theme from "@/theme";
-import { baseURL } from "@/utils/constants";
 import { Leaderboard } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ExploreIcon from "@mui/icons-material/Explore";
@@ -11,15 +10,11 @@ import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { LinearProgress } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import {
-  dehydrate,
-  HydrationBoundary
-} from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import type { Navigation } from "@toolpad/core";
 import { NextAppProvider } from "@toolpad/core/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Metadata } from "next";
 import { Session } from "next-auth";
 import { SessionProvider, signIn, signOut } from "next-auth/react";
 import { headers } from "next/headers";
@@ -27,7 +22,6 @@ import Image from "next/image";
 import * as React from "react";
 import { ReactNode } from "react";
 import "../../styles/global.css";
-import DiamondsProvider from "./Diamonds";
 import ReactQueryProvider from "./ReactQuery";
 import getQueryClient from "./ReactQuery/queryClient";
 import usersQueryKeys from "./ReactQuery/queryKeys/users";
@@ -138,7 +132,7 @@ const Providers = async ({ children }: Props) => {
                 authentication={AUTHENTICATION}
                 theme={theme}
               >
-                <DiamondsProvider>{children}</DiamondsProvider>
+                {children}
                 <Analytics />
                 <SpeedInsights />
               </NextAppProvider>

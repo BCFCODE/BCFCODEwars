@@ -10,10 +10,6 @@ import {
   CurrentUserAction,
   CurrentUserContext as CurrentUserContextType,
 } from "../reducers/currentUser";
-import {
-  DiamondsAction,
-  DiamondsContextState,
-} from "../reducers/diamondsReducer";
 
 export const AllUsersContext = createContext<AllUsersContextType | null>(null);
 export const AllUsersDispatchContext =
@@ -28,7 +24,3 @@ export const CurrentUserDispatchContext =
 export const CodewarsContext = createContext<CodewarsState | null>(null);
 export const CodewarsDispatchContext =
   createContext<Dispatch<CodewarsAction> | null>(null);
-
-export const DiamondsContext = createContext<DiamondsContextState | null>(null);
-export const DiamondsDispatchContext =
-  createContext<React.Dispatch<DiamondsAction> | null>(null);
