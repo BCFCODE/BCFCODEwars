@@ -3,7 +3,7 @@ import { Diamonds } from "@/types/diamonds";
 export interface Context {}
 
 export interface DiamondsContextState extends Context {
-  data?: Diamonds;
+  data?: Diamonds[];
   isDiamondIconButtonDisabled: boolean;
   isCollected: boolean;
   isLoading: boolean;

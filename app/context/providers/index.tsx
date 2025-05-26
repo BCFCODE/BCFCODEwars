@@ -11,10 +11,7 @@ import MilitaryTechIcon from "@mui/icons-material/MilitaryTech";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { LinearProgress } from "@mui/material";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import {
-  dehydrate,
-  HydrationBoundary
-} from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import type { Navigation } from "@toolpad/core";
 import { NextAppProvider } from "@toolpad/core/nextjs";
 import { Analytics } from "@vercel/analytics/react";
@@ -138,7 +135,7 @@ const Providers = async ({ children }: Props) => {
                 authentication={AUTHENTICATION}
                 theme={theme}
               >
-                <DiamondsProvider>{children}</DiamondsProvider>
+                {children}
                 <Analytics />
                 <SpeedInsights />
               </NextAppProvider>

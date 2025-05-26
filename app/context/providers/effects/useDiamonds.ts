@@ -23,8 +23,8 @@ const useDiamonds = (): UseDiamonds => {
 
   useEffect(() => {
     (async () => {
-      const response = await getDiamonds({ cache: "no-store" });
-      
+      const response = await getDiamonds();
+      console.log('useDiamonds/useEffect/data', response.data)
       if (response.success) {
         diamondsDispatch({
           type: "SET_DIAMONDS",
