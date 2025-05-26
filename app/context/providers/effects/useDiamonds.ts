@@ -1,14 +1,12 @@
 'use client'
 
-import DiamondsAPIService from "@/app/api/services/diamonds";
-import { Dispatch, useEffect, useReducer } from "react";
+import { Dispatch, useReducer } from "react";
 import diamondsReducer, {
   DiamondsAction,
   DiamondsContextState,
   initialDiamondsState,
 } from "../../reducers/diamondsReducer";
 
-const { getDiamonds } = new DiamondsAPIService();
 
 interface UseDiamonds {
   diamondsState: DiamondsContextState;
@@ -20,25 +18,6 @@ const useDiamonds = (): UseDiamonds => {
     diamondsReducer,
     initialDiamondsState
   );
-
-  useEffect(() => {
-    (async () => {
-      const response = await getDiamonds();
-      console.log('useDiamonds/useEffect/data', response.data)
-      if (response.success) {
-        diamondsDispatch({
-          type: "SET_DIAMONDS",
-          payload: {
-            ...initialDiamondsState,
-            data: response.data,
-          },
-        });
-      } else {
-        diamondsDispatch({ type: "SET_LOADING", isLoading: true });
-        diamondsDispatch({ type: "SET_ERROR", isError: true });
-      }
-    })();
-  }, []);
 
   return { diamondsState, diamondsDispatch };
 };

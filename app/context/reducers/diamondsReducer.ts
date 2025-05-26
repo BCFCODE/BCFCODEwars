@@ -3,19 +3,19 @@ import { Diamonds } from "@/types/diamonds";
 export interface Context {}
 
 export interface DiamondsContextState extends Context {
-  data?: Diamonds[];
+  // data?: Diamonds[];
   isDiamondIconButtonDisabled: boolean;
-  isCollected: boolean;
-  isLoading: boolean;
-  isError: boolean;
+  // isCollected: boolean;
+  // isLoading: boolean;
+  // isError: boolean;
 }
 
 // Default (synchronous) state for diamonds
 export const initialDiamondsState: DiamondsContextState = {
   isDiamondIconButtonDisabled: false,
-  isLoading: false,
-  isError: false,
-  isCollected: false,
+  // isLoading: false,
+  // isError: false,
+  // isCollected: false,
 };
 
 export type DiamondsAction =
@@ -36,7 +36,7 @@ const diamondsReducer = (
       return {
         ...state,
         isDiamondIconButtonDisabled: true,
-        isCollected: false,
+        // isCollected: false,
       };
     // case "DIAMOND_BUTTON_CLICKED_AND_COUNTING_STARTED": {
     //   return { ...state, isCollected: action.isCollected };
@@ -44,26 +44,26 @@ const diamondsReducer = (
     case "!SUCCESSFUL_RESPONSE": {
       return { ...state, isDiamondIconButtonDisabled: false };
     }
-    case "SET_DIAMONDS": {
-      return { ...action.payload };
-    }
-    case "SET_LOADING": {
-      return { ...state, isLoading: action.isLoading };
-    }
-    case "SET_ERROR": {
-      return { ...state, isError: action.isError };
-    }
+    // case "SET_DIAMONDS": {
+    //   return { ...action.payload };
+    // }
+    // case "SET_LOADING": {
+    //   return { ...state, isLoading: action.isLoading };
+    // }
+    // case "SET_ERROR": {
+    //   return { ...state, isError: action.isError };
+    // }
     case "DISABLE_DIAMOND_ICON_BUTTON":
-      if (state.data) {
+      // if (state.data) {
         return {
           ...state,
           isDiamondIconButtonDisabled: false,
-          isCollected: true,
+          // isCollected: true,
         };
-      }
-    case "DIAMOND_COLLECTION_COUNTING_FINISHED": {
-      return { ...state, isCollected: false };
-    }
+      // }
+    // case "DIAMOND_COLLECTION_COUNTING_FINISHED": {
+    //   return { ...state, isCollected: false };
+    // }
     default:
       return state;
   }
