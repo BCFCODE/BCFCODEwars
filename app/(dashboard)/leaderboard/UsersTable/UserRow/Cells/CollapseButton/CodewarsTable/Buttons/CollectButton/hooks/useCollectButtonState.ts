@@ -3,7 +3,7 @@ import collectButtonReducer, {
   CollectButtonAction,
   CollectDiamondsState,
   initialCollectDiamondsState,
-} from "../../CollectDiamonds/reducers/collectButtonReducer";
+} from "../reducers/collectButtonReducer";
 
 // Alias for cleaner type usage
 export type CollectState = CollectDiamondsState;

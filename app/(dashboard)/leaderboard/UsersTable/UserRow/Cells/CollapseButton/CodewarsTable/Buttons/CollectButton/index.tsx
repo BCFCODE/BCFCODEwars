@@ -8,26 +8,35 @@ import {
 } from "@/app/(dashboard)/leaderboard/styles";
 
 import CodewarsAPIService from "@/app/api/services/codewars";
+import DatabaseAPIService from "@/app/api/services/db";
+import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
+import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import DiamondsService from "@/app/services/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
+import { useEffect, useRef, useState } from "react";
 import { useCollectButtonStore } from "../store/collectButton";
-import useCollectDiamonds from "./hooks/useCollectDiamonds";
-import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
+import useCollectButtonState from "./hooks/useCollectButtonState";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
 const { collectDiamonds } = new DiamondsService();
+const { postCurrentUser } = new DatabaseAPIService();
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
 }
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
+  const [isCounting, setIsCounting] = useState(true);
+  const timeRef = useRef<NodeJS.Timeout | null>(null);
+  const isListUpdatedRef = useRef(false);
+  const isDiamondsUpdatedRef = useRef(false);
   const session = useSession().data;
   const { currentUser } = useCurrentUserContext();
   const codewarsContextDispatch = useCodewarsDispatchContext();
@@ -37,15 +46,102 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   const setIsDiamondIconDisabled = useCollectButtonStore(
     (state) => state.setIsDiamondIconDisabled
   );
+  const { selectedChallenge } = useCodewarsContext();
+  const currentUserDispatch = useCurrentUserDispatchContext();
+
+  const { collectState, collectButtonDispatch } = useCollectButtonState();
+
   const {
-    isLoading,
     counter,
-    collectedDiamondsCount,
     isCollected,
     isError,
+    isLoading,
     success,
+    collectedDiamondsCount,
+  } = collectState;
+
+  useEffect(() => {
+    if (!isCounting) return;
+
+    if (success) {
+      timeRef.current = setTimeout(() => {
+        collectButtonDispatch({ type: "DIAMOND_COUNTS", counter: counter + 1 });
+      }, 50);
+    }
+
+    if (counter === collectedDiamondsCount) {
+      collectButtonDispatch({ type: "LOADING...", isLoading: false });
+      collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
+
+      setIsCounting(false);
+    }
+
+    return () => {
+      timeRef.current && clearTimeout(timeRef.current);
+    };
+  }, [
+    isError,
+    counter,
+    success,
+    isCounting,
+    collectedDiamondsCount,
     collectButtonDispatch,
-  } = useCollectDiamonds();
+  ]);
+
+  useEffect(() => {
+    if (isCollected && collectedDiamondsCount) setIsDiamondIconDisabled(false);
+    // diamondsContextDispatch({ type: "DISABLE_DIAMOND_ICON_BUTTON" });
+    // Reset counter to avoid duplicate dispatches on subsequent renders
+    collectButtonDispatch({ type: "RESET_COUNTER" });
+  }, [
+    isCollected,
+    collectedDiamondsCount,
+    setIsDiamondIconDisabled,
+    collectButtonDispatch,
+  ]);
+
+  useEffect(() => {
+    if (success && !isIconDisabled) {
+      const list = currentUser.codewars.codeChallenges.list.map((challenge) =>
+        challenge.id === selectedChallenge?.id ? selectedChallenge : challenge
+      );
+
+      if (!isListUpdatedRef.current) {
+        const userWithUpdatedList = { ...currentUser };
+        userWithUpdatedList.codewars.codeChallenges.list = [...list];
+        postCurrentUser(userWithUpdatedList);
+        isListUpdatedRef.current = true;
+      }
+
+      currentUserDispatch({
+        type: "UPDATE_CODE_CHALLENGES_LIST",
+        list,
+        totalItems: currentUser.codewars.codeChallenges.totalItems,
+        totalPages: currentUser.codewars.codeChallenges.totalPages,
+      });
+    }
+
+    if (success && !isDiamondsUpdatedRef.current && selectedChallenge) {
+      currentUserDispatch({
+        type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
+        reward: collectedDiamondsCount ?? 0,
+        selectedChallenge,
+      });
+
+      isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
+    }
+
+    if (!success) {
+      isListUpdatedRef.current = false;
+      isDiamondsUpdatedRef.current = false;
+    }
+  }, [
+    success,
+    isIconDisabled,
+    collectedDiamondsCount,
+    currentUserDispatch,
+    selectedChallenge,
+  ]);
 
   const isUserOnPersonalDashboard = session?.user?.email === currentUser.email;
 
@@ -75,7 +171,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
             sx={iconButtonStyles}
             onClick={async () => {
               setIsDiamondIconDisabled(true);
-              // diamondsContextDispatch({ type: "LOADING..." });
 
               collectButtonDispatch({ type: "LOADING...", isLoading: true });
 
