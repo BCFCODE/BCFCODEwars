@@ -9,8 +9,6 @@ import {
 
 import CodewarsAPIService from "@/app/api/services/codewars";
 import DatabaseAPIService from "@/app/api/services/db";
-import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext";
-import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import DiamondsService from "@/app/services/diamonds";
@@ -22,6 +20,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { useCollectButtonStore } from "./store/collectButton";
 import useCollectButtonState from "./hooks/useCollectButtonState";
+import { useCodewarsStore } from "@/app/store/codewars";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
@@ -39,14 +38,19 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   const isDiamondsUpdatedRef = useRef(false);
   const session = useSession().data;
   const { currentUser } = useCurrentUserContext();
-  const codewarsContextDispatch = useCodewarsDispatchContext();
   const isIconDisabled = useCollectButtonStore(
     (state) => state.diamonds.isIconDisabled
   );
   const setIsDiamondIconDisabled = useCollectButtonStore(
     (state) => state.setIsDiamondIconDisabled
   );
-  const { selectedChallenge } = useCodewarsContext();
+  const selectedChallenge = useCodewarsStore(
+    (state) => state.challenge.selectedChallenge
+  );
+  const setSelectedChallenge = useCodewarsStore(
+    (state) => state.setSelectedChallenge
+  );
+
   const currentUserDispatch = useCurrentUserDispatchContext();
 
   const { collectState, collectButtonDispatch } = useCollectButtonState();
@@ -193,16 +197,11 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                   success: true,
                 });
 
-                const selectedChallenge: Required<CodewarsCompletedChallenge> =
-                  {
-                    ...currentChallenge,
-                    rewardStatus: RewardStatus.ClaimedDiamonds,
-                    moreDetails: selectedSingleChallenge,
-                  };
 
-                codewarsContextDispatch({
-                  type: "SET_SELECTED_CHALLENGE",
-                  selectedChallenge,
+                setSelectedChallenge({
+                  ...currentChallenge,
+                  rewardStatus: RewardStatus.ClaimedDiamonds,
+                  moreDetails: selectedSingleChallenge,
                 });
               }
 

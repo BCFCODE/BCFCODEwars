@@ -5,7 +5,6 @@ import {
   AllUsersAction,
   AllUsersContextType,
 } from "@/app/context/reducers/allUsersReducer";
-import { CodewarsAction, CodewarsState } from "../reducers/codewarsReducer";
 import {
   CurrentUserAction,
   CurrentUserContext as CurrentUserContextType,
@@ -21,6 +20,3 @@ export const CurrentUserContext = createContext<CurrentUserContextType | null>(
 export const CurrentUserDispatchContext =
   createContext<Dispatch<CurrentUserAction> | null>(null);
 
-export const CodewarsContext = createContext<CodewarsState | null>(null);
-export const CodewarsDispatchContext =
-  createContext<Dispatch<CodewarsAction> | null>(null);
