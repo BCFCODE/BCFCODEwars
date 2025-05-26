@@ -7,17 +7,21 @@ import {
   iconButtonStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
 
+import CodewarsAPIService from "@/app/api/services/codewars";
+import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import DiamondsService from "@/app/services/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import { useSession } from "next-auth/react";
+import { useCollectButtonStore } from "../store/collectButton";
 import useCollectDiamonds from "./hooks/useCollectDiamonds";
-import handleClick from "./utils/handleClick";
+import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
+const { getSingleChallenge } = new CodewarsAPIService();
+const { collectDiamonds } = new DiamondsService();
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
@@ -26,6 +30,13 @@ interface Props {
 const CollectDiamonds = ({ currentChallenge }: Props) => {
   const session = useSession().data;
   const { currentUser } = useCurrentUserContext();
+  const codewarsContextDispatch = useCodewarsDispatchContext();
+  const isIconDisabled = useCollectButtonStore(
+    (state) => state.diamonds.isIconDisabled
+  );
+  const setIsDiamondIconDisabled = useCollectButtonStore(
+    (state) => state.setIsDiamondIconDisabled
+  );
   const {
     isLoading,
     counter,
@@ -33,9 +44,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     isCollected,
     isError,
     success,
-    isDiamondIconButtonDisabled,
-    codewarsContextDispatch,
-    diamondsContextDispatch,
     collectButtonDispatch,
   } = useCollectDiamonds();
 
@@ -63,17 +71,58 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
 
         {!isCollected && (
           <IconButton
-            disabled={isDiamondIconButtonDisabled || !isUserOnPersonalDashboard}
+            disabled={isIconDisabled || !isUserOnPersonalDashboard}
             sx={iconButtonStyles}
-            onClick={() =>
-              handleClick({
-                codewarsContextDispatch,
-                collectButtonDispatch,
-                currentChallenge,
-                diamondsContextDispatch,
-                currentUser,
-              })
-            }
+            onClick={async () => {
+              setIsDiamondIconDisabled(true);
+              // diamondsContextDispatch({ type: "LOADING..." });
+
+              collectButtonDispatch({ type: "LOADING...", isLoading: true });
+
+              const response = await getSingleChallenge(
+                currentUser.codewars.username,
+                currentChallenge.id
+              );
+
+              if (response.success) {
+                setIsDiamondIconDisabled(true);
+
+                const { data: selectedSingleChallenge } = response;
+                const { collectedDiamondsCount } = await collectDiamonds(
+                  selectedSingleChallenge
+                );
+
+                collectButtonDispatch({
+                  type: "SUCCESSFUL_RESPONSE",
+                  collectedDiamondsCount,
+                  success: true,
+                });
+
+                const selectedChallenge: Required<CodewarsCompletedChallenge> =
+                  {
+                    ...currentChallenge,
+                    rewardStatus: RewardStatus.ClaimedDiamonds,
+                    moreDetails: selectedSingleChallenge,
+                    // isUntracked: currentChallenge.isUntracked ?? false,
+                  };
+
+                codewarsContextDispatch({
+                  type: "SET_SELECTED_CHALLENGE",
+                  selectedChallenge,
+                });
+              }
+
+              if (!response.success) {
+                // diamondsContextDispatch({ type: "!SUCCESSFUL_RESPONSE" });
+                setIsDiamondIconDisabled(false);
+                collectButtonDispatch({ type: "LOADING...", isLoading: false });
+                collectButtonDispatch({
+                  type: "!SUCCESSFUL_RESPONSE",
+                  success: false,
+                });
+                collectButtonDispatch({ type: "RESET_COUNTER" });
+              }
+            }}
           >
             <DiamondIcon
               sx={isLoading || isError ? fade(isError) : diamondStyles}

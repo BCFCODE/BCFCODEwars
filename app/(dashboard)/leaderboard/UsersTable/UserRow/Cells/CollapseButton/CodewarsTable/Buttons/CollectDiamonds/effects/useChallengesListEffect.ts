@@ -3,27 +3,29 @@ import useCodewarsContext from "@/app/context/hooks/codewars/useCodewarsContext"
 import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import { useEffect, useRef } from "react";
+import { useCollectButtonStore } from "../../store/collectButton";
 
 const { postCurrentUser } = new DatabaseAPIService();
 
 interface Props {
   collectedDiamondsCount: number | undefined;
   success: boolean;
-  isDiamondIconButtonDisabled: boolean;
 }
 export default function useChallengesListEffect({
   collectedDiamondsCount = 0,
   success,
-  isDiamondIconButtonDisabled,
 }: Props) {
   const { currentUser } = useCurrentUserContext();
   const { selectedChallenge } = useCodewarsContext();
   const currentUserDispatch = useCurrentUserDispatchContext();
   const isListUpdatedRef = useRef(false);
   const isDiamondsUpdatedRef = useRef(false);
+  const isIconDisabled = useCollectButtonStore(
+    (state) => state.diamonds.isIconDisabled
+  );
 
   useEffect(() => {
-    if (success && !isDiamondIconButtonDisabled) {
+    if (success && !isIconDisabled) {
       const list = currentUser.codewars.codeChallenges.list.map((challenge) =>
         challenge.id === selectedChallenge?.id ? selectedChallenge : challenge
       );
@@ -59,9 +61,8 @@ export default function useChallengesListEffect({
     }
   }, [
     success,
-    isDiamondIconButtonDisabled,
+    isIconDisabled,
     collectedDiamondsCount,
-    // currentUser,
     currentUserDispatch,
     selectedChallenge,
   ]);

@@ -1,16 +1,13 @@
+import useCodewarsDispatchContext from "@/app/context/hooks/codewars/useCodewarsDispatchContext";
 import useCollectEffects from "../effects";
 import { CollectDiamondsState } from "../reducers/collectButtonReducer";
 import useCollectButtonState, {
   CollectButtonDispatch,
 } from "./useCollectButtonState";
-import useCollectDiamondsContext, {
-  UseCollectDiamondsContext,
-} from "./useCollectDiamondsContext";
+
 import useUserCodewarsChallenges from "./useUserCodewarsChallenges";
 
-export interface UseCollectDiamonds
-  extends CollectDiamondsState,
-    UseCollectDiamondsContext {
+export interface UseCollectDiamonds extends CollectDiamondsState {
   collectButtonDispatch: CollectButtonDispatch;
 }
 
@@ -18,12 +15,7 @@ export default function useCollectDiamonds(): UseCollectDiamonds {
   // Extract data from contexts
   const { currentUserDispatch } = useUserCodewarsChallenges();
 
-  // Collect Button State
-  const {
-    codewarsContextDispatch,
-    diamondsContextDispatch,
-    isDiamondIconButtonDisabled,
-  } = useCollectDiamondsContext();
+  // const codewarsContextDispatch = useCodewarsDispatchContext();
 
   // Collect Button State
   const { collectState, collectButtonDispatch } = useCollectButtonState();
@@ -46,8 +38,6 @@ export default function useCollectDiamonds(): UseCollectDiamonds {
     collectedDiamondsCount,
     collectButtonDispatch,
     currentUserDispatch,
-    diamondsContextDispatch,
-    isDiamondIconButtonDisabled,
   });
 
   return {
@@ -55,9 +45,6 @@ export default function useCollectDiamonds(): UseCollectDiamonds {
     counter,
     collectedDiamondsCount,
     isCollected,
-    isDiamondIconButtonDisabled,
-    codewarsContextDispatch,
-    diamondsContextDispatch,
     isError,
     success,
     collectButtonDispatch,
