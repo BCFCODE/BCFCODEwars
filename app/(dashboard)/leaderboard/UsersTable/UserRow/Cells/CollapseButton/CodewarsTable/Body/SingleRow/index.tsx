@@ -6,7 +6,7 @@ import NameCell from "./Cells/NameCell";
 import DateCompletedCell from "./Cells/DateCompletedCell";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import CollectDiamondsCell from "./Cells/CollectDiamondsCell";
-import CollectDiamonds from "../../Buttons/CollectButton";
+import CollectDiamonds from "../CollectButton";
 import TimeAgoCell from "./Cells/TimeAgoCell";
 
 interface Props {

@@ -20,7 +20,7 @@ import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
-import { useCollectButtonStore } from "../store/collectButton";
+import { useCollectButtonStore } from "./store/collectButton";
 import useCollectButtonState from "./hooks/useCollectButtonState";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
@@ -90,7 +90,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
 
   useEffect(() => {
     if (isCollected && collectedDiamondsCount) setIsDiamondIconDisabled(false);
-    // diamondsContextDispatch({ type: "DISABLE_DIAMOND_ICON_BUTTON" });
+
     // Reset counter to avoid duplicate dispatches on subsequent renders
     collectButtonDispatch({ type: "RESET_COUNTER" });
   }, [
@@ -198,7 +198,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                     ...currentChallenge,
                     rewardStatus: RewardStatus.ClaimedDiamonds,
                     moreDetails: selectedSingleChallenge,
-                    // isUntracked: currentChallenge.isUntracked ?? false,
                   };
 
                 codewarsContextDispatch({
@@ -208,7 +207,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
               }
 
               if (!response.success) {
-                // diamondsContextDispatch({ type: "!SUCCESSFUL_RESPONSE" });
                 setIsDiamondIconDisabled(false);
                 collectButtonDispatch({ type: "LOADING...", isLoading: false });
                 collectButtonDispatch({
