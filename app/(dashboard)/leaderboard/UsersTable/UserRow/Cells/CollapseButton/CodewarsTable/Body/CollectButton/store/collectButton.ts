@@ -4,11 +4,8 @@ import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 type Store = {
-  button: {};
   diamonds: {
-    isIconDisabled: boolean; // remove isDiamondIconButtonDisabled
-    counter: number;
-    isCollected: boolean;
+    isIconDisabled: boolean;
   };
   setIsDiamondIconDisabled: (isIconDisabled: boolean) => void;
 };
@@ -16,8 +13,7 @@ type Store = {
 export const useCollectButtonStore = create<Store>()(
   persist(
     immer((set) => ({
-      diamonds: { counter: 0, isCollected: false, isIconDisabled: false },
-      button: {},
+      diamonds: { isIconDisabled: false },
       setIsDiamondIconDisabled: (isIconDisabled) =>
         set((state) => {
           state.diamonds.isIconDisabled = isIconDisabled;
