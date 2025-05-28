@@ -19,7 +19,7 @@ import { Box, IconButton, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useEffect, useRef, useState } from "react";
 import { useCollectButtonStore } from "./store/collectButton";
-import useCollectButtonState from "./hooks/useCollectButtonState";
+import useCollectButtonState from "./useCollectButtonState";
 import { useCodewarsStore } from "@/app/store/codewars";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
@@ -196,7 +196,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
                   collectedDiamondsCount,
                   success: true,
                 });
-
 
                 setSelectedChallenge({
                   ...currentChallenge,
