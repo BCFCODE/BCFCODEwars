@@ -13,13 +13,6 @@ const CodewarsTable = () => {
   const selectedUser = useUsersStore((state) => state.user.selectedUser);
   const { isError, isLoading, data, error } = usePaginationQuery();
 
-  // console.log(
-  //   "data?.totalItems >>>>",
-  //   data?.totalItems,F
-  //   selectedUser?.codewars.username,
-  //   selectedUser
-  // );
-
   if (isError || (error && currentUser.email === selectedUser?.email))
     return <Error />;
 
