@@ -1,18 +1,13 @@
 import ErrorButtonContainer from "@/app/components/UI/Error/Buttons/ButtonContainer";
 import ErrorUI from "@/app/components/UI/Error/ErrorUI";
-import { Button, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import { Button, Typography } from "@mui/material";
 import Link from "next/link";
-import useChallengeList from "../hooks/useDiffAndUpdateList";
 import usePaginationQuery from "./Pagination/usePaginationQuery";
 
 const Error = () => {
   const { isError, isLoading, refetch, isFetching, error } =
     usePaginationQuery();
-  // const {
-  //   fetchAndShowChallenges,
-  //   tryAgain: { isError, isLoading },
-  // } = useChallengeList();
 
   return (
     <ErrorUI>

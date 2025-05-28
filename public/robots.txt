@@ -1,48 +1,35 @@
-# Robots.txt for BCFCODE
+# robots.txt for BCFCODE
 
-# General directives for all search engine bots (User-agent: *)
+# Default rules for all search engine bots
 User-agent: *
 
-# Block access to sensitive administrative and backend areas
-# These sections should not be indexed by search engines for privacy and security.
-Disallow: /admin/            # Block access to admin directory
-Disallow: /login/            # Block access to login page
-Disallow: /wp-admin/         # WordPress specific admin area (if used)
-Disallow: /private/          # Block any private sections (e.g., /private/ folder)
-Disallow: /temp/             # Block temporary files or directories
+# Disallow sensitive or private sections
+Disallow: /admin/            # Admin panel
+Disallow: /login/            # Login page
+Disallow: /wp-admin/         # WordPress admin (precautionary)
+Disallow: /private/          # Private content
+Disallow: /temp/             # Temporary directories
+Disallow: /search/           # Internal search results
+Disallow: /sort/             # Sorting filters (duplicate content risk)
+Disallow: /filter/           # Faceted navigation (duplicate content risk)
+Disallow: /category/*?       # Category filters with query params
+Disallow: /?sessionid=       # Session tracking URLs
 
-# Allow access to image, asset, and static directories for SEO purposes
-Allow: /images/              # Allow access to images (for Open Graph images)
-Allow: /assets/              # Allow crawlers to access the assets folder (JS, CSS, etc.)
-Allow: /fonts/               # Allow access to fonts (important for proper rendering)
+# Allow access to assets needed for rendering and SEO
+Allow: /images/              # Open Graph and Twitter preview images
+Allow: /assets/              # Static assets (JS, CSS, etc.)
+Allow: /fonts/               # Web fonts
+Allow: /js/                  # JavaScript files
+Allow: /css/                 # Stylesheets
 
-# Allow access to critical resources needed for rendering pages properly
-Allow: /js/                  # Allow access to JS files (JavaScript is needed for proper rendering)
-Allow: /css/                 # Allow access to CSS files (CSS is needed for proper styling)
-Allow: /fonts/               # Allow access to fonts (important for page rendering)
-
-# Block access to unnecessary file types that don’t add value for SEO
-Disallow: *.pdf               # Block PDFs if they don’t need to be indexed
-
-# Sitemap: Help search engines find your sitemap for better indexing
+# Sitemap location
 Sitemap: https://bcfcode.ir/sitemap.xml
 
-# Prevent crawlers from accessing specific query parameters and duplicate content
-Disallow: /*?                 # Block any URLs with query parameters (example: ?id=123)
-Disallow: /search/            # Block internal search result pages (they might create duplicate content)
-Disallow: /category/*?        # Block URLs with query parameters (e.g., faceted navigation, filters)
-Disallow: /?sessionid=        # Block session ID URLs that create duplicate content
-
-# Special rules for specific search engines (like Googlebot)
+# Specific rules for Googlebot
 User-agent: Googlebot
-Disallow: /private-google/    # Block access to a directory specific to Googlebot (if applicable)
+Disallow: /private-google/   # Googlebot-specific private section
 
-# Allow crawlers to access the full site for indexing
-User-agent: *
-Disallow: 
-
-# Prevent crawling of unnecessary internal resources like dynamic filters or sorting options
-Disallow: /sort/              # Block access to URL filters (sorting options, etc.)
-Disallow: /filter/            # Block access to URL filters (faceted navigation)
-
-# Enable faster crawling and improved SEO by allowing search engines to index your entire site efficiently
+# Note:
+# - Avoid blocking all query parameters with generic rules like /*? unless necessary.
+# - Use canonical tags and proper meta tags for better duplicate content handling.
+# - Block PDF indexing using X-Robots-Tag headers on the server if needed.

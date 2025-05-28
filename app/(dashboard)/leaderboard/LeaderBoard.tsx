@@ -2,19 +2,15 @@
 
 import usePaginationQuery from "@/app/(dashboard)/leaderboard/UsersTable/Pagination/usePaginationQuery";
 import LoadingUI from "@/app/components/UI/LoadingUI";
-import CodewarsProvider from "@/app/context/providers/Codewars";
 import { Box, Paper, Table, TableContainer } from "@mui/material";
 import LeaderboardLoadingError from "./Error";
 import UsersTable from "./UsersTable";
 import LeaderboardHeader from "./UsersTable/Header";
 import Pagination from "./UsersTable/Pagination";
-// import { useUsersStore } from "@/app/context/store/users";
 
 export default function Leaderboard() {
-  // const selectedUser = useUsersStore((state) => state.user.selectedUser);
   const { data, isError, isLoading, refetch } = usePaginationQuery();
 
-  // console.log("selectedUser for mapping is collapsed", selectedUser);
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
   if (isLoading)
@@ -27,21 +23,19 @@ export default function Leaderboard() {
 
   if (!isError)
     return (
-      <CodewarsProvider>
-        <TableContainer component={Paper}>
-          <Table aria-label="Leaderboard Table">
-            <LeaderboardHeader />
-            <UsersTable list={data?.list} />
-          </Table>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <Pagination totalPageCount={data?.totalUsers} />
-          </Box>
-        </TableContainer>
-      </CodewarsProvider>
+      <TableContainer component={Paper}>
+        <Table aria-label="Leaderboard Table">
+          <LeaderboardHeader />
+          <UsersTable list={data?.list} />
+        </Table>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Pagination totalPageCount={data?.totalUsers} />
+        </Box>
+      </TableContainer>
     );
 }
