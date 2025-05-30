@@ -1,12 +1,12 @@
 "use client";
+import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 import { SvgIconComponent } from "@mui/icons-material";
 import LooksOneIcon from "@mui/icons-material/LooksOne";
 import LooksTwoIcon from "@mui/icons-material/LooksTwo";
 import WhatshotIcon from "@mui/icons-material/Whatshot"; // Or BoltIcon
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
 import { OverridableStringUnion } from "@mui/types";
-import useTargetStore, { TargetLabel } from "./useTargetStore";
-import useGaugeContext from "@/app/context/hooks/useGaugeContext";
+import { TargetLabel } from "./useTargetStore";
 
 type IconColor = OverridableStringUnion<
   | "success"
@@ -27,19 +27,19 @@ interface Icon {
 
 const icons: Icon[] = [
   {
-    title: "1 problem/day",
+    title: "Light Effort: 1/Day",
     Icon: LooksOneIcon,
     color: "success",
     value: 1,
   },
   {
-    title: "2 problems/day",
+    title: "On Track: 2/Day",
     Icon: LooksTwoIcon,
     color: "warning",
     value: 2,
   },
   {
-    title: "3+ problems/day",
+    title: "Crushing It!: 3+/Day",
     Icon: WhatshotIcon,
     color: "error",
     value: 3,
@@ -47,9 +47,7 @@ const icons: Icon[] = [
 ];
 
 export default function TargetSelector() {
-  const { email } = useGaugeContext();
-  const label = useTargetStore((state) => state.label[email] ?? 1);
-  const setTarget = useTargetStore((state) => state.setTarget);
+  const { email, label, setTarget } = useGaugeContext();
 
   const handleChange = (
     _: React.MouseEvent<HTMLElement>,

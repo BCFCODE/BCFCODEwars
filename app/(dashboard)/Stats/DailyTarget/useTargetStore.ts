@@ -5,7 +5,7 @@ import { immer } from "zustand/middleware/immer";
 
 export type TargetLabel = 1 | 2 | 3;
 
-interface TargetStore {
+export interface TargetStore {
   label: Record<string, TargetLabel>;
   isHovering: Record<string, boolean>;
   isLoading: Record<string, boolean>;

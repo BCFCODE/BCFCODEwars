@@ -1,15 +1,17 @@
-import { completedAfterThreshold } from "@/utils/dayjs";
-import useTargetStore from "../DailyTarget/useTargetStore";
 import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
+import { completedAfterThreshold } from "@/utils/dayjs";
 import useGaugeContext from "../../../context/hooks/useGaugeContext";
 
-const useGaugeData = (): {
-  counts: number[];
-  percents: number[];
-} => {
-  const { email } = useGaugeContext();
+interface GaugeData {
+  percent: number;
+  count: number;
+  didLaterPeriodMeetTarget: boolean;
+}
+
+const useGaugeData = (index: number): GaugeData => {
+  const { email, label } = useGaugeContext();
   const { data } = useCurrentUserQuery(email);
-  const label = useTargetStore((state) => state.label[email] ?? 1);
+
   const list = data?.codewars.codeChallenges?.list ?? [];
 
   const dayCounts = [1, 7, 30, 365];
@@ -27,8 +29,14 @@ const useGaugeData = (): {
   const percents = dayCounts.map((dayCount, i) =>
     getPercent(counts[i], dayCount)
   );
-  // console.log("percents", percents, typeof percents);
-  return { counts, percents };
+
+  const [count, percent] = [counts, percents].map((data) => data[index]);
+  const slicedPercents = percents.slice(index + 1);
+  const didLaterPeriodMeetTarget = slicedPercents.some(
+    (percent) => percent >= 100
+  );
+
+  return { percent, count, didLaterPeriodMeetTarget };
 };
 
 export default useGaugeData;

@@ -1,18 +1,36 @@
 import GaugeContext from "@/app/context/providers/contexts";
 import { useContext } from "react";
+import { GaugeContextValue } from "../providers/GaugeProvider";
+import useTargetStore, {
+  TargetStore,
+} from "@/app/(dashboard)/Stats/DailyTarget/useTargetStore";
+
+interface Context extends GaugeContextValue {
+  label: number;
+  isHovering: boolean;
+  setIsHovering: TargetStore["setIsHovering"];
+  setTarget: TargetStore["setTarget"];
+}
 
 /**
  * Custom hook to consume GaugeContext safely.
  * Ensures it's used within a matching Provider.
  */
-const useGaugeContext = () => {
+const useGaugeContext = (): Context => {
   const context = useContext(GaugeContext);
 
   if (context === undefined || context === null) {
     throw new Error("useGaugeContext must be used within a GaugeProvider");
   }
 
-  return context;
+  const email = context.email;
+
+  const label = useTargetStore((state) => state.label[email] ?? 1);
+  const isHovering = useTargetStore((state) => state.isHovering[email]);
+  const setIsHovering = useTargetStore((state) => state.setIsHovering);
+  const setTarget = useTargetStore((state) => state.setTarget);
+
+  return { email, label, isHovering, setIsHovering, setTarget };
 };
 
 export default useGaugeContext;

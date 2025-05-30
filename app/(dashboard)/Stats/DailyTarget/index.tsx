@@ -1,11 +1,10 @@
 "use client";
 
+import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 import { Box, SxProps } from "@mui/material";
 import Fade from "./Fade";
 import Target from "./Target";
 import TargetSelector from "./TargetSelector";
-import useTargetStore from "./useTargetStore";
-import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 
 const RelativeCenter: SxProps = {
   position: "relative",
@@ -26,10 +25,7 @@ const AbsoluteCenter: SxProps = {
 };
 
 export default function DailyTarget() {
-  const { email } = useGaugeContext();
-  const label = useTargetStore((state) => state.label[email] ?? 1);
-  const isHovering = useTargetStore((state) => state.isHovering[email]);
-  const setIsHovering = useTargetStore((state) => state.setIsHovering);
+  const { email, label, isHovering, setIsHovering } = useGaugeContext();
 
   return (
     <Box
