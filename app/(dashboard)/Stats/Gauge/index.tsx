@@ -1,5 +1,5 @@
 import Grid from "@mui/material/Grid";
-import GaugeSwitch, { GaugeTypes } from "./Switch";
+import GaugeView, { GaugeTypes } from "./GaugeView";
 
 const CodewarsTargetGauges = () => {
   const gaugeTypes: GaugeTypes[] = ["daily", "weekly", "monthly", "yearly"];
@@ -12,7 +12,7 @@ const CodewarsTargetGauges = () => {
           size={{ xs: 24, sm: 12, md: 8, lg: 6, xl: 6 }}
           key={i}
         >
-          <GaugeSwitch index={i} type={kind} />
+          <GaugeView index={i} type={kind} />
         </Grid>
       ))}
     </Grid>

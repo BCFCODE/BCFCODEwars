@@ -27,19 +27,19 @@ interface Icon {
 
 const icons: Icon[] = [
   {
-    title: "1 problem/day",
+    title: "Light Effort: 1/Day",
     Icon: LooksOneIcon,
     color: "success",
     value: 1,
   },
   {
-    title: "2 problems/day",
+    title: "On Track: 2/Day",
     Icon: LooksTwoIcon,
     color: "warning",
     value: 2,
   },
   {
-    title: "3+ problems/day",
+    title: "Crushing It!: 3+/Day",
     Icon: WhatshotIcon,
     color: "error",
     value: 3,
