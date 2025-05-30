@@ -15,6 +15,7 @@ const LoadingUI = ({ title, message }: Props) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        minHeight: 100,
         height: "100%",
         width: "100%",
         padding: 2,

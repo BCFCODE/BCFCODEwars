@@ -22,9 +22,9 @@ import Image from "next/image";
 import * as React from "react";
 import { ReactNode } from "react";
 import "../../styles/global.css";
-import ReactQueryProvider from "./ReactQuery";
-import getQueryClient from "./ReactQuery/queryClient";
-import usersQueryKeys from "./ReactQuery/queryKeys/users";
+import ReactQueryProvider from "../../../ReactQuery";
+import getQueryClient from "../../../ReactQuery/queryClient";
+import usersQueryKeys from "../../../ReactQuery/queryKeys/users";
 
 const { getUsers } = new DatabaseAPIService();
 

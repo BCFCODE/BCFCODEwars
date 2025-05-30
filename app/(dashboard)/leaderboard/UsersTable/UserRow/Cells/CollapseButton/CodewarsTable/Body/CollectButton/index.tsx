@@ -9,8 +9,6 @@ import {
 
 import CodewarsAPIService from "@/app/api/services/codewars";
 import DatabaseAPIService from "@/app/api/services/db";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
 import DiamondsService from "@/app/services/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
@@ -21,6 +19,8 @@ import { useEffect, useRef, useState } from "react";
 import { useCollectButtonStore } from "./store/collectButton";
 import useCollectButtonState from "./useCollectButtonState";
 import { useCodewarsStore } from "@/app/store/codewars";
+import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
+import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();

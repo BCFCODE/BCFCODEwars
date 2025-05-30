@@ -1,16 +1,17 @@
 "use client";
 
-import LoadingUI from "@/app/components/UI/LoadingUI";
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
-import { Box, Button, Typography } from "@mui/material";
-import Link from "next/link";
-import DailyTarget from "./DailyTarget";
-import CodewarsTargetGauges from "./Gauge";
 import CodewarsStats from "@/app/components/CodewarsStats";
+import LoadingUI from "@/app/components/UI/LoadingUI";
+import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
 import CodewarsStatsFallback from "../components/CodewarsStatsFallback";
+import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
 
 const DashboardStats = () => {
-  const { data, isLoading } = useCurrentUserQuery();
+  const session = useSession().data as Session;
+  const email = session?.user?.email ?? "";
+
+  const { data, isLoading } = useCurrentUserQuery(email);
 
   const isConnectedToCodewars = data?.codewars.isConnected;
 
@@ -28,7 +29,7 @@ const DashboardStats = () => {
 
   if (isListEmpty) return <CodewarsStatsFallback />;
 
-  return <CodewarsStats />;
+  return <CodewarsStats {...{ email }} />;
 };
 
 export default DashboardStats;

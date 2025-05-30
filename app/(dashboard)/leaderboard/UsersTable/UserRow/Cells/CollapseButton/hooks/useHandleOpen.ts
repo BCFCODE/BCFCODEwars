@@ -1,4 +1,4 @@
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import { useUsersStore } from "@/app/store/users";
 
 const useHandleOpen = () => {

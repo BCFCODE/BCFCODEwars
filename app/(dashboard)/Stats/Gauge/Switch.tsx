@@ -1,10 +1,7 @@
-import { CodewarsCompletedChallenge } from "@/types/codewars";
-import { Stack, Typography } from "@mui/material";
-import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
+import { Typography } from "@mui/material";
 import useTargetStore from "../DailyTarget/useTargetStore";
-import useGaugeData from "./useGaugeData";
 import SingleGauge from "./SingleGauge";
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
+import useGaugeData from "./useGaugeData";
 
 export type GaugeTypes = "daily" | "weekly" | "monthly" | "yearly";
 

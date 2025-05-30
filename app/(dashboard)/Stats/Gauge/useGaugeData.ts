@@ -1,12 +1,14 @@
 import { completedAfterThreshold } from "@/utils/dayjs";
 import useTargetStore from "../DailyTarget/useTargetStore";
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
+import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
+import useGaugeContext from "../../../context/hooks/useGaugeContext";
 
 const useGaugeData = (): {
   counts: number[];
   percents: number[];
 } => {
-  const { data } = useCurrentUserQuery();
+  const { email } = useGaugeContext();
+  const { data } = useCurrentUserQuery(email);
   const { target } = useTargetStore();
   const list = data?.codewars.codeChallenges?.list ?? [];
 
@@ -25,7 +27,7 @@ const useGaugeData = (): {
   const percents = dayCounts.map((dayCount, i) =>
     getPercent(counts[i], dayCount)
   );
-
+  console.log("percents", percents, typeof percents);
   return { counts, percents };
 };
 

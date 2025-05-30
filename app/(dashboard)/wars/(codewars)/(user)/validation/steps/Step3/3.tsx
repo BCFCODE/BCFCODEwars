@@ -1,6 +1,6 @@
 "use client";
 
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
+import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";

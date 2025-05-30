@@ -1,8 +1,8 @@
 import TablePagination from "@mui/material/TablePagination";
 import * as React from "react";
 import usePaginationStore, { defaultPagination } from "./usePaginationStore";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import Loading from "@/app/(dashboard)/leaderboard/UI/Loading";
+import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 
 interface Props {
   totalPageCount: number | undefined;

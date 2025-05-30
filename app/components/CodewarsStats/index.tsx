@@ -1,8 +1,13 @@
+import GaugeProvider from "@/app/context/providers/GaugeProvider";
 import DailyTarget from "@/app/(dashboard)/Stats/DailyTarget";
 import CodewarsTargetGauges from "@/app/(dashboard)/Stats/Gauge";
 import { Box } from "@mui/material";
 
-const CodewarsStats = () => (
+interface Props {
+  email: string;
+}
+
+const CodewarsStats = ({ email }: Props) => (
   <Box
     sx={{
       flexGrow: 1,
@@ -12,7 +17,9 @@ const CodewarsStats = () => (
       paddingBottom: 5,
     }}
   >
-    <CodewarsTargetGauges />
+    <GaugeProvider context={{ email }}>
+      <CodewarsTargetGauges />
+    </GaugeProvider>
     <DailyTarget />
   </Box>
 );

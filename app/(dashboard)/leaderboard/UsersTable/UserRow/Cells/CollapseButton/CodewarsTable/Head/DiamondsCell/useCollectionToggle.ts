@@ -1,4 +1,4 @@
-import useCurrentUserDispatchContext from "@/app/context/hooks/db/useCurrentUserDispatchContext";
+import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { useEffect, useRef, useState } from "react";
 
