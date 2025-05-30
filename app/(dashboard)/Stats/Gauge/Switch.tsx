@@ -1,8 +1,7 @@
+import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 import { Typography } from "@mui/material";
-import useTargetStore from "../DailyTarget/useTargetStore";
 import SingleGauge from "./SingleGauge";
 import useGaugeData from "./useGaugeData";
-import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 
 export type GaugeTypes = "daily" | "weekly" | "monthly" | "yearly";
 
@@ -12,8 +11,8 @@ interface Props {
 }
 
 const GaugeSwitch = ({ index, type }: Props) => {
-  const { email } = useGaugeContext();
-  const label = useTargetStore((state) => state.label[email] ?? 1);
+  const { label } = useGaugeContext();
+
   const { counts, percents } = useGaugeData();
   const [count, percent] = [counts, percents].map((data) => data[index]);
   const slicedPercents = percents.slice(index + 1);

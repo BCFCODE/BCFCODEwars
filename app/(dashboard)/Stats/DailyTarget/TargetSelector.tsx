@@ -1,12 +1,12 @@
 "use client";
+import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 import { SvgIconComponent } from "@mui/icons-material";
 import LooksOneIcon from "@mui/icons-material/LooksOne";
 import LooksTwoIcon from "@mui/icons-material/LooksTwo";
 import WhatshotIcon from "@mui/icons-material/Whatshot"; // Or BoltIcon
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
 import { OverridableStringUnion } from "@mui/types";
-import useTargetStore, { TargetLabel } from "./useTargetStore";
-import useGaugeContext from "@/app/context/hooks/useGaugeContext";
+import { TargetLabel } from "./useTargetStore";
 
 type IconColor = OverridableStringUnion<
   | "success"
@@ -47,9 +47,7 @@ const icons: Icon[] = [
 ];
 
 export default function TargetSelector() {
-  const { email } = useGaugeContext();
-  const label = useTargetStore((state) => state.label[email] ?? 1);
-  const setTarget = useTargetStore((state) => state.setTarget);
+  const { email, label, setTarget } = useGaugeContext();
 
   const handleChange = (
     _: React.MouseEvent<HTMLElement>,
