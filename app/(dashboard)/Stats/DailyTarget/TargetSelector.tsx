@@ -48,7 +48,7 @@ const icons: Icon[] = [
 
 export default function TargetSelector() {
   const { email } = useGaugeContext();
-  const label = useTargetStore((state) => state.label[email]);
+  const label = useTargetStore((state) => state.label[email] ?? 1);
   const setTarget = useTargetStore((state) => state.setTarget);
 
   const handleChange = (

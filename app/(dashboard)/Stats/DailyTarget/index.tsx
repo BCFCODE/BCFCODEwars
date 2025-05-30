@@ -27,7 +27,7 @@ const AbsoluteCenter: SxProps = {
 
 export default function DailyTarget() {
   const { email } = useGaugeContext();
-  const label = useTargetStore((state) => state.label[email]);
+  const label = useTargetStore((state) => state.label[email] ?? 1);
   const isHovering = useTargetStore((state) => state.isHovering[email]);
   const setIsHovering = useTargetStore((state) => state.setIsHovering);
 
