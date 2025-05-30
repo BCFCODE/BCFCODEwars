@@ -5,7 +5,8 @@ import LooksTwoIcon from "@mui/icons-material/LooksTwo";
 import WhatshotIcon from "@mui/icons-material/Whatshot"; // Or BoltIcon
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
 import { OverridableStringUnion } from "@mui/types";
-import useTargetStore, { TargetLevel } from "./useTargetStore";
+import useTargetStore, { TargetLabel } from "./useTargetStore";
+import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 
 type IconColor = OverridableStringUnion<
   | "success"
@@ -21,7 +22,7 @@ interface Icon {
   title: string;
   Icon: SvgIconComponent;
   color: IconColor;
-  value: TargetLevel;
+  value: TargetLabel;
 }
 
 const icons: Icon[] = [
@@ -46,20 +47,22 @@ const icons: Icon[] = [
 ];
 
 export default function TargetSelector() {
-  const { target, setTarget } = useTargetStore();
+  const { email } = useGaugeContext();
+  const label = useTargetStore((state) => state.label[email] ?? 1);
+  const setTarget = useTargetStore((state) => state.setTarget);
 
   const handleChange = (
     _: React.MouseEvent<HTMLElement>,
-    newValue: TargetLevel | null
+    newValue: TargetLabel | null
   ) => {
     if (newValue !== null) {
-      setTarget(newValue);
+      setTarget({ email, label: newValue });
     }
   };
 
   return (
     <ToggleButtonGroup
-      value={target}
+      value={label}
       exclusive
       onChange={handleChange}
       color="primary"
@@ -71,7 +74,7 @@ export default function TargetSelector() {
           <ToggleButton value={value} sx={{ padding: 0.2, border: "none" }}>
             <Icon
               sx={{ fontSize: 40 }}
-              color={target === value ? color : "disabled"}
+              color={label === value ? color : "disabled"}
             />
           </ToggleButton>
         </Tooltip>
