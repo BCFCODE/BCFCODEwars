@@ -18,13 +18,14 @@ const Step3 = ({
   codewars,
 }: StepProps) => {
   const router = useRouter();
-
-  const { data: currentUser } = useCurrentUserQuery();
+  
+  const email = session?.user?.email ?? "";
+  const { data: currentUser } = useCurrentUserQuery(email);
 
   const { mutateAsync: reconnect } = useReconnectMutation();
   const { mutateAsync: connect } = useConnectMutation();
 
-  const email = currentUser?.email ?? "";
+  // const email = currentUser?.email ?? "";
 
   const handleOnYes = async () => {
     if (!currentUser) return;
