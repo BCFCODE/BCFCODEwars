@@ -31,6 +31,7 @@ const CodewarsTable = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
+        
       }}
     >
       {/* <CodewarsTargetGauges /> */}

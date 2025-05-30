@@ -4,6 +4,7 @@ import { AuthenticatedUser } from "@/types/users";
 import { TableBody } from "@mui/material";
 import { useRef } from "react";
 import UserRow from "./UserRow";
+import GaugeProvider from "@/app/context/providers/GaugeProvider";
 
 interface Props {
   list?: AuthenticatedUser[];
@@ -45,7 +46,7 @@ const UsersTable = ({ list }: Props) => {
 
         // }}
       >
-        <UserRow />
+        <UserRow email={currentUser.email} />
       </TableBody>
     </CurrentUserProvider>
   ));
