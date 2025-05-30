@@ -19,8 +19,8 @@ const CodewarsStats = ({ email }: Props) => (
   >
     <GaugeProvider context={{ email }}>
       <CodewarsTargetGauges />
+      <DailyTarget />
     </GaugeProvider>
-    <DailyTarget />
   </Box>
 );
 

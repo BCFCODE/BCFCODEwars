@@ -5,6 +5,7 @@ import Fade from "./Fade";
 import Target from "./Target";
 import TargetSelector from "./TargetSelector";
 import useTargetStore from "./useTargetStore";
+import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 
 const RelativeCenter: SxProps = {
   position: "relative",
@@ -25,13 +26,16 @@ const AbsoluteCenter: SxProps = {
 };
 
 export default function DailyTarget() {
-  const { target, isHovering, setIsHovering } = useTargetStore();
+  const { email } = useGaugeContext();
+  const label = useTargetStore((state) => state.label[email]);
+  const isHovering = useTargetStore((state) => state.isHovering[email]);
+  const setIsHovering = useTargetStore((state) => state.setIsHovering);
 
   return (
     <Box
       sx={RelativeCenter}
-      onMouseOver={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onMouseOver={() => setIsHovering({ email, isHovering: true })}
+      onMouseLeave={() => setIsHovering({ email, isHovering: false })}
     >
       <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 1 : 0 }}>
         <Fade fade={isHovering ? "in" : "out"}>
@@ -40,7 +44,7 @@ export default function DailyTarget() {
       </Box>
       <Box sx={{ ...AbsoluteCenter, zIndex: isHovering ? 0 : 1 }}>
         <Fade fade={isHovering ? "out" : "in"}>
-          <Target value={target} />
+          <Target value={label} />
         </Fade>
       </Box>
     </Box>

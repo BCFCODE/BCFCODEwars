@@ -9,7 +9,7 @@ const useGaugeData = (): {
 } => {
   const { email } = useGaugeContext();
   const { data } = useCurrentUserQuery(email);
-  const { target } = useTargetStore();
+  const label = useTargetStore((state) => state.label[email] ?? 1);
   const list = data?.codewars.codeChallenges?.list ?? [];
 
   const dayCounts = [1, 7, 30, 365];
@@ -22,12 +22,12 @@ const useGaugeData = (): {
   );
 
   const getPercent = (count: number, timeframeDays: number) =>
-    Math.floor((count * 100) / (timeframeDays * target));
+    Math.floor((count * 100) / (timeframeDays * label));
 
   const percents = dayCounts.map((dayCount, i) =>
     getPercent(counts[i], dayCount)
   );
-  console.log("percents", percents, typeof percents);
+  // console.log("percents", percents, typeof percents);
   return { counts, percents };
 };
 

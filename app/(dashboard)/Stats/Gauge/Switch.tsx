@@ -2,6 +2,7 @@ import { Typography } from "@mui/material";
 import useTargetStore from "../DailyTarget/useTargetStore";
 import SingleGauge from "./SingleGauge";
 import useGaugeData from "./useGaugeData";
+import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 
 export type GaugeTypes = "daily" | "weekly" | "monthly" | "yearly";
 
@@ -11,7 +12,8 @@ interface Props {
 }
 
 const GaugeSwitch = ({ index, type }: Props) => {
-  const { target } = useTargetStore((state) => state);
+  const { email } = useGaugeContext();
+  const label = useTargetStore((state) => state.label[email] ?? 1);
   const { counts, percents } = useGaugeData();
   const [count, percent] = [counts, percents].map((data) => data[index]);
   const slicedPercents = percents.slice(index + 1);
@@ -25,12 +27,12 @@ const GaugeSwitch = ({ index, type }: Props) => {
         <SingleGauge gaugeQuery={{ percent, didLaterPeriodMeetTarget }}>
           <Typography sx={{ textAlign: "center" }}>
             {percent >= 100 || didLaterPeriodMeetTarget
-              ? `Daily target reached!`
+              ? `Daily label reached!`
               : `${count} in last 24Hours`}
           </Typography>
           {!didLaterPeriodMeetTarget && (
             <Typography sx={{ textAlign: "center" }}>
-              {count} / {target * 1}
+              {count} / {label * 1}
             </Typography>
           )}
         </SingleGauge>
@@ -41,12 +43,12 @@ const GaugeSwitch = ({ index, type }: Props) => {
         <SingleGauge gaugeQuery={{ percent, didLaterPeriodMeetTarget }}>
           <Typography sx={{ textAlign: "center" }}>
             {percent >= 100 || didLaterPeriodMeetTarget
-              ? `Weekly target reached!`
+              ? `Weekly label reached!`
               : `${count} in last 7Days`}
           </Typography>
           {!didLaterPeriodMeetTarget && (
             <Typography sx={{ textAlign: "center" }}>
-              {count} / {target * 7}
+              {count} / {label * 7}
             </Typography>
           )}
         </SingleGauge>
@@ -57,12 +59,12 @@ const GaugeSwitch = ({ index, type }: Props) => {
         <SingleGauge gaugeQuery={{ percent, didLaterPeriodMeetTarget }}>
           <Typography sx={{ textAlign: "center" }}>
             {percent >= 100 || didLaterPeriodMeetTarget
-              ? `Monthly target reached!`
+              ? `Monthly label reached!`
               : `${count} in last 30Days`}
           </Typography>
           {!didLaterPeriodMeetTarget && (
             <Typography sx={{ textAlign: "center" }}>
-              {count} / {target * 30}
+              {count} / {label * 30}
             </Typography>
           )}
         </SingleGauge>
@@ -73,11 +75,11 @@ const GaugeSwitch = ({ index, type }: Props) => {
         <SingleGauge gaugeQuery={{ percent, didLaterPeriodMeetTarget }}>
           <Typography sx={{ textAlign: "center" }}>
             {percent >= 100 || didLaterPeriodMeetTarget
-              ? `Yearly target reached!`
+              ? `Yearly label reached!`
               : `${count} in last 365Days`}
           </Typography>
           <Typography sx={{ textAlign: "center" }}>
-            {count} / {target * 365}
+            {count} / {label * 365}
           </Typography>
         </SingleGauge>
       );
