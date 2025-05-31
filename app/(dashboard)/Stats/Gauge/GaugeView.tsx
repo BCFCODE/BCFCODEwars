@@ -1,7 +1,7 @@
 import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 import { Fade, Typography } from "@mui/material";
 import SingleGauge from "./SingleGauge";
-import useGaugeData from "./useGaugeData";
+import useGaugeData from "./hooks/useGaugeData";
 import gaugeConfig from "./config";
 
 export type GaugeTypes = "daily" | "weekly" | "monthly" | "yearly";

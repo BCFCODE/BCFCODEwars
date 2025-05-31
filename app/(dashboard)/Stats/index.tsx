@@ -29,7 +29,14 @@ const DashboardStats = () => {
 
   if (isListEmpty) return <CodewarsStatsFallback />;
 
-  return <CodewarsStats {...{ email }} />;
+  return (
+    <CodewarsStats
+      {...{
+        email,
+        columnsPerBreakpoint: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
+      }}
+    />
+  );
 };
 
 export default DashboardStats;

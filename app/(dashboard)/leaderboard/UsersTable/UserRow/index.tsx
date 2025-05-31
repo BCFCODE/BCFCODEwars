@@ -12,7 +12,12 @@ export default function UserRow({ email }: Props) {
     <>
       <User />
       <CollapseBoundary>
-        <CodewarsStats {...{ email }} />
+        <CodewarsStats
+          {...{
+            email,
+            columnsPerBreakpoint: { xs: 4, sm: 4, md: 4, lg: 4, xl: 4 },
+          }}
+        />
         <CodewarsTable />
       </CollapseBoundary>
     </>

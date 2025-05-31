@@ -1,6 +1,6 @@
 import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
 import { completedAfterThreshold } from "@/utils/dayjs";
-import useGaugeContext from "../../../context/hooks/useGaugeContext";
+import useGaugeContext from "../../../../context/hooks/useGaugeContext";
 
 interface GaugeData {
   percent: number;
