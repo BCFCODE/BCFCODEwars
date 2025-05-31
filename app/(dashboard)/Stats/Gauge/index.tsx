@@ -1,6 +1,7 @@
 import Grid from "@mui/material/Grid";
-import GaugeView, { GaugeTypes } from "./GaugeView";
+import GaugeView from "./GaugeView";
 import useGaugeDimensions from "./hooks/useGaugeDimensions";
+import { GaugeTypes } from "./types";
 
 const CodewarsTargetGauges = () => {
   const { totalColumns, gridSize } = useGaugeDimensions();

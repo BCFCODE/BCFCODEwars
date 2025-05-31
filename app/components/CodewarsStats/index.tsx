@@ -18,8 +18,10 @@ const CodewarsStats = ({ email, dimensions }: GaugeContextValue) => (
     }}
   >
     <GaugeProvider context={{ email, dimensions }}>
-      <CodewarsTargetGauges />
-      <DailyTarget />
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        <CodewarsTargetGauges />
+        <DailyTarget />
+      </Box>
     </GaugeProvider>
   </Box>
 );

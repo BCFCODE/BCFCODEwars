@@ -1,7 +1,7 @@
-import { Fade, Stack } from "@mui/material";
+import { Box, Fade } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
-import { ReactNode } from "react";
-import useGaugeDimensions from "./hooks/useGaugeDimensions";
+import useGaugeData from "../hooks/useGaugeData";
+import useGaugeDimensions from "../hooks/useGaugeDimensions";
 
 const getColorKey = (
   percent: number
@@ -12,24 +12,47 @@ const getColorKey = (
   return "success";
 };
 
-interface GaugeQuery {
-  didLaterPeriodMeetTarget: boolean;
-  percent: number;
-}
-
 interface Props {
-  children: ReactNode;
-  gaugeQuery: GaugeQuery;
+  index: number;
 }
 
-const SingleGauge = ({
-  children,
-  gaugeQuery: { didLaterPeriodMeetTarget, percent },
-}: Props) => {
+/**
+ * SingleGauge Component
+ *
+ * Renders an animated radial gauge using MUI X's `<Gauge />` to visually
+ * represent progress percentage toward a defined target.
+ * 
+ * @component
+ * @example
+ * <SingleGauge index={1} />
+ *
+ * @param {number} index - Index to fetch and render specific gauge data.
+ *
+ * @returns {JSX.Element} A styled and color-coded circular gauge component.
+ *
+ * Key Features:
+ * - Dynamically selects a gauge color based on progress thresholds:
+ *   - < 34%: red (error)
+ *   - < 67%: yellow (warning)
+ *   - < 90%: blue (info)
+ *   - >= 90%: green (success)
+ *
+ * - Shows "Done!" when a late-period goal is met or the percent exceeds 100%.
+ * - Max gauge value is capped at 110% to prevent overscaling.
+ * - Typography is responsive and animated for smooth transitions.
+ *
+ * Best Practices:
+ * - `pointerEvents: "none"` disables interaction for a pure display component.
+ * - Conditional coloring enhances accessibility and intuitive understanding.
+ * - Separates logic (`getColorKey`) from rendering for clarity and reuse.
+ */
+const SingleGauge = ({ index }: Props) => {
   const { fontSize } = useGaugeDimensions();
+  const { percent, didLaterPeriodMeetTarget } = useGaugeData(index);
   const colorKey = getColorKey(percent);
+
   return (
-    <Stack>
+    <Box>
       <Fade in timeout={100}>
         <Gauge
           height={200}
@@ -43,7 +66,7 @@ const SingleGauge = ({
               fontSize, // from context
               transform: "translate(0px, 0px)",
               transition: "font-size 1s ease",
-              // [`@media (min-width: ${1000}px)`]: {
+              // [`@media (min-width: ${0}px)`]: {
               //   fontSize: 40,
               // },
               // [`@media (min-width: ${800}px)`]: {
@@ -67,8 +90,7 @@ const SingleGauge = ({
           }
         />
       </Fade>
-      {children}
-    </Stack>
+    </Box>
   );
 };
 

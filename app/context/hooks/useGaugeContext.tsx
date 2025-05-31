@@ -3,7 +3,6 @@ import useTargetStore, {
 } from "@/app/(dashboard)/Stats/DailyTarget/useTargetStore";
 import GaugeContext from "@/app/context/providers/contexts";
 import { useContext } from "react";
-import { GaugeContextValue } from "../providers/GaugeProvider";
 
 interface Context {
   email: string;

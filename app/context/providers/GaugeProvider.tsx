@@ -8,6 +8,8 @@ export type FontSizePerBreakpoint = Record<Breakpoint, string>;
 
 export interface GaugeContextValue {
   email: string;
+  // index: number;
+  // type: GaugeTypes;
   dimensions: {
     columnsPerBreakpoint: ColumnsPerBreakpoint;
     fontSizePerBreakpoint: FontSizePerBreakpoint;
