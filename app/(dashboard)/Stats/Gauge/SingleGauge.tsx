@@ -37,7 +37,14 @@ const SingleGauge = ({
         sx={(theme) => ({
           pointerEvents: "none",
           [`& .${gaugeClasses.valueText}`]: {
-            fontSize: 40,
+            fontSize: {md: 35, lg: 40},
+            // [`@media (min-width: ${1000}px)`]: {
+            //   fontSize: 40,
+            // },
+            // [`@media (min-width: ${800}px)`]: {
+            //   fontSize: 35,
+            // },
+            transition: "font-size 1s ease",
             transform: "translate(0px, 0px)",
           },
           [`& .${gaugeClasses.valueArc}`]: {
@@ -51,8 +58,9 @@ const SingleGauge = ({
           // },
         })}
         // text={({ value, valueMax }) => `${value} / ${valueMax}`}
-        text={(/* { value, valueMax } */) =>
-          `${didLaterPeriodMeetTarget ? "Done!" : `${percent}%`}`
+        text={
+          (/* { value, valueMax } */) =>
+            `${didLaterPeriodMeetTarget ? "Done!" : `${percent}%`}`
         }
       />
       {children}
