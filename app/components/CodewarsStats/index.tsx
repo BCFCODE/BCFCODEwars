@@ -10,8 +10,8 @@ interface Props {
 const CodewarsStats = ({ email }: Props) => (
   <Box
     sx={{
-      // backgroundColor: 'yellowgreen', 
-      width: '100%',
+      // backgroundColor: 'yellowgreen',
+      width: "100%",
       // flexGrow: 1,
       // overflowY: "auto",
       touchAction: "pan-y",

@@ -5,7 +5,7 @@ const CodewarsTargetGauges = () => {
   const gaugeTypes: GaugeTypes[] = ["daily", "weekly", "monthly", "yearly"];
 
   return (
-    <Grid  container spacing={2} columns={24}>
+    <Grid container spacing={2} columns={24}>
       {gaugeTypes.map((kind, i) => (
         <Grid
           sx={{ touchAction: "pan-y", WebkitOverflowScrolling: "touch" }}

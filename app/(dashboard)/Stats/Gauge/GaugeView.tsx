@@ -1,5 +1,5 @@
 import useGaugeContext from "@/app/context/hooks/useGaugeContext";
-import { Typography } from "@mui/material";
+import { Fade, Typography } from "@mui/material";
 import SingleGauge from "./SingleGauge";
 import useGaugeData from "./useGaugeData";
 import gaugeConfig from "./config";
@@ -53,15 +53,19 @@ const GaugeView = ({ index, type }: Props) => {
 
   return (
     <SingleGauge gaugeQuery={{ percent, didLaterPeriodMeetTarget }}>
-      <Typography sx={{ textAlign: "center" }}>
-        {percent >= 100 || didLaterPeriodMeetTarget
-          ? `${unitTarget} target reached!`
-          : `${count} in last ${days === 1 ? "24Hours" : `${days}Days`}`}
-      </Typography>
-      {!didLaterPeriodMeetTarget && (
+      <Fade key={count} in timeout={2500}>
         <Typography sx={{ textAlign: "center" }}>
-          {count} / {label * days}
+          {percent >= 100 || didLaterPeriodMeetTarget
+            ? `${unitTarget} target reached!`
+            : `${count} in last ${days === 1 ? "24Hours" : `${days}Days`}`}
         </Typography>
+      </Fade>
+      {!didLaterPeriodMeetTarget && (
+        <Fade key={label} in timeout={600}>
+          <Typography sx={{ textAlign: "center" }}>
+            {count} / {label * days}
+          </Typography>
+        </Fade>
       )}
     </SingleGauge>
   );
