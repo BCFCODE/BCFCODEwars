@@ -5,7 +5,7 @@ import DailyTarget from "@/app/(dashboard)/Stats/DailyTarget";
 import CodewarsTargetGauges from "@/app/(dashboard)/Stats/Gauge";
 import { Box } from "@mui/material";
 
-const CodewarsStats = ({ email, columnsPerBreakpoint }: GaugeContextValue) => (
+const CodewarsStats = ({ email, dimensions }: GaugeContextValue) => (
   <Box
     sx={{
       // backgroundColor: 'yellowgreen',
@@ -17,7 +17,7 @@ const CodewarsStats = ({ email, columnsPerBreakpoint }: GaugeContextValue) => (
       paddingBottom: 5,
     }}
   >
-    <GaugeProvider context={{ email, columnsPerBreakpoint }}>
+    <GaugeProvider context={{ email, dimensions }}>
       <CodewarsTargetGauges />
       <DailyTarget />
     </GaugeProvider>

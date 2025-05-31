@@ -15,7 +15,16 @@ export default function UserRow({ email }: Props) {
         <CodewarsStats
           {...{
             email,
-            columnsPerBreakpoint: { xs: 4, sm: 4, md: 4, lg: 4, xl: 4 },
+            dimensions: {
+              columnsPerBreakpoint: { xs: 4, sm: 4, md: 4, lg: 4, xl: 4 },
+              fontSizePerBreakpoint: {
+                xs: `3rem`,
+                sm: `${5}vw`,
+                md: `${4}vw`,
+                lg: `${3.5}vw`,
+                xl: `${3}vw`,
+              },
+            },
           }}
         />
         <CodewarsTable />

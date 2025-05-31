@@ -1,6 +1,7 @@
 import { Fade, Stack } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import { ReactNode } from "react";
+import useGaugeDimensions from "./hooks/useGaugeDimensions";
 
 const getColorKey = (
   percent: number
@@ -25,6 +26,7 @@ const SingleGauge = ({
   children,
   gaugeQuery: { didLaterPeriodMeetTarget, percent },
 }: Props) => {
+  const { fontSize } = useGaugeDimensions();
   const colorKey = getColorKey(percent);
   return (
     <Stack>
@@ -38,13 +40,8 @@ const SingleGauge = ({
           sx={(theme) => ({
             pointerEvents: "none",
             [`& .${gaugeClasses.valueText}`]: {
+              fontSize, // from context
               transform: "translate(0px, 0px)",
-              fontSize: {
-                xs: `${8}vw`,
-                sm: `${6}vw`,
-                md: `${3.5}vw`,
-                lg: `${3}vw`,
-              },
               transition: "font-size 1s ease",
               // [`@media (min-width: ${1000}px)`]: {
               //   fontSize: 40,

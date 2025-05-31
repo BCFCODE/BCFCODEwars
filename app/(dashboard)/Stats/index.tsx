@@ -33,7 +33,16 @@ const DashboardStats = () => {
     <CodewarsStats
       {...{
         email,
-        columnsPerBreakpoint: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
+        dimensions: {
+          columnsPerBreakpoint: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
+          fontSizePerBreakpoint: {
+            xs: `${8}vw`,
+            sm: `${6}vw`,
+            md: `${4}vw`,
+            lg: `${3.5}vw`,
+            xl: `${3}vw`,
+          },
+        },
       }}
     />
   );

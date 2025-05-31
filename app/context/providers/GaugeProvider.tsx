@@ -4,10 +4,14 @@ import GaugeContext from "./contexts";
 type NumberOfColumns = 1 | 2 | 3 | 4;
 export type Breakpoint = "xs" | "sm" | "md" | "lg" | "xl";
 export type ColumnsPerBreakpoint = Record<Breakpoint, NumberOfColumns>;
+export type FontSizePerBreakpoint = Record<Breakpoint, string>;
 
 export interface GaugeContextValue {
   email: string;
-  columnsPerBreakpoint: ColumnsPerBreakpoint;
+  dimensions: {
+    columnsPerBreakpoint: ColumnsPerBreakpoint;
+    fontSizePerBreakpoint: FontSizePerBreakpoint;
+  };
 }
 
 export interface GaugeProviderProps extends PropsWithChildren {

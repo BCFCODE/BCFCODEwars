@@ -1,5 +1,8 @@
 import GaugeContext from "@/app/context/providers/contexts";
-import { Breakpoint } from "@/app/context/providers/GaugeProvider";
+import {
+  Breakpoint,
+  FontSizePerBreakpoint,
+} from "@/app/context/providers/GaugeProvider";
 import { useContext } from "react";
 
 type GridSize = Record<Breakpoint, number>;
@@ -7,6 +10,7 @@ type GridSize = Record<Breakpoint, number>;
 interface Dimensions {
   totalColumns: number;
   gridSize: GridSize;
+  fontSize: FontSizePerBreakpoint;
 }
 
 const TOTAL_COLUMNS = 24;
@@ -18,7 +22,7 @@ const useGaugeDimensions = (): Dimensions => {
     throw new Error("useGaugeDimensions must be used within a GaugeProvider");
   }
 
-  const columnsPerBreakpoint = context.columnsPerBreakpoint;
+  const { columnsPerBreakpoint, fontSizePerBreakpoint } = context.dimensions;
 
   const gridSize = Object.entries(columnsPerBreakpoint).reduce<GridSize>(
     (acc, [breakpoint, columnCount]) => {
@@ -35,7 +39,11 @@ const useGaugeDimensions = (): Dimensions => {
     {} as GridSize
   );
 
-  return { totalColumns: TOTAL_COLUMNS, gridSize };
+  return {
+    totalColumns: TOTAL_COLUMNS,
+    gridSize,
+    fontSize: fontSizePerBreakpoint,
+  };
 };
 
 export default useGaugeDimensions;
