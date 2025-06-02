@@ -1,13 +1,3 @@
-interface SX {
-  fontSize: number;
-  marginTop?: number | "initial";
-}
-
-export interface ResponsiveBreakpoint {
-  minWidth: number;
-  sx: SX;
-}
-
 /**
  * A subset of allowed style properties for responsive design.
  * Extend this interface cautiously to include only properties supported in the `sx` prop context.
@@ -54,7 +44,7 @@ export interface ResponsiveBreakpoint {
  */
 const generateResponsiveSX = (
   fontSizeBreakpoints: ResponsiveBreakpoint[]
-): Record<string, SX> =>
+): Record<string, ResponsiveSX> =>
   fontSizeBreakpoints.reduce(
     (acc, { minWidth, sx: { fontSize, marginTop } }) => {
       acc[`@media (min-width: ${minWidth}px)`] = {
@@ -63,7 +53,7 @@ const generateResponsiveSX = (
       };
       return acc;
     },
-    {} as Record<string, SX>
+    {} as Record<string, ResponsiveSX>
   );
 
 export default generateResponsiveSX;

@@ -2,12 +2,27 @@ import CodewarsStats from "@/app/components/CodewarsStats";
 import User from "./Cells";
 import CollapseBoundary from "./Cells/CollapseButton";
 import CodewarsTable from "./Cells/CollapseButton/CodewarsTable";
+import generateResponsiveSX, {
+  ResponsiveBreakpoint,
+} from "@/app/lib/ui/gauges/generateResponsiveSX";
 
 interface Props {
   email: string;
 }
 
 export default function UserRow({ email }: Props) {
+  const gaugeInnerTextSXBreakpoints: ResponsiveBreakpoint[] = [
+    { minWidth: 1, sx: { fontSize: 33 } },
+    { minWidth: 1040, sx: { fontSize: 36 } },
+    { minWidth: 1200, sx: { fontSize: 44 } },
+  ];
+
+  const gaugeFooterTextSXBreakpoints: ResponsiveBreakpoint[] = [
+    { minWidth: 1, sx: { fontSize: 15, marginTop: -3 } },
+    { minWidth: 1050, sx: { fontSize: 17, marginTop: -3 } },
+    { minWidth: 1120, sx: { fontSize: 16, marginTop: -2 } },
+    { minWidth: 1260, sx: { fontSize: 19, marginTop: -1 } },
+  ];
   return (
     <>
       <User />
@@ -20,22 +35,12 @@ export default function UserRow({ email }: Props) {
               gaugeInnerTextSX: {
                 transform: "translate(0px, 0px)",
                 transition: "font-size 1s ease",
-                "@media min-width(300px)": {
-                  fontSize: 2,
-                },
-                "@media min-width(1200px)": {
-                  fontSize: `${0.1}rem`,
-                },
+                ...generateResponsiveSX(gaugeInnerTextSXBreakpoints),
               },
               gaugeFooterTextSX: {
-                // textAlign: "center",
-                // fontSize: {
-                //   xs: `${0.7}rem`,
-                //   sm: `${1}rem`,
-                //   md: `${1}rem`,
-                //   lg: `${1.2}rem`,
-                //   xl: `${1}rem`,
-                // },
+                textAlign: "center",
+                transition: "font-size 1s ease, margin 1s ease",
+                ...generateResponsiveSX(gaugeFooterTextSXBreakpoints),
               },
             },
           }}
