@@ -13,7 +13,7 @@ interface Dimensions {
   gridSize: GridSize;
   // gaugeContainerSx: SxProps;
   gaugeInnerTextSX: SxProps;
-  gaugeFooterTextSx: SxProps;
+  gaugeFooterTextSX: SxProps;
   // fontSize: {
   //   gaugeValue: SizePerBreakpoint;
   //   gaugeFooter: SizePerBreakpoint;
@@ -29,7 +29,7 @@ const useGaugeStyles = (): Dimensions => {
     throw new Error("useGaugeStyles must be used within a GaugeProvider");
   }
 
-  const { columnsPerBreakpoint, gaugeFooterTextSx, gaugeInnerTextSX } =
+  const { columnsPerBreakpoint, gaugeFooterTextSX, gaugeInnerTextSX } =
     context.gaugeStyles;
 
   const gridSize = Object.entries(columnsPerBreakpoint).reduce<GridSize>(
@@ -51,7 +51,7 @@ const useGaugeStyles = (): Dimensions => {
     totalColumns: TOTAL_COLUMNS,
     gridSize,
     gaugeInnerTextSX,
-    gaugeFooterTextSx,
+    gaugeFooterTextSX,
     // fontSize: {
     //   gaugeValue: fontSize.gaugeValue,
     //   gaugeFooter: fontSize.gaugeFooter,

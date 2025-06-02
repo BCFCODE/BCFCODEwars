@@ -20,14 +20,14 @@ export default function UserRow({ email }: Props) {
               gaugeInnerTextSX: {
                 transform: "translate(0px, 0px)",
                 transition: "font-size 1s ease",
-                '@media min-width(300px)': {
+                "@media min-width(300px)": {
                   fontSize: 2,
                 },
-                '@media min-width(1200px)': {
+                "@media min-width(1200px)": {
                   fontSize: `${0.1}rem`,
                 },
               },
-              gaugeFooterTextSx: {
+              gaugeFooterTextSX: {
                 // textAlign: "center",
                 // fontSize: {
                 //   xs: `${0.7}rem`,

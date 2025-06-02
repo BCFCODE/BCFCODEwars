@@ -31,13 +31,13 @@ interface Props {
  * - Shows current count vs. target if the goal is unmet.
  */
 const Texts = ({ type, index }: Props) => {
-  const { gaugeFooterTextSx } = useGaugeStyles();
+  const { gaugeFooterTextSX } = useGaugeStyles();
   const { label } = useGaugeContext();
   const { percent, count, didLaterPeriodMeetTarget } = useGaugeData(index);
   const { unitTarget, days } = gaugeConfig[type];
 
   return (
-    <Box sx={gaugeFooterTextSx}>
+    <Box sx={gaugeFooterTextSX}>
       <Fade key={count} in timeout={2500}>
         <Typography sx={{ fontSize: "inherit" }}>
           {percent >= 100 || didLaterPeriodMeetTarget

@@ -14,7 +14,7 @@ export interface GaugeContextValue {
   gaugeStyles: {
     columnsPerBreakpoint: ColumnsPerBreakpoint;
     gaugeInnerTextSX: SxProps;
-    gaugeFooterTextSx: SxProps;
+    gaugeFooterTextSX: SxProps;
     // fontSize: {
     //   gaugeValue: SizePerBreakpoint;
     //   gaugeFooter: SizePerBreakpoint;
