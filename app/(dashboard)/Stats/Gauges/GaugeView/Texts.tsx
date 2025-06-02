@@ -1,9 +1,9 @@
 import useGaugeContext from "@/app/context/hooks/useGaugeContext";
-import { Box, Fade, SxProps, Typography } from "@mui/material";
-import gaugeConfig from "../config";
-import { GaugeTypes } from "../../types";
+import { Box, Fade, Typography } from "@mui/material";
 import useGaugeData from "../../hooks/useGaugeData";
 import useGaugeStyles from "../../hooks/useGaugeDimensions";
+import { GaugeTypes } from "../../types";
+import gaugeConfig from "../config";
 
 interface Props {
   type: GaugeTypes;
@@ -46,7 +46,7 @@ const Texts = ({ type, index }: Props) => {
         </Typography>
       </Fade>
       {!didLaterPeriodMeetTarget && (
-        <Fade key={label} in timeout={600}>
+        <Fade key={type} in timeout={600}>
           <Typography sx={{ fontSize: "inherit" }}>
             {count} / {label * days}
           </Typography>

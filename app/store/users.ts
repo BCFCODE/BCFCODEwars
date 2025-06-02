@@ -8,20 +8,15 @@ type Store = {
   user: {
     selectedUser?: AuthenticatedUser;
     isCollapsed: Record<string, boolean>;
-    untrackedChallengesAvailable: Record<string, boolean>;
   };
   setSelectedUser: (selectedUser: AuthenticatedUser) => void;
   setIsCollapsed: (email: string, isCollapsed: boolean) => void;
-  checkUntrackedChallengesAvailability: (
-    email: string,
-    untrackedChallengesAvailable: boolean
-  ) => void;
 };
 
 export const useUsersStore = create<Store>()(
   persist(
     immer((set) => ({
-      user: { isCollapsed: {}, untrackedChallengesAvailable: {} },
+      user: { isCollapsed: {} },
       setSelectedUser: (selectedUser) =>
         set((state) => {
           state.user.selectedUser = selectedUser;
@@ -30,15 +25,6 @@ export const useUsersStore = create<Store>()(
         set((state) => {
           if (state.user.selectedUser)
             state.user.isCollapsed[email] = isCollapsed;
-        }),
-      checkUntrackedChallengesAvailability: (
-        email,
-        untrackedChallengesAvailable
-      ) =>
-        set((state) => {
-          if (state.user.untrackedChallengesAvailable)
-            state.user.untrackedChallengesAvailable[email] =
-              untrackedChallengesAvailable;
         }),
     })),
     {
