@@ -36,24 +36,10 @@ const Texts = ({ type, index }: Props) => {
   const { percent, count, didLaterPeriodMeetTarget } = useGaugeData(index);
   const { unitTarget, days } = gaugeConfig[type];
 
-  // const textStyles: SxProps = {
-  //   textAlign: "center",
-  //   fontSize: fontSize.gaugeFooter,
-  //   // position: 'absolute'
-  // };
-
   return (
-    <Box
-    // sx={{
-    //   zIndex: 1,
-    //   transition: "margin 1s ease, font-size 1s ease",
-    //   "@media (min-width:1200px)": {
-    //     marginTop: "-3rem",
-    //   },
-    // }}
-    >
+    <Box sx={gaugeFooterTextSx}>
       <Fade key={count} in timeout={2500}>
-        <Typography sx={gaugeFooterTextSx}>
+        <Typography sx={{ fontSize: "inherit" }}>
           {percent >= 100 || didLaterPeriodMeetTarget
             ? `${unitTarget} target reached!`
             : `${count} in last ${days === 1 ? "24Hours" : `${days}Days`}`}
@@ -61,7 +47,7 @@ const Texts = ({ type, index }: Props) => {
       </Fade>
       {!didLaterPeriodMeetTarget && (
         <Fade key={label} in timeout={600}>
-          <Typography sx={gaugeFooterTextSx}>
+          <Typography sx={{ fontSize: "inherit" }}>
             {count} / {label * days}
           </Typography>
         </Fade>

@@ -39,6 +39,9 @@ const DashboardStats = () => {
             transform: "translate(0px, 0px)",
             transition: "font-size 1s ease",
             [`@media (max-width: ${240}px)`]: {
+              fontSize: 8,
+            },
+            [`@media (max-width: ${280}px)`]: {
               fontSize: 10,
             },
             [`@media (min-width: ${320}px)`]: {
@@ -56,8 +59,11 @@ const DashboardStats = () => {
             [`@media (min-width: ${920}px)`]: {
               fontSize: 30,
             },
-            [`@media (min-width: ${1080}px)`]: {
-              fontSize: 35,
+            [`@media (min-width: ${1020}px)`]: {
+              fontSize: 33.5,
+            },
+            [`@media (min-width: ${1040}px)`]: {
+              fontSize: 36,
             },
             [`@media (min-width: ${1200}px)`]: {
               fontSize: 44,
@@ -65,14 +71,79 @@ const DashboardStats = () => {
           },
           gaugeFooterTextSx: {
             textAlign: "center",
-            // fontSize: {
-            //   xs: `${0.7}rem`,
-            //   sm: `${1}rem`,
-            //   md: `${0.8}rem`,
-            //   lg: `${1.2}rem`,
-            //   xl: `${1}rem`,
-            // },
-            // position: 'absolute'
+            transition: "font-size 1s ease, margin 1s ease",
+            [`@media (max-width: ${220}px)`]: {
+              fontSize: 3,
+              marginTop: -10,
+            },
+            [`@media (min-width: ${220}px)`]: {
+              fontSize: 3,
+              marginTop: -10,
+            },
+            [`@media (min-width: ${240}px)`]: {
+              fontSize: 6,
+              marginTop: -9,
+            },
+            [`@media (min-width: ${280}px)`]: {
+              fontSize: 7,
+              marginTop: -8,
+            },
+            [`@media (min-width: ${320}px)`]: {
+              fontSize: 7,
+              marginTop: -7,
+            },
+            [`@media (min-width: ${340}px)`]: {
+              fontSize: 10,
+              marginTop: -6,
+            },
+            [`@media (min-width: ${420}px)`]: {
+              fontSize: 15,
+              marginTop: -4,
+            },
+            [`@media (min-width: ${480}px)`]: {
+              fontSize: 15,
+              marginTop: -3,
+            },
+            [`@media (min-width: ${520}px)`]: {
+              fontSize: 17,
+              marginTop: -2,
+            },
+            [`@media (min-width: ${600}px)`]: {
+              fontSize: 16,
+              marginTop: -4,
+            },
+            [`@media (min-width: ${640}px)`]: {
+              fontSize: 18,
+              marginTop: -3,
+            },
+            [`@media (min-width: ${680}px)`]: {
+              fontSize: 19,
+              marginTop: -2,
+            },
+            [`@media (min-width: ${720}px)`]: {
+              fontSize: 19,
+              marginTop: -1,
+            },
+            [`@media (min-width: ${820}px)`]: {
+              fontSize: 19,
+              marginTop: 0,
+            },
+            [`@media (min-width: ${980}px)`]: {
+              fontSize: 15,
+              marginTop: -4,
+            },
+            [`@media (min-width: ${1020}px)`]: {
+              fontSize: 15,
+              marginTop: -3,
+            },
+            [`@media (min-width: ${1050}px)`]: {
+              fontSize: 18,
+              marginTop: -2,
+            },
+            [`@media (min-width: ${1260}px)`]: {
+              fontSize: 19,
+              marginTop: -1,
+            },
           },
         },
       }}
