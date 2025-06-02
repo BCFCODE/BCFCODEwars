@@ -40,7 +40,8 @@ export default async function DashboardPage() {
           <Box
             sx={{
               color: "text.secondary", // More subtle tone for the title
-              fontSize: "0.9rem",
+              transition: "font-size 1s ease",
+              fontSize: { xs: `${2.5}vw`, sm: `${2}vw`, md: `${1}vw` },
             }}
           >
             Welcome to BCFCODE {pageName}
@@ -48,7 +49,8 @@ export default async function DashboardPage() {
           <Box
             sx={{
               color: "text.secondary", // Consistent color for user's name
-              fontSize: "0.9rem",
+              transition: "font-size 1s ease",
+              fontSize: { xs: `${2.5}vw`, sm: `${2}vw`, md: `${1}vw` },
             }}
           >
             {session?.user?.name || "User"}!

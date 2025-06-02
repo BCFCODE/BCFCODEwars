@@ -1,4 +1,4 @@
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import { TableCell } from "@mui/material";
 import { tableCellStyles } from "./styles";
 import Badge from "./Badge";

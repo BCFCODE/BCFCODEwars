@@ -47,7 +47,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  themeColor: "#0D1117", // You can customize this
 };
 
 interface Props {

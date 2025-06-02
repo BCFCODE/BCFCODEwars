@@ -2,7 +2,7 @@
 
 import { GetUsersResponse } from "@/app/api/db/users/route";
 import DatabaseAPIService from "@/app/api/services/db";
-import usersQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/users";
+import usersQueryKeys from "@/ReactQuery/queryKeys/users";
 import { PaginationQuery } from "@/app/services/db";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";

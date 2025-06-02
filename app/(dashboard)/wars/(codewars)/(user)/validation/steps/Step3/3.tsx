@@ -1,6 +1,6 @@
 "use client";
 
-import useCurrentUserQuery from "@/app/context/hooks/ReactQuery/useCurrentUserQuery";
+import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -18,13 +18,14 @@ const Step3 = ({
   codewars,
 }: StepProps) => {
   const router = useRouter();
-
-  const { data: currentUser } = useCurrentUserQuery();
+  
+  const email = session?.user?.email ?? "";
+  const { data: currentUser } = useCurrentUserQuery(email);
 
   const { mutateAsync: reconnect } = useReconnectMutation();
   const { mutateAsync: connect } = useConnectMutation();
 
-  const email = currentUser?.email ?? "";
+  // const email = currentUser?.email ?? "";
 
   const handleOnYes = async () => {
     if (!currentUser) return;

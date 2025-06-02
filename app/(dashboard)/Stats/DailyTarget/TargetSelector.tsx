@@ -1,11 +1,12 @@
 "use client";
+import useGaugeContext from "@/app/context/hooks/useGaugeContext";
 import { SvgIconComponent } from "@mui/icons-material";
 import LooksOneIcon from "@mui/icons-material/LooksOne";
 import LooksTwoIcon from "@mui/icons-material/LooksTwo";
 import WhatshotIcon from "@mui/icons-material/Whatshot"; // Or BoltIcon
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@mui/material";
 import { OverridableStringUnion } from "@mui/types";
-import useTargetStore, { TargetLevel } from "./useTargetStore";
+import { TargetLabel } from "./useTargetStore";
 
 type IconColor = OverridableStringUnion<
   | "success"
@@ -21,24 +22,24 @@ interface Icon {
   title: string;
   Icon: SvgIconComponent;
   color: IconColor;
-  value: TargetLevel;
+  value: TargetLabel;
 }
 
 const icons: Icon[] = [
   {
-    title: "1 problem/day",
+    title: "Light Effort: 1/Day",
     Icon: LooksOneIcon,
     color: "success",
     value: 1,
   },
   {
-    title: "2 problems/day",
+    title: "On Track: 2/Day",
     Icon: LooksTwoIcon,
     color: "warning",
     value: 2,
   },
   {
-    title: "3+ problems/day",
+    title: "Crushing It!: 3+/Day",
     Icon: WhatshotIcon,
     color: "error",
     value: 3,
@@ -46,20 +47,20 @@ const icons: Icon[] = [
 ];
 
 export default function TargetSelector() {
-  const { target, setTarget } = useTargetStore();
+  const { email, label, setTarget } = useGaugeContext();
 
   const handleChange = (
     _: React.MouseEvent<HTMLElement>,
-    newValue: TargetLevel | null
+    newValue: TargetLabel | null
   ) => {
     if (newValue !== null) {
-      setTarget(newValue);
+      setTarget({ email, label: newValue });
     }
   };
 
   return (
     <ToggleButtonGroup
-      value={target}
+      value={label}
       exclusive
       onChange={handleChange}
       color="primary"
@@ -71,7 +72,7 @@ export default function TargetSelector() {
           <ToggleButton value={value} sx={{ padding: 0.2, border: "none" }}>
             <Icon
               sx={{ fontSize: 40 }}
-              color={target === value ? color : "disabled"}
+              color={label === value ? color : "disabled"}
             />
           </ToggleButton>
         </Tooltip>

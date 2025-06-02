@@ -1,4 +1,4 @@
-import codewarsQueryKeys from "@/app/context/providers/ReactQuery/queryKeys/codewars";
+import codewarsQueryKeys from "@/ReactQuery/queryKeys/codewars";
 import { QueryKey } from "@tanstack/react-query";
 
 /**

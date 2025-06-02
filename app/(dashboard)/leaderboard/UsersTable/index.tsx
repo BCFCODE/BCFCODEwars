@@ -1,8 +1,6 @@
 import CurrentUserProvider from "@/app/context/providers/CurrentUser";
-import { useUsersStore } from "@/app/store/users";
 import { AuthenticatedUser } from "@/types/users";
 import { TableBody } from "@mui/material";
-import { useRef } from "react";
 import UserRow from "./UserRow";
 
 interface Props {
@@ -45,7 +43,7 @@ const UsersTable = ({ list }: Props) => {
 
         // }}
       >
-        <UserRow />
+        <UserRow email={currentUser.email} />
       </TableBody>
     </CurrentUserProvider>
   ));

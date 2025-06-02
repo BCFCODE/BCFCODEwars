@@ -3,40 +3,48 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
-export type TargetLevel = 1 | 2 | 3;
+export type TargetLabel = 1 | 2 | 3;
 
-interface TargetStore {
-  isHovering: boolean;
-  setIsHovering: (isHovering: boolean) => void;
-  target: TargetLevel;
-  setTarget: (level: TargetLevel) => void;
-  isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
+export interface TargetStore {
+  label: Record<string, TargetLabel>;
+  isHovering: Record<string, boolean>;
+  isLoading: Record<string, boolean>;
+  setTarget: (data: { email: string; label: TargetLabel }) => void;
+  setIsHovering: (data: { email: string; isHovering: boolean }) => void;
+  setIsLoading: (data: { email: string; isLoading: boolean }) => void;
 }
 
 const useTargetStore = create<TargetStore>()(
   persist(
-    (set) => ({
-      isHovering: false,
-      setIsHovering: (isHovering) => set({ isHovering }),
-      target: 1,
-      setTarget: (level) => set({ target: level }),
-      isLoading: true,
-      setIsLoading: (isLoading: boolean) => set({ isLoading }),
-    }),
+    immer((set) => ({
+      label: {},
+      isHovering: {},
+      isLoading: {},
+      setTarget: ({ email, label }) =>
+        set((state) => {
+          state.label[email] = label;
+        }),
+      setIsHovering: ({ email, isHovering }) =>
+        set((state) => {
+          state.isHovering[email] = isHovering;
+        }),
+      setIsLoading: ({ email, isLoading }) =>
+        set((state) => {
+          state.isLoading[email] = isLoading;
+        }),
+    })),
     {
       name: PERSIST_KEYS.dailyTarget,
-      // ✅ Only persist `target`, ignore `isHovering`
-      partialize: (state) => ({ target: state.target }),
+      partialize: (state) => ({ label: state.label }),
       onRehydrateStorage: () => (state) => {
-        state?.setIsLoading(false);
+        if (!state) return;
+
+        for (const email in state.isLoading) {
+          state.setIsLoading({ email, isLoading: false });
+        }
       },
     }
   )
 );
-
-useTargetStore.getState().setIsLoading = (isLoading: boolean) => {
-  useTargetStore.setState({ isLoading });
-};
 
 export default useTargetStore;

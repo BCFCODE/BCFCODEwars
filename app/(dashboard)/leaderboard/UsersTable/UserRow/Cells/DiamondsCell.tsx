@@ -3,10 +3,10 @@ import {
   counterStyles,
   diamondBoxStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, TableCell, Typography } from "@mui/material";
 import { diamondSumStyles } from "./styles";
+import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 
 const DiamondsCell = () => {
   const { currentUser } = useCurrentUserContext();

@@ -1,6 +1,6 @@
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
 import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
+import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 
 export interface UseFilter {
   activeFilter: string;

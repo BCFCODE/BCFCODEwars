@@ -15,7 +15,8 @@ const LoadingUI = ({ title, message }: Props) => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100%",
+        // height: "100%",
+        height: 130,
         width: "100%",
         padding: 2,
       }}
@@ -25,10 +26,11 @@ const LoadingUI = ({ title, message }: Props) => {
         variant="h5"
         color="text.primary"
         sx={{
+          transition: "font-size 1s ease",
           fontSize: {
-            xs: "0.7rem",
+            xs: "0.5rem",
             sm: "1rem",
-            md: "1.3rem", 
+            md: "1.3rem",
             // lg: '1.75rem',// 28px
             // xl: '2rem',   // 32px
           },
@@ -41,8 +43,9 @@ const LoadingUI = ({ title, message }: Props) => {
         color="text.secondary"
         sx={{
           marginTop: 1,
+          transition: "font-size 1s ease",
           fontSize: {
-            xs: "0.5rem",
+            xs: "0.4rem",
             sm: "0.8rem",
             md: "1rem",
           },

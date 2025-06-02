@@ -6,7 +6,7 @@ import useFilter from "../../hooks/useFilter";
 import usePaginationStore, {
   defaultPagination,
 } from "../Pagination/usePaginationStore";
-import useCurrentUserContext from "@/app/context/hooks/db/useCurrentUserContext";
+import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 
 export default function Body() {
   const { currentUser } = useCurrentUserContext();

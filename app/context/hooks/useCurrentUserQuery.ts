@@ -3,17 +3,12 @@
 import DatabaseAPIService from "@/app/api/services/db";
 import { AuthenticatedUser } from "@/types/users";
 import { useQuery } from "@tanstack/react-query";
-import { Session } from "next-auth";
-import { useSession } from "next-auth/react";
 
 const { getCurrentUser } = new DatabaseAPIService();
 
-const useCurrentUserQuery = () => {
-  const session = useSession().data as Session;
-  const email = session?.user?.email ?? "";
-
+const useCurrentUserQuery = (email: string) => {
   return useQuery<AuthenticatedUser>({
-    queryKey: ["currentUser"],
+    queryKey: ["currentUser", email],
     queryFn: async () => {
       const { currentUser, success, error } = await getCurrentUser(email, {
         cache: "no-store",
@@ -23,9 +18,9 @@ const useCurrentUserQuery = () => {
         throw new Error("Failed to fetch and aggregate currentUser.");
       }
 
-      return { ...currentUser, session };
+      return { ...currentUser };
     },
-    enabled: !!session?.user?.email, // Avoid calling if session isn't ready
+    enabled: !!email, // Avoid calling if email isn't ready
     staleTime: 1000 * 60 * 5, // cache for 5 minutes
   });
 };
