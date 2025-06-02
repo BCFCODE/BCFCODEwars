@@ -29,6 +29,34 @@ const DashboardStats = () => {
 
   if (isListEmpty) return <CodewarsStatsFallback />;
 
+  interface GaugeInnerTextValues {
+    minWidth: number;
+    fontSize: number;
+  }
+  const dimensions: GaugeInnerTextValues[] = [
+    { minWidth: 1, fontSize: 8 },
+    { minWidth: 240, fontSize: 15 },
+    { minWidth: 320, fontSize: 22 },
+    { minWidth: 420, fontSize: 30 },
+    { minWidth: 560, fontSize: 35 },
+    { minWidth: 720, fontSize: 40 },
+    { minWidth: 740, fontSize: 44 },
+    { minWidth: 900, fontSize: 30 },
+    { minWidth: 1020, fontSize: 33.5 },
+    { minWidth: 1040, fontSize: 36 },
+    { minWidth: 1200, fontSize: 44 },
+  ];
+  const gaugeInnerTextSXCalculator = (
+    dimensions: GaugeInnerTextValues[]
+  ): Record<string, { fontSize: number }> =>
+    dimensions.reduce(
+      (acc, { minWidth, fontSize }) => {
+        acc[`@media (min-width: ${minWidth}px)`] = { fontSize };
+        return acc;
+      },
+      {} as Record<string, { fontSize: number }>
+    );
+
   return (
     <CodewarsStats
       {...{
@@ -38,41 +66,46 @@ const DashboardStats = () => {
           gaugeInnerTextSX: {
             transform: "translate(0px, 0px)",
             transition: "font-size 1s ease",
-            [`@media (max-width: ${240}px)`]: {
-              fontSize: 8,
-            },
-            [`@media (max-width: ${280}px)`]: {
-              fontSize: 10,
-            },
-            [`@media (min-width: ${320}px)`]: {
-              fontSize: 18,
-            },
-            [`@media (min-width: ${420}px)`]: {
-              fontSize: 30,
-            },
-            [`@media (min-width: ${560}px)`]: {
-              fontSize: 35,
-            },
-            [`@media (min-width: ${720}px)`]: {
-              fontSize: 45,
-            },
-            [`@media (min-width: ${920}px)`]: {
-              fontSize: 30,
-            },
-            [`@media (min-width: ${1020}px)`]: {
-              fontSize: 33.5,
-            },
-            [`@media (min-width: ${1040}px)`]: {
-              fontSize: 36,
-            },
-            [`@media (min-width: ${1200}px)`]: {
-              fontSize: 44,
-            },
+            ...gaugeInnerTextSXCalculator(dimensions),
           },
+          // gaugeInnerTextSX: {
+          //   transform: "translate(0px, 0px)",
+          //   transition: "font-size 1s ease",
+          //   [`@media (min-width: ${1}px)`]: {
+          //     fontSize: 8,
+          //   },
+          //   [`@media (min-width: ${240}px)`]: {
+          //     fontSize: 10,
+          //   },
+          //   [`@media (min-width: ${320}px)`]: {
+          //     fontSize: 18,
+          //   },
+          //   [`@media (min-width: ${420}px)`]: {
+          //     fontSize: 30,
+          //   },
+          //   [`@media (min-width: ${560}px)`]: {
+          //     fontSize: 35,
+          //   },
+          //   [`@media (min-width: ${720}px)`]: {
+          //     fontSize: 45,
+          //   },
+          //   [`@media (min-width: ${920}px)`]: {
+          //     fontSize: 30,
+          //   },
+          //   [`@media (min-width: ${1020}px)`]: {
+          //     fontSize: 33.5,
+          //   },
+          //   [`@media (min-width: ${1040}px)`]: {
+          //     fontSize: 36,
+          //   },
+          //   [`@media (min-width: ${1200}px)`]: {
+          //     fontSize: 44,
+          //   },
+          // },
           gaugeFooterTextSx: {
             textAlign: "center",
             transition: "font-size 1s ease, margin 1s ease",
-            [`@media (max-width: ${220}px)`]: {
+            [`@media (min-width: ${1}px)`]: {
               fontSize: 3,
               marginTop: -10,
             },
@@ -81,7 +114,7 @@ const DashboardStats = () => {
               marginTop: -10,
             },
             [`@media (min-width: ${240}px)`]: {
-              fontSize: 6,
+              fontSize: 5,
               marginTop: -9,
             },
             [`@media (min-width: ${280}px)`]: {
@@ -98,7 +131,7 @@ const DashboardStats = () => {
             },
             [`@media (min-width: ${420}px)`]: {
               fontSize: 15,
-              marginTop: -4,
+              marginTop: -3.5,
             },
             [`@media (min-width: ${480}px)`]: {
               fontSize: 15,
@@ -114,7 +147,7 @@ const DashboardStats = () => {
             },
             [`@media (min-width: ${640}px)`]: {
               fontSize: 18,
-              marginTop: -3,
+              marginTop: -2,
             },
             [`@media (min-width: ${680}px)`]: {
               fontSize: 19,
