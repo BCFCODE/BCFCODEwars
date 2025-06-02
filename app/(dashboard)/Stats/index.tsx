@@ -33,14 +33,46 @@ const DashboardStats = () => {
     <CodewarsStats
       {...{
         email,
-        dimensions: {
+        gaugeStyles: {
           columnsPerBreakpoint: { xs: 2, sm: 2, md: 4, lg: 4, xl: 4 },
-          fontSizePerBreakpoint: {
-            xs: `${8}vw`,
-            sm: `${6}vw`,
-            md: `${4}vw`,
-            lg: `${3.5}vw`,
-            xl: `${3}vw`,
+          gaugeInnerTextSX: {
+            transform: "translate(0px, 0px)",
+            transition: "font-size 1s ease",
+            [`@media (max-width: ${240}px)`]: {
+              fontSize: 10,
+            },
+            [`@media (min-width: ${320}px)`]: {
+              fontSize: 18,
+            },
+            [`@media (min-width: ${420}px)`]: {
+              fontSize: 30,
+            },
+            [`@media (min-width: ${560}px)`]: {
+              fontSize: 35,
+            },
+            [`@media (min-width: ${720}px)`]: {
+              fontSize: 45,
+            },
+            [`@media (min-width: ${920}px)`]: {
+              fontSize: 30,
+            },
+            [`@media (min-width: ${1080}px)`]: {
+              fontSize: 35,
+            },
+            [`@media (min-width: ${1200}px)`]: {
+              fontSize: 44,
+            },
+          },
+          gaugeFooterTextSx: {
+            textAlign: "center",
+            // fontSize: {
+            //   xs: `${0.7}rem`,
+            //   sm: `${1}rem`,
+            //   md: `${0.8}rem`,
+            //   lg: `${1.2}rem`,
+            //   xl: `${1}rem`,
+            // },
+            // position: 'absolute'
           },
         },
       }}

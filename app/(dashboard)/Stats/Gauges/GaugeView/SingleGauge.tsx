@@ -1,7 +1,8 @@
 import { Box, Fade } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
-import useGaugeData from "../hooks/useGaugeData";
-import useGaugeDimensions from "../hooks/useGaugeDimensions";
+import useGaugeData from "../../hooks/useGaugeData";
+import useGaugeStyles from "../../hooks/useGaugeDimensions";
+
 
 const getColorKey = (
   percent: number
@@ -21,14 +22,10 @@ interface Props {
  *
  * Renders an animated radial gauge using MUI X's `<Gauge />` to visually
  * represent progress percentage toward a defined target.
- * 
+ *
  * @component
  * @example
  * <SingleGauge index={1} />
- *
- * @param {number} index - Index to fetch and render specific gauge data.
- *
- * @returns {JSX.Element} A styled and color-coded circular gauge component.
  *
  * Key Features:
  * - Dynamically selects a gauge color based on progress thresholds:
@@ -47,7 +44,7 @@ interface Props {
  * - Separates logic (`getColorKey`) from rendering for clarity and reuse.
  */
 const SingleGauge = ({ index }: Props) => {
-  const { fontSize } = useGaugeDimensions();
+  const { gaugeInnerTextSX } = useGaugeStyles();
   const { percent, didLaterPeriodMeetTarget } = useGaugeData(index);
   const colorKey = getColorKey(percent);
 
@@ -61,18 +58,10 @@ const SingleGauge = ({ index }: Props) => {
           endAngle={110}
           valueMax={110}
           sx={(theme) => ({
+            // backgroundColor: "gray",
+            // maxHeight: 300,
             pointerEvents: "none",
-            [`& .${gaugeClasses.valueText}`]: {
-              fontSize, // from context
-              transform: "translate(0px, 0px)",
-              transition: "font-size 1s ease",
-              // [`@media (min-width: ${0}px)`]: {
-              //   fontSize: 40,
-              // },
-              // [`@media (min-width: ${800}px)`]: {
-              //   fontSize: 35,
-              // },
-            },
+            [`& .${gaugeClasses.valueText}`]: gaugeInnerTextSX,
             [`& .${gaugeClasses.valueArc}`]: {
               fill:
                 didLaterPeriodMeetTarget || percent >= 100

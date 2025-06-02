@@ -1,8 +1,9 @@
 import GaugeContext from "@/app/context/providers/contexts";
 import {
   Breakpoint,
-  FontSizePerBreakpoint,
+  SizePerBreakpoint,
 } from "@/app/context/providers/GaugeProvider";
+import { SxProps } from "@mui/material";
 import { useContext } from "react";
 
 type GridSize = Record<Breakpoint, number>;
@@ -10,19 +11,26 @@ type GridSize = Record<Breakpoint, number>;
 interface Dimensions {
   totalColumns: number;
   gridSize: GridSize;
-  fontSize: FontSizePerBreakpoint;
+  // gaugeContainerSx: SxProps;
+  gaugeInnerTextSX: SxProps;
+  gaugeFooterTextSx: SxProps;
+  // fontSize: {
+  //   gaugeValue: SizePerBreakpoint;
+  //   gaugeFooter: SizePerBreakpoint;
+  // };
 }
 
 const TOTAL_COLUMNS = 24;
 
-const useGaugeDimensions = (): Dimensions => {
+const useGaugeStyles = (): Dimensions => {
   const context = useContext(GaugeContext);
 
   if (context === undefined || context === null) {
-    throw new Error("useGaugeDimensions must be used within a GaugeProvider");
+    throw new Error("useGaugeStyles must be used within a GaugeProvider");
   }
 
-  const { columnsPerBreakpoint, fontSizePerBreakpoint } = context.dimensions;
+  const { columnsPerBreakpoint, gaugeFooterTextSx, gaugeInnerTextSX } =
+    context.gaugeStyles;
 
   const gridSize = Object.entries(columnsPerBreakpoint).reduce<GridSize>(
     (acc, [breakpoint, columnCount]) => {
@@ -42,8 +50,13 @@ const useGaugeDimensions = (): Dimensions => {
   return {
     totalColumns: TOTAL_COLUMNS,
     gridSize,
-    fontSize: fontSizePerBreakpoint,
+    gaugeInnerTextSX,
+    gaugeFooterTextSx,
+    // fontSize: {
+    //   gaugeValue: fontSize.gaugeValue,
+    //   gaugeFooter: fontSize.gaugeFooter,
+    // },
   };
 };
 
-export default useGaugeDimensions;
+export default useGaugeStyles;

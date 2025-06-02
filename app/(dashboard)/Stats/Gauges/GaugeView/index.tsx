@@ -1,7 +1,7 @@
 import { Box, Stack } from "@mui/material";
+import { GaugeTypes } from "../../types";
 import SingleGauge from "./SingleGauge";
 import Texts from "./Texts";
-import { GaugeTypes } from "../types";
 
 interface Props {
   type: GaugeTypes;
@@ -18,10 +18,6 @@ interface Props {
  * @example
  * <GaugeView type="monthly" index={2} />
  *
- * @param {GaugeTypes} type - Determines the configuration (duration, unit targets).
- * @param {number} index - Identifies which gauge data to render (supports multiple gauges).
- *
- * @returns {JSX.Element} A vertical stack containing the gauge and related texts.
  *
  * Composition:
  * - Renders a `SingleGauge` to visually represent percentage.
@@ -36,7 +32,13 @@ interface Props {
 const GaugeView = ({ index, type }: Props) => {
   return (
     <Stack>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
+      <Box
+        sx={{
+          transition: "font-size 1s ease",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <SingleGauge {...{ index }} />
         <Texts {...{ index, type }} />
       </Box>

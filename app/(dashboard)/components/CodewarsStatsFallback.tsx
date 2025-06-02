@@ -36,7 +36,7 @@ const CodewarsStatsFallback = () => {
         <strong>Leaderboard</strong>, click the arrow next to your avatar, and
         collect your diamonds to activate your stats.
       </Typography>
-      {/* <CodewarsTargetGauges /> */}
+      {/* <Gauges /> */}
       <Box
         sx={{
           width: "100%",

@@ -1,14 +1,14 @@
 import Grid from "@mui/material/Grid";
 import GaugeView from "./GaugeView";
-import useGaugeDimensions from "./hooks/useGaugeDimensions";
-import { GaugeTypes } from "./types";
+import { GaugeTypes } from "../types";
+import useGaugeStyles from "../hooks/useGaugeDimensions";
 
-const CodewarsTargetGauges = () => {
-  const { totalColumns, gridSize } = useGaugeDimensions();
+const Gauges = () => {
+  const { totalColumns, gridSize } = useGaugeStyles();
   const gaugeTypes: GaugeTypes[] = ["daily", "weekly", "monthly", "yearly"];
 
   return (
-    <Grid container spacing={2} columns={totalColumns}>
+    <Grid container spacing={1} columns={totalColumns}>
       {gaugeTypes.map((kind, i) => (
         <Grid
           sx={{ touchAction: "pan-y", WebkitOverflowScrolling: "touch" }}
@@ -23,4 +23,4 @@ const CodewarsTargetGauges = () => {
   );
 };
 
-export default CodewarsTargetGauges;
+export default Gauges;

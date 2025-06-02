@@ -1,18 +1,24 @@
 import { PropsWithChildren } from "react";
 import GaugeContext from "./contexts";
+import { SxProps } from "@mui/material";
 
 type NumberOfColumns = 1 | 2 | 3 | 4;
 export type Breakpoint = "xs" | "sm" | "md" | "lg" | "xl";
 export type ColumnsPerBreakpoint = Record<Breakpoint, NumberOfColumns>;
-export type FontSizePerBreakpoint = Record<Breakpoint, string>;
+export type SizePerBreakpoint = Record<Breakpoint, string>;
 
 export interface GaugeContextValue {
   email: string;
   // index: number;
   // type: GaugeTypes;
-  dimensions: {
+  gaugeStyles: {
     columnsPerBreakpoint: ColumnsPerBreakpoint;
-    fontSizePerBreakpoint: FontSizePerBreakpoint;
+    gaugeInnerTextSX: SxProps;
+    gaugeFooterTextSx: SxProps;
+    // fontSize: {
+    //   gaugeValue: SizePerBreakpoint;
+    //   gaugeFooter: SizePerBreakpoint;
+    // };
   };
 }
 

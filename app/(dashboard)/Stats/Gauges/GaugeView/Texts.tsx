@@ -1,8 +1,9 @@
 import useGaugeContext from "@/app/context/hooks/useGaugeContext";
-import { Box, Fade, Typography } from "@mui/material";
+import { Box, Fade, SxProps, Typography } from "@mui/material";
 import gaugeConfig from "../config";
-import useGaugeData from "../hooks/useGaugeData";
-import { GaugeTypes } from "../types";
+import { GaugeTypes } from "../../types";
+import useGaugeData from "../../hooks/useGaugeData";
+import useGaugeStyles from "../../hooks/useGaugeDimensions";
 
 interface Props {
   type: GaugeTypes;
@@ -19,12 +20,6 @@ interface Props {
  * @example
  * <Texts type="weekly" index={0} />
  *
- * @param {GaugeTypes} type - Type of gauge to display (daily, weekly, monthly, yearly).
- * @param {number} index - Index to identify which gauge's data to retrieve from context or hooks.
- *
- * @returns {JSX.Element} A MUI Box containing two fade-in text lines:
- *  1. A summary message indicating target status.
- *  2. A count breakdown (if the target hasn't been met in the later period).
  *
  * - Uses `useGaugeContext` to get the label multiplier.
  * - Uses `useGaugeData` to retrieve the percent completion, raw count, and period status.
@@ -36,14 +31,29 @@ interface Props {
  * - Shows current count vs. target if the goal is unmet.
  */
 const Texts = ({ type, index }: Props) => {
+  const { gaugeFooterTextSx } = useGaugeStyles();
   const { label } = useGaugeContext();
   const { percent, count, didLaterPeriodMeetTarget } = useGaugeData(index);
   const { unitTarget, days } = gaugeConfig[type];
 
+  // const textStyles: SxProps = {
+  //   textAlign: "center",
+  //   fontSize: fontSize.gaugeFooter,
+  //   // position: 'absolute'
+  // };
+
   return (
-    <Box>
+    <Box
+    // sx={{
+    //   zIndex: 1,
+    //   transition: "margin 1s ease, font-size 1s ease",
+    //   "@media (min-width:1200px)": {
+    //     marginTop: "-3rem",
+    //   },
+    // }}
+    >
       <Fade key={count} in timeout={2500}>
-        <Typography sx={{ textAlign: "center" }}>
+        <Typography sx={gaugeFooterTextSx}>
           {percent >= 100 || didLaterPeriodMeetTarget
             ? `${unitTarget} target reached!`
             : `${count} in last ${days === 1 ? "24Hours" : `${days}Days`}`}
@@ -51,7 +61,7 @@ const Texts = ({ type, index }: Props) => {
       </Fade>
       {!didLaterPeriodMeetTarget && (
         <Fade key={label} in timeout={600}>
-          <Typography sx={{ textAlign: "center" }}>
+          <Typography sx={gaugeFooterTextSx}>
             {count} / {label * days}
           </Typography>
         </Fade>

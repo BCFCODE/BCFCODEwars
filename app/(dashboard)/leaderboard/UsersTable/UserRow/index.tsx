@@ -15,14 +15,27 @@ export default function UserRow({ email }: Props) {
         <CodewarsStats
           {...{
             email,
-            dimensions: {
+            gaugeStyles: {
               columnsPerBreakpoint: { xs: 4, sm: 4, md: 4, lg: 4, xl: 4 },
-              fontSizePerBreakpoint: {
-                xs: `3rem`,
-                sm: `${5}vw`,
-                md: `${4}vw`,
-                lg: `${3.5}vw`,
-                xl: `${3}vw`,
+              gaugeInnerTextSX: {
+                transform: "translate(0px, 0px)",
+                transition: "font-size 1s ease",
+                '@media min-width(300px)': {
+                  fontSize: 2,
+                },
+                '@media min-width(1200px)': {
+                  fontSize: `${0.1}rem`,
+                },
+              },
+              gaugeFooterTextSx: {
+                // textAlign: "center",
+                // fontSize: {
+                //   xs: `${0.7}rem`,
+                //   sm: `${1}rem`,
+                //   md: `${1}rem`,
+                //   lg: `${1.2}rem`,
+                //   xl: `${1}rem`,
+                // },
               },
             },
           }}
