@@ -1,4 +1,4 @@
-import { GaugeTypes } from "./GaugeView";
+import { GaugeTypes } from "../types";
 
 interface GaugeConfigEntry {
   unitTarget: string;

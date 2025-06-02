@@ -1,25 +1,33 @@
-import GaugeProvider from "@/app/context/providers/GaugeProvider";
+import GaugeProvider, {
+  GaugeContextValue,
+} from "@/app/context/providers/GaugeProvider";
 import DailyTarget from "@/app/(dashboard)/Stats/DailyTarget";
-import CodewarsTargetGauges from "@/app/(dashboard)/Stats/Gauge";
+import Gauges from "@/app/(dashboard)/Stats/Gauges";
 import { Box } from "@mui/material";
 
-interface Props {
-  email: string;
-}
-
-const CodewarsStats = ({ email }: Props) => (
+const CodewarsStats = ({ email, gaugeStyles }: GaugeContextValue) => (
   <Box
     sx={{
-      flexGrow: 1,
-      // overflowY: "auto",
+      // backgroundColor: 'yellowgreen',
+      width: "100%",
       touchAction: "pan-y",
       WebkitOverflowScrolling: "touch",
       paddingBottom: 5,
     }}
   >
-    <GaugeProvider context={{ email }}>
-      <CodewarsTargetGauges />
-      <DailyTarget />
+    <GaugeProvider context={{ email, gaugeStyles }}>
+      <Box
+        sx={{
+          // backgroundColor: "gray",
+          display: "flex",
+          flexDirection: "column",
+          gap: 3,
+          // height: 100,
+        }}
+      >
+        <Gauges />
+        <DailyTarget />
+      </Box>
     </GaugeProvider>
   </Box>
 );

@@ -31,10 +31,9 @@ const CodewarsTable = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        
       }}
     >
-      {/* <CodewarsTargetGauges /> */}
+      {/* <Gauges /> */}
       <Table size="small" aria-label="completed challenges">
         <Head />
         <Body />

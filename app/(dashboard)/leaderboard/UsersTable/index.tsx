@@ -1,10 +1,7 @@
 import CurrentUserProvider from "@/app/context/providers/CurrentUser";
-import { useUsersStore } from "@/app/store/users";
 import { AuthenticatedUser } from "@/types/users";
 import { TableBody } from "@mui/material";
-import { useRef } from "react";
 import UserRow from "./UserRow";
-import GaugeProvider from "@/app/context/providers/GaugeProvider";
 
 interface Props {
   list?: AuthenticatedUser[];

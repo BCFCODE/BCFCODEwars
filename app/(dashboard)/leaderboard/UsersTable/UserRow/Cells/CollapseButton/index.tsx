@@ -17,7 +17,7 @@ const CollapseBoundary = ({ children }: Props) => {
   return (
     <TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-        <Collapse  in={!isCollapsed} timeout="auto" unmountOnExit>
+        <Collapse in={!isCollapsed} timeout="auto" unmountOnExit>
           {children}
         </Collapse>
       </TableCell>

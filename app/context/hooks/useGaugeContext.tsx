@@ -1,11 +1,11 @@
-import GaugeContext from "@/app/context/providers/contexts";
-import { useContext } from "react";
-import { GaugeContextValue } from "../providers/GaugeProvider";
 import useTargetStore, {
   TargetStore,
 } from "@/app/(dashboard)/Stats/DailyTarget/useTargetStore";
+import GaugeContext from "@/app/context/providers/contexts";
+import { useContext } from "react";
 
-interface Context extends GaugeContextValue {
+interface Context {
+  email: string;
   label: number;
   isHovering: boolean;
   setIsHovering: TargetStore["setIsHovering"];
