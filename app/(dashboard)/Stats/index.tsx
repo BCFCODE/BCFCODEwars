@@ -6,6 +6,9 @@ import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
 import CodewarsStatsFallback from "../components/CodewarsStatsFallback";
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
+import generateResponsiveFontSizeSX, {
+  ResponsiveFontSizeBreakpoint,
+} from "@/app/lib/ui/gauges/generateResponsiveFontSizeSX";
 
 const DashboardStats = () => {
   const session = useSession().data as Session;
@@ -29,11 +32,7 @@ const DashboardStats = () => {
 
   if (isListEmpty) return <CodewarsStatsFallback />;
 
-  interface GaugeInnerTextValues {
-    minWidth: number;
-    fontSize: number;
-  }
-  const dimensions: GaugeInnerTextValues[] = [
+  const fontSizeBreakpoints: ResponsiveFontSizeBreakpoint[] = [
     { minWidth: 1, fontSize: 8 },
     { minWidth: 240, fontSize: 15 },
     { minWidth: 320, fontSize: 22 },
@@ -46,16 +45,6 @@ const DashboardStats = () => {
     { minWidth: 1040, fontSize: 36 },
     { minWidth: 1200, fontSize: 44 },
   ];
-  const gaugeInnerTextSXCalculator = (
-    dimensions: GaugeInnerTextValues[]
-  ): Record<string, { fontSize: number }> =>
-    dimensions.reduce(
-      (acc, { minWidth, fontSize }) => {
-        acc[`@media (min-width: ${minWidth}px)`] = { fontSize };
-        return acc;
-      },
-      {} as Record<string, { fontSize: number }>
-    );
 
   return (
     <CodewarsStats
@@ -66,42 +55,8 @@ const DashboardStats = () => {
           gaugeInnerTextSX: {
             transform: "translate(0px, 0px)",
             transition: "font-size 1s ease",
-            ...gaugeInnerTextSXCalculator(dimensions),
+            ...generateResponsiveFontSizeSX(fontSizeBreakpoints),
           },
-          // gaugeInnerTextSX: {
-          //   transform: "translate(0px, 0px)",
-          //   transition: "font-size 1s ease",
-          //   [`@media (min-width: ${1}px)`]: {
-          //     fontSize: 8,
-          //   },
-          //   [`@media (min-width: ${240}px)`]: {
-          //     fontSize: 10,
-          //   },
-          //   [`@media (min-width: ${320}px)`]: {
-          //     fontSize: 18,
-          //   },
-          //   [`@media (min-width: ${420}px)`]: {
-          //     fontSize: 30,
-          //   },
-          //   [`@media (min-width: ${560}px)`]: {
-          //     fontSize: 35,
-          //   },
-          //   [`@media (min-width: ${720}px)`]: {
-          //     fontSize: 45,
-          //   },
-          //   [`@media (min-width: ${920}px)`]: {
-          //     fontSize: 30,
-          //   },
-          //   [`@media (min-width: ${1020}px)`]: {
-          //     fontSize: 33.5,
-          //   },
-          //   [`@media (min-width: ${1040}px)`]: {
-          //     fontSize: 36,
-          //   },
-          //   [`@media (min-width: ${1200}px)`]: {
-          //     fontSize: 44,
-          //   },
-          // },
           gaugeFooterTextSx: {
             textAlign: "center",
             transition: "font-size 1s ease, margin 1s ease",
