@@ -46,7 +46,7 @@ const Texts = ({ type, index }: Props) => {
         </Typography>
       </Fade>
       {!didLaterPeriodMeetTarget && (
-        <Fade key={type} in timeout={600}>
+        <Fade key={`${count}-${label * days}`} in timeout={600}>
           <Typography sx={{ fontSize: "inherit" }}>
             {count} / {label * days}
           </Typography>

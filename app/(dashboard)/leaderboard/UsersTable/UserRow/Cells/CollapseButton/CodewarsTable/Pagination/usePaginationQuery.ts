@@ -41,7 +41,7 @@ const usePaginationQuery = () => {
         username,
         apiPageNumber,
       });
-
+      
       const mergedList = mergeListsAvoidingDuplicates({
         oldList: currentUser.codewars.codeChallenges.list,
         newList: applyDefaultTrackingAndRewardStatusToAll(list),

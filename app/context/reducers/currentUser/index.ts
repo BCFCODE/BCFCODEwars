@@ -11,7 +11,6 @@ import { Session } from "next-auth";
 import getRank from "./getRank";
 
 export interface CurrentUserState {
-  // isCollapsed?: boolean;
   session?: Session;
   isUserOnPersonalDashboard?: boolean;
 }
@@ -38,18 +37,9 @@ export type CurrentUserAction =
       selectedChallenge: CodewarsCompletedChallenge;
     }
   | { type: "SET_USER_DIAMONDS"; diamonds: Diamonds }
-  // | { type: "SET_COLLAPSE_OPEN"; isCollapsed: boolean }
+  
   | { type: "UPDATE_COLLECTION_FILTER"; filterName: CodeChallengesFilter }
-  // | {
-  //     type: "CHECK_UNTRACKED_CHALLENGES_AVAILABILITY";
-  //     untrackedChallengesAvailable: boolean;
-  //   }
-  // | {
-  //     type: "ADD_UNTRACKED_CHALLENGES_TO_LIST";
-  //     untrackedChallenges: CodewarsCompletedChallenge[];
-  //     totalPages: number;
-  //     totalItems: number;
-  //   }
+
   | { type: "EMPTY_UNTRACKED_CHALLENGE_LIST" }
   | {
       type: "DIAMOND_COUNT_ANIMATION_COMPLETED";
