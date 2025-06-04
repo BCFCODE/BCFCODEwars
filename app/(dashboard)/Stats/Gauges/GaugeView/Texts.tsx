@@ -38,7 +38,7 @@ const Texts = ({ type, index }: Props) => {
 
   return (
     <Box sx={gaugeFooterTextSX}>
-      <Fade key={`${unitTarget}${count}`} in timeout={2500}>
+      <Fade key={count} in timeout={2500}>
         <Typography sx={{ fontSize: "inherit" }}>
           {percent >= 100 || didLaterPeriodMeetTarget
             ? `${unitTarget} target reached!`
@@ -46,7 +46,7 @@ const Texts = ({ type, index }: Props) => {
         </Typography>
       </Fade>
       {!didLaterPeriodMeetTarget && (
-        <Fade key={`${type}${count}`} in timeout={600}>
+        <Fade key={`${count}-${label * days}`} in timeout={600}>
           <Typography sx={{ fontSize: "inherit" }}>
             {count} / {label * days}
           </Typography>

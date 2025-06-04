@@ -23,9 +23,12 @@ const useCurrentUserQuery = (email: string) => {
     },
     enabled: !!email, // Avoid calling if email isn't ready
     // staleTime: 1000 * 60 * 5, // cache for 5 minutes
+    staleTime: 0, // cache for 5 minutes
     refetchOnReconnect: true,
     refetchOnWindowFocus: true,
+    
   });
+  
 };
 
 export default useCurrentUserQuery;
