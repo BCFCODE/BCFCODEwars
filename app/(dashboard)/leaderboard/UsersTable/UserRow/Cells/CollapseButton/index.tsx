@@ -12,7 +12,6 @@ const CollapseBoundary = ({ children }: Props) => {
   const isCollapsed = useUsersStore(
     (state) => state.user.isCollapsed[currentUser.email] ?? true
   );
-  const selectedUser = useUsersStore((state) => state.user.selectedUser);
 
   return (
     <TableRow>

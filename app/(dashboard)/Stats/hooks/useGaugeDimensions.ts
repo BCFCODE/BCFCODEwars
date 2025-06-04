@@ -1,8 +1,5 @@
 import GaugeContext from "@/app/context/providers/contexts";
-import {
-  Breakpoint,
-  SizePerBreakpoint,
-} from "@/app/context/providers/GaugeProvider";
+import { Breakpoint } from "@/app/context/providers/GaugeProvider";
 import { SxProps } from "@mui/material";
 import { useContext } from "react";
 
@@ -11,13 +8,8 @@ type GridSize = Record<Breakpoint, number>;
 interface Dimensions {
   totalColumns: number;
   gridSize: GridSize;
-  // gaugeContainerSx: SxProps;
   gaugeInnerTextSX: SxProps;
   gaugeFooterTextSX: SxProps;
-  // fontSize: {
-  //   gaugeValue: SizePerBreakpoint;
-  //   gaugeFooter: SizePerBreakpoint;
-  // };
 }
 
 const TOTAL_COLUMNS = 24;
