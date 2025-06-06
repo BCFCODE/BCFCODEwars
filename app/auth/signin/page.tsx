@@ -5,12 +5,10 @@ import { Metadata } from "next/types";
 import { providerMap } from "../../../auth";
 import { handleSignIn } from "./signInHandler";
 import {
-  leaderboardStyles,
   signInPageContainerStyles,
   // signInSlotProps,
   signInText,
 } from "./styles";
-import Providers from "@/app/context/providers";
 // import SubmitButton from "./SubmitButton";
 
 export const metadata: Metadata = {
@@ -24,7 +22,9 @@ export const metadata: Metadata = {
 export default async function SignIn() {
   return (
     <Box>
-      <Box sx={leaderboardStyles}>
+      <Box
+        sx={{ height: "100vh", margin: { xs: 0, sm: 1, md: 2, lg: 3, xl: 4 } }}
+      >
         <Leaderboard />
       </Box>
       <SignInPage
