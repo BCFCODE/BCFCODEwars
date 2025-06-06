@@ -1,6 +1,6 @@
 import Leaderboard from "@/app/(dashboard)/leaderboard/LeaderBoard";
 import { Box } from "@mui/material";
-import { SignInPage } from "@toolpad/core/SignInPage";
+import { SignInPage, SignInPageSlots } from "@toolpad/core/SignInPage";
 import { Metadata } from "next/types";
 import { providerMap } from "../../../auth";
 import Container from "./Container";
@@ -14,10 +14,6 @@ import {
 export const metadata: Metadata = {
   title: "Sign in",
 };
-
-// const signInSlots: SignInPageSlots = {
-//   submitButton: SubmitButton,
-// };
 
 export default async function SignIn() {
   return (
@@ -41,8 +37,6 @@ export default async function SignIn() {
             left: "50%", // Center horizontally
             transform: "translate(-50%, -50%)", // Offset by 50% of own width & height
           }}
-          // slotProps={signInSlotProps}
-          // slots={signInSlots}
           localeText={signInText}
           providers={providerMap}
           signIn={handleSignIn}
