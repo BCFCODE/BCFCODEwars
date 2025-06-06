@@ -1,8 +1,5 @@
 import { SxProps, Theme } from "@mui/material";
 
-export const signInPageContainerStyles: SxProps = {
-  // backgroundColor: "yellowgreen",
-};
 
 interface SignInPageLocaleText {
   signInTitle?: string;
