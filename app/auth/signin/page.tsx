@@ -18,11 +18,6 @@ export const metadata: Metadata = {
 export default async function SignIn() {
   return (
     <Box>
-      <Box
-        sx={{ height: "90vh", margin: { xs: 0, sm: 1, md: 2, lg: 3, xl: 4 } }}
-      >
-        <Leaderboard />
-      </Box>
       <Container
         SX={{
           opacity: 0.2,
@@ -32,16 +27,30 @@ export default async function SignIn() {
       >
         <SignInPage
           sx={{
-            top: 200,
+            top: 250, // Fixed vertical offset
             position: "fixed",
             left: "50%", // Center horizontally
-            transform: "translate(-50%, -50%)", // Offset by 50% of own width & height
+            transform: "translate(-50%, -50%)", // Only center horizontally
+
+            // For screens smaller than 700px, override minWidth and width
+            "@media (max-width:800px)": {
+              position: "static", // Let it flow naturally (optional)
+              width: "100%", // Full width on small screens
+              transform: "none", // Remove transform on small screens
+              margin: "auto", // Center with margin
+              top: "auto", // Reset fixed top
+            },
           }}
           localeText={signInText}
           providers={providerMap}
           signIn={handleSignIn}
         />
       </Container>
+      <Box
+        sx={{ height: "90vh", margin: { xs: 0, sm: 1, md: 2, lg: 3, xl: 4 } }}
+      >
+        <Leaderboard />
+      </Box>
     </Box>
   );
 }
