@@ -21,24 +21,26 @@ export default async function SignIn() {
       <Container
         SX={{
           opacity: 0.2,
-          transition: "opacity 1s ease",
+          transition: "opacity 0.7s ease",
           "&:hover": { opacity: 1 },
+          "@media (max-width:800px)": {
+            opacity: 1,
+          },
         }}
       >
         <SignInPage
           sx={{
-            top: 250, // Fixed vertical offset
+            zIndex: 1000,
+            top: 250,
             position: "fixed",
-            left: "50%", // Center horizontally
-            transform: "translate(-50%, -50%)", // Only center horizontally
-
-            // For screens smaller than 700px, override minWidth and width
+            left: "50%",
+            transform: "translate(-50%, -50%)",
             "@media (max-width:800px)": {
-              position: "static", // Let it flow naturally (optional)
-              width: "100%", // Full width on small screens
-              transform: "none", // Remove transform on small screens
-              margin: "auto", // Center with margin
-              top: "auto", // Reset fixed top
+              position: "relative", // <-- change here to relative
+              width: "100%",
+              transform: "none",
+              margin: "auto",
+              top: "auto",
             },
           }}
           localeText={signInText}
