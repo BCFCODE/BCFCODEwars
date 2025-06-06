@@ -61,7 +61,14 @@ export const usePaginationStore = create<PaginationStore>()(
     })),
     {
       name: PERSIST_KEYS.codewarsTablePaginationQuery,
-      partialize: (state) => ({ pagination: state.pagination }),
+      partialize: (state) => ({
+        pagination: Object.fromEntries(
+          Object.entries(state.pagination).map(([username, query]) => [
+            username,
+            { ...defaultPagination, rowsPerPage: query.rowsPerPage },
+          ])
+        ),
+      }),
       onRehydrateStorage: () => {
         return () => {
           usePaginationStore.getState().setIsLoading(false);
