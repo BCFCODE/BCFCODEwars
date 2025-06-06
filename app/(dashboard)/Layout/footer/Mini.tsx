@@ -26,10 +26,10 @@ const Mini = () => {
       <span
         style={{
           position: "absolute",
-          bottom: 20,
-          left: -6,
-          letterSpacing: -3.5,
-          fontSize: "0.95em",
+          bottom: 17,
+          left: -5,
+          letterSpacing: -2,
+          fontSize: 10,
         }}
       >
         BCFCODE
@@ -40,7 +40,7 @@ const Mini = () => {
           bottom: 0,
           left: 0,
           writingMode: "horizontal-tb", // Keeps the year horizontal
-          // fontSize: "1.1em",
+          fontSize: 10,
         }}
       >
         © {currentYear}
