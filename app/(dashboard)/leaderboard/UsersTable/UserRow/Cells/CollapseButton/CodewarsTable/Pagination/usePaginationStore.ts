@@ -65,7 +65,11 @@ export const usePaginationStore = create<PaginationStore>()(
         pagination: Object.fromEntries(
           Object.entries(state.pagination).map(([username, query]) => [
             username,
-            { ...defaultPagination, rowsPerPage: query.rowsPerPage },
+            {
+              ...defaultPagination,
+              rowsPerPage: query.rowsPerPage,
+              limit: query.limit,
+            },
           ])
         ),
       }),

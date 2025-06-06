@@ -28,7 +28,7 @@ const Welcome = ({ children, pageName, user }: Props) => {
         minHeight: "100%", // Full height of the screen
         bgcolor: "background.default", // Neutral background color
         color: "text.primary", // Primary text color for readability
-        p: { xs: 3, sm: 5 }, // Responsive padding (smaller on mobile)
+        padding: { xs: 3, sm: 5 }, // Responsive padding (smaller on mobile)
         boxShadow: 3, // Subtle shadow for depth
         borderRadius: 2, // Rounded corners for a modern feel
         marginTop: 2.5
