@@ -1,15 +1,23 @@
+'use client'
+
 import { Avatar, Box, Typography } from "@mui/material";
 import { PropsWithChildren } from "react";
+import useCurrentUserQuery from "../context/hooks/useCurrentUserQuery";
 
 interface Props extends PropsWithChildren {
   pageName: string;
   user: {
     name: string;
     image: string;
+    email: string;
   };
 }
 
 const Welcome = ({ children, pageName, user }: Props) => {
+  const { isLoading } = useCurrentUserQuery(user.email);
+
+  if (isLoading) return <Box>{children}</Box>;
+
   return (
     <Box
       sx={{

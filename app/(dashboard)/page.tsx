@@ -14,6 +14,7 @@ export default async function DashboardPage() {
           pageName: "Dashboard",
           user: {
             name: session?.user?.name ?? "User",
+            email: session?.user?.email ?? "",
             image: session?.user?.image ?? "",
           },
         }}
