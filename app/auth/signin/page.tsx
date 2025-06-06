@@ -1,40 +1,47 @@
 import Leaderboard from "@/app/(dashboard)/leaderboard/LeaderBoard";
 import { Box } from "@mui/material";
-import { SignInPage } from "@toolpad/core/SignInPage";
+import { SignInPage, SignInPageSlots } from "@toolpad/core/SignInPage";
 import { Metadata } from "next/types";
 import { providerMap } from "../../../auth";
+import Container from "./Container";
 import { handleSignIn } from "./signInHandler";
 import {
-  leaderboardStyles,
-  signInPageContainerStyles,
   // signInSlotProps,
   signInText,
 } from "./styles";
-import Providers from "@/app/context/providers";
 // import SubmitButton from "./SubmitButton";
 
 export const metadata: Metadata = {
   title: "Sign in",
 };
 
-// const signInSlots: SignInPageSlots = {
-//   submitButton: SubmitButton,
-// };
-
 export default async function SignIn() {
   return (
     <Box>
-      <Box sx={leaderboardStyles}>
+      <Box
+        sx={{ height: "90vh", margin: { xs: 0, sm: 1, md: 2, lg: 3, xl: 4 } }}
+      >
         <Leaderboard />
       </Box>
-      <SignInPage
-        sx={signInPageContainerStyles}
-        // slotProps={signInSlotProps}
-        // slots={signInSlots}
-        localeText={signInText}
-        providers={providerMap}
-        signIn={handleSignIn}
-      />
+      <Container
+        SX={{
+          opacity: 0.2,
+          transition: "opacity 1s ease",
+          "&:hover": { opacity: 1 },
+        }}
+      >
+        <SignInPage
+          sx={{
+            top: 200,
+            position: "fixed",
+            left: "50%", // Center horizontally
+            transform: "translate(-50%, -50%)", // Offset by 50% of own width & height
+          }}
+          localeText={signInText}
+          providers={providerMap}
+          signIn={handleSignIn}
+        />
+      </Container>
     </Box>
   );
 }

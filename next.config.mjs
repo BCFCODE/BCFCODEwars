@@ -10,9 +10,14 @@ const nextConfig = {
         protocol: "https",
         hostname: "res.cloudinary.com",
       },
+      {
+        protocol: "https",
+        hostname: "player.cloudinary.com",
+      },
     ],
   },
   // reactStrictMode: false
 };
+
 
 export default nextConfig;
