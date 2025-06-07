@@ -7,7 +7,7 @@ import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 
 export default function AvatarCell() {
   const {
-    currentUser: { image, name },
+    currentUser: { image, name, role },
   } = useCurrentUserContext();
 
   return (

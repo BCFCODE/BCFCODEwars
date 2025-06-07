@@ -23,8 +23,18 @@ export interface BaseUser extends GoogleUser {
   lastLogin: Date;
 }
 
+export enum UserRole {
+  SuperAdmin = "superAdmin",
+  // Admin = "admin",
+  // Moderator = "moderator",
+  // User = "user",
+  // Guest = "guest",
+}
+
 export interface DatabaseUser extends BaseUser {
   activity: UserActivity;
+  role?: UserRole.SuperAdmin;
+  websiteUrl?: string;
 }
 
 export interface AuthenticatedUser extends DatabaseUser, CurrentUserState {
