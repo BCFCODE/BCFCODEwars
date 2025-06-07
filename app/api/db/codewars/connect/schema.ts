@@ -1,4 +1,5 @@
 import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
+import { UserRole } from "@/types/users";
 import { z } from "zod";
 
 const CodewarsSingleChallengeSchema = z.object({
@@ -87,6 +88,8 @@ const CodewarsUserSchema = z.object({
   skills: z.array(z.string()).nullable(),
   ranks: RanksSchema,
   codeChallenges: CodeChallengesSchema,
+  role: z.nativeEnum(UserRole),
+  websiteUrl: z.string().optional(),
 });
 
 export type CodewarsUser = z.infer<typeof CodewarsUserSchema>;
