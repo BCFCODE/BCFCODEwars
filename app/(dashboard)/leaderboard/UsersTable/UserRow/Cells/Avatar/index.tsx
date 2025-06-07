@@ -4,7 +4,6 @@ import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Box, TableCell, Tooltip } from "@mui/material";
 import Badge from "./Badge";
 import Name from "./Name";
-import { tableCellStyles } from "./styles";
 
 export default function AvatarCell() {
   const {
