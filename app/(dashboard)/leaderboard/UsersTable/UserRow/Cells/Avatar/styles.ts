@@ -32,13 +32,6 @@ export const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-export const tableCellStyles: SxProps = {
-  ...codewarsCellStyles,
-  display: "flex",
-  alignItems: "center",
-  gap: 1,
-  paddingLeft: { xs: 4, md: 2 },
-};
 
 export const nameStyles: SxProps = {
   whiteSpace: "nowrap",

@@ -116,6 +116,8 @@ class DatabaseService {
             firstLogin: 1,
             lastLogin: 1,
             activity: 1,
+            role: 1,
+            websiteUrl: 1,
           },
         },
         { $sort: { "diamonds.totals.total": -1 } },
