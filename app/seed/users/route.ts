@@ -27,7 +27,7 @@ export async function GET(request: NextRequest) {
 
   const client = new MongoClient(uri);
 
-  try {
+  try { 
     const { users } = await getCollections();
     // Insert seed data
     const result = await users.insertMany(seedData);

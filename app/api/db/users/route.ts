@@ -25,7 +25,8 @@ export async function GET(
     const { list, totalUsers } = await getUsers({
       skip: safeSkip,
       limit: safeLimit,
-    });
+    }); 
+    console.log(list)
     return NextResponse.json(
       { success: true, list, totalUsers },
       { status: 200 }
