@@ -1,7 +1,7 @@
 {
   "name": "bcfcode",
   "version": "0.1.0",
-  "packageManager": "pnpm@10.10.0",
+  "packageManager": "pnpm@10.11.1+sha512.e519b9f7639869dc8d5c3c5dfef73b3f091094b0a006d7317353c72b124e80e1afd429732e28705ad6bfa1ee879c1fce46c128ccebd3192101f43dd67c667912",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -35,6 +35,7 @@
     "next-auth": "5.0.0-beta.20",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-idle-timer": "^5.7.2",
     "zod": "^3.25.32",
     "zustand": "^5.0.5"
   },
