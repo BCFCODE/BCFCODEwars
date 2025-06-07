@@ -10,7 +10,7 @@ class GoogleService {
     if (!existingUser) {
       await addNewUser(user);
     } else {
-     await updateSingleUser(existingUser.email, {
+      await updateSingleUser(existingUser.email, {
         ...existingUser,
         // name,
         image: user.image,
@@ -19,7 +19,8 @@ class GoogleService {
           ...existingUser.activity,
           lastLogin: new Date(),
           loginHistory: [...existingUser.activity.loginHistory, new Date()],
-          isActiveSession: true,
+          idleHistory: [],
+          isIdle: true,
         },
       });
     }

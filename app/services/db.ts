@@ -283,7 +283,7 @@ class DatabaseService {
           lastLogout: undefined,
           loginHistory: [new Date()],
           logoutHistory: [],
-          isActiveSession: true,
+          isIdle: true,
         },
       });
 

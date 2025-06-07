@@ -9,7 +9,8 @@ export interface UserActivity {
   lastLogout: Date;
   loginHistory: Date[];
   logoutHistory: Date[];
-  isActiveSession: boolean;
+  idleHistory: { from: Date; to?: Date; duration?: number }[];
+  isIdle: boolean;
 }
 
 export interface GoogleUser {

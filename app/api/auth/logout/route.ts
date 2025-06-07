@@ -20,7 +20,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
           ...currentUser.activity,
           lastLogout: new Date(),
           logoutHistory: [...currentUser.activity.logoutHistory, new Date()],
-          isActiveSession: false,
+          // idleHistory: [],
+          isIdle: false,
         },
       });
 
