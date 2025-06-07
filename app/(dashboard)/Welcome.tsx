@@ -16,7 +16,7 @@ interface Props extends PropsWithChildren {
 const Welcome = ({ children, pageName, user }: Props) => {
   const { isLoading } = useCurrentUserQuery(user.email);
 
-  if (isLoading) return <Box>{children}</Box>;
+  if (isLoading) return <Box sx={{ marginTop: 8 }}>{children}</Box>;
 
   return (
     <Box
@@ -31,7 +31,7 @@ const Welcome = ({ children, pageName, user }: Props) => {
         padding: { xs: 3, sm: 5 }, // Responsive padding (smaller on mobile)
         boxShadow: 3, // Subtle shadow for depth
         borderRadius: 2, // Rounded corners for a modern feel
-        marginTop: 2.5
+        marginTop: 2.5,
       }}
     >
       {/* Header Message */}
@@ -77,7 +77,8 @@ const Welcome = ({ children, pageName, user }: Props) => {
             boxShadow: 8, // Deep shadow for visual separation
             border: "2px solid", // Adding a border for distinction
             borderColor: "grey.400", // Neutral border color
-            transition: "transform 0.3s ease-in-out, margin 1s ease, width 2s ease, height 2s ease",
+            transition:
+              "transform 0.3s ease-in-out, margin 1s ease, width 2s ease, height 2s ease",
             "&:hover": {
               transform: "scale(1.1)", // Subtle hover effect to add interaction
             },
@@ -106,7 +107,6 @@ const Welcome = ({ children, pageName, user }: Props) => {
               height: 110,
               marginBottom: -5,
             },
-        
           }}
         />
       )}
