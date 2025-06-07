@@ -27,7 +27,7 @@ const LoadingUI = ({ title, message }: Props) => (
         borderRadius: "50%",
         overflow: "hidden", // clip overflow to keep shape
         boxShadow: `0 0 ${100}px ${30}px rgba(${0},${0},${0},${0.1})`,
-        marginBottom: 3
+        marginBottom: 3,
       }}
     >
       <iframe
