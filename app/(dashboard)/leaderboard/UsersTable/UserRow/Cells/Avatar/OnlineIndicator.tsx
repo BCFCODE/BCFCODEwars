@@ -12,6 +12,7 @@ const OnlineIndicator = ({ children }: Props) => {
 
   return (
     <StyledOnlineIndicator
+      sx={{ zIndex: 1 }}
       overlap="circular"
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       variant="dot"
