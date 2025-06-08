@@ -13,15 +13,15 @@ const RoleBadge = () => {
         title="Super Admin"
       >
         <VerifiedUserIcon
-          fontSize="small"
+          // fontSize="small"
           sx={{
             position: "absolute",
             color: "#FFD700", // classic gold color
             filter: "drop-shadow(0 0 4px #FFC107)", // subtle glowing effect
-            top: 0,
-            right: -4,
+            top: 1,
+            right: 0,
             zIndex: 2,
-            // fontSize: 20, // bigger icon for emphasis
+            fontSize: 12, // bigger icon for emphasis
           }}
         />
       </Tooltip>
