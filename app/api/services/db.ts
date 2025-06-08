@@ -178,11 +178,10 @@ class DatabaseAPIService {
     isIdle: boolean;
   }) => {
     try {
-      const encodedEmail = encodeURIComponent(email);
-      const response = await fetch(`${this.endpoint}/user-activity`, {
+      const response = await fetch(`${this.endpoint}/user-activity/idle`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: encodedEmail, isIdle }),
+        body: JSON.stringify({ email, isIdle }),
       });
 
       if (!response.ok) {

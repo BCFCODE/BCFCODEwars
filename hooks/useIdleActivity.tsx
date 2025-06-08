@@ -1,11 +1,29 @@
-import React from 'react'
+import { useIdleTimer } from "react-idle-timer";
+import useIdleActivityMutation from "./useIdleActivityMutation";
 
-const useIdleActivity = () => {
-  
-  return 
-}
+const useIdleActivity = (email: string): void => {
+  const { mutateAsync } = useIdleActivityMutation();
 
-export default useIdleActivity
+  const onIdle = () => {
+    mutateAsync({ email, isIdle: true });
+    console.log("idle");
+  };
+  const onActive = () => {
+    mutateAsync({ email, isIdle: false });
+    console.log("active");
+  };
+
+  useIdleTimer({
+    onIdle,
+    onActive,
+    // timeout: 60 * 1000, // 1 minute idle
+    // timeout: 1000, // 1s
+    timeout: 20 * 1000, // 30s
+    debounce: 500,
+  });
+};
+
+export default useIdleActivity;
 
 /* 
   To track individual user idle activity (as in your screenshot with multiple users listed), and do it cleanly and scalably using react-idle-timer, here’s an awesome, scalable, and best-practice approach that’ll save you tons of dev/debug time:
@@ -38,9 +56,7 @@ export default useIdleActivity
 
   🧩 Best Practice Setup: (TL;DR Code First)
   useIdleActivity.ts – Custom hook per user
-  tsx
-  Copy
-  Edit
+ 
   import { useIdleTimer } from 'react-idle-timer'
   import { useMutation } from '@tanstack/react-query'
   import { useStore } from '@/store/userStore'
@@ -65,9 +81,7 @@ export default useIdleActivity
     })
   }
   Inside UserDashboard.tsx
-  tsx
-  Copy
-  Edit
+ 
   // Only call for the logged-in user
   useIdleActivity(loggedInUser.id)
   🔁 Server-side: Receive status & broadcast
@@ -82,9 +96,7 @@ export default useIdleActivity
   🎯 UI Component: UserList
   You now just display it like this:
 
-  tsx
-  Copy
-  Edit
+ 
   {users.map(user => (
     <UserCard
       key={user.id}
@@ -100,9 +112,7 @@ export default useIdleActivity
 
   Combine with visibilitychange events to detect when tab is inactive
 
-  tsx
-  Copy
-  Edit
+ 
   useEffect(() => {
     const handleVisibility = () => {
       if (document.hidden) {

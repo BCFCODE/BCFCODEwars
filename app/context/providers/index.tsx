@@ -17,14 +17,14 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Session } from "next-auth";
 import { SessionProvider, signIn, signOut } from "next-auth/react";
-import { headers } from "next/headers";
 import Image from "next/image";
 import * as React from "react";
 import { ReactNode } from "react";
-import "../../styles/global.css";
 import ReactQueryProvider from "../../../ReactQuery";
 import getQueryClient from "../../../ReactQuery/queryClient";
 import usersQueryKeys from "../../../ReactQuery/queryKeys/users";
+import "../../styles/global.css";
+import ClientIdleTracker from "./ClientIdleTracker";
 
 const { getUsers } = new DatabaseAPIService();
 
@@ -96,11 +96,10 @@ interface Props {
 
 const Providers = async ({ children }: Props) => {
   // Await headers() and ensure its operations are performed synchronously after awaiting
-  const headersList = await headers();
-  const forwardedProto = headersList.get("x-forwarded-proto");
+  // const headersList = await headers();
+  // const forwardedProto = headersList.get("x-forwarded-proto");
 
-  // Await the auth call after resolving headers
-  const session: Session | null = await auth(); // Now fully async
+  const session: Session | null = await auth();
 
   const queryClient = getQueryClient();
 
@@ -133,6 +132,7 @@ const Providers = async ({ children }: Props) => {
                 theme={theme}
               >
                 {children}
+                <ClientIdleTracker />
                 <Analytics />
                 <SpeedInsights />
               </NextAppProvider>
