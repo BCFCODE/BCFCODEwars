@@ -169,6 +169,33 @@ class DatabaseAPIService {
       return { success: false };
     }
   };
+
+  toggleUserIdleStatus = async ({
+    email,
+    isIdle,
+  }: {
+    email: string;
+    isIdle: boolean;
+  }) => {
+    try {
+      const encodedEmail = encodeURIComponent(email);
+      const response = await fetch(`${this.endpoint}/user-activity`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: encodedEmail, isIdle }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update user activity.");
+      }
+
+      return { success: true };
+    } catch (error) {
+      if (error instanceof Error)
+        throw new Error(error.message ?? "Unknown error occurred.");
+      throw new Error("Unexpected error occurred");
+    }
+  };
 }
 
 export default DatabaseAPIService;
