@@ -25,8 +25,8 @@ const useIdleActivityMutation = () => {
 
   const queryKey = [
     usersQueryKeys.usersList,
-    // pagination.skip,
-    // pagination.limit,
+    pagination.skip,
+    pagination.limit,
   ];
 
   return useMutation<Data, Error, Variables, Context>({
