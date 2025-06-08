@@ -14,7 +14,10 @@ const UsersTable = ({ list }: Props) => {
   // const setIsCollapsed = useUsersStore((state) => state.setIsCollapsed);
 
   return list?.map((currentUser: AuthenticatedUser) => (
-    <CurrentUserProvider key={currentUser.email} context={{ currentUser }}>
+    <CurrentUserProvider
+      key={`${currentUser.email}-${currentUser.activity.isIdle ? "idle" : "active"}`}
+      context={{ currentUser }}
+    >
       <TableBody
         key={currentUser.email}
         // onMouseEnter={() => {

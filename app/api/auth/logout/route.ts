@@ -14,13 +14,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const currentUser = await getUser(email);
 
     if (currentUser)
-      updateSingleUser(email, {
-        ...currentUser,
-        activity: {
-          ...currentUser.activity,
-          lastLogout: new Date(),
-          logoutHistory: [...currentUser.activity.logoutHistory, new Date()],
-          isActiveSession: false,
+      updateSingleUser({
+        email,
+        update: {
+          "activity.lastLogout": new Date(),
+          "activity.logoutHistory": [
+            ...currentUser.activity.logoutHistory,
+            new Date(),
+          ],
+          "activity.isIdle": false,
         },
       });
 

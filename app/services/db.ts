@@ -283,7 +283,7 @@ class DatabaseService {
           lastLogout: undefined,
           loginHistory: [new Date()],
           logoutHistory: [],
-          isActiveSession: true,
+          isIdle: true,
         },
       });
 
@@ -346,12 +346,20 @@ class DatabaseService {
   //   });
   // };
 
-  updateSingleUser = async <T>(email: string, update: T) => {
+  updateSingleUser = async ({
+    email,
+    update,
+  }: {
+    email: string;
+    update: Record<string, any>;
+  }) => {
     const { users } = await this.getCollections();
-    await users.updateOne(
-      { email },
-      { $set: update as Readonly<Partial<Document>> }
-    );
+
+    const result = await users.updateOne({ email }, { $set: update });
+
+    if (result.matchedCount === 0) {
+      throw new Error(`No user found with email: ${email}`);
+    }
   };
 
   updateCurrentUser = async (currentUser: AuthenticatedUser) => {
@@ -550,6 +558,21 @@ class DatabaseService {
     const client = await this.getClient();
     await client.close();
   };
+
+  // toggleUserIdleStatus = async ({
+  //   email,
+  //   isIdle,
+  // }: {
+  //   email: string;
+  //   isIdle: boolean;
+  // }) => {
+  //   const { users } = await this.getCollections();
+
+  //   users.updateOne({email}, {$set:})
+  //   console.log(
+  //     `email: ${email} and isIdle: ${isIdle} received, please implement db logic.`
+  //   );
+  // };
 }
 
 export default DatabaseService;

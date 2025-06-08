@@ -1,9 +1,8 @@
 import { SxProps } from "@mui/material";
 import Badge from "@mui/material/Badge";
-import { codewarsCellStyles } from "@/app/(dashboard)/leaderboard/styles";
 import { styled } from "@mui/material/styles";
 
-export const StyledBadge = styled(Badge)(({ theme }) => ({
+export const StyledOnlineIndicator = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     backgroundColor: "#44b700",
     color: "#44b700",
@@ -31,7 +30,6 @@ export const StyledBadge = styled(Badge)(({ theme }) => ({
     },
   },
 }));
-
 
 export const nameStyles: SxProps = {
   whiteSpace: "nowrap",
