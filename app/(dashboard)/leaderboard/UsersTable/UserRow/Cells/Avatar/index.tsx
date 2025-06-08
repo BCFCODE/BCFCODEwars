@@ -1,16 +1,13 @@
+import { Box, TableCell } from "@mui/material";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
-import { UserRole } from "@/types/users";
-import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import { Box, TableCell, Tooltip } from "@mui/material";
 import Name from "./Name";
+import Avatar from "@mui/material/Avatar";
 import OnlineIndicator from "./OnlineIndicator";
 import OpenWebsiteIfAvailable from "./OpenWebsiteIfAvailable";
 import RoleBadge from "./RoleBadge";
 
 export default function AvatarCell() {
-  const {
-    currentUser: { name, role },
-  } = useCurrentUserContext();
+  const { currentUser } = useCurrentUserContext();
 
   return (
     <TableCell
@@ -30,7 +27,7 @@ export default function AvatarCell() {
           <OnlineIndicator />
         </Box>
       </OpenWebsiteIfAvailable>
-      <Name text={name} />
+      <Name text={currentUser.name} />
     </TableCell>
   );
 }
