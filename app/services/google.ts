@@ -10,17 +10,15 @@ class GoogleService {
     if (!existingUser) {
       await addNewUser(user);
     } else {
-      await updateSingleUser(existingUser.email, {
-        ...existingUser,
-        // name,
-        image: user.image,
-        lastLogin: new Date(),
-        activity: {
-          ...existingUser.activity,
+      await updateSingleUser({
+        email: existingUser.email,
+        update:{
+          image: user.image,
           lastLogin: new Date(),
-          loginHistory: [...existingUser.activity.loginHistory, new Date()],
-          idleHistory: [],
-          isIdle: true,
+          "activity.lastLogin": new Date(),
+          "activity.loginHistory": [...existingUser.activity.loginHistory, new Date()],
+          "activity.idleHistory": [],
+          "activity.isIdle": true,
         },
       });
     }

@@ -3,12 +3,17 @@
 import { GetUsersResponse } from "@/app/api/db/users/route";
 import DatabaseAPIService from "@/app/api/services/db";
 import usersQueryKeys from "@/ReactQuery/queryKeys/users";
-import { PaginationQuery } from "@/app/services/db";
+// import { PaginationQuery } from "@/app/services/db";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import usePaginationStore from "./usePaginationStore";
+import { Session } from "next-auth";
 
 const { getUsers } = new DatabaseAPIService();
+
+export interface GetUsersResponseWithSession extends GetUsersResponse {
+  session?: Session | null;
+}
 
 const usePaginationQuery = () => {
   const pagination = usePaginationStore((state) => state.pagination);
@@ -18,7 +23,7 @@ const usePaginationQuery = () => {
   //   pagination.skip,
   //   pagination.limit
   // );
-  return useQuery<GetUsersResponse>({
+  return useQuery<GetUsersResponse, Error, GetUsersResponse>({
     queryKey: [usersQueryKeys.usersList, pagination.skip, pagination.limit],
     queryFn: async () => {
       const { success, list, error, totalUsers } = await getUsers(pagination);
@@ -36,7 +41,7 @@ const usePaginationQuery = () => {
           status === "authenticated"
             ? updatedListWithAddedSessionToAuthenticatedUser
             : list,
-        session,
+        // session,
         error,
         success,
         totalUsers,
@@ -45,7 +50,9 @@ const usePaginationQuery = () => {
     enabled: [pagination.skip, pagination.limit].every(
       (query) => typeof query === "number"
     ),
-    staleTime: 1000 * 60 * 60 * 24, // 24h
+    // staleTime: 1000 * 60 * 60 * 24, // 24h
+    refetchOnReconnect: true,
+    refetchOnWindowFocus: true,
     retry: 1,
   });
 };

@@ -26,7 +26,7 @@ export async function GET(
       skip: safeSkip,
       limit: safeLimit,
     }); 
-    console.log(list)
+    
     return NextResponse.json(
       { success: true, list, totalUsers },
       { status: 200 }
