@@ -50,7 +50,7 @@ const usePaginationQuery = () => {
     enabled: [pagination.skip, pagination.limit].every(
       (query) => typeof query === "number"
     ),
-    // staleTime: 1000 * 60 * 60 * 24, // 24h
+    staleTime: 0, // 24h
     refetchOnReconnect: true,
     refetchOnWindowFocus: true,
     retry: 1,

@@ -65,8 +65,9 @@ const useIdleActivityMutation = () => {
     },
     // Invalidate only once after mutation settles
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({ queryKey, refetchType: "active" });
     },
+    retry: 3,
   });
 };
 
