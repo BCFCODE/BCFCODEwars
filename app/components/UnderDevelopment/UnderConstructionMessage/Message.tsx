@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 
 const Message = () => {
-  const version = "0.3.3";
+  const version = "0.5.0";
 
   return (
     <Box>
