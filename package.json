@@ -29,6 +29,7 @@
     "eslint": "^9.28.0",
     "immer": "^10.1.1",
     "kill-port": "^2.0.1",
+    "lodash": "^4.17.21",
     "mongodb": "^6.17.0",
     "mongoose": "^8.15.1",
     "next": "^15.3.3",
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@mui/types": "^7.4.3",
+    "@types/lodash": "^4.17.17",
     "@types/node": "^22.15.30",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.6",

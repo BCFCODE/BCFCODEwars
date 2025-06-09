@@ -1,6 +1,6 @@
 "use client";
 
-import useIdleActivity from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/Avatar/hooks/useIdleActivity";
+import useIdleHistory from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/Avatar/hooks/useIdleHistory";
 import { useSession } from "next-auth/react";
 
 const ClientIdleTracker = () => {
@@ -8,7 +8,7 @@ const ClientIdleTracker = () => {
   const email = session?.user?.email;
 
   if (email) {
-    useIdleActivity(email);
+    useIdleHistory(email);
   }
 
   return null;

@@ -3,6 +3,7 @@ import { GetUsersResponse } from "@/app/api/db/users/route";
 import DatabaseAPIService from "@/app/api/services/db";
 import usersQueryKeys from "@/ReactQuery/queryKeys/users";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { IdleTimerData } from "./useIdleHistory";
 
 const { toggleUserIdleStatus } = new DatabaseAPIService();
 
@@ -12,14 +13,14 @@ interface Data {
 
 interface Variables {
   email: string;
-  isIdle: boolean;
+  snapshot: IdleTimerData;
 }
 
 interface Context {
   previousData?: GetUsersResponse;
 }
 
-const useIdleActivityMutation = () => {
+const useIdleHistoryMutation = () => {
   const pagination = usePaginationStore((state) => state.pagination);
   const queryClient = useQueryClient();
 
@@ -30,11 +31,14 @@ const useIdleActivityMutation = () => {
   ];
 
   return useMutation<Data, Error, Variables, Context>({
-    mutationFn: async ({ email, isIdle }) => {
-      const { success } = await toggleUserIdleStatus({ email, isIdle });
+    mutationFn: async ({ email, snapshot }) => {
+      const { success } = await toggleUserIdleStatus({
+        email,
+        isIdle: snapshot.isIdle,
+      });
       return { success };
     },
-    onMutate: async ({ email, isIdle }) => {
+    onMutate: async ({ email, snapshot }) => {
       await queryClient.cancelQueries({ queryKey });
 
       const previousData = queryClient.getQueryData<GetUsersResponse>(queryKey);
@@ -48,7 +52,10 @@ const useIdleActivityMutation = () => {
             ...oldData,
             list: oldData.list.map((user) =>
               user.email === email
-                ? { ...user, activity: { ...user.activity, isIdle } }
+                ? {
+                    ...user,
+                    activity: { ...user.activity, isIdle: snapshot.isIdle },
+                  }
                 : user
             ),
           };
@@ -71,4 +78,4 @@ const useIdleActivityMutation = () => {
   });
 };
 
-export default useIdleActivityMutation;
+export default useIdleHistoryMutation;
