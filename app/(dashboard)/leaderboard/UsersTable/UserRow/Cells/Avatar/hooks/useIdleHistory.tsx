@@ -11,15 +11,14 @@ export interface IdleTimerData {
   isLastActiveTab: boolean;
   remainingTimeMs: number;
   elapsedTimeMs: number;
-  lastIdleTime: string | null;
-  lastActiveTime: string | null;
+  lastIdleTime: Date | null;
+  lastActiveTime: Date | null;
   idleTimeMs: number;
   activeTimeMs: number;
   totalIdleTimeMs: number;
   totalActiveTimeMs: number;
   presence: "active" | "prompting" | "idle";
-  timestamp: string;
-  lastMessage?: any;
+  timestamp: Date;
 }
 
 const useIdleHistory = (email: string): void => {
@@ -35,14 +34,14 @@ const useIdleHistory = (email: string): void => {
     isLastActiveTab: idleTimer.isLastActiveTab(),
     remainingTimeMs: idleTimer.getRemainingTime(),
     elapsedTimeMs: idleTimer.getElapsedTime(),
-    lastIdleTime: idleTimer.getLastIdleTime()?.toISOString() || null,
-    lastActiveTime: idleTimer.getLastActiveTime()?.toISOString() || null,
+    lastIdleTime: idleTimer.getLastIdleTime(),
+    lastActiveTime: idleTimer.getLastActiveTime(),
     idleTimeMs: idleTimer.getIdleTime(),
     activeTimeMs: idleTimer.getActiveTime(),
     totalIdleTimeMs: idleTimer.getTotalIdleTime(),
     totalActiveTimeMs: idleTimer.getTotalActiveTime(),
     presence: presenceRef.current,
-    timestamp: new Date().toISOString(),
+    timestamp: new Date(),
   });
 
   const idleTimer = useIdleTimer({
