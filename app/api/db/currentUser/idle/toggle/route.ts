@@ -22,7 +22,7 @@ export async function PATCH(
 
     await updateSingleUser({
       email, 
-      update: {
+      $set: {
         "activity.isIdle": isIdle,
       },
     });

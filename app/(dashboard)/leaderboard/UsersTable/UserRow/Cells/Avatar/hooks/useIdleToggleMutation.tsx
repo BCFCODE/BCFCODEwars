@@ -32,7 +32,6 @@ const useIdleToggleMutation = () => {
 
   return useMutation<Data, Error, Variables, Context>({
     mutationFn: async ({ email, isIdle }) => {
-      console.log(email, isIdle);
       const { success } = await toggleUserIdleStatus({
         email,
         isIdle,

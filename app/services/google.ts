@@ -12,11 +12,14 @@ class GoogleService {
     } else {
       await updateSingleUser({
         email: existingUser.email,
-        update:{
+        $set: {
           image: user.image,
           lastLogin: new Date(),
           "activity.lastLogin": new Date(),
-          "activity.loginHistory": [...existingUser.activity.loginHistory, new Date()],
+          "activity.loginHistory": [
+            ...existingUser.activity.loginHistory,
+            new Date(),
+          ],
           "activity.idleHistory": [],
           "activity.isIdle": true,
         },

@@ -16,7 +16,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (currentUser)
       updateSingleUser({
         email,
-        update: {
+        $set: {
           "activity.lastLogout": new Date(),
           "activity.logoutHistory": [
             ...currentUser.activity.logoutHistory,

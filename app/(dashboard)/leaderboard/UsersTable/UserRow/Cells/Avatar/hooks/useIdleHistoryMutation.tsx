@@ -4,22 +4,16 @@ import DatabaseAPIService from "@/app/api/services/db";
 import usersQueryKeys from "@/ReactQuery/queryKeys/users";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export interface IdleHistoryData {
-  id: string;
-  name?: string;
-  remainingTimeMs: number;
+export interface IdleSnapshotData {
+  isIdle: boolean;
   elapsedTimeMs: number;
   lastIdleTime: Date | null;
   lastActiveTime: Date | null;
-  idleTimeMs: number;
   activeTimeMs: number;
-  totalIdleTimeMs: number;
   totalActiveTimeMs: number;
-  presence: "active" | "prompting" | "idle";
-  timestamp: Date;
 }
 
-const { pushIdleHistory } = new DatabaseAPIService();
+const { updateIdleHistory } = new DatabaseAPIService();
 
 interface Data {
   success: boolean;
@@ -27,7 +21,7 @@ interface Data {
 
 interface Variables {
   email: string;
-  snapshot: IdleHistoryData;
+  snapshot: IdleSnapshotData;
 }
 
 interface Context {
@@ -46,7 +40,7 @@ const useIdleHistoryMutation = () => {
 
   return useMutation<Data, Error, Variables, Context>({
     mutationFn: async ({ email, snapshot }) => {
-      const { success } = await pushIdleHistory({
+      const { success } = await updateIdleHistory({
         email,
         snapshot,
       });
@@ -68,7 +62,7 @@ const useIdleHistoryMutation = () => {
               user.email === email
                 ? {
                     ...user,
-                    activity: { ...user.activity, isIdle: snapshot.isIdle },
+                    activity: { ...user.activity, ...snapshot },
                   }
                 : user
             ),
@@ -93,17 +87,3 @@ const useIdleHistoryMutation = () => {
 };
 
 export default useIdleHistoryMutation;
-
-/* 
- await db.collection("users").updateOne(
-  { email: "user@example.com" },
-  {
-    $push: {
-      "activity.idleHistory": {
-        $each: [newIdleSnapshot],
-        $slice: -50
-      }
-    }
-  }
-);
-*/

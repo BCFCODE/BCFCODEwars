@@ -3,6 +3,7 @@ import { baseURL } from "@/utils/constants";
 import { GetUsersResponse } from "../db/users/route";
 import { CodewarsUser } from "@/types/codewars";
 import { PaginationQuery } from "@/app/services/db";
+import { IdleSnapshotData } from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/Avatar/hooks/useIdleHistoryMutation";
 
 export interface ConnectToCodewarsResponse {
   success: boolean;
@@ -195,6 +196,43 @@ class DatabaseAPIService {
       throw new Error("Unexpected error occurred");
     }
   };
+
+  updateIdleHistory = async ({
+    email,
+    snapshot,
+  }: {
+    email: string;
+    snapshot: IdleSnapshotData;
+  }): Promise<{ success: boolean }> => {
+    try {
+      const response = await fetch(
+        `${this.endpoint}/currentUser/idle/history`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, snapshot }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(
+          `Failed to update user activity: ${response.status} ${response.statusText} - ${errorText}`
+        );
+      }
+
+      return { success: true };
+    } catch (error) {
+      if (error instanceof Error) {
+        // Preserve original error message if any, fallback to generic
+        throw new Error(
+          error.message || "Unknown error occurred during updateIdleHistory."
+        );
+      }
+      throw new Error("Unexpected error occurred during updateIdleHistory.");
+    }
+  };
+
 }
 
 export default DatabaseAPIService;

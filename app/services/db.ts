@@ -1,7 +1,14 @@
 import { CodewarsCompletedChallenge, CodewarsUser } from "@/types/codewars";
 import { CodeChallengesFilter, Diamonds } from "@/types/diamonds";
 import { AuthenticatedUser, DatabaseUser, GoogleUser } from "@/types/users";
-import { ClientSession, Collection, Db, Document, MongoClient } from "mongodb";
+import {
+  ClientSession,
+  Collection,
+  Db,
+  Document,
+  MongoClient,
+  UpdateFilter,
+} from "mongodb";
 import { CompletedChallengesQueryData } from "../(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/usePaginationQuery";
 import { CodewarsReconnectRequest } from "../api/services/db";
 
@@ -346,16 +353,16 @@ class DatabaseService {
   //   });
   // };
 
-  updateSingleUser = async ({
+  updateSingleUser = async <T>({
     email,
-    update,
+    $set,
   }: {
     email: string;
-    update: Record<string, any>;
+    $set: UpdateFilter<T>["$set"];
   }) => {
     const { users } = await this.getCollections();
 
-    const result = await users.updateOne({ email }, { $set: update });
+    const result = await users.updateOne({ email }, { $set });
 
     if (result.matchedCount === 0) {
       throw new Error(`No user found with email: ${email}`);
@@ -559,20 +566,23 @@ class DatabaseService {
     await client.close();
   };
 
-  // toggleUserIdleStatus = async ({
-  //   email,
-  //   isIdle,
-  // }: {
-  //   email: string;
-  //   isIdle: boolean;
-  // }) => {
-  //   const { users } = await this.getCollections();
+  updateIdleHistory = async <T>({
+    email,
+    $set,
+    $push,
+  }: {
+    email: string;
+    $set: UpdateFilter<T>["$set"];
+    $push: UpdateFilter<T>["$push"];
+  }) => {
+    const { users } = await this.getCollections();
 
-  //   users.updateOne({email}, {$set:})
-  //   console.log(
-  //     `email: ${email} and isIdle: ${isIdle} received, please implement db logic.`
-  //   );
-  // };
+    const result = await users.updateOne({ email }, { $set, $push });
+
+    if (result.matchedCount === 0) {
+      throw new Error(`No user found with email: ${email}`);
+    }
+  };
 }
 
 export default DatabaseService;
