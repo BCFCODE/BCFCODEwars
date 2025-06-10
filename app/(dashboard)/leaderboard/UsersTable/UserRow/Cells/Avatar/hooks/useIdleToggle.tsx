@@ -11,7 +11,6 @@ export interface IdleTimerData {
 const useIdleToggle = (email: string): void => {
   const { mutateAsync } = useIdleToggleMutation();
   const idleTimerRef = useRef<ReturnType<typeof useIdleTimer>>(null!);
-  const presenceRef = useRef<"active" | "prompting" | "idle">("active");
 
   idleTimerRef.current = useIdleTimer({
     name: "main",
@@ -23,10 +22,6 @@ const useIdleToggle = (email: string): void => {
     // throttle: 5000,
     onActive: () => mutateAsync({ email, isIdle: false }),
     onIdle: () => mutateAsync({ email, isIdle: true }),
-    onPresenceChange: (newPresence) => {
-      presenceRef.current = newPresence.type;
-      // mutateAsync({ email, snapshot: onSnapshot() });
-    },
   });
 
   // useEffect(() => {

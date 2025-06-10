@@ -178,7 +178,7 @@ class DatabaseAPIService {
     isIdle: boolean;
   }) => {
     try {
-      const response = await fetch(`${this.endpoint}/user-activity/idle`, {
+      const response = await fetch(`${this.endpoint}/currentUser/idle/toggle`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, isIdle }),

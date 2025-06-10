@@ -15,7 +15,7 @@ const UsersTable = ({ list }: Props) => {
 
   return list?.map((currentUser: AuthenticatedUser) => (
     <CurrentUserProvider
-      key={`${currentUser.email}-${currentUser.activity.isIdle ? "idle" : "active"}`}
+      key={`${currentUser.email}-${currentUser.activity.isIdle}`}
       context={{ currentUser }}
     >
       <TableBody

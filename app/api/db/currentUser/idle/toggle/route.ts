@@ -4,48 +4,28 @@ import schema from "./schema";
 
 const { updateSingleUser } = new DatabaseService();
 
-export async function PATCH(request: NextRequest) {
-  try { 
+export async function PATCH(
+  request: NextRequest
+): Promise<NextResponse<{ success: boolean; message: string }>> {
+  try {
     const body = await request.json();
-    console.log("currentUser/idle/toggle/PATCH: body", body);
+
     const validation = schema.safeParse(body);
 
     if (!validation.success) {
-      return NextResponse.json(validation.error.errors, { status: 400 });
+      const message = validation.error.errors.map((e) => e.message).join(", ");
+
+      return NextResponse.json({ success: false, message }, { status: 400 });
     }
 
     const { email, isIdle } = validation.data;
 
     await updateSingleUser({
-      email,
-      $set: {
+      email, 
+      update: {
         "activity.isIdle": isIdle,
       },
     });
-
-    /* 
- await db.collection("users").updateOne(
-  { email: "user@example.com" },
-  {
-    $push: {
-      "activity.idleHistory": {
-        $each: [newIdleSnapshot],
-        $slice: -50
-      }
-    }
-  }
-);
-*/
-
-    // if (!result.success) {
-    //   return NextResponse.json(
-    //     {
-    //       success: false,
-    //       message: "User not found or failed to update idle status.",
-    //     },
-    //     { status: 404 }
-    //   );
-    // }
 
     return NextResponse.json({
       success: true,
