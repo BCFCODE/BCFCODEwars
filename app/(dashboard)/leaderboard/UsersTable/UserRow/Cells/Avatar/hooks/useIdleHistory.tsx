@@ -5,15 +5,14 @@ import useIdleHistoryMutation from "./useIdleHistoryMutation";
 
 const useIdleHistory = (email: string): void => {
   const totalActiveTimeMsRef = useRef<number>(0);
-  const isDocumentHiddenRef = useRef<boolean>(false);
+  const lastTabHiddenDurationRef = useRef<number>(0);
+  const totalTabHiddenDurationRef = useRef<number>(0);
+  const documentHiddenTimestamp = useRef<number | null>(null);
   const { mutateAsync: mutateAsyncIdleHistory } = useIdleHistoryMutation();
 
   const accumulateTotalActiveTime = () => {
     const currentActiveMs = getActiveTime();
-    if (
-      !isDocumentHiddenRef.current && // pause accumulation when document is hidden
-      currentActiveMs > 0
-    ) {
+    if (currentActiveMs > 0) {
       totalActiveTimeMsRef.current += currentActiveMs;
     }
   };
@@ -41,18 +40,23 @@ const useIdleHistory = (email: string): void => {
     debounce: 500,
 
     onPrompt: () => {
-      // console.log("🟡 Prompting user for idle...");
+      console.log("🟡 Prompting user for idle...");
       wasPromptedRef.current = true;
     },
 
     onAction: () => {
       accumulateTotalActiveTime();
-      // console.log("An activity happen...", totalActiveTimeMsRef.current);
+      console.log(
+        "An activity happen...",
+        totalActiveTimeMsRef.current,
+        lastTabHiddenDurationRef.current,
+        totalTabHiddenDurationRef.current
+      );
       reset();
     },
 
     onActive: () => {
-      // console.log("🟢 User became active");
+      console.log("🟢 User became active");
       if (wasPromptedRef.current) {
         wasPromptedRef.current = false;
       }
@@ -73,7 +77,7 @@ const useIdleHistory = (email: string): void => {
     },
 
     onIdle: () => {
-      // console.log("🔴 User is idle");
+      console.log("🔴 User is idle");
 
       accumulateTotalActiveTime();
 
@@ -90,10 +94,10 @@ const useIdleHistory = (email: string): void => {
           timestamp: new Date(),
         },
       });
-      // console.log(
-      //   "totalActiveTimeMs onIdle before reset",
-      //   totalActiveTimeMsRef.current
-      // );
+      console.log(
+        "totalActiveTimeMs onIdle before reset",
+        totalActiveTimeMsRef.current
+      );
 
       resetTotalActiveAccumulation();
       // reset();
@@ -103,17 +107,26 @@ const useIdleHistory = (email: string): void => {
   useEffect(() => {
     if (typeof document === "undefined") return;
 
-    
-    
-    const handleVisibilityChange = _.debounce(
+    const calculateHiddenTime = () => {
+      if (document.hidden) {
+        documentHiddenTimestamp.current = Date.now();
+      } else {
+        const hiddenDuration =
+          Date.now() - (documentHiddenTimestamp.current ?? Date.now());
+        lastTabHiddenDurationRef.current = hiddenDuration;
+        totalTabHiddenDurationRef.current += hiddenDuration;
+        documentHiddenTimestamp.current = null;
+      }
+    };
+
+    const debounceSync = _.debounce(
       () => {
         if (document.hidden) {
-          isDocumentHiddenRef.current = true;
-          // console.log(
-          //   "📷 Document is hidden - document.hidden > ",
-          //   document.hidden,
-          //   totalActiveTimeMsRef.current
-          // );
+          console.log(
+            "📷 Document is hidden - document.hidden > ",
+            document.hidden,
+            totalActiveTimeMsRef.current
+          );
 
           mutateAsyncIdleHistory({
             email,
@@ -130,12 +143,11 @@ const useIdleHistory = (email: string): void => {
           });
           pause();
         } else {
-          isDocumentHiddenRef.current = false;
-          // console.log(
-          //   "📷 Document is visible - document.hidden > ",
-          //   document.hidden,
-          //   totalActiveTimeMsRef.current
-          // );
+          console.log(
+            "📷 Document is visible - document.hidden > ",
+            document.hidden,
+            totalActiveTimeMsRef.current
+          );
 
           mutateAsyncIdleHistory({
             email,
@@ -157,12 +169,17 @@ const useIdleHistory = (email: string): void => {
       3 * 60 * 1000
     ); // debounce 3 min
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => {
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      handleVisibilityChange.cancel();
+    const visibilityChangeHandler = () => {
+      calculateHiddenTime();
+      debounceSync();
     };
-  }, [email, document?.hidden]);
+
+    document.addEventListener("visibilitychange", visibilityChangeHandler);
+    return () => {
+      document.removeEventListener("visibilitychange", visibilityChangeHandler);
+      debounceSync.cancel();
+    };
+  }, [email, document?.hidden ? "tab is hidden" : "tab is visible"]);
 };
 
 export default useIdleHistory;
