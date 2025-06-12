@@ -6,11 +6,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export interface IdleSnapshotData {
   isIdle: boolean;
+  isPrompted: boolean;
   elapsedTimeMs: number;
   lastIdleTime: Date | null;
   lastActiveTime: Date | null;
   activeTimeMs: number;
   totalActiveTimeMs: number;
+  timestamp: Date;
 }
 
 const { updateIdleHistory } = new DatabaseAPIService();
@@ -40,6 +42,7 @@ const useIdleHistoryMutation = () => {
 
   return useMutation<Data, Error, Variables, Context>({
     mutationFn: async ({ email, snapshot }) => {
+      // console.log(email, snapshot);
       const { success } = await updateIdleHistory({
         email,
         snapshot,
@@ -78,8 +81,7 @@ const useIdleHistoryMutation = () => {
         queryClient.setQueryData(queryKey, context.previousData);
       }
     },
-    // Invalidate only once after mutation settles
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey });
     },
     retry: 3,

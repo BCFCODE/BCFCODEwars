@@ -25,6 +25,8 @@ export async function PATCH(request: NextRequest) {
         "activity.lastIdleTime": snapshot.lastIdleTime,
         "activity.activeTimeMs": snapshot.activeTimeMs,
         "activity.totalActiveTimeMs": snapshot.totalActiveTimeMs,
+        "activity.isPrompted": snapshot.isPrompted,
+        "activity.timestamp": snapshot.timestamp,
       },
       $push: {
         "activity.idleHistory": {
@@ -35,22 +37,28 @@ export async function PATCH(request: NextRequest) {
               lastIdleTime: snapshot.lastIdleTime,
               activeTimeMs: snapshot.activeTimeMs,
               totalActiveTimeMs: snapshot.totalActiveTimeMs,
+              isPrompted: snapshot.isPrompted,
+              timestamp: snapshot.timestamp,
             },
           ],
-          // $slice: -100000
+          // Optional: limit array size to retain only the most recent snapshots
+          $slice: -10, // Dev
+          // $slice: -100000, // Production
         },
       },
     });
 
     return NextResponse.json({
       success: true,
-      message: "User idle status updated successfully.",
+      message:
+        "User idle history updated successfully. A new activity snapshot has been added to the idleHistory log.",
     });
   } catch (error) {
     return NextResponse.json(
       {
         success: false,
-        message: "An unexpected server error occurred. Please try again later.",
+        message:
+          "A server error occurred while updating idle history. Please try again later.",
       },
       { status: 500 }
     );

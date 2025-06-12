@@ -22,7 +22,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             ...currentUser.activity.logoutHistory,
             new Date(),
           ],
-          "activity.isIdle": false,
         },
       });
 

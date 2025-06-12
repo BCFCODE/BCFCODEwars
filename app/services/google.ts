@@ -21,7 +21,6 @@ class GoogleService {
             new Date(),
           ],
           "activity.idleHistory": [],
-          "activity.isIdle": true,
         },
       });
     }
