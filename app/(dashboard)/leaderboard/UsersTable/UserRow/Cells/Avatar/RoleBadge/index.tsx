@@ -10,7 +10,7 @@ const RoleBadge = () => {
     return (
       <Tooltip
         sx={{ zIndex: 10, position: "absolute", top: 0 }}
-        title="Super Admin"
+        title={UserRole.SuperAdmin ? "Super Admin" : ""}
       >
         <VerifiedUserIcon
           // fontSize="small"

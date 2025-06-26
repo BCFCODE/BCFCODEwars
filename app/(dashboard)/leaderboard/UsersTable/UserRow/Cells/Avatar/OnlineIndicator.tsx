@@ -4,7 +4,6 @@ import { StyledOnlineIndicator } from "./styles";
 
 const OnlineIndicator = () => {
   const { currentUser } = useCurrentUserContext();
-  
 
   return (
     <StyledOnlineIndicator
