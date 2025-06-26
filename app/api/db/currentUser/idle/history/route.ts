@@ -42,8 +42,8 @@ export async function PATCH(request: NextRequest) {
             },
           ],
           // Optional: limit array size to retain only the most recent snapshots
-          $slice: -10, // Dev
-          // $slice: -100000, // Production
+          // $slice: -10, // Dev
+          $slice: -100000, // Production
         },
       },
     });
