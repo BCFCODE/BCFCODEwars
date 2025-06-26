@@ -11,6 +11,7 @@ const CodewarsStatsFallback = () => {
         touchAction: "pan-y",
         // overflowY: "auto",
         WebkitOverflowScrolling: "touch",
+        marginTop: 10
       }}
     >
       <Typography

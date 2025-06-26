@@ -15,16 +15,6 @@ export default function Leaderboard() {
 
   if (isLoading)
     return (
-      <Box sx={{ height: "100%", display: "flex", alignItems: "center" }}>
-        <LoadingUI
-          title="Loading Leaderboard..."
-          message="Hang tight! We're fetching the latest rankings."
-        />
-      </Box>
-    );
-
-  if (isLoading)
-    return (
       <LoadingUI
         title="Loading Leaderboard..."
         message="Hang tight! We're fetching the latest rankings."
