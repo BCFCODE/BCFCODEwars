@@ -17,6 +17,7 @@ const LoadingUI = ({ title, message }: Props) => (
       flexDirection: "column",
       alignItems: "center",
       justifyItems: "center",
+      marginTop: 10
     }}
   >
     <Box
