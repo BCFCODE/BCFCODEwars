@@ -1,16 +1,19 @@
 "use client";
 
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import LoadingPulseButton from "../../components/ui/LoadingPulseButton";
 
 const ReconnectButton = () => {
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <Link href="/wars/validation/steps/1">
-      <Button
-        variant="outlined"
-        color="primary"
-        size="large"
+      <LoadingPulseButton
+        label="Reconnect"
+        ariaLabel="Reconnect to codewars button"
+        loading={isLoading}
+        onClick={() => setIsLoading(true)}
         sx={{
           mt: 2,
           px: 4,
@@ -21,8 +24,17 @@ const ReconnectButton = () => {
           boxShadow: 3,
         }}
       >
-        Reconnect
-      </Button>
+        <Typography
+          variant="button" // same as button text style
+          sx={{
+            whiteSpace: "nowrap", // ❗prevent wrapping
+            overflow: "hidden", // just in case
+            textOverflow: "ellipsis", // truncate if too long
+          }}
+        >
+          Reconnect
+        </Typography>
+      </LoadingPulseButton>
     </Link>
   );
 };

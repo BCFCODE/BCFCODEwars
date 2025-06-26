@@ -1,8 +1,9 @@
 import { LoadingButton } from "@mui/lab";
-import { useTheme } from "@mui/material/styles";
+import { SxProps, useTheme } from "@mui/material/styles";
 import { PropsWithChildren } from "react";
 
 interface Props extends PropsWithChildren {
+  sx: SxProps;
   loading: boolean;
   label: string;
   ariaLabel: string;
@@ -15,6 +16,7 @@ const LoadingPulseButton = ({
   onClick,
   ariaLabel,
   label,
+  sx,
 }: Props) => {
   const theme = useTheme();
 
@@ -52,6 +54,7 @@ const LoadingPulseButton = ({
         "&:hover": {
           backgroundColor: theme.palette.action.hover,
         },
+        ...sx,
       }}
     >
       {label}
