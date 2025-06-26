@@ -22,7 +22,6 @@ const DashboardStats = () => {
 
   const isListEmpty = list.length === 0;
 
-  if (true) return <CodewarsStatsFallback />;
   if (isLoading)
     return (
       <LoadingUI
