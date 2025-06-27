@@ -3,7 +3,7 @@ import { SxProps, useTheme } from "@mui/material/styles";
 import { PropsWithChildren } from "react";
 
 interface Props extends PropsWithChildren {
-  sx: SxProps;
+  sx?: SxProps;
   loading: boolean;
   label: string;
   ariaLabel: string;
