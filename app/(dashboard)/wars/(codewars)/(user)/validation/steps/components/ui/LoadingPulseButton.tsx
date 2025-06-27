@@ -1,3 +1,5 @@
+'use client'
+
 import { LoadingButton } from "@mui/lab";
 import { SxProps, useTheme } from "@mui/material/styles";
 import { PropsWithChildren } from "react";

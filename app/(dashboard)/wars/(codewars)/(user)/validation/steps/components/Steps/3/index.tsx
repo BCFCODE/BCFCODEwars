@@ -18,6 +18,7 @@ const Step3 = ({
   session,
   codewars,
 }: StepProps) => {
+  
   const router = useRouter();
 
   const email = session?.user?.email ?? "";
@@ -31,6 +32,7 @@ const Step3 = ({
   // const email = currentUser?.email ?? "";
 
   const handleOnYes = async () => {
+    console.log('Yes it is me clicked!')
     if (!currentUser) return;
 
     if (currentUser?.codewars.isConnected) {

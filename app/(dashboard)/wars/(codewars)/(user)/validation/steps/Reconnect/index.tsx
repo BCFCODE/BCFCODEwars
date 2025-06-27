@@ -1,6 +1,6 @@
 import { Box, Paper } from "@mui/material";
 import { StepProps } from "../stepSwitch";
-import UserInfoCard from "../UserInfoCard/UserInfoCard";
+import UserInfoCard from "../components/UserInfoCard";
 import ReconnectButton from "./Buttons/Reconnect";
 import Message from "./Message";
 import Tip from "./Tip";
