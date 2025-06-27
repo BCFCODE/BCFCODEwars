@@ -5,8 +5,8 @@ import { baseURL } from "@/utils/constants";
 import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
 import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect";
-import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
-import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
+import { StepProps } from "./(codewars)/(user)/validation/steps/components/Steps/stepSwitch";
+import UserAvatar from "./(codewars)/(user)/validation/steps/components/UserAvatar";
 
 const { getSingleCodewarsUser } = new DatabaseService();
 

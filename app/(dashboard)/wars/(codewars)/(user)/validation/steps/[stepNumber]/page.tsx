@@ -1,6 +1,8 @@
 import { Box } from "@mui/material";
-import Steps from "../stepSwitch";
-import CodewarsValidationStepper from "../topStepper";
+
+
+import Steps from "../components/Steps/stepSwitch";
+import CodewarsValidationStepper from "../components/topStepper";
 
 interface Props {
   params: Promise<{ stepNumber: number }>;
@@ -8,7 +10,6 @@ interface Props {
 }
 
 const StepNumberPage = async ({ params, searchParams }: Props) => {
-
   const { username } = await searchParams;
 
   const { stepNumber } = await params;
@@ -32,6 +33,7 @@ const StepNumberPage = async ({ params, searchParams }: Props) => {
       <CodewarsValidationStepper activeStep={Number(stepNumber)} />
 
       <Steps validatedUsername={username} currentStep={Number(stepNumber)} />
+
     </Box>
   );
 };

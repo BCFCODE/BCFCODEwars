@@ -11,6 +11,8 @@ import useReconnectMutation from "./hooks/useReconnectMutation";
 import { CodewarsUser } from "@/types/codewars";
 import Link from "next/link";
 import { StepProps } from "../stepSwitch";
+import LoadingPulseButton from "../../ui/LoadingPulseButton";
+import { useState } from "react";
 
 const Step3 = ({
   currentStep,
@@ -18,47 +20,59 @@ const Step3 = ({
   session,
   codewars,
 }: StepProps) => {
+  const [isError, setIsError] = useState(false);
   const router = useRouter();
 
   const email = session?.user?.email ?? "";
   const { data: currentUser } = useCurrentUserQuery(email);
 
-  const { mutateAsync: reconnect, isSuccess: successfullyReconnected } =
-    useReconnectMutation();
-  const { mutateAsync: connect, isSuccess: successfullyConnected } =
-    useConnectMutation();
+  const {
+    mutateAsync: reconnect,
+    isPending: reconnectIsPending,
+    isError: isReconnectError,
+  } = useReconnectMutation();
+  const {
+    mutateAsync: connect,
+    isPending: connectIsPending,
+    isError: isConnectError,
+  } = useConnectMutation();
+
+  const buildInitializedCodewarsUser = (): CodewarsUser => ({
+    ...codewars,
+    email,
+    isConnected: true,
+    codeChallenges: {
+      ...codewars.codeChallenges,
+      totalItems: codewars.codeChallenges.totalCompleted,
+      totalPages: 0,
+      challengeFilter: CodeChallengesFilter.Both,
+      list: [],
+    },
+    username: validatedUsername,
+  });
 
   // const email = currentUser?.email ?? "";
 
   const handleOnYes = async () => {
     if (!currentUser) return;
 
-    if (currentUser?.codewars.isConnected) {
-      await reconnect({
-        name: codewars.name ?? "",
-        username: validatedUsername,
-        email,
-        clan: codewars.clan ?? "",
-      });
-    } else {
-      const initializedCodewarsUser: CodewarsUser = {
-        ...codewars,
-        email,
-        isConnected: true,
-        codeChallenges: {
-          ...codewars.codeChallenges,
-          totalItems: codewars.codeChallenges.totalCompleted,
-          totalPages: 0,
-          challengeFilter: CodeChallengesFilter.Both,
-          list: [],
-        },
-        username: validatedUsername,
-      };
+    try {
+      if (currentUser.codewars.isConnected) {
+        await reconnect({
+          name: codewars.name ?? "",
+          username: validatedUsername,
+          email,
+          clan: codewars.clan ?? "",
+        });
+      } else {
+        await connect(buildInitializedCodewarsUser());
+      }
 
-      await connect(initializedCodewarsUser);
+      router.replace(`${currentStep + 1}`);
+    } catch (error) {
+      setIsError(true);
+      console.error("Failed to connect or reconnect:", error);
     }
-
-    if (successfullyConnected) router.replace(`${currentStep + 1}`);
   };
 
   return (
@@ -102,18 +116,36 @@ const Step3 = ({
         />
 
         {/* Description */}
-        <Typography
-          variant="body1"
-          sx={{
-            color: "text.secondary",
-            lineHeight: 1.6,
-            maxWidth: "600px",
-            textAlign: "revert-layer",
-          }}
-        >
-          Confirm these details for your username update on the leaderboard. If
-          they&apos;re incorrect, go back and check!
-        </Typography>
+        {isError || isConnectError || isReconnectError ? (
+          <Typography
+            variant="body1"
+            sx={{
+              color: "error.main", // ✅ Use MUI error color
+              lineHeight: 1.6,
+              maxWidth: "600px",
+              textAlign: "revert-layer",
+              fontWeight: 500,
+            }}
+          >
+            Something went wrong while trying to connect your account to
+            Codewars. This could be a temporary network issue or a problem with
+            the Codewars service. Please try again by clicking{" "}
+            <strong>Retry</strong>. If the issue continues, contact support.
+          </Typography>
+        ) : (
+          <Typography
+            variant="body1"
+            sx={{
+              color: "text.secondary",
+              lineHeight: 1.6,
+              maxWidth: "600px",
+              textAlign: "revert-layer",
+            }}
+          >
+            Confirm these details for your username update on the leaderboard.
+            If they&apos;re incorrect, go back and check!
+          </Typography>
+        )}
       </Box>
 
       <Buttons
@@ -128,7 +160,31 @@ const Step3 = ({
             No
           </Button>
         }
-        right={<Button onClick={handleOnYes}>Yes, it is me</Button>}
+        right={
+          <LoadingPulseButton
+            ariaLabel="Confirm identity and connect to Codewars account"
+            label={
+              isError || isConnectError || isReconnectError
+                ? "Retry"
+                : "Yes, it is me"
+            }
+            onClick={handleOnYes}
+            loading={connectIsPending || reconnectIsPending}
+            sx={{ width: "auto" }}
+          >
+            <Typography
+              variant="button" // same as button text style
+              sx={{
+                whiteSpace: "nowrap", // ❗prevent wrapping
+                overflow: "hidden", // just in case
+                textOverflow: "ellipsis", // truncate if too long
+              }}
+            >
+              Connecting...
+            </Typography>
+          </LoadingPulseButton>
+          // <Button onClick={handleOnYes}>Yes, it is me</Button>
+        }
       />
     </>
   );
