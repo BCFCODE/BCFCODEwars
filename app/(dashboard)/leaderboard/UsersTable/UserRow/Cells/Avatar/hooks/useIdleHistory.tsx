@@ -4,6 +4,7 @@ import { useIdleTimer } from "react-idle-timer";
 import useIdleHistoryMutation from "./useIdleHistoryMutation";
 
 const useIdleHistory = (email: string): void => {
+  const lastSentIdleState = useRef<boolean | null>(null);
   const totalActiveTimeMsRef = useRef<number>(0);
   const lastTabHiddenDurationRef = useRef<number>(0);
   const totalTabHiddenDurationRef = useRef<number>(0);
@@ -37,6 +38,14 @@ const useIdleHistory = (email: string): void => {
       console.error("Failed to send idle snapshot:", err);
     });
   };
+
+  const throttledSendIdleSnapshot = (isIdle: boolean) =>
+    _.throttle(() => {
+      if (lastSentIdleState.current !== isIdle) {
+        sendIdleSnapshot(isIdle);
+        lastSentIdleState.current = isIdle;
+      }
+    }, 60 * 1000);
 
   const resetTotalActiveAccumulation = () => {
     totalActiveTimeMsRef.current = 0;
@@ -82,13 +91,13 @@ const useIdleHistory = (email: string): void => {
         wasPromptedRef.current = false;
       }
 
-      sendIdleSnapshot(false);
+      throttledSendIdleSnapshot(false);
     },
 
     onIdle: () => {
       // console.log("🔴 User is idle");
 
-      sendIdleSnapshot(true);
+      throttledSendIdleSnapshot(true);
 
       // console.log(
       //   "totalActiveTimeMs onIdle before reset",
@@ -122,8 +131,8 @@ const useIdleHistory = (email: string): void => {
         //   document.hidden,
         //   totalActiveTimeMsRef.current
         // );
+        throttledSendIdleSnapshot(true);
 
-        sendIdleSnapshot(true);
         // pause();
       } else {
         // console.log(
@@ -133,7 +142,8 @@ const useIdleHistory = (email: string): void => {
         // );
         accumulateTotalActiveTime();
 
-        sendIdleSnapshot(false);
+        throttledSendIdleSnapshot(false)
+        
         // wasPromptedRef.current = false;
         // start();
       }
