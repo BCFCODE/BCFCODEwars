@@ -4,6 +4,7 @@ import { useIdleTimer } from "react-idle-timer";
 import useIdleHistoryMutation from "./useIdleHistoryMutation";
 
 const useIdleHistory = (email: string): void => {
+  const lastSentIdleState = useRef<boolean | null>(null);
   const totalActiveTimeMsRef = useRef<number>(0);
   const lastTabHiddenDurationRef = useRef<number>(0);
   const totalTabHiddenDurationRef = useRef<number>(0);
@@ -17,14 +18,14 @@ const useIdleHistory = (email: string): void => {
     }
   };
 
-  const sendIdleSnapshot = () => {
+  const sendIdleSnapshot = (isIdle: boolean) => {
     // console.log("sendIdleSnapshot", new Date().toISOString());
     accumulateTotalActiveTime();
 
     mutateAsyncIdleHistory({
       email,
       snapshot: {
-        isIdle: true,
+        isIdle,
         elapsedTimeMs: getElapsedTime(),
         lastIdleTime: getLastIdleTime(),
         lastActiveTime: getLastActiveTime(),
@@ -37,6 +38,14 @@ const useIdleHistory = (email: string): void => {
       console.error("Failed to send idle snapshot:", err);
     });
   };
+
+  const throttledSendIdleSnapshot = (isIdle: boolean) =>
+    _.throttle(() => {
+      if (lastSentIdleState.current !== isIdle) {
+        sendIdleSnapshot(isIdle);
+        lastSentIdleState.current = isIdle;
+      }
+    }, 60 * 1000);
 
   const resetTotalActiveAccumulation = () => {
     totalActiveTimeMsRef.current = 0;
@@ -82,25 +91,13 @@ const useIdleHistory = (email: string): void => {
         wasPromptedRef.current = false;
       }
 
-      mutateAsyncIdleHistory({
-        email,
-        snapshot: {
-          isIdle: false,
-          elapsedTimeMs: getElapsedTime(),
-          lastIdleTime: getLastIdleTime(),
-          lastActiveTime: getLastActiveTime(),
-          activeTimeMs: getActiveTime(),
-          totalActiveTimeMs: totalActiveTimeMsRef.current,
-          isPrompted: wasPromptedRef.current,
-          timestamp: new Date(),
-        },
-      });
+      throttledSendIdleSnapshot(false);
     },
 
     onIdle: () => {
       // console.log("🔴 User is idle");
 
-      sendIdleSnapshot();
+      throttledSendIdleSnapshot(true);
 
       // console.log(
       //   "totalActiveTimeMs onIdle before reset",
@@ -134,8 +131,8 @@ const useIdleHistory = (email: string): void => {
         //   document.hidden,
         //   totalActiveTimeMsRef.current
         // );
+        throttledSendIdleSnapshot(true);
 
-        sendIdleSnapshot();
         // pause();
       } else {
         // console.log(
@@ -145,19 +142,8 @@ const useIdleHistory = (email: string): void => {
         // );
         accumulateTotalActiveTime();
 
-        mutateAsyncIdleHistory({
-          email,
-          snapshot: {
-            isIdle: false,
-            elapsedTimeMs: getElapsedTime(),
-            lastIdleTime: getLastIdleTime(),
-            lastActiveTime: getLastActiveTime(),
-            activeTimeMs: getActiveTime(),
-            totalActiveTimeMs: totalActiveTimeMsRef.current,
-            isPrompted: wasPromptedRef.current,
-            timestamp: new Date(),
-          },
-        });
+        throttledSendIdleSnapshot(false)
+        
         // wasPromptedRef.current = false;
         // start();
       }
@@ -179,7 +165,7 @@ const useIdleHistory = (email: string): void => {
     if (typeof window === "undefined") return;
     const handleBeforeUnload = () => {
       // console.log("🚪 Tab closing... Sending idle snapshot");
-      sendIdleSnapshot();
+      sendIdleSnapshot(true);
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
