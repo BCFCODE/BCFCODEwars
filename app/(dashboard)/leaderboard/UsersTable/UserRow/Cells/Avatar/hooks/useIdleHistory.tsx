@@ -51,6 +51,7 @@ const useIdleHistory = (email: string): void => {
         const isIdle = latestIdleState.current;
         if (isIdle !== null && lastSentIdleState.current !== isIdle) {
           sendIdleSnapshot(isIdle);
+          if (isIdle === true) resetTotalActiveAccumulation();
         }
       },
       60 * 1000,
@@ -64,6 +65,10 @@ const useIdleHistory = (email: string): void => {
   };
 
   const resetTotalActiveAccumulation = () => {
+    // console.log(
+    //   "totalActiveTimeMs onIdle before reset",
+    //   totalActiveTimeMsRef.current
+    // );
     totalActiveTimeMsRef.current = 0;
   };
 
@@ -111,11 +116,6 @@ const useIdleHistory = (email: string): void => {
     onIdle: () => {
       // console.log("🔴 User is idle");
       triggerIdleSnapshot(true);
-      // console.log(
-      //   "totalActiveTimeMs onIdle before reset",
-      //   totalActiveTimeMsRef.current
-      // );
-      resetTotalActiveAccumulation();
     },
   });
 
@@ -138,13 +138,13 @@ const useIdleHistory = (email: string): void => {
       if (document.hidden) {
         throttledSendIdleSnapshot.flush(); // ✅ Flush immediately when tab hides
         // console.log(
-        //   "📷 Document is hidden - totalActiveTimeMs >",
+        //   "📷 if (document.hidden) - totalActiveTimeMs >",
         //   totalActiveTimeMsRef.current
         // );
         triggerIdleSnapshot(true);
       } else {
         // console.log(
-        //   "📷 Document is visible - totalActiveTimeMs >",
+        //   "📷 if (document.hidden) else > totalActiveTimeMs >",
         //   totalActiveTimeMsRef.current
         // );
         accumulateTotalActiveTime();
