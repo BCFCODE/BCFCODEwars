@@ -20,17 +20,21 @@ const useFilter = (): UseFilter => {
 
   const both = list;
 
-  const claimed = useMemo(() => {
-    return list.filter(
-      (challenge) => challenge.rewardStatus === RewardStatus.ClaimedDiamonds
-    );
-  }, [list]);
+  const claimed = useMemo(
+    () =>
+      list.filter(
+        (challenge) => challenge.rewardStatus === RewardStatus.ClaimedDiamonds
+      ),
+    [list]
+  );
 
-  const unClaimed = useMemo(() => {
-    return list.filter(
+  const unClaimed = useMemo(
+    () =>
+      list.filter(
         (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
       ),
-  }, [list]);
+    [list]
+  );
 
   return {
     activeFilter,
