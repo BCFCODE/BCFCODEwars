@@ -21,7 +21,7 @@
     "@mui/x-data-grid-generator": "^8.5.1",
     "@tanstack/react-query": "^5.80.6",
     "@tanstack/react-query-devtools": "^5.80.6",
-    "@toolpad/core": "0.15.0",
+    "@toolpad/core": "0.16.0",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "axios": "^1.9.0",
