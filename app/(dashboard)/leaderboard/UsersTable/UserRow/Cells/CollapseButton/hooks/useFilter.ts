@@ -1,6 +1,7 @@
 import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
+import { useMemo } from "react";
 
 export interface UseFilter {
   activeFilter: string;
@@ -17,17 +18,23 @@ const useFilter = (): UseFilter => {
 
   const list = currentUser.codewars.codeChallenges.list;
 
-  const both = [...list];
+  const both = list;
 
-  const claimed = list.filter(
-    (challenge) => challenge.rewardStatus === RewardStatus.ClaimedDiamonds
+  const claimed = useMemo(
+    () =>
+      list.filter(
+        (challenge) => challenge.rewardStatus === RewardStatus.ClaimedDiamonds
+      ),
+    [list]
   );
 
-  const unClaimed = [
-    ...list.filter(
-      (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
-    ),
-  ];
+  const unClaimed = useMemo(
+    () =>
+      list.filter(
+        (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
+      ),
+    [list]
+  );
 
   return {
     activeFilter,
