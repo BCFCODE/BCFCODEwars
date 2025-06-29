@@ -8,25 +8,36 @@ import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;
 
+  private async fetchJSON<T>(url: string, options?: RequestInit): Promise<T> {
+    const response = await fetch(url, { cache: "no-store", ...options });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(
+        `API Error (${response.status} ${response.statusText}): ${errorText}`
+      );
+    }
+
+    return response.json();
+  }
+
   getCompletedChallenges = async ({
     apiPageNumber,
     username,
   }: {
     apiPageNumber: number;
     username: string;
-  }): Promise<CompletedChallengesQueryData> =>
-    await fetch(
-      `${this.endpoint}/challenges/all?username=${username}&pageNumber=${apiPageNumber}`,
-      { cache: "no-store" }
-    ).then(async (response) => {
-      const {
-        data: list,
-        totalItems,
-        totalPages,
-      } = (await response.json()) as GetCompletedChallengesResponse;
+  }): Promise<CompletedChallengesQueryData> => {
+    const result = await this.fetchJSON<GetCompletedChallengesResponse>(
+      `${this.endpoint}/challenges/all?username=${username}&pageNumber=${apiPageNumber}`
+    );
 
-      return { list, totalItems, totalPages };
-    });
+    return {
+      list: result.data,
+      totalItems: result.totalItems,
+      totalPages: result.totalPages,
+    };
+  };
 
   getSingleChallenge = async (
     username: string,
@@ -35,16 +46,18 @@ class CodewarsAPIService {
   ): Promise<
     | { success: true; data: CodewarsSingleChallenge }
     | { success: false; reason: string }
-  > =>
-    await fetch(
-      `${this.endpoint}/challenges/single?username=${username}&challengeId=${id}`,
-      { ...options }
-    )
-      .then((res) => res.json())
-      .catch((error) => {
-        // console.error(error);
-        throw new Error("Failed to fetch completed challenges");
-      });
+  > => {
+    try {
+      const data = await this.fetchJSON<CodewarsSingleChallenge>(
+        `${this.endpoint}/challenges/single?username=${username}&challengeId=${id}`
+      );
+
+      return { success: true, data };
+    } catch (error) {
+      console.error("Error fetching single challenge:", error);
+      return { success: false, reason: (error as Error).message };
+    }
+  };
 }
 
 export default CodewarsAPIService;

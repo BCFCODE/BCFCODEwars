@@ -26,7 +26,6 @@ const useCurrentUserQuery = (email: string) => {
     staleTime: 0, // cache for 5 minutes
     refetchOnReconnect: true,
     refetchOnWindowFocus: true,
-    
   });
   
 };
