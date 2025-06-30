@@ -9,6 +9,7 @@ import mergeListsAvoidingDuplicates from "./utils/mergeListsAvoidingDuplicates";
 import { applyDefaultTrackingAndRewardStatusToAll } from "../../utils/applyRewardStatus";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
+import { useMemo } from "react";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -40,13 +41,17 @@ const usePaginationQuery = () => {
         username,
         apiPageNumber,
       });
-      
-      const mergedList = mergeListsAvoidingDuplicates({
-        oldList: currentUser.codewars.codeChallenges.list,
-        newList: applyDefaultTrackingAndRewardStatusToAll(list),
-      });
 
-      const sortedList = sortByCompletedAtDesc(mergedList);
+      const sortedList = useMemo(() => {
+        const mergedList = mergeListsAvoidingDuplicates({
+          oldList: currentUser.codewars.codeChallenges.list,
+          newList: applyDefaultTrackingAndRewardStatusToAll(list),
+        });
+
+        const sortedList = sortByCompletedAtDesc(mergedList);
+
+        return sortedList;
+      }, [list]);
 
       currentUserDispatch({
         type: "UPDATE_CODE_CHALLENGES_LIST",
