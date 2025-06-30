@@ -48,10 +48,10 @@ class CodewarsAPIService {
     | { success: false; reason: string }
   > => {
     try {
-      const data = await this.fetchJSON<CodewarsSingleChallenge>(
+      const { data } = await this.fetchJSON<{ data: CodewarsSingleChallenge }>(
         `${this.endpoint}/challenges/single?username=${username}&challengeId=${id}`
       );
-
+      
       return { success: true, data };
     } catch (error) {
       console.error("Error fetching single challenge:", error);

@@ -1,7 +1,9 @@
-import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import DatabaseAPIService from "@/app/api/services/db";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
-import { useMemo } from "react";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
+import { useEffect, useMemo, useRef } from "react";
+import useCurrentUserMutation from "./useCurrentUserMutation";
 
 export interface UseFilter {
   activeFilter: string;
