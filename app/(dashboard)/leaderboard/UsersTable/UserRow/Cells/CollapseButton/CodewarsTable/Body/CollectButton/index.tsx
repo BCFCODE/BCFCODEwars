@@ -21,17 +21,19 @@ import useCollectButtonState from "./useCollectButtonState";
 import { useCodewarsStore } from "@/app/store/codewars";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
+import useCurrentUserMutation from "../../../hooks/useCurrentUserMutation";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
 const { collectDiamonds } = new DiamondsService();
-const { postCurrentUser } = new DatabaseAPIService();
+// const { postCurrentUser } = new DatabaseAPIService();
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
 }
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
+  const { mutate: postCurrentUser } = useCurrentUserMutation();
   const [isCounting, setIsCounting] = useState(true);
   const timeRef = useRef<NodeJS.Timeout | null>(null);
   const isListUpdatedRef = useRef(false);
@@ -96,13 +98,12 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     if (isCollected && collectedDiamondsCount) setIsDiamondIconDisabled(false);
 
     // Reset counter to avoid duplicate dispatches on subsequent renders
-    if (counter !== 0) {
-      collectButtonDispatch({ type: "RESET_COUNTER" });
-    }
+    // if (counter !== 0) {
+    collectButtonDispatch({ type: "RESET_COUNTER" });
+    // }
   }, [
     isCollected,
     collectedDiamondsCount,
-    counter,
     setIsDiamondIconDisabled,
     collectButtonDispatch,
   ]);
@@ -177,37 +178,37 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
             disabled={isIconDisabled || !isUserOnPersonalDashboard}
             sx={iconButtonStyles}
             onClick={async () => {
-              setIsDiamondIconDisabled(true);
-
-              collectButtonDispatch({ type: "LOADING...", isLoading: true });
-
-              const response = await getSingleChallenge(
-                currentUser.codewars.username,
-                currentChallenge.id
-              );
-
-              if (response.success) {
+              try {
                 setIsDiamondIconDisabled(true);
+                collectButtonDispatch({ type: "LOADING...", isLoading: true });
 
-                const { data: selectedSingleChallenge } = response;
-                const { collectedDiamondsCount } = await collectDiamonds(
-                  selectedSingleChallenge
+                const response = await getSingleChallenge(
+                  currentUser.codewars.username,
+                  currentChallenge.id
                 );
 
-                collectButtonDispatch({
-                  type: "SUCCESSFUL_RESPONSE",
-                  collectedDiamondsCount,
-                  success: true,
-                });
+                if (response.success) {
+                  const { data: selectedSingleChallenge } = response;
+                  const { collectedDiamondsCount } = await collectDiamonds(
+                    selectedSingleChallenge
+                  );
 
-                setSelectedChallenge({
-                  ...currentChallenge,
-                  rewardStatus: RewardStatus.ClaimedDiamonds,
-                  moreDetails: selectedSingleChallenge,
-                });
-              }
+                  collectButtonDispatch({
+                    type: "SUCCESSFUL_RESPONSE",
+                    collectedDiamondsCount,
+                    success: true,
+                  });
 
-              if (!response.success) {
+                  setSelectedChallenge({
+                    ...currentChallenge,
+                    rewardStatus: RewardStatus.ClaimedDiamonds,
+                    moreDetails: selectedSingleChallenge,
+                  });
+                } else {
+                  throw new Error("Failed to fetch single challenge");
+                }
+              } catch (error) {
+                // console.error("Collect Diamonds failed:", error);
                 setIsDiamondIconDisabled(false);
                 collectButtonDispatch({ type: "LOADING...", isLoading: false });
                 collectButtonDispatch({

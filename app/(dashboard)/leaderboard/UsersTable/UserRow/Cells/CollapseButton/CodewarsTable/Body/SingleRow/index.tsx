@@ -1,12 +1,11 @@
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { TableRow } from "@mui/material";
-import { ReactNode } from "react";
+import CollectDiamonds from "../CollectButton";
+import CollectDiamondsCell from "./Cells/CollectDiamondsCell";
+import DateCompletedCell from "./Cells/DateCompletedCell";
+import NameCell from "./Cells/NameCell";
 import RankCell from "./Cells/RankCell";
 import SolvedOnCell from "./Cells/SolvedOnCell";
-import NameCell from "./Cells/NameCell";
-import DateCompletedCell from "./Cells/DateCompletedCell";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
-import CollectDiamondsCell from "./Cells/CollectDiamondsCell";
-import CollectDiamonds from "../CollectButton";
 import TimeAgoCell from "./Cells/TimeAgoCell";
 
 interface Props {
