@@ -11,7 +11,6 @@ import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
-const { postCurrentUser } = new DatabaseAPIService();
 
 export interface CompletedChallengesQueryData {
   totalPages: number; // Total number of pages in the response
@@ -57,8 +56,6 @@ const usePaginationQuery = () => {
       });
 
       // console.log("usePaginationQuery/sortedList", sortedList, currentUser);
-
-      await postCurrentUser(currentUser);
 
       return { list, totalItems, totalPages };
     },
