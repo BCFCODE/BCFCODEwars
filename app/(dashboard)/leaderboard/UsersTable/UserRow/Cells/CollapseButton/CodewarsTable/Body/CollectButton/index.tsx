@@ -96,10 +96,13 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     if (isCollected && collectedDiamondsCount) setIsDiamondIconDisabled(false);
 
     // Reset counter to avoid duplicate dispatches on subsequent renders
-    collectButtonDispatch({ type: "RESET_COUNTER" });
+    if (counter !== 0) {
+      collectButtonDispatch({ type: "RESET_COUNTER" });
+    }
   }, [
     isCollected,
     collectedDiamondsCount,
+    counter,
     setIsDiamondIconDisabled,
     collectButtonDispatch,
   ]);
@@ -154,7 +157,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
       <Box sx={diamondBoxStyles}>
         <Typography sx={counterStyles}>
           {calculateCodewarsDiamondsCount(
-            currentChallenge.moreDetails?.rank.id ?? 8
+            currentChallenge.moreDetails?.rank?.id ?? 8
           )}
         </Typography>
         <DiamondIcon sx={collectedDiamondStyles} />
