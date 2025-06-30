@@ -1,15 +1,13 @@
 import CodewarsAPIService from "@/app/api/services/codewars";
-import DatabaseAPIService from "@/app/api/services/db";
+import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
+import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { sortByCompletedAtDesc } from "@/utils/dayjs";
 import { QueryKey, useQuery } from "@tanstack/react-query";
+import { applyDefaultTrackingAndRewardStatusToAll } from "../../utils/applyRewardStatus";
 import usePaginationStore, { defaultPagination } from "./usePaginationStore";
 import getQueryKey from "./utils/getQueryKey";
 import mergeListsAvoidingDuplicates from "./utils/mergeListsAvoidingDuplicates";
-import { applyDefaultTrackingAndRewardStatusToAll } from "../../utils/applyRewardStatus";
-import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
-import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
-import { useMemo } from "react";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -42,16 +40,12 @@ const usePaginationQuery = () => {
         apiPageNumber,
       });
 
-      const sortedList = useMemo(() => {
-        const mergedList = mergeListsAvoidingDuplicates({
-          oldList: currentUser.codewars.codeChallenges.list,
-          newList: applyDefaultTrackingAndRewardStatusToAll(list),
-        });
+      const mergedList = mergeListsAvoidingDuplicates({
+        oldList: currentUser.codewars.codeChallenges.list,
+        newList: applyDefaultTrackingAndRewardStatusToAll(list),
+      });
 
-        const sortedList = sortByCompletedAtDesc(mergedList);
-
-        return sortedList;
-      }, [list]);
+      const sortedList = sortByCompletedAtDesc(mergedList);
 
       currentUserDispatch({
         type: "UPDATE_CODE_CHALLENGES_LIST",
@@ -65,7 +59,7 @@ const usePaginationQuery = () => {
       return { list, totalItems, totalPages };
     },
     enabled: !!username,
-    // staleTime: 10 * 1000 * 60, // 10m
+    staleTime: 1 * 1000 * 60, 
     // retry: 1,
   });
 };
