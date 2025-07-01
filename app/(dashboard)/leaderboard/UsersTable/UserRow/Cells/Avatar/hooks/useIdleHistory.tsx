@@ -4,10 +4,14 @@ import { useIdleTimer } from "react-idle-timer";
 import useIdleHistoryMutation from "./useIdleHistoryMutation";
 
 const useIdleHistory = (email: string): void => {
+  const lastSentIdleState = useRef<boolean | null>(null);
   const totalActiveTimeMsRef = useRef<number>(0);
   const lastTabHiddenDurationRef = useRef<number>(0);
   const totalTabHiddenDurationRef = useRef<number>(0);
   const documentHiddenTimestamp = useRef<number | null>(null);
+  const wasPromptedRef = useRef<boolean>(false);
+  const latestIdleState = useRef<boolean | null>(null);
+
   const { mutateAsync: mutateAsyncIdleHistory } = useIdleHistoryMutation();
 
   const accumulateTotalActiveTime = () => {
@@ -17,14 +21,13 @@ const useIdleHistory = (email: string): void => {
     }
   };
 
-  const sendIdleSnapshot = () => {
-    // console.log("sendIdleSnapshot", new Date().toISOString());
+  const sendIdleSnapshot = (isIdle: boolean) => {
     accumulateTotalActiveTime();
 
     mutateAsyncIdleHistory({
       email,
       snapshot: {
-        isIdle: true,
+        isIdle,
         elapsedTimeMs: getElapsedTime(),
         lastIdleTime: getLastIdleTime(),
         lastActiveTime: getLastActiveTime(),
@@ -33,16 +36,41 @@ const useIdleHistory = (email: string): void => {
         isPrompted: wasPromptedRef.current,
         timestamp: new Date(),
       },
-    }).catch((err) => {
-      console.error("Failed to send idle snapshot:", err);
-    });
+    })
+      .catch((err) => {
+        console.error("Failed to send idle snapshot:", err);
+      })
+      .finally(() => {
+        lastSentIdleState.current = isIdle;
+      });
+  };
+
+  const throttledSendIdleSnapshot = useRef(
+    _.throttle(
+      () => {
+        const isIdle = latestIdleState.current;
+        if (isIdle !== null && lastSentIdleState.current !== isIdle) {
+          sendIdleSnapshot(isIdle);
+          if (isIdle === true) resetTotalActiveAccumulation();
+        }
+      },
+      60 * 1000,
+      { leading: true, trailing: true }
+    )
+  ).current;
+
+  const triggerIdleSnapshot = (isIdle: boolean) => {
+    latestIdleState.current = isIdle;
+    throttledSendIdleSnapshot();
   };
 
   const resetTotalActiveAccumulation = () => {
+    // console.log(
+    //   "totalActiveTimeMs onIdle before reset",
+    //   totalActiveTimeMsRef.current
+    // );
     totalActiveTimeMsRef.current = 0;
   };
-
-  const wasPromptedRef = useRef<boolean>(false);
 
   const {
     getElapsedTime,
@@ -52,10 +80,8 @@ const useIdleHistory = (email: string): void => {
     reset,
   } = useIdleTimer({
     name: "main",
-    // timeout: 20 * 60 * 1000, // 20 minute idle threshold
-    // promptBeforeIdle: 5 * 60 * 1000, // 5 minute
-    timeout: 10 * 1000, // 10s (Dev)
-    promptBeforeIdle: 7 * 1000, // 7s (Dev)
+    timeout: 10 * 1000, // Dev: 10s idle threshold
+    promptBeforeIdle: 7 * 1000, // Dev: 7s prompt
     debounce: 500,
 
     onPrompt: () => {
@@ -66,7 +92,7 @@ const useIdleHistory = (email: string): void => {
     onAction: () => {
       accumulateTotalActiveTime();
       // console.log(
-      //   "An activity happen..., totalActiveTimeMs >",
+      //   "An activity happened..., totalActiveTimeMs >",
       //   totalActiveTimeMsRef.current,
       //   "lastTabHiddenDuration",
       //   lastTabHiddenDurationRef.current,
@@ -82,33 +108,14 @@ const useIdleHistory = (email: string): void => {
         wasPromptedRef.current = false;
       }
 
-      mutateAsyncIdleHistory({
-        email,
-        snapshot: {
-          isIdle: false,
-          elapsedTimeMs: getElapsedTime(),
-          lastIdleTime: getLastIdleTime(),
-          lastActiveTime: getLastActiveTime(),
-          activeTimeMs: getActiveTime(),
-          totalActiveTimeMs: totalActiveTimeMsRef.current,
-          isPrompted: wasPromptedRef.current,
-          timestamp: new Date(),
-        },
-      });
+      if (lastSentIdleState.current !== false) {
+        sendIdleSnapshot(false); // ✅ Immediately notify backend
+      }
     },
 
     onIdle: () => {
       // console.log("🔴 User is idle");
-
-      sendIdleSnapshot();
-
-      // console.log(
-      //   "totalActiveTimeMs onIdle before reset",
-      //   totalActiveTimeMsRef.current
-      // );
-
-      resetTotalActiveAccumulation();
-      // reset();
+      triggerIdleSnapshot(true);
     },
   });
 
@@ -129,39 +136,21 @@ const useIdleHistory = (email: string): void => {
 
     const debounceSync = _.debounce(() => {
       if (document.hidden) {
+        throttledSendIdleSnapshot.flush(); // ✅ Flush immediately when tab hides
         // console.log(
-        //   "📷 Document is hidden - document.hidden > ",
-        //   document.hidden,
+        //   "📷 if (document.hidden) - totalActiveTimeMs >",
         //   totalActiveTimeMsRef.current
         // );
-
-        sendIdleSnapshot();
-        // pause();
+        triggerIdleSnapshot(true);
       } else {
         // console.log(
-        //   "📷 Document is visible - document.hidden > ",
-        //   document.hidden,
+        //   "📷 if (document.hidden) else > totalActiveTimeMs >",
         //   totalActiveTimeMsRef.current
         // );
         accumulateTotalActiveTime();
-
-        mutateAsyncIdleHistory({
-          email,
-          snapshot: {
-            isIdle: false,
-            elapsedTimeMs: getElapsedTime(),
-            lastIdleTime: getLastIdleTime(),
-            lastActiveTime: getLastActiveTime(),
-            activeTimeMs: getActiveTime(),
-            totalActiveTimeMs: totalActiveTimeMsRef.current,
-            isPrompted: wasPromptedRef.current,
-            timestamp: new Date(),
-          },
-        });
-        // wasPromptedRef.current = false;
-        // start();
+        sendIdleSnapshot(false); // ✅ Send immediately when visible again
       }
-    }, 10 * 1000); // debounce 10s
+    }, 10 * 1000); // 10s debounce for visibility changes
 
     const visibilityChangeHandler = () => {
       calculateHiddenTime();
@@ -169,23 +158,34 @@ const useIdleHistory = (email: string): void => {
     };
 
     document.addEventListener("visibilitychange", visibilityChangeHandler);
+
     return () => {
       document.removeEventListener("visibilitychange", visibilityChangeHandler);
       debounceSync.cancel();
+      throttledSendIdleSnapshot.flush();
     };
   }, [email]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+
     const handleBeforeUnload = () => {
-      // console.log("🚪 Tab closing... Sending idle snapshot");
-      sendIdleSnapshot();
+      // console.log("🚪 Tab closing... Sending final idle snapshot");
+      throttledSendIdleSnapshot.flush();
+
+      if (
+        latestIdleState.current !== null &&
+        latestIdleState.current !== lastSentIdleState.current
+      ) {
+        sendIdleSnapshot(latestIdleState.current);
+      }
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
 
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
+      throttledSendIdleSnapshot.flush();
     };
   }, [email]);
 };
