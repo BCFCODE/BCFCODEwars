@@ -541,7 +541,7 @@ class DatabaseService {
       return { success: true };
     } catch (error) {
       await session.abortTransaction();
-      console.error("Transaction failed and was aborted!", error);
+      console.error("❌ Transaction failed and was aborted for:", email, error);
       return { success: false };
     } finally {
       session.endSession();

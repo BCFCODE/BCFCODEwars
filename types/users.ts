@@ -28,7 +28,7 @@ export enum UserRole {
   SuperAdmin = "superAdmin",
   // Admin = "admin",
   // Moderator = "moderator",
-  // User = "user",
+  User = "user",
   // Guest = "guest",
 }
 
