@@ -55,6 +55,7 @@ const usePaginationQuery = () => {
     staleTime: 10 * 60 * 1000,
     refetchOnReconnect: true,
     refetchOnWindowFocus: true,
+    refetchOnMount: "always",
     retry: (failureCount, error) => {
       if (error.message.includes("Network")) return true;
       return false;

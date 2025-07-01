@@ -19,6 +19,9 @@ const Step4 = ({ session }: StepProps) => {
     await queryClient.invalidateQueries({
       queryKey: [usersQueryKeys.usersList],
     });
+    await queryClient.refetchQueries({
+      queryKey: [usersQueryKeys.usersList],
+    });
     router.replace("/leaderboard");
   };
 
