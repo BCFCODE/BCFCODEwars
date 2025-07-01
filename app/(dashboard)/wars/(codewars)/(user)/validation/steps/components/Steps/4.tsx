@@ -1,11 +1,29 @@
 "use client";
 
+import usersQueryKeys from "@/ReactQuery/queryKeys/users";
 import { Box, Button, Paper, Typography } from "@mui/material";
-import Link from "next/link";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { StepProps } from "./stepSwitch";
+import LoadingPulseButton from "../ui/LoadingPulseButton";
+import { useState } from "react";
 
 const Step4 = ({ session }: StepProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
+  const router = useRouter();
   const userName = (session?.user?.name ?? "").split(" ")[0] || "User";
+
+  const handleGoToLeaderboard = async () => {
+    setIsLoading(true);
+    await queryClient.invalidateQueries({
+      queryKey: [usersQueryKeys.usersList],
+    });
+    await queryClient.refetchQueries({
+      queryKey: [usersQueryKeys.usersList],
+    });
+    router.replace("/leaderboard");
+  };
 
   return (
     <Box
@@ -61,10 +79,11 @@ const Step4 = ({ session }: StepProps) => {
           All your stats are powered by those shiny diamonds!
         </Typography>
 
-        <Button
-          component={Link}
-          href="/leaderboard"
-          replace
+        <LoadingPulseButton
+          loading={isLoading}
+          onClick={handleGoToLeaderboard}
+          label="Show Me the Leaderboard"
+          ariaLabel="Go to the Leaderboard and see my updated stats"
           variant="text"
           size="large"
           color="primary"
@@ -80,8 +99,17 @@ const Step4 = ({ session }: StepProps) => {
             },
           }}
         >
-          Go to Leaderboard
-        </Button>
+          <Typography
+            variant="button" // same as button text style
+            sx={{
+              whiteSpace: "nowrap", // ❗prevent wrapping
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            Syncing and Redirecting...
+          </Typography>
+        </LoadingPulseButton>
       </Paper>
     </Box>
   );

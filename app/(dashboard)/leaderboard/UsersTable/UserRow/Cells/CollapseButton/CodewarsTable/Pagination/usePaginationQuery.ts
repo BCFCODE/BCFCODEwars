@@ -1,14 +1,13 @@
 import CodewarsAPIService from "@/app/api/services/codewars";
-import DatabaseAPIService from "@/app/api/services/db";
+import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
+import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { sortByCompletedAtDesc } from "@/utils/dayjs";
 import { QueryKey, useQuery } from "@tanstack/react-query";
+import { applyDefaultTrackingAndRewardStatusToAll } from "../../utils/applyRewardStatus";
 import usePaginationStore, { defaultPagination } from "./usePaginationStore";
 import getQueryKey from "./utils/getQueryKey";
 import mergeListsAvoidingDuplicates from "./utils/mergeListsAvoidingDuplicates";
-import { applyDefaultTrackingAndRewardStatusToAll } from "../../utils/applyRewardStatus";
-import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
-import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
 
 const { getCompletedChallenges } = new CodewarsAPIService();
 
@@ -40,7 +39,7 @@ const usePaginationQuery = () => {
         username,
         apiPageNumber,
       });
-      
+
       const mergedList = mergeListsAvoidingDuplicates({
         oldList: currentUser.codewars.codeChallenges.list,
         newList: applyDefaultTrackingAndRewardStatusToAll(list),
@@ -55,14 +54,17 @@ const usePaginationQuery = () => {
         totalPages: totalPages,
       });
 
+      
+
       // console.log("usePaginationQuery/sortedList", sortedList, currentUser);
 
       return { list, totalItems, totalPages };
     },
     enabled: !!username,
-    // staleTime: 10 * 1000 * 60, // 10m
+    staleTime: 1 * 1000 * 60, 
     // retry: 1,
   });
+  
 };
 
 export default usePaginationQuery;

@@ -13,6 +13,7 @@ import Link from "next/link";
 import { StepProps } from "../stepSwitch";
 import LoadingPulseButton from "../../ui/LoadingPulseButton";
 import { useState } from "react";
+import { UserRole } from "@/types/users";
 
 const Step3 = ({
   currentStep,
@@ -49,6 +50,7 @@ const Step3 = ({
       list: [],
     },
     username: validatedUsername,
+    role: UserRole.User,
   });
 
   // const email = currentUser?.email ?? "";
@@ -162,6 +164,7 @@ const Step3 = ({
         }
         right={
           <LoadingPulseButton
+            variant="text"
             ariaLabel="Confirm identity and connect to Codewars account"
             label={
               isError || isConnectError || isReconnectError

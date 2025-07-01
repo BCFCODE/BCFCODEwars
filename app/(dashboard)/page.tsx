@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import { Avatar, Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 
 import DashboardStats from "./Stats";
 import Welcome from "./Welcome";

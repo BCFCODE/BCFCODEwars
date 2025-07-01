@@ -56,7 +56,8 @@ const useConnectMutation = () => {
 
       return { prevData };
     },
-    onError: (_error, _newCodewarsUser, context) => {
+    onError: (error, _newCodewarsUser, context) => {
+      console.error("Connect mutation failed:", error);
       if (context?.prevData) {
         queryClient.setQueryData([usersQueryKeys.usersList], context.prevData);
       }
