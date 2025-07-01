@@ -22,6 +22,9 @@ import { useCodewarsStore } from "@/app/store/codewars";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
 import useCurrentUserMutation from "../../../hooks/useCurrentUserMutation";
+import usePaginationStore, {
+  defaultPagination,
+} from "../../Pagination/usePaginationStore";
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
@@ -33,13 +36,19 @@ interface Props {
 }
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
-  const { mutate: postCurrentUser } = useCurrentUserMutation();
+  const { currentUser } = useCurrentUserContext();
+  const { mutate: postCurrentUser } = useCurrentUserMutation({
+    username: currentUser.codewars.username,
+    apiPageNumber: usePaginationStore(
+      (state) =>
+        state.pagination[currentUser.codewars.username] ?? defaultPagination
+    ).apiPageNumber,
+  });
   const [isCounting, setIsCounting] = useState(true);
   const timeRef = useRef<NodeJS.Timeout | null>(null);
   const isListUpdatedRef = useRef(false);
   const isDiamondsUpdatedRef = useRef(false);
   const session = useSession().data;
-  const { currentUser } = useCurrentUserContext();
   const isIconDisabled = useCollectButtonStore(
     (state) => state.diamonds.isIconDisabled
   );
