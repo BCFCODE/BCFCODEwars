@@ -54,6 +54,8 @@ const usePaginationQuery = () => {
         totalPages: totalPages,
       });
 
+      
+
       // console.log("usePaginationQuery/sortedList", sortedList, currentUser);
 
       return { list, totalItems, totalPages };
@@ -62,6 +64,7 @@ const usePaginationQuery = () => {
     staleTime: 1 * 1000 * 60, 
     // retry: 1,
   });
+  
 };
 
 export default usePaginationQuery;
