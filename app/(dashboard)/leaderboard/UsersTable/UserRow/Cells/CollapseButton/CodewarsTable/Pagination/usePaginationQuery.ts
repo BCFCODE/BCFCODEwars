@@ -19,7 +19,7 @@ export interface CompletedChallengesQueryData {
 
 const usePaginationQuery = () => {
   const { currentUser } = useCurrentUserContext();
-  const currentUserDispatch = useCurrentUserDispatchContext();
+  // const currentUserDispatch = useCurrentUserDispatchContext();
   const username = currentUser.codewars.username;
   const apiPageNumber = usePaginationStore(
     (state) => state.pagination[username] ?? defaultPagination
@@ -40,19 +40,19 @@ const usePaginationQuery = () => {
         apiPageNumber,
       });
 
-      const mergedList = mergeListsAvoidingDuplicates({
-        oldList: currentUser.codewars.codeChallenges.list,
-        newList: applyDefaultTrackingAndRewardStatusToAll(list),
-      });
+      // const mergedList = mergeListsAvoidingDuplicates({
+      //   oldList: currentUser.codewars.codeChallenges.list,
+      //   newList: applyDefaultTrackingAndRewardStatusToAll(list),
+      // });
 
-      const sortedList = sortByCompletedAtDesc(mergedList);
+      // const sortedList = sortByCompletedAtDesc(mergedList);
 
-      currentUserDispatch({
-        type: "UPDATE_CODE_CHALLENGES_LIST",
-        list: sortedList,
-        totalItems: totalItems,
-        totalPages: totalPages,
-      });
+      // currentUserDispatch({
+      //   type: "UPDATE_CODE_CHALLENGES_LIST",
+      //   list: sortedList,
+      //   totalItems: totalItems,
+      //   totalPages: totalPages,
+      // });
 
       
 
