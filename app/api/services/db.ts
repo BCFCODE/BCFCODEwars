@@ -20,6 +20,16 @@ export interface CodewarsReconnectRequest {
 class DatabaseAPIService {
   private endpoint = `${baseURL}/api/db`;
 
+  private async handleResponse<T>(response: Response): Promise<T> {
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(
+        `API Error: ${response.status} ${response.statusText} - ${text}`
+      );
+    }
+    return response.json() as Promise<T>;
+  }
+
   reconnectToCodewars = async (
     { name, username, email, clan }: CodewarsReconnectRequest,
     options?: RequestInit
@@ -97,7 +107,7 @@ class DatabaseAPIService {
         };
       }
 
-      return (await response.json()) as GetUsersResponse;
+      return this.handleResponse<GetUsersResponse>(response);
     } catch (error) {
       console.error("Error fetching user data from database", error);
       // throw new Error(
@@ -232,7 +242,6 @@ class DatabaseAPIService {
       throw new Error("Unexpected error occurred during updateIdleHistory.");
     }
   };
-
 }
 
 export default DatabaseAPIService;

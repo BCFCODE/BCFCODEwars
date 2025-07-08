@@ -98,7 +98,7 @@ const useReconnectMutation = () => {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [usersQueryKeys.usersList] });
     },
-    retry: 10,
+    retry: 3,
   });
 };
 

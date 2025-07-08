@@ -75,6 +75,7 @@ const CodeChallengesSchema = z.object({
   list: z.array(CodewarsCompletedChallengeSchema),
 });
 
+
 const CodewarsUserSchema = z.object({
   success: z.boolean().optional(),
   isConnected: z.boolean(),

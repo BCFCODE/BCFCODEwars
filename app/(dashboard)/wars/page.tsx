@@ -5,8 +5,8 @@ import { baseURL } from "@/utils/constants";
 import { Box, Button, Fade, Typography } from "@mui/material";
 import Link from "next/link";
 import Reconnect from "./(codewars)/(user)/validation/steps/Reconnect";
-import { StepProps } from "./(codewars)/(user)/validation/steps/stepSwitch";
-import UserAvatar from "./(codewars)/(user)/validation/steps/UserAvatar";
+import { StepProps } from "./(codewars)/(user)/validation/steps/components/Steps/stepSwitch";
+import UserAvatar from "./(codewars)/(user)/validation/steps/components/UserAvatar";
 
 const { getSingleCodewarsUser } = new DatabaseService();
 
@@ -26,7 +26,7 @@ const WarsPage = async () => {
   if (email) {
     try {
       const currentCodewarsUser = await getSingleCodewarsUser(email);
-      
+
       /* Purpose: 
           This block of code checks if the Codewars account associated with the user 
           (stored in our database) is in sync with the current state on Codewars.com. 
@@ -74,7 +74,7 @@ const WarsPage = async () => {
       console.error("Error fetching user data:", error);
     }
   }
-  
+
   if (!isConnected)
     return (
       <Box
@@ -159,25 +159,26 @@ const WarsPage = async () => {
             to sharpen your skills through fun, challenging problem-solving.
             Then, come back and hit the button below to get started.
           </Typography>
-          <Button
-            component={Link}
-            href="/wars/validation/steps/0"
-            variant="outlined"
-            color="primary"
-            size="large"
-            sx={{
-              transition: "font-size 0.5s",
-              fontSize: {
-                xs: "0.7rem",
-                sm: "0.9rem",
-                md: "1rem",
-                lg: "1.2rem",
-              },
-              mb: 3,
-            }}
-          >
-            Connect My Codewars Account
-          </Button>
+          <Link href="/wars/validation/steps/0">
+            <Button
+              variant="outlined"
+              color="primary"
+              size="large"
+              sx={{
+                transition: "font-size 0.5s",
+                fontSize: {
+                  xs: "0.7rem",
+                  sm: "0.9rem",
+                  md: "1rem",
+                  lg: "1.2rem",
+                },
+                mb: 3,
+              }}
+            >
+              Connect My Codewars Account
+            </Button>
+          </Link>
+
           {/* Inspirational Text */}
           <Fade in timeout={1000}>
             <Typography

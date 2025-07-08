@@ -1,8 +1,8 @@
 "use client";
 
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import LoadingPulseButton from "../../components/ui/LoadingPulseButton";
 
 const ReconnectButton = () => {

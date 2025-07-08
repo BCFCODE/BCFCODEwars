@@ -1,33 +1,39 @@
-import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
+import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
+import { useMemo } from "react";
 
 export interface UseFilter {
-  activeFilter: string;
+  activeFilter: CodeChallengesFilter;
   both: CodewarsCompletedChallenge[];
   claimed: CodewarsCompletedChallenge[];
   unClaimed: CodewarsCompletedChallenge[];
 }
 
-const useFilter = (): UseFilter => {
-  const { currentUser } = useCurrentUserContext();
+interface Props {
+  list: CodewarsCompletedChallenge[];
+  activeFilter: CodeChallengesFilter;
+}
 
-  const activeFilter: CodeChallengesFilter =
-    currentUser.codewars.codeChallenges.challengeFilter;
+const useFilter = ({ activeFilter, list }: Props): UseFilter => {
+  // const { currentUser } = useCurrentUserContext();
 
-  const list = currentUser.codewars.codeChallenges.list;
+  const both = list;
 
-  const both = [...list];
-
-  const claimed = list.filter(
-    (challenge) => challenge.rewardStatus === RewardStatus.ClaimedDiamonds
+  const claimed = useMemo(
+    () =>
+      list.filter(
+        (challenge) => challenge.rewardStatus === RewardStatus.ClaimedDiamonds
+      ),
+    [list]
   );
 
-  const unClaimed = [
-    ...list.filter(
-      (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
-    ),
-  ];
+  const unClaimed = useMemo(
+    () =>
+      list.filter(
+        (challenge) => challenge.rewardStatus === RewardStatus.UnclaimedDiamonds
+      ),
+    [list]
+  );
 
   return {
     activeFilter,

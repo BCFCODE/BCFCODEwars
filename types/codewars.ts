@@ -1,4 +1,6 @@
+import { CodewarsUser } from "@/app/api/db/codewars/connect/schema";
 import { CodeChallengesFilter, RewardStatus } from "./diamonds";
+import { UserRole } from "./users";
 
 // types/codewars.ts
 interface OverallRanks {
@@ -23,28 +25,33 @@ export interface Ranks {
 }
 
 export interface CodeChallenges {
-  totalPages: number; 
-  totalItems: number; 
+  totalPages: number;
+  totalItems: number;
   totalAuthored: number;
   totalCompleted: number;
   challengeFilter: CodeChallengesFilter;
   list: CodewarsCompletedChallenge[];
 }
+/* 
+  export type CodewarsUser = {
+    success?: boolean;
+    isConnected: boolean;
+    email: string;
+    id: string;
+    username: string;
+    name: string | null;
+    honor: number;
+    clan: string | null;
+    leaderboardPosition: number | null;
+    skills: string[] | null;
+    ranks: Ranks;
+    codeChallenges: CodeChallenges;
+    role: UserRole;
+    websiteUrl?: string;
+  };
+*/
 
-export type CodewarsUser = {
-  success?: boolean;
-  isConnected: boolean;
-  email: string;
-  id: string;
-  username: string;
-  name: string | null;
-  honor: number;
-  clan: string | null;
-  leaderboardPosition: number | null;
-  skills: string[] | null;
-  ranks: Ranks;
-  codeChallenges: CodeChallenges;
-};
+export { type CodewarsUser };
 
 // export type InitialCodewarsUser = Pick<CodewarsUser, "email" | "isConnected">;
 

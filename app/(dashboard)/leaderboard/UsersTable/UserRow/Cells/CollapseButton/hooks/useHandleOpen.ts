@@ -13,7 +13,6 @@
 
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import { useUsersStore } from "@/app/store/users";
-import usersQueryKeys from "@/ReactQuery/queryKeys/users";
 import { useQueryClient } from "@tanstack/react-query";
 
 /**
@@ -57,9 +56,9 @@ const useHandleOpen = (): { handleOpen: () => Promise<void> } => {
     setIsCollapsed(currentUser.email, !isCollapsed);
 
     // Invalidate and refetch query associated with this user
-    await queryClient.invalidateQueries({
-      queryKey: [usersQueryKeys.currentUser, currentUser.email],
-    });
+    // await queryClient.invalidateQueries({
+    //   queryKey: [usersQueryKeys.currentUser, currentUser.email],
+    // });
   };
 
   return { handleOpen };

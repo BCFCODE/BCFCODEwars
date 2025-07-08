@@ -29,7 +29,9 @@ const usePaginationQuery = () => {
       const { success, list, error, totalUsers } = await getUsers(pagination);
 
       if (!success || !list || error) {
-        throw new Error("Failed to users data in usePaginationQuery");
+        throw new Error(
+          `Failed to fetch users in usePaginationQuery: ${error}`
+        );
       }
 
       const updatedListWithAddedSessionToAuthenticatedUser = list.map((user) =>
@@ -50,10 +52,14 @@ const usePaginationQuery = () => {
     enabled: [pagination.skip, pagination.limit].every(
       (query) => typeof query === "number"
     ),
-    staleTime: 10 * 60 * 1000, // 24h
+    staleTime: 10 * 60 * 1000,
     refetchOnReconnect: true,
     refetchOnWindowFocus: true,
-    retry: 1,
+    refetchOnMount: "always",
+    retry: (failureCount, error) => {
+      if (error.message.includes("Network")) return true;
+      return false;
+    },
   });
 };
 
