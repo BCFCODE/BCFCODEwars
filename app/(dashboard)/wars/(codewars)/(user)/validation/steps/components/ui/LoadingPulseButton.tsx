@@ -1,10 +1,20 @@
-'use client'
+"use client";
 
 import { LoadingButton } from "@mui/lab";
 import { SxProps, useTheme } from "@mui/material/styles";
 import { PropsWithChildren } from "react";
 
 interface Props extends PropsWithChildren {
+  size?: "large" | "medium" | "small";
+  variant?: "contained" | "outlined" | "text";
+  color?:
+    | "primary"
+    | "info"
+    | "error"
+    | "inherit"
+    | "secondary"
+    | "success"
+    | "warning";
   sx?: SxProps;
   loading: boolean;
   label: string;
@@ -13,6 +23,9 @@ interface Props extends PropsWithChildren {
 }
 
 const LoadingPulseButton = ({
+  color,
+  variant,
+  size,
   children,
   loading,
   onClick,
@@ -24,13 +37,14 @@ const LoadingPulseButton = ({
 
   return (
     <LoadingButton
-      variant="outlined"
-      color={loading ? "info" : "primary"}
+      variant={variant ?? "outlined"}
+      color={loading ? "info" : (color ?? "primary")}
       onClick={onClick}
       loading={loading}
       loadingIndicator={children}
       disabled={loading}
       aria-label={ariaLabel}
+      size={size}
       sx={{
         width: "100%",
         px: 3,
