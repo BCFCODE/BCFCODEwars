@@ -6,13 +6,11 @@ import {
   fade,
   iconButtonStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
-
+import dynamic from "next/dynamic";
 import CodewarsAPIService from "@/app/api/services/codewars";
-import DatabaseAPIService from "@/app/api/services/db";
 import DiamondsService from "@/app/services/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
-import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -25,6 +23,7 @@ import useCodewarsTableMutation from "../../../hooks/useCodewarsTableMutation";
 import usePaginationStore, {
   defaultPagination,
 } from "../../Pagination/usePaginationStore";
+const DiamondIcon = dynamic(() => import("@mui/icons-material/Diamond"));
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
