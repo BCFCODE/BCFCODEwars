@@ -104,18 +104,11 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   ]);
 
   useEffect(() => {
-    if (isCollected && collectedDiamondsCount) setIsDiamondIconDisabled(false);
-
-    // Reset counter to avoid duplicate dispatches on subsequent renders
-    // if (counter !== 0) {
-    collectButtonDispatch({ type: "RESET_COUNTER" });
-    // }
-  }, [
-    isCollected,
-    collectedDiamondsCount,
-    setIsDiamondIconDisabled,
-    collectButtonDispatch,
-  ]);
+    if (isCollected && collectedDiamondsCount) {
+      setIsDiamondIconDisabled(false);
+      collectButtonDispatch({ type: "RESET_COUNTER" });
+    }
+  }, [isCollected, collectedDiamondsCount]);
 
   useEffect(() => {
     if (success && !isIconDisabled) {
