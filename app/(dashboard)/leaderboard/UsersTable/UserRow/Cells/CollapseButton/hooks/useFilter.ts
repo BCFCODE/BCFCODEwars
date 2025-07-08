@@ -1,24 +1,21 @@
-import DatabaseAPIService from "@/app/api/services/db";
-import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
-import { useEffect, useMemo, useRef } from "react";
-import useCurrentUserMutation from "./useCurrentUserMutation";
+import { useMemo } from "react";
 
 export interface UseFilter {
-  activeFilter: string;
+  activeFilter: CodeChallengesFilter;
   both: CodewarsCompletedChallenge[];
   claimed: CodewarsCompletedChallenge[];
   unClaimed: CodewarsCompletedChallenge[];
 }
 
-const useFilter = (): UseFilter => {
-  const { currentUser } = useCurrentUserContext();
+interface Props {
+  list: CodewarsCompletedChallenge[];
+  activeFilter: CodeChallengesFilter;
+}
 
-  const activeFilter: CodeChallengesFilter =
-    currentUser.codewars.codeChallenges.challengeFilter;
-
-  const list = currentUser.codewars.codeChallenges.list;
+const useFilter = ({ activeFilter, list }: Props): UseFilter => {
+  // const { currentUser } = useCurrentUserContext();
 
   const both = list;
 
