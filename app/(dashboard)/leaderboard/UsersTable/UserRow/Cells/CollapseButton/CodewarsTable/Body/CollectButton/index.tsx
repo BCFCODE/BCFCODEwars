@@ -6,16 +6,14 @@ import {
   fade,
   iconButtonStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
-
+import dynamic from "next/dynamic";
 import CodewarsAPIService from "@/app/api/services/codewars";
-import DatabaseAPIService from "@/app/api/services/db";
 import DiamondsService from "@/app/services/diamonds";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
-import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useCollectButtonStore } from "./store/collectButton";
 import useCollectButtonState from "./useCollectButtonState";
 import { useCodewarsStore } from "@/app/store/codewars";
@@ -25,6 +23,7 @@ import useCodewarsTableMutation from "../../../hooks/useCodewarsTableMutation";
 import usePaginationStore, {
   defaultPagination,
 } from "../../Pagination/usePaginationStore";
+const DiamondIcon = dynamic(() => import("@mui/icons-material/Diamond"));
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
@@ -104,18 +103,11 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   ]);
 
   useEffect(() => {
-    if (isCollected && collectedDiamondsCount) setIsDiamondIconDisabled(false);
-
-    // Reset counter to avoid duplicate dispatches on subsequent renders
-    // if (counter !== 0) {
-    collectButtonDispatch({ type: "RESET_COUNTER" });
-    // }
-  }, [
-    isCollected,
-    collectedDiamondsCount,
-    setIsDiamondIconDisabled,
-    collectButtonDispatch,
-  ]);
+    if (isCollected && collectedDiamondsCount) {
+      setIsDiamondIconDisabled(false);
+      collectButtonDispatch({ type: "RESET_COUNTER" });
+    }
+  }, [isCollected, collectedDiamondsCount]);
 
   useEffect(() => {
     if (success && !isIconDisabled) {
@@ -160,6 +152,53 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     selectedChallenge,
   ]);
 
+  const handleCollectDiamonds = useCallback(async () => {
+    try {
+      setIsDiamondIconDisabled(true);
+      collectButtonDispatch({ type: "LOADING...", isLoading: true });
+
+      const response = await getSingleChallenge(
+        currentUser.codewars.username,
+        currentChallenge.id
+      );
+
+      if (response.success) {
+        const { data: selectedSingleChallenge } = response;
+        const { collectedDiamondsCount } = await collectDiamonds(
+          selectedSingleChallenge
+        );
+
+        collectButtonDispatch({
+          type: "SUCCESSFUL_RESPONSE",
+          collectedDiamondsCount,
+          success: true,
+        });
+
+        setSelectedChallenge({
+          ...currentChallenge,
+          rewardStatus: RewardStatus.ClaimedDiamonds,
+          moreDetails: selectedSingleChallenge,
+        });
+      } else {
+        throw new Error("Failed to fetch single challenge");
+      }
+    } catch (error) {
+      // console.error("Collect Diamonds failed:", error);
+      setIsDiamondIconDisabled(false);
+      collectButtonDispatch({ type: "LOADING...", isLoading: false });
+      collectButtonDispatch({
+        type: "!SUCCESSFUL_RESPONSE",
+        success: false,
+      });
+      collectButtonDispatch({ type: "RESET_COUNTER" });
+    }
+  }, [
+    currentUser.codewars.username,
+    currentChallenge.id,
+    collectButtonDispatch,
+    setSelectedChallenge,
+  ]);
+
   const isUserOnPersonalDashboard = session?.user?.email === currentUser.email;
 
   if (currentChallenge.rewardStatus === RewardStatus.ClaimedDiamonds)
@@ -186,47 +225,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
           <IconButton
             disabled={isIconDisabled || !isUserOnPersonalDashboard}
             sx={iconButtonStyles}
-            onClick={async () => {
-              try {
-                setIsDiamondIconDisabled(true);
-                collectButtonDispatch({ type: "LOADING...", isLoading: true });
-
-                const response = await getSingleChallenge(
-                  currentUser.codewars.username,
-                  currentChallenge.id
-                );
-
-                if (response.success) {
-                  const { data: selectedSingleChallenge } = response;
-                  const { collectedDiamondsCount } = await collectDiamonds(
-                    selectedSingleChallenge
-                  );
-
-                  collectButtonDispatch({
-                    type: "SUCCESSFUL_RESPONSE",
-                    collectedDiamondsCount,
-                    success: true,
-                  });
-
-                  setSelectedChallenge({
-                    ...currentChallenge,
-                    rewardStatus: RewardStatus.ClaimedDiamonds,
-                    moreDetails: selectedSingleChallenge,
-                  });
-                } else {
-                  throw new Error("Failed to fetch single challenge");
-                }
-              } catch (error) {
-                // console.error("Collect Diamonds failed:", error);
-                setIsDiamondIconDisabled(false);
-                collectButtonDispatch({ type: "LOADING...", isLoading: false });
-                collectButtonDispatch({
-                  type: "!SUCCESSFUL_RESPONSE",
-                  success: false,
-                });
-                collectButtonDispatch({ type: "RESET_COUNTER" });
-              }
-            }}
+            onClick={handleCollectDiamonds}
           >
             <DiamondIcon
               sx={isLoading || isError ? fade(isError) : diamondStyles}
