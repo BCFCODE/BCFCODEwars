@@ -21,7 +21,7 @@ import useCollectButtonState from "./useCollectButtonState";
 import { useCodewarsStore } from "@/app/store/codewars";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
-import useCurrentUserMutation from "../../../hooks/useCurrentUserMutation";
+import useCodewarsTableMutation from "../../../hooks/useCodewarsTableMutation";
 import usePaginationStore, {
   defaultPagination,
 } from "../../Pagination/usePaginationStore";
@@ -37,7 +37,7 @@ interface Props {
 
 const CollectDiamonds = ({ currentChallenge }: Props) => {
   const { currentUser } = useCurrentUserContext();
-  const { mutate: postCurrentUser } = useCurrentUserMutation({
+  const { mutate: postCurrentUser } = useCodewarsTableMutation({
     username: currentUser.codewars.username,
     apiPageNumber: usePaginationStore(
       (state) =>

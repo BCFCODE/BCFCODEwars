@@ -1,9 +1,6 @@
-import DatabaseAPIService from "@/app/api/services/db";
-import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CodeChallengesFilter, RewardStatus } from "@/types/diamonds";
-import { useEffect, useMemo, useRef } from "react";
-import useCurrentUserMutation from "./useCurrentUserMutation";
+import { useMemo } from "react";
 
 export interface UseFilter {
   activeFilter: CodeChallengesFilter;
