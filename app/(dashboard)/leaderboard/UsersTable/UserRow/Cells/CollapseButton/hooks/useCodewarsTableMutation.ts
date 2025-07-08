@@ -3,6 +3,7 @@ import { AuthenticatedUser } from "@/types/users";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import getQueryKey from "../CodewarsTable/Pagination/utils/getQueryKey";
 import { CompletedChallengesQueryData } from "../CodewarsTable/Pagination/usePaginationQuery";
+import usersQueryKeys from "@/ReactQuery/queryKeys/users";
 
 const { postCurrentUser } = new DatabaseAPIService();
 
@@ -22,8 +23,11 @@ const useCodewarsTableMutation = ({ username, apiPageNumber }: Props) => {
     onError: (error) => {
       console.error("Failed to post current user (useFilter):", error);
     },
-    onSuccess: () => {
+    onSuccess: (_data, currentUser) => {
       // queryClient.invalidateQueries({ queryKey });
+      queryClient.invalidateQueries({
+        queryKey: [usersQueryKeys.currentUser, currentUser.email],
+      });
     },
     onSettled: (_data, _error, currentUser) => {
       queryClient.setQueryData(queryKey, () => ({
