@@ -2,8 +2,11 @@ import { TableHead, TableRow, TableCell, Box, Typography } from "@mui/material";
 import React from "react";
 import { codewarsCellStyles } from "../styles";
 import OnlineUsers from "../../components/OnlineUsers";
+import useOnlineUsersQuery from "./hooks/useOnlineUsersQuery";
 
 const LeaderboardHeader = () => {
+  const { data } = useOnlineUsersQuery();
+  console.log(data)
   return (
     <TableHead>
       <TableRow>

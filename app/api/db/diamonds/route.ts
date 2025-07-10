@@ -1,5 +1,3 @@
-// app/api/db/diamonds/route.ts
-
 import DatabaseService from "@/app/services/db";
 import { Diamonds } from "@/types/diamonds";
 import { NextRequest, NextResponse } from "next/server";
@@ -10,18 +8,26 @@ export interface GetDiamondsResponse {
   error?: string;
 }
 
-const { getDiamonds } = new DatabaseService();
+const db = new DatabaseService();
 
 export async function GET(
-  request: NextRequest
+  req: NextRequest
 ): Promise<NextResponse<GetDiamondsResponse>> {
   try {
-    const data = await getDiamonds();
-    return NextResponse.json({ success: true, data }, { status: 200 });
-  } catch (error) {
-    console.error(error);
+    const diamonds = await db.getDiamonds();
+
     return NextResponse.json(
-      { success: false, error: "Unable to fetch diamonds from database." },
+      { success: true, data: diamonds },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("❌ [GET /api/db/diamonds] Error:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: "Unable to fetch diamonds from database.",
+      },
       { status: 500 }
     );
   }
