@@ -2,7 +2,7 @@ import { CurrentUserState } from "@/app/context/reducers/currentUser";
 import { CodewarsUser } from "./codewars";
 import { Diamonds } from "./diamonds";
 import { Session } from "next-auth";
-import { IdleSnapshotData } from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/Avatar/hooks/useIdleHistoryMutation";
+import { IdleSnapshotData } from "@/app/(dashboard)/leaderboard/UsersTable/hooks/useIdleHistoryMutation";
 
 export interface UserActivity extends IdleSnapshotData {
   firstLogin: Date;

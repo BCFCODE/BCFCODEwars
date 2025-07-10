@@ -1,9 +1,19 @@
+import usersQueryKeys from "@/ReactQuery/queryKeys/users";
+import { useQueryClient } from "@tanstack/react-query";
 import _ from "lodash";
 import { useEffect, useRef } from "react";
 import { useIdleTimer } from "react-idle-timer";
 import useIdleHistoryMutation from "./useIdleHistoryMutation";
+import { AuthenticatedUser } from "@/types/users";
 
-const useIdleHistory = (email: string): void => {
+interface Props {
+  name: string;
+  image: string;
+  email: string;
+}
+
+const useIdleHistory = ({ name, image, email }: Props): void => {
+  const queryClient = useQueryClient();
   const lastSentIdleState = useRef<boolean | null>(null);
   const totalActiveTimeMsRef = useRef<number>(0);
   const lastTabHiddenDurationRef = useRef<number>(0);
@@ -13,6 +23,30 @@ const useIdleHistory = (email: string): void => {
   const latestIdleState = useRef<boolean | null>(null);
 
   const { mutateAsync: mutateAsyncIdleHistory } = useIdleHistoryMutation();
+
+  const updateOnlineUsersCache = (isIdle: boolean) => {
+    queryClient.setQueryData(
+      [usersQueryKeys.onlineUsers],
+      (prev?: {
+        list: Pick<AuthenticatedUser, "name" | "image" | "email">[];
+        totalUsers: number;
+      }) => {
+        if (!prev) return prev;
+        // console.log("updateOnlineUsersCache", "isIdle", isIdle);
+        const updatedList = isIdle
+          ? prev?.list.filter((u) => u.email !== email)
+          : [{ name, image, email }, ...prev.list];
+
+        return {
+          ...prev,
+          list: updatedList,
+          totalUsers: isIdle
+            ? Math.max(0, prev.totalUsers - 1)
+            : prev.totalUsers + 1,
+        };
+      }
+    );
+  };
 
   const accumulateTotalActiveTime = () => {
     const currentActiveMs = getActiveTime();
@@ -111,11 +145,13 @@ const useIdleHistory = (email: string): void => {
       if (lastSentIdleState.current !== false) {
         sendIdleSnapshot(false); // ✅ Immediately notify backend
       }
+      updateOnlineUsersCache(false);
     },
 
     onIdle: () => {
       // console.log("🔴 User is idle");
       triggerIdleSnapshot(true);
+      updateOnlineUsersCache(true);
     },
   });
 

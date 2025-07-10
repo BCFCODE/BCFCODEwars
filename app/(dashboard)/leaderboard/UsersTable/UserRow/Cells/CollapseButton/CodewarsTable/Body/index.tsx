@@ -2,7 +2,7 @@ import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { CodeChallengesFilter } from "@/types/diamonds";
 import { TableBody } from "@mui/material";
 import SingleRow from "./SingleRow";
-import useFilter from "../../hooks/useFilter";
+import useFilter from "../../../../../hooks/useFilter";
 import usePaginationStore, {
   defaultPagination,
 } from "../Pagination/usePaginationStore";
