@@ -35,7 +35,8 @@ const useIdleHistory = ({ name, image, email }: Props): void => {
         // console.log("updateOnlineUsersCache", "isIdle", isIdle);
         const updatedList = isIdle
           ? prev?.list.filter((u) => u.email !== email)
-          : [{ name, image, email }, ...(prev?.list ?? [])];
+          : [{ name, image, email }, ...prev.list];
+
         return {
           ...prev,
           list: updatedList,
@@ -143,8 +144,8 @@ const useIdleHistory = ({ name, image, email }: Props): void => {
 
       if (lastSentIdleState.current !== false) {
         sendIdleSnapshot(false); // ✅ Immediately notify backend
-        updateOnlineUsersCache(false);
       }
+      updateOnlineUsersCache(false);
     },
 
     onIdle: () => {
