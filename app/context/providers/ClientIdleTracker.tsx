@@ -5,10 +5,12 @@ import { useSession } from "next-auth/react";
 
 const ClientIdleTracker = () => {
   const session = useSession().data;
-  const email = session?.user?.email;
+  const name = session?.user?.name ?? "";
+  const email = session?.user?.email ?? "";
+  const image = session?.user?.image ?? "";
 
-  if (email) {
-    useIdleHistory(email);
+  if (session) {
+    useIdleHistory({ name, email, image });
   }
 
   return null;

@@ -1,12 +1,14 @@
-import { TableHead, TableRow, TableCell, Box, Typography } from "@mui/material";
-import React from "react";
-import { codewarsCellStyles } from "../styles";
+import { Box, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import OnlineUsers from "../../components/OnlineUsers";
+import { codewarsCellStyles } from "../styles";
 import useOnlineUsersQuery from "./hooks/useOnlineUsersQuery";
 
 const LeaderboardHeader = () => {
-  const { data, isLoading } = useOnlineUsersQuery();
-  console.log('>>>>>>>>>>', data, isLoading)
+  const { data } = useOnlineUsersQuery();
+
+  // Optimization is necessary, too many renders...
+  // console.log(">>>>>>>>>>", data, isLoading);
+
   return (
     <TableHead>
       <TableRow>
@@ -20,8 +22,15 @@ const LeaderboardHeader = () => {
               gap: 5,
             }}
           >
-            <Typography>Users</Typography>
-            <OnlineUsers totalUsers={data?.totalUsers ?? 0} />
+            <Typography>
+              {data?.list?.length ? `Online users:` : `Users`}
+            </Typography>
+
+            <OnlineUsers
+              sx={{ marginLeft: -3 }}
+              list={data?.list ?? []}
+              totalUsers={data?.list?.length ?? 0}
+            />
           </Box>
         </TableCell>
         <TableCell sx={codewarsCellStyles} align="right">
