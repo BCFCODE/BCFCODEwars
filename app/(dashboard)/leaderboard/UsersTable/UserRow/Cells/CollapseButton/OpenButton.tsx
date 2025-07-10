@@ -1,7 +1,7 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { IconButton } from "@mui/material";
-import useHandleOpen from "./hooks/useHandleOpen";
+import useHandleOpen from "../../../hooks/useHandleOpen";
 import { useUsersStore } from "@/app/store/users";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 

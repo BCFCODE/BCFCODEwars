@@ -3,7 +3,7 @@ import { baseURL } from "@/utils/constants";
 import { GetUsersResponse } from "../db/users/route";
 import { CodewarsUser } from "@/types/codewars";
 import { PaginationQuery } from "@/app/services/db";
-import { IdleSnapshotData } from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/Avatar/hooks/useIdleHistoryMutation";
+import { IdleSnapshotData } from "@/app/(dashboard)/leaderboard/UsersTable/hooks/useIdleHistoryMutation";
 
 export interface ConnectToCodewarsResponse {
   success: boolean;
@@ -83,6 +83,8 @@ class DatabaseAPIService {
       return { success: false, message: "Network error or server error." };
     }
   };
+
+  getOnlineUsers = async () => {};
 
   getUsers = async ({
     skip,

@@ -1,6 +1,6 @@
 "use client";
 
-import useIdleHistory from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/Avatar/hooks/useIdleHistory";
+import useIdleHistory from "@/app/(dashboard)/leaderboard/UsersTable/hooks/useIdleHistory";
 import { useSession } from "next-auth/react";
 
 const ClientIdleTracker = () => {

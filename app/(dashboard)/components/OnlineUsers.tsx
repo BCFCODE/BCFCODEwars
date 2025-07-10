@@ -2,17 +2,21 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import { SxProps } from "@mui/material";
+import usePaginationQuery from "../leaderboard/UsersTable/Pagination/usePaginationQuery";
 
 interface Props {
   sx?: SxProps;
+  totalUsers: number;
 }
 
-export default function OnlineUsers({ sx }: Props) {
+export default function OnlineUsers({ sx, totalUsers  }: Props) {
   return (
     <AvatarGroup
       sx={sx}
-      renderSurplus={(surplus) => <span>+{surplus.toString()[0]}k</span>}
-      total={26}
+      renderSurplus={(surplus) =>
+        surplus > 1000 ? <span>+{surplus.toString()[0]}k</span> : surplus
+      }
+      total={totalUsers}
     >
       <Avatar
         alt="Remy Sharp"

@@ -12,9 +12,9 @@
 import DatabaseAPIService from "@/app/api/services/db";
 import { AuthenticatedUser } from "@/types/users";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import getQueryKey from "../CodewarsTable/Pagination/utils/getQueryKey";
-import { CompletedChallengesQueryData } from "../CodewarsTable/Pagination/usePaginationQuery";
 import usersQueryKeys from "@/ReactQuery/queryKeys/users";
+import { CompletedChallengesQueryData } from "../UserRow/Cells/CollapseButton/CodewarsTable/Pagination/usePaginationQuery";
+import getQueryKey from "../UserRow/Cells/CollapseButton/CodewarsTable/Pagination/utils/getQueryKey";
 
 const { postCurrentUser } = new DatabaseAPIService();
 

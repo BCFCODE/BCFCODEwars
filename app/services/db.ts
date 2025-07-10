@@ -70,6 +70,32 @@ class DatabaseService {
     return { users, diamonds, codewars };
   };
 
+  getOnlineUsers = async (
+    limit = 4
+  ): Promise<{
+    list: Pick<AuthenticatedUser, "name" | "image" | "email">[];
+    totalUsers: number;
+  }> => {
+    const { users } = await this.getCollections();
+    const totalUsers = await users.estimatedDocumentCount();
+
+    const list = (await users
+      .find({
+        "activity.isIdle": false,
+      })
+      .sort({ "activity.lastActiveTime": -1 })
+      .limit(limit)
+      .project({
+        name: 1,
+        image: 1,
+        email: 1,
+        _id: 0,
+      })
+      .toArray()) as Pick<AuthenticatedUser, "name" | "image" | "email">[];
+
+    return { list, totalUsers };
+  };
+
   getUsers = async ({
     skip,
     limit,

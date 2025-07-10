@@ -19,10 +19,10 @@ import useCollectButtonState from "./useCollectButtonState";
 import { useCodewarsStore } from "@/app/store/codewars";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import useCurrentUserDispatchContext from "@/app/context/hooks/useCurrentUserDispatchContext";
-import useCodewarsTableMutation from "../../../hooks/useCodewarsTableMutation";
 import usePaginationStore, {
   defaultPagination,
 } from "../../Pagination/usePaginationStore";
+import useCodewarsTableMutation from "@/app/(dashboard)/leaderboard/UsersTable/hooks/useCodewarsTableMutation";
 const DiamondIcon = dynamic(() => import("@mui/icons-material/Diamond"));
 
 const { calculateCodewarsDiamondsCount } = new DiamondsService();

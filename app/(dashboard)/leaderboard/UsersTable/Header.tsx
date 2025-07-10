@@ -18,7 +18,7 @@ const LeaderboardHeader = () => {
             }}
           >
             <Typography>Users</Typography>
-            <OnlineUsers />
+            <OnlineUsers totalUsers={10} />
           </Box>
         </TableCell>
         <TableCell sx={codewarsCellStyles} align="right">
