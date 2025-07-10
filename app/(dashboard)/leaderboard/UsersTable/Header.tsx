@@ -22,10 +22,10 @@ const LeaderboardHeader = () => {
           </Box>
         </TableCell>
         <TableCell sx={codewarsCellStyles} align="right">
-          Member Since
+          Last Activity
         </TableCell>
-        <TableCell sx={codewarsCellStyles} align="right">
-          Last Login
+        <TableCell sx={codewarsCellStyles} align="left">
+          Since
         </TableCell>
         <TableCell sx={codewarsCellStyles} align="right">
           Diamonds

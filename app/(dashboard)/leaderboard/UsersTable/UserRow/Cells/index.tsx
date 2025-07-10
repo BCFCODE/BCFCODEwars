@@ -2,7 +2,7 @@ import { TableRow } from "@mui/material";
 import AvatarCell from "./Avatar";
 import ButtonCell from "./ButtonCell";
 import DiamondsCell from "./DiamondsCell";
-import LastLoginCell from "./LastLoginCell";
+import LastActivityCell from "./LastActivityCell";
 import MemberSinceCell from "./MemberSinceCell";
 import RankCell from "./RankCell";
 
@@ -11,8 +11,8 @@ const User = () => {
     <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
       <ButtonCell />
       <AvatarCell />
+      <LastActivityCell />
       <MemberSinceCell />
-      <LastLoginCell />
       <DiamondsCell />
       <RankCell />
     </TableRow>
