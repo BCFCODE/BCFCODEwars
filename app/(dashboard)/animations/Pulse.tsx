@@ -44,12 +44,20 @@ const Content = styled(Box)({
 interface PulseAnimationProps extends BoxProps {
   children: ReactNode;
   pulseColor?: string; // optional override
+  disabled?: boolean;
 }
 
-export default function PulseAnimation({ children, pulseColor, ...rest }: PulseAnimationProps) {
+export default function PulseAnimation({
+  children,
+  disabled,
+  pulseColor,
+  ...rest
+}: PulseAnimationProps) {
   return (
     <Wrapper {...rest}>
-      <PulseEffect sx={pulseColor ? { backgroundColor: pulseColor } : {}} />
+      {disabled && (
+        <PulseEffect sx={pulseColor ? { backgroundColor: pulseColor } : {}} />
+      )}
       <Content>{children}</Content>
     </Wrapper>
   );
