@@ -5,8 +5,8 @@ import OnlineUsers from "../../components/OnlineUsers";
 import useOnlineUsersQuery from "./hooks/useOnlineUsersQuery";
 
 const LeaderboardHeader = () => {
-  const { data } = useOnlineUsersQuery();
-  console.log(data)
+  const { data, isLoading } = useOnlineUsersQuery();
+  console.log('>>>>>>>>>>', data, isLoading)
   return (
     <TableHead>
       <TableRow>
@@ -21,7 +21,7 @@ const LeaderboardHeader = () => {
             }}
           >
             <Typography>Users</Typography>
-            <OnlineUsers totalUsers={10} />
+            <OnlineUsers totalUsers={data?.totalUsers ?? 0} />
           </Box>
         </TableCell>
         <TableCell sx={codewarsCellStyles} align="right">

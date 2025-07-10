@@ -5,7 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { AuthenticatedUser } from "@/types/users";
 
 export interface GetOnlineUsersResponse {
-  data?: Pick<AuthenticatedUser, "name" | "image" | "email">[];
+  list?: Pick<AuthenticatedUser, "name" | "image" | "email">[];
+  totalUsers?: number;
   success: boolean;
   error?: string;
 }
@@ -16,9 +17,12 @@ export async function GET(
   req: NextRequest
 ): Promise<NextResponse<GetOnlineUsersResponse>> {
   try {
-    const { list } = await db.getOnlineUsers();
+    const { list, totalUsers} = await db.getOnlineUsers();
 
-    return NextResponse.json({ success: true, data: list }, { status: 200 });
+    return NextResponse.json(
+      { success: true, list, totalUsers },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("❌ [GET /api/db/online-users] Error:", error);
 

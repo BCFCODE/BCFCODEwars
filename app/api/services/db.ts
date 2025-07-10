@@ -4,6 +4,7 @@ import { GetUsersResponse } from "../db/users/route";
 import { CodewarsUser } from "@/types/codewars";
 import { PaginationQuery } from "@/app/services/db";
 import { IdleSnapshotData } from "@/app/(dashboard)/leaderboard/UsersTable/hooks/useIdleHistoryMutation";
+import { GetOnlineUsersResponse } from "../db/onlineUsers/route";
 
 export interface ConnectToCodewarsResponse {
   success: boolean;
@@ -84,7 +85,34 @@ class DatabaseAPIService {
     }
   };
 
-  getOnlineUsers = async () => {};
+  getOnlineUsers = async (): Promise<GetOnlineUsersResponse> => {
+    try {
+      const response = await fetch(`${this.endpoint}/onlineUsers`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store", // prevent stale data from being cached
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        return {
+          success: false,
+          error: `Failed to fetch online users: ${response.status} ${errorText}`,
+        };
+      }
+
+      const { success, list, totalUsers } =
+        await this.handleResponse<GetOnlineUsersResponse>(response);
+
+      return { success, list, totalUsers };
+    } catch (error) {
+      console.error("❌ getOnlineUsers error:", error);
+      return {
+        success: false,
+        error: "Unexpected error occurred while fetching online users.",
+      };
+    }
+  };
 
   getUsers = async ({
     skip,
