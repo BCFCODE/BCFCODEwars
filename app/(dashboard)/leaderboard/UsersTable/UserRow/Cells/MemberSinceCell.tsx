@@ -9,7 +9,7 @@ const MemberSinceCell = () => {
   } = useCurrentUserContext();
 
   return (
-    <TableCell sx={codewarsCellStyles} align="right">
+    <TableCell sx={codewarsCellStyles} align="left">
       {new Date(firstLogin).toLocaleDateString()}
     </TableCell>
   );
