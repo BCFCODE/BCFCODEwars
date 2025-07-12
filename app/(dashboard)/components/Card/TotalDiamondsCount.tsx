@@ -3,6 +3,7 @@
 import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
 import { Box } from "@mui/system";
 import React from "react";
+import { formatNumberK } from "../utils/formatNumberK";
 
 interface Props {
   email: string;
@@ -21,9 +22,7 @@ const TotalDiamondsCount = ({ email }: Props) => {
         fontWeight: "medium",
       }}
     >
-      {totalDiamonds > 0
-        ? `${(totalDiamonds / 1000).toFixed(2)} K`
-        : totalDiamonds}
+      {formatNumberK(totalDiamonds)}
     </Box>
   );
 };
