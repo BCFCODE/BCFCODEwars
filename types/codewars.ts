@@ -1,6 +1,5 @@
 import { CodewarsUser } from "@/app/api/db/codewars/connect/schema";
 import { CodeChallengesFilter, RewardStatus } from "./diamonds";
-import { UserRole } from "./users";
 
 // types/codewars.ts
 interface OverallRanks {

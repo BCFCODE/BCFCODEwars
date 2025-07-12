@@ -3,6 +3,7 @@
 import { Box, SxProps } from "@mui/system";
 import { PieChart } from "@mui/x-charts/PieChart";
 import DiamondIcon from "@mui/icons-material/Diamond";
+import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
 
 const KYU_COLORS = [
   "#F2F2F2", // 8 kyū
@@ -15,20 +16,18 @@ const KYU_COLORS = [
   "#243B55", // 1 kyū
 ];
 
-const kyuData = KYU_COLORS.map((color, i) => ({
-  id: `${8 - i}k`,
-  label: `${8 - i} kyū`,
-  value: i === 0 ? 5 : 20,
-  color,
-}));
-
 interface Props {
+  email?: string;
   sx?: SxProps;
   size?: number;
 }
 
-export default function DiamondsPieChart({ sx, size = 100 }: Props) {
+export default function DiamondsPieChart({ sx, email, size = 100 }: Props) {
+  // Too many renders, optimize it
+  const { data } = useCurrentUserQuery(email ?? "");
   const radius = size / 2 - 5; // padding 5px
+
+  const ranks = Object.values(data?.diamonds.totals.codewars.ranks ?? {});
 
   return (
     <Box sx={{ position: "relative" }}>
@@ -44,7 +43,12 @@ export default function DiamondsPieChart({ sx, size = 100 }: Props) {
         hideLegend
         series={[
           {
-            data: kyuData,
+            data: KYU_COLORS.map((color, i) => ({
+              id: `${8 - i}k`,
+              label: `${8 - i} kyū`,
+              value: ranks[ranks.length - i],
+              color,
+            })),
             innerRadius: radius * 0.5,
             outerRadius: radius,
             paddingAngle: 2,
@@ -64,11 +68,9 @@ export default function DiamondsPieChart({ sx, size = 100 }: Props) {
           fontSize: size * 0.32,
           top: "50%",
           left: "50%",
-          transform: "translate(-35%, -55%)",
+          transform: "translate(-34%, -55%)",
           color: "#FFD700", // classic gold color
           filter: "drop-shadow(0 0 4px #FFC107)", // subtle glowing effect
-          // filter: "drop-shadow(0 0 4px black)",
-          // color: "#FFB74D", // brand colour or theme.palette.warning.main
           pointerEvents: "none", // icon won’t steal hover/touch
         }}
       />
