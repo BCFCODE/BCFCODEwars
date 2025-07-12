@@ -3,7 +3,6 @@ import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import useGaugeData from "../../hooks/useGaugeData";
 import useGaugeStyles from "../../hooks/useGaugeDimensions";
 
-
 const getColorKey = (
   percent: number
 ): "error" | "warning" | "info" | "success" => {
@@ -60,6 +59,7 @@ const SingleGauge = ({ index }: Props) => {
           sx={(theme) => ({
             // backgroundColor: "gray",
             // maxHeight: 300,
+            transition: 'margin 1s ease',
             pointerEvents: "none",
             [`& .${gaugeClasses.valueText}`]: gaugeInnerTextSX,
             [`& .${gaugeClasses.valueArc}`]: {
@@ -67,6 +67,30 @@ const SingleGauge = ({ index }: Props) => {
                 didLaterPeriodMeetTarget || percent >= 100
                   ? `#76FF03`
                   : theme.palette[colorKey].main,
+            },
+            [`@media (min-width: ${200}px)`]: {
+              marginTop: index > 1 ? -10 : "initial",
+            },
+            [`@media (min-width: ${260}px)`]: {
+              marginTop: index > 1 ? -9 : "initial",
+            },
+            [`@media (min-width: ${320}px)`]: {
+              marginTop: index > 1 ? -8 : "initial",
+            },
+            [`@media (min-width: ${360}px)`]: {
+              marginTop: index > 1 ? -7 : "initial",
+            },
+            [`@media (min-width: ${420}px)`]: {
+              marginTop: index > 1 ? -6 : "initial",
+            },
+            [`@media (min-width: ${500}px)`]: {
+              marginTop: index > 1 ? -4 : "initial",
+            },
+            [`@media (min-width: ${620}px)`]: {
+              marginTop: index > 1 ? -2 : "initial",
+            },
+            [`@media (min-width: ${740}px)`]: {
+              marginTop:"initial",
             },
             // [`& .${gaugeClasses.referenceArc}`]: {
             //   fill: theme.palette.text.disabled,

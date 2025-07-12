@@ -9,7 +9,7 @@ export default async function DashboardPage() {
   const session = await auth();
 
   return (
-    <Box >
+    <Box>
       <Welcome
         {...{
           pageName: "Dashboard",
@@ -20,7 +20,6 @@ export default async function DashboardPage() {
           },
         }}
       >
-
         <DashboardStats />
         <Box sx={{ display: "flex", gap: 2 }}>
           <DashboardCard
@@ -54,7 +53,6 @@ export default async function DashboardPage() {
             }}
           />
         </Box>
-        
       </Welcome>
     </Box>
   );

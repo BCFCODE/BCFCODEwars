@@ -9,16 +9,10 @@ export type SizePerBreakpoint = Record<Breakpoint, string>;
 
 export interface GaugeContextValue {
   email: string;
-  // index: number;
-  // type: GaugeTypes;
   gaugeStyles: {
     columnsPerBreakpoint: ColumnsPerBreakpoint;
     gaugeInnerTextSX: SxProps;
     gaugeFooterTextSX: SxProps;
-    // fontSize: {
-    //   gaugeValue: SizePerBreakpoint;
-    //   gaugeFooter: SizePerBreakpoint;
-    // };
   };
 }
 
