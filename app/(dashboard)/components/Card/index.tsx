@@ -4,6 +4,7 @@ import { SxProps } from "@mui/system";
 import Box from "@mui/system/Box";
 import DiamondsPieChart from "./DiamondsPieChart";
 import TotalDiamondsCount from "./TotalDiamondsCount";
+import PercentVsLastWeek from "./PercentVsLastWeek";
 
 interface Props {
   email: string;
@@ -12,7 +13,6 @@ interface Props {
 }
 
 export default function DashboardCard({ sx, email, label }: Props) {
-  // const { data } = useCurrentUserQuery(email); how to access this in this server component ?
 
   return (
     <Box sx={{ ...sx, display: "flex" }}>
@@ -21,30 +21,7 @@ export default function DashboardCard({ sx, email, label }: Props) {
 
         <TotalDiamondsCount email={email} />
 
-        <Box
-          component={TrendingUpIcon}
-          sx={{ color: "success.dark", fontSize: "1rem", verticalAlign: "sub" }}
-        />
-        <Box
-          sx={{
-            display: "inline",
-            fontSize: "0.875rem",
-            fontWeight: "bold",
-            color: "success.dark",
-            mx: 0.5,
-          }}
-        >
-          18.7%
-        </Box>
-        <Box
-          sx={{
-            color: "text.secondary",
-            display: "inline",
-            fontSize: "0.875rem",
-          }}
-        >
-          vs. last week
-        </Box>
+        <PercentVsLastWeek email={email}/>
       </Box>
       <DiamondsPieChart email={email} />
     </Box>

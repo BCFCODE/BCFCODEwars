@@ -1,10 +1,15 @@
 import { CodewarsCompletedChallenge } from "@/types/codewars";
-import dayjs from "dayjs";
+import { CodewarsDiamondsRecord } from "@/types/diamonds";
+import dayjs, { Dayjs } from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import updateLocale from "dayjs/plugin/updateLocale";
+import utc from "dayjs/plugin/utc";
+import isBetween from "dayjs/plugin/isBetween";
 
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocale);
+dayjs.extend(utc);
+dayjs.extend(isBetween);
 
 dayjs.updateLocale("en", {
   relativeTime: {
@@ -87,6 +92,68 @@ export function sortByCompletedAtDesc(
   return [...challenges].sort((a, b) =>
     dayjs(b.completedAt).diff(dayjs(a.completedAt))
   );
+}
+
+/**
+ * Sums `diamondsEarned` for challenges completed strictly between `start`
+ * (inclusive) and `end` (exclusive).
+ */
+export function sumDiamondsInRange(
+  challenges: CodewarsDiamondsRecord[],
+  start: Dayjs,
+  end: Dayjs
+): number {
+  return challenges.reduce((sum, ch) => {
+    const d = dayjs(ch.completedAt);
+    return d.isBetween(start, end, undefined, "[)") // inclusive start, exclusive end
+      ? sum + ch.diamondsEarned
+      : sum;
+  }, 0);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Week‑over‑week analytics                                          */
+/* ------------------------------------------------------------------ */
+
+export interface WeekDiamondsStats {
+  /** Diamonds earned in the last 7 days (inclusive of today) */
+  thisWeek: number;
+  /** Diamonds earned in the 7 days before that */
+  prevWeek: number;
+  /** Growth percentage vs previous week (positive = up) */
+  growthPct: number; //  e.g. 18.7  means +18.7 %
+}
+
+/**
+ * Calculates week‑over‑week diamond growth.
+ *
+ * - “This week” = today minus 0‑7 days (inclusive start of 7 days ago,
+ *   exclusive tomorrow).
+ * - “Previous week” = 7‑14 days ago.
+ * - If `prevWeek` is 0, growthPct is 0 (avoids divide‑by‑zero).
+ *
+ * @param challenges Array of CodewarsCompletedChallenge
+ * @returns {WeekDiamondsStats}
+ *
+ * @example
+ * const stats = calcWeeklyDiamondGrowth(challenges);
+ * console.log(`${stats.growthPct.toFixed(1)} % vs last week`);
+ */
+export function calcWeeklyDiamondGrowth(
+  challenges: CodewarsDiamondsRecord[]
+): WeekDiamondsStats {
+  const todayEnd = dayjs().utc().endOf("day"); // exclusive upper bound
+  const thisWeekStart = dayAgo(7); // inclusive lower bound
+  const prevWeekStart = dayAgo(14);
+  const prevWeekEnd = thisWeekStart; // exclusive
+
+  const thisWeek = sumDiamondsInRange(challenges, thisWeekStart, todayEnd);
+
+  const prevWeek = sumDiamondsInRange(challenges, prevWeekStart, prevWeekEnd);
+
+  const growthPct = prevWeek > 0 ? ((thisWeek - prevWeek) / prevWeek) * 100 : 0;
+
+  return { thisWeek, prevWeek, growthPct };
 }
 
 /**

@@ -12,7 +12,7 @@ interface Props {
 const TotalDiamondsCount = ({ email }: Props) => {
   const { data } = useCurrentUserQuery(email ?? "");
 
-  const totalDiamonds = data?.diamonds.totals.codewars.total ?? 0;
+  const totalCodewarsDiamonds = data?.diamonds.totals.codewars.total ?? 0;
 
   return (
     <Box
@@ -22,7 +22,7 @@ const TotalDiamondsCount = ({ email }: Props) => {
         fontWeight: "medium",
       }}
     >
-      {formatNumberK(totalDiamonds)}
+      {formatNumberK(totalCodewarsDiamonds)}
     </Box>
   );
 };
