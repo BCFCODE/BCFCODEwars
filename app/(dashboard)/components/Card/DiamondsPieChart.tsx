@@ -16,7 +16,7 @@ export default function DiamondsPieChart({ sx, ranks, size = 100 }: Props) {
   const radius = size / 2 - 5; // padding 5px
 
   if (ranks.every((rank) => rank === 0)) return null;
-
+  // console.log(ranks);
   return (
     <Box sx={{ position: "relative" }}>
       <PieChart
@@ -34,7 +34,7 @@ export default function DiamondsPieChart({ sx, ranks, size = 100 }: Props) {
             data: KYU_COLORS.map((color, i) => ({
               id: `${8 - i}k`,
               label: `${8 - i} kyū`,
-              value: ranks[ranks.length - i],
+              value: ranks[7 - i],
               color,
             })),
             innerRadius: radius * 0.5,
