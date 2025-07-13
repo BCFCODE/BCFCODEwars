@@ -18,7 +18,6 @@ const CodewarsStats = ({ email, gaugeStyles }: GaugeContextValue) => (
     <GaugeProvider context={{ email, gaugeStyles }}>
       <Box
         sx={{
-          // backgroundColor: "gray",
           display: "flex",
           flexDirection: "column",
           gap: 3,

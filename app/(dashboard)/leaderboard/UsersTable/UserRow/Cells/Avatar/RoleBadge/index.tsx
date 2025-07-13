@@ -1,4 +1,5 @@
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
+import { royalGold } from "@/theme";
 import { UserRole } from "@/types/users";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Tooltip } from "@mui/material";
@@ -16,8 +17,8 @@ const RoleBadge = () => {
           // fontSize="small"
           sx={{
             position: "absolute",
-            color: "#FFD700", // classic gold color
-            filter: "drop-shadow(0 0 4px #FFC107)", // subtle glowing effect
+            color: royalGold, // classic gold color
+            filter: `drop-shadow(0 0 4px ${royalGold})`, // subtle glowing effect
             top: 1,
             right: 0,
             zIndex: 2,
