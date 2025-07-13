@@ -19,7 +19,7 @@ export default function DashboardCard({ sx, email, label }: Props) {
   const { data, isLoading } = useCurrentUserQuery(email);
 
   if(isLoading) return null
-  console.log(data?.diamonds.totals.codewars.ranks)
+  // console.log(data?.diamonds.totals.codewars.ranks)
   const ranks = Object.values(
     (data?.diamonds.totals.codewars.ranks as CodewarsRanks) ?? {}
   );
