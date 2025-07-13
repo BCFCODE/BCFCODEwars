@@ -18,7 +18,7 @@ const RoleBadge = () => {
           sx={{
             position: "absolute",
             color: royalGold, // classic gold color
-            filter: `drop-shadow(0 0 4px ${royalGold})`, // subtle glowing effect
+            filter: "drop-shadow(0 0 4px #FFD700)", // royalGold color
             top: 1,
             right: 0,
             zIndex: 2,

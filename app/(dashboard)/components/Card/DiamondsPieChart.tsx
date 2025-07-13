@@ -58,7 +58,7 @@ export default function DiamondsPieChart({ sx, ranks, size = 100 }: Props) {
           left: "50%",
           transform: "translate(-34%, -55%)",
           color: royalGold, // classic gold color
-          filter: `drop-shadow(0 0 4px ${royalGold})`, // subtle glowing effect
+          filter: "drop-shadow(0 0 4px #FFD700)", // royalGold color
           pointerEvents: "none", // icon won’t steal hover/touch
         }}
       />
