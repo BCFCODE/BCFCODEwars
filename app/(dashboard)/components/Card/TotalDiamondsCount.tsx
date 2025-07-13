@@ -16,6 +16,7 @@ const TotalDiamondsCount = ({ email }: Props) => {
 
   return (
     <Box
+      key={totalCodewarsDiamonds}
       sx={{
         color: "text.primary",
         fontSize: "2.125rem",

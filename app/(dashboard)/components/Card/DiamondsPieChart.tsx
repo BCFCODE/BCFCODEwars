@@ -4,17 +4,7 @@ import { Box, SxProps } from "@mui/system";
 import { PieChart } from "@mui/x-charts/PieChart";
 import DiamondIcon from "@mui/icons-material/Diamond";
 import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
-
-const KYU_COLORS = [
-  "#F2F2F2", // 8 kyū
-  "#FFE066", // 7 kyū
-  "#FFB74D", // 6 kyū
-  "#FF7043", // 5 kyū
-  "#D95F8A", // 4 kyū
-  "#8D5FBF", // 3 kyū
-  "#4A7BD0", // 2 kyū
-  "#243B55", // 1 kyū
-];
+import { KYU_COLORS, royalGold } from "@/theme";
 
 interface Props {
   email?: string;
@@ -69,7 +59,7 @@ export default function DiamondsPieChart({ sx, email, size = 100 }: Props) {
           top: "50%",
           left: "50%",
           transform: "translate(-34%, -55%)",
-          color: "#FFD700", // classic gold color
+          color: royalGold, // classic gold color
           filter: "drop-shadow(0 0 4px #FFC107)", // subtle glowing effect
           pointerEvents: "none", // icon won’t steal hover/touch
         }}

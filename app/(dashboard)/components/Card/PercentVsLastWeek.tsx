@@ -18,7 +18,9 @@ const PercentVsLastWeek = ({ email }: Props) => {
 
   if (!data) return null;
 
-  const { growthPct } = calcWeeklyDiamondGrowth(data.diamonds.codewars ?? []);
+  const { thisWeek, growthPct } = calcWeeklyDiamondGrowth(
+    data.diamonds.codewars ?? []
+  );
   const isUp = growthPct >= 0;
   const color = isUp ? "success.dark" : "error.main";
   const Icon = isUp ? TrendingUpIcon : TrendingDownIcon;
@@ -30,6 +32,7 @@ const PercentVsLastWeek = ({ email }: Props) => {
         sx={{ color, fontSize: "1rem", verticalAlign: "sub" }}
       />
       <Box
+        key={thisWeek}
         sx={{
           display: "inline",
           fontSize: "0.875rem",
@@ -38,7 +41,7 @@ const PercentVsLastWeek = ({ email }: Props) => {
           mx: 0.5,
         }}
       >
-        {growthPct.toFixed(1)} %
+        {growthPct.toFixed(1)}%
       </Box>
       <Box
         sx={{

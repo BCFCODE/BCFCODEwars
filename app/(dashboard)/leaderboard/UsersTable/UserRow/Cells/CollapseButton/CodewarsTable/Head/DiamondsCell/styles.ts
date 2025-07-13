@@ -1,9 +1,8 @@
 import {
-  diamondCollectedColor,
-  diamondNotCollectedColor,
   diamondStyles,
   textStyles,
 } from "@/app/(dashboard)/leaderboard/styles";
+import { diamondCollectedColor, diamondNotCollectedColor } from "@/theme";
 import {
   styled,
   SxProps,

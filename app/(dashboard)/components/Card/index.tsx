@@ -1,10 +1,9 @@
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import Box from "@mui/system/Box";
 import DiamondsPieChart from "./DiamondsPieChart";
-import TotalDiamondsCount from "./TotalDiamondsCount";
 import PercentVsLastWeek from "./PercentVsLastWeek";
+import TotalDiamondsCount from "./TotalDiamondsCount";
 
 interface Props {
   email: string;

@@ -1,7 +1,9 @@
+import {
+  diamondCollectedColor,
+  diamondNotCollectedColor,
+  amberLegacy,
+} from "@/theme";
 import { SxProps } from "@mui/material";
-
-export const diamondCollectedColor = "customPalette.roseGold";
-export const diamondNotCollectedColor = "primary.main";
 
 export const diamondStyles: SxProps = {
   marginTop: 0.4,
@@ -10,7 +12,7 @@ export const diamondStyles: SxProps = {
 
 export const fade = (error: boolean): SxProps => ({
   ...diamondStyles,
-  color: error ? "customPalette.goldOchre" : "initial",
+  color: error ? amberLegacy : "initial",
   animation: `fade 700ms infinite`,
   "@keyframes fade": {
     "0%": { opacity: 1 },
