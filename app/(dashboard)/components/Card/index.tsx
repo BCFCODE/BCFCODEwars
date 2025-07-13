@@ -1,9 +1,13 @@
+"use client";
+
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import Box from "@mui/system/Box";
 import DiamondsPieChart from "./DiamondsPieChart";
 import PercentVsLastWeek from "./PercentVsLastWeek";
 import TotalDiamondsCount from "./TotalDiamondsCount";
+import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
+import { CodewarsRanks } from "@/types/diamonds";
 
 interface Props {
   email: string;
@@ -12,17 +16,29 @@ interface Props {
 }
 
 export default function DashboardCard({ sx, email, label }: Props) {
+  const { data, isLoading } = useCurrentUserQuery(email);
+
+  if(isLoading) return null
+  
+  const ranks = Object.values(
+    (data?.diamonds.totals.codewars.ranks as CodewarsRanks) ?? {}
+  );
+
 
   return (
     <Box sx={{ ...sx, display: "flex" }}>
       <Box>
         <Typography sx={{ color: "text.secondary" }}>{label}</Typography>
 
-        <TotalDiamondsCount email={email} />
+        <TotalDiamondsCount
+          totalCodewarsDiamonds={data?.diamonds.totals.codewars.total ?? 0}
+        />
 
-        <PercentVsLastWeek email={email}/>
+        <PercentVsLastWeek
+          codewarsDiamondsRecord={data?.diamonds.codewars ?? []}
+        />
       </Box>
-      <DiamondsPieChart email={email} />
+      <DiamondsPieChart ranks={ranks} />
     </Box>
   );
 }

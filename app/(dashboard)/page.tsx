@@ -37,7 +37,7 @@ export default async function DashboardPage() {
                 }}
               />
             </Grid>
-            <Grid size={{ xs: 24, md: 8 }}>
+          {/*   <Grid size={{ xs: 24, md: 8 }}>
               <Card
                 label="Position"
                 sx={{
@@ -62,7 +62,7 @@ export default async function DashboardPage() {
                   borderRadius: 2,
                 }}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
       </Welcome>

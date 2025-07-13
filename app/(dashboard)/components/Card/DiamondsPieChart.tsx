@@ -1,23 +1,21 @@
 "use client";
 
+import { KYU_COLORS, royalGold } from "@/theme";
+import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, SxProps } from "@mui/system";
 import { PieChart } from "@mui/x-charts/PieChart";
-import DiamondIcon from "@mui/icons-material/Diamond";
-import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
-import { KYU_COLORS, royalGold } from "@/theme";
 
 interface Props {
-  email?: string;
   sx?: SxProps;
   size?: number;
+  ranks: number[];
 }
 
-export default function DiamondsPieChart({ sx, email, size = 100 }: Props) {
+export default function DiamondsPieChart({ sx, ranks, size = 100 }: Props) {
   // Too many renders, optimize it
-  const { data } = useCurrentUserQuery(email ?? "");
   const radius = size / 2 - 5; // padding 5px
 
-  const ranks = Object.values(data?.diamonds.totals.codewars.ranks ?? {});
+  if (ranks.every((rank) => rank === 0)) return null;
 
   return (
     <Box sx={{ position: "relative" }}>
@@ -60,7 +58,7 @@ export default function DiamondsPieChart({ sx, email, size = 100 }: Props) {
           left: "50%",
           transform: "translate(-34%, -55%)",
           color: royalGold, // classic gold color
-          filter: "drop-shadow(0 0 4px #FFC107)", // subtle glowing effect
+          filter: `drop-shadow(0 0 4px ${royalGold})`, // subtle glowing effect
           pointerEvents: "none", // icon won’t steal hover/touch
         }}
       />

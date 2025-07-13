@@ -1,25 +1,16 @@
-"use client";
-
-import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
-import {
-  calcWeeklyDiamondGrowth,
-  completedAfterThreshold,
-} from "@/utils/dayjs";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import { CodewarsDiamondsRecord } from "@/types/diamonds";
+import { calcWeeklyDiamondGrowth } from "@/utils/dayjs";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import Box from "@mui/system/Box";
 
 interface Props {
-  email: string;
+  codewarsDiamondsRecord: CodewarsDiamondsRecord[];
 }
 
-const PercentVsLastWeek = ({ email }: Props) => {
-  const { data } = useCurrentUserQuery(email ?? "");
-
-  if (!data) return null;
-
+const PercentVsLastWeek = ({ codewarsDiamondsRecord }: Props) => {
   const { thisWeek, growthPct } = calcWeeklyDiamondGrowth(
-    data.diamonds.codewars ?? []
+    codewarsDiamondsRecord
   );
   const isUp = growthPct >= 0;
   const color = isUp ? "success.dark" : "error.main";
