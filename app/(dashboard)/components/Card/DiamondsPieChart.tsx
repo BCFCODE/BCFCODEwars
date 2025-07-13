@@ -16,7 +16,7 @@ export default function DiamondsPieChart({ sx, ranks, size = 100 }: Props) {
   const radius = size / 2 - 5; // padding 5px
 
   if (ranks.every((rank) => rank === 0)) return null;
-
+console.log(ranks)
   return (
     <Box sx={{ position: "relative" }}>
       <PieChart
