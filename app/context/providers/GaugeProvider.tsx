@@ -9,7 +9,7 @@ export type SizePerBreakpoint = Record<Breakpoint, string>;
 
 export interface GaugeContextValue {
   email: string;
-  gaugeStyles: {
+  gaugeStyles?: {
     columnsPerBreakpoint: ColumnsPerBreakpoint;
     gaugeInnerTextSX: SxProps;
     gaugeFooterTextSX: SxProps;

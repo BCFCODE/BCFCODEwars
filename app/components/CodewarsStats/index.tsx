@@ -1,7 +1,7 @@
 import GaugeProvider, {
   GaugeContextValue,
 } from "@/app/context/providers/GaugeProvider";
-import DailyTarget from "@/app/(dashboard)/Stats/DailyTarget";
+import DailyTarget from "@/app/(dashboard)/components/Cards/TargetCard/DailyTarget";
 import Gauges from "@/app/(dashboard)/Stats/Gauges";
 import { Box } from "@mui/material";
 
@@ -25,7 +25,7 @@ const CodewarsStats = ({ email, gaugeStyles }: GaugeContextValue) => (
         }}
       >
         <Gauges />
-        <DailyTarget />
+        {/* <DailyTarget /> */}
       </Box>
     </GaugeProvider>
   </Box>

@@ -1,4 +1,4 @@
-import DiamondsCard from "@/app/(dashboard)/components/DiamondsCard";
+import DiamondsCard from "@/app/(dashboard)/components/Cards/DiamondsCard";
 import {
   codewarsCellStyles,
   counterStyles,

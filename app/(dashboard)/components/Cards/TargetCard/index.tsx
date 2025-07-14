@@ -3,11 +3,12 @@
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import Box from "@mui/system/Box";
-import DiamondsPieChart from "./DiamondsPieChart";
-import PercentVsLastWeek from "./PercentVsLastWeek";
-import TotalDiamondsCount from "./TotalDiamondsCount";
 import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
-import { CodewarsRanks } from "@/types/diamonds";
+import PercentVsLastWeek from "../PercentVsLastWeek";
+import TotalValue from "../TotalValue";
+import DailyTarget from "./DailyTarget";
+import GaugeProvider from "@/app/context/providers/GaugeProvider";
+// import { CodewarsRanks } from "@/types/diamonds";
 
 interface Props {
   email: string;
@@ -15,14 +16,14 @@ interface Props {
   sx?: SxProps;
 }
 
-export default function DiamondsCard({ sx, email, label }: Props) {
+export default function TargetCard({ sx, email, label }: Props) {
   const { data, isLoading } = useCurrentUserQuery(email);
 
   if (isLoading) return null;
   // console.log(data?.diamonds.totals.codewars.ranks)
-  const ranks = Object.values(
-    (data?.diamonds.totals.codewars.ranks as CodewarsRanks) ?? {}
-  );
+  // const ranks = Object.values(
+  //   (data?.diamonds.totals.codewars.ranks as CodewarsRanks) ?? {}
+  // );
 
   return (
     <Box
@@ -33,6 +34,7 @@ export default function DiamondsCard({ sx, email, label }: Props) {
         borderColor: "divider",
         bgcolor: "background.default",
         borderRadius: 2,
+        position: 'relative',
         display: "flex",
         ...sx,
       }}
@@ -40,7 +42,7 @@ export default function DiamondsCard({ sx, email, label }: Props) {
       <Box>
         <Typography sx={{ color: "text.secondary" }}>{label}</Typography>
 
-        <TotalDiamondsCount
+        <TotalValue
           totalCodewarsDiamonds={data?.diamonds.totals.codewars.total ?? 0}
         />
 
@@ -48,7 +50,10 @@ export default function DiamondsCard({ sx, email, label }: Props) {
           codewarsDiamondsRecord={data?.diamonds.codewars ?? []}
         />
       </Box>
-      <DiamondsPieChart ranks={ranks} />
+      <GaugeProvider context={{ email }}>
+        <DailyTarget />
+      </GaugeProvider>
+      {/* <DiamondsPieChart ranks={ranks} /> */}
     </Box>
   );
 }

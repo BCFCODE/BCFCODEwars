@@ -5,7 +5,7 @@ interface Props {
   totalCodewarsDiamonds: number;
 }
 
-const TotalDiamondsCount = ({ totalCodewarsDiamonds }: Props) => {
+const TotalValue = ({ totalCodewarsDiamonds }: Props) => {
   return (
     <Box
       key={totalCodewarsDiamonds}
@@ -20,4 +20,4 @@ const TotalDiamondsCount = ({ totalCodewarsDiamonds }: Props) => {
   );
 };
 
-export default TotalDiamondsCount;
+export default TotalValue;
