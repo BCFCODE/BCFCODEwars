@@ -5,6 +5,7 @@ import DashboardStats from "./Stats";
 import Welcome from "./Welcome";
 import DiamondsCard from "./components/Cards/DiamondsCard";
 import TargetCard from "./components/Cards/TargetCard";
+import CodewarsCard from "./components/Cards/CodewarsCard";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -34,9 +35,9 @@ export default async function DashboardPage() {
               <TargetCard email={session?.user?.email ?? ""} label="Target" />
             </Grid>
             <Grid size={{ xs: 24, md: 8 }}>
-              <DiamondsCard
+              <CodewarsCard
                 email={session?.user?.email ?? ""}
-                label="Diamonds"
+                label="Codewars"
               />
             </Grid>
           </Grid>

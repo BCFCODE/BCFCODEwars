@@ -19,7 +19,7 @@ const TargetInEachDay = () => {
       key={label}
       sx={{
         color: "text.primary",
-        fontSize: "2.25rem",
+        fontSize: "2.125rem",
         width: "6ch",
         height: "3.2rem", // or use 44px
         display: "flex",
@@ -43,7 +43,7 @@ const TargetInEachDay = () => {
         <Box
           component="span"
           sx={{
-            animation: `${search} 2s ease-in-out infinite`,
+            animation: `${search} 2.5s ease-in-out infinite`,
             color: "warning.main",
             position: "absolute",
             top: 5,
