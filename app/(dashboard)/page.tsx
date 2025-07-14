@@ -31,7 +31,7 @@ export default async function DashboardPage() {
               />
             </Grid>
             <Grid size={{ xs: 24, md: 8 }}>
-              <TargetCard email={session?.user?.email ?? ""} label="Daily Target" />
+              <TargetCard email={session?.user?.email ?? ""} label="Target" />
             </Grid>
             <Grid size={{ xs: 24, md: 8 }}>
               <DiamondsCard

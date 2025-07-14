@@ -25,7 +25,7 @@ interface Icon {
   value: TargetLabel;
 }
 
-const icons: Icon[] = [
+export const icons: Icon[] = [
   {
     title: "Light Effort: 1/Day",
     Icon: LooksOneIcon,

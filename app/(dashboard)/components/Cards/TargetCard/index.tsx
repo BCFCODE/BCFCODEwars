@@ -1,14 +1,13 @@
 "use client";
 
+import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
+import GaugeProvider from "@/app/context/providers/GaugeProvider";
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import Box from "@mui/system/Box";
-import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
-import PercentVsLastWeek from "../PercentVsLastWeek";
-import TotalValue from "../TotalValue";
+import BottomInfo from "./BottomInfo";
 import DailyTarget from "./DailyTarget";
-import GaugeProvider from "@/app/context/providers/GaugeProvider";
-// import { CodewarsRanks } from "@/types/diamonds";
+import TargetInEachDay from "./TargetInEachDay";
 
 interface Props {
   email: string;
@@ -17,13 +16,9 @@ interface Props {
 }
 
 export default function TargetCard({ sx, email, label }: Props) {
-  const { data, isLoading } = useCurrentUserQuery(email);
+  const { isLoading } = useCurrentUserQuery(email);
 
   if (isLoading) return null;
-  // console.log(data?.diamonds.totals.codewars.ranks)
-  // const ranks = Object.values(
-  //   (data?.diamonds.totals.codewars.ranks as CodewarsRanks) ?? {}
-  // );
 
   return (
     <Box
@@ -34,26 +29,21 @@ export default function TargetCard({ sx, email, label }: Props) {
         borderColor: "divider",
         bgcolor: "background.default",
         borderRadius: 2,
-        position: 'relative',
+        position: "relative",
         display: "flex",
         ...sx,
       }}
     >
-      <Box>
-        <Typography sx={{ color: "text.secondary" }}>{label}</Typography>
-
-        <TotalValue
-          totalCodewarsDiamonds={data?.diamonds.totals.codewars.total ?? 0}
-        />
-
-        <PercentVsLastWeek
-          codewarsDiamondsRecord={data?.diamonds.codewars ?? []}
-        />
-      </Box>
       <GaugeProvider context={{ email }}>
+        <Box>
+          <Typography sx={{ color: "text.secondary" }}>{label}</Typography>
+
+          <TargetInEachDay />
+
+          <BottomInfo />
+        </Box>
         <DailyTarget />
       </GaugeProvider>
-      {/* <DiamondsPieChart ranks={ranks} /> */}
     </Box>
   );
 }

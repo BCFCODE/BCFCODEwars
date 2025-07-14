@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import { formatNumberK } from "../utils/formatNumberK";
+import { formatNumberK } from "../../utils/formatNumberK";
 
 interface Props {
   totalCodewarsDiamonds: number;
