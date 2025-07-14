@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 import Grid from "@mui/system/Grid";
 import DashboardStats from "./Stats";
 import Welcome from "./Welcome";
-import Card from "./components/Card";
+import DiamondsCard from "./components/DiamondsCard";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -24,20 +24,12 @@ export default async function DashboardPage() {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2} columns={24}>
             <Grid size={{ xs: 24, md: 8 }}>
-              <Card
+              <DiamondsCard
                 email={session?.user?.email ?? ""}
                 label="Diamonds"
-                sx={{
-                  p: 2,
-                  minWidth: 300,
-                  border: "1px solid",
-                  borderColor: "divider",
-                  bgcolor: "background.default",
-                  borderRadius: 2,
-                }}
               />
             </Grid>
-          {/*   <Grid size={{ xs: 24, md: 8 }}>
+            {/*   <Grid size={{ xs: 24, md: 8 }}>
               <Card
                 label="Position"
                 sx={{
