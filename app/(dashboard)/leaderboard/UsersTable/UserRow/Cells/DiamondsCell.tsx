@@ -29,14 +29,8 @@ const DiamondsCell = memo(({ maxWidth }: Props) => {
       align="right"
     >
       <Box sx={{ ...diamondBoxStyles, position: "relative" }}>
-        <Typography
-          sx={{ ...counterStyles, opacity: !showDiamondsCard ? 1 : 0 }}
-        >
-          {diamondsSum}
-        </Typography>
-        <DiamondIcon
-          sx={{ ...diamondSumStyles, opacity: !showDiamondsCard ? 1 : 0 }}
-        />
+        <Typography sx={{ ...counterStyles }}>{diamondsSum}</Typography>
+        <DiamondIcon sx={{ ...diamondSumStyles }} />
         {showDiamondsCard && (
           <DiamondsCard
             key={diamondsSum}
