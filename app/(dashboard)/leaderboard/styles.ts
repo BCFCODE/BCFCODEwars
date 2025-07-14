@@ -6,6 +6,7 @@ import {
 import { SxProps } from "@mui/material";
 
 export const diamondStyles: SxProps = {
+  transition: 'opacity 1s ease',
   marginTop: 0.4,
   color: diamondNotCollectedColor,
 };
@@ -39,6 +40,7 @@ export const diamondBoxStyles: SxProps = {
 };
 
 export const counterStyles: SxProps = {
+  transition: 'opacity 1s ease',
   mr: 0.35,
 };
 
