@@ -22,7 +22,7 @@ const useCurrentUserQuery = (email: string) => {
       return { ...currentUser };
     },
     enabled: !!email, // Avoid calling if email isn't ready
-    staleTime: 0, 
+    staleTime: 1 * 60 * 1000, // 1m
     refetchOnReconnect: true,
     refetchOnWindowFocus: true,
   });

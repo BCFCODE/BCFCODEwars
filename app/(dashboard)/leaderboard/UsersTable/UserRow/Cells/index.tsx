@@ -13,7 +13,7 @@ const User = () => {
       <AvatarCell />
       <LastActivityCell />
       <MemberSinceCell />
-      <DiamondsCell />
+      <DiamondsCell maxWidth={50}/>
       <RankCell />
     </TableRow>
   );
