@@ -2,6 +2,7 @@ import { Box, Fade } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import useGaugeData from "../../hooks/useGaugeData";
 import useGaugeStyles from "../../hooks/useGaugeDimensions";
+import { usePathname } from "next/navigation";
 
 const getColorKey = (
   percent: number
@@ -47,6 +48,10 @@ const SingleGauge = ({ index }: Props) => {
   const { percent, didLaterPeriodMeetTarget } = useGaugeData(index);
   const colorKey = getColorKey(percent);
 
+  const pathname = usePathname();
+  const isRoot = pathname === "/";
+  const shouldAdjustMargin = index > 1 && isRoot;
+
   return (
     <Box>
       <Fade in timeout={100}>
@@ -59,38 +64,42 @@ const SingleGauge = ({ index }: Props) => {
           sx={(theme) => ({
             // backgroundColor: "gray",
             // maxHeight: 300,
-            transition: 'margin 1s ease',
-            pointerEvents: "none",
-            [`& .${gaugeClasses.valueText}`]: gaugeInnerTextSX,
+            transition: "margin 1s ease",
+            // pointerEvents: "none",
+            [`& .${gaugeClasses.valueText}`]: {
+              ...gaugeInnerTextSX,
+              pointerEvents: "none",
+            },
             [`& .${gaugeClasses.valueArc}`]: {
               fill:
                 didLaterPeriodMeetTarget || percent >= 100
                   ? `#76FF03`
                   : theme.palette[colorKey].main,
+              pointerEvents: "none",
             },
             [`@media (min-width: ${200}px)`]: {
-              marginTop: index > 1 ? -10 : "initial",
+              marginTop: shouldAdjustMargin ? -10 : "initial",
             },
             [`@media (min-width: ${260}px)`]: {
-              marginTop: index > 1 ? -9 : "initial",
+              marginTop: shouldAdjustMargin ? -9 : "initial",
             },
             [`@media (min-width: ${320}px)`]: {
-              marginTop: index > 1 ? -8 : "initial",
+              marginTop: shouldAdjustMargin ? -8 : "initial",
             },
             [`@media (min-width: ${360}px)`]: {
-              marginTop: index > 1 ? -7 : "initial",
+              marginTop: shouldAdjustMargin ? -7 : "initial",
             },
             [`@media (min-width: ${420}px)`]: {
-              marginTop: index > 1 ? -6 : "initial",
+              marginTop: shouldAdjustMargin ? -6 : "initial",
             },
             [`@media (min-width: ${500}px)`]: {
-              marginTop: index > 1 ? -4 : "initial",
+              marginTop: shouldAdjustMargin ? -4 : "initial",
             },
             [`@media (min-width: ${620}px)`]: {
-              marginTop: index > 1 ? -2 : "initial",
+              marginTop: shouldAdjustMargin ? -2 : "initial",
             },
             [`@media (min-width: ${740}px)`]: {
-              marginTop:"initial",
+              marginTop: "initial",
             },
             // [`& .${gaugeClasses.referenceArc}`]: {
             //   fill: theme.palette.text.disabled,
