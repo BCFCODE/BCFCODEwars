@@ -1,7 +1,7 @@
 // "use client";
 
 import { CodewarsUser } from "@/types/codewars";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper, Typography } from "@mui/material";
 
 interface Props {
   codewars: CodewarsUser;
@@ -33,6 +33,7 @@ const UserInfoCard = ({
         margin: "10px auto ",
       }}
     >
+      {/* {false ? ( */}
       {isUsernameSynced ? (
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Typography
@@ -73,6 +74,7 @@ const UserInfoCard = ({
           >
             <strong>Clan:</strong> {codewars?.clan ?? "N/A"}
           </Typography>
+          <Button color="error">This is not me</Button>
         </Box>
       ) : (
         <Typography
@@ -108,6 +110,7 @@ const UserInfoCard = ({
             <strong>&quot;{validatedUsername}&quot;</strong> has either been
             changed or deleted.
           </Typography>
+          <Button color="error">It is true</Button>
         </Typography>
       )}
     </Paper>

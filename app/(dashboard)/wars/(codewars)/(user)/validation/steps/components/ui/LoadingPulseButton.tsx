@@ -19,6 +19,7 @@ interface Props extends PropsWithChildren {
   loading: boolean;
   label: string;
   ariaLabel: string;
+  disabled?: boolean
   onClick: () => void;
 }
 
@@ -32,6 +33,7 @@ const LoadingPulseButton = ({
   ariaLabel,
   label,
   sx,
+  disabled
 }: Props) => {
   const theme = useTheme();
 
@@ -42,7 +44,7 @@ const LoadingPulseButton = ({
       onClick={onClick}
       loading={loading}
       loadingIndicator={children}
-      disabled={loading}
+      disabled={disabled || loading}
       aria-label={ariaLabel}
       size={size}
       sx={{
