@@ -104,17 +104,18 @@ const Step3 = ({
 
         {/* User Info */}
         <UserInfoCard
-          {...{
-            isUsernameSynced: true,
-            session,
-            codewars,
-            validatedUsername,
-            /*  
+          codewarsUsername={codewars.name ?? "N/A"}
+          codewarsHonor={codewars.honor ?? 0}
+          validatedUsername={validatedUsername ?? "User"}
+          codewarsLeaderboardPosition={codewars.leaderboardPosition ?? 0}
+          codewarsClan={codewars.clan ?? "N/A"}
+          isUsernameSynced={true}
+          /*  
               This flag is temporarily set to 'true' to ensure that the user info card is displayed for validation purposes. 
               It allows us to show the user’s Codewars information while confirming if the username is accurate. 
               Once the validation process is complete, this can be updated or removed based on the application's flow. 
             */
-          }}
+          overallRank={Math.abs(Number(codewars?.ranks?.overall.rank))}
         />
 
         {/* Description */}

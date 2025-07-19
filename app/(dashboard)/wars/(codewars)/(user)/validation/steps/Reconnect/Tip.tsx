@@ -6,7 +6,7 @@ const Tip = () => {
     <Typography
       variant="body2"
       color="text.secondary"
-      sx={{ mt: 2, textAlign: "center" }}
+      sx={{ mt: 3, textAlign: "center" }}
     >
       Tip: Want to update your clan, name, or username? Simply click{" "}
       <Link
