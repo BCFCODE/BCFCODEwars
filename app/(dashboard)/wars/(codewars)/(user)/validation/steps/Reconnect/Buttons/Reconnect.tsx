@@ -5,13 +5,17 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import LoadingPulseButton from "../../components/ui/LoadingPulseButton";
 
-const ReconnectButton = () => {
+interface Props {
+  disabled: boolean;
+}
+
+const ReconnectButton = ({ disabled }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   return (
     <LoadingPulseButton
-      disabled={true}
+      disabled={disabled}
       color="error"
       label="Reconnect"
       ariaLabel="Reconnect to codewars button"
@@ -28,7 +32,7 @@ const ReconnectButton = () => {
         fontWeight: 600,
         fontSize: "1rem",
         boxShadow: 3,
-        width: 'auto'
+        width: "auto",
       }}
     >
       <Typography

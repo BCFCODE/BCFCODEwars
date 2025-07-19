@@ -1,12 +1,37 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { PropsWithChildren } from "react";
 
-const WarningMessage = () => (
+interface Props extends PropsWithChildren {}
+
+const WarningMessage = ({ children }: Props) => (
   <Typography
     component="span"
-    sx={{ fontWeight: "bold", color: "error.main", display: "block", mt: 1 }}
+    sx={{
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      color: "warning.main",
+      fontWeight: 600,
+      fontSize: "1rem",
+      textAlign: "center",
+      lineHeight: 1.6,
+    }}
   >
-    ⚠️ Warning: If you reconnect, all your existing data in our database will be
-    erased and replaced with the new information. Please proceed with caution!
+    <Box
+      component="span"
+      sx={{
+        mr: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        // flexDirection: "column",
+        fontSize: "2.2rem",
+      }}
+    >
+      ⚠️
+    </Box>
+    {children}
   </Typography>
 );
 
