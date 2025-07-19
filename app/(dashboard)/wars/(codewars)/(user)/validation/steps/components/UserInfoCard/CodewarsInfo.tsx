@@ -18,12 +18,16 @@ const CodewarsInfo = ({
   codewarsLeaderboardPosition,
   codewarsClan,
 }: Props) => {
-  const infoSx: SxProps = { fontWeight: 500, color: "text.secondary" };
+  const infoSx: SxProps = {
+    fontSize: "1.1rem",
+    fontWeight: 500,
+    color: "text.secondary",
+  };
   return (
     <Box>
       <Info sx={infoSx} label="Name" info={codewarsUsername} />
       <Info
-        sx={{ fontWeight: 600, color: "text.primary" }}
+        sx={{ fontSize: "1.2rem",fontWeight: 600, color: "text.primary" }}
         label="User Name"
         info={validatedUsername}
       />
@@ -34,7 +38,6 @@ const CodewarsInfo = ({
         label="Leaderboard Position"
         info={`${codewarsLeaderboardPosition}`}
       />
-      <Info sx={infoSx} label="Overall Rank" info={`${overallRank}`} />
       <Info sx={infoSx} label="Clan" info={`${codewarsClan}`} />
     </Box>
   );
