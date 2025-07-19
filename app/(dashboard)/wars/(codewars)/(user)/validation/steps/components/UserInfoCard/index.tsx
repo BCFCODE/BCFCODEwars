@@ -144,7 +144,7 @@ const UserInfoCard = ({
           <Button color="error" variant="outlined" onClick={handleNotMeClick}>
             {isMe
               ? isUsernameSynced
-                ? "Not me"
+                ? "Who’s this? Not me!"
                 : "You're right!"
               : "Delete my data"}
           </Button>
