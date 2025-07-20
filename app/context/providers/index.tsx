@@ -38,21 +38,21 @@ const NAVIGATION: Navigation = [
     title: "Dashboard",
     icon: <DashboardIcon />,
   },
-  {
+/*   {
     segment: "orders",
     title: "Orders",
     icon: <ShoppingCartIcon />,
-  },
+  }, */
   {
     segment: "wars",
     title: "Wars",
     icon: <MilitaryTechIcon />,
   },
-  {
+/*   {
     segment: "missions",
     title: "Missions",
     icon: <ExploreIcon />,
-  },
+  }, */
   {
     kind: "divider",
   },
