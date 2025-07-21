@@ -10,9 +10,15 @@ interface Props {
   sx?: SxProps;
   size?: number;
   ranks: number[];
+  username?: string;
 }
 
-export default function CodewarsPieChart({ sx, ranks, size = 100 }: Props) {
+export default function CodewarsPieChart({
+  sx,
+  ranks,
+  username,
+  size = 100,
+}: Props) {
   // Too many renders, optimize it
   const radius = size / 2 - 5; // padding 5px
 
@@ -47,28 +53,28 @@ export default function CodewarsPieChart({ sx, ranks, size = 100 }: Props) {
           },
         ]}
       />
-      <Link
-        href="https://www.codewars.com/users/www.BCFCODE.ir"
+
+      <Box
+        component="a"
+        href={`https://www.codewars.com/users/${username}`}
         target="_blank"
+        rel="noopener noreferrer"
+        sx={{
+          position: "absolute",
+          fontSize: size * 0.32,
+          top: "51%",
+          left: "50.2%",
+          transform: "translate(-34%, -55%)",
+          // pointerEvents: "none", // icon won’t steal hover/touch
+        }}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            fontSize: size * 0.32,
-            top: "50%",
-            left: "50.5%",
-            transform: "translate(-34%, -55%)",
-            pointerEvents: "none", // icon won’t steal hover/touch
-          }}
-        >
-          <Image
-            width={size * 0.28}
-            height={size * 0.28}
-            src="https://www.codewars.com/packs/assets/logo.f607a0fb.svg"
-            alt="Codewars Icon"
-          />
-        </Box>
-      </Link>
+        <Image
+          width={size * 0.28}
+          height={size * 0.28}
+          src="https://www.codewars.com/packs/assets/logo.f607a0fb.svg"
+          alt="Codewars Icon"
+        />
+      </Box>
     </Box>
   );
 }

@@ -6,9 +6,9 @@ import { Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import Box from "@mui/system/Box";
 
-import SolvedCount from "./SolvedCount";
-import BottomInfo from "./BottomInfo";
+import BottomInfo from "./PercentVsLastDay";
 import CodewarsPieChart from "./CodewarsPieChart";
+import SolvedCount from "./SolvedCount";
 
 interface Props {
   email: string;
@@ -44,13 +44,12 @@ export default function CodewarsCard({ sx, email, label }: Props) {
             position={data?.codewars.codeChallenges.totalCompleted ?? 0}
           />
 
-          <BottomInfo
-            leaderboardPosition={data?.codewars.leaderboardPosition ?? 0}
-          />
+          <BottomInfo codewarsDiamondsRecord={data?.diamonds.codewars ?? []} />
         </Box>
         <CodewarsPieChart
           sx={{ marginRight: 0.5 }}
-          ranks={[20, 20, 20, 20, 20]}
+          ranks={[20, 20, 20, 20, 20, 20]}
+          username={data?.codewars.username}
         />
       </Box>
     </GaugeProvider>
