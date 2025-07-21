@@ -9,6 +9,9 @@ import Box from "@mui/system/Box";
 import BottomInfo from "./PercentVsLastDay";
 import CodewarsPieChart from "./CodewarsPieChart";
 import SolvedCount from "./SolvedCount";
+import { useMemo } from "react";
+import { completedAfterThreshold } from "@/utils/dayjs";
+import { CodewarsCompletedChallenge } from "@/types/codewars";
 
 interface Props {
   email: string;
@@ -18,6 +21,14 @@ interface Props {
 
 export default function CodewarsCard({ sx, email, label }: Props) {
   const { data, isLoading } = useCurrentUserQuery(email);
+
+  const challenges = data?.codewars.codeChallenges.list ?? [];
+
+  const lastTwoDaysSolvedProblems = useMemo(() => {
+    return challenges.filter((challenge) =>
+      completedAfterThreshold(challenge.completedAt, 2)
+    ) as CodewarsCompletedChallenge[];
+  }, [challenges]);
 
   if (isLoading) return null;
 
@@ -44,7 +55,7 @@ export default function CodewarsCard({ sx, email, label }: Props) {
             position={data?.codewars.codeChallenges.totalCompleted ?? 0}
           />
 
-          <BottomInfo codewarsDiamondsRecord={data?.diamonds.codewars ?? []} />
+          <BottomInfo lastTwoDaysSolvedProblems={lastTwoDaysSolvedProblems} />
         </Box>
         <CodewarsPieChart
           sx={{ marginRight: 0.5 }}

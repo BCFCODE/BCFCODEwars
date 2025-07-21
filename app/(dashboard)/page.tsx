@@ -35,10 +35,7 @@ export default async function DashboardPage() {
               <TargetCard email={session?.user?.email ?? ""} label="Target" />
             </Grid>
             <Grid size={{ xs: 24, md: 8 }}>
-              <CodewarsCard
-                email={session?.user?.email ?? ""}
-                label="Codewars"
-              />
+              <CodewarsCard email={session?.user?.email ?? ""} label="Solved" />
             </Grid>
           </Grid>
         </Box>

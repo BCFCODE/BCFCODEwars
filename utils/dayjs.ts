@@ -156,7 +156,50 @@ export function calcWeeklyDiamondGrowth(
   return { thisWeek, prevWeek, growthPct };
 }
 
+export interface DaySolvedStats {
+  today: number;
+  yesterday: number;
+  growthPct: number;
+}
+
+/**
+ * Calculates daily solved problem growth.
+ *
+ * - “Today” = start to end of today
+ * - “Yesterday” = start to end of previous day
+ * - If yesterday = 0, growthPct is 0
+ *
+ * @param challenges Array of completed challenges
+ * @returns DaySolvedStats
+ */
+export function calcDailySolvedProblemsGrowth(
+  challenges: CodewarsCompletedChallenge[]
+): DaySolvedStats {
+  const startOfToday = dayjs().startOf("day");
+  const endOfToday = dayjs().endOf("day");
+
+  const startOfYesterday = startOfToday.subtract(1, "day");
+  const endOfYesterday = startOfToday;
+
+  let today = 0;
+  let yesterday = 0;
+
+  for (const challenge of challenges) {
+    const completedAt = dayjs(challenge.completedAt);
+    if (completedAt.isBetween(startOfToday, endOfToday, undefined, "[)")) {
+      today++;
+    } else if (completedAt.isBetween(startOfYesterday, endOfYesterday, undefined, "[)")) {
+      yesterday++;
+    }
+  }
+
+  const growthPct = yesterday > 0 ? ((today - yesterday) / yesterday) * 100 : 0;
+
+  return { today, yesterday, growthPct };
+}
+
 /**
  * Exported Dayjs instance with configured plugins and locale.
  */
 export default dayjs;
+

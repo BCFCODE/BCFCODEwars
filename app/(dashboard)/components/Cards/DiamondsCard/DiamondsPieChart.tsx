@@ -22,7 +22,7 @@ export default function DiamondsPieChart({ sx, ranks, size = 100 }: Props) {
       <PieChart
         width={size}
         height={size}
-        margin={{ top: 0, bottom: 0, left: 0, right: 0 }}
+        margin={0}
         colors={KYU_COLORS}
         hideLegend
         series={[
