@@ -10,19 +10,20 @@ interface Props {
   email: string;
 }
 
-export default function UserRow({ email }: Props) {
-  const gaugeInnerTextSXBreakpoints: ResponsiveBreakpoint[] = [
-    { minWidth: 1, sx: { fontSize: 33 } },
-    { minWidth: 1040, sx: { fontSize: 36 } },
-    { minWidth: 1200, sx: { fontSize: 44 } },
-  ];
+export const gaugeInnerTextSXBreakpoints: ResponsiveBreakpoint[] = [
+  { minWidth: 1, sx: { fontSize: 33 } },
+  { minWidth: 1040, sx: { fontSize: 36 } },
+  { minWidth: 1200, sx: { fontSize: 44 } },
+];
 
-  const gaugeFooterTextSXBreakpoints: ResponsiveBreakpoint[] = [
-    { minWidth: 1, sx: { fontSize: 15, marginTop: -3 } },
-    { minWidth: 1050, sx: { fontSize: 17, marginTop: -3 } },
-    { minWidth: 1120, sx: { fontSize: 16, marginTop: -2 } },
-    { minWidth: 1260, sx: { fontSize: 19, marginTop: -1 } },
-  ];
+export const gaugeFooterTextSXBreakpoints: ResponsiveBreakpoint[] = [
+  { minWidth: 1, sx: { fontSize: 15, marginTop: -3 } },
+  { minWidth: 1050, sx: { fontSize: 17, marginTop: -3 } },
+  { minWidth: 1120, sx: { fontSize: 16, marginTop: -2 } },
+  { minWidth: 1260, sx: { fontSize: 19, marginTop: -1 } },
+];
+
+export default function UserRow({ email }: Props) {
   return (
     <>
       <User />
