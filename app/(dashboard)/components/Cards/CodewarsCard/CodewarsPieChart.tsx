@@ -1,9 +1,10 @@
 "use client";
 
 import { KYU_COLORS, royalGold } from "@/theme";
-import DiamondIcon from "@mui/icons-material/Diamond";
 import { Box, SxProps } from "@mui/system";
 import { PieChart } from "@mui/x-charts/PieChart";
+import Image from "next/image";
+import Link from "next/link";
 
 interface Props {
   sx?: SxProps;
@@ -11,7 +12,7 @@ interface Props {
   ranks: number[];
 }
 
-export default function DiamondsPieChart({ sx, ranks, size = 100 }: Props) {
+export default function CodewarsPieChart({ sx, ranks, size = 100 }: Props) {
   // Too many renders, optimize it
   const radius = size / 2 - 5; // padding 5px
 
@@ -46,18 +47,28 @@ export default function DiamondsPieChart({ sx, ranks, size = 100 }: Props) {
           },
         ]}
       />
-      <DiamondIcon
-        sx={{
-          position: "absolute",
-          fontSize: size * 0.32,
-          top: "50%",
-          left: "50%",
-          transform: "translate(-34%, -55%)",
-          color: royalGold, // classic gold color
-          filter: "drop-shadow(0 0 4px #FFD700)", // royalGold color
-          pointerEvents: "none", // icon won’t steal hover/touch
-        }}
-      />
+      <Link
+        href="https://www.codewars.com/users/www.BCFCODE.ir"
+        target="_blank"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            fontSize: size * 0.32,
+            top: "50%",
+            left: "50.5%",
+            transform: "translate(-34%, -55%)",
+            pointerEvents: "none", // icon won’t steal hover/touch
+          }}
+        >
+          <Image
+            width={size * 0.28}
+            height={size * 0.28}
+            src="https://www.codewars.com/packs/assets/logo.f607a0fb.svg"
+            alt="Codewars Icon"
+          />
+        </Box>
+      </Link>
     </Box>
   );
 }

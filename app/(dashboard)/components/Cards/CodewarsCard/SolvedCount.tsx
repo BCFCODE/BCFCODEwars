@@ -4,7 +4,7 @@ interface Props {
   position: number;
 }
 
-const LeaderboardPosition = ({ position }: Props) => {
+const SolvedCount = ({ position }: Props) => {
   return (
     <Box
       key={position}
@@ -19,4 +19,4 @@ const LeaderboardPosition = ({ position }: Props) => {
   );
 };
 
-export default LeaderboardPosition;
+export default SolvedCount;

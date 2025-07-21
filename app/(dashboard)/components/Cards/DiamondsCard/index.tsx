@@ -35,6 +35,7 @@ export default function DiamondsCard({ sx, email, label }: Props) {
         bgcolor: "background.default",
         borderRadius: 2,
         display: "flex",
+        justifyContent: "space-between",
         ...sx,
       }}
     >
@@ -49,7 +50,7 @@ export default function DiamondsCard({ sx, email, label }: Props) {
           codewarsDiamondsRecord={data?.diamonds.codewars ?? []}
         />
       </Box>
-      <DiamondsPieChart ranks={ranks} />
+      <DiamondsPieChart sx={{ marginRight: 0.5 }} ranks={ranks} />
     </Box>
   );
 }

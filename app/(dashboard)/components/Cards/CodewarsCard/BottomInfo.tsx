@@ -1,10 +1,10 @@
 import Box from "@mui/system/Box";
 
 interface Props {
-  honor: number;
+  leaderboardPosition: number;
 }
 
-const BottomInfo = ({ honor }: Props) => {
+const BottomInfo = ({ leaderboardPosition }: Props) => {
   return (
     <>
       <Box
@@ -14,7 +14,7 @@ const BottomInfo = ({ honor }: Props) => {
           fontSize: "0.875rem",
         }}
       >
-        Honor: {honor}
+        Position: {leaderboardPosition}
       </Box>
     </>
   );
