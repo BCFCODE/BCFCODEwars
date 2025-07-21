@@ -52,7 +52,7 @@ export default function CodewarsCard({ sx, email, label }: Props) {
           <Typography sx={{ color: "text.secondary" }}>{label}</Typography>
 
           <SolvedCount
-            position={data?.codewars.codeChallenges.totalCompleted ?? 0}
+            totalCompleted={data?.codewars.codeChallenges.totalCompleted ?? 0}
           />
 
           <BottomInfo lastTwoDaysSolvedProblems={lastTwoDaysSolvedProblems} />

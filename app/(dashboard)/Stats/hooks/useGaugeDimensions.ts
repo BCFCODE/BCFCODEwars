@@ -44,10 +44,6 @@ const useGaugeStyles = (): Dimensions => {
     gridSize,
     gaugeInnerTextSX,
     gaugeFooterTextSX,
-    // fontSize: {
-    //   gaugeValue: fontSize.gaugeValue,
-    //   gaugeFooter: fontSize.gaugeFooter,
-    // },
   };
 };
 

@@ -14,6 +14,8 @@ const PercentVsLastDay = ({ lastTwoDaysSolvedProblems }: Props) => {
     lastTwoDaysSolvedProblems
   );
 
+  console.log(today, growthPct) // today I solved one problem and today show me 1 but yesterday I solved 0 problem, percent must be 100% percent growth, right?
+
   const isUp = growthPct >= 0;
   const color = isUp ? "success.dark" : "error.main";
   const Icon = isUp ? TrendingUpIcon : TrendingDownIcon;

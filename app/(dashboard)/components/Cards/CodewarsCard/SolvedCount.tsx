@@ -1,20 +1,20 @@
 import Box from "@mui/system/Box";
 
 interface Props {
-  position: number;
+  totalCompleted: number;
 }
 
-const SolvedCount = ({ position }: Props) => {
+const SolvedCount = ({ totalCompleted }: Props) => {
   return (
     <Box
-      key={position}
+      key={totalCompleted}
       sx={{
         color: "text.primary",
         fontSize: "2.125rem",
         fontWeight: "medium",
       }}
     >
-      {position}
+      {totalCompleted}
     </Box>
   );
 };

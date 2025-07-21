@@ -188,12 +188,19 @@ export function calcDailySolvedProblemsGrowth(
     const completedAt = dayjs(challenge.completedAt);
     if (completedAt.isBetween(startOfToday, endOfToday, undefined, "[)")) {
       today++;
-    } else if (completedAt.isBetween(startOfYesterday, endOfYesterday, undefined, "[)")) {
+    } else if (
+      completedAt.isBetween(startOfYesterday, endOfYesterday, undefined, "[)")
+    ) {
       yesterday++;
     }
   }
 
-  const growthPct = yesterday > 0 ? ((today - yesterday) / yesterday) * 100 : 0;
+  const growthPct =
+    yesterday === 0
+      ? today > 0
+        ? 100
+        : 0
+      : ((today - yesterday) / yesterday) * 100;
 
   return { today, yesterday, growthPct };
 }
@@ -202,4 +209,3 @@ export function calcDailySolvedProblemsGrowth(
  * Exported Dayjs instance with configured plugins and locale.
  */
 export default dayjs;
-
