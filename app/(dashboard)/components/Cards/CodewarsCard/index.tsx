@@ -2,7 +2,7 @@
 
 import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
 
-import { Typography } from "@mui/material";
+import { Tooltip, Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import Box from "@mui/system/Box";
 
@@ -23,6 +23,8 @@ interface Props {
 export default function CodewarsCard({ sx, email, label }: Props) {
   const { data, isLoading } = useCurrentUserQuery(email);
 
+  if (isLoading) return null;
+
   const challenges = data?.codewars.codeChallenges.list ?? [];
 
   const { ranks, lastTwoDaysSolvedProblems } = useMemo(
@@ -39,8 +41,6 @@ export default function CodewarsCard({ sx, email, label }: Props) {
     }),
     [challenges.length]
   );
-
-  if (isLoading) return null;
 
   return (
     <EmailProvider context={{ email }}>
@@ -67,11 +67,15 @@ export default function CodewarsCard({ sx, email, label }: Props) {
 
           <BottomInfo lastTwoDaysSolvedProblems={lastTwoDaysSolvedProblems} />
         </Box>
-        <CodewarsPieChart
-          sx={{ marginRight: 0.5 }}
-          ranks={ranks}
-          username={data?.codewars.username}
-        />
+        <Tooltip title="Heads up! This pie chart only reflects your collected diamond challenges. Keep collecting diamonds to see your progress shine here!">
+          <Box component="span">
+            <CodewarsPieChart
+              sx={{ marginRight: 0.5 }}
+              ranks={ranks}
+              username={data?.codewars.username}
+            />
+          </Box>
+        </Tooltip>
       </Box>
     </EmailProvider>
   );

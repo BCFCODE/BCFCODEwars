@@ -1,6 +1,7 @@
 "use client";
 
 import { KYU_COLORS } from "@/theme";
+import { Tooltip } from "@mui/material";
 import { Box, SxProps } from "@mui/system";
 import { PieChart } from "@mui/x-charts/PieChart";
 import Image from "next/image";
