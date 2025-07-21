@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import GaugeContext from "./contexts";
+import { GaugeContext } from "./contexts";
 import { SxProps } from "@mui/material";
 
 type NumberOfColumns = 1 | 2 | 3 | 4;

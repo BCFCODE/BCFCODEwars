@@ -1,32 +1,34 @@
 "use client";
 
-import { KYU_COLORS, royalGold } from "@/theme";
-import DiamondIcon from "@mui/icons-material/Diamond";
+import { KYU_COLORS } from "@/theme";
 import { Box, SxProps } from "@mui/system";
 import { PieChart } from "@mui/x-charts/PieChart";
+import Image from "next/image";
 
 interface Props {
   sx?: SxProps;
   size?: number;
   ranks: number[];
+  username?: string;
 }
 
-export default function DiamondsPieChart({ sx, ranks, size = 100 }: Props) {
+export default function CodewarsPieChart({
+  sx,
+  ranks,
+  username,
+  size = 100,
+}: Props) {
   // Too many renders, optimize it
   const radius = size / 2 - 5; // padding 5px
 
   if (ranks.every((rank) => rank === 0)) return null;
   // console.log(ranks);
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box sx={{ ...sx, position: "relative" }}>
       <PieChart
-        sx={{
-          ...sx,
-          // backgroundColor: "yellowgreen",
-        }}
         width={size}
         height={size}
-        margin={{ top: 0, bottom: 0, left: 0, right: 0 }}
+        margin={0}
         colors={KYU_COLORS}
         hideLegend
         series={[
@@ -50,18 +52,28 @@ export default function DiamondsPieChart({ sx, ranks, size = 100 }: Props) {
           },
         ]}
       />
-      <DiamondIcon
+
+      <Box
+        component="a"
+        href={`https://www.codewars.com/users/${username}`}
+        target="_blank"
+        rel="noopener noreferrer"
         sx={{
           position: "absolute",
           fontSize: size * 0.32,
-          top: "50%",
-          left: "50%",
+          top: "51%",
+          left: "50.2%",
           transform: "translate(-34%, -55%)",
-          color: royalGold, // classic gold color
-          filter: "drop-shadow(0 0 4px #FFD700)", // royalGold color
-          pointerEvents: "none", // icon won’t steal hover/touch
+          // pointerEvents: "none", // icon won’t steal hover/touch
         }}
-      />
+      >
+        <Image
+          width={size * 0.28}
+          height={size * 0.28}
+          src="https://www.codewars.com/packs/assets/logo.f607a0fb.svg"
+          alt="Codewars Icon"
+        />
+      </Box>
     </Box>
   );
 }

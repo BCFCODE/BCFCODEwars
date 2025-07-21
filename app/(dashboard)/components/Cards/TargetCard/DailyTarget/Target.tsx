@@ -4,8 +4,8 @@ import WhatshotIcon from "@mui/icons-material/Whatshot";
 import { SxProps } from "@mui/material";
 
 const style: SxProps = {
-  fontSize: 65,
-  opacity: '30%'
+  fontSize: 110,
+  opacity: '80%'
 };
 
 interface Props {

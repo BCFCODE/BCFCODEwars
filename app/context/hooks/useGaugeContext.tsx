@@ -1,7 +1,7 @@
 import useTargetStore, {
   TargetStore,
-} from "@/app/(dashboard)/Stats/DailyTarget/useTargetStore";
-import GaugeContext from "@/app/context/providers/contexts";
+} from "@/app/(dashboard)/components/Cards/TargetCard/DailyTarget/useTargetStore";
+import { GaugeContext } from "@/app/context/providers/contexts";
 import { useContext } from "react";
 
 interface Context {

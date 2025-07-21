@@ -25,7 +25,7 @@ interface Icon {
   value: TargetLabel;
 }
 
-const icons: Icon[] = [
+export const icons: Icon[] = [
   {
     title: "Light Effort: 1/Day",
     Icon: LooksOneIcon,
@@ -71,7 +71,7 @@ export default function TargetSelector() {
         <Tooltip title={title} key={i}>
           <ToggleButton value={value} sx={{ padding: 0.2, border: "none" }}>
             <Icon
-              sx={{ fontSize: 40 }}
+              sx={{ fontSize: 55 }}
               color={label === value ? color : "disabled"}
             />
           </ToggleButton>

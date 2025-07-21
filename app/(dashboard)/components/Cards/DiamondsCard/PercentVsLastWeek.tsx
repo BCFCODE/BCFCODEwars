@@ -38,7 +38,7 @@ const PercentVsLastWeek = ({ codewarsDiamondsRecord }: Props) => {
         sx={{
           color: "text.secondary",
           display: "inline",
-          fontSize: "0.875rem",
+          fontSize: "0.845rem",
         }}
       >
         vs. last week

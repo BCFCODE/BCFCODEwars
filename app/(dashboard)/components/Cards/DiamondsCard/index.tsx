@@ -3,11 +3,12 @@
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import Box from "@mui/system/Box";
-import DiamondsPieChart from "./DiamondsPieChart";
 import PercentVsLastWeek from "./PercentVsLastWeek";
-import TotalDiamondsCount from "./TotalDiamondsCount";
+import DiamondsPieChart from "./DiamondsPieChart";
+
 import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
 import { CodewarsRanks } from "@/types/diamonds";
+import TotalDiamondsCount from "./TotalValue";
 
 interface Props {
   email: string;
@@ -34,6 +35,7 @@ export default function DiamondsCard({ sx, email, label }: Props) {
         bgcolor: "background.default",
         borderRadius: 2,
         display: "flex",
+        justifyContent: "space-between",
         ...sx,
       }}
     >
@@ -48,7 +50,7 @@ export default function DiamondsCard({ sx, email, label }: Props) {
           codewarsDiamondsRecord={data?.diamonds.codewars ?? []}
         />
       </Box>
-      <DiamondsPieChart ranks={ranks} />
+      <DiamondsPieChart sx={{ marginRight: 0.5 }} ranks={ranks} />
     </Box>
   );
 }
