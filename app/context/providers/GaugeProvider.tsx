@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import GaugeContext from "./contexts";
+import { GaugeContext } from "./contexts";
 import { SxProps } from "@mui/material";
 
 type NumberOfColumns = 1 | 2 | 3 | 4;
@@ -9,7 +9,7 @@ export type SizePerBreakpoint = Record<Breakpoint, string>;
 
 export interface GaugeContextValue {
   email: string;
-  gaugeStyles?: {
+  gaugeStyles: {
     columnsPerBreakpoint: ColumnsPerBreakpoint;
     gaugeInnerTextSX: SxProps;
     gaugeFooterTextSX: SxProps;

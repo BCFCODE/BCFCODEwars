@@ -1,17 +1,18 @@
 "use client";
 
 import useCurrentUserQuery from "@/app/context/hooks/useCurrentUserQuery";
-import GaugeProvider from "@/app/context/providers/GaugeProvider";
+
 import { Typography } from "@mui/material";
 import { SxProps } from "@mui/system";
 import Box from "@mui/system/Box";
 
-import BottomInfo from "./PercentVsLastDay";
-import CodewarsPieChart from "./CodewarsPieChart";
-import SolvedCount from "./SolvedCount";
-import { useMemo } from "react";
-import { completedAfterThreshold } from "@/utils/dayjs";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
+import { completedAfterThreshold } from "@/utils/dayjs";
+import { useMemo } from "react";
+import CodewarsPieChart from "./CodewarsPieChart";
+import BottomInfo from "./PercentVsLastDay";
+import SolvedCount from "./SolvedCount";
+import EmailProvider from "@/app/context/providers/EmailProvider";
 
 interface Props {
   email: string;
@@ -33,7 +34,7 @@ export default function CodewarsCard({ sx, email, label }: Props) {
   if (isLoading) return null;
 
   return (
-    <GaugeProvider context={{ email }}>
+    <EmailProvider context={{ email }}>
       <Box
         sx={{
           p: 2,
@@ -63,6 +64,6 @@ export default function CodewarsCard({ sx, email, label }: Props) {
           username={data?.codewars.username}
         />
       </Box>
-    </GaugeProvider>
+    </EmailProvider>
   );
 }

@@ -1,4 +1,4 @@
-import GaugeContext from "@/app/context/providers/contexts";
+import { GaugeContext } from "@/app/context/providers/contexts";
 import { Breakpoint } from "@/app/context/providers/GaugeProvider";
 import { SxProps } from "@mui/material";
 import { useContext } from "react";

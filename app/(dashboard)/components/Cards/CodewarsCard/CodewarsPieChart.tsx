@@ -1,10 +1,9 @@
 "use client";
 
-import { KYU_COLORS, royalGold } from "@/theme";
+import { KYU_COLORS } from "@/theme";
 import { Box, SxProps } from "@mui/system";
 import { PieChart } from "@mui/x-charts/PieChart";
 import Image from "next/image";
-import Link from "next/link";
 
 interface Props {
   sx?: SxProps;

@@ -10,6 +10,7 @@ import {
   CurrentUserContext as CurrentUserContextType,
 } from "../reducers/currentUser";
 import { GaugeContextValue } from "@/app/context/providers/GaugeProvider";
+import { Email } from "./EmailProvider";
 
 export const AllUsersContext = createContext<AllUsersContextType | null>(null);
 export const AllUsersDispatchContext =
@@ -21,6 +22,6 @@ export const CurrentUserContext = createContext<CurrentUserContextType | null>(
 export const CurrentUserDispatchContext =
   createContext<Dispatch<CurrentUserAction> | null>(null);
 
-const GaugeContext = createContext<GaugeContextValue | null>(null);
+export const GaugeContext = createContext<GaugeContextValue | null>(null);
 
-export default GaugeContext;
+export const EmailContext = createContext<Email | null>(null);
