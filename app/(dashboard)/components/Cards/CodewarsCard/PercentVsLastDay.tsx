@@ -3,6 +3,7 @@ import { CodewarsDiamondsRecord } from "@/types/diamonds";
 import { calcDailySolvedProblemsGrowth } from "@/utils/dayjs";
 import TrendingDownIcon from "@mui/icons-material/TrendingDown";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
+import { Tooltip } from "@mui/material";
 import Box from "@mui/system/Box";
 
 interface Props {
@@ -13,8 +14,6 @@ const PercentVsLastDay = ({ lastTwoDaysSolvedProblems }: Props) => {
   const { today, growthPct } = calcDailySolvedProblemsGrowth(
     lastTwoDaysSolvedProblems
   );
-
-  console.log(today, growthPct) // today I solved one problem and today show me 1 but yesterday I solved 0 problem, percent must be 100% percent growth, right?
 
   const isUp = growthPct >= 0;
   const color = isUp ? "success.dark" : "error.main";
@@ -45,7 +44,7 @@ const PercentVsLastDay = ({ lastTwoDaysSolvedProblems }: Props) => {
           fontSize: "0.845rem",
         }}
       >
-        vs. yesterday
+        vs. last day
       </Box>
     </>
   );
