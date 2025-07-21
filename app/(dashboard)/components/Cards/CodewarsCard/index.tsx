@@ -25,11 +25,20 @@ export default function CodewarsCard({ sx, email, label }: Props) {
 
   const challenges = data?.codewars.codeChallenges.list ?? [];
 
-  const lastTwoDaysSolvedProblems = useMemo(() => {
-    return challenges.filter((challenge) =>
-      completedAfterThreshold(challenge.completedAt, 2)
-    ) as CodewarsCompletedChallenge[];
-  }, [challenges]);
+  const { ranks, lastTwoDaysSolvedProblems } = useMemo(
+    () => ({
+      ranks: Array.from({ length: 8 }, (_, k) => -1 - k).map(
+        (rank) =>
+          challenges.filter(
+            (challenge) => challenge.moreDetails?.rank.id === rank
+          ).length
+      ),
+      lastTwoDaysSolvedProblems: challenges.filter((challenge) =>
+        completedAfterThreshold(challenge.completedAt, 2)
+      ) as CodewarsCompletedChallenge[],
+    }),
+    [challenges.length]
+  );
 
   if (isLoading) return null;
 
@@ -60,7 +69,7 @@ export default function CodewarsCard({ sx, email, label }: Props) {
         </Box>
         <CodewarsPieChart
           sx={{ marginRight: 0.5 }}
-          ranks={[20, 20, 20, 20, 20, 20]}
+          ranks={ranks}
           username={data?.codewars.username}
         />
       </Box>
