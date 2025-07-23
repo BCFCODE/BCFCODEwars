@@ -26,14 +26,20 @@ export default async function DashboardPage() {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={2} columns={24}>
             <Grid
-              sx={{ display: "flex", justifyContent: "center" }}
+              sx={{
+                display: { xs: "flex", sm: "block", md: "flex" },
+                justifyContent: "center",
+              }}
               size={{ xs: 24, sm: 24, md: 24, lg: 8 }}
             >
               <TargetCard email={session?.user?.email ?? ""} label="Target" />
             </Grid>
             <Grid
-              sx={{ display: "flex", justifyContent: "center" }}
-              size={{ xs: 24, sm: 12, md: 12, lg: 8 }}
+              sx={{
+                display: { xs: "flex", sm: "block", md: "flex" },
+                justifyContent: "center",
+              }}
+              size={{ xs: 24, sm: 24, md: 12, lg: 8 }}
             >
               <DiamondsCard
                 email={session?.user?.email ?? ""}
@@ -42,8 +48,11 @@ export default async function DashboardPage() {
             </Grid>
 
             <Grid
-              sx={{ display: "flex", justifyContent: "center" }}
-              size={{ xs: 24, sm: 12, md: 12, lg: 8 }}
+              sx={{
+                display: { xs: "flex", sm: "block", md: "flex" },
+                justifyContent: "center",
+              }}
+              size={{ xs: 24, sm: 24, md: 12, lg: 8 }}
             >
               <CodewarsCard email={session?.user?.email ?? ""} label="Solved" />
             </Grid>
