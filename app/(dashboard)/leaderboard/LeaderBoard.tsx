@@ -10,11 +10,10 @@ import Pagination from "./UsersTable/Pagination";
 
 export default function Leaderboard() {
   const { data, isError, isLoading, refetch } = usePaginationQuery();
-  // console.log('Leaderboard', data)
 
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
-  if (isLoading)
+  if (isLoading || !data)
     return (
       <LoadingUI
         title="Loading Leaderboard..."
@@ -22,21 +21,20 @@ export default function Leaderboard() {
       />
     );
 
-  if (!isError)
-    return (
-      <TableContainer component={Paper}>
-        <Table aria-label="Leaderboard Table">
-          <LeaderboardHeader />
-          <UsersTable list={data?.list} />
-        </Table>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Pagination totalPageCount={data?.totalUsers} />
-        </Box>
-      </TableContainer>
-    );
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="Leaderboard Table">
+        <LeaderboardHeader />
+        <UsersTable list={data?.list} />
+      </Table>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Pagination totalPageCount={data?.totalUsers} />
+      </Box>
+    </TableContainer>
+  );
 }
