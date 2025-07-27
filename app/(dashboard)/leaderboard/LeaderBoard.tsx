@@ -22,21 +22,20 @@ export default function Leaderboard() {
       />
     );
 
-  if (!isError)
-    return (
-      <TableContainer component={Paper}>
-        <Table aria-label="Leaderboard Table">
-          <LeaderboardHeader />
-          <UsersTable list={data?.list} />
-        </Table>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Pagination totalPageCount={data?.totalUsers} />
-        </Box>
-      </TableContainer>
-    );
+  return (
+    <TableContainer component={Paper}>
+      <Table aria-label="Leaderboard Table">
+        <LeaderboardHeader />
+        <UsersTable list={data?.list ?? []} />
+      </Table>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Pagination totalPageCount={data?.totalUsers ?? 0} />
+      </Box>
+    </TableContainer>
+  );
 }
