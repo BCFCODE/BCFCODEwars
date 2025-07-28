@@ -94,21 +94,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
         totalPages: currentUser.codewars.codeChallenges.totalPages,
       });
     }
-
-    // if (success && !isDiamondsUpdatedRef.current && selectedChallenge) {
-    //   currentUserDispatch({
-    //     type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
-    //     reward: collectedDiamondsCount ?? 0,
-    //     selectedChallenge,
-    //   });
-
-    //   isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
-    // }
-
-    if (!success) {
-      isListUpdatedRef.current = false;
-      isDiamondsUpdatedRef.current = false;
-    }
   }, [
     success,
     isIconDisabled,
@@ -128,6 +113,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
       );
 
       if (response.success) {
+        
         setIsDiamondIconDisabled(false);
         collectButtonDispatch({ type: "LOADING...", isLoading: false });
         collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
@@ -160,7 +146,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
         throw new Error("Failed to fetch single challenge");
       }
     } catch (error) {
-      // console.error("Collect Diamonds failed:", error);
       setIsDiamondIconDisabled(false);
       collectButtonDispatch({ type: "LOADING...", isLoading: false });
       collectButtonDispatch({
@@ -169,7 +154,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
       });
       isListUpdatedRef.current = false;
       isDiamondsUpdatedRef.current = false;
-      // collectButtonDispatch({ type: "RESET_COUNTER" });
     }
   }, [
     currentUser.codewars.username,
@@ -204,7 +188,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
               useEasing
             />
           )}
-          {/* {isLoading ? (success ? counter : "") : collectedDiamondsCount} */}
         </Typography>
 
         {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}
