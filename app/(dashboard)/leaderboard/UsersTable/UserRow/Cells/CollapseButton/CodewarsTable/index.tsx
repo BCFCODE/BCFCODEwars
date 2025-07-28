@@ -44,7 +44,7 @@ const CodewarsTable = () => {
           justifyContent: "center",
         }}
       >
-        <Pagination totalPageCount={data?.totalItems} />
+        <Pagination totalPageCount={data?.totalItems ?? 0} />
       </Box>
     </Box>
   );

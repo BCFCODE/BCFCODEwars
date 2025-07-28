@@ -25,7 +25,7 @@ export default function Leaderboard() {
     <TableContainer component={Paper}>
       <Table aria-label="Leaderboard Table">
         <LeaderboardHeader />
-        <UsersTable list={data?.list} />
+        <UsersTable list={data?.list ?? []} />
       </Table>
       <Box
         sx={{
@@ -33,7 +33,7 @@ export default function Leaderboard() {
           justifyContent: "center",
         }}
       >
-        <Pagination totalPageCount={data?.totalUsers} />
+        <Pagination totalPageCount={data?.totalUsers ?? 0} />
       </Box>
     </TableContainer>
   );
