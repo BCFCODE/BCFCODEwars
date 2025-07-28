@@ -5,6 +5,7 @@ import CodewarsTable from "./Cells/CollapseButton/CodewarsTable";
 import generateResponsiveSX, {
   ResponsiveBreakpoint,
 } from "@/app/lib/ui/gauges/generateResponsiveSX";
+import { memo } from "react";
 
 interface Props {
   email: string;
@@ -23,7 +24,7 @@ export const gaugeFooterTextSXBreakpoints: ResponsiveBreakpoint[] = [
   { minWidth: 1260, sx: { fontSize: 19, marginTop: -1 } },
 ];
 
-export default function UserRow({ email }: Props) {
+const UserRow = memo(({ email }: Props) => {
   return (
     <>
       <User />
@@ -50,4 +51,6 @@ export default function UserRow({ email }: Props) {
       </CollapseBoundary>
     </>
   );
-}
+});
+
+export default UserRow;
