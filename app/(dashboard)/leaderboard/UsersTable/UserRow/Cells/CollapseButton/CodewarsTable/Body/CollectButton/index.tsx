@@ -67,41 +67,13 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   const { collectState, collectButtonDispatch } = useCollectButtonState();
 
   const {
-    counter,
+    // counter,
     isCollected,
     isError,
     isLoading,
     success,
     collectedDiamondsCount,
   } = collectState;
-
-  useEffect(() => {
-    if (!isCounting) return;
-
-    if (success) {
-      timeRef.current = setTimeout(() => {
-        collectButtonDispatch({ type: "DIAMOND_COUNTS", counter: counter + 1 });
-      }, 50);
-    }
-
-    if (counter === collectedDiamondsCount) {
-      collectButtonDispatch({ type: "LOADING...", isLoading: false });
-      collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
-
-      setIsCounting(false);
-    }
-
-    return () => {
-      timeRef.current && clearTimeout(timeRef.current);
-    };
-  }, [
-    isError,
-    counter,
-    success,
-    isCounting,
-    collectedDiamondsCount,
-    collectButtonDispatch,
-  ]);
 
   useEffect(() => {
     if (isCollected && collectedDiamondsCount) {
@@ -164,11 +136,13 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
       );
 
       if (response.success) {
+        collectButtonDispatch({ type: "LOADING...", isLoading: false });
+        collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
+        setIsCounting(false);
         const { data: selectedSingleChallenge } = response;
         const collectedDiamondsCount = calculateCodewarsDiamondsCount(
           selectedSingleChallenge
         );
-
         collectButtonDispatch({
           type: "SUCCESSFUL_RESPONSE",
           collectedDiamondsCount,
@@ -220,7 +194,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
           {success && (
             <CountUp
               end={collectedDiamondsCount ?? 500}
-              duration={0.5}
+              duration={1}
               // suffix="/Day"
               preserveValue
               useEasing
