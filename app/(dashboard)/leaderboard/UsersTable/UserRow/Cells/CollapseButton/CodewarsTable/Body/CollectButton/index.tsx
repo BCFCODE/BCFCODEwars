@@ -8,8 +8,10 @@ import {
 } from "@/app/(dashboard)/leaderboard/styles";
 import dynamic from "next/dynamic";
 import CodewarsAPIService from "@/app/api/services/codewars";
-import DiamondsService from "@/app/services/diamonds";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import {
+  CodewarsCompletedChallenge,
+  CodewarsSingleChallenge,
+} from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
@@ -23,11 +25,12 @@ import usePaginationStore, {
   defaultPagination,
 } from "../../Pagination/usePaginationStore";
 import useCodewarsTableMutation from "@/app/(dashboard)/leaderboard/UsersTable/hooks/useCodewarsTableMutation";
+import calculateCodewarsDiamondsCount from "@/utils/calculateCodewarsDiamondsCount";
 const DiamondIcon = dynamic(() => import("@mui/icons-material/Diamond"));
 
-const { calculateCodewarsDiamondsCount } = new DiamondsService();
+// const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
-const { collectDiamonds } = new DiamondsService();
+// const { collectDiamonds } = new DiamondsService();
 // const { postCurrentUser } = new DatabaseAPIService();
 
 interface Props {
@@ -164,7 +167,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
 
       if (response.success) {
         const { data: selectedSingleChallenge } = response;
-        const { collectedDiamondsCount } = await collectDiamonds(
+        const collectedDiamondsCount = calculateCodewarsDiamondsCount(
           selectedSingleChallenge
         );
 
@@ -206,7 +209,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
       <Box sx={diamondBoxStyles}>
         <Typography sx={counterStyles}>
           {calculateCodewarsDiamondsCount(
-            currentChallenge.moreDetails?.rank?.id ?? 8
+            currentChallenge.moreDetails as CodewarsSingleChallenge
           )}
         </Typography>
         <DiamondIcon sx={collectedDiamondStyles} />
