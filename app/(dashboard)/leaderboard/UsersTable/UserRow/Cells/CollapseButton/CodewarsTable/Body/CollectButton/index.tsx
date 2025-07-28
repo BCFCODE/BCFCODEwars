@@ -44,8 +44,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
         state.pagination[currentUser.codewars.username] ?? defaultPagination
     ).apiPageNumber,
   });
-  const [isCounting, setIsCounting] = useState(true);
-  const timeRef = useRef<NodeJS.Timeout | null>(null);
+
   const isListUpdatedRef = useRef(false);
   const isDiamondsUpdatedRef = useRef(false);
   const session = useSession().data;
@@ -76,13 +75,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   } = collectState;
 
   useEffect(() => {
-    if (isCollected && collectedDiamondsCount) {
-      setIsDiamondIconDisabled(false);
-      collectButtonDispatch({ type: "RESET_COUNTER" });
-    }
-  }, [isCollected, collectedDiamondsCount]);
-
-  useEffect(() => {
     if (success && !isIconDisabled) {
       const list = currentUser.codewars.codeChallenges.list.map((challenge) =>
         challenge.id === selectedChallenge?.id ? selectedChallenge : challenge
@@ -103,15 +95,15 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
       });
     }
 
-    if (success && !isDiamondsUpdatedRef.current && selectedChallenge) {
-      currentUserDispatch({
-        type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
-        reward: collectedDiamondsCount ?? 0,
-        selectedChallenge,
-      });
+    // if (success && !isDiamondsUpdatedRef.current && selectedChallenge) {
+    //   currentUserDispatch({
+    //     type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
+    //     reward: collectedDiamondsCount ?? 0,
+    //     selectedChallenge,
+    //   });
 
-      isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
-    }
+    //   isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
+    // }
 
     if (!success) {
       isListUpdatedRef.current = false;
@@ -136,9 +128,9 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
       );
 
       if (response.success) {
+        setIsDiamondIconDisabled(false);
         collectButtonDispatch({ type: "LOADING...", isLoading: false });
         collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
-        setIsCounting(false);
         const { data: selectedSingleChallenge } = response;
         const collectedDiamondsCount = calculateCodewarsDiamondsCount(
           selectedSingleChallenge
@@ -154,6 +146,16 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
           rewardStatus: RewardStatus.ClaimedDiamonds,
           moreDetails: selectedSingleChallenge,
         });
+
+        if (selectedChallenge) {
+          currentUserDispatch({
+            type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
+            reward: collectedDiamondsCount ?? 0,
+            selectedChallenge,
+          });
+
+          isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
+        }
       } else {
         throw new Error("Failed to fetch single challenge");
       }
@@ -165,7 +167,9 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
         type: "!SUCCESSFUL_RESPONSE",
         success: false,
       });
-      collectButtonDispatch({ type: "RESET_COUNTER" });
+      isListUpdatedRef.current = false;
+      isDiamondsUpdatedRef.current = false;
+      // collectButtonDispatch({ type: "RESET_COUNTER" });
     }
   }, [
     currentUser.codewars.username,
