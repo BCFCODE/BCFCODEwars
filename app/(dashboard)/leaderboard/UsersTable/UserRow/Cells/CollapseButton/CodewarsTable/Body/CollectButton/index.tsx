@@ -26,12 +26,10 @@ import usePaginationStore, {
 } from "../../Pagination/usePaginationStore";
 import useCodewarsTableMutation from "@/app/(dashboard)/leaderboard/UsersTable/hooks/useCodewarsTableMutation";
 import calculateCodewarsDiamondsCount from "@/utils/calculateCodewarsDiamondsCount";
+import CountUp from "react-countup";
 const DiamondIcon = dynamic(() => import("@mui/icons-material/Diamond"));
 
-// const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
-// const { collectDiamonds } = new DiamondsService();
-// const { postCurrentUser } = new DatabaseAPIService();
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
@@ -219,7 +217,16 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     return (
       <Box sx={diamondBoxStyles}>
         <Typography sx={counterStyles}>
-          {isLoading ? (success ? counter : "") : collectedDiamondsCount}
+          {success && (
+            <CountUp
+              end={collectedDiamondsCount ?? 500}
+              duration={0.5}
+              // suffix="/Day"
+              preserveValue
+              useEasing
+            />
+          )}
+          {/* {isLoading ? (success ? counter : "") : collectedDiamondsCount} */}
         </Typography>
 
         {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}
