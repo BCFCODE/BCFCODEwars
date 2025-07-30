@@ -10,11 +10,10 @@ import Pagination from "./UsersTable/Pagination";
 
 export default function Leaderboard() {
   const { data, isError, isLoading, refetch } = usePaginationQuery();
-  // console.log('Leaderboard', data)
 
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;
 
-  if (isLoading)
+  if (isLoading || !data)
     return (
       <LoadingUI
         title="Loading Leaderboard..."

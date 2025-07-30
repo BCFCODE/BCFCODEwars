@@ -10,7 +10,6 @@ import { Box, TableCell, Typography, keyframes } from "@mui/material";
 import { memo, useState } from "react";
 import CountUp from "react-countup";
 import { diamondSumStyles } from "./styles";
-import PulseAnimation from "@/app/(dashboard)/animations/Pulse";
 
 const wave = keyframes`
   0% {

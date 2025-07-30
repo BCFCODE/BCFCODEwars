@@ -8,8 +8,10 @@ import {
 } from "@/app/(dashboard)/leaderboard/styles";
 import dynamic from "next/dynamic";
 import CodewarsAPIService from "@/app/api/services/codewars";
-import DiamondsService from "@/app/services/diamonds";
-import { CodewarsCompletedChallenge } from "@/types/codewars";
+import {
+  CodewarsCompletedChallenge,
+  CodewarsSingleChallenge,
+} from "@/types/codewars";
 import { RewardStatus } from "@/types/diamonds";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useSession } from "next-auth/react";
@@ -23,12 +25,11 @@ import usePaginationStore, {
   defaultPagination,
 } from "../../Pagination/usePaginationStore";
 import useCodewarsTableMutation from "@/app/(dashboard)/leaderboard/UsersTable/hooks/useCodewarsTableMutation";
+import calculateCodewarsDiamondsCount from "@/utils/calculateCodewarsDiamondsCount";
+import CountUp from "react-countup";
 const DiamondIcon = dynamic(() => import("@mui/icons-material/Diamond"));
 
-const { calculateCodewarsDiamondsCount } = new DiamondsService();
 const { getSingleChallenge } = new CodewarsAPIService();
-const { collectDiamonds } = new DiamondsService();
-// const { postCurrentUser } = new DatabaseAPIService();
 
 interface Props {
   currentChallenge: CodewarsCompletedChallenge;
@@ -43,8 +44,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
         state.pagination[currentUser.codewars.username] ?? defaultPagination
     ).apiPageNumber,
   });
-  const [isCounting, setIsCounting] = useState(true);
-  const timeRef = useRef<NodeJS.Timeout | null>(null);
+
   const isListUpdatedRef = useRef(false);
   const isDiamondsUpdatedRef = useRef(false);
   const session = useSession().data;
@@ -66,48 +66,13 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
   const { collectState, collectButtonDispatch } = useCollectButtonState();
 
   const {
-    counter,
+    // counter,
     isCollected,
     isError,
     isLoading,
     success,
     collectedDiamondsCount,
   } = collectState;
-
-  useEffect(() => {
-    if (!isCounting) return;
-
-    if (success) {
-      timeRef.current = setTimeout(() => {
-        collectButtonDispatch({ type: "DIAMOND_COUNTS", counter: counter + 1 });
-      }, 50);
-    }
-
-    if (counter === collectedDiamondsCount) {
-      collectButtonDispatch({ type: "LOADING...", isLoading: false });
-      collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
-
-      setIsCounting(false);
-    }
-
-    return () => {
-      timeRef.current && clearTimeout(timeRef.current);
-    };
-  }, [
-    isError,
-    counter,
-    success,
-    isCounting,
-    collectedDiamondsCount,
-    collectButtonDispatch,
-  ]);
-
-  useEffect(() => {
-    if (isCollected && collectedDiamondsCount) {
-      setIsDiamondIconDisabled(false);
-      collectButtonDispatch({ type: "RESET_COUNTER" });
-    }
-  }, [isCollected, collectedDiamondsCount]);
 
   useEffect(() => {
     if (success && !isIconDisabled) {
@@ -129,21 +94,6 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
         totalPages: currentUser.codewars.codeChallenges.totalPages,
       });
     }
-
-    if (success && !isDiamondsUpdatedRef.current && selectedChallenge) {
-      currentUserDispatch({
-        type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
-        reward: collectedDiamondsCount ?? 0,
-        selectedChallenge,
-      });
-
-      isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
-    }
-
-    if (!success) {
-      isListUpdatedRef.current = false;
-      isDiamondsUpdatedRef.current = false;
-    }
   }, [
     success,
     isIconDisabled,
@@ -163,11 +113,14 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
       );
 
       if (response.success) {
+        
+        setIsDiamondIconDisabled(false);
+        collectButtonDispatch({ type: "LOADING...", isLoading: false });
+        collectButtonDispatch({ type: "DIAMONDS_COLLECTED" });
         const { data: selectedSingleChallenge } = response;
-        const { collectedDiamondsCount } = await collectDiamonds(
+        const collectedDiamondsCount = calculateCodewarsDiamondsCount(
           selectedSingleChallenge
         );
-
         collectButtonDispatch({
           type: "SUCCESSFUL_RESPONSE",
           collectedDiamondsCount,
@@ -179,18 +132,28 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
           rewardStatus: RewardStatus.ClaimedDiamonds,
           moreDetails: selectedSingleChallenge,
         });
+
+        if (selectedChallenge) {
+          currentUserDispatch({
+            type: "UPDATE_DIAMONDS_TOTALS_AND_RANKS",
+            reward: collectedDiamondsCount ?? 0,
+            selectedChallenge,
+          });
+
+          isDiamondsUpdatedRef.current = true; // Prevents duplicate dispatch
+        }
       } else {
         throw new Error("Failed to fetch single challenge");
       }
     } catch (error) {
-      // console.error("Collect Diamonds failed:", error);
       setIsDiamondIconDisabled(false);
       collectButtonDispatch({ type: "LOADING...", isLoading: false });
       collectButtonDispatch({
         type: "!SUCCESSFUL_RESPONSE",
         success: false,
       });
-      collectButtonDispatch({ type: "RESET_COUNTER" });
+      isListUpdatedRef.current = false;
+      isDiamondsUpdatedRef.current = false;
     }
   }, [
     currentUser.codewars.username,
@@ -206,7 +169,7 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
       <Box sx={diamondBoxStyles}>
         <Typography sx={counterStyles}>
           {calculateCodewarsDiamondsCount(
-            currentChallenge.moreDetails?.rank?.id ?? 8
+            currentChallenge.moreDetails as CodewarsSingleChallenge
           )}
         </Typography>
         <DiamondIcon sx={collectedDiamondStyles} />
@@ -216,7 +179,15 @@ const CollectDiamonds = ({ currentChallenge }: Props) => {
     return (
       <Box sx={diamondBoxStyles}>
         <Typography sx={counterStyles}>
-          {isLoading ? (success ? counter : "") : collectedDiamondsCount}
+          {success && (
+            <CountUp
+              end={collectedDiamondsCount ?? 500}
+              duration={1}
+              // suffix="/Day"
+              preserveValue
+              useEasing
+            />
+          )}
         </Typography>
 
         {isCollected && <DiamondIcon sx={collectedDiamondStyles} />}

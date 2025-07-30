@@ -1,9 +1,9 @@
 // app/services/codewars-service.ts
 
-import { CompletedChallengesQueryData } from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/usePaginationQuery";
+// import { CompletedChallengesQueryData } from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/usePaginationQuery";
 import { CodewarsSingleChallenge } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
-import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route";
+// import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route";
 
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;
@@ -21,23 +21,23 @@ class CodewarsAPIService {
     return response.json();
   }
 
-  getCompletedChallenges = async ({
-    apiPageNumber,
-    username,
-  }: {
-    apiPageNumber: number;
-    username: string;
-  }): Promise<CompletedChallengesQueryData> => {
-    const result = await this.fetchJSON<GetCompletedChallengesResponse>(
-      `${this.endpoint}/challenges/all?username=${username}&pageNumber=${apiPageNumber}`
-    );
+  // getCompletedChallenges = async ({
+  //   apiPageNumber,
+  //   username,
+  // }: {
+  //   apiPageNumber: number;
+  //   username: string;
+  // }): Promise<CompletedChallengesQueryData> => {
+  //   const result = await this.fetchJSON<GetCompletedChallengesResponse>(
+  //     `${this.endpoint}/challenges/all?username=${username}&pageNumber=${apiPageNumber}`
+  //   );
 
-    return {
-      list: result.data,
-      totalItems: result.totalItems,
-      totalPages: result.totalPages,
-    };
-  };
+  //   return {
+  //     list: result.data,
+  //     totalItems: result.totalItems,
+  //     totalPages: result.totalPages,
+  //   };
+  // };
 
   getSingleChallenge = async (
     username: string,
