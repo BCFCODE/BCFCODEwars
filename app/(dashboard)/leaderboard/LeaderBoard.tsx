@@ -9,6 +9,7 @@ import LeaderboardHeader from "./UsersTable/Header";
 import Pagination from "./UsersTable/Pagination";
 
 export default function Leaderboard() {
+  console.log("Leaderboard rendered at", new Date().toISOString());
   const { data, isError, isLoading, refetch } = usePaginationQuery();
   
   if (isError) return <LeaderboardLoadingError onRetry={refetch} />;

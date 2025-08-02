@@ -36,6 +36,7 @@ const usePaginationQuery = () => {
         username,
         apiPageNumber,
       });
+      console.log("Start fetch users at", new Date().toISOString());
 
       // const mergedList = mergeListsAvoidingDuplicates({
       //   oldList: currentUser.codewars.codeChallenges.list,
