@@ -39,13 +39,20 @@ export default function Body() {
 
   useEffect(() => {
     if (!data) return;
-    currentUserDispatch({
-      type: "UPDATE_CODE_CHALLENGES_LIST",
-      list: sortedList,
-      totalItems: data?.totalItems ?? 0,
-      totalPages: data?.totalPages ?? 0,
-    });
-  }, [data, sortedList, currentUserDispatch]);
+
+    // Prevent dispatch loop: only dispatch if data list length changed
+    const currentList = currentUser.codewars.codeChallenges.list;
+    const isLengthChanged = currentList.length !== sortedList.length;
+
+    if (isLengthChanged) {
+      currentUserDispatch({
+        type: "UPDATE_CODE_CHALLENGES_LIST",
+        list: sortedList,
+        totalItems: data.totalItems,
+        totalPages: data.totalPages,
+      });
+    }
+  }, [data, sortedList, currentUser.codewars.codeChallenges.list.length]);
 
   const { both, claimed, unClaimed } = useFilter({
     activeFilter,

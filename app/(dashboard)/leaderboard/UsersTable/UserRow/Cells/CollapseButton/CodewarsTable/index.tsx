@@ -12,6 +12,7 @@ const CodewarsTable = () => {
   const { currentUser } = useCurrentUserContext();
   const selectedUser = useUsersStore((state) => state.user.selectedUser);
   const { isError, isLoading, data, error } = usePaginationQuery();
+console.log("CodewarsTable rendered at", new Date().toISOString());
 
   if (isError || (error && currentUser.email === selectedUser?.email))
     return <Error />;
@@ -44,7 +45,7 @@ const CodewarsTable = () => {
           justifyContent: "center",
         }}
       >
-        <Pagination totalPageCount={data?.totalItems} />
+        <Pagination totalPageCount={data?.totalItems ?? 0} />
       </Box>
     </Box>
   );

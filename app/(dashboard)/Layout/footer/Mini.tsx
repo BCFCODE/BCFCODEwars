@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 
 const Mini = () => {
   const currentYear = new Date().getFullYear();
+
   return (
     <Typography
       variant="caption"
@@ -17,31 +18,34 @@ const Mini = () => {
         flexDirection: "column",
         alignItems: "flex-start",
         position: "relative",
-        // fontSize: "0.7em",
         writingMode: "vertical-lr", // "BCFCODE" stays vertical
         textOrientation: "upright",
         height: "100%", // Ensures full height for proper positioning
       }}
     >
       <span
-        style={{
-          position: "absolute",
-          bottom: 17,
-          left: -5,
-          letterSpacing: -2,
-          fontSize: 10,
-        }}
+        style={
+          {
+            position: "absolute",
+            bottom: "17px",
+            left: "-5px",
+            letterSpacing: "-2px",
+            fontSize: "10px",
+          } as React.CSSProperties
+        }
       >
         BCFCODE
-      </span>{" "}
+      </span>
       <span
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          writingMode: "horizontal-tb", // Keeps the year horizontal
-          fontSize: 10,
-        }}
+        style={
+          {
+            position: "absolute",
+            bottom: "0px",
+            left: "0px",
+            writingMode: "horizontal-tb",
+            fontSize: "10px",
+          } as React.CSSProperties
+        }
       >
         © {currentYear}
       </span>

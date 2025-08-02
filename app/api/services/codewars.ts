@@ -1,9 +1,11 @@
 // app/services/codewars-service.ts
 
+// import { CompletedChallengesQueryData } from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/usePaginationQuery";
 import { CompletedChallengesQueryData } from "@/app/(dashboard)/leaderboard/UsersTable/UserRow/Cells/CollapseButton/CodewarsTable/Pagination/usePaginationQuery";
 import { CodewarsSingleChallenge } from "@/types/codewars";
 import { baseURL } from "@/utils/constants";
 import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route";
+// import { GetCompletedChallengesResponse } from "../codewars/challenges/all/route";
 
 class CodewarsAPIService {
   private endpoint = `${baseURL}/api/codewars`;
@@ -51,7 +53,7 @@ class CodewarsAPIService {
       const { data } = await this.fetchJSON<{ data: CodewarsSingleChallenge }>(
         `${this.endpoint}/challenges/single?username=${username}&challengeId=${id}`
       );
-      
+
       return { success: true, data };
     } catch (error) {
       console.error("Error fetching single challenge:", error);

@@ -13,7 +13,7 @@ export type CollectButtonAction =
       type: "DIAMOND_COUNTS";
       counter: number;
     }
-  | { type: "RESET_COUNTER" }
+  // | { type: "RESET_COUNTER" }
   | { type: "DIAMONDS_COLLECTED" }
   | {
       type: "SUCCESSFUL_RESPONSE";
@@ -50,8 +50,8 @@ export default function collectButtonReducer(
         ...state,
         counter: action.counter,
       };
-    case "RESET_COUNTER":
-      return { ...state, counter: 0 };
+    // case "RESET_COUNTER":
+    //   return { ...state, counter: 0 };
     case "DIAMONDS_COLLECTED":
       return { ...state, isCollected: true };
     case "SUCCESSFUL_RESPONSE":

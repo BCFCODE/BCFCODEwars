@@ -2,6 +2,7 @@ import CurrentUserProvider from "@/app/context/providers/CurrentUser";
 import { AuthenticatedUser } from "@/types/users";
 import { TableBody } from "@mui/material";
 import UserRow from "./UserRow";
+import { useMemo } from "react";
 
 interface Props {
   list?: AuthenticatedUser[];

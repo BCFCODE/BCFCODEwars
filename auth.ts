@@ -4,13 +4,15 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { baseURL } from "./utils/constants";
 
+const clientId = process.env.GOOGLE_CLIENT_ID;
+const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+
+if (!clientId || !clientSecret) {
+  throw new Error("Missing Google OAuth environment variables.");
+}
+
 // Define authentication providers
-const providers = [
-  GoogleProvider({
-    clientId: process.env.GOOGLE_CLIENT_ID!,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-  }),
-];
+const providers = [GoogleProvider({ clientId, clientSecret })];
 
 const missingVars: string[] = [];
 

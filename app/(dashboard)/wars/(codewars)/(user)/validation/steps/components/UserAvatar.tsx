@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Avatar } from "@mui/material";
-import { auth } from "@/auth";
+// import { auth } from "@/auth";
 
 const UserAvatar = ({ session }: { session: any }) => {
   if (!session || !session.user) {
@@ -31,10 +31,10 @@ const UserAvatar = ({ session }: { session: any }) => {
 
 export default UserAvatar;
 
-// Server-side data fetching
-export async function getServerSideProps(context: any) {
-  const session = await auth(context.req); // Pass request context if needed
-  return {
-    props: { session },
-  };
-}
+// // Server-side data fetching
+// export async function getServerSideProps(context: any) {
+//   const session = await auth(context.req); // Pass request context if needed
+//   return {
+//     props: { session },
+//   };
+// }

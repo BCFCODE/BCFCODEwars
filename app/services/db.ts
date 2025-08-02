@@ -157,7 +157,7 @@ class DatabaseService {
         { $skip: skip },
         { $limit: limit },
       ])
-      .sort({ "diamonds.totals.total": -1 })
+      
       .toArray();
 
     return { list, totalUsers };

@@ -1,3 +1,4 @@
+// import CodewarsAPIService from "@/app/api/services/codewars";
 import CodewarsAPIService from "@/app/api/services/codewars";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
@@ -35,6 +36,7 @@ const usePaginationQuery = () => {
         username,
         apiPageNumber,
       });
+      console.log("Start fetch users at", new Date().toISOString());
 
       // const mergedList = mergeListsAvoidingDuplicates({
       //   oldList: currentUser.codewars.codeChallenges.list,
