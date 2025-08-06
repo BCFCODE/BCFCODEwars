@@ -1,12 +1,12 @@
 // import CodewarsAPIService from "@/app/api/services/codewars";
+import CodewarsAPIService from "@/app/api/services/codewars";
 import useCurrentUserContext from "@/app/context/hooks/useCurrentUserContext";
 import { CodewarsCompletedChallenge } from "@/types/codewars";
 import { QueryKey, useQuery } from "@tanstack/react-query";
 import usePaginationStore, { defaultPagination } from "./usePaginationStore";
 import getQueryKey from "./utils/getQueryKey";
-import axios from "axios";
 
-// const { getCompletedChallenges } = new CodewarsAPIService();
+const { getCompletedChallenges } = new CodewarsAPIService();
 
 export interface CompletedChallengesQueryData {
   totalPages: number; // Total number of pages in the response
@@ -31,36 +31,31 @@ const usePaginationQuery = () => {
     QueryKey
   >({
     queryKey,
-    queryFn: () =>
-      axios
-        .get<CompletedChallengesQueryData>(
-          `/api/codewars/challenges/all?username=${username}&pageNumber=${apiPageNumber}`
-        )
-        .then((res) => res.data),
-    // async () => {
-    //   const { list, totalItems, totalPages } = await getCompletedChallenges({
-    //     username,
-    //     apiPageNumber,
-    //   });
+    queryFn: async () => {
+      const { list, totalItems, totalPages } = await getCompletedChallenges({
+        username,
+        apiPageNumber,
+      });
+      console.log("Start fetch users at", new Date().toISOString());
 
-    //   // const mergedList = mergeListsAvoidingDuplicates({
-    //   //   oldList: currentUser.codewars.codeChallenges.list,
-    //   //   newList: applyDefaultTrackingAndRewardStatusToAll(list),
-    //   // });
+      // const mergedList = mergeListsAvoidingDuplicates({
+      //   oldList: currentUser.codewars.codeChallenges.list,
+      //   newList: applyDefaultTrackingAndRewardStatusToAll(list),
+      // });
 
-    //   // const sortedList = sortByCompletedAtDesc(mergedList);
+      // const sortedList = sortByCompletedAtDesc(mergedList);
 
-    //   // currentUserDispatch({
-    //   //   type: "UPDATE_CODE_CHALLENGES_LIST",
-    //   //   list: sortedList,
-    //   //   totalItems: totalItems,
-    //   //   totalPages: totalPages,
-    //   // });
+      // currentUserDispatch({
+      //   type: "UPDATE_CODE_CHALLENGES_LIST",
+      //   list: sortedList,
+      //   totalItems: totalItems,
+      //   totalPages: totalPages,
+      // });
 
-    //   // console.log("usePaginationQuery/sortedList", sortedList, currentUser);
+      // console.log("usePaginationQuery/sortedList", sortedList, currentUser);
 
-    //   return { list, totalItems, totalPages };
-    // }
+      return { list, totalItems, totalPages };
+    },
     enabled: !!username,
     staleTime: 1 * 1000 * 60,
     // retry: 1,
