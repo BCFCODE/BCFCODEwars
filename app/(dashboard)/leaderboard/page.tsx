@@ -8,7 +8,7 @@ import UsersTable from "./UsersTable";
 import LeaderboardHeader from "./UsersTable/Header";
 import Pagination from "./UsersTable/Pagination";
 
-export default async function LeaderBoardPage() {
+export default function LeaderBoardPage() {
   console.log("Leaderboard rendered at", new Date().toISOString());
   const { data, isError, isLoading, refetch } = usePaginationQuery();
 
