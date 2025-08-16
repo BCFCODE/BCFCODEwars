@@ -5,7 +5,7 @@ import { Box, SxProps } from "@mui/material";
 import React, { PropsWithChildren, useState } from "react";
 
 interface Props extends PropsWithChildren {
-  SX: SxProps;
+  SX?: SxProps;
 }
 
 const Container = ({ children, SX }: Props) => {
