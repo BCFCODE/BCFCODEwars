@@ -1,4 +1,3 @@
-import Leaderboard from "@/app/(dashboard)/leaderboard/LeaderBoard";
 import { Box } from "@mui/material";
 import { SignInPage } from "@toolpad/core/SignInPage";
 import { Metadata } from "next/types";
@@ -30,17 +29,18 @@ export default async function SignIn() {
     >
       {/* Sign-In Container */}
       <Container
-        SX={{
-          opacity: 0.2,
-          transition: "opacity 0.7s ease",
-          "&:hover": { opacity: 1 },
-          "@media (max-width:800px)": {
-            opacity: 1,
-          },
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        // SX={{
+        //   opacity: 0.2,
+        //   transition: "opacity 0.7s ease",
+        //   "&:hover": { opacity: 1 },
+        //   "@media (max-width:800px)": {
+        //     opacity: 1,
+        //   },
+        //   display: "flex",
+        //   justifyContent: "center",
+        //   alignItems: "center",
+        //   borderRadius: 50
+        // }}
       >
         <SignInPage
           sx={{
@@ -49,7 +49,7 @@ export default async function SignIn() {
               xs: "relative", // stack normally on mobile
               md: "fixed", // float in center on large
             },
-            top: { xs: "auto", md: 250 },
+            // top: { xs: "auto", md: 250 },
             left: { xs: "auto", md: "50%" },
             transform: { xs: "none", md: "translate(-50%, -50%)" },
             width: { xs: "100%", sm: "90%", md: "auto" },
@@ -61,7 +61,7 @@ export default async function SignIn() {
       </Container>
 
       {/* Leaderboard */}
-      <Box
+      {/* <Box
         sx={{
           height: "90vh",
           width: "100%",
@@ -69,7 +69,7 @@ export default async function SignIn() {
         }}
       >
         <Leaderboard />
-      </Box>
+      </Box> */}
     </Box>
   );
 }
