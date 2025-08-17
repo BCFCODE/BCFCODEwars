@@ -1,6 +1,6 @@
-# BCFCODEwars
+# BCFCODE
 
-Welcome to BCFCODEwars! This is where we combine coding skills and teamwork to tackle challenges with creativity.
+Welcome to BCFCODE! This is where we combine coding skills and teamwork to tackle challenges with creativity.
 
 ## Dependencies:
 
@@ -30,7 +30,7 @@ BCFCODE is a place for tech enthusiasts who value creativity and collaboration. 
 
 <p align="center">
   <a href="https://github.com/BCFCODEteam">
-    <img src="assets/BCFCODEwars LOGO.jpg" alt="BCFCODE LOGO">
+    <img src="https://res.cloudinary.com/ds8pptoh2/image/upload/v1747825921/BCFCODE-LOGO_vtfegn.jpg" alt="BCFCODE LOGO">
   </a>
 </p>
 
@@ -43,12 +43,6 @@ BCFCODE is a place for tech enthusiasts who value creativity and collaboration. 
 - [Morteza Bakhshandeh](https://bakhshandehmorteza.ir/)
 - Adib Khaki
 
-# [© BCFCODE](https://github.com/BCFCODE)
+# [© BCFCODE](https://www.bcfcode.ir/)
 
-[Join our Telegram](https://t.me/BCFCODE) | [Follow us on Instagram](https://www.instagram.com/bcfcodeteam/?igshid=MzRlODBiNWFlZA%3D%3D)
-
-<span style="color: yellow;">  
-Using data from an API, such as the CodeWars API, requires following specific terms and policies. Check the [CodeWars API documentation](https://dev.codewars.com/) for details on data usage, limits, and guidelines. Make sure to adhere to these rules and keep your API keys secure.
-</span>
-
-## [CodeWars API documentation](https://dev.codewars.com/)
+[Join our Telegram](https://t.me/BCFCODE) | [Follow us on X](https://x.com/bcfcode)

@@ -1,0 +1,35 @@
+# robots.txt for BCFCODE
+
+# Default rules for all search engine bots
+User-agent: *
+
+# Disallow sensitive or private sections
+Disallow: /admin/            # Admin panel
+Disallow: /login/            # Login page
+Disallow: /wp-admin/         # WordPress admin (precautionary)
+Disallow: /private/          # Private content
+Disallow: /temp/             # Temporary directories
+Disallow: /search/           # Internal search results
+Disallow: /sort/             # Sorting filters (duplicate content risk)
+Disallow: /filter/           # Faceted navigation (duplicate content risk)
+Disallow: /category/*?       # Category filters with query params
+Disallow: /?sessionid=       # Session tracking URLs
+
+# Allow access to assets needed for rendering and SEO
+Allow: /images/              # Open Graph and Twitter preview images
+Allow: /assets/              # Static assets (JS, CSS, etc.)
+Allow: /fonts/               # Web fonts
+Allow: /js/                  # JavaScript files
+Allow: /css/                 # Stylesheets
+
+# Sitemap location
+Sitemap: https://bcfcode.ir/sitemap.xml
+
+# Specific rules for Googlebot
+User-agent: Googlebot
+Disallow: /private-google/   # Googlebot-specific private section
+
+# Note:
+# - Avoid blocking all query parameters with generic rules like /*? unless necessary.
+# - Use canonical tags and proper meta tags for better duplicate content handling.
+# - Block PDF indexing using X-Robots-Tag headers on the server if needed.
