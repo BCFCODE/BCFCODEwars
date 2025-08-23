@@ -116,7 +116,7 @@ export default function AppSidebar() {
             alt='BCFCODE Logo'
             className='bg-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-b-sm'
           />
-          <span className='ml-1 text-3xl leading-none font-semibold text-white opacity-90 drop-shadow-[0_0_3px_rgba(215,229,240,1)]'>
+          <span className='ml-1 text-3xl leading-none font-semibold opacity-90 drop-shadow-[0_0_3px_rgba(215,229,240,1)] dark:text-white'>
             BCFCODE
           </span>
           {/* <div className='flex flex-col gap-0.5 leading-none'>
