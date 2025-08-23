@@ -1,85 +1,127 @@
 @import 'tailwindcss';
-
 @import 'tw-animate-css';
-
 @custom-variant dark (&:is(.dark *));
-
 @import './theme.css';
 
+/* ===== Design Tokens ===== */
 :root {
   --radius: 0.625rem;
+
+  /* Light Theme Defaults */
+  --background: #f9fafb; /* fallback */
   --background: oklch(1 0 0);
+  --foreground: #030812;
   --foreground: oklch(0.145 0 0);
+
+  --card: #ffffff;
   --card: oklch(1 0 0);
+  --card-foreground: #152234;
   --card-foreground: oklch(0.145 0 0);
+
+  --popover: #ffffff;
   --popover: oklch(1 0 0);
+  --popover-foreground: #030812;
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+
+  --primary: #16a087;
+  --primary: oklch(0.64 0.17 174);
+  --primary-foreground: #ffffff;
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+
+  --secondary: #93a8c3;
+  --secondary: oklch(0.75 0.05 240);
+  --secondary-foreground: #030812;
   --secondary-foreground: oklch(0.205 0 0);
+
+  --muted: #e5eaf0;
   --muted: oklch(0.97 0 0);
+  --muted-foreground: #1e2d47;
   --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+
+  --accent: #16a087;
+  --accent-foreground: #030812;
+
+  --destructive: #e24d4d;
   --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: #ffffff;
+
+  --border: #d7e5f0;
   --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
+  --input: var(--border);
+  --ring: #16a087;
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Charts */
+  --chart-1: #16a087;
+  --chart-2: #93a8c3;
+  --chart-3: #1e2d47;
+  --chart-4: #152234;
+  --chart-5: #03060f;
+
+  /* Sidebar */
+  --sidebar: #ffffff;
+  --sidebar-foreground: #030812;
+  --sidebar-primary: #16a087;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #93a8c3;
+  --sidebar-accent-foreground: #030812;
+  --sidebar-border: #d7e5f0;
+  --sidebar-ring: #16a087;
 }
 
+/* ===== Dark Theme ===== */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.269 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.371 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.439 0 0);
+  --background: #030812;
+  --foreground: #93a8c3;
+
+  --card: #081b1f;
+  --card-foreground: #93a8c3;
+
+  --popover: #040915;
+  --popover-foreground: #93a8c3;
+
+  --primary: #16a087;
+  --primary-foreground: #030812;
+
+  --secondary: #1e2d47;
+  --secondary-foreground: #93a8c3;
+
+  --muted: #152234;
+  --muted-foreground: #93a8c3;
+
+  --accent: #93a8c3;
+  --accent-foreground: #030812;
+
+  --destructive: #e24d4d;
+  --destructive-foreground: #ffffff;
+
+  --border: #050c16;
+  --input: #060e1a;
+  --ring: #16a087;
+
+  --chart-1: #16a087;
+  --chart-2: #93a8c3;
+  --chart-3: #1e2d47;
+  --chart-4: #152234;
+  --chart-5: #03060f;
+
+  --sidebar: #040915;
+  --sidebar-foreground: #93a8c3;
+  --sidebar-primary: #16a087;
+  --sidebar-primary-foreground: #030812;
+  --sidebar-accent: #1e2d47;
+  --sidebar-accent-foreground: #93a8c3;
+  --sidebar-border: #050c16;
+  --sidebar-ring: #16a087;
 }
 
+/* ===== Theme Mapping for Tailwind ===== */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -113,16 +155,17 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* ===== Base Layer ===== */
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
 }
 
-/* View Transition Wave Effect */
+/* ===== View Transition Animation ===== */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
@@ -130,29 +173,34 @@
 }
 
 ::view-transition-old(root) {
-  /* Ensure the outgoing view (old theme) is beneath */
   z-index: 0;
 }
 
 ::view-transition-new(root) {
-  /* Ensure the incoming view (new theme) is always on top */
   z-index: 1;
+  animation: reveal 0.4s ease-in-out forwards;
 }
 
 @keyframes reveal {
   from {
-    /* Use CSS variables for the origin, defaulting to center if not set */
     clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
     opacity: 0.7;
   }
   to {
-    /* Use CSS variables for the origin, defaulting to center if not set */
     clip-path: circle(150% at var(--x, 50%) var(--y, 50%));
     opacity: 1;
   }
 }
 
-::view-transition-new(root) {
-  /* Apply the reveal animation */
-  animation: reveal 0.4s ease-in-out forwards;
+/* ===== SEO + Accessibility ===== */
+/* Respect system preference for crawlers & first render */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+  }
+}
+@media (prefers-color-scheme: light) {
+  :root:not(.dark) {
+    color-scheme: light;
+  }
 }

@@ -46,7 +46,33 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
 import { Icons } from '../icons';
-import { OrgSwitcher } from '../org-switcher';
+// import { OrgSwitcher } from '../org-switcher';
+import { cn } from '@/lib/utils';
+import { cva } from 'class-variance-authority';
+import Image from 'next/image';
+
+const sidebarMenuButtonVariants = cva(
+  'peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm outline-hidden ring-sidebar-ring transition-[width,height,padding] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidebar=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0',
+  {
+    variants: {
+      variant: {
+        default: 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
+        outline:
+          'bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]'
+      },
+      size: {
+        default: 'h-8 text-sm',
+        sm: 'h-7 text-xs',
+        lg: 'h-12 text-sm group-data-[collapsible=icon]:p-0!'
+      }
+    },
+    defaultVariants: {
+      variant: 'default',
+      size: 'default'
+    }
+  }
+);
+
 export const company = {
   name: 'Acme Inc',
   logo: IconPhotoUp,
@@ -68,7 +94,7 @@ export default function AppSidebar() {
     // Tenant switching functionality would be implemented here
   };
 
-  const activeTenant = tenants[0];
+  // const activeTenant = tenants[0];
 
   React.useEffect(() => {
     // Side effects based on sidebar state changes
@@ -77,11 +103,31 @@ export default function AppSidebar() {
   return (
     <Sidebar collapsible='icon'>
       <SidebarHeader>
-        <OrgSwitcher
+        <div
+          className={cn(
+            sidebarMenuButtonVariants({ variant: 'default', size: 'lg' }),
+            'data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
+          )}
+        >
+          <Image
+            height={40}
+            width={40}
+            src='https://res.cloudinary.com/ds8pptoh2/image/upload/v1747825921/BCFCODE-LOGO_vtfegn.jpg'
+            alt='BCFCODE Logo'
+            className='bg-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-b-sm'
+          />
+          <span className='ml-1 text-3xl leading-none font-semibold text-white opacity-90 drop-shadow-[0_0_3px_rgba(215,229,240,1)]'>
+            BCFCODE
+          </span>
+          {/* <div className='flex flex-col gap-0.5 leading-none'>
+            <span className=''>Acme</span>
+          </div> */}
+        </div>
+        {/* <OrgSwitcher
           tenants={tenants}
           defaultTenant={activeTenant}
           onTenantSwitch={handleSwitchTenant}
-        />
+        /> */}
       </SidebarHeader>
       <SidebarContent className='overflow-x-hidden'>
         <SidebarGroup>

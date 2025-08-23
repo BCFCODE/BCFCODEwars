@@ -9,6 +9,11 @@ const baseConfig: NextConfig = {
         protocol: 'https',
         hostname: 'api.slingacademy.com',
         port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com', // <-- Add this
+        port: ''
       }
     ]
   },

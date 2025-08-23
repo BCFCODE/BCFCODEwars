@@ -1,6 +1,6 @@
 'use client';
 
-import { Check, ChevronsUpDown, GalleryVerticalEnd } from 'lucide-react';
+import { Check, ChevronsUpDown /* GalleryVerticalEnd */ } from 'lucide-react';
 import * as React from 'react';
 
 import {
@@ -14,6 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem
 } from '@/components/ui/sidebar';
+import Image from 'next/image';
 
 interface Tenant {
   id: string;
@@ -52,11 +53,15 @@ export function OrgSwitcher({
               size='lg'
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
-              <div className='bg-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg'>
-                <GalleryVerticalEnd className='size-4' />
-              </div>
+              <Image
+                height={40}
+                width={40}
+                src='https://res.cloudinary.com/ds8pptoh2/image/upload/v1747825921/BCFCODE-LOGO_vtfegn.jpg'
+                alt='BCFCODE Logo'
+                className='bg-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-b-sm'
+              />
               <div className='flex flex-col gap-0.5 leading-none'>
-                <span className='font-semibold'>Next Starter</span>
+                <span className='font-semibold'>BCFCODE</span>
                 <span className=''>{selectedTenant.name}</span>
               </div>
               <ChevronsUpDown className='ml-auto' />

@@ -50,6 +50,13 @@ const MONO_THEMES = [
   }
 ];
 
+const MONTSERRAT_THEMES = [
+  {
+    name: 'Montserrat',
+    value: 'montserrat'
+  }
+];
+
 export function ThemeSelector() {
   const { activeTheme, setActiveTheme } = useThemeConfig();
 
@@ -90,6 +97,15 @@ export function ThemeSelector() {
           <SelectGroup>
             <SelectLabel>Monospaced</SelectLabel>
             {MONO_THEMES.map((theme) => (
+              <SelectItem key={theme.name} value={theme.value}>
+                {theme.name}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+          <SelectSeparator />
+          <SelectGroup>
+            <SelectLabel>Montserrat</SelectLabel>
+            {MONTSERRAT_THEMES.map((theme) => (
               <SelectItem key={theme.name} value={theme.value}>
                 {theme.name}
               </SelectItem>
