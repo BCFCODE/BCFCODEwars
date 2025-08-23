@@ -52,16 +52,15 @@ import {
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { useIsMobile } from '@/components/ui/new-york-v4/hooks/use-mobile';
-import { Badge } from '@/components/ui/new-york-v4/ui/badge';
-import { Button } from '@/components/ui/new-york-v4/ui/button';
+import { Badge } from '@/components/ui/new-york-v4/badge';
+import { Button } from '@/components/ui/new-york-v4/button';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent
-} from '@/components/ui/new-york-v4/ui/chart';
-import { Checkbox } from '@/components/ui/new-york-v4/ui/checkbox';
+} from '@/components/ui/new-york-v4/chart';
+import { Checkbox } from '@/components/ui/new-york-v4/checkbox';
 import {
   Drawer,
   DrawerClose,
@@ -71,7 +70,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger
-} from '@/components/ui/new-york-v4/ui/drawer';
+} from '@/components/ui/new-york-v4/drawer';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -79,17 +78,17 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/new-york-v4/ui/dropdown-menu';
-import { Input } from '@/components/ui/new-york-v4/ui/input';
-import { Label } from '@/components/ui/new-york-v4/ui/label';
+} from '@/components/ui/new-york-v4/dropdown-menu';
+import { Input } from '@/components/ui/new-york-v4/input';
+import { Label } from '@/components/ui/new-york-v4/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/new-york-v4/ui/select';
-import { Separator } from '@/components/ui/new-york-v4/ui/separator';
+} from '@/components/ui/new-york-v4/select';
+import { Separator } from '@/components/ui/new-york-v4/separator';
 import {
   Table,
   TableBody,
@@ -97,14 +96,15 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from '@/components/ui/new-york-v4/ui/table';
+} from '@/components/ui/new-york-v4/table';
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger
-} from '@/components/ui/new-york-v4/ui/tabs';
+} from '@/components/ui/new-york-v4/tabs';
 import data from './data.json';
+import { useIsMobile } from '@/components/ui/new-york-v4/hooks/use-mobile';
 
 export const schema = z.object({
   id: z.number(),
@@ -426,14 +426,12 @@ export function DataTable({
           </SelectContent>
         </Select>
         <TabsList className='**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex'>
-          <TabsTrigger value='outline'>Outline</TabsTrigger>
-          <TabsTrigger value='past-performance'>
-            Past Performance <Badge variant='secondary'>3</Badge>
+          <TabsTrigger value='outline' className='cursor-pointer'>
+            Users
           </TabsTrigger>
-          <TabsTrigger value='key-personnel'>
-            Key Personnel <Badge variant='secondary'>2</Badge>
+          <TabsTrigger value='past-performance' className='cursor-pointer'>
+            Codewars <Badge variant='secondary'>3</Badge>
           </TabsTrigger>
-          <TabsTrigger value='focus-documents'>Focus Documents</TabsTrigger>
         </TabsList>
         <div className='flex items-center gap-2'>
           <DropdownMenu>
