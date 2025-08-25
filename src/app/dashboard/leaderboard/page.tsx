@@ -1,7 +1,7 @@
 'use client';
 
 import data from './data.json';
-import DataTable from './DataTable';
+import DataTable from './components/DataTable';
 
 export default function LeaderboardPage() {
   return (

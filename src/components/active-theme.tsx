@@ -9,7 +9,8 @@ import {
 } from 'react';
 
 const COOKIE_NAME = 'active_theme';
-const DEFAULT_THEME = 'default';
+// const DEFAULT_THEME = 'default';
+const DEFAULT_THEME = 'montserrat';
 
 function setThemeCookie(theme: string) {
   if (typeof window === 'undefined') return;

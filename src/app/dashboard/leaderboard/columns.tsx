@@ -25,9 +25,9 @@ import {
 import { ColumnDef } from '@tanstack/react-table';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { DragHandle } from './RowComponents';
-import { schema } from './schema';
-import { TableCellViewer } from './TableCellViewer';
+import { DragHandle } from './components/RowComponents';
+import { schema } from './schemas/schema';
+import { TableCellViewer } from './components/TableCellViewer';
 
 const columns: ColumnDef<z.infer<typeof schema>>[] = [
   {

@@ -69,9 +69,9 @@ import {
 } from '@tanstack/react-table';
 import * as React from 'react';
 import { z } from 'zod';
-import columns from './columns';
+import columns from '../columns';
 import { DraggableRow } from './RowComponents';
-import { schema } from './schema';
+import { schema } from '../schemas/schema';
 
 function DataTable({ data: initialData }: { data: z.infer<typeof schema>[] }) {
   const [data, setData] = React.useState(() => initialData);
