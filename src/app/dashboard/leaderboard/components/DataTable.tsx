@@ -71,7 +71,7 @@ import * as React from 'react';
 import { z } from 'zod';
 import columns from '../columns';
 import { DraggableRow } from './RowComponents';
-import { schema } from '../schemas/schema';
+import { schema } from '../schemas/usersSchema';
 
 function DataTable({ data: initialData }: { data: z.infer<typeof schema>[] }) {
   const [data, setData] = React.useState(() => initialData);
@@ -94,7 +94,7 @@ function DataTable({ data: initialData }: { data: z.infer<typeof schema>[] }) {
   );
 
   const dataIds = React.useMemo<UniqueIdentifier[]>(
-    () => data?.map(({ id }) => id) || [],
+    () => data?.map(({ name }) => name) || [],
     [data]
   );
 
@@ -108,7 +108,7 @@ function DataTable({ data: initialData }: { data: z.infer<typeof schema>[] }) {
       columnFilters,
       pagination
     },
-    getRowId: (row) => row.id.toString(),
+    getRowId: (row) => row.name,
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,

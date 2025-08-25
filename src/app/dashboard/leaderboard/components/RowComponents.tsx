@@ -5,7 +5,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { flexRender, Row } from '@tanstack/react-table';
 import { IconGripVertical } from '@tabler/icons-react';
 import { z } from 'zod';
-import { schema } from '../schemas/schema';
+import { schema } from '../schemas/usersSchema';
 
 function DragHandle({ id }: { id: number }) {
   const { attributes, listeners } = useSortable({
@@ -28,7 +28,7 @@ function DragHandle({ id }: { id: number }) {
 
 function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
-    id: row.original.id
+    id: row.original.name
   });
 
   return (

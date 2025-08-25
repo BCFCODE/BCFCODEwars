@@ -2,6 +2,7 @@
 
 import data from './data.json';
 import DataTable from './components/DataTable';
+import usersData from '../../../../data/BCFCODEwars.users.json';
 
 export default function LeaderboardPage() {
   return (
@@ -11,7 +12,7 @@ export default function LeaderboardPage() {
         <div className='px-4 lg:px-6'>
           <ChartAreaInteractive />
         </div> */}
-        <DataTable data={data} />
+        <DataTable data={usersData} />
       </div>
     </div>
   );
