@@ -1,3 +1,5 @@
+'use client';
+
 import { Badge } from '@/components/ui/new-york-v4/badge';
 import { Button } from '@/components/ui/new-york-v4/button';
 import {
@@ -71,7 +73,7 @@ import * as React from 'react';
 import { z } from 'zod';
 import columns from '../columns';
 import { DraggableRow } from './RowComponents';
-import { schema } from '../schemas/usersSchema';
+import { schema } from '../schemas/schema';
 
 function DataTable({ data: initialData }: { data: z.infer<typeof schema>[] }) {
   const [data, setData] = React.useState(() => initialData);
@@ -94,7 +96,7 @@ function DataTable({ data: initialData }: { data: z.infer<typeof schema>[] }) {
   );
 
   const dataIds = React.useMemo<UniqueIdentifier[]>(
-    () => data?.map(({ name }) => name) || [],
+    () => data?.map(({ id }) => id) || [],
     [data]
   );
 
@@ -108,7 +110,7 @@ function DataTable({ data: initialData }: { data: z.infer<typeof schema>[] }) {
       columnFilters,
       pagination
     },
-    getRowId: (row) => row.name,
+    getRowId: (row) => row.id.toString(),
     enableRowSelection: true,
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
