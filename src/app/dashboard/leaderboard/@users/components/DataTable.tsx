@@ -71,11 +71,15 @@ import {
 } from '@tanstack/react-table';
 import * as React from 'react';
 import { z } from 'zod';
-import { DraggableRow } from './RowComponents';
-import { schema } from '../schemas/usersSchema';
 import columns from '../columns';
+import { DraggableRow } from './RowComponents';
+import { usersTableSchema } from '../../schemas';
 
-function DataTable({ data: initialData }: { data: z.infer<typeof schema>[] }) {
+function DataTable({
+  data: initialData
+}: {
+  data: z.infer<typeof usersTableSchema>[];
+}) {
   const [data, setData] = React.useState(() => initialData);
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =

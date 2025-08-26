@@ -73,9 +73,13 @@ import * as React from 'react';
 import { z } from 'zod';
 import columns from '../columns';
 import { DraggableRow } from './RowComponents';
-import { schema } from '../schemas/schema';
+import { codewarsTableSchema } from '../../schemas';
 
-function DataTable({ data: initialData }: { data: z.infer<typeof schema>[] }) {
+function DataTable({
+  data: initialData
+}: {
+  data: z.infer<typeof codewarsTableSchema>[];
+}) {
   const [data, setData] = React.useState(() => initialData);
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =

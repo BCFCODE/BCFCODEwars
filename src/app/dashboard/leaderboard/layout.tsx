@@ -1,3 +1,4 @@
+// import { useSelectedLayoutSegment } from 'next/navigation';
 import React, { PropsWithChildren } from 'react';
 
 interface Props extends PropsWithChildren {
@@ -6,6 +7,8 @@ interface Props extends PropsWithChildren {
 }
 
 const LeaderboardLayout = ({ users, codewars }: Props) => {
+  //   const leaderBoardType = checkUserRole()
+  // console.log(usersSegment)
   return (
     <div className='flex flex-1 flex-col'>
       {' '}

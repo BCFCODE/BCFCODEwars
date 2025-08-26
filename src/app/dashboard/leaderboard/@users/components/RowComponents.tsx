@@ -5,7 +5,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { flexRender, Row } from '@tanstack/react-table';
 import { IconGripVertical } from '@tabler/icons-react';
 import { z } from 'zod';
-import { schema } from '../schemas/usersSchema';
+import { schema } from '../../schemas/usersTableSchema';
 
 function DragHandle({ id }: { id: number }) {
   const { attributes, listeners } = useSortable({
