@@ -1,5 +1,5 @@
-// import { useSelectedLayoutSegment } from 'next/navigation';
 import React, { PropsWithChildren } from 'react';
+import DataTableTabs from './components/DataTableTabs';
 
 interface Props extends PropsWithChildren {
   users: React.ReactNode;
@@ -7,8 +7,6 @@ interface Props extends PropsWithChildren {
 }
 
 const LeaderboardLayout = ({ users, codewars }: Props) => {
-  //   const leaderBoardType = checkUserRole()
-  // console.log(usersSegment)
   return (
     <div className='flex flex-1 flex-col'>
       {' '}
@@ -18,9 +16,7 @@ const LeaderboardLayout = ({ users, codewars }: Props) => {
         <div className='px-4 lg:px-6'>
           <ChartAreaInteractive />
         </div> */}
-          {/* <CodewarsDataTable data={codewarsData} /> */}
-          {users}
-          {codewars}
+          <DataTableTabs slots={{ users, codewars }} />
         </div>
       </div>
     </div>

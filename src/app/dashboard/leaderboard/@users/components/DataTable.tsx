@@ -74,12 +74,14 @@ import { z } from 'zod';
 import columns from '../columns';
 import { DraggableRow } from './RowComponents';
 import { usersTableSchema } from '../../schemas';
+import useSlotSelector, { Slot } from '../../store/useSlotSelector';
 
 function DataTable({
   data: initialData
 }: {
   data: z.infer<typeof usersTableSchema>[];
 }) {
+  const selectSlot = useSlotSelector((s) => s.selectSlot);
   const [data, setData] = React.useState(() => initialData);
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -141,15 +143,12 @@ function DataTable({
   }
 
   return (
-    <Tabs
-      defaultValue='outline'
-      className='w-full flex-col justify-start gap-6'
-    >
+    <Tabs defaultValue='users' className='w-full flex-col justify-start gap-6'>
       <div className='flex items-center justify-between px-4 lg:px-6'>
         <Label htmlFor='view-selector' className='sr-only'>
           View
         </Label>
-        <Select defaultValue='outline'>
+        <Select defaultValue='users'>
           <SelectTrigger
             className='flex w-fit @4xl/main:hidden'
             size='sm'
@@ -158,17 +157,23 @@ function DataTable({
             <SelectValue placeholder='Select a view' />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value='outline'>Outline</SelectItem>
+            <SelectItem value='users'>Users</SelectItem>
             <SelectItem value='past-performance'>Past Performance</SelectItem>
-            <SelectItem value='key-personnel'>Key Personnel</SelectItem>
-            <SelectItem value='focus-documents'>Focus Documents</SelectItem>
           </SelectContent>
         </Select>
         <TabsList className='**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex'>
-          <TabsTrigger value='outline' className='cursor-pointer'>
+          <TabsTrigger
+            onClick={() => selectSlot(Slot.Users)}
+            value='users'
+            className='cursor-pointer'
+          >
             Users
           </TabsTrigger>
-          <TabsTrigger value='past-performance' className='cursor-pointer'>
+          <TabsTrigger
+            onClick={() => selectSlot(Slot.Codewars)}
+            value='past-performance'
+            className='cursor-pointer'
+          >
             Codewars <Badge variant='secondary'>3</Badge>
           </TabsTrigger>
         </TabsList>
@@ -213,7 +218,7 @@ function DataTable({
         </div>
       </div>
       <TabsContent
-        value='outline'
+        value='users'
         className='relative flex flex-col gap-4 overflow-auto px-4 lg:px-6'
       >
         {/* Table container */}
@@ -350,15 +355,6 @@ function DataTable({
       </TabsContent>
       <TabsContent
         value='past-performance'
-        className='flex flex-col px-4 lg:px-6'
-      >
-        <div className='aspect-video w-full flex-1 rounded-lg border border-dashed'></div>
-      </TabsContent>
-      <TabsContent value='key-personnel' className='flex flex-col px-4 lg:px-6'>
-        <div className='aspect-video w-full flex-1 rounded-lg border border-dashed'></div>
-      </TabsContent>
-      <TabsContent
-        value='focus-documents'
         className='flex flex-col px-4 lg:px-6'
       >
         <div className='aspect-video w-full flex-1 rounded-lg border border-dashed'></div>
