@@ -1,35 +1,8 @@
-import { Badge } from '@/components/ui/new-york-v4/badge';
-import { Button } from '@/components/ui/new-york-v4/button';
-import { Checkbox } from '@/components/ui/new-york-v4/checkbox';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '@/components/ui/new-york-v4/dropdown-menu';
-import { Input } from '@/components/ui/new-york-v4/input';
-import { Label } from '@/components/ui/new-york-v4/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/new-york-v4/select';
-import {
-  IconCircleCheckFilled,
-  IconDotsVertical,
-  IconLoader
-} from '@tabler/icons-react';
 import { ColumnDef } from '@tanstack/react-table';
-import { toast } from 'sonner';
 import { z } from 'zod';
-import { DragHandle } from './@users/components/RowComponents';
-import { schema } from './@users/schemas/usersSchema';
-import { TableCellViewer } from './@users/components/TableCellViewer';
+import { usersTableSchema } from '../../schemas';
 
-const columns: ColumnDef<z.infer<typeof schema>>[] = [
+const columns: ColumnDef<z.infer<typeof usersTableSchema>>[] = [
   // {
   //   id: 'drag',
   //   header: () => null,
