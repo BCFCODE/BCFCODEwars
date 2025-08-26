@@ -1,4 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { z } from 'zod';
 import { usersTableSchema } from '../../schemas';
 
@@ -34,6 +35,19 @@ const columns: ColumnDef<z.infer<typeof usersTableSchema>>[] = [
   //   enableSorting: false,
   //   enableHiding: false
   // },
+  {
+    accessorKey: 'image',
+    header: 'Image',
+    cell: ({ row }) => {
+      return (
+        <Avatar>
+          <AvatarImage src={row.original.image} referrerPolicy='no-referrer' />
+          <AvatarFallback>{`${row.original.name[0]}${row.original.name.split(' ')[1][0]}`}</AvatarFallback>
+        </Avatar>
+      );
+    },
+    enableHiding: false
+  },
   {
     accessorKey: 'name',
     header: 'Name',

@@ -258,7 +258,7 @@ function DataTableTabs({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-56'>
-              {codewarsTable
+              {(tableView === TableView.Users ? usersTable : codewarsTable)
                 .getAllColumns()
                 .filter(
                   (column) =>

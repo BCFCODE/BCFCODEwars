@@ -14,6 +14,11 @@ const baseConfig: NextConfig = {
         protocol: 'https',
         hostname: 'res.cloudinary.com', // <-- Add this
         port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com', // <-- Google profile images
+        port: ''
       }
     ]
   },
