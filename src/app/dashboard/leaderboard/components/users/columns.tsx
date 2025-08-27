@@ -6,7 +6,7 @@ import { usersTableSchema } from '../../schemas';
 const columns: ColumnDef<z.infer<typeof usersTableSchema>>[] = [
   {
     accessorKey: 'image',
-    header: 'Image',
+    header: '',
     cell: ({ row }) => {
       return (
         <Avatar>
@@ -19,7 +19,7 @@ const columns: ColumnDef<z.infer<typeof usersTableSchema>>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Name',
+    header: 'User',
     cell: ({ row }) => {
       return <p>{row.original.name}</p>;
     },

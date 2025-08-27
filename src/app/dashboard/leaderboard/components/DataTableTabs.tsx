@@ -176,7 +176,7 @@ function DataTableTabs({
       columnFilters: usersColumnFilters,
       pagination: usersPagination
     },
-    getRowId: (row) => row._id.$oid,
+    getRowId: (row) => row.image,
     enableRowSelection: true,
     onRowSelectionChange: setUsersRowSelection,
     onSortingChange: setUsersSorting,
@@ -259,10 +259,10 @@ function DataTableTabs({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant='outline' size='sm'>
+          {/* <Button variant='outline' size='sm'>
             <IconPlus />
             <span className='hidden lg:inline'>Add Section</span>
-          </Button>
+          </Button> */}
         </div>
       </div>
       <TabsContent
@@ -294,7 +294,7 @@ function DataTableTabs({
               {usersTable.getRowModel().rows?.length ? (
                 usersTable.getRowModel().rows.map((row) => (
                   <TableRow
-                    key={row.original._id.$oid}
+                    key={row.original.image}
                     data-state={row.getIsSelected() && 'selected'}
                   >
                     {row.getVisibleCells().map((cell) => (
