@@ -1,6 +1,6 @@
 import DataTableTabs, { TableTab } from './tables/DataTableTabs';
 import codewarsDummyData from '../../../../../data/codewarsDummyData.json';
-import usersData from '../../../../../data/BCFCODEwars.users.json';
+import { getPublicUsers } from '@/services/userService';
 
 export default async function LeaderboardTabPage({
   params
@@ -8,6 +8,7 @@ export default async function LeaderboardTabPage({
   params: { tab: string };
 }) {
   const { tab } = await params;
+  const usersData = await getPublicUsers();
 
   return (
     <div className='flex flex-1 flex-col'>

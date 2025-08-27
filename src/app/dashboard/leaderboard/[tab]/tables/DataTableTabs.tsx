@@ -75,7 +75,7 @@ import { z } from 'zod';
 import codewarsColumns from './codewars/columns';
 import { DraggableRow as CodewarsDraggableRow } from './codewars/components/RowComponents';
 // import { DraggableRow as UsersDraggableRow } from './users/components/RowComponents';
-import { codewarsTableSchema, usersTableSchema } from '../../schemas';
+import { codewarsTableSchema, usersTableSchema } from '../schemas';
 import usersColumns from './users/columns';
 import { useRouter } from 'next/navigation';
 
