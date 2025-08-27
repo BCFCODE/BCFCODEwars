@@ -31,7 +31,7 @@ import { Separator } from '@/components/ui/new-york-v4/separator';
 import { IconTrendingUp } from '@tabler/icons-react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { z } from 'zod';
-import { usersTableSchema } from '../../../schemas';
+import { schema } from '../../../../schemas/codewarsTableSchema';
 
 const chartData = [
   { month: 'January', desktop: 186, mobile: 80 },
@@ -53,19 +53,19 @@ const chartConfig = {
   }
 } satisfies ChartConfig;
 
-function TableCellViewer({ item }: { item: z.infer<typeof usersTableSchema> }) {
+function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
   const isMobile = useIsMobile();
 
   return (
     <Drawer direction={isMobile ? 'bottom' : 'right'}>
       <DrawerTrigger asChild>
         <Button variant='link' className='text-foreground w-fit px-0 text-left'>
-          {item.name}
+          {item.header}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className='gap-1'>
-          <DrawerTitle>{item.name}</DrawerTitle>
+          <DrawerTitle>{item.header}</DrawerTitle>
           <DrawerDescription>
             Showing total visitors for the last 6 months
           </DrawerDescription>
@@ -131,12 +131,12 @@ function TableCellViewer({ item }: { item: z.infer<typeof usersTableSchema> }) {
           <form className='flex flex-col gap-4'>
             <div className='flex flex-col gap-3'>
               <Label htmlFor='header'>Header</Label>
-              <Input id='header' defaultValue={item.name} />
+              <Input id='header' defaultValue={item.header} />
             </div>
             <div className='grid grid-cols-2 gap-4'>
               <div className='flex flex-col gap-3'>
                 <Label htmlFor='type'>Type</Label>
-                <Select defaultValue={item.name}>
+                <Select defaultValue={item.type}>
                   <SelectTrigger id='type' className='w-full'>
                     <SelectValue placeholder='Select a type' />
                   </SelectTrigger>
@@ -162,7 +162,7 @@ function TableCellViewer({ item }: { item: z.infer<typeof usersTableSchema> }) {
               </div>
               <div className='flex flex-col gap-3'>
                 <Label htmlFor='status'>Status</Label>
-                <Select defaultValue={item.name}>
+                <Select defaultValue={item.status}>
                   <SelectTrigger id='status' className='w-full'>
                     <SelectValue placeholder='Select a status' />
                   </SelectTrigger>
@@ -177,16 +177,16 @@ function TableCellViewer({ item }: { item: z.infer<typeof usersTableSchema> }) {
             <div className='grid grid-cols-2 gap-4'>
               <div className='flex flex-col gap-3'>
                 <Label htmlFor='target'>Target</Label>
-                <Input id='target' defaultValue={item.name} />
+                <Input id='target' defaultValue={item.target} />
               </div>
               <div className='flex flex-col gap-3'>
                 <Label htmlFor='limit'>Limit</Label>
-                <Input id='limit' defaultValue={item.name} />
+                <Input id='limit' defaultValue={item.limit} />
               </div>
             </div>
             <div className='flex flex-col gap-3'>
               <Label htmlFor='reviewer'>Reviewer</Label>
-              <Select defaultValue={item.name}>
+              <Select defaultValue={item.reviewer}>
                 <SelectTrigger id='reviewer' className='w-full'>
                   <SelectValue placeholder='Select a reviewer' />
                 </SelectTrigger>
