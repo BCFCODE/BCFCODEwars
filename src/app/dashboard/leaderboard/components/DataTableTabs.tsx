@@ -74,7 +74,7 @@ import { z } from 'zod';
 
 import codewarsColumns from './codewars/columns';
 import { DraggableRow as CodewarsDraggableRow } from './codewars/components/RowComponents';
-import { DraggableRow as UsersDraggableRow } from './users/components/RowComponents';
+// import { DraggableRow as UsersDraggableRow } from './users/components/RowComponents';
 import { codewarsTableSchema, usersTableSchema } from '../schemas';
 import usersColumns from './users/columns';
 
@@ -165,17 +165,6 @@ function DataTableTabs({
     pageIndex: 0,
     pageSize: 10
   });
-  const usersSortableId = React.useId();
-  const usersSensors = useSensors(
-    useSensor(MouseSensor, {}),
-    useSensor(TouchSensor, {}),
-    useSensor(KeyboardSensor, {})
-  );
-
-  const usersDataIds = React.useMemo<UniqueIdentifier[]>(
-    () => usersData?.map(({ name }) => name) || [],
-    [usersData]
-  );
 
   const usersTable = useReactTable({
     data: usersData,
@@ -187,7 +176,7 @@ function DataTableTabs({
       columnFilters: usersColumnFilters,
       pagination: usersPagination
     },
-    getRowId: (row) => row.name,
+    getRowId: (row) => row._id.$oid,
     enableRowSelection: true,
     onRowSelectionChange: setUsersRowSelection,
     onSortingChange: setUsersSorting,
@@ -201,17 +190,6 @@ function DataTableTabs({
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues()
   });
-
-  function usersHandleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-    if (active && over && active.id !== over.id) {
-      setUsersData((data) => {
-        const oldIndex = usersDataIds.indexOf(active.id);
-        const newIndex = usersDataIds.indexOf(over.id);
-        return arrayMove(data, oldIndex, newIndex);
-      });
-    }
-  }
 
   return (
     <Tabs
@@ -293,55 +271,54 @@ function DataTableTabs({
       >
         {/* Table container */}
         <div className='max-h-[70vh] overflow-auto rounded-lg border'>
-          <DndContext
-            collisionDetection={closestCenter}
-            modifiers={[restrictToVerticalAxis]}
-            onDragEnd={usersHandleDragEnd}
-            sensors={usersSensors}
-            id={usersSortableId}
-          >
-            <Table>
-              <TableHeader className='bg-muted sticky top-0 z-10'>
-                {usersTable.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id} colSpan={header.colSpan}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                        </TableHead>
-                      );
-                    })}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody className='**:data-[slot=table-cell]:first:w-8'>
-                {usersTable.getRowModel().rows?.length ? (
-                  <SortableContext
-                    items={usersDataIds}
-                    strategy={verticalListSortingStrategy}
+          <Table>
+            <TableHeader className='bg-muted sticky top-0 z-10'>
+              {usersTable.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id} colSpan={header.colSpan}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody className='**:data-[slot=table-cell]:first:w-8'>
+              {usersTable.getRowModel().rows?.length ? (
+                usersTable.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.original._id.$oid}
+                    data-state={row.getIsSelected() && 'selected'}
                   >
-                    {usersTable.getRowModel().rows.map((row) => (
-                      <UsersDraggableRow key={row.id} row={row} />
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
                     ))}
-                  </SortableContext>
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={usersColumns.length}
-                      className='h-24 text-center'
-                    >
-                      No results.
-                    </TableCell>
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </DndContext>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={usersColumns.length}
+                    className='h-24 text-center'
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
 
         {/* Pagination controls pinned OUTSIDE of scroll area */}
