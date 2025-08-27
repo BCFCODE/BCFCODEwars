@@ -1,4 +1,4 @@
-import DataTableTabs, { TableTab } from './components/DataTableTabs';
+import DataTableTabs, { TableTab } from './tables/DataTableTabs';
 import codewarsDummyData from '../../../../../data/codewarsDummyData.json';
 import usersData from '../../../../../data/BCFCODEwars.users.json';
 

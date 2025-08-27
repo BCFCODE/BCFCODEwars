@@ -53,8 +53,8 @@ import {
   IconChevronRight,
   IconChevronsLeft,
   IconChevronsRight,
-  IconLayoutColumns,
-  IconPlus
+  IconLayoutColumns
+  // IconPlus
 } from '@tabler/icons-react';
 import {
   ColumnFiltersState,
@@ -83,7 +83,7 @@ export type TableTab = 'users' | 'codewars';
 
 function DataTableTabs({
   codewarsData: codewarsInitialData,
-  usersData: usersInitialData,
+  usersData,
   currentTab
 }: {
   codewarsData: z.infer<typeof codewarsTableSchema>[];
@@ -155,7 +155,7 @@ function DataTableTabs({
     }
   }
 
-  const [usersData, setUsersData] = React.useState(() => usersInitialData);
+  // const [usersData, setUsersData] = React.useState(() => usersInitialData);
   const [usersRowSelection, setUsersRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -177,7 +177,7 @@ function DataTableTabs({
       columnFilters: usersColumnFilters,
       pagination: usersPagination
     },
-    getRowId: (row) => row.image,
+    getRowId: (row) => row.email,
     enableRowSelection: true,
     onRowSelectionChange: setUsersRowSelection,
     onSortingChange: setUsersSorting,
@@ -299,7 +299,7 @@ function DataTableTabs({
               {usersTable.getRowModel().rows?.length ? (
                 usersTable.getRowModel().rows.map((row) => (
                   <TableRow
-                    key={row.original.image}
+                    key={row.original.email}
                     data-state={row.getIsSelected() && 'selected'}
                   >
                     {row.getVisibleCells().map((cell) => (
