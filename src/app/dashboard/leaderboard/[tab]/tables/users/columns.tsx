@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { z } from 'zod';
-import { usersTableSchema } from '../../schemas';
+import { usersTableSchema } from '../../../schemas';
 
 const columns: ColumnDef<z.infer<typeof usersTableSchema>>[] = [
   {

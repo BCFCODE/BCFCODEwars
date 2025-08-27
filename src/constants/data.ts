@@ -27,7 +27,20 @@ export const navItems: NavItem[] = [
     icon: 'leaderboard',
     shortcut: ['l', 'l'],
     isActive: false,
-    items: [] // No child items
+    items: [
+      {
+        title: 'Users',
+        url: '/dashboard/leaderboard/users',
+        icon: 'user',
+        shortcut: ['l', 'u']
+      },
+      {
+        title: 'Codewars',
+        url: '/dashboard/leaderboard/codewars',
+        icon: 'check',
+        shortcut: ['l', 'c']
+      }
+    ] // No child items
   },
   // {
   //   title: 'Product',

@@ -53,8 +53,8 @@ import {
   IconChevronRight,
   IconChevronsLeft,
   IconChevronsRight,
-  IconLayoutColumns,
-  IconPlus
+  IconLayoutColumns
+  // IconPlus
 } from '@tabler/icons-react';
 import {
   ColumnFiltersState,
@@ -75,22 +75,23 @@ import { z } from 'zod';
 import codewarsColumns from './codewars/columns';
 import { DraggableRow as CodewarsDraggableRow } from './codewars/components/RowComponents';
 // import { DraggableRow as UsersDraggableRow } from './users/components/RowComponents';
-import { codewarsTableSchema, usersTableSchema } from '../schemas';
+import { codewarsTableSchema, usersTableSchema } from '../../schemas';
 import usersColumns from './users/columns';
+import { useRouter } from 'next/navigation';
 
-enum TableView {
-  Users = 'users',
-  Codewars = 'codewars'
-}
+export type TableTab = 'users' | 'codewars';
 
 function DataTableTabs({
   codewarsData: codewarsInitialData,
-  usersData: usersInitialData
+  usersData,
+  currentTab
 }: {
   codewarsData: z.infer<typeof codewarsTableSchema>[];
   usersData: z.infer<typeof usersTableSchema>[];
+  currentTab: TableTab;
 }) {
-  const [tableView, setTableView] = React.useState(TableView.Users);
+  const router = useRouter();
+  // const [tableView, setTableView] = React.useState(TableTab.Users);
   const [codewarsData, setCodewarsData] = React.useState(
     () => codewarsInitialData
   );
@@ -154,7 +155,7 @@ function DataTableTabs({
     }
   }
 
-  const [usersData, setUsersData] = React.useState(() => usersInitialData);
+  // const [usersData, setUsersData] = React.useState(() => usersInitialData);
   const [usersRowSelection, setUsersRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -176,7 +177,7 @@ function DataTableTabs({
       columnFilters: usersColumnFilters,
       pagination: usersPagination
     },
-    getRowId: (row) => row.image,
+    getRowId: (row) => row.email,
     enableRowSelection: true,
     onRowSelectionChange: setUsersRowSelection,
     onSortingChange: setUsersSorting,
@@ -193,8 +194,10 @@ function DataTableTabs({
 
   return (
     <Tabs
-      value={tableView}
-      onValueChange={(val) => setTableView(val as TableView)}
+      value={currentTab}
+      onValueChange={(val) =>
+        router.push(`/dashboard/leaderboard/${val as TableTab}`)
+      }
       className='w-full flex-col justify-start gap-6'
     >
       <div className='flex items-center justify-between px-4 lg:px-6'>
@@ -202,8 +205,10 @@ function DataTableTabs({
           View
         </Label>
         <Select
-          value={tableView}
-          onValueChange={(val) => setTableView(val as TableView)}
+          value={currentTab}
+          onValueChange={(val) =>
+            router.push(`/dashboard/leaderboard/${val as TableTab}`)
+          }
         >
           <SelectTrigger
             className='flex w-fit @4xl/main:hidden'
@@ -213,15 +218,15 @@ function DataTableTabs({
             <SelectValue placeholder='Select a view' />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={TableView.Users}>Users</SelectItem>
-            <SelectItem value={TableView.Codewars}>Codewars</SelectItem>
+            <SelectItem value='users'>Users</SelectItem>
+            <SelectItem value='codewars'>Codewars</SelectItem>
           </SelectContent>
         </Select>
         <TabsList className='**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex'>
-          <TabsTrigger value={TableView.Users} className='cursor-pointer'>
+          <TabsTrigger value='users' className='cursor-pointer'>
             Users
           </TabsTrigger>
-          <TabsTrigger value={TableView.Codewars} className='cursor-pointer'>
+          <TabsTrigger value='codewars' className='cursor-pointer'>
             Codewars <Badge variant='secondary'>3</Badge>
           </TabsTrigger>
         </TabsList>
@@ -236,7 +241,7 @@ function DataTableTabs({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end' className='w-56'>
-              {(tableView === TableView.Users ? usersTable : codewarsTable)
+              {(currentTab === 'users' ? usersTable : codewarsTable)
                 .getAllColumns()
                 .filter(
                   (column) =>
@@ -266,7 +271,7 @@ function DataTableTabs({
         </div>
       </div>
       <TabsContent
-        value={TableView.Users}
+        value='users'
         className='relative flex flex-col gap-4 overflow-auto px-4 lg:px-6'
       >
         {/* Table container */}
@@ -294,7 +299,7 @@ function DataTableTabs({
               {usersTable.getRowModel().rows?.length ? (
                 usersTable.getRowModel().rows.map((row) => (
                   <TableRow
-                    key={row.original.image}
+                    key={row.original.email}
                     data-state={row.getIsSelected() && 'selected'}
                   >
                     {row.getVisibleCells().map((cell) => (
@@ -403,7 +408,7 @@ function DataTableTabs({
         </div>
       </TabsContent>
       <TabsContent
-        value={TableView.Codewars}
+        value='codewars'
         className='relative flex flex-col gap-4 overflow-auto px-4 lg:px-6'
       >
         {/* Table container */}
