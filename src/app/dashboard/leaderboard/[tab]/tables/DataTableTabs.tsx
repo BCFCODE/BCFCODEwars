@@ -78,6 +78,7 @@ import { codewarsTableSchema, usersTableSchema } from '../schemas';
 import usersColumns from './users/columns';
 import { useRouter } from 'next/navigation';
 import UsersTabContent from './users';
+import CodewarsTabContent from './codewars';
 
 export type TableTab = 'users' | 'codewars';
 
@@ -271,148 +272,11 @@ function DataTableTabs({
         </div>
       </div>
       <UsersTabContent table={usersTable} />
-      <TabsContent
-        value='codewars'
-        className='relative flex flex-col gap-4 overflow-auto px-4 lg:px-6'
-      >
-        {/* Table container */}
-        <div className='max-h-[70vh] overflow-auto rounded-lg border'>
-          <DndContext
-            collisionDetection={closestCenter}
-            modifiers={[restrictToVerticalAxis]}
-            onDragEnd={codewarsHandleDragEnd}
-            sensors={codewarsSensors}
-            id={codewarsSortableId}
-          >
-            <Table>
-              <TableHeader className='bg-muted sticky top-0 z-10'>
-                {codewarsTable.getHeaderGroups().map((headerGroup) => (
-                  <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id} colSpan={header.colSpan}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                        </TableHead>
-                      );
-                    })}
-                  </TableRow>
-                ))}
-              </TableHeader>
-              <TableBody className='**:data-[slot=table-cell]:first:w-8'>
-                {codewarsTable.getRowModel().rows?.length ? (
-                  <SortableContext
-                    items={codewarsDataIds}
-                    strategy={verticalListSortingStrategy}
-                  >
-                    {codewarsTable.getRowModel().rows.map((row) => (
-                      <CodewarsDraggableRow key={row.id} row={row} />
-                    ))}
-                  </SortableContext>
-                ) : (
-                  <TableRow>
-                    <TableCell
-                      colSpan={codewarsColumns.length}
-                      className='h-24 text-center'
-                    >
-                      No results.
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </DndContext>
-        </div>
-
-        {/* Pagination controls pinned OUTSIDE of scroll area */}
-        <div className='bg-background sticky bottom-0 z-20 flex items-center justify-between border-t px-4 py-3'>
-          <div className='text-muted-foreground hidden flex-1 text-sm lg:flex'>
-            {codewarsTable.getFilteredSelectedRowModel().rows.length} of{' '}
-            {codewarsTable.getFilteredRowModel().rows.length} row(s) selected.
-          </div>
-          <div className='flex w-full items-center gap-8 lg:w-fit'>
-            <div className='hidden items-center gap-2 lg:flex'>
-              <Label htmlFor='rows-per-page' className='text-sm font-medium'>
-                Rows per page
-              </Label>
-              <Select
-                value={`${codewarsTable.getState().pagination.pageSize}`}
-                onValueChange={(value) => {
-                  codewarsTable.setPageSize(Number(value));
-                }}
-              >
-                <SelectTrigger size='sm' className='w-20' id='rows-per-page'>
-                  <SelectValue
-                    placeholder={codewarsTable.getState().pagination.pageSize}
-                  />
-                </SelectTrigger>
-                <SelectContent side='top'>
-                  {[10, 20, 30, 40, 50].map((pageSize) => (
-                    <SelectItem key={pageSize} value={`${pageSize}`}>
-                      {pageSize}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className='flex w-fit items-center justify-center text-sm font-medium'>
-              Page {codewarsTable.getState().pagination.pageIndex + 1} of{' '}
-              {codewarsTable.getPageCount()}
-            </div>
-            <div className='ml-auto flex items-center gap-2 lg:ml-0'>
-              <Button
-                variant='outline'
-                className='hidden h-8 w-8 p-0 lg:flex'
-                onClick={() => codewarsTable.setPageIndex(0)}
-                disabled={!codewarsTable.getCanPreviousPage()}
-              >
-                <span className='sr-only'>Go to first page</span>
-                <IconChevronsLeft />
-              </Button>
-              <Button
-                variant='outline'
-                className='size-8'
-                size='icon'
-                onClick={() => codewarsTable.previousPage()}
-                disabled={!codewarsTable.getCanPreviousPage()}
-              >
-                <span className='sr-only'>Go to previous page</span>
-                <IconChevronLeft />
-              </Button>
-              <Button
-                variant='outline'
-                className='size-8'
-                size='icon'
-                onClick={() => codewarsTable.nextPage()}
-                disabled={!codewarsTable.getCanNextPage()}
-              >
-                <span className='sr-only'>Go to next page</span>
-                <IconChevronRight />
-              </Button>
-              <Button
-                variant='outline'
-                className='hidden size-8 lg:flex'
-                size='icon'
-                onClick={() =>
-                  codewarsTable.setPageIndex(codewarsTable.getPageCount() - 1)
-                }
-                disabled={!codewarsTable.getCanNextPage()}
-              >
-                <span className='sr-only'>Go to last page</span>
-                <IconChevronsRight />
-              </Button>
-              <Button variant='outline' size='sm'>
-                <IconPlus />
-                <span className='hidden lg:inline'>Add Section</span>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </TabsContent>
+      <CodewarsTabContent
+        setData={setCodewarsData}
+        data={codewarsData}
+        table={codewarsTable}
+      />
     </Tabs>
   );
 }
