@@ -2,8 +2,7 @@ import { getDb } from '@/lib/mongodb';
 
 export async function findAllUsers() {
   const db = await getDb(process.env.MONGODB_DB as string);
-
-  return db
+  return await db
     .collection('users')
     .find(
       {},
@@ -11,8 +10,10 @@ export async function findAllUsers() {
         projection: {
           _id: 0,
           email: 1,
+          name: 1,
           image: 1,
-          name: 1
+          'activity.lastActiveTime': 1,
+          'activity.firstLogin': 1
         }
       }
     )

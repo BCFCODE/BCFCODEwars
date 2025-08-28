@@ -24,6 +24,37 @@ const columns: ColumnDef<z.infer<typeof usersTableSchema>>[] = [
       return <p>{row.original.name}</p>;
     },
     enableHiding: false
+  },
+  {
+    accessorKey: 'lastActivity',
+    header: 'Last Activity',
+    cell: ({ row }) => {
+      return (
+        <p>
+          {new Intl.DateTimeFormat('en-US', {
+            dateStyle: 'short',
+            timeStyle: 'medium'
+          }).format(row.original.lastActiveTime ?? row.original.firstLogin)}
+        </p>
+      );
+    },
+    enableHiding: true
+  },
+  {
+    accessorKey: 'since',
+    header: 'Since',
+    cell: ({ row }) => {
+      return (
+        <p>
+          {new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+          }).format(row.original.firstLogin)}
+        </p>
+      );
+    },
+    enableHiding: true
   }
 ];
 
