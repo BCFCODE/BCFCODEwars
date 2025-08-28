@@ -2,6 +2,8 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { z } from 'zod';
 import { usersTableSchema } from '../../schemas';
+// import { Gem } from 'lucide-react';
+import { IconDiamond } from '@tabler/icons-react';
 
 const columns: ColumnDef<z.infer<typeof usersTableSchema>>[] = [
   {
@@ -52,6 +54,19 @@ const columns: ColumnDef<z.infer<typeof usersTableSchema>>[] = [
             day: 'numeric'
           }).format(row.original.firstLogin)}
         </p>
+      );
+    },
+    enableHiding: true
+  },
+  {
+    accessorKey: 'diamonds',
+    header: () => <div className='text-right'>Diamonds</div>,
+    cell: ({ row }) => {
+      return (
+        <div className='flex items-center justify-end gap-1'>
+          <p>{row.original.totalDiamonds}</p>
+          <IconDiamond />
+        </div>
       );
     },
     enableHiding: true

@@ -5,5 +5,6 @@ export const schema = z.object({
   name: z.string(),
   image: z.string(),
   lastActiveTime: z.date().optional(),
-  firstLogin: z.date()
+  firstLogin: z.date(),
+  totalDiamonds: z.number()
 });

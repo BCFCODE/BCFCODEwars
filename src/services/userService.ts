@@ -10,7 +10,8 @@ export async function getPublicUsers() {
       name: user.name,
       image: user.image,
       lastActiveTime: user.activity?.lastActiveTime,
-      firstLogin: user.activity.firstLogin
+      firstLogin: user.activity.firstLogin,
+      totalDiamonds: user.totalDiamonds
     }))
   );
 }

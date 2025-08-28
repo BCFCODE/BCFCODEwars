@@ -9,7 +9,7 @@ export default async function LeaderboardTabPage({
 }) {
   const { tab } = await params;
   const usersData = await getPublicUsers();
-  console.log(usersData);
+  // console.log(usersData);
   return (
     <div className='flex flex-1 flex-col'>
       <div className='@container/main flex flex-1 flex-col gap-2'>
