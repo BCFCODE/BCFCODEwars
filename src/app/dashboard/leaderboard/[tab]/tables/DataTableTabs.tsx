@@ -53,8 +53,8 @@ import {
   IconChevronRight,
   IconChevronsLeft,
   IconChevronsRight,
-  IconLayoutColumns
-  // IconPlus
+  IconLayoutColumns,
+  IconPlus
 } from '@tabler/icons-react';
 import {
   ColumnFiltersState,
@@ -74,7 +74,6 @@ import { z } from 'zod';
 
 import codewarsColumns from './codewars/columns';
 import { DraggableRow as CodewarsDraggableRow } from './codewars/components/RowComponents';
-// import { DraggableRow as UsersDraggableRow } from './users/components/RowComponents';
 import { codewarsTableSchema, usersTableSchema } from '../schemas';
 import usersColumns from './users/columns';
 import { useRouter } from 'next/navigation';
@@ -91,7 +90,6 @@ function DataTableTabs({
   currentTab: TableTab;
 }) {
   const router = useRouter();
-  // const [tableView, setTableView] = React.useState(TableTab.Users);
   const [codewarsData, setCodewarsData] = React.useState(
     () => codewarsInitialData
   );
@@ -155,7 +153,6 @@ function DataTableTabs({
     }
   }
 
-  // const [usersData, setUsersData] = React.useState(() => usersInitialData);
   const [usersRowSelection, setUsersRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -264,10 +261,12 @@ function DataTableTabs({
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
-          {/* <Button variant='outline' size='sm'>
-            <IconPlus />
-            <span className='hidden lg:inline'>Add Section</span>
-          </Button> */}
+          {currentTab === 'codewars' && (
+            <Button variant='outline' size='sm'>
+              <IconPlus />
+              <span className='hidden lg:inline'>Add Section</span>
+            </Button>
+          )}
         </div>
       </div>
       <TabsContent
@@ -540,6 +539,10 @@ function DataTableTabs({
               >
                 <span className='sr-only'>Go to last page</span>
                 <IconChevronsRight />
+              </Button>
+              <Button variant='outline' size='sm'>
+                <IconPlus />
+                <span className='hidden lg:inline'>Add Section</span>
               </Button>
             </div>
           </div>
