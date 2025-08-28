@@ -1,4 +1,4 @@
-import DataTableTabs, { TableTab } from './tables/DataTableTabs';
+import DataTableTabs, { TableTab } from './tables/components/DataTableTabs';
 import codewarsDummyData from '../../../../../data/codewarsDummyData.json';
 import { getPublicUsers } from '@/services/userService';
 

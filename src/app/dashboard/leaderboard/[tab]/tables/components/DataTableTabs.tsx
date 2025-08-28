@@ -1,13 +1,6 @@
 'use client';
 
 import { Badge } from '@/components/ui/new-york-v4/badge';
-import { Button } from '@/components/ui/new-york-v4/button';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger
-} from '@/components/ui/new-york-v4/dropdown-menu';
 import { Label } from '@/components/ui/new-york-v4/label';
 import {
   Select,
@@ -16,49 +9,9 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/new-york-v4/select';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/new-york-v4/table';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
-} from '@/components/ui/new-york-v4/tabs';
-import {
-  closestCenter,
-  DndContext,
-  KeyboardSensor,
-  MouseSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-  type DragEndEvent,
-  type UniqueIdentifier
-} from '@dnd-kit/core';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
-import {
-  arrayMove,
-  SortableContext,
-  verticalListSortingStrategy
-} from '@dnd-kit/sortable';
-import {
-  IconChevronDown,
-  IconChevronLeft,
-  IconChevronRight,
-  IconChevronsLeft,
-  IconChevronsRight,
-  IconLayoutColumns,
-  IconPlus
-} from '@tabler/icons-react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/new-york-v4/tabs';
 import {
   ColumnFiltersState,
-  flexRender,
   getCoreRowModel,
   getFacetedRowModel,
   getFacetedUniqueValues,
@@ -72,13 +25,13 @@ import {
 import * as React from 'react';
 import { z } from 'zod';
 
-import codewarsColumns from './codewars/columns';
-import { DraggableRow as CodewarsDraggableRow } from './codewars/components/RowComponents';
-import { codewarsTableSchema, usersTableSchema } from '../schemas';
-import usersColumns from './users/columns';
 import { useRouter } from 'next/navigation';
-import UsersTabContent from './users';
-import CodewarsTabContent from './codewars';
+import { codewarsTableSchema, usersTableSchema } from '../../schemas';
+import CodewarsTabContent from '../codewars';
+import codewarsColumns from '../codewars/columns';
+import DropDownMenus from './DropDownMenus';
+import UsersTabContent from '../users';
+import usersColumns from '../users/columns';
 
 export type TableTab = 'users' | 'codewars';
 
@@ -92,6 +45,7 @@ function DataTableTabs({
   currentTab: TableTab;
 }) {
   const router = useRouter();
+  // Codewars Tab
   const [codewarsData, setCodewarsData] = React.useState(
     () => codewarsInitialData
   );
@@ -107,17 +61,6 @@ function DataTableTabs({
     pageIndex: 0,
     pageSize: 10
   });
-  const codewarsSortableId = React.useId();
-  const codewarsSensors = useSensors(
-    useSensor(MouseSensor, {}),
-    useSensor(TouchSensor, {}),
-    useSensor(KeyboardSensor, {})
-  );
-
-  const codewarsDataIds = React.useMemo<UniqueIdentifier[]>(
-    () => codewarsData?.map(({ id }) => id) || [],
-    [codewarsData]
-  );
 
   const codewarsTable = useReactTable({
     data: codewarsData,
@@ -144,17 +87,7 @@ function DataTableTabs({
     getFacetedUniqueValues: getFacetedUniqueValues()
   });
 
-  function codewarsHandleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-    if (active && over && active.id !== over.id) {
-      setCodewarsData((data) => {
-        const oldIndex = codewarsDataIds.indexOf(active.id);
-        const newIndex = codewarsDataIds.indexOf(over.id);
-        return arrayMove(data, oldIndex, newIndex);
-      });
-    }
-  }
-
+  // Users Tab
   const [usersRowSelection, setUsersRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -229,47 +162,10 @@ function DataTableTabs({
             Codewars <Badge variant='secondary'>3</Badge>
           </TabsTrigger>
         </TabsList>
-        <div className='flex items-center gap-2'>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant='outline' size='sm'>
-                <IconLayoutColumns />
-                <span className='hidden lg:inline'>Customize Columns</span>
-                <span className='lg:hidden'>Columns</span>
-                <IconChevronDown />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='end' className='w-56'>
-              {(currentTab === 'users' ? usersTable : codewarsTable)
-                .getAllColumns()
-                .filter(
-                  (column) =>
-                    typeof column.accessorFn !== 'undefined' &&
-                    column.getCanHide()
-                )
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className='capitalize'
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          {currentTab === 'codewars' && (
-            <Button variant='outline' size='sm'>
-              <IconPlus />
-              <span className='hidden lg:inline'>Add Section</span>
-            </Button>
-          )}
-        </div>
+        <DropDownMenus
+          tab={currentTab}
+          tables={{ users: usersTable, codewars: codewarsTable }}
+        />
       </div>
       <UsersTabContent table={usersTable} />
       <CodewarsTabContent
