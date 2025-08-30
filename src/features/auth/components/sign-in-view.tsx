@@ -115,9 +115,11 @@ export default function SignInViewPage({ stars }: { stars: number }) {
 
           {/* Sign-in form */}
           <ClerkSignInForm
-            initialValues={{
-              emailAddress: 'BCFCODE@gmail.com'
-            }}
+            initialValues={
+              {
+                // emailAddress: 'BCFCODE@gmail.com'
+              }
+            }
           />
 
           {/* Terms and privacy */}
