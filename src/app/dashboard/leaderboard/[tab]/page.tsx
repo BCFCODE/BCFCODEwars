@@ -1,5 +1,5 @@
 import DataTableTabs, { TableTab } from './tables/components/DataTableTabs';
-import codewarsDummyData from '../../../../../data/codewarsDummyData.json';
+import dummyData from '../../../../../data/dummyData.json';
 import { getPublicUsers } from '@/services/userService';
 
 export default async function LeaderboardTabPage({
@@ -16,7 +16,8 @@ export default async function LeaderboardTabPage({
       <div className='@container/main flex flex-1 flex-col gap-2'>
         <div className='flex flex-col'>
           <DataTableTabs
-            codewarsData={codewarsDummyData}
+            productsData={dummyData}
+            codewarsData={dummyData}
             usersData={usersData}
             currentTab={tab}
           />

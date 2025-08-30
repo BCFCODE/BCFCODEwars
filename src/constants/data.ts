@@ -39,6 +39,12 @@ export const navItems: NavItem[] = [
         url: '/dashboard/leaderboard/codewars',
         icon: 'check',
         shortcut: ['l', 'c']
+      },
+      {
+        title: 'Products',
+        url: '/dashboard/leaderboard/products',
+        icon: 'product',
+        shortcut: ['l', 'p']
       }
     ] // No child items
   },
