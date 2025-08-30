@@ -30,9 +30,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Export a helper to get DB
-export async function getDb(dbName: string): Promise<Db> {
+export async function getDb(): Promise<Db> {
   const client = await clientPromise;
-  return client.db(dbName);
+  return client.db(process.env.MONGODB_DB as string);
 }
 
 export default clientPromise;

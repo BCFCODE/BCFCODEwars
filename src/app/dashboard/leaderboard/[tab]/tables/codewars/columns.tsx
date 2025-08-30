@@ -28,6 +28,7 @@ import { z } from 'zod';
 import { DragHandle } from './components/RowComponents';
 import { schema } from '../../schemas/codewarsTableSchema';
 import { TableCellViewer } from './components/TableCellViewer';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const columns: ColumnDef<z.infer<typeof schema>>[] = [
   {
@@ -35,6 +36,28 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     header: () => null,
     cell: ({ row }) => <DragHandle id={row.original.id} />
   },
+  {
+    accessorKey: 'image',
+    header: '',
+    cell: ({ row }) => {
+      return (
+        <Avatar>
+          <AvatarImage src={row.original.image} referrerPolicy='no-referrer' />
+          <AvatarFallback>{row.original.name}</AvatarFallback>
+        </Avatar>
+      );
+    },
+    enableHiding: false
+  },
+  {
+    accessorKey: 'name',
+    header: 'User',
+    cell: ({ row }) => {
+      return <p>{row.original.name}</p>;
+    },
+    enableHiding: false
+  },
+
   {
     id: 'select',
     header: ({ table }) => (

@@ -1,7 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 
 export async function findAllUsers() {
-  const db = await getDb(process.env.MONGODB_DB as string);
+  const db = await getDb();
   return await db
     .collection('users')
     .aggregate([
@@ -31,6 +31,46 @@ export async function findAllUsers() {
           'activity.lastActiveTime': 1,
           'activity.firstLogin': 1,
           totalDiamonds: '$diamondsData.totals.total' // From diamonds.totals.total
+        }
+      }
+    ])
+    .toArray();
+}
+
+export async function findCodewarsUsers() {
+  const db = await getDb();
+  return await db
+    .collection('codewars')
+    .aggregate([
+      // Step 1: Filter for isConnected: true
+      {
+        $match: {
+          isConnected: true
+        }
+      },
+      // Step 2: Join with users collection
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'email', // Assuming codewars collection has an email field
+          foreignField: 'email',
+          as: 'userData'
+        }
+      },
+      // Step 3: Unwind userData (assuming one-to-one mapping)
+      {
+        $unwind: {
+          path: '$userData',
+          preserveNullAndEmptyArrays: false // Exclude codewars users without matching user data
+        }
+      },
+      // Step 4: Project only name and image
+      {
+        $project: {
+          _id: 0,
+          email: '$userData.email',
+          name: '$userData.name',
+          image: '$userData.image'
         }
       }
     ])

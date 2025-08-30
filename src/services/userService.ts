@@ -1,5 +1,9 @@
 import { usersTableSchema } from '@/app/dashboard/leaderboard/[tab]/schemas';
-import { findAllUsers } from '@/app/repositories/userRepository';
+import {
+  findAllUsers,
+  findCodewarsUsers
+} from '@/app/repositories/userRepository';
+import { z } from 'zod';
 
 export async function getPublicUsers() {
   const users = await findAllUsers();
@@ -14,4 +18,16 @@ export async function getPublicUsers() {
       totalDiamonds: user.totalDiamonds
     }))
   );
+}
+
+export async function getPublicCodewarsUsers() {
+  const codewarsUsers = await findCodewarsUsers();
+
+  const schema = z.object({
+    email: z.string().optional(),
+    name: z.string().optional(),
+    image: z.string().optional()
+  });
+
+  return schema.array().parse(codewarsUsers);
 }

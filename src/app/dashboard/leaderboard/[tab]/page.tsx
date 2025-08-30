@@ -1,6 +1,6 @@
 import DataTableTabs, { TableTab } from './tables/components/DataTableTabs';
-import dummyData from '../../../../../data/dummyData.json';
-import { getPublicUsers } from '@/services/userService';
+import dummyData from './tables/dummyData.json';
+import { getPublicCodewarsUsers, getPublicUsers } from '@/services/userService';
 
 export default async function LeaderboardTabPage({
   params
@@ -9,7 +9,12 @@ export default async function LeaderboardTabPage({
 }) {
   const { tab } = await params;
 
-  let usersData = (await getPublicUsers()) ?? [];
+  const usersData = (await getPublicUsers()) ?? [];
+  const codewarsUsers = await getPublicCodewarsUsers();
+
+  const codewarsTemporaryDummyData = dummyData.map((data, i) =>
+    codewarsUsers[i] ? { ...data, ...codewarsUsers[i] } : data
+  );
 
   return (
     <div className='flex flex-1 flex-col'>
@@ -17,7 +22,7 @@ export default async function LeaderboardTabPage({
         <div className='flex flex-col'>
           <DataTableTabs
             productsData={dummyData}
-            codewarsData={dummyData}
+            codewarsData={codewarsTemporaryDummyData}
             usersData={usersData}
             currentTab={tab}
           />
