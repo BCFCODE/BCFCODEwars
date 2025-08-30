@@ -5,23 +5,20 @@ import { getPublicUsers } from '@/services/userService';
 export default async function LeaderboardTabPage({
   params
 }: {
-  params: { tab: string };
+  params: Promise<{ tab: TableTab }>;
 }) {
   const { tab } = await params;
-  const usersData = await getPublicUsers();
-  // console.log(usersData);
+
+  let usersData = (await getPublicUsers()) ?? [];
+
   return (
     <div className='flex flex-1 flex-col'>
       <div className='@container/main flex flex-1 flex-col gap-2'>
         <div className='flex flex-col'>
-          {/* <SectionCards />
-        <div className='px-4 lg:px-6'>
-          <ChartAreaInteractive />
-        </div> */}
           <DataTableTabs
             codewarsData={codewarsDummyData}
             usersData={usersData}
-            currentTab={tab as TableTab}
+            currentTab={tab}
           />
         </div>
       </div>
