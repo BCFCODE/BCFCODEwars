@@ -48,7 +48,8 @@ export default async function Page() {
     }
   } catch (error) {
     // Error fetching GitHub stars, using default value
-    console.error('Failed to fetch GitHub stars:', error);
+    // console.error('Failed to fetch GitHub stars:', error);
+    throw new Error('Failed to fetch GitHub stars');
   }
 
   return <SignInViewPage stars={stars} />;
