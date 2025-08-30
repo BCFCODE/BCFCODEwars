@@ -60,12 +60,12 @@ function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
     <Drawer direction={isMobile ? 'bottom' : 'right'}>
       <DrawerTrigger asChild>
         <Button variant='link' className='text-foreground w-fit px-0 text-left'>
-          {item.header}
+          {item.name}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className='gap-1'>
-          <DrawerTitle>{item.header}</DrawerTitle>
+          <DrawerTitle>{item.name}</DrawerTitle>
           <DrawerDescription>
             Showing total visitors for the last 6 months
           </DrawerDescription>

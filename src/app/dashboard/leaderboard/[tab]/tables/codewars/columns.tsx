@@ -37,28 +37,6 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     cell: ({ row }) => <DragHandle id={row.original.id} />
   },
   {
-    accessorKey: 'image',
-    header: '',
-    cell: ({ row }) => {
-      return (
-        <Avatar>
-          <AvatarImage src={row.original.image} referrerPolicy='no-referrer' />
-          <AvatarFallback>{row.original.name}</AvatarFallback>
-        </Avatar>
-      );
-    },
-    enableHiding: false
-  },
-  {
-    accessorKey: 'name',
-    header: 'User',
-    cell: ({ row }) => {
-      return <p>{row.original.name}</p>;
-    },
-    enableHiding: false
-  },
-
-  {
     id: 'select',
     header: ({ table }) => (
       <div className='flex items-center justify-center'>
@@ -85,8 +63,21 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     enableHiding: false
   },
   {
+    accessorKey: 'image',
+    header: '',
+    cell: ({ row }) => {
+      return (
+        <Avatar>
+          <AvatarImage src={row.original.image} referrerPolicy='no-referrer' />
+          <AvatarFallback>{row.original.name}</AvatarFallback>
+        </Avatar>
+      );
+    },
+    enableHiding: false
+  },
+  {
     accessorKey: 'header',
-    header: 'Header',
+    header: 'User',
     cell: ({ row }) => {
       return <TableCellViewer item={row.original} />;
     },
