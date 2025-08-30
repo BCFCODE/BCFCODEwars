@@ -25,7 +25,7 @@ interface Props {
   tab: TableTab;
 }
 
-const DropDownMenus = ({ tables, tab }: Props) => {
+const CustomizeColumnsMenu = ({ tables, tab }: Props) => {
   switch (tab) {
     case 'users': {
       return (
@@ -108,4 +108,4 @@ const DropDownMenus = ({ tables, tab }: Props) => {
   }
 };
 
-export default DropDownMenus;
+export default CustomizeColumnsMenu;

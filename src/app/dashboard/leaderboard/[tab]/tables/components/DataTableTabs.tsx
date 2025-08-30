@@ -1,15 +1,5 @@
 'use client';
 
-import { Badge } from '@/components/ui/new-york-v4/badge';
-import { Label } from '@/components/ui/new-york-v4/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/new-york-v4/select';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/new-york-v4/tabs';
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -25,13 +15,13 @@ import {
 import * as React from 'react';
 import { z } from 'zod';
 
-import { useRouter } from 'next/navigation';
 import { codewarsTableSchema, usersTableSchema } from '../../schemas';
 import CodewarsTabContent from '../codewars';
 import codewarsColumns from '../codewars/columns';
-import DropDownMenus from './DropDownMenus';
 import UsersTabContent from '../users';
 import usersColumns from '../users/columns';
+import TabSwitcher from './TabSwitcher';
+import CustomizeColumnsMenu from './CustomizeColumnsMenu';
 
 export type TableTab = 'users' | 'codewars';
 
@@ -44,7 +34,6 @@ function DataTableTabs({
   usersData: z.infer<typeof usersTableSchema>[];
   currentTab: TableTab;
 }) {
-  const router = useRouter();
   // Codewars Tab
   const [codewarsData, setCodewarsData] = React.useState(
     () => codewarsInitialData
@@ -125,55 +114,22 @@ function DataTableTabs({
   });
 
   return (
-    <Tabs
-      value={currentTab}
-      onValueChange={(val) =>
-        router.push(`/dashboard/leaderboard/${val as TableTab}`)
-      }
-      className='w-full flex-col justify-start gap-6'
-    >
-      <div className='flex items-center justify-between px-4 lg:px-6'>
-        <Label htmlFor='view-selector' className='sr-only'>
-          View
-        </Label>
-        <Select
-          value={currentTab}
-          onValueChange={(val) =>
-            router.push(`/dashboard/leaderboard/${val as TableTab}`)
-          }
-        >
-          <SelectTrigger
-            className='flex w-fit @4xl/main:hidden'
-            size='sm'
-            id='view-selector'
-          >
-            <SelectValue placeholder='Select a view' />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value='users'>Users</SelectItem>
-            <SelectItem value='codewars'>Codewars</SelectItem>
-          </SelectContent>
-        </Select>
-        <TabsList className='**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex'>
-          <TabsTrigger value='users' className='cursor-pointer'>
-            Users
-          </TabsTrigger>
-          <TabsTrigger value='codewars' className='cursor-pointer'>
-            Codewars <Badge variant='secondary'>3</Badge>
-          </TabsTrigger>
-        </TabsList>
-        <DropDownMenus
+    <TabSwitcher
+      tab={currentTab}
+      customizeColumnsMenu={
+        <CustomizeColumnsMenu
           tab={currentTab}
           tables={{ users: usersTable, codewars: codewarsTable }}
         />
-      </div>
+      }
+    >
       <UsersTabContent table={usersTable} />
       <CodewarsTabContent
         setData={setCodewarsData}
         data={codewarsData}
         table={codewarsTable}
       />
-    </Tabs>
+    </TabSwitcher>
   );
 }
 
