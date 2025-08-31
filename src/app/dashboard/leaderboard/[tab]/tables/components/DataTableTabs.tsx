@@ -21,10 +21,10 @@ import {
   usersTableSchema
 } from '../../schemas';
 import CodewarsTabContent from '../codewars';
+import usersColumns from '../users/columns';
 import codewarsColumns from '../codewars/columns';
 import productsColumns from '../products/columns';
 import UsersTabContent from '../users';
-import usersColumns from '../users/columns';
 import TabSwitcher from './TabSwitcher';
 import CustomizeColumnsMenu from './CustomizeColumnsMenu';
 import ProductsTabContent from '../products';
@@ -32,7 +32,7 @@ import ProductsTabContent from '../products';
 export type TableTab = 'users' | 'codewars' | 'products';
 
 function DataTableTabs({
-  usersData,
+  usersData: usersInitialData,
   codewarsData: codewarsInitialData,
   productsData: productsInitialData,
   currentTab
@@ -43,8 +43,9 @@ function DataTableTabs({
   currentTab: TableTab;
 }) {
   // Users Tab
+  const [usersData, setUsersData] = React.useState(() => usersInitialData);
   const [usersRowSelection, setUsersRowSelection] = React.useState({});
-  const [columnVisibility, setColumnVisibility] =
+  const [usersColumnVisibility, setUsersColumnVisibility] =
     React.useState<VisibilityState>({});
   const [usersColumnFilters, setUsersColumnFilters] =
     React.useState<ColumnFiltersState>([]);
@@ -59,17 +60,17 @@ function DataTableTabs({
     columns: usersColumns,
     state: {
       sorting: usersSorting,
-      columnVisibility,
+      columnVisibility: usersColumnVisibility,
       rowSelection: usersRowSelection,
       columnFilters: usersColumnFilters,
       pagination: usersPagination
     },
-    getRowId: (row) => row.email,
+    getRowId: (row) => row.id.toString(),
     enableRowSelection: true,
     onRowSelectionChange: setUsersRowSelection,
     onSortingChange: setUsersSorting,
     onColumnFiltersChange: setUsersColumnFilters,
-    onColumnVisibilityChange: setColumnVisibility,
+    onColumnVisibilityChange: setUsersColumnVisibility,
     onPaginationChange: setUsersPagination,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -177,7 +178,11 @@ function DataTableTabs({
         />
       }
     >
-      <UsersTabContent table={usersTable} />
+      <UsersTabContent
+        setData={setUsersData}
+        data={usersData}
+        table={usersTable}
+      />
       <CodewarsTabContent
         setData={setCodewarsData}
         data={codewarsData}

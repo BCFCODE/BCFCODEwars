@@ -1,6 +1,6 @@
+import { getPublicCodewarsUsers, getPublicUsers } from '@/services/userService';
 import DataTableTabs, { TableTab } from './tables/components/DataTableTabs';
 import dummyData from './tables/dummyData.json';
-import { getPublicCodewarsUsers, getPublicUsers } from '@/services/userService';
 
 export default async function LeaderboardTabPage({
   params
@@ -10,10 +10,13 @@ export default async function LeaderboardTabPage({
   const { tab } = await params;
 
   const usersData = (await getPublicUsers()) ?? [];
-  const codewarsUsers = await getPublicCodewarsUsers();
+  const usersTemporaryDummyData = dummyData.map((data, i) =>
+    usersData[i] ? { ...data, ...usersData[i] } : data
+  );
 
+  const codewarsData = (await getPublicCodewarsUsers()) ?? [];
   const codewarsTemporaryDummyData = dummyData.map((data, i) =>
-    codewarsUsers[i] ? { ...data, ...codewarsUsers[i] } : data
+    codewarsData[i] ? { ...data, ...codewarsData[i] } : data
   );
 
   return (
@@ -21,9 +24,12 @@ export default async function LeaderboardTabPage({
       <div className='@container/main flex flex-1 flex-col gap-2'>
         <div className='flex flex-col'>
           <DataTableTabs
+            codewarsData={codewarsTemporaryDummyData.slice(
+              0,
+              codewarsData.length
+            )}
+            usersData={usersTemporaryDummyData.slice(0, usersData.length)}
             productsData={dummyData}
-            codewarsData={codewarsTemporaryDummyData}
-            usersData={usersData}
             currentTab={tab}
           />
         </div>
