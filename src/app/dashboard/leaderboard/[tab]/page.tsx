@@ -13,7 +13,8 @@ export default async function LeaderboardTabPage({
   const usersTemporaryDummyData = dummyData.map((data, i) =>
     usersData[i] ? { ...data, ...usersData[i] } : data
   );
-
+  // console.log(usersTemporaryDummyData)
+  // console.log(usersData)
   const codewarsData = (await getPublicCodewarsUsers()) ?? [];
   const codewarsTemporaryDummyData = dummyData.map((data, i) =>
     codewarsData[i] ? { ...data, ...codewarsData[i] } : data

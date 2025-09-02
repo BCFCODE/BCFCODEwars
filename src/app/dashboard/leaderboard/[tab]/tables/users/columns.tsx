@@ -36,33 +36,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     header: () => null,
     cell: ({ row }) => <DragHandle id={row.original.id} />
   },
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <div className='flex items-center justify-center'>
-        <Checkbox
-          checked={
-            table.getIsAllPageRowsSelected() ||
-            (table.getIsSomePageRowsSelected() && 'indeterminate')
-          }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label='Select all'
-        />
-      </div>
-    ),
 
-    cell: ({ row }) => (
-      <div className='flex items-center justify-center'>
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label='Select row'
-        />
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false
-  },
   {
     accessorKey: 'image',
     header: '',
@@ -87,6 +61,22 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
     enableHiding: false
   },
   {
+    accessorKey: 'since',
+    header: 'Member since',
+    cell: ({ row }) => (
+      <div className='w-32'>
+        <Badge variant='outline' className='text-muted-foreground px-1.5'>
+          {new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric'
+          }).format(row.original.firstLogin ?? new Date())}
+        </Badge>
+      </div>
+    ),
+    enableHiding: true
+  },
+  {
     accessorKey: 'lastActivity',
     header: 'Last Activity',
     cell: ({ row }) => (
@@ -95,13 +85,13 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
           {new Intl.DateTimeFormat('en-US', {
             dateStyle: 'short',
             timeStyle: 'medium'
-          }).format(
-            /* row.original.lastActiveTime ?? row.original.firstLogin ?? */ new Date()
-          )}
+          }).format(row.original.lastActiveTime ?? row.original.firstLogin)}
         </Badge>
       </div>
-    )
+    ),
+    enableHiding: true
   },
+
   {
     accessorKey: 'status',
     header: 'Status',
@@ -118,7 +108,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   {
     accessorKey: 'target',
-    header: () => <div className='w-full text-right'>Target</div>,
+    header: () => <div className='w-full text-center'>Target</div>,
     cell: ({ row }) => (
       <form
         onSubmit={(e) => {
@@ -143,7 +133,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   {
     accessorKey: 'limit',
-    header: () => <div className='w-full text-right'>Limit</div>,
+    header: () => <div className='w-full text-center'>Limit</div>,
     cell: ({ row }) => (
       <form
         onSubmit={(e) => {
@@ -199,6 +189,33 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
         </>
       );
     }
+  },
+  {
+    id: 'select',
+    header: ({ table }) => (
+      <div className='flex items-center justify-center'>
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && 'indeterminate')
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label='Select all'
+        />
+      </div>
+    ),
+
+    cell: ({ row }) => (
+      <div className='flex items-center justify-center'>
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label='Select row'
+        />
+      </div>
+    ),
+    enableSorting: false,
+    enableHiding: false
   },
   {
     id: 'actions',

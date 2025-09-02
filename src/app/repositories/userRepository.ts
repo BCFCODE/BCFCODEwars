@@ -2,7 +2,7 @@ import { getDb } from '@/lib/mongodb';
 
 export async function findAllUsers() {
   const db = await getDb();
-  return await db
+  const users = await db
     .collection('users')
     .aggregate([
       // Step 1: Join with diamonds collection
@@ -35,6 +35,8 @@ export async function findAllUsers() {
       }
     ])
     .toArray();
+
+  return users;
 }
 
 export async function findCodewarsUsers() {
