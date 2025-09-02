@@ -64,7 +64,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
   },
   {
     accessorKey: 'image',
-    header: '',
+    header: () => null,
     cell: ({ row }) => {
       return (
         <Avatar>

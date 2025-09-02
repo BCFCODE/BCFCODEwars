@@ -1,30 +1,9 @@
-import { Button } from '@/components/ui/new-york-v4/button';
 import { TableCell, TableRow } from '@/components/ui/new-york-v4/table';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { flexRender, Row } from '@tanstack/react-table';
-import { IconGripVertical } from '@tabler/icons-react';
 import { z } from 'zod';
 import { schema } from '../../../schemas/usersTableSchema';
-
-function DragHandle({ id }: { id: number }) {
-  const { attributes, listeners } = useSortable({
-    id
-  });
-
-  return (
-    <Button
-      {...attributes}
-      {...listeners}
-      variant='ghost'
-      size='icon'
-      className='text-muted-foreground size-7 hover:bg-transparent'
-    >
-      <IconGripVertical className='text-muted-foreground size-3' />
-      <span className='sr-only'>Drag to reorder</span>
-    </Button>
-  );
-}
 
 function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
@@ -51,7 +30,7 @@ function DraggableRow({ row }: { row: Row<z.infer<typeof schema>> }) {
   );
 }
 
-export { DraggableRow, DragHandle };
+export { DraggableRow };
 
 // import { Button } from '@/components/ui/new-york-v4/button';
 // import { TableCell, TableRow } from '@/components/ui/new-york-v4/table';
