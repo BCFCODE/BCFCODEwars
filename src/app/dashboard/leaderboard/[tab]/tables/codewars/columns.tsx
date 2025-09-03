@@ -1,7 +1,6 @@
 import { Badge } from '@/components/ui/new-york-v4/badge';
 import { ColumnDef } from '@tanstack/react-table';
-import { z } from 'zod';
-import { schema } from '../../../schemas/codewarsTableSchema';
+import { CodewarsTableData } from '../../../types';
 import {
   actions,
   avatar,
@@ -12,9 +11,9 @@ import {
   status,
   target,
   user
-} from './Cells';
+} from './components/Cells';
 
-const columns: ColumnDef<z.infer<typeof schema>>[] = [
+const columns: ColumnDef<CodewarsTableData>[] = [
   dragHandle,
   avatar,
   user,

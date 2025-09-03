@@ -13,12 +13,12 @@ import { SelectCell } from './SelectCell';
 import { StatusCell } from './StatusCell';
 import { TargetCell } from './TargetCell';
 import { UserCell } from './UserCell';
-import { CodewarsTableCells } from '../../../../types/CodewarsTable';
+import { CodewarsTableData } from '../../../../../types/CodewarsTable';
 
 export const dragHandle = {
   id: 'drag',
   header: () => null,
-  cell: ({ row }: { row: Row<CodewarsTableCells> }) => (
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => (
     <DragHandleCell id={row.original.id} />
   )
 };
@@ -26,7 +26,7 @@ export const dragHandle = {
 export const avatar = {
   accessorKey: 'image',
   header: () => null,
-  cell: ({ row }: { row: Row<CodewarsTableCells> }) => (
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => (
     <AvatarCell {...{ row }} />
   )
 };
@@ -34,16 +34,14 @@ export const avatar = {
 export const user = {
   accessorKey: 'user',
   header: 'User',
-  cell: ({ row }: { row: Row<CodewarsTableCells> }) => (
-    <UserCell {...{ row }} />
-  ),
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => <UserCell {...{ row }} />,
   enableHiding: false
 };
 
 export const lastActivity = {
   accessorKey: 'lastActivity',
   header: 'Last Activity',
-  cell: ({ row }: { row: Row<CodewarsTableCells> }) => (
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => (
     <LastActivityCell {...{ row }} />
   ),
   enableHiding: true
@@ -52,7 +50,7 @@ export const lastActivity = {
 export const status = {
   accessorKey: 'status',
   header: 'Status',
-  cell: ({ row }: { row: Row<CodewarsTableCells> }) => (
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => (
     <StatusCell {...{ row }} />
   )
 };
@@ -60,7 +58,7 @@ export const status = {
 export const target = {
   accessorKey: 'target',
   header: () => <TargetHeader />,
-  cell: ({ row }: { row: Row<CodewarsTableCells> }) => (
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => (
     <TargetCell {...{ row }} />
   )
 };
@@ -68,15 +66,13 @@ export const target = {
 export const limit = {
   accessorKey: 'limit',
   header: () => <LimitHeader />,
-  cell: ({ row }: { row: Row<CodewarsTableCells> }) => (
-    <LimitCell {...{ row }} />
-  )
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => <LimitCell {...{ row }} />
 };
 
 export const reviewer = {
   accessorKey: 'reviewer',
   header: 'Reviewer',
-  cell: ({ row }: { row: Row<CodewarsTableCells> }) => (
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => (
     <ReviewerCell {...{ row }} />
   )
 };
@@ -84,7 +80,7 @@ export const reviewer = {
 export const memberSince = {
   accessorKey: 'since',
   header: 'Member since',
-  cell: ({ row }: { row: Row<CodewarsTableCells> }) => (
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => (
     <MemberSinceCell {...{ row }} />
   ),
   enableHiding: true
@@ -92,10 +88,10 @@ export const memberSince = {
 
 export const select = {
   id: 'select',
-  header: ({ table }: { table: Table<CodewarsTableCells> }) => (
+  header: ({ table }: { table: Table<CodewarsTableData> }) => (
     <SelectHeader {...{ table }} />
   ),
-  cell: ({ row }: { row: Row<CodewarsTableCells> }) => (
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => (
     <SelectCell {...{ row }} />
   ),
   enableSorting: false,

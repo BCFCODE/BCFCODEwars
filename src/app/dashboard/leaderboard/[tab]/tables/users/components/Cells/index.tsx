@@ -1,5 +1,5 @@
 import { Row, Table } from '@tanstack/react-table';
-import { UsersTableCells } from '../../../../../types';
+import { UsersTableData } from '../../../../../types';
 import { LimitHeader } from '../Headers/LimitHeader';
 import { SelectHeader } from '../Headers/SelectHeader';
 import { TargetHeader } from '../Headers/TargetHeader';
@@ -18,7 +18,7 @@ import { UserCell } from './UserCell';
 export const dragHandle = {
   id: 'drag',
   header: () => null,
-  cell: ({ row }: { row: Row<UsersTableCells> }) => (
+  cell: ({ row }: { row: Row<UsersTableData> }) => (
     <DragHandleCell id={row.original.id} />
   )
 };
@@ -26,20 +26,20 @@ export const dragHandle = {
 export const avatar = {
   accessorKey: 'image',
   header: () => null,
-  cell: ({ row }: { row: Row<UsersTableCells> }) => <AvatarCell {...{ row }} />
+  cell: ({ row }: { row: Row<UsersTableData> }) => <AvatarCell {...{ row }} />
 };
 
 export const user = {
   accessorKey: 'user',
   header: 'User',
-  cell: ({ row }: { row: Row<UsersTableCells> }) => <UserCell {...{ row }} />,
+  cell: ({ row }: { row: Row<UsersTableData> }) => <UserCell {...{ row }} />,
   enableHiding: false
 };
 
 export const lastActivity = {
   accessorKey: 'lastActivity',
   header: 'Last Activity',
-  cell: ({ row }: { row: Row<UsersTableCells> }) => (
+  cell: ({ row }: { row: Row<UsersTableData> }) => (
     <LastActivityCell {...{ row }} />
   ),
   enableHiding: true
@@ -48,33 +48,31 @@ export const lastActivity = {
 export const status = {
   accessorKey: 'status',
   header: 'Status',
-  cell: ({ row }: { row: Row<UsersTableCells> }) => <StatusCell {...{ row }} />
+  cell: ({ row }: { row: Row<UsersTableData> }) => <StatusCell {...{ row }} />
 };
 
 export const target = {
   accessorKey: 'target',
   header: () => <TargetHeader />,
-  cell: ({ row }: { row: Row<UsersTableCells> }) => <TargetCell {...{ row }} />
+  cell: ({ row }: { row: Row<UsersTableData> }) => <TargetCell {...{ row }} />
 };
 
 export const limit = {
   accessorKey: 'limit',
   header: () => <LimitHeader />,
-  cell: ({ row }: { row: Row<UsersTableCells> }) => <LimitCell {...{ row }} />
+  cell: ({ row }: { row: Row<UsersTableData> }) => <LimitCell {...{ row }} />
 };
 
 export const reviewer = {
   accessorKey: 'reviewer',
   header: 'Reviewer',
-  cell: ({ row }: { row: Row<UsersTableCells> }) => (
-    <ReviewerCell {...{ row }} />
-  )
+  cell: ({ row }: { row: Row<UsersTableData> }) => <ReviewerCell {...{ row }} />
 };
 
 export const memberSince = {
   accessorKey: 'since',
   header: 'Member since',
-  cell: ({ row }: { row: Row<UsersTableCells> }) => (
+  cell: ({ row }: { row: Row<UsersTableData> }) => (
     <MemberSinceCell {...{ row }} />
   ),
   enableHiding: true
@@ -82,10 +80,10 @@ export const memberSince = {
 
 export const select = {
   id: 'select',
-  header: ({ table }: { table: Table<UsersTableCells> }) => (
+  header: ({ table }: { table: Table<UsersTableData> }) => (
     <SelectHeader {...{ table }} />
   ),
-  cell: ({ row }: { row: Row<UsersTableCells> }) => <SelectCell {...{ row }} />,
+  cell: ({ row }: { row: Row<UsersTableData> }) => <SelectCell {...{ row }} />,
   enableSorting: false,
   enableHiding: false
 };

@@ -1,5 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { UsersTable } from '../../../types';
+import { UsersTableData } from '../../../types';
 import {
   actions,
   avatar,
@@ -14,7 +14,7 @@ import {
   user
 } from './components/Cells';
 
-const columns: ColumnDef<UsersTable>[] = [
+const columns: ColumnDef<UsersTableData>[] = [
   dragHandle,
   avatar,
   user,

@@ -1,3 +1,3 @@
-export { type UsersTableCells } from './UsersTable';
+export { type UsersTableData } from './UsersTable';
 
-export { type CodewarsTableCells } from './CodewarsTable';
+export { type CodewarsTableData } from './CodewarsTable';

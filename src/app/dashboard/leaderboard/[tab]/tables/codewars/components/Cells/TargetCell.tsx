@@ -2,9 +2,9 @@ import { Input } from '@/components/ui/new-york-v4/input';
 import { Label } from '@/components/ui/new-york-v4/label';
 import { Row } from '@tanstack/react-table';
 import { toast } from 'sonner';
-import { CodewarsTableCells } from '../../../../types';
+import { CodewarsTableData } from '../../../../../types';
 
-export function LimitCell({ row }: { row: Row<CodewarsTableCells> }) {
+export function TargetCell({ row }: { row: Row<CodewarsTableData> }) {
   return (
     <form
       onSubmit={(e) => {
@@ -16,13 +16,13 @@ export function LimitCell({ row }: { row: Row<CodewarsTableCells> }) {
         });
       }}
     >
-      <Label htmlFor={`${row.original.id}-limit`} className='sr-only'>
-        Limit
+      <Label htmlFor={`${row.original.id}-target`} className='sr-only'>
+        Target
       </Label>
       <Input
         className='hover:bg-input/30 focus-visible:bg-background dark:hover:bg-input/30 dark:focus-visible:bg-input/30 h-8 w-16 border-transparent bg-transparent text-right shadow-none focus-visible:border dark:bg-transparent'
-        defaultValue={row.original.limit}
-        id={`${row.original.id}-limit`}
+        defaultValue={row.original.target}
+        id={`${row.original.id}-target`}
       />
     </form>
   );

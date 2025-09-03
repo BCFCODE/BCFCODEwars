@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Row } from '@tanstack/react-table';
-import { UsersTableCells } from '../../../../../types';
+import { UsersTableData } from '../../../../../types';
 
-export function AvatarCell({ row }: { row: Row<UsersTableCells> }) {
+export function AvatarCell({ row }: { row: Row<UsersTableData> }) {
   return (
     <Avatar>
       <AvatarImage src={row.original.image} referrerPolicy='no-referrer' />

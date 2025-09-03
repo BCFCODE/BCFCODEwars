@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@/components/ui/new-york-v4/button';
 import {
   DropdownMenu,

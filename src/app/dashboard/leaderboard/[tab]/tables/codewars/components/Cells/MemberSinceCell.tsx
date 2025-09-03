@@ -1,8 +1,8 @@
 import { Badge } from '@/components/ui/new-york-v4/badge';
 import { Row } from '@tanstack/react-table';
-import { CodewarsTableCells } from '../../../../types';
+import { CodewarsTableData } from '../../../../../types';
 
-export function MemberSinceCell({ row }: { row: Row<CodewarsTableCells> }) {
+export function MemberSinceCell({ row }: { row: Row<CodewarsTableData> }) {
   return (
     <div className='w-32'>
       <Badge variant='outline' className='text-muted-foreground px-1.5'>

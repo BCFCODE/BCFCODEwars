@@ -2,9 +2,9 @@ import { Input } from '@/components/ui/new-york-v4/input';
 import { Label } from '@/components/ui/new-york-v4/label';
 import { Row } from '@tanstack/react-table';
 import { toast } from 'sonner';
-import { UsersTableCells } from '../../../../../types';
+import { UsersTableData } from '../../../../../types';
 
-export function LimitCell({ row }: { row: Row<UsersTableCells> }) {
+export function LimitCell({ row }: { row: Row<UsersTableData> }) {
   return (
     <form
       onSubmit={(e) => {

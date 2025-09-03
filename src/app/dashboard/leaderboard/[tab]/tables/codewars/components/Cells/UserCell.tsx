@@ -1,7 +1,7 @@
 import { Row } from '@tanstack/react-table';
-import { UsersTableData } from '../../../../../types';
+import { CodewarsTableData } from '../../../../../types';
 import { TableCellViewer } from '../TableCellViewer';
 
-export function UserCell({ row }: { row: Row<UsersTableData> }) {
+export function UserCell({ row }: { row: Row<CodewarsTableData> }) {
   return <TableCellViewer item={row.original} />;
 }

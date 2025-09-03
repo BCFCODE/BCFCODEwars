@@ -1,10 +1,10 @@
-import { CodewarsTableCells } from '@/app/dashboard/leaderboard/types';
+import { CodewarsTableData } from '@/app/dashboard/leaderboard/types';
 import { TableCell, TableRow } from '@/components/ui/new-york-v4/table';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { flexRender, Row } from '@tanstack/react-table';
 
-export function DraggableRow({ row }: { row: Row<CodewarsTableCells> }) {
+export function DraggableRow({ row }: { row: Row<CodewarsTableData> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({
     id: row.original.id
   });
