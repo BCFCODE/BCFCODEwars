@@ -14,13 +14,12 @@ import {
 } from '@tanstack/react-table';
 import * as React from 'react';
 import { z } from 'zod';
-
-import { codewarsTableSchema, usersTableSchema } from '../../../schemas';
-import CodewarsTabContent from '../codewars';
-import codewarsColumns from '../codewars/columns';
-import UsersTabContent from '../users';
-import usersColumns from '../users/columns';
-import CustomizeColumnsMenu from './CustomizeColumnsMenu';
+import usersColumns from '../[tab]/tables/users/columns';
+import codewarsColumns from '../[tab]/tables/codewars/columns';
+import CodewarsTabContent from '../[tab]/tables/codewars';
+import UsersTabContent from '../[tab]/tables/users';
+import { usersTableSchema, codewarsTableSchema } from '../schemas';
+import CustomizeColumnsMenu from './CustomizeColumns';
 import TabSwitcher from './TabSwitcher';
 
 export type TableTab = 'users' | 'codewars';

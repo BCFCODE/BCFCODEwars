@@ -1,5 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { UsersTable } from '../types';
+import { UsersTable } from '../../../types';
 import {
   actions,
   avatar,

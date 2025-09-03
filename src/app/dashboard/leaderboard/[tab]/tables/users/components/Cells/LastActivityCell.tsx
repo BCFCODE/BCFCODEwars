@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/new-york-v4/badge';
 import { Row } from '@tanstack/react-table';
-import { UsersTableCells } from '../../../types';
+import { UsersTableCells } from '../../../../../types';
 
 export function LastActivityCell({ row }: { row: Row<UsersTableCells> }) {
   return (

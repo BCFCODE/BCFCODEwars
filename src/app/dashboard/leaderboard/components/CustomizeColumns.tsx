@@ -13,7 +13,7 @@ import {
   IconPlus
 } from '@tabler/icons-react';
 import { z } from 'zod';
-import { codewarsTableSchema, usersTableSchema } from '../../../schemas';
+import { codewarsTableSchema, usersTableSchema } from '../schemas';
 import { Table } from '@tanstack/react-table';
 import { TableTab } from './DataTableTabs';
 

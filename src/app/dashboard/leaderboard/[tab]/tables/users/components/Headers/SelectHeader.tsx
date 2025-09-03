@@ -1,6 +1,6 @@
 import { Checkbox } from '@/components/ui/new-york-v4/checkbox';
 import { Table } from '@tanstack/react-table';
-import { UsersTableCells } from '../../../types';
+import { UsersTableCells } from '../../../../../types';
 
 export function SelectHeader({ table }: { table: Table<UsersTableCells> }) {
   return (

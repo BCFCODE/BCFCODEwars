@@ -16,7 +16,6 @@ import {
 
 const columns: ColumnDef<z.infer<typeof schema>>[] = [
   dragHandle,
-  select,
   avatar,
   user,
   {
@@ -34,6 +33,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
   target,
   limit,
   reviewer,
+  select,
   actions
 ];
 

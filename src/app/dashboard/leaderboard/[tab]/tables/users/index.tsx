@@ -44,7 +44,7 @@ import {
 } from '@tabler/icons-react';
 import { flexRender, Table } from '@tanstack/react-table';
 import columns from './columns';
-import { DraggableRow } from './components/RowComponents';
+import { DraggableRow } from './components/DraggableRow';
 import { usersTableSchema } from '../../../schemas';
 import { z } from 'zod';
 import React from 'react';

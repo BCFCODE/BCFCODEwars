@@ -9,8 +9,8 @@ import {
   SelectValue
 } from '@/components/ui/new-york-v4/select';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/new-york-v4/tabs';
-import { TableTab } from './DataTableTabs';
 import { useRouter } from 'next/navigation';
+import { TableTab } from './DataTableTabs';
 
 interface Props extends PropsWithChildren {
   tab: TableTab;

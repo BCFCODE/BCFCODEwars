@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/new-york-v4/badge';
 import { IconCircleCheckFilled, IconLoader } from '@tabler/icons-react';
 import { Row } from '@tanstack/react-table';
-import { CodewarsTableCells } from '../../types';
+import { CodewarsTableCells } from '../../../../types';
 
 export function StatusCell({ row }: { row: Row<CodewarsTableCells> }) {
   return (

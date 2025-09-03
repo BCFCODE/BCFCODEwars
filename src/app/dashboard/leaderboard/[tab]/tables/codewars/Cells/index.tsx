@@ -13,7 +13,7 @@ import { SelectCell } from './SelectCell';
 import { StatusCell } from './StatusCell';
 import { TargetCell } from './TargetCell';
 import { UserCell } from './UserCell';
-import { CodewarsTableCells } from '../../types/CodewarsTable';
+import { CodewarsTableCells } from '../../../../types/CodewarsTable';
 
 export const dragHandle = {
   id: 'drag',

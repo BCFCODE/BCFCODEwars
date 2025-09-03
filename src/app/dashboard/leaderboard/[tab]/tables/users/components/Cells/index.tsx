@@ -1,5 +1,5 @@
 import { Row, Table } from '@tanstack/react-table';
-import { UsersTableCells } from '../../../types';
+import { UsersTableCells } from '../../../../../types';
 import { LimitHeader } from '../Headers/LimitHeader';
 import { SelectHeader } from '../Headers/SelectHeader';
 import { TargetHeader } from '../Headers/TargetHeader';

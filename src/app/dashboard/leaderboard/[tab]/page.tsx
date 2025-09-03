@@ -1,6 +1,6 @@
 import { getPublicCodewarsUsers, getPublicUsers } from '@/services/userService';
-import DataTableTabs, { TableTab } from './tables/components/DataTableTabs';
 import dummyData from './tables/dummyData.json';
+import DataTableTabs, { TableTab } from '../components/DataTableTabs';
 
 export default async function LeaderboardTabPage({
   params
