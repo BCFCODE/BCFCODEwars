@@ -30,7 +30,6 @@ export default async function LeaderboardTabPage({
               codewarsData.length
             )}
             usersData={usersTemporaryDummyData.slice(0, usersData.length)}
-            productsData={dummyData}
             currentTab={tab}
           />
         </div>

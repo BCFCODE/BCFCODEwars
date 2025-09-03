@@ -1,8 +1,8 @@
 import { Checkbox } from '@/components/ui/new-york-v4/checkbox';
 import { Row } from '@tanstack/react-table';
-import { UsersTableCells } from '../../../types';
+import { CodewarsTableCells } from '../../types';
 
-export function SelectCell({ row }: { row: Row<UsersTableCells> }) {
+export function SelectCell({ row }: { row: Row<CodewarsTableCells> }) {
   return (
     <div className='flex items-center justify-center'>
       <Checkbox

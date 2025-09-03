@@ -15,31 +15,23 @@ import {
 import * as React from 'react';
 import { z } from 'zod';
 
-import {
-  codewarsTableSchema,
-  productsTableSchema,
-  usersTableSchema
-} from '../../schemas';
+import { codewarsTableSchema, usersTableSchema } from '../../../schemas';
 import CodewarsTabContent from '../codewars';
-import usersColumns from '../users/columns';
 import codewarsColumns from '../codewars/columns';
-import productsColumns from '../products/columns';
 import UsersTabContent from '../users';
-import TabSwitcher from './TabSwitcher';
+import usersColumns from '../users/columns';
 import CustomizeColumnsMenu from './CustomizeColumnsMenu';
-import ProductsTabContent from '../products';
+import TabSwitcher from './TabSwitcher';
 
-export type TableTab = 'users' | 'codewars' | 'products';
+export type TableTab = 'users' | 'codewars';
 
 function DataTableTabs({
+  currentTab,
   usersData: usersInitialData,
-  codewarsData: codewarsInitialData,
-  productsData: productsInitialData,
-  currentTab
+  codewarsData: codewarsInitialData
 }: {
   usersData: z.infer<typeof usersTableSchema>[];
   codewarsData: z.infer<typeof codewarsTableSchema>[];
-  productsData: z.infer<typeof productsTableSchema>[];
   currentTab: TableTab;
 }) {
   // Users Tab
@@ -122,48 +114,6 @@ function DataTableTabs({
     getFacetedUniqueValues: getFacetedUniqueValues()
   });
 
-  // Products Tab
-  const [productsData, setProductsData] = React.useState(
-    () => productsInitialData
-  );
-  const [productsRowSelection, setProductsRowSelection] = React.useState({});
-  const [productsColumnVisibility, setProductsColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [productsColumnFilters, setProductsColumnFilters] =
-    React.useState<ColumnFiltersState>([]);
-  const [productsSorting, setProductsSorting] = React.useState<SortingState>(
-    []
-  );
-  const [productsPagination, setProductsPagination] = React.useState({
-    pageIndex: 0,
-    pageSize: 10
-  });
-
-  const productsTable = useReactTable({
-    data: productsData,
-    columns: productsColumns,
-    state: {
-      sorting: productsSorting,
-      columnVisibility: productsColumnVisibility,
-      rowSelection: productsRowSelection,
-      columnFilters: productsColumnFilters,
-      pagination: productsPagination
-    },
-    getRowId: (row) => row.id.toString(),
-    enableRowSelection: true,
-    onRowSelectionChange: setProductsRowSelection,
-    onSortingChange: setProductsSorting,
-    onColumnFiltersChange: setProductsColumnFilters,
-    onColumnVisibilityChange: setProductsColumnVisibility,
-    onPaginationChange: setProductsPagination,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues()
-  });
-
   return (
     <TabSwitcher
       tab={currentTab}
@@ -172,8 +122,7 @@ function DataTableTabs({
           tab={currentTab}
           tables={{
             users: usersTable,
-            codewars: codewarsTable,
-            products: productsTable
+            codewars: codewarsTable
           }}
         />
       }
@@ -187,11 +136,6 @@ function DataTableTabs({
         setData={setCodewarsData}
         data={codewarsData}
         table={codewarsTable}
-      />
-      <ProductsTabContent
-        setData={setProductsData}
-        data={productsData}
-        table={productsTable}
       />
     </TabSwitcher>
   );

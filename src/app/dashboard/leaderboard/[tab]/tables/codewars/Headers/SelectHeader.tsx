@@ -1,8 +1,8 @@
 import { Checkbox } from '@/components/ui/new-york-v4/checkbox';
 import { Table } from '@tanstack/react-table';
-import { UsersTableCells } from '../../../types';
+import { UsersTable } from '../../../types';
 
-export function SelectHeader({ table }: { table: Table<UsersTableCells> }) {
+export function SelectHeader({ table }: { table: Table<UsersTable> }) {
   return (
     <div className='flex items-center justify-center'>
       <Checkbox

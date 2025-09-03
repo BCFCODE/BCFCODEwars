@@ -7,9 +7,9 @@ import {
   SelectValue
 } from '@/components/ui/new-york-v4/select';
 import { Row } from '@tanstack/react-table';
-import { UsersTableCells } from '../../../types';
+import { CodewarsTableCells } from '../../types';
 
-export function ReviewerCell({ row }: { row: Row<UsersTableCells> }) {
+export function ReviewerCell({ row }: { row: Row<CodewarsTableCells> }) {
   const isAssigned = row.original.reviewer !== 'Assign reviewer';
 
   if (isAssigned) {

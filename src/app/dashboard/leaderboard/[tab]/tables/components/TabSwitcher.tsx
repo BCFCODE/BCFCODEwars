@@ -47,7 +47,6 @@ const TabSwitcher = ({ children, tab, customizeColumnsMenu }: Props) => {
           <SelectContent>
             <SelectItem value='users'>Users</SelectItem>
             <SelectItem value='codewars'>Codewars</SelectItem>
-            <SelectItem value='products'>Products</SelectItem>
           </SelectContent>
         </Select>
         <TabsList className='**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex'>
@@ -56,9 +55,6 @@ const TabSwitcher = ({ children, tab, customizeColumnsMenu }: Props) => {
           </TabsTrigger>
           <TabsTrigger value='codewars' className='cursor-pointer'>
             Codewars <Badge variant='secondary'>3</Badge>
-          </TabsTrigger>
-          <TabsTrigger value='products' className='cursor-pointer'>
-            Products <Badge variant='secondary'>3</Badge>
           </TabsTrigger>
         </TabsList>
         {customizeColumnsMenu}

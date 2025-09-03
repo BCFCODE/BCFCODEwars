@@ -45,7 +45,7 @@ import {
 import { flexRender, Table } from '@tanstack/react-table';
 import columns from './columns';
 import { DraggableRow } from './components/RowComponents';
-import { codewarsTableSchema } from '../../schemas';
+import { codewarsTableSchema } from '../../../schemas';
 import { z } from 'zod';
 import React from 'react';
 
