@@ -67,10 +67,20 @@ function DataTableTabs({
         </Select>
         <TabsList className='**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex'>
           <TabsTrigger value='users' className='cursor-pointer'>
-            Users
+            Users{' '}
+            {currentTab === 'users' && (
+              <Badge variant='secondary'>
+                {table.getCoreRowModel().rows.length}
+              </Badge>
+            )}
           </TabsTrigger>
           <TabsTrigger value='codewars' className='cursor-pointer'>
-            Codewars <Badge variant='secondary'>3</Badge>
+            Codewars{' '}
+            {currentTab === 'codewars' && (
+              <Badge variant='secondary'>
+                {table.getCoreRowModel().rows.length}
+              </Badge>
+            )}
           </TabsTrigger>
         </TabsList>
         <CustomizeColumnsMenu {...{ table }} />

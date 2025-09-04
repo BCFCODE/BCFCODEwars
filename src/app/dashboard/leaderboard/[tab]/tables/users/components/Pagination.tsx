@@ -1,3 +1,4 @@
+import { LeftFooter } from '@/app/dashboard/leaderboard/components/LeftFooter';
 import { UsersTableData } from '@/app/dashboard/leaderboard/types';
 import { Button } from '@/components/ui/new-york-v4/button';
 import { Label } from '@/components/ui/new-york-v4/label';
@@ -20,10 +21,7 @@ import { Table } from '@tanstack/react-table';
 export function Pagination({ table }: { table: Table<UsersTableData> }) {
   return (
     <div className='bg-background sticky bottom-0 z-20 flex items-center justify-between border-t px-4 py-3'>
-      <div className='text-muted-foreground hidden flex-1 text-sm lg:flex'>
-        {table.getFilteredSelectedRowModel().rows.length} of{' '}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
-      </div>
+      <LeftFooter table={table} who='user' />
       <div className='flex w-full items-center gap-8 lg:w-fit'>
         <div className='hidden items-center gap-2 lg:flex'>
           <Label htmlFor='rows-per-page' className='text-sm font-medium'>
