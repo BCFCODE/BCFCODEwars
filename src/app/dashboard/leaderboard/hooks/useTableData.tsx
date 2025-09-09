@@ -13,10 +13,10 @@ import {
   useReactTable,
   VisibilityState
 } from '@tanstack/react-table';
-import codewarsColumns from '../[tab]/tables/codewars/columns';
-import usersColumns from '../[tab]/tables/users/columns';
+import codewarsColumns from '../codewars/columns';
 import { TableTab } from '../components/DataTableTabs';
 import { CodewarsTableData, UsersTableData } from '../types';
+import usersColumns from '../users/columns';
 
 interface TableData<Data> {
   initialData: {

@@ -11,11 +11,11 @@ import {
 } from '@/components/ui/new-york-v4/select';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/new-york-v4/tabs';
 import { useRouter } from 'next/navigation';
-import CodewarsTabContent from '../[tab]/tables/codewars';
-import UsersTabContent from '../[tab]/tables/users';
+import CodewarsTabContent from '../codewars/components/TabContent';
 import { useTableData } from '../hooks/useTableData';
 import { CodewarsTableData, UsersTableData } from '../types';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
+import UsersTabContent from '../users/components/TabContent';
 
 export type TableTab = 'users' | 'codewars';
 

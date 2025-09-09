@@ -12,8 +12,8 @@ import {
   useReactTable,
   VisibilityState
 } from '@tanstack/react-table';
-import usersColumns from '../[tab]/tables/users/columns';
 import { UsersTableData } from '../types';
+import usersColumns from '../users/columns';
 
 export function useUsersTable(initialData: UsersTableData[]) {
   const [usersData, setUsersData] = React.useState(() => initialData);

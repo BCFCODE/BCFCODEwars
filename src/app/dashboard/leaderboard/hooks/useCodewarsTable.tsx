@@ -13,7 +13,7 @@ import {
   VisibilityState
 } from '@tanstack/react-table';
 import { CodewarsTableData } from '../types';
-import codewarsColumns from '../[tab]/tables/codewars/columns';
+import codewarsColumns from '../codewars/columns';
 
 export function useCodewarsTable(initialData: CodewarsTableData[]) {
   const [codewarsData, setCodewarsData] = React.useState(() => initialData);
