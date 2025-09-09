@@ -28,18 +28,15 @@ import {
 } from '@dnd-kit/sortable';
 import { flexRender, Table } from '@tanstack/react-table';
 import React from 'react';
-import { z } from 'zod';
-import { codewarsTableSchema } from '../../schemas';
+import { CodewarsTableData } from '../../types';
 import columns from '../columns';
 import { DraggableRow } from './DraggableRow';
 import { Pagination } from './Pagination';
 
 interface Props {
-  table: Table<z.infer<typeof codewarsTableSchema>>;
-  data: z.infer<typeof codewarsTableSchema>[];
-  setData: React.Dispatch<
-    React.SetStateAction<z.infer<typeof codewarsTableSchema>[]>
-  >;
+  table: Table<CodewarsTableData>;
+  data: CodewarsTableData[];
+  setData: React.Dispatch<React.SetStateAction<CodewarsTableData[]>>;
 }
 
 const CodewarsTabContent = ({ table, data, setData }: Props) => {

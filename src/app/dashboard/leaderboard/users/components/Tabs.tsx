@@ -22,18 +22,18 @@ import {
   useReactTable,
   VisibilityState
 } from '@tanstack/react-table';
+import React from 'react';
 import { UsersTableData } from '../../types';
+import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import UsersTabContent from './TabContent';
-import columns from '../columns';
-import React from 'react';
 
 export default function UsersDataTableTabs({
   initialData
 }: {
   initialData: UsersTableData[];
 }) {
-  const [data, setData] = React.useState<UsersTableData[]>(initialData);
+  const [data, setData] = React.useState<UsersTableData[]>(() => initialData);
 
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -46,11 +46,6 @@ export default function UsersDataTableTabs({
     pageIndex: 0,
     pageSize: 10
   });
-
-  React.useEffect(() => {
-    setData(initialData);
-    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-  }, [initialData]);
 
   const table = useReactTable({
     data,
@@ -74,7 +69,8 @@ export default function UsersDataTableTabs({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues()
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+    autoResetAll: false
   });
 
   return (

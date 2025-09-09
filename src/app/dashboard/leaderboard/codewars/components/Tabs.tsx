@@ -22,9 +22,9 @@ import {
   useReactTable,
   VisibilityState
 } from '@tanstack/react-table';
+import React from 'react';
 import { CodewarsTableData } from '../../types';
 import columns from '../columns';
-import React from 'react';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import CodewarsTabContent from './TabContent';
 
@@ -33,7 +33,9 @@ export default function CodewarsDataTableTabs({
 }: {
   initialData: CodewarsTableData[];
 }) {
-  const [data, setData] = React.useState<CodewarsTableData[]>(initialData);
+  const [data, setData] = React.useState<CodewarsTableData[]>(
+    () => initialData
+  );
 
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] =
@@ -47,14 +49,15 @@ export default function CodewarsDataTableTabs({
     pageSize: 10
   });
 
-  React.useEffect(() => {
-    setData(initialData);
-    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-  }, [initialData]);
-
   const table = useReactTable({
     data,
     columns,
+    // initialState: {
+    //   pagination: {
+    //     pageIndex: 0,
+    //     pageSize: 10
+    //   }
+    // },
     state: {
       sorting: sorting,
       columnVisibility: columnVisibility,
@@ -74,7 +77,8 @@ export default function CodewarsDataTableTabs({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues()
+    getFacetedUniqueValues: getFacetedUniqueValues(),
+    autoResetAll: false
   });
 
   return (
