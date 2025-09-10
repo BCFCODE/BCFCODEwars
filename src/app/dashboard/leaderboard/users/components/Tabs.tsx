@@ -11,6 +11,7 @@ import {
   SelectValue
 } from '@/components/ui/new-york-v4/select';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/new-york-v4/tabs';
+import { tableTabUrls } from '@/lib/constants';
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -23,13 +24,12 @@ import {
   useReactTable,
   VisibilityState
 } from '@tanstack/react-table';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-import { TableTab, UsersTableData } from '../../types';
+import { UsersTableData } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import UsersTabContent from './TabContent';
-import { usePathname, useRouter } from 'next/navigation';
-import { tableTabUrls } from '@/lib/constants';
 
 export default function UsersDataTableTabs({
   initialData
@@ -80,7 +80,7 @@ export default function UsersDataTableTabs({
 
   return (
     <Tabs
-      // defaultValue={pathname}
+      defaultValue={tableTabUrls.users}
       value={pathname}
       onValueChange={(value) => router.push(value)}
       className='w-full flex-col justify-start gap-6'
@@ -95,7 +95,7 @@ export default function UsersDataTableTabs({
             size='sm'
             id='view-selector'
           >
-            <SelectValue placeholder='Select a view' />
+            <SelectValue placeholder='Select a table' />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={tableTabUrls.users}>Users</SelectItem>

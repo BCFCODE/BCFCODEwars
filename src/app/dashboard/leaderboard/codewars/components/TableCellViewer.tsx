@@ -30,8 +30,7 @@ import {
 import { Separator } from '@/components/ui/new-york-v4/separator';
 import { IconTrendingUp } from '@tabler/icons-react';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
-import { z } from 'zod';
-import { schema } from '../../../../schemas/codewarsTableSchema';
+import { CodewarsTableData } from '../../types';
 
 const chartData = [
   { month: 'January', desktop: 186, mobile: 80 },
@@ -53,7 +52,7 @@ const chartConfig = {
   }
 } satisfies ChartConfig;
 
-function TableCellViewer({ item }: { item: z.infer<typeof schema> }) {
+function TableCellViewer({ item }: { item: CodewarsTableData }) {
   const isMobile = useIsMobile();
 
   return (
