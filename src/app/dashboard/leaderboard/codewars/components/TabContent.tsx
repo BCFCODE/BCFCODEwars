@@ -65,6 +65,7 @@ const CodewarsTabContent = ({ table, data, setData }: Props) => {
       });
     }
   }
+
   return (
     <TabsContent
       value={tableTabUrls.codewars}
