@@ -8,13 +8,5 @@ export default async function UsersTablePage() {
     .map((data, i) => (usersData[i] ? { ...data, ...usersData[i] } : data))
     .slice(0, usersData.length);
 
-  return (
-    <div className='flex flex-1 flex-col'>
-      <div className='@container/main flex flex-1 flex-col gap-2'>
-        <div className='flex flex-col'>
-          <UsersDataTableTabs initialData={usersTemporaryDummyData} />
-        </div>
-      </div>
-    </div>
-  );
+  return <UsersDataTableTabs initialData={usersTemporaryDummyData} />;
 }

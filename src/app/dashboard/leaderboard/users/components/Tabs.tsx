@@ -27,6 +27,7 @@ import { UsersTableData } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import UsersTabContent from './TabContent';
+import Link from 'next/link';
 
 export default function UsersDataTableTabs({
   initialData
@@ -101,7 +102,9 @@ export default function UsersDataTableTabs({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value='users'>Users</SelectItem>
-            <SelectItem value='codewars'>Codewars</SelectItem>
+            <Link href='/leaderboard/codewars'>
+              <SelectItem value='codewars'>Codewars</SelectItem>
+            </Link>
           </SelectContent>
         </Select>
         <TabsList className='**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex'>

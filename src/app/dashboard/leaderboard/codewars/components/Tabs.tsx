@@ -27,6 +27,7 @@ import { CodewarsTableData } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import CodewarsTabContent from './TabContent';
+import Link from 'next/link';
 
 export default function CodewarsDataTableTabs({
   initialData
@@ -52,12 +53,6 @@ export default function CodewarsDataTableTabs({
   const table = useReactTable({
     data,
     columns,
-    // initialState: {
-    //   pagination: {
-    //     pageIndex: 0,
-    //     pageSize: 10
-    //   }
-    // },
     state: {
       sorting: sorting,
       columnVisibility: columnVisibility,
@@ -108,7 +103,9 @@ export default function CodewarsDataTableTabs({
             <SelectValue placeholder='Select a view' />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value='users'>CodewarsUsers</SelectItem>
+            <Link href='/leaderboard/users'>
+              <SelectItem value='users'>Users</SelectItem>
+            </Link>
             <SelectItem value='codewars'>Codewars</SelectItem>
           </SelectContent>
         </Select>
