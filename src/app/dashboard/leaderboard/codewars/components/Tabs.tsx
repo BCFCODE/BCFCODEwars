@@ -1,3 +1,5 @@
+// \src\app\dashboard\leaderboard\codewars\components\Tabs.tsx
+
 'use client';
 
 import { Badge } from '@/components/ui/new-york-v4/badge';
@@ -23,16 +25,22 @@ import {
   VisibilityState
 } from '@tanstack/react-table';
 import React from 'react';
-import { CodewarsTableData } from '../../types';
+import { CodewarsTableData, TableTab } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import CodewarsTabContent from './TabContent';
+import Link from 'next/link';
+import TableTabs from '../../components/TableTabs';
+import { usePathname, useRouter } from 'next/navigation';
+import { tableTabUrls } from '@/lib/constants';
 
 export default function CodewarsDataTableTabs({
   initialData
 }: {
   initialData: CodewarsTableData[];
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [data, setData] = React.useState<CodewarsTableData[]>(
     () => initialData
   );
@@ -52,12 +60,6 @@ export default function CodewarsDataTableTabs({
   const table = useReactTable({
     data,
     columns,
-    // initialState: {
-    //   pagination: {
-    //     pageIndex: 0,
-    //     pageSize: 10
-    //   }
-    // },
     state: {
       sorting: sorting,
       columnVisibility: columnVisibility,
@@ -83,23 +85,16 @@ export default function CodewarsDataTableTabs({
 
   return (
     <Tabs
-      defaultValue='codewars'
-      // value={currentTab}
-      // onValueChange={(val) =>
-      //   router.push(`/dashboard/leaderboard/${val as TableTab}`)
-      // }
+      defaultValue={tableTabUrls.codewars}
+      value={pathname}
+      onValueChange={(value) => router.push(value)}
       className='w-full flex-col justify-start gap-6'
     >
       <div className='flex items-center justify-between px-4 lg:px-6'>
         <Label htmlFor='view-selector' className='sr-only'>
           View
         </Label>
-        <Select
-        // value={currentTab}
-        // onValueChange={(val) =>
-        //   router.push(`/dashboard/leaderboard/${val as TableTab}`)
-        // }
-        >
+        <Select onValueChange={(value) => router.push(value)}>
           <SelectTrigger
             className='flex w-fit @4xl/main:hidden'
             size='sm'
@@ -108,18 +103,18 @@ export default function CodewarsDataTableTabs({
             <SelectValue placeholder='Select a view' />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value='users'>CodewarsUsers</SelectItem>
-            <SelectItem value='codewars'>Codewars</SelectItem>
+            <SelectItem value={tableTabUrls.users}>Users</SelectItem>
+            <SelectItem value={tableTabUrls.codewars}>Codewars</SelectItem>
           </SelectContent>
         </Select>
         <TabsList className='**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex'>
-          <TabsTrigger value='users' className='cursor-pointer'>
+          <TabsTrigger value={tableTabUrls.users} className='cursor-pointer'>
             Users{' '}
             {/* <Badge variant='secondary'>
               {table.getCoreRowModel().rows.length}
             </Badge> */}
           </TabsTrigger>
-          <TabsTrigger value='codewars' className='cursor-pointer'>
+          <TabsTrigger value={tableTabUrls.codewars} className='cursor-pointer'>
             Codewars{' '}
             <Badge variant='secondary'>
               {table.getCoreRowModel().rows.length}

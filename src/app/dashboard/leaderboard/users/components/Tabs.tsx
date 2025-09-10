@@ -1,3 +1,4 @@
+// \src\app\dashboard\leaderboard\users\components\Tabs.tsx
 'use client';
 
 import { Badge } from '@/components/ui/new-york-v4/badge';
@@ -23,16 +24,20 @@ import {
   VisibilityState
 } from '@tanstack/react-table';
 import React from 'react';
-import { UsersTableData } from '../../types';
+import { TableTab, UsersTableData } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import UsersTabContent from './TabContent';
+import { usePathname, useRouter } from 'next/navigation';
+import { tableTabUrls } from '@/lib/constants';
 
 export default function UsersDataTableTabs({
   initialData
 }: {
   initialData: UsersTableData[];
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
   const [data, setData] = React.useState<UsersTableData[]>(() => initialData);
 
   const [rowSelection, setRowSelection] = React.useState({});
@@ -75,23 +80,16 @@ export default function UsersDataTableTabs({
 
   return (
     <Tabs
-      defaultValue='users'
-      // value={currentTab}
-      // onValueChange={(val) =>
-      //   router.push(`/dashboard/leaderboard/${val as TableTab}`)
-      // }
+      // defaultValue={pathname}
+      value={pathname}
+      onValueChange={(value) => router.push(value)}
       className='w-full flex-col justify-start gap-6'
     >
       <div className='flex items-center justify-between px-4 lg:px-6'>
         <Label htmlFor='view-selector' className='sr-only'>
           View
         </Label>
-        <Select
-        // value={currentTab}
-        // onValueChange={(val) =>
-        //   router.push(`/dashboard/leaderboard/${val as TableTab}`)
-        // }
-        >
+        <Select value={pathname} onValueChange={(value) => router.push(value)}>
           <SelectTrigger
             className='flex w-fit @4xl/main:hidden'
             size='sm'
@@ -100,18 +98,19 @@ export default function UsersDataTableTabs({
             <SelectValue placeholder='Select a view' />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value='users'>Users</SelectItem>
-            <SelectItem value='codewars'>Codewars</SelectItem>
+            <SelectItem value={tableTabUrls.users}>Users</SelectItem>
+            <SelectItem value={tableTabUrls.codewars}>Codewars</SelectItem>
           </SelectContent>
+          {/* <TableTabs /> */}
         </Select>
         <TabsList className='**:data-[slot=badge]:bg-muted-foreground/30 hidden **:data-[slot=badge]:size-5 **:data-[slot=badge]:rounded-full **:data-[slot=badge]:px-1 @4xl/main:flex'>
-          <TabsTrigger value='users' className='cursor-pointer'>
+          <TabsTrigger value={tableTabUrls.users} className='cursor-pointer'>
             Users{' '}
             <Badge variant='secondary'>
               {table.getCoreRowModel().rows.length}
             </Badge>
           </TabsTrigger>
-          <TabsTrigger value='codewars' className='cursor-pointer'>
+          <TabsTrigger value={tableTabUrls.codewars} className='cursor-pointer'>
             Codewars{' '}
             {/* <Badge variant='secondary'>
               {table.getCoreRowModel().rows.length}
