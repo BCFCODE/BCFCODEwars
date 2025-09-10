@@ -100,7 +100,7 @@ export default function CodewarsDataTableTabs({
             size='sm'
             id='view-selector'
           >
-            <SelectValue placeholder='Select a view' />
+            <SelectValue placeholder='Select a table' />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={tableTabUrls.users}>Users</SelectItem>

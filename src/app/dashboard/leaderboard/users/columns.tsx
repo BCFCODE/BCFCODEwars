@@ -1,8 +1,9 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { UsersTableData } from '../../../types';
+
 import {
   actions,
   avatar,
+  diamonds,
   dragHandle,
   lastActivity,
   limit,
@@ -13,11 +14,13 @@ import {
   target,
   user
 } from './components/Cells';
+import { UsersTableData } from '../types';
 
 const columns: ColumnDef<UsersTableData>[] = [
   dragHandle,
   avatar,
   user,
+  diamonds,
   lastActivity,
   status,
   target,
