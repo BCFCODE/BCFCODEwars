@@ -1,5 +1,4 @@
 import { Row, Table } from '@tanstack/react-table';
-import { UsersTableData } from '../../../../../types';
 import { LimitHeader } from '../Headers/LimitHeader';
 import { SelectHeader } from '../Headers/SelectHeader';
 import { TargetHeader } from '../Headers/TargetHeader';
@@ -14,6 +13,10 @@ import { SelectCell } from './SelectCell';
 import { StatusCell } from './StatusCell';
 import { TargetCell } from './TargetCell';
 import { UserCell } from './UserCell';
+import { UsersTableData } from '../../../types';
+import { IconDiamond } from '@tabler/icons-react';
+import { DiamondsCell } from './DiamondsCell';
+import { DiamondsHeader } from '../Headers/DiamondsHeader';
 
 export const dragHandle = {
   id: 'drag',
@@ -34,6 +37,15 @@ export const user = {
   header: 'User',
   cell: ({ row }: { row: Row<UsersTableData> }) => <UserCell {...{ row }} />,
   enableHiding: false
+};
+
+export const diamonds = {
+  accessorKey: 'diamonds',
+  header: () => <DiamondsHeader />,
+  cell: ({ row }: { row: Row<UsersTableData> }) => (
+    <DiamondsCell {...{ row }} />
+  ),
+  enableHiding: true
 };
 
 export const lastActivity = {

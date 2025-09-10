@@ -58,7 +58,10 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
   return (
     <Drawer direction={isMobile ? 'bottom' : 'right'}>
       <DrawerTrigger asChild>
-        <Button variant='link' className='text-foreground w-fit px-0 text-left'>
+        <Button
+          variant='link'
+          className='text-foreground w-fit cursor-pointer px-0 text-left'
+        >
           {item.name}
         </Button>
       </DrawerTrigger>

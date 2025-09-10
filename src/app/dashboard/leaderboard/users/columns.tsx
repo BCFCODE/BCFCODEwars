@@ -3,6 +3,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import {
   actions,
   avatar,
+  diamonds,
   dragHandle,
   lastActivity,
   limit,
@@ -19,6 +20,7 @@ const columns: ColumnDef<UsersTableData>[] = [
   dragHandle,
   avatar,
   user,
+  diamonds,
   lastActivity,
   status,
   target,

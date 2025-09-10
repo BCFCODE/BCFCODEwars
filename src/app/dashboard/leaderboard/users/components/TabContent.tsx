@@ -65,6 +65,7 @@ const UsersTabContent = ({ table, data, setData }: Props) => {
       });
     }
   }
+
   return (
     <TabsContent
       value={tableTabUrls.users}
@@ -122,7 +123,6 @@ const UsersTabContent = ({ table, data, setData }: Props) => {
           </ShadCNTable>
         </DndContext>
       </div>
-
       {/* Pagination controls pinned OUTSIDE of scroll area */}
       <Pagination {...{ table }} />
     </TabsContent>

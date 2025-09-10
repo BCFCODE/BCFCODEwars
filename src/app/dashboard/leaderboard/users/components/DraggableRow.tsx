@@ -2,7 +2,7 @@ import { TableCell, TableRow } from '@/components/ui/new-york-v4/table';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { flexRender, Row } from '@tanstack/react-table';
-import { UsersTableData } from '../../../../types';
+import { UsersTableData } from '../../types';
 
 export function DraggableRow({ row }: { row: Row<UsersTableData> }) {
   const { transform, transition, setNodeRef, isDragging } = useSortable({

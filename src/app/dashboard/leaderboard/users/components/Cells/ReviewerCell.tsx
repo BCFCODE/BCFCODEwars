@@ -7,7 +7,7 @@ import {
   SelectValue
 } from '@/components/ui/new-york-v4/select';
 import { Row } from '@tanstack/react-table';
-import { UsersTableData } from '../../../../../types';
+import { UsersTableData } from '../../../types';
 
 export function ReviewerCell({ row }: { row: Row<UsersTableData> }) {
   const isAssigned = row.original.reviewer !== 'Assign reviewer';
