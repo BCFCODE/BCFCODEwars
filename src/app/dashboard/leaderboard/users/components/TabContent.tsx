@@ -1,3 +1,5 @@
+// \src\app\dashboard\leaderboard\users\components\TabContent.tsx
+
 'use client';
 
 import {
@@ -32,6 +34,7 @@ import columns from '../columns';
 import { DraggableRow } from './DraggableRow';
 import { Pagination } from './Pagination';
 import { UsersTableData } from '../../types';
+import { tableTabUrls } from '@/lib/constants';
 
 interface Props {
   table: Table<UsersTableData>;
@@ -64,7 +67,7 @@ const UsersTabContent = ({ table, data, setData }: Props) => {
   }
   return (
     <TabsContent
-      value='users'
+      value={tableTabUrls.users}
       className='relative flex flex-col gap-4 overflow-auto px-4 lg:px-6'
     >
       {/* ShadCNTable container */}

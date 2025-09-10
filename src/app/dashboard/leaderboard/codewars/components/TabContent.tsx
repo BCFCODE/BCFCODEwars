@@ -1,3 +1,5 @@
+// src\app\dashboard\leaderboard\codewars\components\TabContent.tsx
+
 'use client';
 
 import {
@@ -32,6 +34,7 @@ import { CodewarsTableData } from '../../types';
 import columns from '../columns';
 import { DraggableRow } from './DraggableRow';
 import { Pagination } from './Pagination';
+import { tableTabUrls } from '@/lib/constants';
 
 interface Props {
   table: Table<CodewarsTableData>;
@@ -64,7 +67,7 @@ const CodewarsTabContent = ({ table, data, setData }: Props) => {
   }
   return (
     <TabsContent
-      value='codewars'
+      value={tableTabUrls.codewars}
       className='relative flex flex-col gap-4 overflow-auto px-4 lg:px-6'
     >
       {/* ShadCNTable container */}
