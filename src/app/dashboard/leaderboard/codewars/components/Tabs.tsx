@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/new-york-v4/select';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/new-york-v4/tabs';
+import { tableTabUrls } from '@/lib/constants';
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -24,15 +24,13 @@ import {
   useReactTable,
   VisibilityState
 } from '@tanstack/react-table';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-import { CodewarsTableData, TableTab } from '../../types';
+import { CodewarsTableData } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import CodewarsTabContent from './TabContent';
-import Link from 'next/link';
-import TableTabs from '../../components/TableTabs';
-import { usePathname, useRouter } from 'next/navigation';
-import { tableTabUrls } from '@/lib/constants';
+import { Tabs, TabsList, TabsTrigger } from '@/components/UI/tabs';
 
 export default function CodewarsDataTableTabs({
   initialData
