@@ -5,143 +5,150 @@
 
 /* ===== Design Tokens ===== */
 :root {
-  --radius: 0.625rem;
+  --radius: 0.5rem; /* Softer corners for modern aesthetic */
 
   /* Light Theme */
-  --background: oklch(0.99 0 0);
-  --foreground: oklch(0.16 0 270);
+  --background: oklch(0.99 0.02 200); /* Bright cyan-white for vibrancy */
+  --foreground: oklch(0.14 0.03 270); /* Deep charcoal for high contrast */
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.16 0 270);
+  --card: oklch(0.99 0.01 210)
+    linear-gradient(135deg, oklch(0.99 0.02 190) 0%, oklch(0.99 0.02 230) 100%); /* Cyan-to-lavender gradient */
+  --card-foreground: oklch(0.14 0.03 270);
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.16 0 270);
+  --popover: oklch(0.98 0.02 220); /* Light cyan for popovers */
+  --popover-foreground: oklch(0.14 0.03 270);
 
-  --primary: oklch(0.64 0.17 174); /* Teal-green */
-  --primary-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.7 0.18 160); /* Vibrant teal (kyu-2 inspired) */
+  --primary-foreground: oklch(0.95 0 0); /* White for text */
 
-  --secondary: oklch(0.75 0.05 250); /* Soft blue-gray */
-  --secondary-foreground: oklch(0.2 0 270);
+  --secondary: oklch(0.78 0.14 280); /* Bright amethyst (kyu-3 inspired) */
+  --secondary-foreground: oklch(0.14 0.03 270);
 
-  --muted: oklch(0.96 0.01 260);
-  --muted-foreground: oklch(0.55 0 270);
+  --muted: oklch(0.96 0.02 230); /* Pale cyan for muted backgrounds */
+  --muted-foreground: oklch(0.5 0.05 270); /* Soft gray for muted text */
 
-  --accent: oklch(0.7 0.12 200); /* Modern cyan accent */
-  --accent-foreground: oklch(0.16 0 270);
+  --accent: oklch(0.78 0.14 280); /* Vivid coral (kyu-5 inspired) */
+  --accent-foreground: oklch(0.14 0.03 270);
 
-  --destructive: oklch(0.57 0.25 27);
-  --destructive-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.65 0.2 20); /* Bright ruby for destructive actions */
+  --destructive-foreground: oklch(0.95 0 0);
 
-  --border: oklch(0.92 0.01 250);
-  --input: var(--border);
-  --ring: var(--primary);
+  --border: oklch(0.92 0.02 240); /* Soft cyan border */
+  --input: oklch(0.98 0.01 230); /* Near-white input background */
+  --ring: oklch(0.7 0.18 160); /* Teal ring for focus states */
 
   /* Charts */
-  --chart-1: var(--primary);
-  --chart-2: var(--secondary);
-  --chart-3: oklch(0.42 0.04 250);
-  --chart-4: oklch(0.28 0.04 250);
-  --chart-5: oklch(0.14 0.02 250);
+  --chart-1: oklch(0.7 0.18 160); /* Teal (kyu-2) */
+  --chart-2: oklch(0.75 0.16 40); /* Coral (kyu-5) */
+  --chart-3: oklch(0.78 0.14 280); /* Amethyst (kyu-3) */
+  --chart-4: oklch(0.72 0.17 90); /* Emerald */
+  --chart-5: oklch(0.7 0.2 350); /* Neon magenta */
 
   /* Sidebar */
-  --sidebar: oklch(1 0 0);
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--secondary);
-  --sidebar-accent-foreground: var(--secondary-foreground);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--primary);
+  --sidebar: oklch(0.98 0.01 220)
+    linear-gradient(180deg, oklch(0.98 0.02 200) 0%, oklch(0.98 0.02 240) 100%);
+  --sidebar-foreground: oklch(0.14 0.03 270);
+  --sidebar-primary: oklch(0.7 0.18 160);
+  --sidebar-primary-foreground: oklch(0.95 0 0);
+  --sidebar-accent: oklch(90.933% 0.04509 282.695);
+  --sidebar-accent-foreground: oklch(0.14 0.03 270);
+  --sidebar-border: oklch(0.92 0.02 240);
+  --sidebar-ring: oklch(0.7 0.18 160);
 
   /* Diamond Luxe Colors */
-  --rose-gleam: #b76e79; /* ✨ Rose Gold: Romantic luxury */
-  --amber-legacy: #e1ad52; /* 🌅 Gold Ochre: Warm and grounded */
-  --royal-gold: #ffd700; /* 👑 Classic Gold: Timeless richness */
-  --champagne-mist: #f4d58d; /* 🍾 Champagne Gold: Pale elegance */
-  --saffron-dust: #e8b46f; /* 🌾 Muted Saffron: Vintage tone */
-  --honey-silk: #f3c178; /* 🍯 Pastel Honey: Gentle warmth */
+  --rose-gleam: #d67895; /* Vibrant rose gold */
+  --amber-legacy: #f5bc70; /* Bright gold ochre */
+  --royal-gold: #ffee80; /* Glowing gold */
+  --champagne-mist: #f8e8b0; /* Soft champagne */
+  --saffron-dust: #faca88; /* Vibrant saffron */
+  --honey-silk: #fadb9a; /* Warm honey */
 
   /* Diamond Collected/Not Collected */
   --diamond-collected: var(--rose-gleam);
   --diamond-not-collected: var(--primary);
 
   /* Kyū Colors */
-  --kyu-8: #f2f2f2; /* 8 kyū – Pearl Mist */
-  --kyu-7: #ffe066; /* 7 kyū – Golden Dawn */
-  --kyu-6: #ffb74d; /* 6 kyū – Sunset Amber */
-  --kyu-5: #ff7043; /* 5 kyū – Ember Coral */
-  --kyu-4: #d95f8a; /* 4 kyū – Rose Ember */
-  --kyu-3: #8d5fbf; /* 3 kyū – Amethyst Crest */
-  --kyu-2: #4a7bd0; /* 2 kyū – Sapphire Sky */
-  --kyu-1: #243b55; /* 1 kyū – Obsidian Depth */
+  --kyu-8: #f8f8f8; /* Pearl Mist: Clean white */
+  --kyu-7: #ffee99; /* Golden Dawn: Glowing yellow */
+  --kyu-6: #ffca4d; /* Sunset Amber: Vibrant amber */
+  --kyu-5: #ff9666; /* Ember Coral: Bright coral */
+  --kyu-4: #eb709b; /* Rose Ember: Vivid pink */
+  --kyu-3: #a873d6; /* Amethyst Crest: Bright purple */
+  --kyu-2: #5e90e6; /* Sapphire Sky: Lively blue */
+  --kyu-1: #2d4e7a; /* Obsidian Depth: Rich navy */
 }
 
 /* ===== Dark Theme ===== */
 .dark {
-  --background: oklch(0.14 0.02 260);
-  --foreground: oklch(0.85 0.03 240);
+  --background: oklch(0.22 0.06 260)
+    linear-gradient(135deg, oklch(0.22 0.06 260) 0%, oklch(0.25 0.06 280) 100%); /* Lighter indigo with kyu-3 gradient */
+  --foreground: oklch(0.94 0.02 240); /* Bright white for readability */
 
-  --card: oklch(0.2 0.03 260);
-  --card-foreground: oklch(0.85 0.03 240);
+  --card: oklch(0.28 0.06 260)
+    linear-gradient(135deg, oklch(0.28 0.06 260) 0%, oklch(0.32 0.06 40) 100%); /* Indigo-to-coral (kyu-5) gradient */
+  --card-foreground: oklch(0.94 0.02 240);
 
-  --popover: oklch(0.16 0.03 260);
-  --popover-foreground: oklch(0.85 0.03 240);
+  --popover: oklch(0.26 0.06 260); /* Lighter indigo for popovers */
+  --popover-foreground: oklch(0.94 0.02 240);
 
-  --primary: oklch(0.64 0.17 174);
-  --primary-foreground: oklch(0.16 0 270);
+  --primary: oklch(0.78 0.18 160); /* Bright teal (kyu-2 inspired) */
+  --primary-foreground: oklch(0.14 0.03 270);
 
-  --secondary: oklch(0.35 0.03 260);
-  --secondary-foreground: oklch(0.8 0.03 240);
+  --secondary: oklch(
+    37.197% 0.06378 261.505 / 0.449
+  ); /* Vivid amethyst (kyu-3 inspired) */
+  --secondary-foreground: oklch(0.94 0.02 240);
 
-  --muted: oklch(0.22 0.02 260);
-  --muted-foreground: oklch(0.75 0.03 240);
+  --muted: oklch(33.994% 0.05022 261.066 / 0.473); /* Lighter muted indigo */
+  --muted-foreground: oklch(0.85 0.03 240);
 
-  --accent: oklch(0.5 0.1 200);
-  --accent-foreground: oklch(0.95 0 0);
+  --accent: oklch(0.34 0.05 260); /* Lighter muted indigo */
+  --accent-foreground: oklch(0.94 0.02 240);
 
-  --destructive: oklch(0.57 0.25 27);
-  --destructive-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.72 0.2 20); /* Vivid ruby */
+  --destructive-foreground: oklch(0.95 0 0);
 
-  --border: oklch(0.18 0.01 260);
-  --input: oklch(0.22 0.01 260);
-  --ring: var(--primary);
+  --border: oklch(0.3 0.05 260); /* Lighter indigo border */
+  --input: oklch(0.34 0.05 260); /* Lighter input background */
+  --ring: oklch(0.78 0.18 160);
 
-  --chart-1: var(--primary);
-  --chart-2: var(--secondary);
-  --chart-3: oklch(0.5 0.04 250);
-  --chart-4: oklch(0.3 0.04 250);
-  --chart-5: oklch(0.2 0.02 250);
+  --chart-1: oklch(0.78 0.18 160); /* Teal (kyu-2) */
+  --chart-2: oklch(0.82 0.16 40); /* Coral (kyu-5) */
+  --chart-3: oklch(0.85 0.14 280); /* Amethyst (kyu-3) */
+  --chart-4: oklch(0.78 0.17 90); /* Emerald */
+  --chart-5: oklch(0.75 0.2 350); /* Neon magenta */
 
-  --sidebar: oklch(0.16 0.02 260);
-  --sidebar-foreground: var(--foreground);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: var(--secondary);
-  --sidebar-accent-foreground: var(--secondary-foreground);
-  --sidebar-border: var(--border);
-  --sidebar-ring: var(--primary);
+  --sidebar: oklch(0.26 0.06 260)
+    linear-gradient(180deg, oklch(0.26 0.06 260) 0%, oklch(0.3 0.06 280) 100%); /* Indigo-to-amethyst (kyu-3) */
+  --sidebar-foreground: oklch(0.94 0.02 240);
+  --sidebar-primary: oklch(0.78 0.18 160);
+  --sidebar-primary-foreground: oklch(0.14 0.03 270);
+  --sidebar-accent: oklch(37.197% 0.06378 261.505 / 0.449);
+  --sidebar-accent-foreground: oklch(0.94 0.02 240);
+  --sidebar-border: oklch(0.3 0.05 260);
+  --sidebar-ring: oklch(37.197% 0.06378 261.505 / 0.449);
 
-  /* Diamond Luxe Colors (adjust for dark theme if needed) */
-  --rose-gleam: #b76e79; /* ✨ Rose Gold: Romantic luxury */
-  --amber-legacy: #e1ad52; /* 🌅 Gold Ochre: Warm and grounded */
-  --royal-gold: #ffd700; /* 👑 Classic Gold: Timeless richness */
-  --champagne-mist: #f4d58d; /* 🍾 Champagne Gold: Pale elegance */
-  --saffron-dust: #e8b46f; /* 🌾 Muted Saffron: Vintage tone */
-  --honey-silk: #f3c178; /* 🍯 Pastel Honey: Gentle warmth */
+  /* Diamond Luxe Colors (brighter for dark theme) */
+  --rose-gleam: #e68fa5; /* Vibrant rose gold */
+  --amber-legacy: #ffd28a; /* Bright gold ochre */
+  --royal-gold: #ffeb66; /* Glowing gold */
+  --champagne-mist: #fff3c0; /* Bright champagne */
+  --saffron-dust: #ffdea0; /* Vibrant saffron */
+  --honey-silk: #ffedaa; /* Bright honey */
 
   /* Diamond Collected/Not Collected */
   --diamond-collected: var(--rose-gleam);
   --diamond-not-collected: var(--primary);
 
-  /* Kyū Colors (adjust for dark theme if needed) */
-  --kyu-8: #f2f2f2; /* 8 kyū – Pearl Mist */
-  --kyu-7: #ffe066; /* 7 kyū – Golden Dawn */
-  --kyu-6: #ffb74d; /* 6 kyū – Sunset Amber */
-  --kyu-5: #ff7043; /* 5 kyū – Ember Coral */
-  --kyu-4: #d95f8a; /* 4 kyū – Rose Ember */
-  --kyu-3: #8d5fbf; /* 3 kyū – Amethyst Crest */
-  --kyu-2: #4a7bd0; /* 2 kyū – Sapphire Sky */
-  --kyu-1: #243b55; /* 1 kyū – Obsidian Depth */
+  /* Kyū Colors (vibrant for dark theme) */
+  --kyu-8: #fefefe; /* Pearl Mist: Brightest white */
+  --kyu-7: #fff5b3; /* Golden Dawn: Glowing yellow */
+  --kyu-6: #ffd980; /* Sunset Amber: Vivid amber */
+  --kyu-5: #ffaa80; /* Ember Coral: Bright coral */
+  --kyu-4: #ff85b0; /* Rose Ember: Vibrant pink */
+  --kyu-3: #c08ce6; /* Amethyst Crest: Bright purple */
+  --kyu-2: #80a8ff; /* Sapphire Sky: Lively blue */
+  --kyu-1: #4a6a9b; /* Obsidian Depth: Rich navy */
 }
 
 /* ===== Theme Mapping for Tailwind ===== */
@@ -209,7 +216,7 @@
 /* ===== Base Layer ===== */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/50 transition-all duration-200;
   }
   body {
     @apply bg-background text-foreground antialiased;
@@ -217,26 +224,30 @@
 }
 
 /* ===== View Transition Animation ===== */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-::view-transition-old(root) {
-  z-index: 0;
-}
-::view-transition-new(root) {
-  z-index: 1;
-  animation: reveal 0.4s ease-in-out forwards;
-}
-@keyframes reveal {
-  from {
-    clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
-    opacity: 0.7;
+@layer utilities {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
   }
-  to {
-    clip-path: circle(150% at var(--x, 50%) var(--y, 50%));
-    opacity: 1;
+  ::view-transition-old(root) {
+    z-index: 0;
+  }
+  ::view-transition-new(root) {
+    z-index: 1;
+    animation: reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes reveal {
+    from {
+      clip-path: circle(0% at var(--x, 50%) var(--y, 50%));
+      opacity: 0.5;
+      transform: scale(0.9);
+    }
+    to {
+      clip-path: circle(150% at var(--x, 50%) var(--y, 50%));
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 }
 

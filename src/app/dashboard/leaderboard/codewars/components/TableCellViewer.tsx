@@ -2,12 +2,7 @@
 
 import { Button } from '@/components/UI/button';
 
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent
-} from '@/components/UI/chart';
+import { ChartConfig } from '@/components/UI/chart';
 import {
   Drawer,
   DrawerClose,
@@ -20,8 +15,7 @@ import {
 } from '@/components/UI/drawer';
 import { Separator } from '@/components/UI/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { IconTrendingUp } from '@tabler/icons-react';
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import { ChartRadarKatas } from '../../components/ChartRadarKatas';
 import { DiamondIcon } from '../../components/DiamondIcon';
 import { DiamondsCountBadge } from '../../components/DiamondsCountBadge';
 import { CodewarsTableData } from '../../types';
@@ -70,7 +64,7 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
         <div className='flex flex-col gap-4 overflow-y-auto px-4 text-sm'>
           {!isMobile && (
             <>
-              <ChartContainer config={chartConfig}>
+              {/* <ChartContainer config={chartConfig}>
                 <AreaChart
                   accessibilityLayer
                   data={chartData}
@@ -109,9 +103,10 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
                     stackId='a'
                   />
                 </AreaChart>
-              </ChartContainer>
+              </ChartContainer> */}
+              <ChartRadarKatas />
               <Separator />
-              <div className='grid gap-2'>
+              {/* <div className='grid gap-2'>
                 <div className='flex gap-2 leading-none font-medium'>
                   Trending up by 5.2% this month{' '}
                   <IconTrendingUp className='size-4' />
@@ -122,7 +117,7 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
                   and should wrap around.
                 </div>
               </div>
-              <Separator />
+              <Separator /> */}
             </>
           )}
           <DiamondsCountBadge size='lg' count={item.totalDiamonds ?? 0}>
