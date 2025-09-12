@@ -62,13 +62,13 @@ export const navItems: NavItem[] = [
         url: '/dashboard/profile',
         icon: 'userPen',
         shortcut: ['m', 'm']
+      },
+      {
+        title: 'Codewars',
+        url: '/dashboard/codewars',
+        icon: 'userPen',
+        shortcut: ['c', 'w']
       }
-      // {
-      //   title: 'Login',
-      //   shortcut: ['l', 'l'],
-      //   url: '/',
-      //   icon: 'login'
-      // }
     ]
   }
   // {

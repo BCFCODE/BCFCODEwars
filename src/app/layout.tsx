@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   description:
     'Join the best coding battles and challenges at BCFCODE, led by Bakhshandeh Morteza.',
-  metadataBase: baseUrl, // or your baseURL
+  metadataBase: new URL(baseUrl), // or your baseURL
   icons: {
     icon: 'https://res.cloudinary.com/ds8pptoh2/image/upload/v1747824940/favicon_txosgy.png',
     apple:
