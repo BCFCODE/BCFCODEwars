@@ -2,21 +2,12 @@
 
 import { Button } from '@/components/UI/button';
 
-import { Input } from '@/components/UI/input';
-import { Label } from '@/components/UI/label';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/UI/select';
-
-import { IconTrendingUp } from '@tabler/icons-react';
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
-import { CodewarsTableData } from '../../types';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { Separator } from '@/components/UI/separator';
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent
+} from '@/components/UI/chart';
 import {
   Drawer,
   DrawerClose,
@@ -27,12 +18,13 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '@/components/UI/drawer';
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent
-} from '@/components/UI/chart';
+import { Separator } from '@/components/UI/separator';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { IconTrendingUp } from '@tabler/icons-react';
+import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import { DiamondIcon } from '../../components/DiamondIcon';
+import { DiamondsCountBadge } from '../../components/DiamondsCountBadge';
+import { CodewarsTableData } from '../../types';
 
 const chartData = [
   { month: 'January', desktop: 186, mobile: 80 },
@@ -74,6 +66,7 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
             Showing total visitors for the last 6 months
           </DrawerDescription>
         </DrawerHeader>
+
         <div className='flex flex-col gap-4 overflow-y-auto px-4 text-sm'>
           {!isMobile && (
             <>
@@ -132,7 +125,11 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
               <Separator />
             </>
           )}
-          <form className='flex flex-col gap-4'>
+          <DiamondsCountBadge size='lg' count={item.totalDiamonds ?? 0}>
+            <DiamondIcon size='xl' />
+          </DiamondsCountBadge>
+
+          {/* <form className='flex flex-col gap-4'>
             <div className='flex flex-col gap-3'>
               <Label htmlFor='header'>Header</Label>
               <Input id='header' defaultValue={item.header} />
@@ -203,12 +200,14 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
                 </SelectContent>
               </Select>
             </div>
-          </form>
+          </form> */}
         </div>
         <DrawerFooter>
-          <Button>Submit</Button>
+          {/* <Button>Submit</Button> */}
           <DrawerClose asChild>
-            <Button variant='outline'>Done</Button>
+            <Button variant='outline' className='cursor-pointer'>
+              Close
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>
