@@ -3,6 +3,7 @@ import { CodewarsTableData } from '../types';
 import {
   actions,
   avatar,
+  diamonds,
   dragHandle,
   limit,
   reviewer,
@@ -17,6 +18,7 @@ const columns: ColumnDef<CodewarsTableData>[] = [
   dragHandle,
   avatar,
   user,
+  diamonds,
   {
     accessorKey: 'type',
     header: 'Section Type',

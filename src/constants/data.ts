@@ -38,7 +38,7 @@ export const navItems: NavItem[] = [
         title: 'Codewars',
         url: '/dashboard/leaderboard/codewars',
         icon: 'check',
-        shortcut: ['l', 'c']
+        shortcut: ['c', 'c']
       }
     ] // No child items
   },
@@ -64,10 +64,10 @@ export const navItems: NavItem[] = [
         shortcut: ['m', 'm']
       },
       {
-        title: 'Codewars',
+        title: 'Codewars Profile',
         url: '/dashboard/codewars',
         icon: 'userPen',
-        shortcut: ['c', 'w']
+        shortcut: ['c', 'p']
       }
     ]
   }

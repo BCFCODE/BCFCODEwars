@@ -1,7 +1,7 @@
 import { Row, Table } from '@tanstack/react-table';
-import { LimitHeader } from '../Headers/LimitHeader';
+import { LimitHeader } from '../../../components/LimitHeader';
 import { SelectHeader } from '../Headers/SelectHeader';
-import { TargetHeader } from '../Headers/TargetHeader';
+import { TargetHeader } from '../../../components/TargetHeader';
 import { ActionsCell } from './ActionsCell';
 import { AvatarCell } from './AvatarCell';
 import { DragHandleCell } from './DragHandleCell';
@@ -16,7 +16,7 @@ import { UserCell } from './UserCell';
 import { UsersTableData } from '../../../types';
 import { IconDiamond } from '@tabler/icons-react';
 import { DiamondsCell } from './DiamondsCell';
-import { DiamondsHeader } from '../Headers/DiamondsHeader';
+import { DiamondsHeader } from '../../../components/DiamondsHeader';
 
 export const dragHandle = {
   id: 'drag',

@@ -1,7 +1,5 @@
 import { Row, Table } from '@tanstack/react-table';
-import { LimitHeader } from '../Headers/LimitHeader';
 import { SelectHeader } from '../Headers/SelectHeader';
-import { TargetHeader } from '../Headers/TargetHeader';
 import { ActionsCell } from './ActionsCell';
 import { AvatarCell } from './AvatarCell';
 import { DragHandleCell } from './DragHandleCell';
@@ -13,7 +11,11 @@ import { SelectCell } from './SelectCell';
 import { StatusCell } from './StatusCell';
 import { TargetCell } from './TargetCell';
 import { UserCell } from './UserCell';
-import { CodewarsTableData } from '../../../../../types/CodewarsTable';
+import { CodewarsTableData } from '../../../types';
+import { TargetHeader } from '../../../components/TargetHeader';
+import { LimitHeader } from '../../../components/LimitHeader';
+import { DiamondsHeader } from '../../../components/DiamondsHeader';
+import { DiamondsCell } from './DiamondsCell';
 
 export const dragHandle = {
   id: 'drag',
@@ -36,6 +38,15 @@ export const user = {
   header: 'User',
   cell: ({ row }: { row: Row<CodewarsTableData> }) => <UserCell {...{ row }} />,
   enableHiding: false
+};
+
+export const diamonds = {
+  accessorKey: 'diamonds',
+  header: () => <DiamondsHeader />,
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => (
+    <DiamondsCell {...{ row }} />
+  ),
+  enableHiding: true
 };
 
 export const lastActivity = {

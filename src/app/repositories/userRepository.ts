@@ -59,11 +59,25 @@ export async function findCodewarsUsers() {
           as: 'userData'
         }
       },
+      {
+        $lookup: {
+          from: 'diamonds', // Collection to join with
+          localField: 'email', // Field in users collection
+          foreignField: 'email', // Field in diamonds collection
+          as: 'diamondsData' // Output array field
+        }
+      },
       // Step 3: Unwind userData (assuming one-to-one mapping)
       {
         $unwind: {
           path: '$userData',
           preserveNullAndEmptyArrays: false // Exclude codewars users without matching user data
+        }
+      },
+      {
+        $unwind: {
+          path: '$diamondsData',
+          preserveNullAndEmptyArrays: true // Keep users without diamonds data
         }
       },
       // Step 4: Project only name and image
@@ -72,7 +86,8 @@ export async function findCodewarsUsers() {
           _id: 0,
           email: '$userData.email',
           name: '$userData.name',
-          image: '$userData.image'
+          image: '$userData.image',
+          totalDiamonds: '$diamondsData.totals.total' // From diamonds.totals.total
         }
       }
     ])

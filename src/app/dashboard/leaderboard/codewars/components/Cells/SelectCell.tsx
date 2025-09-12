@@ -1,6 +1,6 @@
 import { Checkbox } from '@/components/UI/checkbox';
 import { Row } from '@tanstack/react-table';
-import { CodewarsTableData } from '../../../../../types';
+import { CodewarsTableData } from '../../../types';
 
 export function SelectCell({ row }: { row: Row<CodewarsTableData> }) {
   return (
