@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/new-york-v4/button';
+import { Button } from '@/components/UI/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger
-} from '@/components/ui/new-york-v4/dropdown-menu';
+} from '@/components/UI/dropdown-menu';
 import { IconChevronDown, IconLayoutColumns } from '@tabler/icons-react';
 import { Table } from '@tanstack/react-table';
 import { CodewarsTableData } from '../../types';

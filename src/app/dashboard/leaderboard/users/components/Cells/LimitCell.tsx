@@ -1,5 +1,5 @@
-import { Input } from '@/components/ui/new-york-v4/input';
-import { Label } from '@/components/ui/new-york-v4/label';
+import { Input } from '@/components/UI/input';
+import { Label } from '@/components/UI/label';
 import { Row } from '@tanstack/react-table';
 import { toast } from 'sonner';
 import { UsersTableData } from '../../../types';

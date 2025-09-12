@@ -2,15 +2,14 @@
 
 'use client';
 
-import { Badge } from '@/components/ui/new-york-v4/badge';
-import { Label } from '@/components/ui/new-york-v4/label';
+import { Label } from '@/components/UI/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/new-york-v4/select';
+} from '@/components/UI/select';
 import { tableTabUrls } from '@/lib/constants';
 import {
   ColumnFiltersState,
@@ -31,6 +30,7 @@ import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import CodewarsTabContent from './TabContent';
 import { Tabs, TabsList, TabsTrigger } from '@/components/UI/tabs';
+import { Badge } from '@/components/UI/badge';
 
 export default function CodewarsDataTableTabs({
   initialData

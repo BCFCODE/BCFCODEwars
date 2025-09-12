@@ -1,6 +1,6 @@
 'use client';
 
-import { SelectContent, SelectItem } from '@/components/ui/new-york-v4/select';
+import { SelectContent, SelectItem } from '@/components/UI/select';
 import { baseUrl } from '@/lib/constants';
 import Link from 'next/link';
 

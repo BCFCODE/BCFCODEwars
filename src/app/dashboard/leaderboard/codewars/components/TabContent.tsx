@@ -9,8 +9,8 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from '@/components/ui/new-york-v4/table';
-import { TabsContent } from '@/components/ui/new-york-v4/tabs';
+} from '@/components/UI/table';
+import { TabsContent } from '@/components/UI/tabs';
 import {
   closestCenter,
   DndContext,

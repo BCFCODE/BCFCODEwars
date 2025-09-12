@@ -1,5 +1,5 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardContent, CardHeader } from '@/components/UI/card';
+import { Skeleton } from '@/components/UI/skeleton';
 
 export function AreaGraphSkeleton() {
   return (

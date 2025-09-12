@@ -1,4 +1,4 @@
-import { Checkbox } from '@/components/ui/new-york-v4/checkbox';
+import { Checkbox } from '@/components/UI/checkbox';
 import { Row } from '@tanstack/react-table';
 import { UsersTableData } from '../../../types';
 
