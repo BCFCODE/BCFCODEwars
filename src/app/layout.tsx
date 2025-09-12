@@ -1,5 +1,5 @@
 import Providers from '@/components/layout/providers';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from '@/components/UI/sonner';
 import { fontVariables } from '@/lib/font';
 import ThemeProvider from '@/components/layout/ThemeToggle/theme-provider';
 import { cn } from '@/lib/utils';
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   description:
     'Join the best coding battles and challenges at BCFCODE, led by Bakhshandeh Morteza.',
-  metadataBase: baseUrl, // or your baseURL
+  metadataBase: new URL(baseUrl), // or your baseURL
   icons: {
     icon: 'https://res.cloudinary.com/ds8pptoh2/image/upload/v1747824940/favicon_txosgy.png',
     apple:

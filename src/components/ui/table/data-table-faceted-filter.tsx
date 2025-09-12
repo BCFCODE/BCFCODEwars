@@ -4,8 +4,8 @@ import type { Option } from '@/types/data-table';
 import type { Column } from '@tanstack/react-table';
 import { PlusCircle, XCircle } from 'lucide-react';
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/UI/badge';
+import { Button } from '@/components/UI/button';
 import {
   Command,
   CommandEmpty,
@@ -14,13 +14,13 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator
-} from '@/components/ui/command';
+} from '@/components/UI/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from '@/components/ui/popover';
-import { Separator } from '@/components/ui/separator';
+} from '@/components/UI/popover';
+import { Separator } from '@/components/UI/separator';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 import { CheckIcon } from '@radix-ui/react-icons';

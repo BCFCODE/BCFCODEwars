@@ -2,16 +2,15 @@
 
 'use client';
 
-import { Badge } from '@/components/ui/new-york-v4/badge';
-import { Label } from '@/components/ui/new-york-v4/label';
+import { Label } from '@/components/UI/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/new-york-v4/select';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/new-york-v4/tabs';
+} from '@/components/UI/select';
+import { tableTabUrls } from '@/lib/constants';
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -24,15 +23,14 @@ import {
   useReactTable,
   VisibilityState
 } from '@tanstack/react-table';
+import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-import { CodewarsTableData, TableTab } from '../../types';
+import { CodewarsTableData } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import CodewarsTabContent from './TabContent';
-import Link from 'next/link';
-import TableTabs from '../../components/TableTabs';
-import { usePathname, useRouter } from 'next/navigation';
-import { tableTabUrls } from '@/lib/constants';
+import { Tabs, TabsList, TabsTrigger } from '@/components/UI/tabs';
+import { Badge } from '@/components/UI/badge';
 
 export default function CodewarsDataTableTabs({
   initialData

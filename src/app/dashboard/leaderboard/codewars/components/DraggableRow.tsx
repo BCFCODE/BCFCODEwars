@@ -1,5 +1,5 @@
 import { CodewarsTableData } from '@/app/dashboard/leaderboard/types';
-import { TableCell, TableRow } from '@/components/ui/new-york-v4/table';
+import { TableCell, TableRow } from '@/components/UI/table';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { flexRender, Row } from '@tanstack/react-table';

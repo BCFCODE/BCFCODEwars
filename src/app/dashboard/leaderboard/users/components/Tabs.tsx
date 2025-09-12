@@ -1,16 +1,15 @@
 // \src\app\dashboard\leaderboard\users\components\Tabs.tsx
 'use client';
 
-import { Badge } from '@/components/ui/new-york-v4/badge';
-import { Label } from '@/components/ui/new-york-v4/label';
+import { Label } from '@/components/UI/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/new-york-v4/select';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/new-york-v4/tabs';
+} from '@/components/UI/select';
+import { Tabs, TabsList, TabsTrigger } from '@/components/UI/tabs';
 import { tableTabUrls } from '@/lib/constants';
 import {
   ColumnFiltersState,
@@ -30,6 +29,7 @@ import { UsersTableData } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import UsersTabContent from './TabContent';
+import { Badge } from '@/components/UI/badge';
 
 export default function UsersDataTableTabs({
   initialData

@@ -1,6 +1,6 @@
-import { Badge } from '@/components/ui/new-york-v4/badge';
 import { Row } from '@tanstack/react-table';
-import { CodewarsTableData } from '../../../../../types';
+import { CodewarsTableData } from '../../../types';
+import { Badge } from '@/components/UI/badge';
 
 export function LastActivityCell({ row }: { row: Row<CodewarsTableData> }) {
   return (

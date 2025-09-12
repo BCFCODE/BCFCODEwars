@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/UI/button';
 import { IconBrandGithub } from '@tabler/icons-react';
 
 export default function CtaGithub() {

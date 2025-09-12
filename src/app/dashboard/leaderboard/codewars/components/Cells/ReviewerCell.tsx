@@ -1,11 +1,11 @@
-import { Label } from '@/components/ui/new-york-v4/label';
+import { Label } from '@/components/UI/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/new-york-v4/select';
+} from '@/components/UI/select';
 import { Row } from '@tanstack/react-table';
 import { CodewarsTableData } from '../../../../../types';
 

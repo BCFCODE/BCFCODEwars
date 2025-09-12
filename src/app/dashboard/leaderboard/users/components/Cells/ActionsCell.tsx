@@ -1,11 +1,11 @@
-import { Button } from '@/components/ui/new-york-v4/button';
+import { Button } from '@/components/UI/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/new-york-v4/dropdown-menu';
+} from '@/components/UI/dropdown-menu';
 import { IconDotsVertical } from '@tabler/icons-react';
 
 export function ActionsCell() {

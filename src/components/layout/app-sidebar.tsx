@@ -3,7 +3,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger
-} from '@/components/ui/collapsible';
+} from '@/components/UI/collapsible';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+} from '@/components/UI/dropdown-menu';
 import {
   Sidebar,
   SidebarContent,
@@ -27,7 +27,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarRail
-} from '@/components/ui/sidebar';
+} from '@/components/UI/sidebar';
 import { UserAvatarProfile } from '@/components/user-avatar-profile';
 import { navItems } from '@/constants/data';
 import { useMediaQuery } from '@/hooks/use-media-query';

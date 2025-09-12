@@ -1,12 +1,22 @@
 'use client';
 
-import { Button } from '@/components/ui/new-york-v4/button';
+import { Button } from '@/components/UI/button';
+
+import { Input } from '@/components/UI/input';
+import { Label } from '@/components/UI/label';
 import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent
-} from '@/components/ui/new-york-v4/chart';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/UI/select';
+
+import { IconTrendingUp } from '@tabler/icons-react';
+import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
+import { CodewarsTableData } from '../../types';
+import { useIsMobile } from '@/hooks/use-mobile';
+import { Separator } from '@/components/UI/separator';
 import {
   Drawer,
   DrawerClose,
@@ -16,21 +26,13 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger
-} from '@/components/ui/new-york-v4/drawer';
-import { useIsMobile } from '@/components/ui/new-york-v4/hooks/use-mobile';
-import { Input } from '@/components/ui/new-york-v4/input';
-import { Label } from '@/components/ui/new-york-v4/label';
+} from '@/components/UI/drawer';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/new-york-v4/select';
-import { Separator } from '@/components/ui/new-york-v4/separator';
-import { IconTrendingUp } from '@tabler/icons-react';
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
-import { CodewarsTableData } from '../../types';
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent
+} from '@/components/UI/chart';
 
 const chartData = [
   { month: 'January', desktop: 186, mobile: 80 },

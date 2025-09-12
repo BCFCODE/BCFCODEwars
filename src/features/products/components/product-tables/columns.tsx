@@ -1,6 +1,6 @@
 'use client';
-import { Badge } from '@/components/ui/badge';
-import { DataTableColumnHeader } from '@/components/ui/table/data-table-column-header';
+import { Badge } from '@/components/UI/badge';
+import { DataTableColumnHeader } from '@/components/UI/table/data-table-column-header';
 import { Product } from '@/constants/data';
 import { Column, ColumnDef } from '@tanstack/react-table';
 import { CheckCircle2, Text, XCircle } from 'lucide-react';

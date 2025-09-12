@@ -1,4 +1,4 @@
-import { Badge } from '@/components/ui/new-york-v4/badge';
+import { Badge } from '@/components/UI/badge';
 import { Row } from '@tanstack/react-table';
 import { UsersTableData } from '../../../types';
 

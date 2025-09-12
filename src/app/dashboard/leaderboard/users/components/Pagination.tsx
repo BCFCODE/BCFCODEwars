@@ -1,14 +1,14 @@
 import { LeftFooter } from '@/app/dashboard/leaderboard/components/LeftFooter';
 import { UsersTableData } from '@/app/dashboard/leaderboard/types';
-import { Button } from '@/components/ui/new-york-v4/button';
-import { Label } from '@/components/ui/new-york-v4/label';
+import { Button } from '@/components/UI/button';
+import { Label } from '@/components/UI/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/ui/new-york-v4/select';
+} from '@/components/UI/select';
 import {
   IconChevronLeft,
   IconChevronRight,

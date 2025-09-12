@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/UI/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+} from '@/components/UI/dropdown-menu';
 import { UserAvatarProfile } from '@/components/user-avatar-profile';
 import { SignOutButton, useUser } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';

@@ -1,13 +1,13 @@
 'use client';
 import { AlertModal } from '@/components/modal/alert-modal';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/UI/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+} from '@/components/UI/dropdown-menu';
 import { Product } from '@/constants/data';
 import { IconEdit, IconDotsVertical, IconTrash } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
