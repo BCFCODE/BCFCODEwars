@@ -36,7 +36,8 @@ export async function getPublicCodewarsUsers() {
   const schema = z.object({
     email: z.string().optional(),
     name: z.string().optional(),
-    image: z.string().optional()
+    image: z.string().optional(),
+    totalDiamonds: z.number().optional()
   });
 
   return schema.array().parse(codewarsUsers);
