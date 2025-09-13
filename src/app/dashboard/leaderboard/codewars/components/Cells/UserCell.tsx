@@ -3,5 +3,5 @@ import { TableCellViewer } from '../TableCellViewer';
 import { CodewarsTableData } from '../../../types';
 
 export function UserCell({ row }: { row: Row<CodewarsTableData> }) {
-  return <TableCellViewer item={row.original} />;
+  return <TableCellViewer codewarsUser={row.original} />;
 }

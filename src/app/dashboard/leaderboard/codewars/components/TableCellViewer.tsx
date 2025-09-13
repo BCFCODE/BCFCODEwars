@@ -19,7 +19,11 @@ import { DiamondIcon } from '../../components/DiamondIcon';
 import { DiamondsCountBadge } from '../../components/DiamondsCountBadge';
 import { CodewarsTableData } from '../../types';
 
-function TableCellViewer({ item }: { item: CodewarsTableData }) {
+function TableCellViewer({
+  codewarsUser
+}: {
+  codewarsUser: CodewarsTableData;
+}) {
   const isMobile = useIsMobile();
 
   return (
@@ -29,17 +33,22 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
           variant='link'
           className='text-foreground w-fit cursor-pointer px-0 text-left'
         >
-          {item.name}
+          {codewarsUser.name}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className='gap-1'>
           <DrawerTitle className='text-lg font-semibold tracking-tight'>
-            {item.name}
+            Warrior: {codewarsUser.name}
           </DrawerTitle>
           <DrawerDescription>
-            Dive into this kata’s journey — here’s a breakdown of your solved
-            challenges and earned diamonds.
+            <span className='text-muted-foreground text-left text-sm leading-relaxed'>
+              {codewarsUser.name} is smashing challenges and stacking{' '}
+              <span className='text-royal-gold font-semibold'>
+                {codewarsUser.totalDiamonds ?? 0} diamonds
+              </span>
+              ! Check out their progress below.
+            </span>
           </DrawerDescription>
         </DrawerHeader>
 
@@ -50,7 +59,7 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
               <Separator />
             </>
           )}
-          <DiamondsCountBadge size='md' count={item.totalDiamonds ?? 0}>
+          <DiamondsCountBadge size='md' count={codewarsUser.totalDiamonds ?? 0}>
             <DiamondIcon size='lg' />
           </DiamondsCountBadge>
         </div>
