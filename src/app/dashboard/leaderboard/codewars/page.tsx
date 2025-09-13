@@ -11,7 +11,7 @@ export default async function CodewarsTablePage() {
     )
     .slice(0, codewarsData.length);
 
-  console.log(codewarsData);
+  // console.log(codewarsData);
 
   return <CodewarsDataTableTabs initialData={codewarsTemporaryDummyData} />;
 }
