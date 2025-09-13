@@ -133,7 +133,7 @@
   --sidebar-foreground: oklch(0.94 0.02 240);
   --sidebar-primary: oklch(0.78 0.18 160);
   --sidebar-primary-foreground: oklch(0.14 0.03 270);
-  --sidebar-accent: oklch(81.51% 0.11776 228.902 / 0.125);
+  --sidebar-accent: rgba(102, 209, 255, 0.125);
   --sidebar-accent-foreground: oklch(0.94 0.02 240);
   --sidebar-border: oklch(0.3 0.05 260);
   --sidebar-ring: oklch(37.197% 0.06378 261.505 / 0.449);
@@ -141,7 +141,7 @@
   /* Diamond Luxe Colors (brighter for dark theme) */
   --rose-gleam: #e68fa5; /* Vibrant rose gold */
   --amber-legacy: #ffd28a; /* Bright gold ochre */
-  --royal-gold: #ffeb66; /* Glowing gold */
+  --royal-gold: rgb(255, 235, 102); /* Glowing gold */
   --champagne-mist: #fff3c0; /* Bright champagne */
   --saffron-dust: #ffdea0; /* Vibrant saffron */
   --honey-silk: #ffedaa; /* Bright honey */

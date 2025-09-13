@@ -34,9 +34,12 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className='gap-1'>
-          <DrawerTitle>{item.name}</DrawerTitle>
+          <DrawerTitle className='text-lg font-semibold tracking-tight'>
+            {item.name}
+          </DrawerTitle>
           <DrawerDescription>
-            Showing total visitors for the last 6 months
+            Dive into this kata’s journey — here’s a breakdown of your solved
+            challenges and earned diamonds.
           </DrawerDescription>
         </DrawerHeader>
 
@@ -51,10 +54,11 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
             <DiamondIcon size='xl' />
           </DiamondsCountBadge>
         </div>
+
         <DrawerFooter>
           <DrawerClose asChild>
             <Button variant='outline' className='cursor-pointer'>
-              Close
+              Got it ✨
             </Button>
           </DrawerClose>
         </DrawerFooter>
