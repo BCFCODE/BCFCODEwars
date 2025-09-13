@@ -50,8 +50,8 @@ function TableCellViewer({ item }: { item: CodewarsTableData }) {
               <Separator />
             </>
           )}
-          <DiamondsCountBadge size='lg' count={item.totalDiamonds ?? 0}>
-            <DiamondIcon size='xl' />
+          <DiamondsCountBadge size='md' count={item.totalDiamonds ?? 0}>
+            <DiamondIcon size='lg' />
           </DiamondsCountBadge>
         </div>
 

@@ -9,14 +9,14 @@ import {
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts';
 
 const chartData = [
-  { rank: 'kyo-1', count: 305 },
-  { rank: 'kyo-2', count: 186 },
-  { rank: 'kyo-3', count: 214 },
-  { rank: 'kyo-4', count: 209 },
-  { rank: 'kyo-5', count: 273 },
-  { rank: 'kyo-6', count: 237 },
-  { rank: 'kyo-7', count: 305 },
-  { rank: 'kyo-8', count: 186 }
+  { rank: 'kyu-1', count: 305 },
+  { rank: 'kyu-2', count: 186 },
+  { rank: 'kyu-3', count: 214 },
+  { rank: 'kyu-4', count: 209 },
+  { rank: 'kyu-5', count: 273 },
+  { rank: 'kyu-6', count: 237 },
+  { rank: 'kyu-7', count: 305 },
+  { rank: 'kyu-8', count: 186 }
 ];
 
 const chartConfig = {
@@ -31,7 +31,7 @@ export function ChartRadarKatas() {
       config={chartConfig}
       className='mx-auto aspect-square h-[320px] w-[320px]'
     >
-      <RadarChart height={320} width={320} outerRadius={110} data={chartData}>
+      <RadarChart height={300} width={300} outerRadius={110} data={chartData}>
         {/* Tooltip */}
         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
 
@@ -53,21 +53,21 @@ export function ChartRadarKatas() {
           dataKey='rank'
           tick={({ payload, x, y, textAnchor, ...rest }) => {
             const colorMap: Record<string, string> = {
-              'kyo-1': 'var(--kyu-1)',
-              'kyo-2': 'var(--kyu-2)',
-              'kyo-3': 'var(--kyu-3)',
-              'kyo-4': 'var(--kyu-4)',
-              'kyo-5': 'var(--kyu-5)',
-              'kyo-6': 'var(--kyu-6)',
-              'kyo-7': 'var(--kyu-7)',
-              'kyo-8': 'var(--kyu-8)'
+              'kyu-1': 'var(--kyu-1)',
+              'kyu-2': 'var(--kyu-2)',
+              'kyu-3': 'var(--kyu-3)',
+              'kyu-4': 'var(--kyu-4)',
+              'kyu-5': 'var(--kyu-5)',
+              'kyu-6': 'var(--kyu-6)',
+              'kyu-7': 'var(--kyu-7)',
+              'kyu-8': 'var(--kyu-8)'
             };
             return (
               <g filter='url(#goldShadow)'>
                 <text
                   {...rest}
                   x={x}
-                  y={y + 4}
+                  y={y + 5}
                   textAnchor={textAnchor}
                   fill={colorMap[payload.value] || 'currentColor'}
                   fontWeight='700'

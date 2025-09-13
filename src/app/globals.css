@@ -96,7 +96,7 @@
   --popover: oklch(0.26 0.06 260); /* Lighter indigo for popovers */
   --popover-foreground: oklch(0.94 0.02 240);
 
-  --drawer-popover: oklch(17.457% 0.04575 258.146 / 0.851);
+  --drawer-popover: oklch(10.61% 0.04284 281.422 / 0.851);
   --drawer-popover-foreground: oklch(0.94 0.02 240);
 
   --primary: oklch(0.78 0.18 160); /* Bright teal (kyu-2 inspired) */
