@@ -18,6 +18,13 @@
   --popover: oklch(0.98 0.02 220); /* Light cyan for popovers */
   --popover-foreground: oklch(0.14 0.03 270);
 
+  --drawer-popover: oklch(
+    0.92 0.03 220
+  ); /* New soft cyan, vibrant and opaque */
+  --drawer-popover-foreground: oklch(
+    0.14 0.03 270
+  ); /* Matches --popover-foreground */
+
   --primary: oklch(0.7 0.18 160); /* Vibrant teal (kyu-2 inspired) */
   --primary-foreground: oklch(0.95 0 0); /* White for text */
 
@@ -91,6 +98,9 @@
   --popover: oklch(0.26 0.06 260); /* Lighter indigo for popovers */
   --popover-foreground: oklch(0.94 0.02 240);
 
+  --drawer-popover: oklch(17.457% 0.04575 258.146 / 0.851);
+  --drawer-popover-foreground: oklch(0.94 0.02 240);
+
   --primary: oklch(0.78 0.18 160); /* Bright teal (kyu-2 inspired) */
   --primary-foreground: oklch(0.14 0.03 270);
 
@@ -110,7 +120,7 @@
 
   --border: oklch(0.3 0.05 260); /* Lighter indigo border */
   --input: oklch(0.34 0.05 260); /* Lighter input background */
-  --ring: oklch(0.78 0.18 160);
+  --ring: var(--color-royal-gold);
 
   --chart-1: oklch(0.78 0.18 160); /* Teal (kyu-2) */
   --chart-2: oklch(0.82 0.16 40); /* Coral (kyu-5) */
@@ -123,7 +133,7 @@
   --sidebar-foreground: oklch(0.94 0.02 240);
   --sidebar-primary: oklch(0.78 0.18 160);
   --sidebar-primary-foreground: oklch(0.14 0.03 270);
-  --sidebar-accent: oklch(37.197% 0.06378 261.505 / 0.449);
+  --sidebar-accent: oklch(81.51% 0.11776 228.902 / 0.125);
   --sidebar-accent-foreground: oklch(0.94 0.02 240);
   --sidebar-border: oklch(0.3 0.05 260);
   --sidebar-ring: oklch(37.197% 0.06378 261.505 / 0.449);
@@ -164,6 +174,10 @@
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
+  --color-drawer-popover: var(--drawer-popover); /* Added new color */
+  --color-drawer-popover-foreground: var(
+    --drawer-popover-foreground
+  ); /* Added new color */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
