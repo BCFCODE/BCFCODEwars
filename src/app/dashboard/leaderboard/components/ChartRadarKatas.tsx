@@ -1,75 +1,104 @@
 'use client';
 
-import { TrendingUp } from 'lucide-react';
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts';
-
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/UI/card';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent
 } from '@/components/UI/chart';
-
-export const description = 'A radar chart';
+import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts';
 
 const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 273 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 }
+  { rank: 'kyu-1', count: 305 },
+  { rank: 'kyu-2', count: 186 },
+  { rank: 'kyu-3', count: 214 },
+  { rank: 'kyu-4', count: 209 },
+  { rank: 'kyu-5', count: 273 },
+  { rank: 'kyu-6', count: 237 },
+  { rank: 'kyu-7', count: 305 },
+  { rank: 'kyu-8', count: 186 }
 ];
 
 const chartConfig = {
-  desktop: {
-    label: 'Desktop',
-    color: 'var(--chart-1)'
+  count: {
+    label: 'Count:'
   }
 } satisfies ChartConfig;
 
 export function ChartRadarKatas() {
   return (
-    <Card>
-      <CardHeader className='items-center pb-4'>
-        <CardTitle>Radar Chart</CardTitle>
-        <CardDescription>
-          Showing total visitors for the last 6 months
-        </CardDescription>
-      </CardHeader>
-      <CardContent className='pb-0'>
-        <ChartContainer
-          config={chartConfig}
-          className='mx-auto aspect-square max-h-[250px]'
-        >
-          <RadarChart data={chartData}>
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-            <PolarAngleAxis dataKey='month' />
-            <PolarGrid />
-            <Radar
-              dataKey='desktop'
-              fill='var(--color-desktop)'
-              fillOpacity={0.6}
-            />
-          </RadarChart>
-        </ChartContainer>
-      </CardContent>
-      <CardFooter className='flex-col gap-2 text-sm'>
-        <div className='flex items-center gap-2 leading-none font-medium'>
-          Trending up by 5.2% this month <TrendingUp className='h-4 w-4' />
-        </div>
-        <div className='text-muted-foreground flex items-center gap-2 leading-none'>
-          January - June 2024
-        </div>
-      </CardFooter>
-    </Card>
+    <ChartContainer
+      config={chartConfig}
+      className='mx-auto aspect-square h-[320px] w-[320px]'
+    >
+      <RadarChart height={300} width={300} outerRadius={110} data={chartData}>
+        {/* Tooltip */}
+        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+
+        {/* Drop shadow & gradient defs */}
+        <defs>
+          {/* <filter id="goldShadow" x="-50%" y="-50%" width="200%" height="200%">
+            <feDropShadow dx="0" dy="0" stdDeviation="3" floodColor="var(--royal-gold)" floodOpacity="1" />
+          </filter> */}
+          <radialGradient id='radarGradient' cx='50%' cy='50%' r='80%'>
+            <stop offset='0%' stopColor='var(--kyu-7)' stopOpacity={0.9} />
+            <stop offset='50%' stopColor='var(--kyu-4)' stopOpacity={0.7} />
+            <stop offset='100%' stopColor='var(--kyu-1)' stopOpacity={0.5} />
+          </radialGradient>
+        </defs>
+
+        {/* Custom colored axis labels with gold glow */}
+        <PolarAngleAxis
+          radius={115}
+          dataKey='rank'
+          tick={({ payload, x, y, textAnchor, ...rest }) => {
+            const colorMap: Record<string, string> = {
+              'kyu-1': 'var(--kyu-1)',
+              'kyu-2': 'var(--kyu-2)',
+              'kyu-3': 'var(--kyu-3)',
+              'kyu-4': 'var(--kyu-4)',
+              'kyu-5': 'var(--kyu-5)',
+              'kyu-6': 'var(--kyu-6)',
+              'kyu-7': 'var(--kyu-7)',
+              'kyu-8': 'var(--kyu-8)'
+            };
+            return (
+              <g filter='url(#goldShadow)'>
+                <text
+                  {...rest}
+                  x={x}
+                  y={y + 5}
+                  textAnchor={textAnchor}
+                  fill={colorMap[payload.value] || 'currentColor'}
+                  fontWeight='700'
+                  fontSize={13}
+                >
+                  {payload.value.toUpperCase()}
+                </text>
+              </g>
+            );
+          }}
+        />
+
+        {/* Background grid */}
+        <PolarGrid
+          stroke='var(--kyu-8)'
+          strokeDasharray='1'
+          strokeOpacity={0.4}
+          strokeWidth={2}
+          gridType='polygon'
+          radialLines={true}
+        />
+
+        {/* Radar shape */}
+        <Radar
+          dataKey='count'
+          stroke='rgba(255, 235, 102, 0.9)'
+          strokeWidth={2}
+          fill='url(#radarGradient)'
+          fillOpacity={0.6}
+        />
+      </RadarChart>
+    </ChartContainer>
   );
 }
