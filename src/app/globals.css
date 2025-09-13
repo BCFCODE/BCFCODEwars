@@ -18,9 +18,7 @@
   --popover: oklch(0.98 0.02 220); /* Light cyan for popovers */
   --popover-foreground: oklch(0.14 0.03 270);
 
-  --drawer-popover: oklch(
-    0.92 0.03 220
-  ); /* New soft cyan, vibrant and opaque */
+  --drawer-popover: oklch(0% 0 0 / 0.568);
   --drawer-popover-foreground: oklch(
     0.14 0.03 270
   ); /* Matches --popover-foreground */
