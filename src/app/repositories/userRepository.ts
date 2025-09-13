@@ -14,10 +14,24 @@ export async function findAllUsers() {
           as: 'diamondsData' // Output array field
         }
       },
+      {
+        $lookup: {
+          from: 'codewars', // Collection to join with
+          localField: 'email', // Field in users collection
+          foreignField: 'email', // Field in diamonds collection
+          as: 'codewarsData' // Output array field
+        }
+      },
       // Step 2: Unwind diamondsData (optional, for one-to-one mapping)
       {
         $unwind: {
           path: '$diamondsData',
+          preserveNullAndEmptyArrays: true // Keep users without diamonds data
+        }
+      },
+      {
+        $unwind: {
+          path: '$codewarsData',
           preserveNullAndEmptyArrays: true // Keep users without diamonds data
         }
       },
@@ -30,7 +44,8 @@ export async function findAllUsers() {
           image: 1,
           'activity.lastActiveTime': 1,
           'activity.firstLogin': 1,
-          totalDiamonds: '$diamondsData.totals.total' // From diamonds.totals.total
+          totalDiamonds: '$diamondsData.totals.total', // From diamonds.totals.total
+          isCodewarsConnected: '$codewarsData.isConnected'
         }
       }
     ])

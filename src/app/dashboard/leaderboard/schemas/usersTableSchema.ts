@@ -7,6 +7,7 @@ export const schema = z.object({
   lastActiveTime: z.date().optional(),
   firstLogin: z.date().optional(),
   totalDiamonds: z.number().optional(),
+  isCodewarsConnected: z.boolean().optional(),
   id: z.number(),
   header: z.string(),
   type: z.string(),

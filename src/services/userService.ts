@@ -13,7 +13,8 @@ export async function getPublicUsers() {
     image: z.string().optional(),
     lastActiveTime: z.date().optional(),
     firstLogin: z.date().optional(),
-    totalDiamonds: z.number().optional()
+    totalDiamonds: z.number().optional(),
+    isCodewarsConnected: z.boolean()
   });
 
   return schema.array().parse(
@@ -24,7 +25,8 @@ export async function getPublicUsers() {
         image: u.image,
         lastActiveTime: u.activity.lastActiveTime,
         firstLogin: u.activity.firstLogin,
-        totalDiamonds: u.totalDiamonds
+        totalDiamonds: u.totalDiamonds,
+        isCodewarsConnected: u.isCodewarsConnected
       })
     )
   );
