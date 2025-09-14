@@ -17,21 +17,12 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '@/components/UI/drawer';
-import { Input } from '@/components/UI/input';
-import { Label } from '@/components/UI/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/UI/select';
 import { Separator } from '@/components/UI/separator';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { IconTrendingUp } from '@tabler/icons-react';
+import Link from 'next/link';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { UsersTableData } from '../../types';
-import { useIsMobile } from '@/hooks/use-mobile';
-import Link from 'next/link';
 
 // Sample chart data (replace with actual data from item)
 const chartData = [
