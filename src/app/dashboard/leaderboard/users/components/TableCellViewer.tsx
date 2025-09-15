@@ -17,40 +17,29 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '@/components/UI/drawer';
-import { Input } from '@/components/UI/input';
-import { Label } from '@/components/UI/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/UI/select';
 import { Separator } from '@/components/UI/separator';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { IconTrendingUp } from '@tabler/icons-react';
+import Link from 'next/link';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { UsersTableData } from '../../types';
-import { useIsMobile } from '@/hooks/use-mobile';
 
+// Sample chart data (replace with actual data from item)
 const chartData = [
-  { month: 'January', desktop: 186, mobile: 80 },
-  { month: 'February', desktop: 305, mobile: 200 },
-  { month: 'March', desktop: 237, mobile: 120 },
-  { month: 'April', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'June', desktop: 214, mobile: 140 }
+  { month: 'Jan', katas: 10 },
+  { month: 'Feb', katas: 15 },
+  { month: 'Mar', katas: 25 },
+  { month: 'Apr', katas: 20 },
+  { month: 'May', katas: 30 },
+  { month: 'Jun', katas: 40 }
 ];
 
-const chartConfig = {
-  desktop: {
-    label: 'Desktop',
-    color: 'var(--primary)'
-  },
-  mobile: {
-    label: 'Mobile',
-    color: 'var(--primary)'
+const chartConfig: ChartConfig = {
+  katas: {
+    label: 'Completed Katas',
+    color: 'var(--chart-1)' // Teal
   }
-} satisfies ChartConfig;
+};
 
 function TableCellViewer({ item }: { item: UsersTableData }) {
   const isMobile = useIsMobile();
@@ -69,144 +58,111 @@ function TableCellViewer({ item }: { item: UsersTableData }) {
         <DrawerHeader className='gap-1'>
           <DrawerTitle>{item.name}</DrawerTitle>
           <DrawerDescription>
-            Showing total visitors for the last 6 months
+            Track your Codewars progress and achievements
           </DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-4 overflow-y-auto px-4 text-sm'>
           {!isMobile && (
             <>
-              <ChartContainer config={chartConfig}>
-                <AreaChart
-                  accessibilityLayer
-                  data={chartData}
-                  margin={{
-                    left: 0,
-                    right: 10
-                  }}
-                >
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey='month'
-                    tickLine={false}
-                    axisLine={false}
-                    tickMargin={8}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                    hide
-                  />
-                  <ChartTooltip
-                    cursor={false}
-                    content={<ChartTooltipContent indicator='dot' />}
-                  />
-                  <Area
-                    dataKey='mobile'
-                    type='natural'
-                    fill='var(--color-mobile)'
-                    fillOpacity={0.6}
-                    stroke='var(--color-mobile)'
-                    stackId='a'
-                  />
-                  <Area
-                    dataKey='desktop'
-                    type='natural'
-                    fill='var(--color-desktop)'
-                    fillOpacity={0.4}
-                    stroke='var(--color-desktop)'
-                    stackId='a'
-                  />
-                </AreaChart>
-              </ChartContainer>
-              <Separator />
-              <div className='grid gap-2'>
-                <div className='flex gap-2 leading-none font-medium'>
-                  Trending up by 5.2% this month{' '}
-                  <IconTrendingUp className='size-4' />
+              {item.isCodewarsConnected ? (
+                <div className='bg-card-background flex flex-col items-center justify-center gap-4 rounded-xl border border-transparent bg-gradient-to-r from-[--kyu-3] to-[--kyu-2] p-6 text-center shadow-lg transition-transform duration-300 hover:scale-[1.02]'>
+                  {/* Celebratory text */}
+                  <div className='space-y-2'>
+                    <div className='flex w-full items-center gap-3 text-left tracking-tight'>
+                      <IconTrendingUp className='text-royal-gold h-8 w-8' />
+                      <h3 className='text-foreground text-lg font-bold'>
+                        You’re Crushing It, {item.name}!
+                      </h3>
+                    </div>
+                    <p className='text-muted-foreground text-left text-sm leading-relaxed'>
+                      Your Codewars journey is on fire! 🚀 Explore your{' '}
+                      <span className='text-kyu-3 font-semibold'>
+                        exclusive BCFCODE stats
+                      </span>{' '}
+                      and watch your coding skills soar to new heights.
+                    </p>
+                  </div>
+
+                  {/* Progress chart */}
+                  <ChartContainer
+                    config={chartConfig}
+                    className='h-[200px] w-full'
+                  >
+                    <AreaChart
+                      data={chartData}
+                      margin={{ top: 10, right: 10, left: 10, bottom: 10 }}
+                    >
+                      <CartesianGrid strokeDasharray='3 3' />
+                      <XAxis dataKey='month' />
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <Area
+                        type='monotone'
+                        dataKey='katas'
+                        stroke='var(--chart-1)'
+                        fill='var(--chart-1)'
+                        fillOpacity={0.3}
+                      />
+                    </AreaChart>
+                  </ChartContainer>
+
+                  {/* CTA button */}
+                  <Link href='/dashboard/codewars'>
+                    <Button
+                      size='lg'
+                      className='bg-accent-foreground cursor-pointer text-white shadow-md transition-all hover:bg-[--kyu-2] hover:shadow-lg'
+                    >
+                      View Full Profile
+                    </Button>
+                  </Link>
                 </div>
-                <div className='text-muted-foreground'>
-                  Showing total visitors for the last 6 months. This is just
-                  some random text to test the layout. It spans multiple lines
-                  and should wrap around.
+              ) : (
+                <div className='bg-card-background flex flex-col items-center justify-center gap-4 rounded-xl border border-transparent bg-gradient-to-r from-[--champagne-mist] to-[--honey-silk] p-6 text-center shadow-lg transition-transform duration-300 hover:scale-[1.02] dark:from-[--royal-gold] dark:to-[--amber-legacy]'>
+                  {/* Motivational text */}
+                  <div className='space-y-2'>
+                    <div className='flex w-full items-center gap-3 text-left tracking-tight'>
+                      {/* Codewars logo */}
+                      <div className='h-20 w-20 animate-pulse'>
+                        <img
+                          src='https://www.codewars.com/packs/assets/logo.f607a0fb.svg'
+                          alt='Codewars Logo'
+                          className='h-full w-full object-contain'
+                        />
+                      </div>
+                      <h3 className='text-foreground text-md font-bold'>
+                        Ready to Begin Your Codewars Journey {item.name}?
+                      </h3>
+                    </div>
+                    <p className='text-muted-foreground text-left text-sm leading-relaxed'>
+                      Connect your Codewars account today and unlock{' '}
+                      <span className='text-royal-gold font-semibold'>
+                        exclusive BCFCODE statistics
+                      </span>{' '}
+                      you can’t find anywhere else. Track progress, visualize
+                      growth, and level up your coding path.
+                    </p>
+                  </div>
+
+                  {/* CTA button */}
+                  <Link href='/dashboard/codewars/connect'>
+                    <Button
+                      size='lg'
+                      className='bg-accent-foreground cursor-pointer text-white shadow-md transition-all hover:bg-[--amber-legacy] hover:shadow-lg'
+                    >
+                      Connect Codewars Account
+                    </Button>
+                  </Link>
                 </div>
-              </div>
+              )}
+
               <Separator />
             </>
           )}
-          <form className='flex flex-col gap-4'>
-            <div className='flex flex-col gap-3'>
-              <Label htmlFor='header'>Header</Label>
-              <Input id='header' defaultValue={item.header} />
-            </div>
-            <div className='grid grid-cols-2 gap-4'>
-              <div className='flex flex-col gap-3'>
-                <Label htmlFor='type'>Type</Label>
-                <Select defaultValue={item.type}>
-                  <SelectTrigger id='type' className='w-full'>
-                    <SelectValue placeholder='Select a type' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value='Table of Contents'>
-                      Table of Contents
-                    </SelectItem>
-                    <SelectItem value='Executive Summary'>
-                      Executive Summary
-                    </SelectItem>
-                    <SelectItem value='Technical Approach'>
-                      Technical Approach
-                    </SelectItem>
-                    <SelectItem value='Design'>Design</SelectItem>
-                    <SelectItem value='Capabilities'>Capabilities</SelectItem>
-                    <SelectItem value='Focus Documents'>
-                      Focus Documents
-                    </SelectItem>
-                    <SelectItem value='Narrative'>Narrative</SelectItem>
-                    <SelectItem value='Cover Page'>Cover Page</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className='flex flex-col gap-3'>
-                <Label htmlFor='status'>Status</Label>
-                <Select defaultValue={item.status}>
-                  <SelectTrigger id='status' className='w-full'>
-                    <SelectValue placeholder='Select a status' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value='Done'>Done</SelectItem>
-                    <SelectItem value='In Progress'>In Progress</SelectItem>
-                    <SelectItem value='Not Started'>Not Started</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-            <div className='grid grid-cols-2 gap-4'>
-              <div className='flex flex-col gap-3'>
-                <Label htmlFor='target'>Target</Label>
-                <Input id='target' defaultValue={item.target} />
-              </div>
-              <div className='flex flex-col gap-3'>
-                <Label htmlFor='limit'>Limit</Label>
-                <Input id='limit' defaultValue={item.limit} />
-              </div>
-            </div>
-            <div className='flex flex-col gap-3'>
-              <Label htmlFor='reviewer'>Reviewer</Label>
-              <Select defaultValue={item.reviewer}>
-                <SelectTrigger id='reviewer' className='w-full'>
-                  <SelectValue placeholder='Select a reviewer' />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value='Eddie Lake'>Eddie Lake</SelectItem>
-                  <SelectItem value='Jamik Tashpulatov'>
-                    Jamik Tashpulatov
-                  </SelectItem>
-                  <SelectItem value='Emily Whalen'>Emily Whalen</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </form>
         </div>
         <DrawerFooter>
-          <Button>Submit</Button>
           <DrawerClose asChild>
-            <Button variant='outline'>Done</Button>
+            <Button className='cursor-pointer' variant='outline'>
+              Done
+            </Button>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

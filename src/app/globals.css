@@ -92,11 +92,12 @@
   --card: oklch(0.28 0.06 260)
     linear-gradient(135deg, oklch(0.28 0.06 260) 0%, oklch(0.32 0.06 40) 100%); /* Indigo-to-coral (kyu-5) gradient */
   --card-foreground: oklch(0.94 0.02 240);
+  --card-background: oklch(11.469% 0.05127 282.295);
 
   --popover: oklch(0.26 0.06 260); /* Lighter indigo for popovers */
   --popover-foreground: oklch(0.94 0.02 240);
 
-  --drawer-popover: oklch(10.61% 0.04284 281.422 / 0.851);
+  --drawer-popover: oklch(11.469% 0.05127 282.295 / 0.784);
   --drawer-popover-foreground: oklch(0.94 0.02 240);
 
   --primary: oklch(0.78 0.18 160); /* Bright teal (kyu-2 inspired) */
@@ -111,7 +112,7 @@
   --muted-foreground: oklch(0.85 0.03 240);
 
   --accent: oklch(0.34 0.05 260); /* Lighter muted indigo */
-  --accent-foreground: oklch(0.94 0.02 240);
+  --accent-foreground: rgba(255, 235, 102, 0.6);
 
   --destructive: oklch(0.72 0.2 20); /* Vivid ruby */
   --destructive-foreground: oklch(0.95 0 0);
@@ -170,6 +171,7 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-card-background: var(--card-background);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-drawer-popover: var(--drawer-popover); /* Added new color */

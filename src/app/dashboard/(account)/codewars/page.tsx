@@ -1,3 +1,3 @@
-export default async function CodewarsAccount() {
-  return <p>Connect To Codewars</p>;
+export default async function CodewarsProfile() {
+  return <p>Codewars Profile</p>;
 }
