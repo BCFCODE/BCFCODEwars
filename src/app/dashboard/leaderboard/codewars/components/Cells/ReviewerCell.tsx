@@ -1,4 +1,7 @@
 import { Label } from '@/components/UI/label';
+
+import { Row } from '@tanstack/react-table';
+import { CodewarsTableData } from '../../../types';
 import {
   Select,
   SelectContent,
@@ -6,8 +9,6 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/UI/select';
-import { Row } from '@tanstack/react-table';
-import { CodewarsTableData } from '../../../types';
 
 export function ReviewerCell({ row }: { row: Row<CodewarsTableData> }) {
   const isAssigned = row.original.reviewer !== 'Assign reviewer';

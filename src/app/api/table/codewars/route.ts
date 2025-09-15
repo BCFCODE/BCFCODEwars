@@ -4,9 +4,9 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   // Authenticate the request
-  const { isAuthenticated, getToken } = await auth();
+  const { sessionStatus, getToken } = await auth();
 
-  if (!isAuthenticated) {
+  if (sessionStatus !== 'active') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
