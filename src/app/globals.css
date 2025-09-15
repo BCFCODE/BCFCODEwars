@@ -92,7 +92,8 @@
   --card: oklch(0.28 0.06 260)
     linear-gradient(135deg, oklch(0.28 0.06 260) 0%, oklch(0.32 0.06 40) 100%); /* Indigo-to-coral (kyu-5) gradient */
   --card-foreground: oklch(0.94 0.02 240);
-  --card-background: oklch(11.469% 0.05127 282.295);
+  --card-background: oklch(0.28 0.06 260)
+    linear-gradient(135deg, oklch(0.28 0.06 260) 0%, oklch(0.32 0.06 40) 100%);
 
   --popover: oklch(0.26 0.06 260); /* Lighter indigo for popovers */
   --popover-foreground: oklch(0.94 0.02 240);

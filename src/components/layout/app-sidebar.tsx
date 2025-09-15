@@ -102,7 +102,7 @@ export default function AppSidebar() {
   }, [isOpen]);
 
   return (
-    <Sidebar collapsible='icon'>
+    <Sidebar className='bg-card-background' collapsible='icon'>
       <SidebarHeader>
         <div
           className={cn(
