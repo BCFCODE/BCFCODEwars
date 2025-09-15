@@ -1,11 +1,11 @@
-import { Label } from '@/components/UI/Label';
+import { Label } from '@/components/ui/Label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/UI/select';
+} from '@/components/ui/select';
 import { Row } from '@tanstack/react-table';
 import { UsersTableData } from '../../../types';
 

@@ -5,7 +5,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle
-} from '@/components/UI/dialog';
+} from '@/components/ui/dialog';
 
 interface ModalProps {
   title: string;

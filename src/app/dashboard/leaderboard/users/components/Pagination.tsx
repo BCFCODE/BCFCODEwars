@@ -1,14 +1,14 @@
 import { LeftFooter } from '@/app/dashboard/leaderboard/components/LeftFooter';
 import { UsersTableData } from '@/app/dashboard/leaderboard/types';
-import { Button } from '@/components/UI/Button';
-import { Label } from '@/components/UI/Label';
+import { Button } from '@/components/ui/Button';
+import { Label } from '@/components/ui/Label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/UI/select';
+} from '@/components/ui/select';
 import {
   IconChevronLeft,
   IconChevronRight,

@@ -3,12 +3,12 @@
 import type { Column, Table } from '@tanstack/react-table';
 import * as React from 'react';
 
-import { DataTableDateFilter } from '@/components/UI/table/data-table-date-filter';
-import { DataTableFacetedFilter } from '@/components/UI/table/data-table-faceted-filter';
-import { DataTableSliderFilter } from '@/components/UI/table/data-table-slider-filter';
-import { DataTableViewOptions } from '@/components/UI/table/data-table-view-options';
-import { Button } from '@/components/UI/Button';
-import { Input } from '@/components/UI/input';
+import { DataTableDateFilter } from '@/components/ui/table/data-table-date-filter';
+import { DataTableFacetedFilter } from '@/components/ui/table/data-table-faceted-filter';
+import { DataTableSliderFilter } from '@/components/ui/table/data-table-slider-filter';
+import { DataTableViewOptions } from '@/components/ui/table/data-table-view-options';
+import { Button } from '@/components/ui/Button';
+import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { Cross2Icon } from '@radix-ui/react-icons';
 

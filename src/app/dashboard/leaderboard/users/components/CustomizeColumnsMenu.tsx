@@ -1,10 +1,10 @@
-import { Button } from '@/components/UI/Button';
+import { Button } from '@/components/ui/Button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger
-} from '@/components/UI/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import { IconChevronDown, IconLayoutColumns } from '@tabler/icons-react';
 import { Table } from '@tanstack/react-table';
 import { UsersTableData } from '../../types';

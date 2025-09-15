@@ -9,8 +9,8 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from '@/components/UI/table';
-import { TabsContent } from '@/components/UI/tabs';
+} from '@/components/ui/table';
+import { TabsContent } from '@/components/ui/tabs';
 import {
   closestCenter,
   DndContext,

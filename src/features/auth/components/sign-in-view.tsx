@@ -1,4 +1,4 @@
-import { buttonVariants } from '@/components/UI/Button';
+import { buttonVariants } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { SignIn as ClerkSignInForm } from '@clerk/nextjs';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';

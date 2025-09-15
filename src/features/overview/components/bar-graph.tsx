@@ -9,13 +9,13 @@ import {
   CardDescription,
   CardHeader,
   CardTitle
-} from '@/components/UI/Card';
+} from '@/components/ui/Card';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent
-} from '@/components/UI/chart';
+} from '@/components/ui/chart';
 
 export const description = 'An interactive bar chart';
 

@@ -5,8 +5,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger
-} from '@/components/UI/accordion';
-import { Button } from '@/components/UI/Button';
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/Button';
 import {
   Form,
   FormControl,
@@ -14,17 +14,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '@/components/UI/form';
-import { Heading } from '@/components/UI/heading';
-import { Input } from '@/components/UI/input';
+} from '@/components/ui/form';
+import { Heading } from '@/components/ui/heading';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/UI/select';
-import { Separator } from '@/components/UI/separator';
+} from '@/components/ui/select';
+import { Separator } from '@/components/ui/separator';
 import { profileSchema, type ProfileFormValues } from '../utils/form-schema';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';

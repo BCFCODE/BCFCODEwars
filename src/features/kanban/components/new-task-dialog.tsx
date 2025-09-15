@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/UI/Button';
+import { Button } from '@/components/ui/Button';
 import {
   Dialog,
   DialogContent,
@@ -9,9 +9,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from '@/components/UI/dialog';
-import { Input } from '@/components/UI/input';
-import { Textarea } from '@/components/UI/textarea';
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 import { useTaskStore } from '../utils/store';
 

@@ -1,15 +1,16 @@
 'use client';
 
-import { Button } from '@/components/UI/Button';
+import { Button } from '@/components/ui/Button';
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/UI/Card';
+} from '@/components/ui/Card';
 import { IconTrendingUp } from '@tabler/icons-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export function CodewarsStatusCard({
   codewarsUser
@@ -50,7 +51,7 @@ export function CodewarsStatusCard({
     <Card className='group dark:from-accent-foreground @container/card bg-gradient-to-r from-[--champagne-mist] to-[--honey-silk] shadow-lg transition-transform duration-300 hover:scale-[1.02] dark:to-[var(--background)]'>
       <CardHeader>
         <CardDescription className='flex items-center gap-2 group-hover:hidden'>
-          <img
+          <Image
             src='https://www.codewars.com/packs/assets/logo.f607a0fb.svg'
             alt='Codewars Logo'
             className='h-6 w-6'

@@ -17,7 +17,6 @@
     "paths": {
       "@/*": ["./src/*"],
       "~/*": ["./public/*"],
-      "@/components/UI/*": ["./src/components/UI/*"]
     },
     "incremental": true,
     "plugins": [

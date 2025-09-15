@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/UI/Button';
+import { Button } from '@/components/ui/Button';
 
 import {
   Drawer,
@@ -11,8 +11,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger
-} from '@/components/UI/drawer';
-import { Separator } from '@/components/UI/separator';
+} from '@/components/ui/drawer';
+import { Separator } from '@/components/ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ChartRadarKatas } from '../../components/ChartRadarKatas';
 import { DiamondIcon } from '../../components/DiamondIcon';

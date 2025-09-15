@@ -2,14 +2,14 @@
 
 'use client';
 
-import { Label } from '@/components/UI/Label';
+import { Label } from '@/components/ui/Label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/UI/select';
+} from '@/components/ui/select';
 import { tableTabUrls } from '@/lib/constants';
 import {
   ColumnFiltersState,
@@ -29,8 +29,8 @@ import { CodewarsTableData } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import CodewarsTabContent from './TabContent';
-import { Tabs, TabsList, TabsTrigger } from '@/components/UI/tabs';
-import { Badge } from '@/components/UI/Badge';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/Badge';
 
 export default function CodewarsDataTableTabs({
   initialData

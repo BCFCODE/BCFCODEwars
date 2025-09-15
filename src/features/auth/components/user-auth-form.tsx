@@ -1,5 +1,5 @@
 'use client';
-import { Button } from '@/components/UI/Button';
+import { Button } from '@/components/ui/Button';
 import {
   Form,
   FormControl,
@@ -7,8 +7,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '@/components/UI/form';
-import { Input } from '@/components/UI/input';
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 // import { useSearchParams } from 'next/navigation';
 import { useTransition } from 'react';

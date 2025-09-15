@@ -8,12 +8,12 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger
-} from '@/components/UI/dropdown-menu';
+} from '@/components/ui/dropdown-menu';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem
-} from '@/components/UI/Sidebar';
+} from '@/components/ui/Sidebar';
 import Image from 'next/image';
 
 interface Tenant {

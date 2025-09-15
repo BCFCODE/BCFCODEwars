@@ -1,7 +1,7 @@
 'use client';
 
 import { useThemeConfig } from '@/components/active-theme';
-import { Label } from '@/components/UI/Label';
+import { Label } from '@/components/ui/Label';
 import {
   Select,
   SelectContent,
@@ -11,7 +11,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue
-} from '@/components/UI/select';
+} from '@/components/ui/select';
 
 const DEFAULT_THEMES = [
   {

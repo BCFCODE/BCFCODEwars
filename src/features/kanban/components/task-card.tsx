@@ -1,11 +1,11 @@
-import { Button } from '@/components/UI/Button';
-import { Card, CardContent, CardHeader } from '@/components/UI/Card';
+import { Button } from '@/components/ui/Button';
+import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Task } from '../utils/store';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { cva } from 'class-variance-authority';
 import { IconGripVertical } from '@tabler/icons-react';
-import { Badge } from '@/components/UI/Badge';
+import { Badge } from '@/components/ui/Badge';
 
 // export interface Task {
 //   id: UniqueIdentifier;

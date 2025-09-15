@@ -1,11 +1,11 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/UI/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Card,
   CardHeader,
   CardContent,
   CardTitle,
   CardDescription
-} from '@/components/UI/Card';
+} from '@/components/ui/Card';
 
 const salesData = [
   {

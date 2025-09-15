@@ -5,7 +5,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent
-} from '@/components/UI/chart';
+} from '@/components/ui/chart';
 import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from 'recharts';
 
 const chartData = [

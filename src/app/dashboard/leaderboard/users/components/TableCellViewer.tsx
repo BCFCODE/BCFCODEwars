@@ -1,12 +1,12 @@
 'use client';
 
-import { Button } from '@/components/UI/Button';
+import { Button } from '@/components/ui/Button';
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent
-} from '@/components/UI/chart';
+} from '@/components/ui/chart';
 import {
   Drawer,
   DrawerClose,
@@ -16,13 +16,14 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger
-} from '@/components/UI/drawer';
-import { Separator } from '@/components/UI/separator';
+} from '@/components/ui/drawer';
+import { Separator } from '@/components/ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { IconTrendingUp } from '@tabler/icons-react';
 import Link from 'next/link';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
 import { UsersTableData } from '../../types';
+import Image from 'next/image';
 
 // Sample chart data (replace with actual data from item)
 const chartData = [
@@ -122,7 +123,7 @@ function TableCellViewer({ item }: { item: UsersTableData }) {
                     <div className='flex w-full items-center gap-3 text-left tracking-tight'>
                       {/* Codewars logo */}
                       <div className='h-20 w-20 animate-pulse'>
-                        <img
+                        <Image
                           src='https://www.codewars.com/packs/assets/logo.f607a0fb.svg'
                           alt='Codewars Logo'
                           className='h-full w-full object-contain'

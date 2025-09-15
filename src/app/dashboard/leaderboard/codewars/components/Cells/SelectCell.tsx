@@ -1,4 +1,4 @@
-import { Checkbox } from '@/components/UI/checkbox';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Row } from '@tanstack/react-table';
 import { CodewarsTableData } from '../../../types';
 

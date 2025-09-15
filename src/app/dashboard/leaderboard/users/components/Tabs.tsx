@@ -1,15 +1,15 @@
 // \src\app\dashboard\leaderboard\users\components\Tabs.tsx
 'use client';
 
-import { Label } from '@/components/UI/Label';
+import { Label } from '@/components/ui/Label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/components/UI/select';
-import { Tabs, TabsList, TabsTrigger } from '@/components/UI/tabs';
+} from '@/components/ui/select';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { tableTabUrls } from '@/lib/constants';
 import {
   ColumnFiltersState,
@@ -29,7 +29,7 @@ import { UsersTableData } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import UsersTabContent from './TabContent';
-import { Badge } from '@/components/UI/Badge';
+import { Badge } from '@/components/ui/Badge';
 
 export default function UsersDataTableTabs({
   initialData

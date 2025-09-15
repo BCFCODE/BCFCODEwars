@@ -12,7 +12,7 @@ import {
   target,
   user
 } from './components/Cells';
-import { Badge } from '@/components/UI/Badge';
+import { Badge } from '@/components/ui/Badge';
 
 const columns: ColumnDef<CodewarsTableData>[] = [
   dragHandle,
