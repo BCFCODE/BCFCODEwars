@@ -1,7 +1,7 @@
 // \src\app\dashboard\leaderboard\users\components\Tabs.tsx
 'use client';
 
-import { Label } from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -29,7 +29,7 @@ import { UsersTableData } from '../../types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import UsersTabContent from './TabContent';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/badge';
 
 export default function UsersDataTableTabs({
   initialData

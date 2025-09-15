@@ -1,4 +1,4 @@
-import { Label } from '@/components/ui/Label';
+import { Label } from '@/components/ui/label';
 
 import { Row } from '@tanstack/react-table';
 import { CodewarsTableData } from '../../../types';

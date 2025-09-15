@@ -1,13 +1,13 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/ui/Card';
+} from '@/components/ui/card';
 import { IconTrendingUp } from '@tabler/icons-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -52,9 +52,11 @@ export function CodewarsStatusCard({
       <CardHeader>
         <CardDescription className='flex items-center gap-2 group-hover:hidden'>
           <Image
+            width={23}
+            height={23}
             src='https://www.codewars.com/packs/assets/logo.f607a0fb.svg'
             alt='Codewars Logo'
-            className='h-6 w-6'
+            // className='h-6 w-6'
           />
           Codewars Connected
         </CardDescription>

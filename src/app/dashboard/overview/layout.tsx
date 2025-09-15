@@ -2,7 +2,7 @@ import PageContainer from '@/components/layout/page-container';
 import { currentUser } from '@clerk/nextjs/server';
 import type { Metadata } from 'next';
 import React from 'react';
-import { Badge } from '@/components/ui/Badge';
+import { Badge } from '@/components/ui/badge';
 import {
   Card,
   CardAction,
@@ -10,7 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/ui/Card';
+} from '@/components/ui/card';
 import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
 
 export const metadata: Metadata = {

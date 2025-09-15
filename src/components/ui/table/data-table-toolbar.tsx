@@ -7,7 +7,7 @@ import { DataTableDateFilter } from '@/components/ui/table/data-table-date-filte
 import { DataTableFacetedFilter } from '@/components/ui/table/data-table-faceted-filter';
 import { DataTableSliderFilter } from '@/components/ui/table/data-table-slider-filter';
 import { DataTableViewOptions } from '@/components/ui/table/data-table-view-options';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { Cross2Icon } from '@radix-ui/react-icons';

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import {
   ChartConfig,
   ChartContainer,
@@ -126,7 +126,9 @@ function TableCellViewer({ item }: { item: UsersTableData }) {
                         <Image
                           src='https://www.codewars.com/packs/assets/logo.f607a0fb.svg'
                           alt='Codewars Logo'
-                          className='h-full w-full object-contain'
+                          width={30}
+                          height={30}
+                          // className='h-full w-full object-contain'
                         />
                       </div>
                       <h3 className='text-foreground text-md font-bold'>

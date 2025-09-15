@@ -4,8 +4,8 @@ import type { Option } from '@/types/data-table';
 import type { Column } from '@tanstack/react-table';
 import { PlusCircle, XCircle } from 'lucide-react';
 
-import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,

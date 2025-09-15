@@ -1,5 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton';
-import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 export function PieGraphSkeleton() {
   return (

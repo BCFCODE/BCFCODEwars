@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui/button';
 import { useSortable } from '@dnd-kit/sortable';
 import { IconGripVertical } from '@tabler/icons-react';
 
