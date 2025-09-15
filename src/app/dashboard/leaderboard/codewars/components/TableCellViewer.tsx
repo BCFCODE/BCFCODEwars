@@ -53,15 +53,20 @@ function TableCellViewer({
         </DrawerHeader>
 
         <div className='flex flex-col gap-4 overflow-y-auto px-4 text-sm'>
-          {!isMobile && (
+          {!isMobile ? (
             <>
               <ChartRadarKatas />
+              <DiamondsCountBadge
+                size='md'
+                count={codewarsUser.totalDiamonds ?? 0}
+              >
+                <DiamondIcon size='lg' />
+              </DiamondsCountBadge>
               <Separator />
             </>
+          ) : (
+            <ChartRadarKatas />
           )}
-          <DiamondsCountBadge size='md' count={codewarsUser.totalDiamonds ?? 0}>
-            <DiamondIcon size='lg' />
-          </DiamondsCountBadge>
         </div>
 
         <DrawerFooter>
