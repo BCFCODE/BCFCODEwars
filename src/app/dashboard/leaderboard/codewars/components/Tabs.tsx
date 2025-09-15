@@ -2,7 +2,7 @@
 
 'use client';
 
-import { Label } from '@/components/UI/label';
+import { Label } from '@/components/UI/Label';
 import {
   Select,
   SelectContent,
@@ -30,7 +30,7 @@ import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import CodewarsTabContent from './TabContent';
 import { Tabs, TabsList, TabsTrigger } from '@/components/UI/tabs';
-import { Badge } from '@/components/UI/badge';
+import { Badge } from '@/components/UI/Badge';
 
 export default function CodewarsDataTableTabs({
   initialData

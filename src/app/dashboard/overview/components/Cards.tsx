@@ -1,4 +1,4 @@
-import { Badge } from '@/components/UI/badge';
+import { Badge } from '@/components/UI/Badge';
 import {
   Card,
   CardAction,
@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/UI/card';
+} from '@/components/UI/Card';
 import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
 
 export default function Cards() {

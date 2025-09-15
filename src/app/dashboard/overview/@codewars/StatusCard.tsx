@@ -1,13 +1,13 @@
 'use client';
 
-import { Button } from '@/components/UI/button';
+import { Button } from '@/components/UI/Button';
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/UI/card';
+} from '@/components/UI/Card';
 import { IconTrendingUp } from '@tabler/icons-react';
 import Link from 'next/link';
 

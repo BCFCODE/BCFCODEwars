@@ -1,5 +1,5 @@
 import PageContainer from '@/components/layout/page-container';
-import { buttonVariants } from '@/components/UI/button';
+import { buttonVariants } from '@/components/UI/Button';
 import { Heading } from '@/components/UI/heading';
 import { Separator } from '@/components/UI/separator';
 import { DataTableSkeleton } from '@/components/UI/table/data-table-skeleton';

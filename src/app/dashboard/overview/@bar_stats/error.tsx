@@ -1,8 +1,8 @@
 'use client';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/UI/alert';
-import { Button } from '@/components/UI/button';
-import { Card, CardContent, CardHeader } from '@/components/UI/card';
+import { Button } from '@/components/UI/Button';
+import { Card, CardContent, CardHeader } from '@/components/UI/Card';
 import { IconAlertCircle } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useTransition } from 'react';

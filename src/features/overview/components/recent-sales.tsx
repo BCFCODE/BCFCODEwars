@@ -5,7 +5,7 @@ import {
   CardContent,
   CardTitle,
   CardDescription
-} from '@/components/UI/card';
+} from '@/components/UI/Card';
 
 const salesData = [
   {

@@ -22,7 +22,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar
-} from '@/components/UI/sidebar';
+} from '@/components/UI/Sidebar';
 import { Icon } from '@/components/icons';
 
 export function NavProjects({

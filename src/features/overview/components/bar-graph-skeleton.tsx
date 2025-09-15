@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from '@/components/UI/card';
+import { Card, CardContent, CardHeader } from '@/components/UI/Card';
 import { Skeleton } from '@/components/UI/skeleton';
 
 export function BarGraphSkeleton() {

@@ -24,7 +24,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar
-} from '@/components/UI/sidebar';
+} from '@/components/UI/Sidebar';
 
 export function NavUser({
   user

@@ -1,8 +1,8 @@
 'use client';
 
 import { FileUploader } from '@/components/file-uploader';
-import { Button } from '@/components/UI/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/UI/card';
+import { Button } from '@/components/UI/Button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/UI/Card';
 import {
   Form,
   FormControl,

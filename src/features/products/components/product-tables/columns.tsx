@@ -1,5 +1,5 @@
 'use client';
-import { Badge } from '@/components/UI/badge';
+import { Badge } from '@/components/UI/Badge';
 import { DataTableColumnHeader } from '@/components/UI/table/data-table-column-header';
 import { Product } from '@/constants/data';
 import { Column, ColumnDef } from '@tanstack/react-table';

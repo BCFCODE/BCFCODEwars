@@ -1,6 +1,6 @@
 import { Row } from '@tanstack/react-table';
 import { UsersTableData } from '../../../types';
-import { Badge } from '@/components/UI/badge';
+import { Badge } from '@/components/UI/Badge';
 
 export function MemberSinceCell({ row }: { row: Row<UsersTableData> }) {
   return (

@@ -3,9 +3,9 @@
 import type { Column } from '@tanstack/react-table';
 import * as React from 'react';
 
-import { Button } from '@/components/UI/button';
+import { Button } from '@/components/UI/Button';
 import { Input } from '@/components/UI/input';
-import { Label } from '@/components/UI/label';
+import { Label } from '@/components/UI/Label';
 import {
   Popover,
   PopoverContent,

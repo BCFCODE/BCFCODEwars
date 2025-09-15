@@ -1,5 +1,5 @@
 import { Input } from '@/components/UI/input';
-import { Label } from '@/components/UI/label';
+import { Label } from '@/components/UI/Label';
 import { Row } from '@tanstack/react-table';
 import { toast } from 'sonner';
 import { CodewarsTableData } from '../../../types';

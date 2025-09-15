@@ -9,7 +9,7 @@ import Dropzone, {
 } from 'react-dropzone';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/UI/button';
+import { Button } from '@/components/UI/Button';
 import { Progress } from '@/components/UI/progress';
 import { ScrollArea } from '@/components/UI/scroll-area';
 import { useControllableState } from '@/hooks/use-controllable-state';

@@ -5,7 +5,7 @@ import { CalendarIcon, XCircle } from 'lucide-react';
 import * as React from 'react';
 import type { DateRange } from 'react-day-picker';
 
-import { Button } from '@/components/UI/button';
+import { Button } from '@/components/UI/Button';
 import { Calendar } from '@/components/UI/calendar';
 import {
   Popover,

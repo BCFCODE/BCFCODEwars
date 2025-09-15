@@ -5,7 +5,7 @@ import { DayPicker } from 'react-day-picker';
 import type { ComponentProps } from 'react';
 
 import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/UI/button';
+import { buttonVariants } from '@/components/UI/Button';
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 
 // Custom icons that meet the DayPicker requirements

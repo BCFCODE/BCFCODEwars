@@ -13,7 +13,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem
-} from '@/components/UI/sidebar';
+} from '@/components/UI/Sidebar';
 import Image from 'next/image';
 
 interface Tenant {

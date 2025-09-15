@@ -10,7 +10,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/UI/card';
+} from '@/components/UI/Card';
 import {
   ChartConfig,
   ChartContainer,

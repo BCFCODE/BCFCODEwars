@@ -4,7 +4,7 @@ import SearchInput from '../search-input';
 import { UserNav } from './user-nav';
 import { ModeToggle } from './ThemeToggle/theme-toggle';
 import CtaGithub from './cta-github';
-import { SidebarTrigger } from '../UI/sidebar';
+import { SidebarTrigger } from '../UI/Sidebar';
 import { Separator } from '../UI/separator';
 
 export default function Header() {

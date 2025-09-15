@@ -1,7 +1,7 @@
 import { LeftFooter } from '@/app/dashboard/leaderboard/components/LeftFooter';
 import { CodewarsTableData } from '@/app/dashboard/leaderboard/types';
-import { Button } from '@/components/UI/button';
-import { Label } from '@/components/UI/label';
+import { Button } from '@/components/UI/Button';
+import { Label } from '@/components/UI/Label';
 import {
   Select,
   SelectContent,

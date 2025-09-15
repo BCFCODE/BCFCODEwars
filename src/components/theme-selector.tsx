@@ -1,7 +1,7 @@
 'use client';
 
 import { useThemeConfig } from '@/components/active-theme';
-import { Label } from '@/components/UI/label';
+import { Label } from '@/components/UI/Label';
 import {
   Select,
   SelectContent,
