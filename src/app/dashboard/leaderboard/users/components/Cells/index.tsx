@@ -14,7 +14,6 @@ import { StatusCell } from './StatusCell';
 import { TargetCell } from './TargetCell';
 import { UserCell } from './UserCell';
 import { UsersTableData } from '../../../types';
-import { IconDiamond } from '@tabler/icons-react';
 import { DiamondsCell } from './DiamondsCell';
 import { DiamondsHeader } from '../../../components/DiamondsHeader';
 
