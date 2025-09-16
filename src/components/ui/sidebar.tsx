@@ -186,7 +186,7 @@ function Sidebar({
           data-sidebar='sidebar'
           data-slot='sidebar'
           data-mobile='true'
-          className='bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden'
+          className='bg-sidebar-mobile-background text-sidebar-background w-(--sidebar-width) p-0 [&>button]:hidden'
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE
@@ -259,21 +259,28 @@ function SidebarTrigger({
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar();
 
+  // Single responsibility: merge external + internal handlers
+  const handleClick = React.useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      onClick?.(event); // Respect external onClick
+      toggleSidebar(); // Internal behavior
+    },
+    [onClick, toggleSidebar]
+  );
+
   return (
     <Button
+      type='button'
+      aria-label='Toggle Sidebar'
       data-sidebar='trigger'
       data-slot='sidebar-trigger'
       variant='ghost'
       size='icon'
-      className={cn('size-7', className)}
-      onClick={(event) => {
-        onClick?.(event);
-        toggleSidebar();
-      }}
+      className={cn('size-9 cursor-pointer', className)}
+      onClick={handleClick}
       {...props}
     >
-      <PanelLeftIcon />
-      <span className='sr-only'>Toggle Sidebar</span>
+      <PanelLeftIcon aria-hidden='true' />
     </Button>
   );
 }

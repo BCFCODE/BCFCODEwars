@@ -130,6 +130,7 @@
   --sidebar: oklch(0.26 0.06 260)
     linear-gradient(180deg, oklch(0.26 0.06 260) 0%, oklch(0.3 0.06 280) 100%); /* Indigo-to-amethyst (kyu-3) */
   --sidebar-foreground: oklch(0.94 0.02 240);
+  --sidebar-mobile-background: oklch(8.753% 0.04382 311.989 / 0.832);
   --sidebar-primary: oklch(0.78 0.18 160);
   --sidebar-primary-foreground: oklch(0.14 0.03 270);
   --sidebar-accent: rgba(102, 209, 255, 0.125);
@@ -197,6 +198,7 @@
   --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-mobile-background: var(--sidebar-mobile-background);
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
   --color-sidebar-accent: var(--sidebar-accent);
