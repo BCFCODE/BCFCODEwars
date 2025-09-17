@@ -257,6 +257,7 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
+  const isMobile = useIsMobile();
   const { toggleSidebar, open } = useSidebar();
 
   // Single responsibility: merge external + internal handlers
@@ -280,8 +281,9 @@ function SidebarTrigger({
       onClick={handleClick}
       {...props}
     >
-      {/* <PanelLeftIcon aria-hidden='true' /> */}
-      {open ? (
+      {isMobile ? (
+        <PanelLeftIcon aria-hidden='true' />
+      ) : open ? (
         <ChevronLeft
           className='h-5 w-5 transition-transform duration-200'
           aria-hidden='true'
