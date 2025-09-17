@@ -49,7 +49,8 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarRail
+  SidebarRail,
+  SidebarTrigger
 } from '../ui/sidebar';
 
 const sidebarMenuButtonVariants = cva(
@@ -150,7 +151,7 @@ export default function AppSidebar() {
                         tooltip={item.title}
                         isActive={pathname === item.url}
                       >
-                        {item.icon && <Icon />}
+                        {item.icon && <Icon className='cursor-pointer' />}
                         <span>{item.title}</span>
                         <IconChevronRight className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
                       </SidebarMenuButton>
@@ -192,6 +193,7 @@ export default function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
+        <SidebarTrigger className='-ml-1' />
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>

@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Slot } from '@radix-ui/react-slot';
 import { VariantProps, cva } from 'class-variance-authority';
-import { PanelLeftIcon } from 'lucide-react';
+import { ChevronLeft, ChevronRight, PanelLeftIcon } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -257,7 +257,7 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, open } = useSidebar();
 
   // Single responsibility: merge external + internal handlers
   const handleClick = React.useCallback(
@@ -280,7 +280,18 @@ function SidebarTrigger({
       onClick={handleClick}
       {...props}
     >
-      <PanelLeftIcon aria-hidden='true' />
+      {/* <PanelLeftIcon aria-hidden='true' /> */}
+      {open ? (
+        <ChevronLeft
+          className='h-5 w-5 transition-transform duration-200'
+          aria-hidden='true'
+        />
+      ) : (
+        <ChevronRight
+          className='h-5 w-5 transition-transform duration-200'
+          aria-hidden='true'
+        />
+      )}
     </Button>
   );
 }

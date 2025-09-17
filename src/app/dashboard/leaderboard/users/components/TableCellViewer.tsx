@@ -42,7 +42,7 @@ const chartConfig: ChartConfig = {
   }
 };
 
-function TableCellViewer({ item }: { item: UsersTableData }) {
+function TableCellViewer({ user }: { user: UsersTableData }) {
   const isMobile = useIsMobile();
 
   return (
@@ -52,27 +52,25 @@ function TableCellViewer({ item }: { item: UsersTableData }) {
           variant='link'
           className='text-foreground w-fit cursor-pointer px-0 text-left'
         >
-          {item.name}
+          {user.name}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className='gap-1'>
-          <DrawerTitle>{item.name}</DrawerTitle>
-          <DrawerDescription>
-            Track your Codewars progress and achievements
-          </DrawerDescription>
+          <DrawerTitle>{user.name}</DrawerTitle>
+          <DrawerDescription>Under development...</DrawerDescription>
         </DrawerHeader>
         <div className='flex flex-col gap-4 overflow-y-auto px-4 text-sm'>
           {!isMobile && (
             <>
-              {item.isCodewarsConnected ? (
+              {user.isCodewarsConnected ? (
                 <div className='bg-card-background flex flex-col items-center justify-center gap-4 rounded-xl border border-transparent bg-gradient-to-r from-[--kyu-3] to-[--kyu-2] p-6 text-center shadow-lg transition-transform duration-300 hover:scale-[1.02]'>
                   {/* Celebratory text */}
                   <div className='space-y-2'>
                     <div className='flex w-full items-center gap-3 text-left tracking-tight'>
                       <IconTrendingUp className='text-royal-gold h-8 w-8' />
                       <h3 className='text-foreground text-lg font-bold'>
-                        You’re Crushing It, {item.name}!
+                        You’re Crushing It, {user.name}!
                       </h3>
                     </div>
                     <p className='text-muted-foreground text-left text-sm leading-relaxed'>
@@ -132,7 +130,7 @@ function TableCellViewer({ item }: { item: UsersTableData }) {
                         />
                       </div>
                       <h3 className='text-foreground text-md font-bold'>
-                        Ready to Begin Your Codewars Journey {item.name}?
+                        Ready to Begin Your Codewars Journey {user.name}?
                       </h3>
                     </div>
                     <p className='text-muted-foreground text-left text-sm leading-relaxed'>
