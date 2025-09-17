@@ -77,7 +77,7 @@ export function CodewarsStatusCard({
       </CardHeader>
       <CardFooter className='flex-col items-start gap-3 text-sm'>
         <Link href='/dashboard/codewars'>
-          <Button className='bg-background hover:bg-muted cursor-pointer text-white shadow-md'>
+          <Button className='bg-background hover:bg-muted text-card-foreground cursor-pointer shadow-md'>
             View Full Profile
           </Button>
         </Link>

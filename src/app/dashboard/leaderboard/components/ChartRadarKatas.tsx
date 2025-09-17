@@ -29,7 +29,7 @@ export function ChartRadarKatas() {
   return (
     <ChartContainer
       config={chartConfig}
-      className='mx-auto aspect-square h-[300px] w-[300px]'
+      className='mx-auto aspect-square h-[320px] w-[320px]'
     >
       <RadarChart height={300} width={300} outerRadius={110} data={chartData}>
         {/* Tooltip */}

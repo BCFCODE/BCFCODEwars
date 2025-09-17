@@ -8,12 +8,15 @@
   --radius: 0.5rem; /* Softer corners for modern aesthetic */
 
   /* Light Theme */
-  --background: oklch(0.99 0.02 200); /* Bright cyan-white for vibrancy */
+  --background: oklch(
+    99.774% 0.00321 199.057
+  ); /* Bright cyan-white for vibrancy */
   --foreground: oklch(0.14 0.03 270); /* Deep charcoal for high contrast */
 
   --card: oklch(0.99 0.01 210)
     linear-gradient(135deg, oklch(0.99 0.02 190) 0%, oklch(0.99 0.02 230) 100%); /* Cyan-to-lavender gradient */
   --card-foreground: oklch(0.14 0.03 270);
+  --card-background: red;
 
   --popover: oklch(0.98 0.02 220); /* Light cyan for popovers */
   --popover-foreground: oklch(0.14 0.03 270);
@@ -26,13 +29,13 @@
   --primary: oklch(0.7 0.18 160); /* Vibrant teal (kyu-2 inspired) */
   --primary-foreground: oklch(0.95 0 0); /* White for text */
 
-  --secondary: oklch(0.78 0.14 280); /* Bright amethyst (kyu-3 inspired) */
+  --secondary: rgb(255, 238, 128); /* Bright amethyst (kyu-3 inspired) */
   --secondary-foreground: oklch(0.14 0.03 270);
 
   --muted: oklch(0.96 0.02 230); /* Pale cyan for muted backgrounds */
   --muted-foreground: oklch(0.5 0.05 270); /* Soft gray for muted text */
 
-  --accent: oklch(0.78 0.14 280); /* Vivid coral (kyu-5 inspired) */
+  --accent: rgba(205, 182, 31, 0.382); /* Vivid coral (kyu-5 inspired) */
   --accent-foreground: oklch(0.14 0.03 270);
 
   --destructive: oklch(0.65 0.2 20); /* Bright ruby for destructive actions */
@@ -40,7 +43,7 @@
 
   --border: oklch(0.92 0.02 240); /* Soft cyan border */
   --input: oklch(0.98 0.01 230); /* Near-white input background */
-  --ring: oklch(0.7 0.18 160); /* Teal ring for focus states */
+  --ring: rgb(196, 173, 25); /* Teal ring for focus states */
 
   /* Charts */
   --chart-1: oklch(0.7 0.18 160); /* Teal (kyu-2) */
@@ -50,15 +53,16 @@
   --chart-5: oklch(0.7 0.2 350); /* Neon magenta */
 
   /* Sidebar */
-  --sidebar: oklch(0.98 0.01 220)
+  --sidebar: #ffca4d
     linear-gradient(180deg, oklch(0.98 0.02 200) 0%, oklch(0.98 0.02 240) 100%);
   --sidebar-foreground: oklch(0.14 0.03 270);
+  --sidebar-mobile-background: oklch(100% 0.00011 271.152 / 0.94);
   --sidebar-primary: oklch(0.7 0.18 160);
   --sidebar-primary-foreground: oklch(0.95 0 0);
-  --sidebar-accent: oklch(90.933% 0.04509 282.695);
+  --sidebar-accent: rgba(255, 238, 128, 0.359);
   --sidebar-accent-foreground: oklch(0.14 0.03 270);
   --sidebar-border: oklch(0.92 0.02 240);
-  --sidebar-ring: oklch(0.7 0.18 160);
+  --sidebar-ring: rgb(242, 230, 151);
 
   /* Diamond Luxe Colors */
   --rose-gleam: #d67895; /* Vibrant rose gold */
@@ -94,7 +98,9 @@
   --card-foreground: oklch(0.94 0.02 240);
   --card-background: oklch(8.753% 0.04382 311.989 / 0.459);
 
-  --popover: oklch(0.26 0.06 260); /* Lighter indigo for popovers */
+  --popover: oklch(
+    11.075% 0.02739 244.144 / 0.771
+  ); /* Lighter indigo for popovers */
   --popover-foreground: oklch(0.94 0.02 240);
 
   --drawer-popover: oklch(11.469% 0.05127 282.295 / 0.784);
