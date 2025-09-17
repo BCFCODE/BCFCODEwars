@@ -63,14 +63,14 @@ export const metadata: Metadata = {
 
 export default async function OverViewLayout({
   codewars,
-  sales,
-  pie_stats,
+  recently_solved,
+  codewars_radar_chart,
   bar_stats,
   area_stats
 }: {
   codewars: React.ReactNode;
-  sales: React.ReactNode;
-  pie_stats: React.ReactNode;
+  recently_solved: React.ReactNode;
+  codewars_radar_chart: React.ReactNode;
   bar_stats: React.ReactNode;
   area_stats: React.ReactNode;
 }) {
@@ -160,11 +160,12 @@ export default async function OverViewLayout({
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
           <div className='col-span-4'>{bar_stats}</div>
           <div className='col-span-4 md:col-span-3'>
-            {/* sales parallel routes */}
-            {sales}
+            {/* recently_solved
+         parallel routes */}
+            {recently_solved}
           </div>
           <div className='col-span-4'>{area_stats}</div>
-          <div className='col-span-4 md:col-span-3'>{pie_stats}</div>
+          <div className='col-span-4 md:col-span-3'>{codewars_radar_chart}</div>
         </div>
       </div>
     </PageContainer>

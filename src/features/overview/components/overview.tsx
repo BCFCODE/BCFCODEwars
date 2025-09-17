@@ -11,8 +11,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { AreaGraph } from './area-graph';
 import { BarGraph } from './bar-graph';
-import { PieGraph } from './pie-graph';
-import { RecentSales } from './recent-sales';
+import { CodewarsRadarOverViewPage } from './codewars-radar-overview-page';
+import { RecentKatas } from './recent-katas';
 import { IconTrendingUp, IconTrendingDown } from '@tabler/icons-react';
 import { Badge } from '@/components/ui/badge';
 
@@ -132,13 +132,13 @@ export default function OverViewPage() {
                 <BarGraph />
               </div>
               <Card className='col-span-4 md:col-span-3'>
-                <RecentSales />
+                <RecentKatas />
               </Card>
               <div className='col-span-4'>
                 <AreaGraph />
               </div>
               <div className='col-span-4 md:col-span-3'>
-                <PieGraph />
+                <CodewarsRadarOverViewPage />
               </div>
             </div>
           </TabsContent>

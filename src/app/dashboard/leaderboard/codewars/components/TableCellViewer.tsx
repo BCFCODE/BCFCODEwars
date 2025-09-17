@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/drawer';
 import { Separator } from '@/components/ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { ChartRadarKatas } from '../../components/ChartRadarKatas';
+import { ChartRadarKatas } from '../../../../../components/ui/ChartRadarKatas';
 import { DiamondIcon } from '../../components/DiamondIcon';
 import { DiamondsCountBadge } from '../../components/DiamondsCountBadge';
 import { CodewarsTableData } from '../../types';
