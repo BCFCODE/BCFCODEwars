@@ -10,14 +10,14 @@ import {
   select,
   status,
   target,
-  user
+  warrior
 } from './components/Cells';
 import { Badge } from '@/components/ui/badge';
 
 const columns: ColumnDef<CodewarsTableData>[] = [
   dragHandle,
   avatar,
-  user,
+  warrior,
   diamonds,
   {
     accessorKey: 'type',

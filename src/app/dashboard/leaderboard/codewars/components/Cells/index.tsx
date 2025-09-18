@@ -1,7 +1,12 @@
 import { Row, Table } from '@tanstack/react-table';
+import { DiamondsHeader } from '../../../components/DiamondsHeader';
+import { LimitHeader } from '../../../components/LimitHeader';
+import { TargetHeader } from '../../../components/TargetHeader';
+import { CodewarsTableData } from '../../../types';
 import { SelectHeader } from '../Headers/SelectHeader';
 import { ActionsCell } from './ActionsCell';
 import { AvatarCell } from './AvatarCell';
+import { DiamondsCell } from './DiamondsCell';
 import { DragHandleCell } from './DragHandleCell';
 import { LastActivityCell } from './LastActivityCell';
 import { LimitCell } from './LimitCell';
@@ -10,12 +15,8 @@ import { ReviewerCell } from './ReviewerCell';
 import { SelectCell } from './SelectCell';
 import { StatusCell } from './StatusCell';
 import { TargetCell } from './TargetCell';
-import { UserCell } from './UserCell';
-import { CodewarsTableData } from '../../../types';
-import { TargetHeader } from '../../../components/TargetHeader';
-import { LimitHeader } from '../../../components/LimitHeader';
-import { DiamondsHeader } from '../../../components/DiamondsHeader';
-import { DiamondsCell } from './DiamondsCell';
+import { WarriorCell } from './WarriorCell';
+import { WarriorHeader } from '../Headers/WarriorHeader';
 
 export const dragHandle = {
   id: 'drag',
@@ -33,10 +34,12 @@ export const avatar = {
   )
 };
 
-export const user = {
-  accessorKey: 'user',
-  header: 'User',
-  cell: ({ row }: { row: Row<CodewarsTableData> }) => <UserCell {...{ row }} />,
+export const warrior = {
+  accessorKey: 'warrior',
+  header: () => <WarriorHeader />,
+  cell: ({ row }: { row: Row<CodewarsTableData> }) => (
+    <WarriorCell {...{ row }} />
+  ),
   enableHiding: false
 };
 

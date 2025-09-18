@@ -1,6 +1,12 @@
 import { getPublicCodewarsUsers } from '@/services/userService';
 import dummyData from '../dummyData.json';
 import CodewarsDataTableTabs from './components/Tabs';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Codewars',
+  description: 'Codewars Leaderboard'
+};
 
 export default async function CodewarsTablePage() {
   const codewarsData = (await getPublicCodewarsUsers()) ?? [];

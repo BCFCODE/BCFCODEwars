@@ -1,5 +1,3 @@
-// \src\app\dashboard\leaderboard\codewars\components\Tabs.tsx
-
 'use client';
 
 import { Label } from '@/components/ui/label';

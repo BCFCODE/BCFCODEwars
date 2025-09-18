@@ -3,7 +3,7 @@ import SignInViewPage from '@/features/auth/components/sign-in-view';
 import { baseUrl } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: 'Sign In | BCFCODEwars', // Include brand name for clarity
+  title: 'Sign In | BCFCODE', // Include brand name for clarity
   description:
     'Sign in to your BCFCODEwars account to access challenges, track progress, and join the coding leaderboard.',
   openGraph: {
