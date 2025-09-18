@@ -1,43 +1,43 @@
+// src/app/dashboard/leaderboard/layout.tsx
+
 import type { Metadata } from 'next';
 import { PropsWithChildren } from 'react';
 
 export const metadata: Metadata = {
   title: {
     default: 'Leaderboard',
-    template: '%s | Leaderboard'
+    template: '%s | BCFCODE Leaderboard'
   },
   description:
-    'Manage your coding battles, progress, and profile inside the BCFCODE dashboard.',
+    'Explore coding rankings, kata progress, and achievements inside the BCFCODE Leaderboard dashboard.',
   openGraph: {
-    title: 'BCFCODE Dashboard',
+    title: 'BCFCODE Leaderboard Dashboard',
     description:
-      'Track your coding battles and performance in the BCFCODE dashboard.',
-    url: 'https://bcfcode.com/dashboard',
+      'Track your coding battles, progress, and community rankings inside BCFCODE.',
+    url: 'https://bcfcode.com/dashboard/leaderboard',
     siteName: 'BCFCODE',
     images: [
       {
         url: 'https://res.cloudinary.com/ds8pptoh2/image/upload/v1747824940/opengraph-image_suelea.jpg',
         width: 1200,
         height: 630,
-        alt: 'BCFCODE Dashboard Open Graph'
+        alt: 'BCFCODE Leaderboard Preview'
       }
     ],
     type: 'website'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BCFCODE Dashboard',
+    title: 'BCFCODE Leaderboard Dashboard',
     description:
-      'Manage your coding battles and profile inside the BCFCODE dashboard.',
+      'Your coding battles and performance, visualized in the BCFCODE dashboard.',
     images: [
-      {
-        url: 'https://res.cloudinary.com/ds8pptoh2/image/upload/v1747824941/twitter-image_q83jcs.jpg',
-        alt: 'BCFCODE Dashboard Twitter Image'
-      }
-    ]
+      'https://res.cloudinary.com/ds8pptoh2/image/upload/v1747824941/twitter-image_q83jcs.jpg'
+    ],
+    creator: '@bcfcode'
   },
   robots: {
-    index: false, // 👈 dashboard pages usually should NOT be indexed by search engines
+    index: false, // ❌ private dashboard wrapper should not be indexed
     follow: false
   }
 };
