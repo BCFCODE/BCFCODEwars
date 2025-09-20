@@ -1,3 +1,6 @@
-export default async function CodewarsProfile() {
-  return <p>Codewars Profile</p>;
+import CodewarsProfile from './CodewarsProfile';
+import data from './data.json';
+
+export default async function CodewarsProfilePage() {
+  return <CodewarsProfile profileData={data} />;
 }
