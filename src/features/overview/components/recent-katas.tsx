@@ -126,7 +126,7 @@ export function RecentKatas() {
               </div>
 
               {/* Solved At */}
-              <div className='text-muted-foreground ml-auto flex items-center text-xs'>
+              <div className='text-muted-foreground ml-auto hidden items-center text-xs sm:flex'>
                 <Clock className='mr-1 h-4 w-4 text-[var(--royal-gold)]' />
                 {dayjs(kata.solvedAt).format('MMM D, HH:mm')}
               </div>

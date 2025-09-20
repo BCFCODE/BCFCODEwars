@@ -37,7 +37,7 @@ export function CodewarsStatusCard({
             </span>
             . Track progress, visualize growth, and level up your coding path.
           </p>
-          <Link href='/dashboard/codewars/connect'>
+          <Link href='/dashboard/profile/codewars/connect'>
             <Button className='bg-accent-foreground hover:bg-muted cursor-pointer text-white shadow-md'>
               Connect Codewars Account
             </Button>
@@ -76,7 +76,7 @@ export function CodewarsStatusCard({
         </CardTitle>
       </CardHeader>
       <CardFooter className='flex-col items-start gap-3 text-sm'>
-        <Link href='/dashboard/codewars'>
+        <Link href='/dashboard/profile/codewars'>
           <Button className='bg-background hover:bg-muted text-card-foreground cursor-pointer shadow-md'>
             View Full Profile
           </Button>
