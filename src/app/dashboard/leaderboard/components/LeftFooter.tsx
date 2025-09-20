@@ -1,6 +1,6 @@
 import { Table } from '@tanstack/react-table';
 import React from 'react';
-import { UsersTableData } from '../types';
+import { UsersTableData } from '@/types';
 import {
   HoverCard,
   HoverCardContent,

@@ -12,7 +12,7 @@ import {
   useReactTable,
   VisibilityState
 } from '@tanstack/react-table';
-import { UsersTableData } from '../types';
+import { UsersTableData } from '@/types';
 import usersColumns from '../users/columns';
 
 export function useUsersTable(initialData: UsersTableData[]) {

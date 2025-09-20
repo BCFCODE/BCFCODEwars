@@ -14,7 +14,7 @@ import {
   target,
   user
 } from './components/Cells';
-import { UsersTableData } from '../types';
+import { UsersTableData } from '@/types';
 
 const columns: ColumnDef<UsersTableData>[] = [
   dragHandle,
