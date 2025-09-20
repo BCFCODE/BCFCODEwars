@@ -1,5 +1,5 @@
 import { LeftFooter } from '@/app/dashboard/leaderboard/components/LeftFooter';
-import { UsersTableData } from '@/app/dashboard/leaderboard/types';
+import { UsersTableData } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
