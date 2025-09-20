@@ -1,6 +1,6 @@
 import { Checkbox } from '@/components/ui/checkbox';
+import { CodewarsTableData } from '@/types';
 import { Table } from '@tanstack/react-table';
-import { CodewarsTableData } from '../../../types';
 
 export function SelectHeader({ table }: { table: Table<CodewarsTableData> }) {
   return (

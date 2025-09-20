@@ -30,11 +30,11 @@ import {
 } from '@dnd-kit/sortable';
 import { flexRender, Table } from '@tanstack/react-table';
 import React from 'react';
-import { CodewarsTableData } from '../../types';
 import columns from '../columns';
 import { DraggableRow } from './DraggableRow';
 import { Pagination } from './Pagination';
 import { tableTabUrls } from '@/lib/constants';
+import { CodewarsTableData } from '@/types';
 
 interface Props {
   table: Table<CodewarsTableData>;

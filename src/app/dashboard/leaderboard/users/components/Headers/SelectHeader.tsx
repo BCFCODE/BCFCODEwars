@@ -1,6 +1,6 @@
 import { Checkbox } from '@/components/ui/checkbox';
+import { UsersTableData } from '@/types';
 import { Table } from '@tanstack/react-table';
-import { UsersTableData } from '../../../types';
 
 export function SelectHeader({ table }: { table: Table<UsersTableData> }) {
   return (

@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Row } from '@tanstack/react-table';
 import { toast } from 'sonner';
-import { CodewarsTableData } from '../../../types';
+import { CodewarsTableData } from '@/types';
 
 export function TargetCell({ row }: { row: Row<CodewarsTableData> }) {
   return (

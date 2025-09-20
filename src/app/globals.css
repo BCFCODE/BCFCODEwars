@@ -16,7 +16,7 @@
   --card: oklch(0.99 0.01 210)
     linear-gradient(135deg, oklch(0.99 0.02 190) 0%, oklch(0.99 0.02 230) 100%); /* Cyan-to-lavender gradient */
   --card-foreground: oklch(0.14 0.03 270);
-  --card-background: red;
+  --card-background: oklch(88.583% 0.02432 270.33);
 
   --popover: oklch(0.98 0.02 220); /* Light cyan for popovers */
   --popover-foreground: oklch(0.14 0.03 270);

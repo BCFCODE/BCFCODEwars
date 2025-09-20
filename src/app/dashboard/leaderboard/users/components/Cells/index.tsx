@@ -13,7 +13,7 @@ import { SelectCell } from './SelectCell';
 import { StatusCell } from './StatusCell';
 import { TargetCell } from './TargetCell';
 import { UserCell } from './UserCell';
-import { UsersTableData } from '../../../types';
+import { UsersTableData } from '@/types';
 import { DiamondsCell } from './DiamondsCell';
 import { DiamondsHeader } from '../../../components/DiamondsHeader';
 

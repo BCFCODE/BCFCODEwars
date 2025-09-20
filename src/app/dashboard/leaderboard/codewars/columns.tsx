@@ -1,5 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { CodewarsTableData } from '../types';
+
 import {
   actions,
   avatar,
@@ -13,6 +13,7 @@ import {
   warrior
 } from './components/Cells';
 import { Badge } from '@/components/ui/badge';
+import { CodewarsTableData } from '@/types';
 
 const columns: ColumnDef<CodewarsTableData>[] = [
   dragHandle,

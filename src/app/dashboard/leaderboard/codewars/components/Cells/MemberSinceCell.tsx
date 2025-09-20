@@ -1,5 +1,5 @@
 import { Row } from '@tanstack/react-table';
-import { CodewarsTableData } from '../../../types';
+import { CodewarsTableData } from '@/types';
 import { Badge } from '@/components/ui/badge';
 
 export function MemberSinceCell({ row }: { row: Row<CodewarsTableData> }) {
