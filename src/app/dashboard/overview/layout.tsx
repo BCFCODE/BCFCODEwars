@@ -1,3 +1,5 @@
+// app/dashboard/overview/layout.tsx
+
 import PageContainer from '@/components/layout/page-container';
 import { currentUser } from '@clerk/nextjs/server';
 import type { Metadata } from 'next';
@@ -12,53 +14,42 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
+import { baseUrl } from '@/lib/constants';
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Overview',
-    template: '%s | BCFCODE Dashboard'
-  },
+  title: 'Overview | BCFCODE Dashboard',
   description:
-    'Private dashboard for managing your coding battles, performance, and profile on BCFCODE.',
+    'Your BCFCODE overview — track your coding activity, monitor progress, and stay motivated with real-time stats and insights.',
+  openGraph: {
+    title: 'BCFCODE Dashboard Overview',
+    description:
+      'Get a snapshot of your coding journey: recent katas, growth rate, and personalized insights inside BCFCODE.',
+    url: `${baseUrl}/dashboard/overview`,
+    siteName: 'BCFCODE',
+    images: [
+      {
+        url: 'https://res.cloudinary.com/ds8pptoh2/image/upload/v1747824940/dashboard-overview-preview.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'BCFCODE Dashboard Overview Preview'
+      }
+    ],
+    type: 'website'
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'BCFCODE Dashboard Overview',
+    description:
+      'See your BCFCODE activity at a glance: recent katas, growth stats, and progress insights.',
+    images: [
+      'https://res.cloudinary.com/ds8pptoh2/image/upload/v1747824940/dashboard-overview-preview.jpg'
+    ],
+    creator: '@BCFCODE'
+  },
   robots: {
-    index: false, // ✅ do not index private pages
-    follow: false,
-    nocache: true,
-    googleBot: {
-      index: false,
-      follow: false,
-      noimageindex: true,
-      nosnippet: true
-    }
+    index: false, // 👈 dashboard overview is private, don’t index
+    follow: false
   }
-  // ⚠️ Optional: Keep OG/Twitter disabled for dashboards unless internal previews are needed
-  // If you *do* want internal previews, uncomment and adapt below:
-  // openGraph: {
-  //   title: "BCFCODE Dashboard",
-  //   description: "Track your coding battles and performance in the BCFCODE dashboard.",
-  //   url: "https://bcfcode.com/dashboard/overview",
-  //   siteName: "BCFCODE",
-  //   images: [
-  //     {
-  //       url: "https://res.cloudinary.com/ds8pptoh2/image/upload/v1747824940/opengraph-image_suelea.jpg",
-  //       width: 1200,
-  //       height: 630,
-  //       alt: "BCFCODE Dashboard Preview",
-  //     },
-  //   ],
-  //   type: "website",
-  // },
-  // twitter: {
-  //   card: "summary_large_image",
-  //   title: "BCFCODE Dashboard",
-  //   description: "Manage your coding battles and profile inside the BCFCODE dashboard.",
-  //   images: [
-  //     {
-  //       url: "https://res.cloudinary.com/ds8pptoh2/image/upload/v1747824941/twitter-image_q83jcs.jpg",
-  //       alt: "BCFCODE Dashboard Twitter Preview",
-  //     },
-  //   ],
-  // },
 };
 
 export default async function OverViewLayout({
