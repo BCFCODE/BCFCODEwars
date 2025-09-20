@@ -23,7 +23,7 @@ import {
 } from '@tanstack/react-table';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-import { CodewarsTableData } from '../../types';
+import { CodewarsTableData } from '@/types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import CodewarsTabContent from './TabContent';

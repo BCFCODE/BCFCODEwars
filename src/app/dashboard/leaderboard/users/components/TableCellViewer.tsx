@@ -22,7 +22,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { IconTrendingUp } from '@tabler/icons-react';
 import Link from 'next/link';
 import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts';
-import { UsersTableData } from '../../types';
+import { UsersTableData } from '@/types';
 import Image from 'next/image';
 
 // Sample chart data (replace with actual data from item)

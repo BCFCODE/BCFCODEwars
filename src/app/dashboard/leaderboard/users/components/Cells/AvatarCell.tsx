@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Row } from '@tanstack/react-table';
-import { UsersTableData } from '../../../types';
+import { UsersTableData } from '@/types';
 
 export function AvatarCell({ row }: { row: Row<UsersTableData> }) {
   return (

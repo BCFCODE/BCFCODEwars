@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { Row } from '@tanstack/react-table';
 import { toast } from 'sonner';
-import { CodewarsTableData } from '../../../types';
+import { CodewarsTableData } from '@/types';
 import { Label } from '@/components/ui/label';
 
 export function LimitCell({ row }: { row: Row<CodewarsTableData> }) {

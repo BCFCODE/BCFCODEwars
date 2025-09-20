@@ -1,7 +1,7 @@
 import { Label } from '@/components/ui/label';
 
 import { Row } from '@tanstack/react-table';
-import { CodewarsTableData } from '../../../types';
+import { CodewarsTableData } from '@/types';
 import {
   Select,
   SelectContent,

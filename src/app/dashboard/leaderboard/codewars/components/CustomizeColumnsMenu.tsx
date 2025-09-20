@@ -5,9 +5,9 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import { CodewarsTableData } from '@/types';
 import { IconChevronDown, IconLayoutColumns } from '@tabler/icons-react';
 import { Table } from '@tanstack/react-table';
-import { CodewarsTableData } from '../../types';
 
 export function CustomizeColumnsMenu({
   table

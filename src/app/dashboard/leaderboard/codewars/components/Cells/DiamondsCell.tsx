@@ -1,5 +1,5 @@
 import { Row } from '@tanstack/react-table';
-import { CodewarsTableData } from '../../../types';
+import { CodewarsTableData } from '@/types';
 
 export function DiamondsCell({ row }: { row: Row<CodewarsTableData> }) {
   return (

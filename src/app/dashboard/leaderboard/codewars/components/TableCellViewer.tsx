@@ -17,7 +17,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { ChartRadarKatas } from '../../../../../components/ui/ChartRadarKatas';
 import { DiamondIcon } from '../../components/DiamondIcon';
 import { DiamondsCountBadge } from '../../components/DiamondsCountBadge';
-import { CodewarsTableData } from '../../types';
+import { CodewarsTableData } from '@/types';
 
 function TableCellViewer({
   codewarsUser

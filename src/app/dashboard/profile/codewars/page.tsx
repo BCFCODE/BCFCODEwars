@@ -1,6 +1,11 @@
+import { getCodewarsProfile } from '@/app/repositories/codewarsRepository';
+import { currentUser } from '@clerk/nextjs/server';
 import CodewarsProfile from './CodewarsProfile';
-import data from './data.json';
 
 export default async function CodewarsProfilePage() {
-  return <CodewarsProfile profileData={data} />;
+  const user = await currentUser();
+  const { emailAddress } = user?.emailAddresses[0]!;
+  const data = await getCodewarsProfile(emailAddress);
+  // console.log(data)
+  if (data) return <CodewarsProfile profileData={data} />;
 }

@@ -1,5 +1,4 @@
 import { LeftFooter } from '@/app/dashboard/leaderboard/components/LeftFooter';
-import { CodewarsTableData } from '@/app/dashboard/leaderboard/types';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
@@ -9,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import { CodewarsTableData } from '@/types';
 import {
   IconChevronLeft,
   IconChevronRight,

@@ -2,7 +2,7 @@ import { Row, Table } from '@tanstack/react-table';
 import { DiamondsHeader } from '../../../components/DiamondsHeader';
 import { LimitHeader } from '../../../components/LimitHeader';
 import { TargetHeader } from '../../../components/TargetHeader';
-import { CodewarsTableData } from '../../../types';
+import { CodewarsTableData } from '@/types';
 import { SelectHeader } from '../Headers/SelectHeader';
 import { ActionsCell } from './ActionsCell';
 import { AvatarCell } from './AvatarCell';

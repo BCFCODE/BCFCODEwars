@@ -25,7 +25,7 @@ import {
 } from '@tanstack/react-table';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
-import { UsersTableData } from '../../types';
+import { UsersTableData } from '@/types';
 import columns from '../columns';
 import { CustomizeColumnsMenu } from './CustomizeColumnsMenu';
 import UsersTabContent from './TabContent';

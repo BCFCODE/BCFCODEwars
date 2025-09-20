@@ -33,3 +33,11 @@ export interface FooterItem {
 export type MainNavItem = NavItemWithOptionalChildren;
 
 export type SidebarNavItem = NavItemWithChildren;
+
+export { type UsersTableData } from './users-table';
+
+export { type CodewarsTableData } from './codewars-table';
+
+export type TableTab = 'codewars' | 'users';
+
+export { type CodewarsProfileData } from './codewars-profile';

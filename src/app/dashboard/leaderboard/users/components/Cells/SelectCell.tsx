@@ -1,6 +1,6 @@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Row } from '@tanstack/react-table';
-import { UsersTableData } from '../../../types';
+import { UsersTableData } from '@/types';
 
 export function SelectCell({ row }: { row: Row<UsersTableData> }) {
   return (

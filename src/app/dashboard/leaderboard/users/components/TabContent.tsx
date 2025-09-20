@@ -33,7 +33,7 @@ import React from 'react';
 import columns from '../columns';
 import { DraggableRow } from './DraggableRow';
 import { Pagination } from './Pagination';
-import { UsersTableData } from '../../types';
+import { UsersTableData } from '@/types';
 import { tableTabUrls } from '@/lib/constants';
 
 interface Props {
