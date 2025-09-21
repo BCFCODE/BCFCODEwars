@@ -1,25 +1,16 @@
-// app/dashboard/profile/codewars/layout.tsx
-import React, { PropsWithChildren } from 'react';
 import PageContainer from '@/components/layout/page-container';
-import Link from 'next/link';
-import { auth, currentUser } from '@clerk/nextjs/server';
-import { CodewarsProfileDataSchema } from '@/types/codewars-profile'; // zod schema
 import type { CodewarsProfileData } from '@/types/codewars-profile';
-
+import { CodewarsProfileDataSchema } from '@/types/codewars-profile'; // zod schema
+import { currentUser } from '@clerk/nextjs/server';
+import Link from 'next/link';
+import { PropsWithChildren } from 'react';
 import { Badge } from '@/components/ui/badge';
-import {
-  Card,
-  CardAction,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-  CardDescription
-} from '@/components/ui/card';
-// import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
-import { Trophy, Medal, Award, Code, UserX } from 'lucide-react';
+import { Card } from '@/components/ui/card';
 import { getCodewarsProfile } from '@/app/repositories/codewarsRepository';
 import { IconTrendingUp } from '@tabler/icons-react';
-import { UserAvatar } from './UserAvatar';
+import { Award, Code, Medal, Trophy, UserX } from 'lucide-react';
+import { UserAvatar } from './components/UserAvatar';
+import { StatCard } from './components/StatCard';
 
 export const metadata = {
   title: 'Codewars Profile | BCFCODE Dashboard',
@@ -29,36 +20,6 @@ export const metadata = {
 };
 
 interface Props extends PropsWithChildren {}
-
-function StatCard({
-  title,
-  primary,
-  meta,
-  badge,
-  hint
-}: {
-  title: string;
-  primary: React.ReactNode;
-  meta?: React.ReactNode;
-  badge?: React.ReactNode;
-  hint?: string;
-}) {
-  return (
-    <Card className='@container/card'>
-      <CardHeader>
-        <CardDescription>{title}</CardDescription>
-        <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
-          {primary}
-        </CardTitle>
-        {badge && <CardAction>{badge}</CardAction>}
-      </CardHeader>
-      <CardFooter className='flex-col items-start gap-1.5 text-sm'>
-        {meta && <div className='font-medium'>{meta}</div>}
-        {hint && <div className='text-muted-foreground'>{hint}</div>}
-      </CardFooter>
-    </Card>
-  );
-}
 
 export default async function Layout({ children }: Props) {
   // get current user (server)
