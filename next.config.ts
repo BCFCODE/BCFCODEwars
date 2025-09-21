@@ -19,6 +19,11 @@ const baseConfig: NextConfig = {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com', // <-- Google profile images
         port: ''
+      },
+      {
+        protocol: 'https',
+        hostname: 'img.clerk.com', // <-- Google profile images
+        port: ''
       }
     ]
   },

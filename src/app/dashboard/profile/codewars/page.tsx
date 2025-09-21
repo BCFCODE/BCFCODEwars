@@ -1,6 +1,6 @@
 import { getCodewarsProfile } from '@/app/repositories/codewarsRepository';
 import { currentUser } from '@clerk/nextjs/server';
-import CodewarsProfile from './CodewarsProfile';
+import CodewarsProfile from './components/CodewarsProfile';
 
 export default async function CodewarsProfilePage() {
   const user = await currentUser();
