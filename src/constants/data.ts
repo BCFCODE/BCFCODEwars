@@ -65,7 +65,7 @@ export const navItems: NavItem[] = [
       },
       {
         title: 'Codewars Profile',
-        url: '/dashboard/codewars',
+        url: '/dashboard/profile/codewars',
         icon: 'userPen',
         shortcut: ['c', 'p']
       }
