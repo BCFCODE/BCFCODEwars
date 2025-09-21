@@ -1,8 +1,10 @@
 import { getDb } from '@/lib/mongodb';
+import { getEmail } from '@/services/clerkService';
 import { CodewarsProfileData } from '@/types';
 
-export async function isConnected(email: string) {
+export async function isConnected() {
   try {
+    const email = await getEmail();
     const db = await getDb();
     return await db
       .collection('codewars')
@@ -13,10 +15,9 @@ export async function isConnected(email: string) {
   }
 }
 
-export async function getCodewarsProfile(
-  email: string
-): Promise<CodewarsProfileData | null> {
+export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> {
   try {
+    const email = await getEmail();
     const db = await getDb();
 
     const profile = await db

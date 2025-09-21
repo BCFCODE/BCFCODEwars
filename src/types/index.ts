@@ -40,4 +40,9 @@ export { type CodewarsTableData } from './codewars-table';
 
 export type TableTab = 'codewars' | 'users';
 
-export { type CodewarsProfileData } from './codewars-profile';
+export {
+  type CodewarsProfileData,
+  codewarsProfileDataSchema,
+  type isConnectedToCodewars,
+  isConnectedToCodewarsSchema
+} from './codewars-profile';
