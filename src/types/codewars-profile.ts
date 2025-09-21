@@ -8,7 +8,7 @@ const RankSchema = z.object({
 });
 
 // Profile data schema
-export const CodewarsProfileDataSchema = z.object({
+export const codewarsProfileDataSchema = z.object({
   isConnected: z.boolean(),
   name: z.string().optional(),
   username: z.string().optional(),
@@ -26,4 +26,11 @@ export const CodewarsProfileDataSchema = z.object({
 });
 
 // ✅ Type inference for TypeScript
-export type CodewarsProfileData = z.infer<typeof CodewarsProfileDataSchema>;
+export type CodewarsProfileData = z.infer<typeof codewarsProfileDataSchema>;
+
+export const isConnectedToCodewarsSchema = z.object({
+  isConnected: z.boolean(),
+  name: z.string()
+});
+
+export type isConnectedToCodewars = z.infer<typeof isConnectedToCodewarsSchema>;
