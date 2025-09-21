@@ -2,7 +2,7 @@
 import React, { PropsWithChildren } from 'react';
 import PageContainer from '@/components/layout/page-container';
 import Link from 'next/link';
-import { currentUser } from '@clerk/nextjs/server';
+import { auth, currentUser } from '@clerk/nextjs/server';
 import { CodewarsProfileDataSchema } from '@/types/codewars-profile'; // zod schema
 import type { CodewarsProfileData } from '@/types/codewars-profile';
 
@@ -18,6 +18,8 @@ import {
 // import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
 import { Trophy, Medal, Award, Code, UserX } from 'lucide-react';
 import { getCodewarsProfile } from '@/app/repositories/codewarsRepository';
+import { IconTrendingUp } from '@tabler/icons-react';
+import { UserAvatar } from './UserAvatar';
 
 export const metadata = {
   title: 'Codewars Profile | BCFCODE Dashboard',
@@ -102,6 +104,16 @@ export default async function Layout({ children }: Props) {
       : null;
   const skillsCount = (profileData?.skills ?? []).length;
 
+  const avatarData = user
+    ? {
+        id: user.id,
+        firstName: user.firstName ?? null,
+        lastName: user.lastName ?? null,
+        imageUrl: user.imageUrl ?? null,
+        isConnected
+      }
+    : null;
+
   const formatNumber = (n: number | null | undefined) =>
     typeof n === 'number' ? n.toLocaleString() : '—';
 
@@ -124,9 +136,9 @@ export default async function Layout({ children }: Props) {
                   Connect Codewars Account
                 </button>
               </Link>
-              <Link href='/dashboard/profile/codewars'>
+              <Link href='/dashboard/leaderboard/codewars'>
                 <button className='hover:bg-muted inline-flex cursor-pointer items-center rounded-md px-4 py-2 text-sm font-medium'>
-                  Manage Profile
+                  Back to Leaderboard
                 </button>
               </Link>
             </div>
@@ -182,12 +194,7 @@ export default async function Layout({ children }: Props) {
         primary={
           overall ? (
             <div className='flex items-baseline gap-2'>
-              <span
-                className='text-xl font-semibold'
-                style={{ color: overall.color }}
-              >
-                {overall.name}
-              </span>
+              <span className='text-xl font-semibold'>{overall.name}</span>
               <span className='text-muted-foreground text-sm'>
                 ({formatNumber(overall.score)} pts)
               </span>
@@ -216,12 +223,7 @@ export default async function Layout({ children }: Props) {
         primary={
           topLanguage ? (
             <div className='flex items-baseline gap-2'>
-              <span
-                className='text-lg font-semibold'
-                style={{ color: topLanguage[1].color }}
-              >
-                {topLanguage[0]}
-              </span>
+              <span className='text-lg font-semibold'>{topLanguage[0]}</span>
               <span className='text-muted-foreground text-sm'>
                 • {topLanguage[1].name}
               </span>
@@ -251,23 +253,99 @@ export default async function Layout({ children }: Props) {
   return (
     <PageContainer>
       <div className='flex flex-1 flex-col space-y-4'>
-        <div className='flex items-center justify-between'>
-          <h2 className='text-2xl font-bold tracking-tight'>
-            Hi, {user?.firstName ?? 'Guest'} — Codewars Profile
-          </h2>
-          <div className='hidden items-center gap-2 sm:flex'>
+        <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between'>
+          {/* left: avatar + greeting */}
+          <div className='flex items-start gap-4'>
+            <UserAvatar size={56} showPresence user={avatarData} />
+
+            <div className='min-w-0'>
+              <h2 className='text-lg leading-tight font-extrabold tracking-tight sm:text-2xl'>
+                Welcome back,{' '}
+                <span className='bg-gradient-to-r from-[var(--royal-gold)] to-[var(--kyu-2)] bg-clip-text text-transparent'>
+                  {user?.firstName ?? 'Guest'}
+                </span>
+                <span className='text-muted-foreground ml-1 font-normal'>
+                  — Codewars profile
+                </span>
+              </h2>
+
+              <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
+                {isConnected ? (
+                  <>
+                    <span className='inline-flex items-center gap-2 rounded-full bg-[var(--kyu-3)]/10 px-2 py-0.5 text-[11px] font-medium text-[var(--kyu-3)]'>
+                      • Connected to Codewars
+                    </span>
+                    <span className='ml-3'>
+                      Live honor, ranks & language stats
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span className='border-muted/20 text-muted-foreground inline-flex items-center gap-2 rounded-full border px-2 py-0.5 text-[11px] font-medium'>
+                      • Not connected
+                    </span>
+                    <span className='ml-3'>
+                      Connect to surface your Codewars metrics
+                    </span>
+                  </>
+                )}
+              </p>
+            </div>
+          </div>
+
+          {/* right: actions / shortcuts */}
+          <div className='flex flex-wrap items-center gap-3'>
             <Link
               href='/dashboard/leaderboard/codewars'
-              className='text-sm font-medium hover:underline'
+              className='inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[var(--kyu-3)] to-[var(--kyu-2)] px-3 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-[1.02] focus:ring-2 focus:ring-[var(--kyu-2)] focus:outline-none'
             >
               View Leaderboard
+              <IconTrendingUp className='h-4 w-4' />
             </Link>
+
             <Link
               href='/dashboard/profile'
-              className='text-muted-foreground text-sm hover:underline'
+              className='text-muted-foreground hover:bg-muted/10 inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition'
             >
               Profile settings
             </Link>
+
+            {/* compact status pill for small screens */}
+            <div className='bg-card/50 text-muted-foreground hidden items-center gap-2 rounded-full px-3 py-1 text-xs font-medium sm:inline-flex'>
+              {isConnected ? (
+                <span className='inline-flex items-center gap-2 text-[var(--kyu-4)]'>
+                  <svg
+                    className='h-3 w-3'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                    aria-hidden
+                  >
+                    <circle
+                      cx='12'
+                      cy='12'
+                      r='10'
+                      stroke='currentColor'
+                      strokeOpacity='0.15'
+                    />
+                    <path
+                      d='M7 13l3 3 7-7'
+                      stroke='currentColor'
+                      strokeWidth='1.6'
+                      strokeLinecap='round'
+                      strokeLinejoin='round'
+                    />
+                  </svg>
+                  Connected
+                </span>
+              ) : (
+                <Link
+                  href='/dashboard/profile/codewars/connect'
+                  className='bg-accent text-accent-foreground inline-flex items-center gap-2 rounded-md px-2 py-1 text-xs font-semibold shadow-sm'
+                >
+                  Connect
+                </Link>
+              )}
+            </div>
           </div>
         </div>
 
