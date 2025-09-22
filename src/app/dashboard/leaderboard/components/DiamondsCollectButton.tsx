@@ -95,11 +95,11 @@ export function DiamondsCollectButton({ count }: { count: number }) {
     startSimulatedProgress();
 
     try {
-      const res = await fetch('/api/diamonds/collect', { method: 'POST' });
+      // const res = await fetch('/api/diamonds/collect', { method: 'POST' });
 
-      if (!res.ok) {
-        throw new Error('Failed to trigger diamond collection');
-      }
+      // if (!res.ok) {
+      //   throw new Error('Failed to trigger diamond collection');
+      // }
 
       // on success: fill to 100%
       stopSimulatedProgress(true);
