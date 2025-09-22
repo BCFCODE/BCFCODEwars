@@ -14,10 +14,9 @@ import {
 } from '@/components/ui/drawer';
 import { Separator } from '@/components/ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { ChartRadarKatas } from '../../../../../components/ui/ChartRadarKatas';
-import { DiamondIcon } from '../../components/DiamondIcon';
-import { DiamondsCountBadge } from '../../components/DiamondsCountBadge';
 import { CodewarsTableData } from '@/types';
+import { ChartRadarKatas } from '../../../../../components/ui/ChartRadarKatas';
+import { DiamondsCollectButton } from '../../components/DiamondsCollectButton';
 
 function TableCellViewer({
   codewarsUser
@@ -56,12 +55,7 @@ function TableCellViewer({
           {!isMobile ? (
             <>
               <ChartRadarKatas />
-              <DiamondsCountBadge
-                size='md'
-                count={codewarsUser.totalDiamonds ?? 0}
-              >
-                <DiamondIcon size='lg' />
-              </DiamondsCountBadge>
+              <DiamondsCollectButton count={codewarsUser.totalDiamonds ?? 0} />
               <Separator />
             </>
           ) : (
