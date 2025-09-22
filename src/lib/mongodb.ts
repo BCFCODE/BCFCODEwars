@@ -6,6 +6,7 @@ const options = {};
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
+let cachedDb: Db | null = null;
 
 // In dev mode, cache connection across hot reloads
 declare global {
@@ -31,8 +32,11 @@ if (process.env.NODE_ENV === 'development') {
 
 // Export a helper to get DB
 export async function getDb(): Promise<Db> {
+  if (cachedDb) return cachedDb;
+
   const client = await clientPromise;
-  return client.db(process.env.MONGODB_DB as string);
+  cachedDb = client.db(process.env.MONGODB_DB as string);
+  return cachedDb;
 }
 
 export default clientPromise;
