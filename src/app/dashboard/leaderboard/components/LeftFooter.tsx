@@ -42,7 +42,7 @@ export function LeftFooter({ table, who }: LeftFooterProps) {
         </div>
       </HoverCardTrigger>
       <HoverCardContent
-        className='bg-background border-muted max-w-xs rounded-md border p-4 shadow-lg'
+        className='bg-card border-muted max-w-xs rounded-md border p-4 shadow-lg'
         side='top'
         align='start'
       >

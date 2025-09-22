@@ -52,7 +52,7 @@ export const navItems: NavItem[] = [
   // },
   {
     title: 'Account',
-    url: '#', // Placeholder as there is no direct link for the parent
+    url: '/dashboard/profile/codewars', // # is Placeholder if there is no direct link for the parent
     icon: 'billing',
     isActive: true,
 
