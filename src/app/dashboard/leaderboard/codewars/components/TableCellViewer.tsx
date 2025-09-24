@@ -14,10 +14,9 @@ import {
 } from '@/components/ui/drawer';
 import { Separator } from '@/components/ui/separator';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { ChartRadarKatas } from '../../../../../components/ui/ChartRadarKatas';
-import { DiamondIcon } from '../../components/DiamondIcon';
-import { DiamondsCountBadge } from '../../components/DiamondsCountBadge';
 import { CodewarsTableData } from '@/types';
+import Link from 'next/link';
+import { ChartRadarKatas } from '../../../../../components/ui/ChartRadarKatas';
 
 function TableCellViewer({
   codewarsUser
@@ -55,17 +54,16 @@ function TableCellViewer({
         <div className='flex flex-col gap-4 overflow-y-auto px-4 text-sm'>
           {!isMobile ? (
             <>
-              <ChartRadarKatas />
-              <DiamondsCountBadge
-                size='md'
-                count={codewarsUser.totalDiamonds ?? 0}
-              >
-                <DiamondIcon size='lg' />
-              </DiamondsCountBadge>
+              <Link href='/dashboard/profile/codewars'>
+                <ChartRadarKatas />
+              </Link>
+              {/* <DiamondsCollectButton count={codewarsUser.totalDiamonds ?? 0} /> */}
               <Separator />
             </>
           ) : (
-            <ChartRadarKatas />
+            <Link href='/dashboard/profile/codewars'>
+              <ChartRadarKatas />
+            </Link>
           )}
         </div>
 
