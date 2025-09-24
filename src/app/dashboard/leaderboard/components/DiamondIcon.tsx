@@ -2,7 +2,7 @@ import { IconDiamond } from '@tabler/icons-react';
 
 const sizeMap = {
   sm: 'h-7 w-7',
-  md: 'h-25 w-25',
+  md: 'h-30 w-30',
   lg: 'h-45 w-45',
   xl: 'h-50 w-50',
   xxl: 'h-100 w-100'

@@ -86,7 +86,7 @@ export async function StatCards({ data }: Props) {
         }
       />
 
-      <DiamondsCollectButtonCard count={1000} />
+      <DiamondsCollectButtonCard count={data.totalDiamonds} />
     </>
   );
 }

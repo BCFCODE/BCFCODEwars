@@ -114,7 +114,7 @@ export function DiamondsCollectButtonCard({ count }: { count: number }) {
       onClick={handleCollect}
       disabled={loading}
       className={clsx(
-        'relative flex w-full cursor-pointer flex-col items-center rounded-2xl',
+        'relative flex w-full cursor-pointer flex-col items-center rounded-2xl pb-3',
         'bg-gradient-to-br from-amber-100 to-yellow-200 dark:from-yellow-900/10 dark:to-amber-800/35',
         'text-center shadow-xl transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]',
         loading && 'cursor-wait opacity-90'
@@ -127,7 +127,7 @@ export function DiamondsCollectButtonCard({ count }: { count: number }) {
         <div className='pointer-events-none absolute inset-0 animate-ping rounded-2xl bg-yellow-300/10' />
       )}
 
-      <div className='relative z-10'>
+      <div className='relative z-10 p-0'>
         {/* keep passing isLoading if your DiamondIcon supports it; harmless if ignored */}
         <div className='flex w-full items-center justify-between gap-2'>
           <DiamondIcon isLoading={loading} size='md' />
@@ -135,7 +135,7 @@ export function DiamondsCollectButtonCard({ count }: { count: number }) {
           {/* Big number container */}
           <div
             className={clsx(
-              'flex flex-col gap-2 rounded-xl shadow-inner',
+              'flex flex-col items-start gap-2 rounded-xl shadow-inner',
               // Theme-aware gradient
               'bg-gradient-to-r from-[--champagne-mist] to-[--honey-silk] dark:from-[--royal-gold] dark:to-[--amber-legacy]',
               'text-4xl'
