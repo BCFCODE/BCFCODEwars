@@ -1,22 +1,17 @@
 import { Badge } from '@/components/ui/badge';
-import { Award, Code, Medal, Trophy } from 'lucide-react';
+import { CodewarsProfileData } from '@/types';
+import { Award, Medal, Trophy } from 'lucide-react';
+import { DiamondsCollectButtonCard } from './DiamondsCollectButtonCard';
 import { StatCard } from './StatCard';
-import { getCodewarsProfileData } from '@/services/codewarsService';
 
-export async function StatCards() {
-  // Fetch and validate profile
-  let { data: profileData } = await getCodewarsProfileData();
+interface Props {
+  data: CodewarsProfileData;
+}
 
-  const honor = profileData?.honor ?? null;
-  const leaderboardPosition = profileData?.leaderboardPosition ?? null;
-  const overall = profileData?.ranks?.overall ?? null;
-  const languages = profileData?.ranks?.languages ?? {};
-  const languageEntries = Object.entries(languages);
-  const topLanguage =
-    languageEntries.length > 0
-      ? languageEntries.sort((a, b) => b[1].score - a[1].score)[0] // [lang, {name,color,score}]
-      : null;
-  const skillsCount = (profileData?.skills ?? []).length;
+export async function StatCards({ data }: Props) {
+  const honor = data?.honor ?? null;
+  const leaderboardPosition = data?.leaderboardPosition ?? null;
+  const overall = data?.ranks?.overall ?? null;
 
   const formatNumber = (n: number | null | undefined) =>
     typeof n === 'number' ? n.toLocaleString() : '—';
@@ -91,35 +86,7 @@ export async function StatCards() {
         }
       />
 
-      <StatCard
-        title='Top Language'
-        primary={
-          topLanguage ? (
-            <div className='flex items-baseline gap-2'>
-              <span className='text-lg font-semibold'>{topLanguage[0]}</span>
-              <span className='text-muted-foreground text-sm'>
-                • {topLanguage[1].name}
-              </span>
-            </div>
-          ) : (
-            <span className='text-lg font-semibold'>—</span>
-          )
-        }
-        badge={
-          topLanguage ? (
-            <Badge variant='outline' className='flex items-center gap-1'>
-              <Code className='h-4 w-4' />
-              {formatNumber(topLanguage[1].score)}
-            </Badge>
-          ) : (
-            <Badge variant='outline' className='flex items-center gap-1'>
-              <Code className='h-4 w-4' /> Languages
-            </Badge>
-          )
-        }
-        meta='Your best-performing language on Codewars.'
-        hint={`${languageEntries.length} language${languageEntries.length === 1 ? '' : 's'} tracked • ${skillsCount} skill${skillsCount === 1 ? '' : 's'}`}
-      />
+      <DiamondsCollectButtonCard count={1000} />
     </>
   );
 }
