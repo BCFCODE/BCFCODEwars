@@ -58,7 +58,7 @@ export function DiamondsCollectButton({ count }: { count: number }) {
       );
       const next = Math.min(95, cur + step);
       setProgress(next);
-    }, 220);
+    }, 1000);
   };
 
   const stopSimulatedProgress = (complete = false) => {
