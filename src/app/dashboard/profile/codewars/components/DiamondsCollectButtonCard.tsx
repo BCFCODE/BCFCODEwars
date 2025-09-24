@@ -115,7 +115,7 @@ export function DiamondsCollectButtonCard({ count }: { count: number }) {
       disabled={loading}
       className={clsx(
         'relative flex w-full cursor-pointer flex-col items-center rounded-2xl pb-3',
-        'bg-gradient-to-br from-amber-100 to-yellow-200 dark:from-yellow-900/10 dark:to-amber-800/35',
+        'bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-5)]/10 dark:from-[var(--bg-background)]/10 dark:to-[var(--kyu-5)]/10',
         'text-center shadow-xl transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]',
         loading && 'cursor-wait opacity-90'
       )}
