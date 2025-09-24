@@ -22,7 +22,8 @@ export const codewarsProfileDataSchema = z.object({
       languages: z.record(RankSchema) // dynamic keys (JS, TS, etc.)
     })
     .optional(),
-  skills: z.array(z.string()).optional()
+  skills: z.array(z.string()).optional(),
+  totalDiamonds: z.number().default(0)
 });
 
 // ✅ Type inference for TypeScript
@@ -30,7 +31,8 @@ export type CodewarsProfileData = z.infer<typeof codewarsProfileDataSchema>;
 
 export const isConnectedToCodewarsSchema = z.object({
   isConnected: z.boolean(),
-  name: z.string()
+  name: z.string(),
+  totalDiamonds: z.number().default(0)
 });
 
 export type isConnectedToCodewars = z.infer<typeof isConnectedToCodewarsSchema>;

@@ -11,12 +11,17 @@ import {
 import { IconTrendingUp } from '@tabler/icons-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
+import { DiamondsCollectButtonCard } from '@/app/dashboard/profile/codewars/components/DiamondsCollectButtonCard';
+import { isConnectedToCodewars } from '@/types';
 
 export function CodewarsStatusCard({
   codewarsUser
 }: {
-  codewarsUser: { isConnected: boolean; name: string };
+  codewarsUser: isConnectedToCodewars;
 }) {
+  const [showCollectDiamondsBtn, setShowCollectDiamondsBtn] = useState(false);
+
   if (!codewarsUser.isConnected) {
     return (
       <Card className='group @container/card bg-gradient-to-r from-[var(--kyu-3)] to-[var(--kyu-2)] shadow-lg transition-transform duration-300 hover:scale-[1.02]'>
@@ -47,6 +52,9 @@ export function CodewarsStatusCard({
     );
   }
 
+  if (showCollectDiamondsBtn)
+    return <DiamondsCollectButtonCard count={codewarsUser.totalDiamonds} />;
+
   return (
     <Card className='group dark:from-accent-foreground @container/card bg-gradient-to-r from-[--champagne-mist] to-[--honey-silk] shadow-lg transition-transform duration-300 hover:scale-[1.02] dark:to-[var(--background)]'>
       <CardHeader>
@@ -75,10 +83,16 @@ export function CodewarsStatusCard({
           </span>
         </CardTitle>
       </CardHeader>
-      <CardFooter className='flex-col items-start gap-3 text-sm'>
+      <CardFooter className='flex items-start justify-between gap-1 text-sm'>
+        <Button
+          onClick={() => setShowCollectDiamondsBtn(true)}
+          className='bg-background hover:bg-muted/30 text-card-foreground cursor-pointer shadow-md'
+        >
+          Collect Diamonds
+        </Button>
         <Link href='/dashboard/profile/codewars'>
-          <Button className='bg-background hover:bg-muted text-card-foreground cursor-pointer shadow-md'>
-            View Full Profile
+          <Button className='bg-background hover:bg-muted/30 text-card-foreground cursor-pointer shadow-md'>
+            Full Profile
           </Button>
         </Link>
       </CardFooter>
