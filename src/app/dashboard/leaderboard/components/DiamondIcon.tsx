@@ -10,7 +10,7 @@ const sizeMap = {
 
 interface Props {
   size: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export function DiamondIcon({ size, isLoading }: Props) {
