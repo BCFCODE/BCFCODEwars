@@ -135,7 +135,7 @@ export function DiamondsCollectButtonCard({ count }: { count: number }) {
           {/* Big number container */}
           <div
             className={clsx(
-              'flex flex-col items-start gap-2 rounded-xl shadow-inner',
+              'flex flex-col items-start gap-2 rounded-xl',
               // Theme-aware gradient
               'bg-gradient-to-r from-[--champagne-mist] to-[--honey-silk] dark:from-[--royal-gold] dark:to-[--amber-legacy]',
               'text-4xl'

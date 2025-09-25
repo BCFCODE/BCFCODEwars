@@ -19,14 +19,14 @@ interface Props extends PropsWithChildren {}
 export type Payment = {
   id: string;
   amount: number;
-  status: 'pending' | 'processing' | 'success' | 'failed';
+  solvedAt: 'pending' | 'processing' | 'success' | 'failed';
   email: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    accessorKey: 'status',
-    header: 'Status'
+    accessorKey: 'solvedAt',
+    header: 'SolvedAt'
   },
   {
     accessorKey: 'email',
@@ -47,7 +47,7 @@ export default async function Layout({ children }: Props) {
       {
         id: '728ed52f',
         amount: 100,
-        status: 'pending',
+        solvedAt: 'pending',
         email: 'm@example.com'
       }
       // ...

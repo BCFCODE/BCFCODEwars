@@ -29,7 +29,7 @@
   --primary: oklch(0.7 0.18 160); /* Vibrant teal (kyu-2 inspired) */
   --primary-foreground: oklch(0.95 0 0); /* White for text */
 
-  --secondary: rgb(255, 238, 128); /* Bright amethyst (kyu-3 inspired) */
+  --secondary: rgb(244, 236, 184); /* Bright amethyst (kyu-3 inspired) */
   --secondary-foreground: oklch(0.14 0.03 270);
 
   --muted: oklch(0.96 0.02 230); /* Pale cyan for muted backgrounds */
@@ -59,7 +59,7 @@
   --sidebar-mobile-background: oklch(100% 0.00011 271.152 / 0.94);
   --sidebar-primary: oklch(0.7 0.18 160);
   --sidebar-primary-foreground: oklch(0.95 0 0);
-  --sidebar-accent: rgba(255, 238, 128, 0.359);
+  --sidebar-accent: rgba(253, 244, 184, 0.359);
   --sidebar-accent-foreground: oklch(0.14 0.03 270);
   --sidebar-border: oklch(0.92 0.02 240);
   --sidebar-ring: rgb(242, 230, 151);
