@@ -4,6 +4,8 @@ import { IconTrendingUp } from '@tabler/icons-react';
 import Link from 'next/link';
 import { PropsWithChildren } from 'react';
 import { UserAvatar } from './components/UserAvatar';
+import { KatasTable } from './components/KatasTable';
+import { ColumnDef } from '@tanstack/react-table';
 
 export const metadata = {
   title: 'Codewars Profile | BCFCODE Dashboard',
@@ -14,8 +16,45 @@ export const metadata = {
 
 interface Props extends PropsWithChildren {}
 
+export type Payment = {
+  id: string;
+  amount: number;
+  status: 'pending' | 'processing' | 'success' | 'failed';
+  email: string;
+};
+
+export const columns: ColumnDef<Payment>[] = [
+  {
+    accessorKey: 'status',
+    header: 'Status'
+  },
+  {
+    accessorKey: 'email',
+    header: 'Email'
+  },
+  {
+    accessorKey: 'amount',
+    header: 'Amount'
+  }
+];
+
 export default async function Layout({ children }: Props) {
   const { data: codewarsUser } = await isConnectedToCodewars();
+
+  async function getKataData(): Promise<Payment[]> {
+    // Fetch data from your API here.
+    return [
+      {
+        id: '728ed52f',
+        amount: 100,
+        status: 'pending',
+        email: 'm@example.com'
+      }
+      // ...
+    ];
+  }
+
+  const kataData = await getKataData();
 
   return (
     <PageContainer>
@@ -120,7 +159,12 @@ export default async function Layout({ children }: Props) {
           </div>
         </div>
 
-        {children}
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
+          {children}
+        </div>
+        <div className='grid grid-cols-1'>
+          <KatasTable columns={columns} data={kataData} />
+        </div>
       </div>
     </PageContainer>
   );
