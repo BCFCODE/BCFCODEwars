@@ -1,7 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import { getEmail } from '@/services/clerkService';
 import { CodewarsProfileData, isConnectedToCodewars, Kata } from '@/types';
-import { Payment } from '../dashboard/profile/codewars/layout';
+// import { Payment } from '../dashboard/profile/codewars/layout';
 
 // 🔹 Reusable pipeline stages to add totalDiamonds
 const addDiamondsStages = [
