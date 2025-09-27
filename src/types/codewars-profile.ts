@@ -32,7 +32,8 @@ export type CodewarsProfileData = z.infer<typeof codewarsProfileDataSchema>;
 export const isConnectedToCodewarsSchema = z.object({
   isConnected: z.boolean(),
   name: z.string(),
-  totalDiamonds: z.number().default(0)
+  totalDiamonds: z.number().default(0),
+  id: z.string()
 });
 
 export type isConnectedToCodewars = z.infer<typeof isConnectedToCodewarsSchema>;

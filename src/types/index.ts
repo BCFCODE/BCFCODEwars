@@ -46,3 +46,5 @@ export {
   type isConnectedToCodewars,
   isConnectedToCodewarsSchema
 } from './codewars-profile';
+
+export { type Kata, kataSchema } from './codewars-katas';
