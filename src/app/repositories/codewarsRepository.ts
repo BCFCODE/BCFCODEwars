@@ -1,6 +1,7 @@
 import { getDb } from '@/lib/mongodb';
 import { getEmail } from '@/services/clerkService';
-import { CodewarsProfileData, isConnectedToCodewars } from '@/types';
+import { CodewarsProfileData, isConnectedToCodewars, Kata } from '@/types';
+import { Payment } from '../dashboard/profile/codewars/layout';
 
 // 🔹 Reusable pipeline stages to add totalDiamonds
 const addDiamondsStages = [
@@ -35,7 +36,7 @@ export async function isConnected(): Promise<isConnectedToCodewars | null> {
       .collection<isConnectedToCodewars>('codewars')
       .aggregate<isConnectedToCodewars>([
         { $match: { email } },
-        { $project: { _id: 0, isConnected: 1, name: 1, email: 1 } },
+        { $project: { _id: 0, isConnected: 1, name: 1, email: 1, id: 1 } },
         ...addDiamondsStages
       ])
       .toArray();
@@ -80,4 +81,22 @@ export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> 
     console.error('Error in getCodewarsProfile:', error);
     throw new Error('Failed to fetch Codewars profile');
   }
+}
+
+export async function getKataData(userId: string): Promise<Kata[]> {
+  const db = await getDb();
+
+  db.collection('katas');
+
+  return [
+    {
+      name: 'Validate the Hash',
+      slug: 'validate-the-hash',
+      completedLanguages: ['javascript'],
+      completedAt: new Date('2025-08-06T17:39:15.398Z'),
+      rewardStatus: 'claimedDiamonds',
+      userId: '63e68a181664895f434c9fa9'
+    }
+    // ...
+  ];
 }

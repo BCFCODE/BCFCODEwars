@@ -6,6 +6,8 @@ import { PropsWithChildren } from 'react';
 import { UserAvatar } from './components/UserAvatar';
 import { KatasTable } from './components/KatasTable';
 import { ColumnDef } from '@tanstack/react-table';
+import { getKataData } from '@/app/repositories/codewarsRepository';
+import { Kata } from '@/types';
 
 export const metadata = {
   title: 'Codewars Profile | BCFCODE Dashboard',
@@ -16,45 +18,21 @@ export const metadata = {
 
 interface Props extends PropsWithChildren {}
 
-export type Payment = {
-  id: string;
-  amount: number;
-  solvedAt: 'pending' | 'processing' | 'success' | 'failed';
-  email: string;
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<Kata>[] = [
   {
-    accessorKey: 'solvedAt',
+    accessorKey: 'completedAt',
     header: 'SolvedAt'
   },
   {
-    accessorKey: 'email',
-    header: 'Email'
-  },
-  {
-    accessorKey: 'amount',
-    header: 'Amount'
+    accessorKey: 'name',
+    header: 'Kata'
   }
 ];
 
 export default async function Layout({ children }: Props) {
   const { data: codewarsUser } = await isConnectedToCodewars();
 
-  async function getKataData(): Promise<Payment[]> {
-    // Fetch data from your API here.
-    return [
-      {
-        id: '728ed52f',
-        amount: 100,
-        solvedAt: 'pending',
-        email: 'm@example.com'
-      }
-      // ...
-    ];
-  }
-
-  const kataData = await getKataData();
+  const kataData = await getKataData(codewarsUser?.id ?? '');
 
   return (
     <PageContainer>
