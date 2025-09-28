@@ -1,7 +1,11 @@
 import { getDb } from '@/lib/mongodb';
 import { getEmail } from '@/services/clerkService';
-import { CodewarsProfileData, isConnectedToCodewars, Kata } from '@/types';
-import { Payment } from '../dashboard/profile/codewars/layout';
+import {
+  CodewarsProfileData,
+  isConnectedToCodewars,
+  Kata,
+  kataSchema
+} from '@/types';
 
 // 🔹 Reusable pipeline stages to add totalDiamonds
 const addDiamondsStages = [
@@ -86,17 +90,16 @@ export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> 
 export async function getKataData(userId: string): Promise<Kata[]> {
   const db = await getDb();
 
-  db.collection('katas');
+  const katas = await db
+    .collection<Kata>('katas')
+    .find({ userId })
+    .project({
+      _id: 0,
+      name: 1,
+      completedAt: 1
+    })
+    .sort({ completedAt: -1 }) // optional: newest first
+    .toArray();
 
-  return [
-    {
-      name: 'Validate the Hash',
-      slug: 'validate-the-hash',
-      completedLanguages: ['javascript'],
-      completedAt: new Date('2025-08-06T17:39:15.398Z'),
-      rewardStatus: 'claimedDiamonds',
-      userId: '63e68a181664895f434c9fa9'
-    }
-    // ...
-  ];
+  return katas.map((kata) => kataSchema.parse(kata));
 }
