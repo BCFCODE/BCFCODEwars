@@ -4,10 +4,9 @@ import { IconTrendingUp } from '@tabler/icons-react';
 import Link from 'next/link';
 import { PropsWithChildren } from 'react';
 import { UserAvatar } from './components/UserAvatar';
-import { KatasTable } from './components/KatasTable';
-import { ColumnDef } from '@tanstack/react-table';
+import { KatasTable } from './components/Table/KatasTable';
 import { getKataData } from '@/app/repositories/codewarsRepository';
-import { Kata } from '@/types';
+import { columns } from './components/Table/columns';
 
 export const metadata = {
   title: 'Codewars Profile | BCFCODE Dashboard',
@@ -17,17 +16,6 @@ export const metadata = {
 };
 
 interface Props extends PropsWithChildren {}
-
-export const columns: ColumnDef<Kata>[] = [
-  {
-    accessorKey: 'completedAt',
-    header: 'SolvedAt'
-  },
-  {
-    accessorKey: 'name',
-    header: 'Kata'
-  }
-];
 
 export default async function Layout({ children }: Props) {
   const { data: codewarsUser } = await isConnectedToCodewars();
