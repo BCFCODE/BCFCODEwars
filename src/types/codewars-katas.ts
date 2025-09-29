@@ -1,30 +1,43 @@
 import { z } from 'zod';
 
-// Zod schema for validating MongoDB ObjectId strings (24-character hex)
-const objectIdSchema = z.string().regex(/^[0-9a-fA-F]{24}$/, {
-  message: 'Invalid ObjectId format: must be a 24-character hexadecimal string'
+// Zod schema for validating 24-character hexadecimal strings (not strictly ObjectId)
+const hexIdSchema = z.string().regex(/^[0-9a-fA-F]{24}$/, {
+  message: 'Invalid ID format: must be a 24-character hexadecimal string'
 });
 
 // Zod schema for the kata document
 const kataSchema = z
   .object({
+    userId: hexIdSchema, // User ID as 24-char hex string (MongoDB ObjectId)
+    id: z.string().min(1, { message: 'Kata ID is required' }), // Codewars kata ID (less strict than ObjectId)
     name: z.string().min(1, { message: 'Kata name is required' }), // Kata name
-    // slug: z.string().min(1, { message: 'Kata slug is required' }), // URL-friendly slug
-    // completedLanguages: z
-    //   .array(z.string().min(1, { message: 'Language name cannot be empty' }))
-    //   .min(1, { message: 'At least one completed language is required' }), // Array of languages
+    slug: z.string().min(1, { message: 'Kata slug is required' }), // URL-friendly slug
+    completedLanguages: z
+      .array(z.string().min(1, { message: 'Language name cannot be empty' }))
+      .default([]), // Allow empty array for incomplete katas
     completedAt: z
       .string()
       .datetime({ message: 'Invalid ISO date format for completedAt' })
-      .transform((val) => new Date(val)) // Parse ISO string to Date
-    // rewardStatus: z.enum(['claimedDiamonds', 'pending', 'unclaimed'], {
-    //   errorMap: (issue, ctx) => ({
-    //     message: `Invalid reward status: must be one of 'claimedDiamonds', 'pending', 'unclaimed', got '${ctx.data}'`
-    //   })
-    // }), // Enum for reward status
-    // userId: objectIdSchema // User ID as ObjectId string
+      .transform((val) => new Date(val))
+      .or(z.date()), // Accept ISO string or Date, transform to Date
+    rewardStatus: z
+      .enum(['claimedDiamonds', 'unclaimedDiamonds'], {
+        errorMap: (issue, ctx) => ({
+          message: `Invalid reward status: must be one of 'claimedDiamonds', 'unclaimedDiamonds', got '${ctx.data}'`
+        })
+      })
+      .optional()
+      .catch(undefined) // Handle unknown statuses gracefully
   })
-  .strict(); // Prevent unknown fields
+  .strict() // Prevent unknown fields
+  .refine(
+    (data) =>
+      data.completedAt instanceof Date && !isNaN(data.completedAt.getTime()),
+    {
+      message: 'completedAt must be a valid Date object',
+      path: ['completedAt']
+    }
+  ); // Ensure valid Date after transform
 
 // TypeScript type inferred from the Zod schema
 type Kata = z.infer<typeof kataSchema>;
