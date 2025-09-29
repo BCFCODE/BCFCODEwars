@@ -18,9 +18,12 @@ export const metadata = {
 interface Props extends PropsWithChildren {}
 
 export default async function Layout({ children }: Props) {
-  const { data: codewarsUser } = await isConnectedToCodewars();
+  const { data: codewars } = await isConnectedToCodewars();
 
-  const kataData = await getKataData(codewarsUser?.id ?? '');
+  const kataData = await getKataData({
+    userId: codewars?.id ?? '',
+    username: codewars?.username ?? ''
+  });
 
   return (
     <PageContainer>
@@ -29,7 +32,7 @@ export default async function Layout({ children }: Props) {
           {/* left: avatar + greeting */}
           <div className='flex items-start gap-4'>
             <UserAvatar
-              isConnected={codewarsUser?.isConnected ?? false}
+              isConnected={codewars?.isConnected ?? false}
               size={55}
               showPresence
             />
@@ -38,7 +41,7 @@ export default async function Layout({ children }: Props) {
               <h2 className='text-lg leading-tight font-extrabold tracking-tight sm:text-2xl'>
                 Welcome back,{' '}
                 <span className='bg-gradient-to-r from-[var(--royal-gold)] to-[var(--kyu-2)] bg-clip-text text-transparent'>
-                  {codewarsUser?.name ?? 'Guest'}
+                  {codewars?.name ?? 'Guest'}
                 </span>
                 <span className='text-muted-foreground ml-1 font-normal'>
                   — Codewars profile
@@ -46,7 +49,7 @@ export default async function Layout({ children }: Props) {
               </h2>
 
               <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
-                {codewarsUser?.isConnected ? (
+                {codewars?.isConnected ? (
                   <>
                     <span className='inline-flex items-center gap-2 rounded-full bg-[var(--kyu-3)]/10 px-2 py-0.5 text-[11px] font-medium text-[var(--kyu-3)]'>
                       • Connected to Codewars
@@ -88,7 +91,7 @@ export default async function Layout({ children }: Props) {
 
             {/* compact status pill for small screens */}
             <div className='bg-card/50 text-muted-foreground hidden items-center gap-2 rounded-full px-3 py-1 text-xs font-medium sm:inline-flex'>
-              {codewarsUser?.isConnected ? (
+              {codewars?.isConnected ? (
                 <span className='inline-flex items-center gap-2 text-[var(--kyu-4)]'>
                   <svg
                     className='h-3 w-3'

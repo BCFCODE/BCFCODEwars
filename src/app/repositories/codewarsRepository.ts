@@ -40,7 +40,16 @@ export async function isConnected(): Promise<isConnectedToCodewars | null> {
       .collection<isConnectedToCodewars>('codewars')
       .aggregate<isConnectedToCodewars>([
         { $match: { email } },
-        { $project: { _id: 0, isConnected: 1, name: 1, email: 1, id: 1 } },
+        {
+          $project: {
+            _id: 0,
+            isConnected: 1,
+            name: 1,
+            email: 1,
+            id: 1,
+            username: 1
+          }
+        },
         ...addDiamondsStages
       ])
       .toArray();
@@ -87,18 +96,85 @@ export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> 
   }
 }
 
-export async function getKataData(userId: string): Promise<Kata[]> {
+export async function getKataData({
+  username,
+  userId
+}: {
+  username: string;
+  userId: string;
+}) {
   const db = await getDb();
+  const collection = db.collection<Kata>('katas');
 
-  const katas = await db
-    .collection<Kata>('katas')
+  // Step 1: Get checkpoint
+  const latest = await collection.findOne(
+    { userId },
+    { sort: { completedAt: -1 }, projection: { completedAt: 1 } }
+  );
+  const latestCompletedAt = latest?.completedAt || null;
+
+  // Step 2: Fetch new katas
+  const newKatas: Kata[] = [];
+  let page = 0;
+  let hasMore = true;
+
+  while (hasMore) {
+    const response = await fetch(
+      `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=${page}`
+    );
+    if (!response.ok) throw new Error(`API error: ${response.status}`);
+
+    const { totalPages, data } = await response.json();
+
+    for (const apiKata of data) {
+      const completedDate = new Date(apiKata.completedAt);
+      if (latestCompletedAt && completedDate <= latestCompletedAt) continue;
+
+      newKatas.push({
+        userId,
+        id: apiKata.id,
+        name: apiKata.name,
+        completedAt: completedDate,
+        completedLanguages: apiKata.completedLanguages,
+        slug: apiKata.slug,
+        rewardStatus: 'unclaimedDiamonds'
+      });
+    }
+
+    page++;
+    if (page >= totalPages) hasMore = false;
+  }
+
+  // Deduplicate (just in case)
+  const dedupedKatas = Array.from(
+    new Map(newKatas.map((k) => [`${k.userId}-${k.id}`, k])).values()
+  );
+
+  // Step 3: Bulk upsert (⚡ super fast)
+  if (dedupedKatas.length > 0) {
+    const operations = dedupedKatas.map((kata) => ({
+      updateOne: {
+        filter: { userId: kata.userId, id: kata.id },
+        update: { $setOnInsert: kata },
+        upsert: true
+      }
+    }));
+
+    await collection.bulkWrite(operations, { ordered: false });
+  }
+
+  // Step 4: Return updated data
+  const katas = await collection
     .find({ userId })
     .project({
       _id: 0,
+      id: 1,
+      userId: 1,
+      slug: 1,
       name: 1,
       completedAt: 1
     })
-    .sort({ completedAt: -1 }) // optional: newest first
+    .sort({ completedAt: -1 })
     .toArray();
 
   return katas.map((kata) => kataSchema.parse(kata));

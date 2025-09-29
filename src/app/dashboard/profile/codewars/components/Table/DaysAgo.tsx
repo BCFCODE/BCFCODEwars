@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import dayjs from '@/lib/dayjs';
 import clsx from 'clsx';
 import { motion, MotionStyle } from 'framer-motion';
 
-// Extend MotionStyle to include custom CSS properties
 interface CustomMotionStyle extends MotionStyle {
   '--gradient-from'?: string;
   '--gradient-to'?: string;
@@ -17,62 +16,55 @@ interface DaysAgoProps {
 }
 
 export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
-  const [now, setNow] = React.useState(Date.now());
+  const [now, setNow] = useState(Date.now());
 
+  // ⏳ Auto-refresh but adaptively
   useEffect(() => {
-    const interval = setInterval(() => setNow(Date.now()), 60000);
+    // Refresh frequently for first hour, then slow down
+    const d = dayjs(date);
+    const ageMinutes = dayjs(now).diff(d, 'minute');
+    const intervalMs = ageMinutes < 60 ? 60_000 : 300_000; // 1m for <1h, else 5m
+    const interval = setInterval(() => setNow(Date.now()), intervalMs);
     return () => clearInterval(interval);
-  }, []);
+  }, [date, now]);
 
   const { relative, full, gradientFrom, gradientTo, textColor } =
     useMemo(() => {
       const d = dayjs(date);
-      const diffSeconds = dayjs(now).diff(d, 'second');
-      const diffDays = dayjs(now).diff(d, 'day');
-      const diffMonths = dayjs(now).diff(d, 'month');
-      const diffYears = dayjs(now).diff(d, 'year');
+      const seconds = dayjs(now).diff(d, 'second');
+      const minutes = Math.floor(seconds / 60);
+      const hours = Math.floor(minutes / 60);
+      const days = Math.floor(hours / 24);
 
-      // Consistent-length relative time labels
-      let relative: string;
-      if (diffSeconds < 60) {
-        relative = 'Now';
-      } else if (diffDays < 1) {
-        relative = '1 day';
-      } else if (diffDays < 7) {
-        relative = `${diffDays} days`;
-      } else if (diffDays < 30) {
-        relative = `${diffMonths || 1} mo`; // Use "mo" for months
-      } else if (diffDays < 365) {
-        relative = `${diffMonths || 1} mo`;
-      } else {
-        relative = `${diffYears || 1} yr`; // Use "yr" for years
-      }
+      let relative = '';
+      if (seconds < 60) relative = 'Just now';
+      else if (minutes < 60) relative = `${minutes}m ago`;
+      else if (hours < 24) relative = `${hours}h ago`;
+      else if (days < 7) relative = `${days}d ago`;
+      else if (days < 30) relative = `${Math.floor(days / 7)}w ago`;
+      else if (days < 365) relative = d.format('MMM D');
+      else relative = d.format('MMM D, YYYY');
 
-      // Capitalize first letter
-      relative = relative.charAt(0).toUpperCase() + relative.slice(1);
       const full = d.format('YYYY-MM-DD HH:mm');
 
-      // Gradient and text color mapping based on time difference
+      // Color gradient logic (can adjust)
       let gradientFrom = '--color-background';
-      let gradientTo = '--color-kyu-5'; // Ember Coral default
-      let textColor = '--color-foreground'; // High-contrast default
-      if (diffSeconds < 60) {
-        gradientTo = '--color-primary'; // Vibrant Teal
-        textColor = '--color-primary-foreground'; // White for contrast
-      } else if (diffDays < 1) {
-        gradientTo = '--color-kyu-6'; // Sunset Amber
-        textColor = '--color-foreground';
-      } else if (diffDays < 7) {
-        gradientTo = '--color-kyu-5'; // Ember Coral
-        textColor = '--color-foreground';
-      } else if (diffDays < 30) {
-        gradientTo = '--color-kyu-3'; // Amethyst Crest
+      let gradientTo = '--color-kyu-5';
+      let textColor = '--color-foreground';
+      if (seconds < 60) {
+        gradientTo = '--color-primary';
         textColor = '--color-primary-foreground';
-      } else if (diffDays < 365) {
-        gradientTo = '--color-kyu-2'; // Sapphire Sky
-        textColor = '--color-foreground';
+      } else if (minutes < 60) {
+        gradientTo = '--color-kyu-6';
+      } else if (hours < 24) {
+        gradientTo = '--color-kyu-5';
+      } else if (days < 7) {
+        gradientTo = '--color-kyu-3';
+        textColor = '--color-primary-foreground';
+      } else if (days < 365) {
+        gradientTo = '--color-kyu-2';
       } else {
-        gradientTo = '--color-rose-gleam'; // Vibrant rose gold
+        gradientTo = '--color-rose-gleam';
         textColor = '--color-primary-foreground';
       }
 
@@ -107,6 +99,7 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
       whileHover={{ scale: 1.05, rotate: 1 }}
       whileTap={{ scale: 0.95 }}
     >
+      {/* clock icon */}
       <motion.svg
         className='h-4 w-4'
         viewBox='0 0 24 24'
@@ -141,6 +134,8 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
           strokeLinecap='round'
         />
       </motion.svg>
+
+      {/* time label */}
       <span className='bg-gradient-to-r from-[var(--gradient-to)] to-[var(--color-royal-gold)] bg-clip-text text-transparent dark:to-[var(--color-champagne-mist)]'>
         {relative}
       </span>
