@@ -106,7 +106,11 @@ export async function getKataData({
   const db = await getDb();
   const collection = db.collection<Kata>('katas');
 
-  // Step 1: Get checkpoint
+  // ✅ Make sure indexes exist (run once at startup, not per-request ideally)
+  await collection.createIndex({ userId: 1, completedAt: -1 });
+  await collection.createIndex({ userId: 1, id: 1 }, { unique: true });
+
+  // Step 1: Get checkpoint (latest completed kata for this user)
   const latest = await collection.findOne(
     { userId },
     { sort: { completedAt: -1 }, projection: { completedAt: 1 } }
@@ -115,20 +119,24 @@ export async function getKataData({
 
   // Step 2: Fetch new katas
   const newKatas: Kata[] = [];
-  let page = 0;
-  let hasMore = true;
 
-  while (hasMore) {
-    const response = await fetch(
-      `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=${page}`
-    );
-    if (!response.ok) throw new Error(`API error: ${response.status}`);
+  // Fetch first page to get totalPages and check if we need more
+  const firstRes = await fetch(
+    `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=0`
+  );
+  if (!firstRes.ok) throw new Error(`API error: ${firstRes.status}`);
+  const firstJson = await firstRes.json();
+  const { totalPages, data: firstData } = firstJson;
 
-    const { totalPages, data } = await response.json();
-
+  // Helper to filter out only new katas
+  const processData = (data: any[]) => {
     for (const apiKata of data) {
       const completedDate = new Date(apiKata.completedAt);
-      if (latestCompletedAt && completedDate <= latestCompletedAt) continue;
+
+      // ✅ Early exit optimization
+      if (latestCompletedAt && completedDate <= latestCompletedAt) {
+        return false; // stop scanning this page
+      }
 
       newKatas.push({
         userId,
@@ -140,19 +148,35 @@ export async function getKataData({
         rewardStatus: 'unclaimedDiamonds'
       });
     }
+    return true;
+  };
 
-    page++;
-    if (page >= totalPages) hasMore = false;
+  // Process first page
+  let shouldContinue = processData(firstData);
+
+  if (shouldContinue && totalPages > 1) {
+    // Fetch remaining pages in parallel
+    const pageRequests = Array.from({ length: totalPages - 1 }, (_, i) =>
+      fetch(
+        `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=${i + 1}`
+      ).then((r) => {
+        if (!r.ok) throw new Error(`API error: ${r.status}`);
+        return r.json();
+      })
+    );
+
+    const pages = await Promise.all(pageRequests);
+
+    // Process pages in order until we hit old katas
+    for (const { data } of pages) {
+      shouldContinue = processData(data);
+      if (!shouldContinue) break; // ✅ early break
+    }
   }
 
-  // Deduplicate (just in case)
-  const dedupedKatas = Array.from(
-    new Map(newKatas.map((k) => [`${k.userId}-${k.id}`, k])).values()
-  );
-
-  // Step 3: Bulk upsert (⚡ super fast)
-  if (dedupedKatas.length > 0) {
-    const operations = dedupedKatas.map((kata) => ({
+  // Step 3: Bulk upsert (fast, unordered)
+  if (newKatas.length > 0) {
+    const operations = newKatas.map((kata) => ({
       updateOne: {
         filter: { userId: kata.userId, id: kata.id },
         update: { $setOnInsert: kata },
@@ -160,10 +184,16 @@ export async function getKataData({
       }
     }));
 
-    await collection.bulkWrite(operations, { ordered: false });
+    // ⚡ Chunk operations if massive
+    const chunkSize = 500;
+    for (let i = 0; i < operations.length; i += chunkSize) {
+      await collection.bulkWrite(operations.slice(i, i + chunkSize), {
+        ordered: false
+      });
+    }
   }
 
-  // Step 4: Return updated data
+  // Step 4: Return updated data (already sorted & projected by index)
   const katas = await collection
     .find({ userId })
     .project({

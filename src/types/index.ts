@@ -48,3 +48,8 @@ export {
 } from './codewars-profile';
 
 export { type Kata, kataSchema } from './codewars-katas';
+
+export {
+  type CodeChallenge,
+  CodeChallengeSchema
+} from './codewars-code-challenge';
