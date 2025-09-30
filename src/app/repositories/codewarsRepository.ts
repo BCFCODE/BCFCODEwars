@@ -215,3 +215,33 @@ export async function getKataData({
 
   return katas.map((kata) => kataSchema.parse(kata));
 }
+
+export async function getRecentlySolved({
+  userId,
+  limit = 100
+}: {
+  userId: string;
+  limit?: number;
+}) {
+  const db = await getDb();
+  const collection = db.collection<Kata>('recentlySolved');
+
+  // ✅ Index for fast retrieval (run once ideally)
+  await collection.createIndex({ userId: 1, completedAt: -1 });
+
+  const katas = await collection
+    .find({ userId })
+    .project({
+      _id: 0,
+      id: 1,
+      userId: 1,
+      slug: 1,
+      name: 1,
+      completedAt: 1
+    })
+    .sort({ completedAt: -1 }) // ✅ latest on top
+    .limit(limit)
+    .toArray();
+
+  return katas.map((kata) => kataSchema.parse(kata));
+}
