@@ -1,5 +1,6 @@
 import { getKataData } from '@/app/repositories/codewarsRepository';
 import { RecentKatas } from '@/features/overview/components/recent-katas';
+import { cn } from '@/lib/utils';
 import {
   getRecentlySolvedData,
   isConnectedToCodewars
@@ -16,5 +17,15 @@ export default async function RecentlySolved() {
 
   const { data, success } = await getRecentlySolvedData();
 
-  return <RecentKatas data={success ? data : []} />;
+  return (
+    <RecentKatas
+      data={success ? data : []}
+      className={{
+        kataNameStyles: cn(
+          'max-w-80 flex-wrap',
+          'group-hover:max-w-80 group-hover:break-words group-hover:whitespace-normal'
+        )
+      }}
+    />
+  );
 }

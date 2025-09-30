@@ -13,13 +13,18 @@ import {
 } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { recentlySolvedKata } from '@/types';
-import { Trophy } from 'lucide-react';
+import { Trophy, History } from 'lucide-react';
+import Link from 'next/link';
 
 interface Props {
   data: recentlySolvedKata[];
+  className?: {
+    kataNameStyles?: string;
+    avatarStyles?: string;
+  };
 }
 
-export function RecentKatas({ data }: Props) {
+export function RecentKatas({ data, className }: Props) {
   return (
     <Card
       className={cn(
@@ -27,14 +32,27 @@ export function RecentKatas({ data }: Props) {
         'border-sidebar-border border'
       )}
     >
-      <CardHeader className='bg-sidebar/50 dark:bg-sidebar/30'>
-        <CardTitle className='text-sidebar-foreground flex items-center gap-2 text-xl font-bold'>
-          <Trophy className='h-6 w-6 animate-pulse text-[var(--royal-gold)]' />
-          BCFCODE Kata Champions
-        </CardTitle>
-        <CardDescription className='text-sidebar-accent-foreground text-sm'>
-          See who’s crushing Codewars right now ⚡
-        </CardDescription>
+      <CardHeader className='bg-sidebar/50 dark:bg-sidebar/30 flex items-center justify-between'>
+        <div>
+          <CardTitle className='text-sidebar-foreground flex items-center gap-2 text-xl font-bold'>
+            <Trophy className='h-6 w-6 animate-pulse text-[var(--royal-gold)]' />
+            BCFCODE Kata Champions
+          </CardTitle>
+          <CardDescription className='text-sidebar-accent-foreground text-sm'>
+            See who’s crushing Codewars right now ⚡
+          </CardDescription>
+        </div>
+        <Link
+          href='/dashboard/recently-solved-history'
+          className={cn(
+            'flex items-center gap-2 rounded-lg bg-[var(--royal-gold)]/30 px-4 py-2 font-semibold text-white hover:text-black',
+            'transition-all duration-200 hover:scale-105 hover:bg-[var(--royal-gold)]/90',
+            'focus:ring-sidebar-ring focus:ring-2 focus:outline-none'
+          )}
+        >
+          <History className='h-5 w-5' />
+          View History
+        </Link>
       </CardHeader>
       <CardContent className='-mt-3 p-2'>
         <div className='space-y-1'>
@@ -52,7 +70,8 @@ export function RecentKatas({ data }: Props) {
               <Avatar
                 className={cn(
                   'h-12 w-12 border-2 border-[var(--royal-gold)]/50 shadow-md',
-                  'transition-transform duration-300 hover:scale-110'
+                  'transition-transform duration-300 hover:scale-110',
+                  className?.avatarStyles
                 )}
               >
                 <AvatarImage
@@ -60,7 +79,9 @@ export function RecentKatas({ data }: Props) {
                   alt={kata.kataName}
                   referrerPolicy='no-referrer'
                 />
-                <AvatarFallback className='bg-muted text-muted-foreground'>
+                <AvatarFallback
+                  className={cn('bg-muted text-muted-foreground')}
+                >
                   {kata.fallback}
                 </AvatarFallback>
               </Avatar>
@@ -76,10 +97,7 @@ export function RecentKatas({ data }: Props) {
                     <KataName
                       name={kata.kataName}
                       date={kata.completedAt}
-                      className={cn(
-                        'max-w-80 flex-wrap',
-                        'group-hover:max-w-80 group-hover:break-words group-hover:whitespace-normal'
-                      )}
+                      className={className?.kataNameStyles}
                     />
                   </span>
                 </div>
