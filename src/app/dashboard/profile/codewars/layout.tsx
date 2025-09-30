@@ -47,42 +47,6 @@ export default async function Layout({ children }: Props) {
                   <span className='text-muted-foreground ml-1 font-normal'>
                     — Codewars profile
                   </span>
-                  {/* compact status pill for small screens */}
-                  <div className='bg-card/50 text-muted-foreground hidden items-center gap-2 rounded-full px-3 py-1 text-xs font-medium sm:inline-flex'>
-                    {codewars?.isConnected ? (
-                      <span className='flex items-center gap-1 rounded-md bg-[var(--chart-1)]/10 py-0 pr-2 text-[9px] text-[var(--chart-1)] shadow-sm'>
-                        <svg
-                          className='h-3 w-3'
-                          viewBox='0 0 24 24'
-                          fill='none'
-                          aria-hidden
-                        >
-                          <circle
-                            cx='12'
-                            cy='12'
-                            r='10'
-                            stroke='currentColor'
-                            strokeOpacity='0.15'
-                          />
-                          <path
-                            d='M7 13l3 3 7-7'
-                            stroke='currentColor'
-                            strokeWidth='1.6'
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                          />
-                        </svg>
-                        Connected
-                      </span>
-                    ) : (
-                      <Link
-                        href='/dashboard/profile/codewars/connect'
-                        className='bg-accent text-accent-foreground inline-flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-xs font-semibold shadow-sm'
-                      >
-                        Connect
-                      </Link>
-                    )}
-                  </div>
                 </div>
               </h2>
 

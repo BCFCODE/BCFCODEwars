@@ -20,7 +20,6 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
 
   // ⏳ Auto-refresh but adaptively
   useEffect(() => {
-    // Refresh frequently for first hour, then slow down
     const d = dayjs(date);
     const ageMinutes = dayjs(now).diff(d, 'minute');
     const intervalMs = ageMinutes < 60 ? 60_000 : 300_000; // 1m for <1h, else 5m
@@ -47,10 +46,9 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
 
       const full = d.format('YYYY-MM-DD HH:mm');
 
-      // Color gradient logic (can adjust)
       let gradientFrom = '--color-background';
       let gradientTo = '--color-kyu-5';
-      let textColor = '--color-foreground';
+      let textColor = '--text-color-light'; // Darker text for light mode
       if (seconds < 60) {
         gradientTo = '--color-primary';
         textColor = '--color-primary-foreground';
@@ -74,12 +72,11 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
   return (
     <motion.time
       dateTime={dayjs(date).toISOString()}
-      title={full}
       aria-label={`Posted ${relative}`}
       className={clsx(
-        'inline-flex items-center gap-1 rounded-2xl px-1 py-0 text-sm font-semibold tracking-tight',
+        'relative inline-flex w-24 items-center justify-center gap-1 rounded-2xl px-2 py-1 text-sm font-semibold tracking-tight',
         'bg-gradient-to-br from-[var(--gradient-from)]/20 to-[var(--gradient-to)]/20 dark:from-[var(--gradient-from)]/10 dark:to-[var(--gradient-to)]/10',
-        'border border-[color-mix(in_srgb,_var(--gradient-to)_20%,_transparent)]',
+        'border border-[color-mix(in_srgb,_var(--gradient-to)_10%,_transparent)]',
         'transition-all duration-300 ease-out select-none',
         'hover:bg-gradient-to-br hover:from-[var(--gradient-from)]/25 hover:to-[var(--gradient-to)]/25',
         'hover:shadow-[0_0_12px_color-mix(in_srgb,_var(--gradient-to)_40%,_transparent)]',
@@ -90,6 +87,7 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
         {
           '--gradient-from': `var(${gradientFrom})`,
           '--gradient-to': `var(${gradientTo})`,
+          '--text-color-light': 'hsl(0, 0%, 20%)', // Darker text for light mode
           color: `var(${textColor})`
         } as CustomMotionStyle
       }
@@ -99,13 +97,34 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
       whileHover={{ scale: 1.05, rotate: 1 }}
       whileTap={{ scale: 0.95 }}
     >
-      {/* clock icon */}
+      {/* Tooltip for full date */}
+      <motion.div
+        className='absolute -top-10 left-1/2 z-10 hidden -translate-x-1/2 group-hover:block'
+        initial={{ opacity: 0, y: 5, scale: 0.95 }}
+        animate={{ opacity: 0, y: 5, scale: 0.95 }}
+        whileHover={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
+      >
+        <div
+          className={clsx(
+            'bg-[var(--gradient-from)]/90 dark:bg-[var(--gradient-from)]/80',
+            'rounded-lg border border-[var(--gradient-to)]/50 px-3 py-1 text-xs font-medium',
+            'text-[var(--text-color-light)] shadow-lg backdrop-blur-sm dark:text-[var(--color-champagne-mist)]'
+          )}
+        >
+          {full}
+        </div>
+        {/* Tooltip arrow */}
+        <div className='absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[var(--gradient-to)]/50' />
+      </motion.div>
+
+      {/* Clock icon */}
       <motion.svg
-        className='h-4 w-4'
+        className='ml-0 h-4 w-4'
         viewBox='0 0 24 24'
         fill='none'
         aria-hidden='true'
-        whileHover={{ rotate: 15, scale: 1.1 }}
+        whileHover={{ rotate: 15, scale: 1.1, opacity: 0.8 }}
         transition={{ duration: 0.2 }}
       >
         <defs>
@@ -135,8 +154,12 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
         />
       </motion.svg>
 
-      {/* time label */}
-      <span className='bg-gradient-to-r from-[var(--gradient-to)] to-[var(--color-royal-gold)] bg-clip-text text-transparent dark:to-[var(--color-champagne-mist)]'>
+      {/* Time label */}
+      <span
+        className={clsx(
+          'text-[var(--text-color-light)] dark:bg-gradient-to-r dark:from-[var(--gradient-to)] dark:to-[var(--color-champagne-mist)] dark:bg-clip-text dark:text-transparent'
+        )}
+      >
         {relative}
       </span>
     </motion.time>
