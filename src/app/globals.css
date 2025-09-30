@@ -106,7 +106,7 @@
   --drawer-popover: oklch(11.469% 0.05127 282.295 / 0.784);
   --drawer-popover-foreground: oklch(0.94 0.02 240);
 
-  --primary: oklch(0.78 0.18 160); /* Bright teal (kyu-2 inspired) */
+  --primary: oklch(0.78 0.18 160);
   --primary-foreground: oklch(0.14 0.03 270);
 
   --secondary: oklch(

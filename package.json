@@ -83,6 +83,7 @@
     "nuqs": "^2.4.1",
     "postcss": "8.4.49",
     "react": "19.0.0",
+    "react-countup": "^6.5.3",
     "react-day-picker": "^8.10.1",
     "react-dom": "19.0.0",
     "react-dropzone": "^14.3.5",

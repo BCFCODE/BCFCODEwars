@@ -43,21 +43,59 @@ export default async function Layout({ children }: Props) {
                 <span className='bg-gradient-to-r from-[var(--royal-gold)] to-[var(--kyu-2)] bg-clip-text text-transparent'>
                   {codewars?.name ?? 'Guest'}
                 </span>
-                <span className='text-muted-foreground ml-1 font-normal'>
-                  — Codewars profile
-                </span>
+                <div className='flex items-center align-baseline'>
+                  <span className='text-muted-foreground ml-1 font-normal'>
+                    — Codewars profile
+                  </span>
+                  {/* compact status pill for small screens */}
+                  <div className='bg-card/50 text-muted-foreground hidden items-center gap-2 rounded-full px-3 py-1 text-xs font-medium sm:inline-flex'>
+                    {codewars?.isConnected ? (
+                      <span className='flex items-center gap-1 rounded-md bg-[var(--chart-1)]/10 py-0 pr-2 text-[9px] text-[var(--chart-1)] shadow-sm'>
+                        <svg
+                          className='h-3 w-3'
+                          viewBox='0 0 24 24'
+                          fill='none'
+                          aria-hidden
+                        >
+                          <circle
+                            cx='12'
+                            cy='12'
+                            r='10'
+                            stroke='currentColor'
+                            strokeOpacity='0.15'
+                          />
+                          <path
+                            d='M7 13l3 3 7-7'
+                            stroke='currentColor'
+                            strokeWidth='1.6'
+                            strokeLinecap='round'
+                            strokeLinejoin='round'
+                          />
+                        </svg>
+                        Connected
+                      </span>
+                    ) : (
+                      <Link
+                        href='/dashboard/profile/codewars/connect'
+                        className='bg-accent text-accent-foreground inline-flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-xs font-semibold shadow-sm'
+                      >
+                        Connect
+                      </Link>
+                    )}
+                  </div>
+                </div>
               </h2>
 
               <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
                 {codewars?.isConnected ? (
-                  <>
-                    <span className='inline-flex items-center gap-2 rounded-full bg-[var(--kyu-3)]/10 px-2 py-0.5 text-[11px] font-medium text-[var(--kyu-3)]'>
+                  <span className='flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-0'>
+                    <span className='inline-flex w-40 items-center gap-2 rounded-full bg-[var(--chart-1)]/10 px-2 py-0.5 text-[11px] font-medium text-[var(--chart-1)]'>
                       • Connected to Codewars
                     </span>
                     <span className='ml-3'>
                       Live honor, ranks & language stats
                     </span>
-                  </>
+                  </span>
                 ) : (
                   <>
                     <span className='border-muted/20 text-muted-foreground inline-flex items-center gap-2 rounded-full border px-2 py-0.5 text-[11px] font-medium'>
@@ -76,64 +114,26 @@ export default async function Layout({ children }: Props) {
           <div className='flex flex-wrap items-center gap-3'>
             <Link
               href='/dashboard/leaderboard/codewars'
-              className='inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[var(--kyu-3)] to-[var(--kyu-2)] px-3 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-[1.02] focus:ring-2 focus:ring-[var(--kyu-2)] focus:outline-none'
+              className='inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[var(--kyu-3)]/50 to-[var(--kyu-2)]/30 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-[1.02] focus:ring-2 focus:ring-[var(--kyu-2)] focus:outline-none'
             >
               View Leaderboard
               <IconTrendingUp className='h-4 w-4' />
             </Link>
-
-            <Link
-              href='/dashboard/profile'
-              className='text-muted-foreground hover:bg-muted/10 inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition'
-            >
-              Profile settings
-            </Link>
-
-            {/* compact status pill for small screens */}
-            <div className='bg-card/50 text-muted-foreground hidden items-center gap-2 rounded-full px-3 py-1 text-xs font-medium sm:inline-flex'>
-              {codewars?.isConnected ? (
-                <span className='inline-flex items-center gap-2 text-[var(--kyu-4)]'>
-                  <svg
-                    className='h-3 w-3'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    aria-hidden
-                  >
-                    <circle
-                      cx='12'
-                      cy='12'
-                      r='10'
-                      stroke='currentColor'
-                      strokeOpacity='0.15'
-                    />
-                    <path
-                      d='M7 13l3 3 7-7'
-                      stroke='currentColor'
-                      strokeWidth='1.6'
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                    />
-                  </svg>
-                  Connected
-                </span>
-              ) : (
-                <Link
-                  href='/dashboard/profile/codewars/connect'
-                  className='bg-accent text-accent-foreground inline-flex items-center gap-2 rounded-md px-2 py-1 text-xs font-semibold shadow-sm'
-                >
-                  Connect
-                </Link>
-              )}
-            </div>
           </div>
         </div>
 
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
-          {children}
-        </div>
-        <div className='grid grid-cols-1'>
-          <KatasTable columns={columns} data={kataData} />
-        </div>
+        {codewars?.isConnected ? (
+          <>
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
+              {children}
+            </div>
+            <div className='grid grid-cols-1'>
+              <KatasTable columns={columns} data={kataData} />
+            </div>
+          </>
+        ) : (
+          <> {children}</>
+        )}
       </div>
     </PageContainer>
   );
