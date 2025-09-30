@@ -123,7 +123,7 @@ export function DiamondsCollectButtonCard({ count }: { count: number }) {
               )}
             >
               {collected ? (
-                <CountUp end={count} duration={1.2} separator=',' />
+                <CountUp end={count} duration={1.2} separator='' />
               ) : (
                 count
               )}
