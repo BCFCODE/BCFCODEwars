@@ -51,5 +51,7 @@ export { type Kata, kataSchema } from './codewars-katas';
 
 export {
   type CodeChallenge,
-  CodeChallengeSchema
+  CodeChallengeSchema,
+  type recentlySolvedKata,
+  recentlySolvedKataSchema
 } from './codewars-code-challenge';

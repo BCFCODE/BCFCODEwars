@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 // Zod schema for validating 24-character hexadecimal strings (not strictly ObjectId)
-const hexIdSchema = z.string().regex(/^[0-9a-fA-F]{24}$/, {
+export const hexIdSchema = z.string().regex(/^[0-9a-fA-F]{24}$/, {
   message: 'Invalid ID format: must be a 24-character hexadecimal string'
 });
 

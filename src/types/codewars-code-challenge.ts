@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { hexIdSchema } from './codewars-katas';
 
 // Define schemas for nested objects first
 const UserSchema = z.object({
@@ -26,7 +27,7 @@ const UnresolvedSchema = z.object({
 });
 
 // Main CodeChallenge schema
-const CodeChallengeSchema = z.object({
+export const CodeChallengeSchema = z.object({
   id: z.string().uuid('ID must be a valid UUID'),
   name: z.string().min(1, 'Name cannot be empty'),
   slug: z
@@ -68,7 +69,22 @@ const CodeChallengeSchema = z.object({
 });
 
 // Infer TypeScript type from Zod schema
-type CodeChallenge = z.infer<typeof CodeChallengeSchema>;
+export type CodeChallenge = z.infer<typeof CodeChallengeSchema>;
 
-// Export both schema and type
-export { CodeChallengeSchema, type CodeChallenge };
+// Zod schema for RecentKata
+export const recentlySolvedKataSchema = z.object({
+  username: z.string().min(1, 'Username is required'),
+  userId: hexIdSchema, // User ID as 24-char hex string (MongoDB ObjectId)
+  kataId: z.string().min(1, { message: 'Kata ID is required' }), // Codewars kata ID (less strict than ObjectId)
+  kataName: z.string().min(1, { message: 'Kata name is required' }), // Kata name
+  completedAt: z
+    .string()
+    .datetime({ message: 'Invalid ISO date format for completedAt' })
+    .transform((val) => new Date(val))
+    .or(z.date()), // Accept ISO string or Date, transform to Date
+  avatar: z.string().url({ message: 'Avatar must be a valid URL' }).optional(),
+  fallback: z.string().min(1, 'Fallback is required')
+});
+
+// TypeScript type inferred from Zod schema
+export type recentlySolvedKata = z.infer<typeof recentlySolvedKataSchema>;

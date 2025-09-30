@@ -1,10 +1,12 @@
 import { getDb } from '@/lib/mongodb';
-import { getEmail } from '@/services/clerkService';
+import { getEmail, getUser } from '@/services/clerkService';
 import {
   CodewarsProfileData,
   isConnectedToCodewars,
   Kata,
-  kataSchema
+  kataSchema,
+  recentlySolvedKata,
+  recentlySolvedKataSchema
 } from '@/types';
 
 // 🔹 Reusable pipeline stages to add totalDiamonds
@@ -105,6 +107,7 @@ export async function getKataData({
   const db = await getDb();
   const collection = db.collection<Kata>('katas');
   const recentlySolved = db.collection('recentlySolved');
+  const user = await getUser();
 
   // ✅ Ensure indexes (ideally created once at startup, not here)
   await collection.createIndex({ userId: 1, completedAt: -1 });
@@ -189,11 +192,15 @@ export async function getKataData({
 
     // ✅ Also insert into recentlySolved (as event log, lightweight)
     const recentDocs = newKatas.map((kata) => ({
+      username: user.fullName,
       userId: kata.userId,
       kataId: kata.id,
-      slug: kata.slug,
-      name: kata.name,
-      completedAt: kata.completedAt
+      kataName: kata.name,
+      completedAt: kata.completedAt,
+      avatar: user.imageUrl,
+      fallback:
+        (user.firstName ?? 'G')[0].toUpperCase() +
+        (user.lastName ?? '')[0].toUpperCase()
     }));
 
     await recentlySolved.insertMany(recentDocs, { ordered: false });
@@ -211,37 +218,31 @@ export async function getKataData({
       completedAt: 1
     })
     .sort({ completedAt: -1 })
+    .limit(10)
     .toArray();
 
   return katas.map((kata) => kataSchema.parse(kata));
 }
 
-export async function getRecentlySolved({
-  userId,
-  limit = 100
-}: {
-  userId: string;
-  limit?: number;
-}) {
+export async function getRecentlySolved({ limit = 100 }: { limit?: number }) {
   const db = await getDb();
-  const collection = db.collection<Kata>('recentlySolved');
-
-  // ✅ Index for fast retrieval (run once ideally)
-  await collection.createIndex({ userId: 1, completedAt: -1 });
+  const collection = db.collection<recentlySolvedKata>('recentlySolved');
 
   const katas = await collection
-    .find({ userId })
+    .find({})
     .project({
       _id: 0,
-      id: 1,
+      username: 1,
       userId: 1,
-      slug: 1,
-      name: 1,
-      completedAt: 1
+      kataId: 1,
+      kataName: 1,
+      completedAt: 1,
+      avatar: 1,
+      fallback: 1
     })
     .sort({ completedAt: -1 }) // ✅ latest on top
     .limit(limit)
     .toArray();
 
-  return katas.map((kata) => kataSchema.parse(kata));
+  return katas.map((kata) => recentlySolvedKataSchema.parse(kata));
 }

@@ -13,9 +13,10 @@ interface CustomMotionStyle extends MotionStyle {
 interface Props {
   name: string;
   date?: Date | string | number; // Optional date to align gradient logic with DaysAgo/SolvedOn
+  className?: string;
 }
 
-export const KataName: React.FC<Props> = ({ name, date }) => {
+export const KataName: React.FC<Props> = ({ name, date, className }) => {
   const { gradientFrom, gradientTo, textColor } = useMemo(() => {
     let gradientFrom = '--color-background';
     let gradientTo = '--color-kyu-5';
@@ -57,7 +58,8 @@ export const KataName: React.FC<Props> = ({ name, date }) => {
         'transition-all duration-300 ease-out select-none',
         'hover:bg-gradient-to-br hover:from-[var(--gradient-from)]/25 hover:to-[var(--gradient-to)]/25',
         'hover:shadow-[0_0_12px_color-mix(in_srgb,_var(--gradient-to)_40%,_transparent)]',
-        'focus:ring-2 focus:ring-[var(--color-ring)] focus:ring-offset-2 focus:outline-none'
+        'focus:ring-2 focus:ring-[var(--color-ring)] focus:ring-offset-2 focus:outline-none',
+        className
       )}
       style={
         {

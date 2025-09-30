@@ -74,14 +74,29 @@ export default async function Layout({ children }: Props) {
             </div>
           </div>
 
-          {/* right: actions / shortcuts */}
-          <div className='flex flex-wrap items-center gap-3'>
+          <div className='flex flex-wrap items-center gap-4'>
+            {/* Leaderboard Button */}
             <Link
               href='/dashboard/leaderboard/codewars'
-              className='inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-[var(--kyu-3)]/50 to-[var(--kyu-2)]/30 px-3 py-2 text-sm font-semibold text-white shadow-sm transition-transform hover:scale-[1.02] focus:ring-2 focus:ring-[var(--kyu-2)] focus:outline-none'
+              className='group relative inline-flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-[var(--kyu-3)]/60 to-[var(--kyu-2)]/30 px-4 py-2.5 text-sm font-bold text-white shadow-lg transition-all duration-300 ease-out hover:scale-[1.05] hover:text-black hover:shadow-xl focus:ring-4 focus:ring-[var(--kyu-2)]/50 focus:outline-none'
             >
-              View Leaderboard
-              <IconTrendingUp className='h-4 w-4' />
+              <span className='absolute inset-0 rounded-xl bg-gradient-to-r from-[var(--kyu-3)]/80 to-[var(--kyu-2)]/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
+              <span className='relative flex items-center gap-2'>
+                View Leaderboard
+                <IconTrendingUp className='h-5 w-5 transition-transform duration-300 group-hover:translate-x-1' />
+              </span>
+            </Link>
+
+            {/* Dashboard Button */}
+            <Link
+              href='/dashboard/overview'
+              className='group relative inline-flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-[var(--kyu-2)]/60 to-[var(--kyu-1)]/30 px-4 py-2.5 text-sm font-bold text-white shadow-lg transition-all duration-300 ease-out hover:scale-[1.05] hover:text-black hover:shadow-xl focus:ring-4 focus:ring-[var(--kyu-1)]/50 focus:outline-none'
+            >
+              <span className='absolute inset-0 rounded-xl bg-gradient-to-r from-[var(--kyu-2)]/80 to-[var(--kyu-1)]/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
+              <span className='relative flex items-center gap-2'>
+                View Dashboard
+                <IconTrendingUp className='h-5 w-5 transition-transform duration-300 group-hover:translate-x-1' />
+              </span>
             </Link>
           </div>
         </div>
