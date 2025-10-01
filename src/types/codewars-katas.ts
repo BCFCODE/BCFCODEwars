@@ -20,7 +20,7 @@ const kataSchema = z
       .datetime({ message: 'Invalid ISO date format for completedAt' })
       .transform((val) => new Date(val))
       .or(z.date()), // Accept ISO string or Date, transform to Date
-    rewardStatus: z.boolean().optional()
+    isCollected: z.boolean().optional()
   })
   .strict() // Prevent unknown fields
   .refine(
