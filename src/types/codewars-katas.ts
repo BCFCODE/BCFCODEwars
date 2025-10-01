@@ -20,14 +20,7 @@ const kataSchema = z
       .datetime({ message: 'Invalid ISO date format for completedAt' })
       .transform((val) => new Date(val))
       .or(z.date()), // Accept ISO string or Date, transform to Date
-    rewardStatus: z
-      .enum(['claimedDiamonds', 'unclaimedDiamonds'], {
-        errorMap: (issue, ctx) => ({
-          message: `Invalid reward status: must be one of 'claimedDiamonds', 'unclaimedDiamonds', got '${ctx.data}'`
-        })
-      })
-      .optional()
-      .catch(undefined) // Handle unknown statuses gracefully
+    rewardStatus: z.boolean().optional()
   })
   .strict() // Prevent unknown fields
   .refine(

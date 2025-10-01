@@ -156,7 +156,7 @@ export async function getKataData({
           completedAt: completedDate,
           completedLanguages: apiKata.completedLanguages,
           slug: apiKata.slug,
-          rewardStatus: 'unclaimedDiamonds'
+          isCollected: false
         });
       }
       return true;
