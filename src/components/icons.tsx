@@ -1,3 +1,4 @@
+// src/components/icons.tsx
 import {
   IconAlertTriangle,
   IconArrowRight,
@@ -31,42 +32,68 @@ import {
   IconX,
   IconLayoutKanban,
   IconBrandGithub,
-  IconTrophy
+  IconTrophy,
+  IconCode,
+  IconMedal
 } from '@tabler/icons-react';
 
 export type Icon = React.ComponentType<IconProps>;
 
+/**
+ * Centralized icon registry for nav, CmdK, and UI components.
+ * Extend this whenever new icons are needed.
+ */
 export const Icons = {
+  // Core
   dashboard: IconLayoutDashboard,
   logo: IconCommand,
   login: IconLogin,
   close: IconX,
-  leaderboard: IconTrophy,
-  product: IconShoppingBag,
   spinner: IconLoader2,
-  kanban: IconLayoutKanban,
-  chevronLeft: IconChevronLeft,
-  chevronRight: IconChevronRight,
-  trash: IconTrash,
-  employee: IconUserX,
-  post: IconFileText,
-  page: IconFile,
-  userPen: IconUserEdit,
-  user2: IconUserCircle,
-  media: IconPhoto,
   settings: IconSettings,
   billing: IconCreditCard,
-  ellipsis: IconDotsVertical,
-  add: IconPlus,
-  warning: IconAlertTriangle,
+
+  // Users
   user: IconUser,
+  user2: IconUserCircle,
+  userPen: IconUserEdit,
+  employee: IconUserX,
+
+  // Navigation
+  chevronLeft: IconChevronLeft,
+  chevronRight: IconChevronRight,
   arrowRight: IconArrowRight,
-  help: IconHelpCircle,
-  pizza: IconPizza,
+  ellipsis: IconDotsVertical,
+
+  // Content
+  product: IconShoppingBag,
+  post: IconFileText,
+  page: IconFile,
+  media: IconPhoto,
+
+  // Actions
+  add: IconPlus,
+  trash: IconTrash,
+  warning: IconAlertTriangle,
+  check: IconCheck,
+
+  // Dashboard Extras
+  leaderboard: IconTrophy,
+  codewars: IconCode, // 🆕 Specific icon for Codewars
+  competition: IconMedal, // 🆕 More meaningful than generic "add"
+
+  // Themes
   sun: IconSun,
   moon: IconMoon,
   laptop: IconDeviceLaptop,
+
+  // Fun / Misc
+  pizza: IconPizza,
+
+  // Brands
   github: IconBrandGithub,
   twitter: IconBrandTwitter,
-  check: IconCheck
-};
+  help: IconHelpCircle
+} as const;
+
+export type IconName = keyof typeof Icons;

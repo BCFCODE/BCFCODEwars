@@ -8,6 +8,52 @@ import {
   recentlySolvedKata,
   recentlySolvedKataSchema
 } from '@/types';
+import { Db } from 'mongodb';
+
+/**
+ * Retrieves the Codewars user ID and username for the authenticated user based on their email.
+ * @returns An object containing the database instance, user email, Codewars user ID, and username.
+ * @throws Error if the email is invalid, the database operation fails, or the Codewars user ID or username is not found.
+ */
+export async function getCodewarsUserId(): Promise<{
+  db: Db;
+  email: string;
+  id: string;
+  username: string;
+}> {
+  try {
+    const email = await getEmail();
+
+    // Validate email input
+    if (!email || typeof email !== 'string' || !email.includes('@')) {
+      throw new Error('Invalid or missing email');
+    }
+
+    const db = await getDb();
+
+    // Query the codewars collection for the user ID and username
+    const codewars = await db
+      .collection<isConnectedToCodewars>('codewars')
+      .findOne({ email }, { projection: { _id: 0, id: 1, username: 1 } });
+
+    // Throw an error if the user ID or username is not found
+    if (!codewars?.id || !codewars?.username) {
+      throw new Error(
+        'Codewars user ID or username not found for the provided email'
+      );
+    }
+
+    // Return the result with db, email, id, and username
+    return { db, email, id: codewars.id, username: codewars.username };
+  } catch (error) {
+    console.error('Error in getCodewarsUserId:', error);
+    throw new Error(
+      error instanceof Error && error.message.includes('not found')
+        ? error.message
+        : 'Failed to fetch Codewars user ID or username'
+    );
+  }
+}
 
 // 🔹 Reusable pipeline stages to add totalDiamonds
 const addDiamondsStages = [
@@ -63,12 +109,48 @@ export async function isConnected(): Promise<isConnectedToCodewars | null> {
   }
 }
 
-/** 🔹 Full profile + diamonds */
+/**
+ * Retrieves the Codewars profile for the authenticated user, fetching fresh data from the Codewars API
+ * and updating the database with the latest user information.
+ * @returns The Codewars profile data or null if the profile cannot be retrieved or updated.
+ * @throws Error if the database operation fails, the API request fails, or required user data is missing.
+ */
 export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> {
   try {
-    const email = await getEmail();
-    const db = await getDb();
+    const { db, email, id, username } = await getCodewarsUserId();
 
+    // Fetch user data from Codewars API
+    const response = await fetch(
+      `https://www.codewars.com/api/v1/users/${encodeURIComponent(username)}`,
+      { signal: AbortSignal.timeout(10000) } // 10s timeout
+    );
+
+    if (!response.ok) {
+      console.error(
+        `Codewars API error: ${response.status} ${response.statusText}`
+      );
+      throw new Error(`Failed to fetch Codewars profile: ${response.status}`);
+    }
+
+    const apiData = await response.json();
+
+    // Validate API response
+    if (!apiData?.id || !apiData?.username) {
+      throw new Error('Invalid Codewars API response: Missing id or username');
+    }
+
+    // Prepare updated profile data
+    const updatedProfile = {
+      email,
+      ...apiData
+    };
+
+    // Update the codewars collection with the new data
+    await db
+      .collection<isConnectedToCodewars>('codewars')
+      .updateOne({ id }, { $set: updatedProfile }, { upsert: true });
+
+    // Fetch the updated profile with diamonds
     const [profile] = await db
       .collection<CodewarsProfileData>('codewars')
       .aggregate<CodewarsProfileData>([
@@ -84,7 +166,8 @@ export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> 
             honor: 1,
             leaderboardPosition: 1,
             ranks: 1,
-            skills: 1
+            skills: 1,
+            codeChallenges: 1
           }
         },
         ...addDiamondsStages
@@ -94,7 +177,11 @@ export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> 
     return profile ?? null;
   } catch (error) {
     console.error('Error in getCodewarsProfile:', error);
-    throw new Error('Failed to fetch Codewars profile');
+    throw new Error(
+      error instanceof Error && error.message.includes('API')
+        ? error.message
+        : 'Failed to fetch or update Codewars profile'
+    );
   }
 }
 
