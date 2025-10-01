@@ -12,12 +12,12 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 const LINK_STYLES = {
   base: 'group relative inline-flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-lg focus:ring-4 focus:outline-none',
   leaderboard: {
-    gradient: 'bg-gradient-to-r from-[#e94560]/70 to-[#f4a261]/40',
+    gradient: 'bg-gradient-to-r from-[#e94560]/30 to-[#f4a261]/10',
     hoverGradient: 'from-[#e94560]/90 to-[#f4a261]/90',
     focusRing: 'focus:ring-[#e94560]/50'
   },
   profile: {
-    gradient: 'bg-gradient-to-r from-[#f4a261]/70 to-[#e94560]/40',
+    gradient: 'bg-gradient-to-r from-[#f4a261]/30 to-[#e94560]/10',
     hoverGradient: 'from-[#f4a261]/90 to-[#e94560]/90',
     focusRing: 'focus:ring-[#f4a261]/50'
   }
