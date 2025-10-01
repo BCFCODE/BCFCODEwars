@@ -15,16 +15,13 @@ export default async function RecentlySolved() {
       username: codewars?.username ?? ''
     });
 
-  const { data, success } = await getRecentlySolvedData();
+  const { data, success } = await getRecentlySolvedData({ limit: 3 });
 
   return (
     <RecentKatas
       data={success ? data : []}
       className={{
-        kataNameStyles: cn(
-          'max-w-80 flex-wrap',
-          'group-hover:max-w-80 group-hover:break-words group-hover:whitespace-normal'
-        )
+        kataNameStyles: cn('max-w-80')
       }}
     />
   );

@@ -27,47 +27,44 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
     return () => clearInterval(interval);
   }, [date, now]);
 
-  const { relative, full, gradientFrom, gradientTo, textColor } =
-    useMemo(() => {
-      const d = dayjs(date);
-      const seconds = dayjs(now).diff(d, 'second');
-      const minutes = Math.floor(seconds / 60);
-      const hours = Math.floor(minutes / 60);
-      const days = Math.floor(hours / 24);
+  const { relative, gradientFrom, gradientTo, textColor } = useMemo(() => {
+    const d = dayjs(date);
+    const seconds = dayjs(now).diff(d, 'second');
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
 
-      let relative = '';
-      if (seconds < 60) relative = 'Just now';
-      else if (minutes < 60) relative = `${minutes}m ago`;
-      else if (hours < 24) relative = `${hours}h ago`;
-      else if (days < 7) relative = `${days}d ago`;
-      else if (days < 30) relative = `${Math.floor(days / 7)}w ago`;
-      else if (days < 365) relative = d.format('MMM D');
-      else relative = d.format('MMM D, YYYY');
+    let relative = '';
+    if (seconds < 60) relative = 'Just now';
+    else if (minutes < 60) relative = `${minutes}m ago`;
+    else if (hours < 24) relative = `${hours}h ago`;
+    else if (days < 7) relative = `${days}d ago`;
+    else if (days < 30) relative = `${Math.floor(days / 7)}w ago`;
+    else if (days < 365) relative = d.format('MMM D');
+    else relative = d.format('MMM D, YYYY');
 
-      const full = d.format('YYYY-MM-DD HH:mm');
+    let gradientFrom = '--color-background';
+    let gradientTo = '--color-kyu-5';
+    let textColor = '--text-color-light'; // Darker text for light mode
+    if (seconds < 60) {
+      gradientTo = '--color-primary';
+      textColor = '--color-primary-foreground';
+    } else if (minutes < 60) {
+      gradientTo = '--color-kyu-6';
+    } else if (hours < 24) {
+      gradientTo = '--color-kyu-5';
+    } else if (days < 7) {
+      gradientTo = '--color-kyu-3';
+      textColor = '--color-primary-foreground';
+    } else if (days < 365) {
+      gradientTo = '--color-kyu-2';
+    } else {
+      gradientTo = '--color-rose-gleam';
+      textColor = '--color-primary-foreground';
+    }
 
-      let gradientFrom = '--color-background';
-      let gradientTo = '--color-kyu-5';
-      let textColor = '--text-color-light'; // Darker text for light mode
-      if (seconds < 60) {
-        gradientTo = '--color-primary';
-        textColor = '--color-primary-foreground';
-      } else if (minutes < 60) {
-        gradientTo = '--color-kyu-6';
-      } else if (hours < 24) {
-        gradientTo = '--color-kyu-5';
-      } else if (days < 7) {
-        gradientTo = '--color-kyu-3';
-        textColor = '--color-primary-foreground';
-      } else if (days < 365) {
-        gradientTo = '--color-kyu-2';
-      } else {
-        gradientTo = '--color-rose-gleam';
-        textColor = '--color-primary-foreground';
-      }
-
-      return { relative, full, gradientFrom, gradientTo, textColor };
-    }, [date, now]);
+    return { relative, gradientFrom, gradientTo, textColor };
+  }, [date, now]);
 
   return (
     <motion.time
@@ -97,27 +94,6 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
       whileHover={{ scale: 1.05, rotate: 1 }}
       whileTap={{ scale: 0.95 }}
     >
-      {/* Tooltip for full date */}
-      <motion.div
-        className='absolute -top-10 left-1/2 z-10 hidden -translate-x-1/2 group-hover:block'
-        initial={{ opacity: 0, y: 5, scale: 0.95 }}
-        animate={{ opacity: 0, y: 5, scale: 0.95 }}
-        whileHover={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.2, ease: 'easeOut' }}
-      >
-        <div
-          className={clsx(
-            'bg-[var(--gradient-from)]/90 dark:bg-[var(--gradient-from)]/80',
-            'rounded-lg border border-[var(--gradient-to)]/50 px-3 py-1 text-xs font-medium',
-            'text-[var(--text-color-light)] shadow-lg backdrop-blur-sm dark:text-[var(--color-champagne-mist)]'
-          )}
-        >
-          {full}
-        </div>
-        {/* Tooltip arrow */}
-        <div className='absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[var(--gradient-to)]/50' />
-      </motion.div>
-
       {/* Clock icon */}
       <motion.svg
         className='ml-0 h-4 w-4'

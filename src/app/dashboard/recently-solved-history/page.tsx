@@ -65,7 +65,7 @@ export default async function RecentlySolvedHistoryPage() {
   }
 
   // Fetch recently solved data
-  const { data, success } = await getRecentlySolvedData();
+  const { data, success } = await getRecentlySolvedData({ limit: 10 });
 
   return (
     <PageContainer>
