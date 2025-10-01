@@ -9,7 +9,7 @@ interface Props {
 }
 
 export async function StatCards({ data }: Props) {
-  const honor = data?.honor ?? null;
+  const totalCompleted = data?.codeChallenges?.totalCompleted ?? null;
   const leaderboardPosition = data?.leaderboardPosition ?? null;
   const overall = data?.ranks?.overall ?? null;
 
@@ -19,18 +19,20 @@ export async function StatCards({ data }: Props) {
   return (
     <>
       <StatCard
-        title='Total Honor'
+        title='Total Katas Completed'
         primary={
-          <span className='text-2xl font-semibold'>{formatNumber(honor)}</span>
+          <span className='text-2xl font-semibold'>
+            {formatNumber(totalCompleted)}
+          </span>
         }
         badge={
           <Badge variant='outline' className='flex items-center gap-1'>
             <Trophy className='h-4 w-4 text-[var(--royal-gold)]' />
-            Honor
+            Katas
           </Badge>
         }
-        meta='Community reputation points earned on Codewars.'
-        hint='Higher honor indicates consistent contributions & kata solving.'
+        meta='Total number of katas completed on Codewars.'
+        hint='Higher completion counts reflect dedication to solving coding challenges.'
       />
 
       <StatCard
