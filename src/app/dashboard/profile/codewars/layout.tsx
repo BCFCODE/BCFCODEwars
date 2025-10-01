@@ -53,7 +53,7 @@ export default async function Layout({ children }: Props) {
               <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
                 {codewars?.isConnected ? (
                   <span className='flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-0'>
-                    <span className='inline-flex w-40 items-center gap-2 rounded-full bg-[var(--chart-1)]/10 px-2 py-0.5 text-[11px] font-medium text-[var(--chart-1)]'>
+                    <span className='inline-flex w-40 items-center gap-2 rounded-full bg-[var(--chart-1)]/5 px-2 py-0.5 text-[11px] font-medium text-[var(--chart-1)]/80'>
                       • Connected to Codewars
                     </span>
                     <span className='ml-3'>

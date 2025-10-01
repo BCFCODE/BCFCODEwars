@@ -97,6 +97,7 @@ export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> 
     throw new Error('Failed to fetch Codewars profile');
   }
 }
+
 export async function getKataData({
   username,
   userId
@@ -109,71 +110,88 @@ export async function getKataData({
   const recentlySolved = db.collection('recentlySolved');
   const user = await getUser();
 
-  // ✅ Ensure indexes (ideally created once at startup, not here)
+  // Validate username
+  if (!username || typeof username !== 'string') {
+    throw new Error('Invalid or missing username');
+  }
+
+  // Ensure indexes
   await collection.createIndex({ userId: 1, completedAt: -1 });
   await collection.createIndex({ userId: 1, id: 1 }, { unique: true });
   await recentlySolved.createIndex({ userId: 1, completedAt: -1 });
   await recentlySolved.createIndex({ userId: 1, id: 1 });
 
-  // Step 1: Get checkpoint (latest completed kata for this user)
+  // Get checkpoint
   const latest = await collection.findOne(
     { userId },
     { sort: { completedAt: -1 }, projection: { completedAt: 1 } }
   );
   const latestCompletedAt = latest?.completedAt || null;
 
-  // Step 2: Fetch new katas
+  // Fetch new katas
   const newKatas: Kata[] = [];
 
-  const firstRes = await fetch(
-    `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=0`
-  );
-  if (!firstRes.ok) throw new Error(`API error: ${firstRes.status}`);
-  const firstJson = await firstRes.json();
-  const { totalPages, data: firstData } = firstJson;
-
-  const processData = (data: any[]) => {
-    for (const apiKata of data) {
-      const completedDate = new Date(apiKata.completedAt);
-
-      if (latestCompletedAt && completedDate <= latestCompletedAt) {
-        return false; // stop scanning old katas
-      }
-
-      newKatas.push({
-        userId,
-        id: apiKata.id,
-        name: apiKata.name,
-        completedAt: completedDate,
-        completedLanguages: apiKata.completedLanguages,
-        slug: apiKata.slug,
-        rewardStatus: 'unclaimedDiamonds'
-      });
-    }
-    return true;
-  };
-
-  let shouldContinue = processData(firstData);
-
-  if (shouldContinue && totalPages > 1) {
-    const pageRequests = Array.from({ length: totalPages - 1 }, (_, i) =>
-      fetch(
-        `https://www.codewars.com/api/v1/users/${username}/code-challenges/completed?page=${i + 1}`
-      ).then((r) => {
-        if (!r.ok) throw new Error(`API error: ${r.status}`);
-        return r.json();
-      })
+  try {
+    const firstRes = await fetch(
+      `https://www.codewars.com/api/v1/users/${encodeURIComponent(username)}/code-challenges/completed?page=0`,
+      { signal: AbortSignal.timeout(10000) } // 10s timeout
     );
-
-    const pages = await Promise.all(pageRequests);
-
-    for (const { data } of pages) {
-      shouldContinue = processData(data);
-      if (!shouldContinue) break;
+    if (!firstRes.ok) {
+      console.error(`API error: ${firstRes.status} ${firstRes.statusText}`);
+      throw new Error(`Codewars API error: ${firstRes.status}`);
     }
+    const firstJson = await firstRes.json();
+    const { totalPages, data: firstData } = firstJson;
+
+    const processData = (data: any[]) => {
+      for (const apiKata of data) {
+        const completedDate = new Date(apiKata.completedAt);
+        if (latestCompletedAt && completedDate <= latestCompletedAt) {
+          return false;
+        }
+        newKatas.push({
+          userId,
+          id: apiKata.id,
+          name: apiKata.name,
+          completedAt: completedDate,
+          completedLanguages: apiKata.completedLanguages,
+          slug: apiKata.slug,
+          isCollected: false
+        });
+      }
+      return true;
+    };
+
+    let shouldContinue = processData(firstData);
+
+    if (shouldContinue && totalPages > 1) {
+      const pageRequests = Array.from({ length: totalPages - 1 }, (_, i) =>
+        fetch(
+          `https://www.codewars.com/api/v1/users/${encodeURIComponent(username)}/code-challenges/completed?page=${i + 1}`,
+          { signal: AbortSignal.timeout(10000) }
+        ).then(async (r) => {
+          if (!r.ok) {
+            console.error(
+              `API error on page ${i + 1}: ${r.status} ${r.statusText}`
+            );
+            throw new Error(`Codewars API error: ${r.status}`);
+          }
+          return r.json();
+        })
+      );
+
+      const pages = await Promise.all(pageRequests);
+      for (const { data } of pages) {
+        shouldContinue = processData(data);
+        if (!shouldContinue) break;
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching Codewars data:', error);
+    throw new Error(`Failed to fetch katas: ${(error as Error).message}`);
   }
 
-  // Step 3: Bulk upsert to katas
+  // Bulk upsert to katas
   if (newKatas.length > 0) {
     const operations = newKatas.map((kata) => ({
       updateOne: {
@@ -190,7 +208,6 @@ export async function getKataData({
       });
     }
 
-    // ✅ Also insert into recentlySolved (as event log, lightweight)
     const recentDocs = newKatas.map((kata) => ({
       username: user.fullName,
       userId: kata.userId,
@@ -206,7 +223,7 @@ export async function getKataData({
     await recentlySolved.insertMany(recentDocs, { ordered: false });
   }
 
-  // Step 4: Return updated data
+  // Return updated data
   const katas = await collection
     .find({ userId })
     .project({

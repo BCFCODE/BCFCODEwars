@@ -87,28 +87,33 @@ export async function getUser(options?: {
  * console.log(email); // e.g. "user@example.com"
  */
 export async function getEmail(): Promise<string> {
-  const { userId } = await auth();
+  try {
+    const { userId } = await auth();
+    if (!userId) {
+      throw new AuthError(
+        'No authenticated user found (Clerk auth returned null userId).'
+      );
+    }
 
-  if (!userId) {
-    throw new AuthError('Email is required but no authenticated user found.');
+    const user = await currentUser();
+    if (!user) {
+      throw new AuthError(
+        'No authenticated user found (Clerk currentUser returned null).'
+      );
+    }
+
+    const email =
+      user.emailAddresses?.[0]?.emailAddress ??
+      user.primaryEmailAddress?.emailAddress ??
+      null;
+
+    if (!email) {
+      throw new AuthError('No primary email address found for the user.');
+    }
+
+    return email;
+  } catch (error) {
+    console.error('Error in getEmail:', error);
+    throw new AuthError(`Failed to fetch email: ${(error as Error).message}`);
   }
-
-  const user = await currentUser();
-
-  if (!user) {
-    throw new AuthError('Email is required but user data fetch failed.');
-  }
-
-  const email =
-    user.emailAddresses?.[0]?.emailAddress ??
-    user.primaryEmailAddress?.emailAddress ??
-    null;
-
-  if (!email) {
-    throw new AuthError(
-      'Email is required to fetch Codewars data (user missing email address).'
-    );
-  }
-
-  return email;
 }
