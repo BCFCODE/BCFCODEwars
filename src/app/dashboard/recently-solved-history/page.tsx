@@ -59,13 +59,14 @@ export default async function RecentlySolvedHistoryPage() {
   // Fetch kata data if connected
   if (codewars?.isConnected) {
     await getKataData({
-      userId: codewars?.id ?? '',
-      username: codewars?.username ?? ''
+      codewarsUserId: codewars.id,
+      codewarsUsername: codewars.username,
+      codewarsName: codewars.name
     });
   }
 
   // Fetch recently solved data
-  const { data, success } = await getRecentlySolvedData({ limit: 10 });
+  const { data, success } = await getRecentlySolvedData({ limit: 20 });
 
   return (
     <PageContainer>
