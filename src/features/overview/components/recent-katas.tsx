@@ -49,33 +49,33 @@ export function RecentKatas({ data, className }: Props) {
           <Link
             href='/dashboard/recently-solved-history'
             className={cn(
-              'text-card flex items-center gap-2 rounded-full bg-[var(--royal-gold)]/40 font-semibold',
+              'text-card flex items-center gap-2 rounded-full bg-[var(--royal-gold)]/40 font-semibold max-[420]:-ml-4',
               'transition-all duration-300 hover:scale-110 hover:bg-[var(--royal-gold)]/60 hover:p-1 hover:text-black',
               'focus:ring-sidebar-ring focus:ring-2 focus:outline-none'
             )}
           >
-            <History className='group-hover/link:animate-spin-slow h-10 w-10' />
+            <History className='group-hover/link:animate-spin-slow h-10 w-10 max-[480px]:h-8 max-[480px]:w-8 max-[320px]:h-6 max-[320px]:w-6' />
           </Link>
-          <span className='text-card absolute top-full left-1/2 mt-2 hidden -translate-x-1/2 rounded-md bg-[var(--royal-gold)]/30 px-2 py-1 text-xs shadow-md group-hover/link:block'>
+          <span className='text-card absolute top-full left-1/2 mt-1 hidden -translate-x-1/2 rounded-md bg-[var(--royal-gold)]/30 px-2 py-1 text-xs shadow-md group-hover/link:block'>
             History
           </span>
         </div>
 
         {/* Title and Description */}
-        <div className='ml-4'>
+        <div className='ml-4 max-[480px]:ml-3 max-[420px]:ml-2 max-[320px]:ml-0'>
           <CardTitle
             className={cn(
-              'text-sidebar-foreground flex items-center gap-2 text-2xl font-extrabold tracking-tight',
+              'text-sidebar-foreground flex items-center gap-2 text-2xl font-extrabold tracking-tight max-[520px]:text-[20px] max-[480px]:text-[18px] max-[420px]:text-[15px] max-[360px]:text-[12px]',
               'text-card-foreground drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]',
               'group-hover:text-card-foreground/80 transition-all duration-300'
             )}
           >
-            <Trophy className='text-card-foreground h-7 w-7 animate-bounce group-hover:animate-pulse' />
+            <Trophy className='text-card-foreground h-7 w-7 animate-bounce group-hover:animate-pulse max-[520px]:h-4 max-[520px]:w-4 max-[480px]:h-3 max-[480px]:w-3' />
             BCFCODE Kata Champions
           </CardTitle>
           <CardDescription
             className={cn(
-              'text-sidebar-accent-foreground mt-1 text-sm font-medium',
+              'text-sidebar-accent-foreground mt-1 text-sm font-medium max-[480px]:text-xs max-[420px]:text-[10px] max-[360px]:text-[9px]',
               'text-card-foreground/80'
             )}
           >
@@ -98,7 +98,7 @@ export function RecentKatas({ data, className }: Props) {
               {/* Avatar */}
               <Avatar
                 className={cn(
-                  'h-15 w-15 border-2 border-[var(--royal-gold)]/10 shadow-md',
+                  'h-15 w-15 border-2 border-[var(--royal-gold)]/10 shadow-md max-[420px]:hidden',
                   'transition-transform duration-300 hover:scale-110',
                   className?.avatarStyles
                 )}
@@ -116,7 +116,7 @@ export function RecentKatas({ data, className }: Props) {
               </Avatar>
 
               {/* Kata Info */}
-              <div className='ml-4 flex-1'>
+              <div className='ml-4 flex-1 max-[360px]:ml-1'>
                 <div className='text-foreground text-sm font-medium'>
                   <span className='font-semibold'>{kata.username}</span>
                   <span className='italic'> solved </span>
