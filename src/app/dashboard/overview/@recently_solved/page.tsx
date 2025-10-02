@@ -11,8 +11,9 @@ export default async function RecentlySolved() {
 
   if (codewars?.isConnected)
     await getKataData({
-      userId: codewars?.id ?? '',
-      username: codewars?.username ?? ''
+      codewarsUserId: codewars.id,
+      codewarsUsername: codewars.username,
+      codewarsName: codewars.name
     });
 
   const { data, success } = await getRecentlySolvedData({ limit: 3 });

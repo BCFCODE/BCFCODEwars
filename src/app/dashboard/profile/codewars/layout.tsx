@@ -20,10 +20,14 @@ interface Props extends PropsWithChildren {}
 export default async function Layout({ children }: Props) {
   const { data: codewars } = await isConnectedToCodewars();
 
-  const kataData = await getKataData({
-    userId: codewars?.id ?? '',
-    username: codewars?.username ?? ''
-  });
+  let kataData;
+
+  if (codewars?.isConnected)
+    kataData = await getKataData({
+      codewarsUserId: codewars.id,
+      codewarsUsername: codewars.username,
+      codewarsName: codewars.name
+    });
 
   return (
     <PageContainer>
@@ -107,7 +111,7 @@ export default async function Layout({ children }: Props) {
               {children}
             </div>
             <div className='grid grid-cols-1'>
-              <KatasTable columns={columns} data={kataData} />
+              <KatasTable columns={columns} data={kataData ?? []} />
             </div>
           </>
         ) : (
