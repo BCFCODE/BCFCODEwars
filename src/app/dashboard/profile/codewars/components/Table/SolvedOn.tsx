@@ -16,11 +16,12 @@ interface SolvedOnProps {
 }
 
 export const SolvedOn: React.FC<SolvedOnProps> = ({ date, className }) => {
-  const { formatted, verbose, gradientFrom, gradientTo, textColor } =
+  const { datePart, timePart, verbose, gradientFrom, gradientTo, textColor } =
     useMemo(() => {
       const d = dayjs(date);
-      const formatted = d.format('YYYY-MM-DD h:mm A'); // e.g., 2025-09-30 3:38 PM
-      const verbose = d.format('MMMM D, YYYY, h:mm A'); // e.g., September 30, 2025, 3:38 PM
+      const datePart = d.format('YYYY-MM-DD ');
+      const timePart = d.format('h:mm A');
+      const verbose = d.format('MMMM D, YYYY, h:mm A');
 
       const seconds = dayjs().diff(d, 'second');
       const minutes = Math.floor(seconds / 60);
@@ -47,7 +48,14 @@ export const SolvedOn: React.FC<SolvedOnProps> = ({ date, className }) => {
         textColor = '--color-primary-foreground';
       }
 
-      return { formatted, verbose, gradientFrom, gradientTo, textColor };
+      return {
+        datePart,
+        timePart,
+        verbose,
+        gradientFrom,
+        gradientTo,
+        textColor
+      };
     }, [date]);
 
   return (
@@ -56,8 +64,6 @@ export const SolvedOn: React.FC<SolvedOnProps> = ({ date, className }) => {
       aria-label={`Solved on ${verbose}`}
       className={clsx(
         'relative inline-flex w-40 items-center justify-center gap-1 rounded-2xl px-1 py-1 text-sm font-semibold tracking-tight',
-        // 'bg-gradient-to-br from-[var(--gradient-from)]/20 to-[var(--gradient-to)]/20 dark:from-[var(--gradient-from)]/10 dark:to-[var(--gradient-to)]/10',
-        // 'border border-[color-mix(in_srgb,_var(--gradient-to)_10%,_transparent)]',
         'transition-all duration-300 ease-out select-none',
         'hover:bg-gradient-to-br hover:from-[var(--gradient-from)]/25 hover:to-[var(--gradient-to)]/25',
         'hover:shadow-[0_0_12px_color-mix(in_srgb,_var(--gradient-to)_40%,_transparent)]',
@@ -105,7 +111,8 @@ export const SolvedOn: React.FC<SolvedOnProps> = ({ date, className }) => {
           'text-[var(--text-color-light)] dark:bg-gradient-to-r dark:from-[var(--gradient-to)] dark:to-[var(--color-champagne-mist)] dark:bg-clip-text dark:text-transparent'
         )}
       >
-        {formatted}
+        <span className='inline max-[380px]:hidden'>{datePart}</span>
+        {timePart}
       </span>
     </motion.time>
   );
