@@ -65,17 +65,17 @@ export function RecentKatas({ data, className }: Props) {
         <div className='ml-4 max-[480px]:ml-3 max-[420px]:ml-2 max-[320px]:ml-0'>
           <CardTitle
             className={cn(
-              'text-sidebar-foreground flex items-center gap-2 text-2xl font-extrabold tracking-tight max-[520px]:text-[20px] max-[480px]:text-[18px] max-[420px]:text-[15px] max-[360px]:text-[12px]',
+              'text-sidebar-foreground flex items-center gap-2 text-2xl font-extrabold tracking-tight max-[1280px]:text-[19px] max-[520px]:text-[20px] max-[480px]:text-[18px] max-[420px]:text-[15px] max-[360px]:text-[12px]',
               'text-card-foreground drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]',
               'group-hover:text-card-foreground/80 transition-all duration-300'
             )}
           >
-            <Trophy className='text-card-foreground h-7 w-7 animate-bounce group-hover:animate-pulse max-[520px]:h-4 max-[520px]:w-4 max-[480px]:h-3 max-[480px]:w-3' />
+            <Trophy className='text-card-foreground h-7 w-7 animate-bounce group-hover:animate-pulse max-[1280px]:h-4 max-[1280px]:w-4 max-[520px]:h-4 max-[520px]:w-4 max-[480px]:h-3 max-[480px]:w-3' />
             BCFCODE Kata Champions
           </CardTitle>
           <CardDescription
             className={cn(
-              'text-sidebar-accent-foreground mt-1 text-sm font-medium max-[480px]:text-xs max-[420px]:text-[10px] max-[360px]:text-[9px]',
+              'text-sidebar-accent-foreground mt-1 text-sm font-medium max-[480px]:text-xs max-[420px]:text-[12px] max-[360px]:text-[9px]',
               'text-card-foreground/80'
             )}
           >
@@ -116,8 +116,8 @@ export function RecentKatas({ data, className }: Props) {
               </Avatar>
 
               {/* Kata Info */}
-              <div className='ml-4 flex-1 max-[360px]:ml-1'>
-                <div className='text-foreground text-sm font-medium'>
+              <div className='ml-4 flex-1 max-[420]:ml-0 max-[360px]:ml-1 max-[320px]:-ml-1'>
+                <div className='text-foreground text-sm font-medium max-[320px]:text-xs'>
                   <span className='font-semibold'>{kata.username}</span>
                   <span className='italic'> solved </span>
                   <span className='group inline-block italic'>
