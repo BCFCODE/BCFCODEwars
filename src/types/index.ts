@@ -51,3 +51,10 @@ export {
   type recentlySolvedKata,
   recentlySolvedKataSchema
 } from './codewars-code-challenge';
+
+export {
+  type CodewarsUser,
+  CodewarsUserSchema,
+  type CodewarsApiUser,
+  CodewarsApiSchema
+} from './codewars-user';

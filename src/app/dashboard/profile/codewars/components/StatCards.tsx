@@ -19,23 +19,6 @@ export async function StatCards({ data }: Props) {
   return (
     <>
       <StatCard
-        title='Total Katas Completed'
-        primary={
-          <span className='text-2xl font-semibold'>
-            {formatNumber(totalCompleted)}
-          </span>
-        }
-        badge={
-          <Badge variant='outline' className='flex items-center gap-1'>
-            <Trophy className='h-4 w-4 text-[var(--royal-gold)]' />
-            Katas
-          </Badge>
-        }
-        meta='Total number of katas completed on Codewars.'
-        hint='Higher completion counts reflect dedication to solving coding challenges.'
-      />
-
-      <StatCard
         title='Leaderboard Position'
         primary={
           leaderboardPosition ? (
@@ -57,6 +40,23 @@ export async function StatCards({ data }: Props) {
             ? 'Lower rank is better — solve more high-value kata to climb.'
             : 'No leaderboard data available.'
         }
+      />
+
+      <StatCard
+        title='Total Katas Completed'
+        primary={
+          <span className='text-2xl font-semibold'>
+            {formatNumber(totalCompleted)}
+          </span>
+        }
+        badge={
+          <Badge variant='outline' className='flex items-center gap-1'>
+            <Trophy className='h-4 w-4 text-[var(--royal-gold)]' />
+            Katas
+          </Badge>
+        }
+        meta='Total number of katas completed on Codewars.'
+        hint='Higher completion counts reflect dedication to solving coding challenges.'
       />
 
       <StatCard

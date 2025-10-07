@@ -19,7 +19,7 @@ export const navItems: NavItem[] = [
     items: [
       {
         title: 'Competition',
-        url: '/dashboard/recently-solved-history',
+        url: '/dashboard/champions',
         icon: 'competition', // 🆕 instead of "add"
         shortcut: ['l', 'u']
       }
