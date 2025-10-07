@@ -56,12 +56,12 @@ export default function CodewarsConnectForm() {
       <button
         type='submit'
         disabled={loading}
-        className='group bg-primary text-primary-foreground relative w-full overflow-hidden rounded-lg py-2.5 font-semibold shadow-md transition-all hover:scale-[1.02] hover:shadow-xl disabled:opacity-70'
+        className='group bg-primary text-primary-foreground relative w-full cursor-pointer overflow-hidden rounded-lg py-2.5 font-semibold shadow-md transition-all hover:scale-[1.02] hover:shadow-xl disabled:opacity-70'
       >
         <span className='relative z-10'>
           {loading ? 'Connecting...' : 'Validate & Connect'}
         </span>
-        <div className='absolute inset-0 -z-0 bg-gradient-to-r from-[var(--color-kyu-5)] via-[var(--color-kyu-3)] to-[var(--color-kyu-2)] opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
+        <div className='absolute inset-0 -z-0 bg-gradient-to-r from-[var(--color-kyu-5)]/70 via-[var(--color-kyu-3)]/5 to-[var(--color-kyu-2)]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
       </button>
     </form>
   );

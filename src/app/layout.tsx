@@ -111,7 +111,7 @@ export default async function RootLayout({
             <Providers activeThemeValue={activeThemeValue as string}>
               {children}
               <Toaster
-                position='top-center'
+                position='bottom-right'
                 richColors
                 closeButton
                 toastOptions={{

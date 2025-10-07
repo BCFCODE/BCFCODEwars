@@ -52,7 +52,7 @@ const LinkButton = ({
   </Link>
 );
 
-export default async function RecentlySolvedHistoryPage() {
+export default async function CodewarsChampionsPage() {
   // Fetch connection status
   const { data: codewars } = await isConnectedToCodewars();
 
