@@ -133,7 +133,7 @@ export const DaysAgo: React.FC<DaysAgoProps> = ({ date, className }) => {
       {/* Time label */}
       <span
         className={clsx(
-          'text-[var(--text-color-light)] dark:bg-gradient-to-r dark:from-[var(--gradient-to)] dark:to-[var(--color-champagne-mist)] dark:bg-clip-text dark:text-transparent'
+          'whitespace-nowrap text-[var(--text-color-light)] dark:bg-gradient-to-r dark:from-[var(--gradient-to)] dark:to-[var(--color-champagne-mist)] dark:bg-clip-text dark:text-transparent'
         )}
       >
         {relative}
