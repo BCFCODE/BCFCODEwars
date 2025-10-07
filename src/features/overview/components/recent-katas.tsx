@@ -47,7 +47,7 @@ export function RecentKatas({ data, className }: Props) {
         {/* History Link with Tooltip */}
         <div className='group/link relative'>
           <Link
-            href='/dashboard/recently-solved-history'
+            href='/dashboard/champions'
             className={cn(
               'text-card flex items-center gap-2 rounded-full bg-[var(--royal-gold)]/40 font-semibold max-[420]:-ml-4',
               'transition-all duration-300 hover:scale-110 hover:bg-[var(--royal-gold)]/60 hover:p-1 hover:text-black',

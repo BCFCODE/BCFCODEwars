@@ -109,8 +109,15 @@ export default async function RootLayout({
             enableColorScheme
           >
             <Providers activeThemeValue={activeThemeValue as string}>
-              <Toaster />
               {children}
+              <Toaster
+                position='top-center'
+                richColors
+                closeButton
+                toastOptions={{
+                  style: { fontSize: '0.9rem', fontWeight: 500 }
+                }}
+              />
               <Analytics />
               <SpeedInsights />
             </Providers>

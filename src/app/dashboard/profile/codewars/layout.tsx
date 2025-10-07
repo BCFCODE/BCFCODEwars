@@ -94,7 +94,7 @@ export default async function Layout({ children }: Props) {
 
             {/* Codewars History Button */}
             <Link
-              href='/dashboard/recently-solved-history'
+              href='/dashboard/champions'
               className='group relative inline-flex items-center gap-2.5 rounded-xl bg-gradient-to-r from-[var(--kyu-3)]/60 to-[var(--kyu-2)]/30 px-4 py-2.5 text-sm font-bold text-white shadow-lg transition-all duration-300 ease-out hover:scale-[1.05] hover:text-black hover:shadow-xl focus:ring-4 focus:ring-[var(--kyu-2)]/50 focus:outline-none'
             >
               <span className='absolute inset-0 rounded-xl bg-gradient-to-r from-[var(--kyu-3)]/80 to-[var(--kyu-2)]/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
