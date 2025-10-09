@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 export default function CodewarsConnectForm() {
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -26,7 +27,11 @@ export default function CodewarsConnectForm() {
 
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.reason || 'Connection failed.');
+      if (!res.ok) {
+        throw new Error(data.reason || 'Connection failed.');
+      }
+
+      setError(false);
 
       toast.success('✅ Successfully connected! Redirecting...');
       setTimeout(
@@ -34,6 +39,7 @@ export default function CodewarsConnectForm() {
         1500
       );
     } catch (err: any) {
+      setError(true);
       toast.error(err.message || '❌ Something went wrong. Please try again.');
     } finally {
       setLoading(false);
@@ -59,7 +65,11 @@ export default function CodewarsConnectForm() {
         className='group bg-primary text-primary-foreground relative w-full cursor-pointer overflow-hidden rounded-lg py-2.5 font-semibold shadow-md transition-all hover:scale-[1.02] hover:shadow-xl disabled:opacity-70'
       >
         <span className='relative z-10'>
-          {loading ? 'Connecting...' : 'Validate & Connect'}
+          {error
+            ? 'Try Again'
+            : loading
+              ? 'Connecting...'
+              : 'Validate & Connect'}
         </span>
         <div className='absolute inset-0 -z-0 bg-gradient-to-r from-[var(--color-kyu-5)]/70 via-[var(--color-kyu-3)]/5 to-[var(--color-kyu-2)]/50 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
       </button>
