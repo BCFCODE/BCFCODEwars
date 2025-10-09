@@ -58,3 +58,5 @@ export {
   type CodewarsApiUser,
   CodewarsApiSchema
 } from './codewars-user';
+
+export { type ToastType, ToastTypeSchema } from './toast';
