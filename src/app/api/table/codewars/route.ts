@@ -4,16 +4,16 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   // Authenticate the request
-  const { sessionStatus, getToken } = await auth();
+  const { sessionStatus } = await auth();
 
   if (sessionStatus !== 'active') {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // Get JWT for verification or backend calls
-  const token = await getToken({ template: 'bcfcode-jwt-service' });
+  // // Get JWT for verification or backend calls
+  // const token = await getToken({ template: 'bcfcode-jwt-service' });
 
-  console.log('JWT Token for user:', token); // optional: debugging
+  // console.log('JWT Token for user:', token); // optional: debugging
 
   try {
     const users = await getPublicCodewarsUsers();

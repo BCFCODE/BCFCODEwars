@@ -1,5 +1,6 @@
 'use client';
 
+import { ApiResponse } from '@/app/api/codewars/connect/route';
 import { useState } from 'react';
 import { toast } from 'sonner';
 
@@ -12,7 +13,7 @@ export default function CodewarsConnectForm() {
     e.preventDefault();
 
     if (!username.trim()) {
-      toast.error('⚠️ Please enter your Codewars username.');
+      toast.warning('Please enter your Codewars username.');
       return;
     }
 
@@ -25,10 +26,14 @@ export default function CodewarsConnectForm() {
         body: JSON.stringify({ username })
       });
 
-      const data = await res.json();
+      const data: ApiResponse = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.reason || 'Connection failed.');
+      if (!data.success) {
+        setError(true);
+
+        toast[data.toastType](data.reason);
+
+        return;
       }
 
       setError(false);
