@@ -60,7 +60,8 @@ export async function POST(req: Request) {
 
     // ✅ Validate Codewars API response
     const parsedApiData = CodewarsApiSchema.safeParse(apiData);
-
+    console.log('>>>>>>>>>>>>>>>', apiData);
+    console.log('>>>>>>>>>>>>>>>', parsedApiData.data);
     if (!parsedApiData.success) {
       console.error(
         '⚠️ Invalid Codewars API structure:',
