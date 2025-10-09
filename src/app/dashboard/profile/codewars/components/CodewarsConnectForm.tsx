@@ -18,8 +18,19 @@ export default function CodewarsConnectForm() {
   /* -------------------- 🔹 Step 2: Validate username -------------------- */
   async function handleValidation(e: React.FormEvent) {
     e.preventDefault();
+    const toastId = toast.loading(
+      step === 1
+        ? '⚔️ Preparing to validate your Codewars journey...'
+        : step === 2
+          ? '🔍 Checking your Codewars username in the dojo...'
+          : step === 3
+            ? '🚀 Syncing your Codewars profile...'
+            : error
+              ? '🔄 Retrying username validation...'
+              : '⚡ Validating your Codewars username...'
+    );
     if (!username.trim()) {
-      toast.warning('Please enter your Codewars username.');
+      toast.warning('🛑 Oops! Please enter your Codewars username to proceed.');
       return;
     }
 
@@ -38,16 +49,15 @@ export default function CodewarsConnectForm() {
         toast[data.toastType](data.reason);
         return;
       }
+      toast.dismiss(toastId);
 
-      if (data.success) {
-        setError(false);
-        toast.success('✅ User validated successfully!');
-        setUserData(data.userData);
-        setStep(3);
-      }
+      setError(false);
+      toast.success('🎉 Username validated! Ready to conquer the next step!');
+      setUserData(data.userData);
+      setStep(3);
     } catch {
       setError(true);
-      toast.error('Something went wrong during validation.');
+      toast.error('⚠️ Uh-oh! Validation failed. Give it another shot!');
     } finally {
       setLoading(false);
     }
@@ -57,7 +67,9 @@ export default function CodewarsConnectForm() {
   async function handleSave() {
     if (!userData) return;
 
-    const toastId = toast.loading('Saving your Codewars connection...');
+    const toastId = toast.loading(
+      '💾 Saving your Codewars connection to the leaderboard...'
+    );
     try {
       const res = await fetch('/api/codewars/connect/save', {
         method: 'POST',
@@ -74,15 +86,13 @@ export default function CodewarsConnectForm() {
         return;
       }
 
-      if (data.success) {
-        setError(false);
-        toast.success(data.message);
-        window.location.href = '/dashboard/profile/codewars';
-      }
+      setError(false);
+      toast.success('🏆 Success! Your Codewars account is now linked!');
+      window.location.href = '/dashboard/profile/codewars';
     } catch {
       setError(true);
       toast.dismiss(toastId);
-      toast.error('Failed to save connection. Please retry.');
+      toast.error('❌ Connection failed. Let’s try saving again!');
     }
   }
 
@@ -97,13 +107,14 @@ export default function CodewarsConnectForm() {
           <p className='text-muted-foreground text-sm leading-relaxed'>
             Link your{' '}
             <span className='text-foreground font-semibold'>Codewars</span>{' '}
-            account to sync your kata stats and showcase your progress.
+            account to effortlessly sync kata progress, track your coding
+            achievements, and showcase your growth as a developer.
           </p>
           <button
             onClick={() => setStep(2)}
             className='bg-primary text-primary-foreground w-full cursor-pointer rounded-lg py-2.5 font-semibold shadow-md transition-all hover:scale-[1.02] hover:shadow-lg'
           >
-            Continue
+            Let’s Go!
           </button>
         </div>
       )}
@@ -133,7 +144,7 @@ export default function CodewarsConnectForm() {
               disabled={loading}
               className='bg-primary text-primary-foreground w-1/2 cursor-pointer rounded-lg py-2.5 font-semibold shadow-md transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70'
             >
-              {error ? 'Try again' : loading ? 'Validating...' : 'Validate'}
+              {error ? 'Try Again' : loading ? 'Validating...' : 'Validate'}
             </button>
           </div>
         </form>
@@ -148,25 +159,27 @@ export default function CodewarsConnectForm() {
           <div className='border-border bg-card flex w-full flex-col items-start gap-2 rounded-xl border p-5 text-center shadow-sm'>
             <p className='text-muted-foreground text-sm'>
               <span className='text-foreground font-medium'>Username:</span>{' '}
-              {userData.username.toLocaleString()}
+              {userData.username}
             </p>
             <p className='text-muted-foreground text-sm'>
               <span className='text-foreground font-medium'>Rank:</span>{' '}
-              {userData.ranks.overall.name.toLocaleString()}
+              {userData.ranks.overall.name}
             </p>
             <p className='text-muted-foreground text-sm'>
               <span className='text-foreground font-medium'>Honor:</span>{' '}
               {userData.honor.toLocaleString()}
             </p>
-
             <p className='text-muted-foreground text-sm'>
               <span className='text-foreground font-medium'>Leaderboard:</span>{' '}
               #{userData.leaderboardPosition ?? 'N/A'}
             </p>
-
             <p className='text-muted-foreground text-sm'>
               <span className='text-foreground font-medium'>Clan:</span>{' '}
               {userData.clan || '—'}
+            </p>
+            <p className='text-muted-foreground text-sm'>
+              <span className='text-foreground font-medium'>Challenges:</span>{' '}
+              {userData.codeChallenges.totalCompleted} completed
             </p>
           </div>
 
@@ -181,7 +194,7 @@ export default function CodewarsConnectForm() {
               onClick={handleSave}
               className='bg-primary text-primary-foreground w-1/2 cursor-pointer rounded-lg py-2.5 font-semibold shadow-sm transition-all hover:scale-[1.02]'
             >
-              {error ? 'Try again' : loading ? 'Saving...' : ' Confirm & Save'}
+              {error ? 'Try Again' : loading ? 'Saving...' : ' Confirm & Save'}
             </button>
           </div>
         </div>

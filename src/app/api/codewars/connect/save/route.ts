@@ -51,7 +51,7 @@ export async function POST(req: Request): Promise<NextResponse<ApiResponse>> {
 
     return NextResponse.json({
       success: true,
-      message: `🎉 Your Codewars account (@${userData.username}) has been successfully connected!`,
+      message: `"${userData.username}" has been successfully connected!`,
       toastType: 'success'
     });
   } catch (error) {
