@@ -9,6 +9,7 @@ let clientPromise: Promise<MongoClient>;
 let cachedDb: Db | null = null;
 
 // In dev mode, cache connection across hot reloads
+
 declare global {
   // allow global `var` declarations
   // eslint-disable-next-line no-var

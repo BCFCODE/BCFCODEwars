@@ -27,7 +27,7 @@ export const CodewarsApiSchema = z.object({
     overall: RankSchema,
     languages: LanguagesRankSchema
   }),
-  skills: z.array(z.string().url()).default([])
+  skills: z.array(z.string()).optional().default([])
 });
 
 // ✅ Extended schema: what you store in MongoDB
