@@ -54,14 +54,14 @@ function TableCellViewer({
         <div className='flex flex-col gap-4 overflow-y-auto px-4 text-sm'>
           {!isMobile ? (
             <>
-              <Link href='/dashboard/profile/codewars'>
+              <Link href='/dashboard/codewars'>
                 <ChartRadarKatas />
               </Link>
               {/* <DiamondsCollectButton count={codewarsUser.totalDiamonds ?? 0} /> */}
               <Separator />
             </>
           ) : (
-            <Link href='/dashboard/profile/codewars'>
+            <Link href='/dashboard/codewars'>
               <ChartRadarKatas />
             </Link>
           )}

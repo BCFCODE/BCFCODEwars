@@ -13,6 +13,7 @@ export default function CodewarsConnectForm() {
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [userData, setUserData] = useState<CodewarsApiUser>();
 
   /* -------------------- 🔹 Step 2: Validate username -------------------- */
@@ -87,8 +88,9 @@ export default function CodewarsConnectForm() {
       }
 
       setError(false);
+      setIsSaved(true);
       toast.success('🏆 Success! Your Codewars account is now linked!');
-      window.location.href = '/dashboard/profile/codewars';
+      window.location.href = '/dashboard/codewars';
     } catch {
       setError(true);
       toast.dismiss(toastId);
@@ -191,10 +193,21 @@ export default function CodewarsConnectForm() {
               Back
             </button>
             <button
+              disabled={isSaved}
               onClick={handleSave}
-              className='bg-primary text-primary-foreground w-1/2 cursor-pointer rounded-lg py-2.5 font-semibold shadow-sm transition-all hover:scale-[1.02]'
+              className={`w-1/2 rounded-lg py-2.5 font-semibold shadow-sm transition-all duration-300 ${
+                isSaved
+                  ? 'scale-[1.03] cursor-not-allowed bg-green-500/30 text-white opacity-80'
+                  : 'bg-primary text-primary-foreground cursor-pointer hover:scale-[1.02] hover:shadow-md'
+              }`}
             >
-              {error ? 'Try Again' : loading ? 'Saving...' : ' Confirm & Save'}
+              {isSaved
+                ? 'Saved!'
+                : error
+                  ? 'Try Again...'
+                  : loading
+                    ? 'Saving...'
+                    : 'Confirm & Save'}
             </button>
           </div>
         </div>

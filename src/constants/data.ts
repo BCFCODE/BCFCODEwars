@@ -12,14 +12,14 @@ export const navItems: NavItem[] = [
   },
   {
     title: 'Codewars',
-    url: '/dashboard/profile/codewars',
+    url: '/dashboard/codewars',
     icon: 'codewars', // 🆕 instead of "userPen"
     isActive: false,
     shortcut: ['c', 'c'],
     items: [
       {
         title: 'Competition',
-        url: '/dashboard/champions',
+        url: '/dashboard/codewars/champions',
         icon: 'competition', // 🆕 instead of "add"
         shortcut: ['l', 'u']
       }

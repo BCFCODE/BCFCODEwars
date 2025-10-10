@@ -17,7 +17,7 @@ export async function StatCards({ data }: Props) {
     typeof n === 'number' ? n.toLocaleString() : '—';
 
   return (
-    <>
+    <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
       <StatCard
         title='Leaderboard Position'
         primary={
@@ -89,6 +89,6 @@ export async function StatCards({ data }: Props) {
       />
 
       <DiamondsCollectButtonCard count={data.totalDiamonds} />
-    </>
+    </div>
   );
 }

@@ -3,7 +3,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import CountUp from 'react-countup';
-import { DiamondIcon } from '../../../leaderboard/components/DiamondIcon';
+import { DiamondIcon } from '../../leaderboard/components/DiamondIcon';
 
 export function DiamondsCollectButtonCard({ count }: { count: number }) {
   const [loading, setLoading] = React.useState(false);
