@@ -2,7 +2,7 @@ import CodewarsConnectForm from '../components/CodewarsConnectForm';
 
 export default function CodewarsConnectPage() {
   return (
-    <main className='-mt-15 flex min-h-[80vh] flex-col items-center justify-center px-4 py-12 transition-colors duration-500'>
+    <div className='flex flex-1 flex-col items-center justify-center space-y-6 px-4 py-12 transition-colors duration-500'>
       <div className='animate-fade-up w-full max-w-md text-center'>
         <h1 className='text-foreground text-3xl font-bold'>
           Connect your <span className='text-primary'>Codewars</span> account
@@ -16,6 +16,6 @@ export default function CodewarsConnectPage() {
       <div className='mt-10 w-full max-w-md'>
         <CodewarsConnectForm />
       </div>
-    </main>
+    </div>
   );
 }

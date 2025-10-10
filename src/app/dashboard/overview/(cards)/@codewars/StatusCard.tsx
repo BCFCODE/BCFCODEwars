@@ -12,7 +12,7 @@ import { IconTrendingUp } from '@tabler/icons-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { DiamondsCollectButtonCard } from '@/app/dashboard/profile/codewars/components/DiamondsCollectButtonCard';
+import { DiamondsCollectButtonCard } from '@/app/dashboard/codewars/components/DiamondsCollectButtonCard';
 import { isConnectedToCodewars } from '@/types';
 
 export function CodewarsStatusCard({
@@ -42,7 +42,7 @@ export function CodewarsStatusCard({
             </span>
             . Track progress, visualize growth, and level up your coding path.
           </p>
-          <Link href='/dashboard/profile/codewars/connect'>
+          <Link href='/dashboard/codewars/connect'>
             <Button className='bg-accent-foreground hover:bg-muted cursor-pointer text-white shadow-md'>
               Connect Codewars Account
             </Button>
@@ -90,7 +90,7 @@ export function CodewarsStatusCard({
         >
           Collect Diamonds
         </Button>
-        <Link href='/dashboard/profile/codewars'>
+        <Link href='/dashboard/codewars'>
           <Button className='bg-background hover:bg-muted/30 text-card-foreground cursor-pointer shadow-md'>
             Full Profile
           </Button>
