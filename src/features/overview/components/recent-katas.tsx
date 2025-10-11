@@ -12,8 +12,8 @@ import {
 } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { recentlySolvedKata } from '@/types';
-import { History, Trophy } from 'lucide-react';
-import Link from 'next/link';
+import { Trophy } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   data: recentlySolvedKata[];
@@ -24,66 +24,67 @@ interface Props {
 }
 
 export function RecentKatas({ data, className }: Props) {
+  const router = useRouter();
+
   return (
     <Card
       className={cn(
-        'bg-gradient-to-r from-[var(--royal-gold)]/20 to-[var(--kyu-5)]/20 dark:from-[var(--royal-gold)]/5 dark:to-[var(--kyu-5)]/5',
-        'group h-full overflow-hidden rounded-xl bg-gradient-to-br from-[var(--bg-background)]/10 to-[var(--kyu-5)]/10 shadow-lg transition-all duration-300 hover:shadow-xl',
-        'border-sidebar-border border'
+        'group border-sidebar-border h-full overflow-hidden rounded-xl border shadow-lg transition-all duration-500 hover:shadow-[0_0_25px_rgba(255,215,0,0.3)]',
+        'bg-gradient-to-br from-[var(--bg-background)]/10 to-[var(--kyu-5)]/10 dark:from-[var(--bg-background)]/5 dark:to-[var(--kyu-5)]/5'
       )}
     >
-      <Link
-        href='/dashboard/codewars/champions'
-        // className={cn(
-        //   'text-card flex items-center gap-2 rounded-full bg-[var(--royal-gold)]/40 font-semibold max-[420]:-ml-4',
-        //   'transition-all duration-300 hover:scale-110 hover:bg-[var(--royal-gold)]/60 hover:p-1 hover:text-black',
-        //   'focus:ring-sidebar-ring focus:ring-2 focus:outline-none'
-        // )}
+      <CardHeader
+        role='button'
+        tabIndex={0}
+        onClick={() => router.push('/dashboard/codewars/champions')}
+        className={cn(
+          'relative flex cursor-pointer items-center justify-start gap-4 overflow-hidden px-7 py-5',
+          'bg-gradient-to-r from-[var(--royal-gold)]/20 to-[var(--kyu-5)]/20',
+          'border-b border-[var(--royal-gold)]/30 backdrop-blur-md',
+          'transition-all duration-500',
+          'hover:scale-[1.02] active:scale-[0.99]',
+          'hover:shadow-[0_8px_25px_rgba(255,215,0,0.3)]',
+          'focus-visible:ring-2 focus-visible:ring-[var(--royal-gold)] focus-visible:outline-none'
+        )}
       >
-        <CardHeader
-          className={cn(
-            'relative bg-gradient-to-r from-[var(--royal-gold)]/20 to-[var(--kyu-5)]/20 dark:from-[var(--royal-gold)]/5 dark:to-[var(--kyu-5)]/5',
-            'border-b border-[var(--royal-gold)]/30 backdrop-blur-md',
-            'flex items-center justify-start px-7 py-4',
-            'shadow-[0_4px_12px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_12px_rgba(255,255,255,0.05)]',
-            'transition-all duration-500 hover:shadow-[0_6px_20px_rgba(255,215,0,0.3)]'
-          )}
-        >
-          {/* Animated Background Effect */}
-          <div className='animate-pulse-slow absolute inset-0 bg-gradient-to-r from-[var(--royal-gold)]/10 to-transparent opacity-50' />
+        {/* Subtle shimmer sweep */}
+        <div className='group-hover:animate-shimmer pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-[var(--royal-gold)]/10 to-transparent opacity-0 group-hover:opacity-100' />
 
-          {/* History Link with Tooltip */}
+        {/* Glowing rotating aura behind Trophy */}
+        <div className='animate-rotate-slow absolute -left-3 h-20 w-20 rounded-full bg-[var(--royal-gold)]/20 opacity-50 blur-2xl group-hover:opacity-70' />
 
-          <div className='group/link relative'>
-            <History className='group-hover/link:animate-spin-slow h-10 w-10 max-[480px]:h-8 max-[480px]:w-8 max-[320px]:h-6 max-[320px]:w-6' />
-            <span className='text-card absolute top-full left-1/2 mt-1 hidden -translate-x-1/2 rounded-md bg-[var(--royal-gold)]/30 px-2 py-1 text-xs shadow-md group-hover/link:block'>
-              History
-            </span>
-          </div>
+        {/* Animated Trophy Icon */}
+        <div className='relative flex items-center justify-center'>
+          <Trophy
+            className={cn(
+              'h-11 w-11 text-[var(--royal-gold)] drop-shadow-[0_0_8px_rgba(255,215,0,0.5)] transition-transform duration-500',
+              'group-hover:scale-110 group-hover:rotate-[10deg] group-hover:drop-shadow-[0_0_15px_rgba(255,215,0,0.7)]',
+              'max-[480px]:h-8 max-[480px]:w-8 max-[320px]:h-6 max-[320px]:w-6'
+            )}
+          />
+          <div className='animate-ping-slow absolute inset-0 rounded-full border border-[var(--royal-gold)]/30' />
+        </div>
 
-          {/* Title and Description */}
-          <div className='ml-4 max-[480px]:ml-3 max-[420px]:ml-2 max-[320px]:ml-0'>
-            <CardTitle
-              className={cn(
-                'text-sidebar-foreground flex items-center gap-2 text-2xl font-extrabold tracking-tight max-[1280px]:text-[19px] max-[520px]:text-[20px] max-[480px]:text-[18px] max-[420px]:text-[15px] max-[360px]:text-[12px]',
-                'text-card-foreground drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]',
-                'group-hover:text-card-foreground/80 transition-all duration-300'
-              )}
-            >
-              <Trophy className='text-card-foreground h-7 w-7 animate-bounce group-hover:animate-pulse max-[1280px]:h-4 max-[1280px]:w-4 max-[520px]:h-4 max-[520px]:w-4 max-[480px]:h-3 max-[480px]:w-3' />
-              BCFCODE Kata Champions
-            </CardTitle>
-            <CardDescription
-              className={cn(
-                'text-sidebar-accent-foreground mt-1 text-sm font-medium max-[480px]:text-xs max-[420px]:text-[12px] max-[360px]:text-[9px]',
-                'text-card-foreground/80'
-              )}
-            >
-              See who’s crushing Codewars right now ⚡
-            </CardDescription>
-          </div>
-        </CardHeader>
-      </Link>
+        {/* Title & Subtitle */}
+        <div className='relative z-10 flex flex-col'>
+          <CardTitle
+            className={cn(
+              'text-card-foreground text-2xl font-extrabold tracking-tight max-[1280px]:text-[19px] max-[480px]:text-[17px] max-[360px]:text-[14px]',
+              'drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] transition-all duration-300 group-hover:text-[var(--royal-gold)]'
+            )}
+          >
+            BCFCODE Kata Champions
+          </CardTitle>
+          <CardDescription
+            className={cn(
+              'text-card-foreground/80 mt-1 text-sm font-medium max-[480px]:text-xs max-[420px]:text-[11px]',
+              'transition-colors duration-300 group-hover:text-[var(--royal-gold)]/90'
+            )}
+          >
+            See who’s crushing Codewars right now ⚡
+          </CardDescription>
+        </div>
+      </CardHeader>
 
       <CardContent className='-mt-3 p-2'>
         <div className='space-y-1'>
@@ -91,9 +92,8 @@ export function RecentKatas({ data, className }: Props) {
             <div
               key={idx}
               className={cn(
-                'flex items-center rounded-lg p-3 transition-all duration-200',
-                'hover:bg-sidebar-accent/20 hover:scale-[1.01] hover:shadow-sm',
-                'focus-within:ring-sidebar-ring focus-within:ring-2'
+                'flex items-center rounded-lg p-3 transition-all duration-300',
+                'hover:bg-sidebar-accent/20 focus-within:ring-sidebar-ring focus-within:ring-2 hover:scale-[1.01] hover:shadow-sm'
               )}
               tabIndex={0}
             >
@@ -110,9 +110,7 @@ export function RecentKatas({ data, className }: Props) {
                   alt={kata.kataName}
                   referrerPolicy='no-referrer'
                 />
-                <AvatarFallback
-                  className={cn('bg-muted text-muted-foreground')}
-                >
+                <AvatarFallback className='bg-muted text-muted-foreground'>
                   {kata.fallback}
                 </AvatarFallback>
               </Avatar>
