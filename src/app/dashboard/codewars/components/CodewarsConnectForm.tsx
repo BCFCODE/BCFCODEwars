@@ -5,8 +5,44 @@ import { ApiResponse as SaveApiResponse } from '@/app/api/codewars/connect/save/
 import { CodewarsApiUser } from '@/types';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 type Step = 1 | 2 | 3;
+
+const baseBtn = cn(
+  'cursor-pointer',
+  'w-full sm:w-1/2',
+  'rounded-lg',
+  'py-2.5',
+  'font-semibold',
+  'transition-all duration-300',
+  'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary',
+  'disabled:cursor-not-allowed disabled:opacity-70'
+);
+
+const primaryBtn = cn(
+  baseBtn,
+  'bg-gradient-to-r from-primary to-primary/80 text-primary-foreground',
+  'hover:from-primary/90 hover:to-primary hover:shadow-md',
+  'active:scale-[0.98]',
+  'focus:ring-primary/40'
+);
+
+const outlineBtn = cn(
+  baseBtn,
+  'border border-border text-foreground bg-background',
+  'hover:bg-accent/10 hover:text-accent-foreground',
+  'active:scale-[0.98]',
+  'focus:ring-accent/30'
+);
+
+const successBtn = cn(
+  baseBtn,
+  'bg-green-500/20 text-green-700 border border-green-500/30',
+  'shadow-sm hover:shadow-md hover:bg-green-500/25',
+  'active:scale-[0.98]',
+  'focus:ring-green-500/40'
+);
 
 export default function CodewarsConnectForm() {
   const [step, setStep] = useState<Step>(1);
@@ -19,19 +55,9 @@ export default function CodewarsConnectForm() {
   /* -------------------- 🔹 Step 2: Validate username -------------------- */
   async function handleValidation(e: React.FormEvent) {
     e.preventDefault();
-    const toastId = toast.loading(
-      step === 1
-        ? '⚔️ Preparing to validate your Codewars journey...'
-        : step === 2
-          ? '🔍 Checking your Codewars username in the dojo...'
-          : step === 3
-            ? '🚀 Syncing your Codewars profile...'
-            : error
-              ? '🔄 Retrying username validation...'
-              : '⚡ Validating your Codewars username...'
-    );
+
     if (!username.trim()) {
-      toast.warning('🛑 Oops! Please enter your Codewars username to proceed.');
+      toast.warning('Oops! Please enter your Codewars username to proceed.');
       return;
     }
 
@@ -50,7 +76,6 @@ export default function CodewarsConnectForm() {
         toast[data.toastType](data.reason);
         return;
       }
-      toast.dismiss(toastId);
 
       setError(false);
       toast.success('Username validated! Ready to conquer the next step!');
@@ -112,10 +137,7 @@ export default function CodewarsConnectForm() {
             account to effortlessly sync kata progress, track your coding
             achievements, and showcase your growth as a developer.
           </p>
-          <button
-            onClick={() => setStep(2)}
-            className='bg-primary text-primary-foreground w-full cursor-pointer rounded-lg py-2.5 font-semibold shadow-md transition-all hover:scale-[1.02] hover:shadow-lg'
-          >
+          <button onClick={() => setStep(2)} className={primaryBtn}>
             Let’s Go!
           </button>
         </div>
@@ -137,14 +159,19 @@ export default function CodewarsConnectForm() {
             <button
               type='button'
               onClick={() => setStep(1)}
-              className='border-border hover:bg-accent/10 w-1/2 cursor-pointer rounded-lg border py-2.5 font-semibold transition-all'
+              className={outlineBtn}
             >
               Back
             </button>
             <button
               type='submit'
               disabled={loading}
-              className='bg-primary text-primary-foreground w-1/2 cursor-pointer rounded-lg py-2.5 font-semibold shadow-md transition-all hover:scale-[1.02] hover:shadow-lg disabled:opacity-70'
+              className={cn(
+                primaryBtn,
+                loading && 'cursor-wait opacity-80',
+                error &&
+                  'bg-gradient-to-r from-red-500/30 to-red-600/40 hover:from-red-600/80 hover:to-red-700/80'
+              )}
             >
               {error ? 'Try Again' : loading ? 'Validating...' : 'Validate'}
             </button>
@@ -186,20 +213,19 @@ export default function CodewarsConnectForm() {
           </div>
 
           <div className='flex w-full justify-between gap-2'>
-            <button
-              onClick={() => setStep(2)}
-              className='border-border hover:bg-accent/10 w-1/2 cursor-pointer rounded-lg border py-2.5 text-sm font-semibold transition-all'
-            >
+            <button onClick={() => setStep(2)} className={outlineBtn}>
               Back
             </button>
             <button
               disabled={isSaved}
               onClick={handleSave}
-              className={`w-1/2 rounded-lg py-2.5 font-semibold shadow-sm transition-all duration-300 ${
-                isSaved
-                  ? 'scale-[1.03] cursor-not-allowed bg-green-500/30 text-white opacity-80'
-                  : 'bg-primary text-primary-foreground cursor-pointer hover:scale-[1.02] hover:shadow-md'
-              }`}
+              className={cn(
+                isSaved ? successBtn : primaryBtn,
+                loading && 'cursor-wait opacity-80',
+                error &&
+                  !isSaved &&
+                  'bg-gradient-to-r from-red-500/30 to-red-600/40 hover:from-red-600/80 hover:to-red-700/80'
+              )}
             >
               {isSaved
                 ? 'Saved!'
@@ -207,7 +233,7 @@ export default function CodewarsConnectForm() {
                   ? 'Try Again...'
                   : loading
                     ? 'Saving...'
-                    : 'Confirm & Save'}
+                    : 'Save'}
             </button>
           </div>
         </div>

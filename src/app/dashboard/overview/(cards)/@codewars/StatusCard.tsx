@@ -88,11 +88,11 @@ export function CodewarsStatusCard({
           onClick={() => setShowCollectDiamondsBtn(true)}
           className='bg-background hover:bg-muted/30 text-card-foreground cursor-pointer shadow-md'
         >
-          Collect Diamonds
+          Collect
         </Button>
         <Link href='/dashboard/codewars'>
           <Button className='bg-background hover:bg-muted/30 text-card-foreground cursor-pointer shadow-md'>
-            Full Profile
+            Profile
           </Button>
         </Link>
       </CardFooter>

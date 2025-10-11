@@ -57,28 +57,28 @@ export function RecentKatas({ data, className }: Props) {
         <div className='relative flex items-center justify-center'>
           <Trophy
             className={cn(
-              'h-11 w-11 text-[var(--royal-gold)] drop-shadow-[0_0_8px_rgba(255,215,0,0.5)] transition-transform duration-500',
+              'text-card-foreground/80 h-11 w-11 drop-shadow-[0_0_8px_rgba(255,215,0,0.5)] transition-transform duration-500 dark:text-[var(--royal-gold)]',
               'group-hover:scale-110 group-hover:rotate-[10deg] group-hover:drop-shadow-[0_0_15px_rgba(255,215,0,0.7)]',
-              'max-[480px]:h-8 max-[480px]:w-8 max-[320px]:h-6 max-[320px]:w-6'
+              'max-[480px]:h-8 max-[480px]:w-8 max-[420px]:-ml-1 max-[380px]:-ml-2 max-[360px]:-ml-3 max-[320px]:h-6 max-[320px]:w-6'
             )}
           />
-          <div className='animate-ping-slow absolute inset-0 rounded-full border border-[var(--royal-gold)]/30' />
+          <div className='animate-ping-slow absolute inset-0 rounded-full border border-[var(--royal-gold)]/30 max-[420px]:-ml-1 max-[380px]:-ml-2 max-[360px]:-ml-3' />
         </div>
 
         {/* Title & Subtitle */}
         <div className='relative z-10 flex flex-col'>
           <CardTitle
             className={cn(
-              'text-card-foreground text-2xl font-extrabold tracking-tight max-[1280px]:text-[19px] max-[480px]:text-[17px] max-[360px]:text-[14px]',
-              'drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] transition-all duration-300 group-hover:text-[var(--royal-gold)]'
+              'text-card-foreground text-2xl font-extrabold tracking-tight max-[1280px]:text-[19px] max-[480px]:text-[17px] max-[360px]:text-[14px] max-[320px]:text-[10px]',
+              'drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] transition-all duration-300 dark:group-hover:text-[var(--royal-gold)]'
             )}
           >
             BCFCODE Kata Champions
           </CardTitle>
           <CardDescription
             className={cn(
-              'text-card-foreground/80 mt-1 text-sm font-medium max-[480px]:text-xs max-[420px]:text-[11px]',
-              'transition-colors duration-300 group-hover:text-[var(--royal-gold)]/90'
+              'text-card-foreground/80 mt-1 text-sm font-medium max-[480px]:text-xs max-[420px]:text-[11px] max-[360px]:text-[9px] max-[320px]:text-[7px]',
+              'transition-colors duration-300 dark:group-hover:text-[var(--royal-gold)]/90'
             )}
           >
             See who’s crushing Codewars right now ⚡
