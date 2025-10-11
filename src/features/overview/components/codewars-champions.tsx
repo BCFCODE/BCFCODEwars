@@ -14,8 +14,11 @@ import { cn } from '@/lib/utils';
 import { recentlySolvedKata } from '@/types';
 import { Trophy } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { ChampionsPagination } from './codewars-champion-pagination';
+import { useState } from 'react';
 
 interface Props {
+  showPagination?: boolean;
   data: recentlySolvedKata[];
   className?: {
     kataNameStyles?: string;
@@ -23,7 +26,8 @@ interface Props {
   };
 }
 
-export function RecentKatas({ data, className }: Props) {
+export function CodewarsChampions({ showPagination, data, className }: Props) {
+  const [page, setPage] = useState(0);
   const router = useRouter();
 
   return (
@@ -136,6 +140,16 @@ export function RecentKatas({ data, className }: Props) {
           ))}
         </div>
       </CardContent>
+      {showPagination && (
+        <div className='relative mt-6'>
+          <div className='absolute inset-0 -z-10 animate-pulse bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.1),transparent_70%)] blur-2xl' />
+          <ChampionsPagination
+            currentPage={page ?? 0}
+            totalPages={10}
+            onPageChange={setPage}
+          />
+        </div>
+      )}
     </Card>
   );
 }

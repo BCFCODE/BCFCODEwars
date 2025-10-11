@@ -1,12 +1,11 @@
 import { getKataData } from '@/app/repositories/codewarsRepository';
-import PageContainer from '@/components/layout/page-container';
-import { RecentKatas } from '@/features/overview/components/kata-champions';
+import { CodewarsChampions } from '@/features/overview/components/codewars-champions';
 import {
   getRecentlySolvedData,
   isConnectedToCodewars
 } from '@/services/codewarsService';
-import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import Link from 'next/link';
 
 // Constants for better maintainability
 const LINK_STYLES = {
@@ -109,8 +108,9 @@ export default async function CodewarsChampionsPage() {
           />
         </div>
       </div>
-      {/* Katas List */}
-      <RecentKatas
+      {/* Codewars Champions */}
+      <CodewarsChampions
+        showPagination
         data={success ? data : []}
         className={{
           avatarStyles: 'h-20 w-20'

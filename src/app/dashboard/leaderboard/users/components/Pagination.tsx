@@ -1,5 +1,4 @@
 import { LeftFooter } from '@/app/dashboard/leaderboard/components/LeftFooter';
-import { UsersTableData } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
@@ -9,12 +8,12 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import { UsersTableData } from '@/types';
 import {
   IconChevronLeft,
   IconChevronRight,
   IconChevronsLeft,
-  IconChevronsRight,
-  IconPlus
+  IconChevronsRight
 } from '@tabler/icons-react';
 import { Table } from '@tanstack/react-table';
 
@@ -89,10 +88,10 @@ export function Pagination({ table }: { table: Table<UsersTableData> }) {
             <span className='sr-only'>Go to last page</span>
             <IconChevronsRight />
           </Button>
-          <Button variant='outline' size='sm'>
+          {/* <Button variant='outline' size='sm'>
             <IconPlus />
             <span className='hidden lg:inline'>Add Section</span>
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>
