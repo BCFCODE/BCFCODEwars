@@ -13,15 +13,21 @@ export const navItems: NavItem[] = [
   {
     title: 'Codewars',
     url: '/dashboard/codewars',
-    icon: 'codewars', // 🆕 instead of "userPen"
+    icon: 'codewars',
     isActive: false,
     shortcut: ['c', 'c'],
     items: [
       {
-        title: 'Competition',
+        title: 'Champions',
         url: '/dashboard/codewars/champions',
-        icon: 'competition', // 🆕 instead of "add"
+        icon: 'champions',
         shortcut: ['l', 'u']
+      },
+      {
+        title: 'Connect',
+        url: '/dashboard/codewars/connect',
+        icon: 'link',
+        shortcut: ['c', 'l']
       }
     ]
   },

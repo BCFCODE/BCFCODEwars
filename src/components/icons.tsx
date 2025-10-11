@@ -30,7 +30,7 @@ import {
   IconUserEdit,
   IconUserX,
   IconX,
-  IconLayoutKanban,
+  IconLink,
   IconBrandGithub,
   IconTrophy,
   IconCode,
@@ -80,7 +80,7 @@ export const Icons = {
   // Dashboard Extras
   leaderboard: IconTrophy,
   codewars: IconCode, // 🆕 Specific icon for Codewars
-  competition: IconMedal, // 🆕 More meaningful than generic "add"
+  champions: IconMedal, // 🆕 More meaningful than generic "add"
 
   // Themes
   sun: IconSun,
@@ -93,7 +93,9 @@ export const Icons = {
   // Brands
   github: IconBrandGithub,
   twitter: IconBrandTwitter,
-  help: IconHelpCircle
+  help: IconHelpCircle,
+
+  link: IconLink // 🆕 clean, modern, instantly clear for "Connect"
 } as const;
 
 export type IconName = keyof typeof Icons;

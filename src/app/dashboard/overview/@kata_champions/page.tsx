@@ -1,5 +1,5 @@
 import { getKataData } from '@/app/repositories/codewarsRepository';
-import { RecentKatas } from '@/features/overview/components/recent-katas';
+import { RecentKatas } from '@/features/overview/components/kata-champions';
 import { cn } from '@/lib/utils';
 import {
   getRecentlySolvedData,

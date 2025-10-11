@@ -1,6 +1,6 @@
 import { getKataData } from '@/app/repositories/codewarsRepository';
 import PageContainer from '@/components/layout/page-container';
-import { RecentKatas } from '@/features/overview/components/recent-katas';
+import { RecentKatas } from '@/features/overview/components/kata-champions';
 import {
   getRecentlySolvedData,
   isConnectedToCodewars
