@@ -144,8 +144,8 @@ export function CodewarsChampions({ showPagination, data, className }: Props) {
         <div className='relative mt-6'>
           <div className='absolute inset-0 -z-10 animate-pulse bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.1),transparent_70%)] blur-2xl' />
           <ChampionsPagination
-            currentPage={page ?? 0}
-            totalPages={10}
+            currentPage={page}
+            totalPages={17}
             onPageChange={setPage}
           />
         </div>
