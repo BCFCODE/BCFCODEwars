@@ -297,3 +297,45 @@
     color-scheme: light;
   }
 }
+
+/* 💫 Animations */
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+@keyframes rotate-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ping-slow {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite linear;
+}
+.animate-rotate-slow {
+  animation: rotate-slow 10s linear infinite;
+}
+.animate-ping-slow {
+  animation: ping-slow 3.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}

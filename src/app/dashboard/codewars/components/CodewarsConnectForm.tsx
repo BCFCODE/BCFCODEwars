@@ -53,12 +53,12 @@ export default function CodewarsConnectForm() {
       toast.dismiss(toastId);
 
       setError(false);
-      toast.success('🎉 Username validated! Ready to conquer the next step!');
+      toast.success('Username validated! Ready to conquer the next step!');
       setUserData(data.userData);
       setStep(3);
     } catch {
       setError(true);
-      toast.error('⚠️ Uh-oh! Validation failed. Give it another shot!');
+      toast.error('Uh-oh! Validation failed. Give it another shot!');
     } finally {
       setLoading(false);
     }
