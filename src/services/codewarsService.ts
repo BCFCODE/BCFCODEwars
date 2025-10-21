@@ -17,17 +17,19 @@
 
 import {
   getCodewarsProfile,
-  getRecentlySolved,
+  getChampionsKataData,
   isConnected
 } from '@/app/repositories/codewarsRepository';
 import { getDb } from '@/lib/mongodb';
 import {
   codewarsProfileDataSchema,
   isConnectedToCodewarsSchema,
+  recentlySolvedKata,
   recentlySolvedKataSchema
 } from '@/types';
 import { z } from 'zod';
 import { getEmail } from './clerkService';
+import { ClientSession } from 'mongodb';
 
 /**
  * Fetches the Codewars user ID for the currently signed-in user.
@@ -106,31 +108,87 @@ export async function getCodewarsProfileData() {
 }
 
 /**
- * Fetches the list of recently solved katas across all users.
+ * Fetches the list of recently solved katas across all users within a MongoDB transaction.
  *
- * - Calls repository `getRecentlySolved()`
+ * - Calls repository `getChampionsKataData` with transactional session
  * - Validates the response with Zod
- * - Returns a typed SafeParseReturn object
+ * - Returns a simplified object with success status and data
  *
- * @param {Object} [params]
- * @param {number} [params.limit=100] - Maximum number of katas to return
+ * @param {Object} params
+ * @param {number} [params.limit=25] - Maximum number of katas to return
+ * @param {number} [params.skip=0] - Number of katas to skip for pagination
+ * @param {ClientSession} params.session - MongoDB session for transactional operations
  *
- * @returns {Promise<ReturnType<typeof recentlySolvedKatasSchema.safeParse>>}
- *          A Zod SafeParseReturn. Use `.success` to check validity and `.data` to get typed data.
+ * @returns {Promise<{ success: boolean; data: RecentlySolvedKata[] }>}
+ *          An object with success status and typed data. Use `.success` to check validity and `.data` to get katas.
  *
  * @example
- * const result = await getRecentlySolvedData({ limit: 50 });
- * if (result.success) {
- *   console.log(result.data[0].name); // "Valid Braces"
+ * const session = client.startSession();
+ * try {
+ *   await session.withTransaction(async () => {
+ *     const result = await getRecentlySolvedData({ limit: 50, skip: 0, session });
+ *     if (result.success) {
+ *       console.log(result.data[0].kataName); // e.g., "Valid Braces"
+ *     }
+ *   });
+ * } finally {
+ *   await session.endSession();
  * }
  */
-export async function getRecentlySolvedData({
-  limit = 100
-}: {
-  limit?: number;
-} = {}) {
-  const raw = await getRecentlySolved({ limit });
+export async function getRecentlySolvedData(
+  {
+    limit = 25,
+    skip = 0
+  }: {
+    limit?: number;
+    skip?: number;
+  },
+  session?: ClientSession
+): Promise<{ success: boolean; data: recentlySolvedKata[] }> {
+  try {
+    // Validate input parameters
+    if (typeof limit !== 'number' || !Number.isInteger(limit) || limit < 1) {
+      throw new Error('Limit must be a positive integer');
+    }
+    if (typeof skip !== 'number' || !Number.isInteger(skip) || skip < 0) {
+      throw new Error('Skip must be a non-negative integer');
+    }
 
-  // Validate with Zod
-  return z.array(recentlySolvedKataSchema).safeParse(raw);
+    // Fetch data from repository
+    const { success, data } = await getChampionsKataData(
+      { limit, skip },
+      session
+    );
+
+    // Check repository response
+    if (!success) {
+      console.error('Failed to fetch champions kata data from repository');
+      return {
+        success: false,
+        data: []
+      };
+    }
+
+    // Validate with Zod
+    const result = z.array(recentlySolvedKataSchema).safeParse(data);
+
+    if (!result.success) {
+      console.error(
+        'Zod validation failed for recently solved katas:',
+        result.error
+      );
+      return {
+        success: false,
+        data: []
+      };
+    }
+
+    return { success: true, data: result.data };
+  } catch (error) {
+    console.error('Error in getRecentlySolvedData:', error);
+    return {
+      success: false,
+      data: []
+    };
+  }
 }

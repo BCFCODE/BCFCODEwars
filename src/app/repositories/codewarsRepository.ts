@@ -8,7 +8,7 @@ import {
   recentlySolvedKata,
   recentlySolvedKataSchema
 } from '@/types';
-import { Db } from 'mongodb';
+import { ClientSession, Db } from 'mongodb';
 
 /**
  * Retrieves the Codewars user ID and username for the authenticated user based on their email.
@@ -185,16 +185,19 @@ export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> 
   }
 }
 
-export async function getKataData({
-  codewarsUsername,
-  codewarsUserId,
-  codewarsName
-}: {
-  codewarsUsername: string;
-  codewarsUserId: string;
-  codewarsName: string;
-}) {
-  // Input validation (expanded for all params)
+export async function getKataData(
+  {
+    codewarsUsername,
+    codewarsUserId,
+    codewarsName
+  }: {
+    codewarsUsername: string;
+    codewarsUserId: string;
+    codewarsName: string;
+  },
+  session?: ClientSession
+): Promise<Kata[]> {
+  // Input validation
   if (typeof codewarsUsername !== 'string' || !codewarsUsername.trim()) {
     throw new Error('Invalid or missing username');
   }
@@ -208,26 +211,23 @@ export async function getKataData({
   const db = await getDb();
   const katasCollection = db.collection<Kata>('katas');
   const recentlySolvedCollection = db.collection('recentlySolved');
-  const user = await getUser(); // Assuming this fetches user data including imageUrl
+  const user = await getUser(); // Fetches user data including imageUrl
 
-  // NOTE: Index creation should be handled in a separate migration or init script,
-  // not in every function call for performance. Assuming they exist; remove these lines in production.
-  // await katasCollection.createIndex({ userId: 1, completedAt: -1 });
-  // await katasCollection.createIndex({ userId: 1, id: 1 }, { unique: true });
-  // await recentlySolvedCollection.createIndex({ userId: 1, completedAt: -1 });
-  // await recentlySolvedCollection.createIndex({ userId: 1, id: 1 }, { unique: true }); // Added unique for consistency
-
-  // Get latest completedAt checkpoint
+  // Get latest completedAt checkpoint within transaction
   const latest = await katasCollection.findOne(
     { userId: codewarsUserId },
-    { sort: { completedAt: -1 }, projection: { completedAt: 1 } }
+    {
+      sort: { completedAt: -1 },
+      projection: { completedAt: 1 },
+      session // Bind to transaction
+    }
   );
   const latestCompletedAt = latest?.completedAt ?? null;
 
-  // Fetch new katas sequentially with early stopping to avoid unnecessary API calls
+  // Fetch new katas sequentially with early stopping
   const newKatas: Kata[] = [];
   let page = 0;
-  let totalPages = 1; // Initial assumption; updated after first fetch
+  let totalPages = 1;
   let shouldContinue = true;
 
   try {
@@ -258,11 +258,10 @@ export async function getKataData({
         totalPages = json.totalPages;
       }
 
-      shouldContinue = false; // Assume stop unless new katas found
+      shouldContinue = false;
       for (const apiKata of data) {
         const completedDate = new Date(apiKata.completedAt);
         if (latestCompletedAt && completedDate <= latestCompletedAt) {
-          // Since API sorts descending by completedAt, we can stop entirely
           shouldContinue = false;
           break;
         }
@@ -275,20 +274,21 @@ export async function getKataData({
           slug: apiKata.slug,
           isCollected: false
         });
-        shouldContinue = true; // Found a new one, continue to next page if available
+        shouldContinue = true;
       }
       page++;
     }
   } catch (error) {
-    if ((error as Error).message === 'Request timed out') {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    if (errorMessage === 'Request timed out') {
       console.error('Fetch timed out');
       throw new Error('Request timed out after 10 seconds');
     }
     console.error('Error fetching Codewars data:', error);
-    throw new Error(`Failed to fetch katas: ${(error as Error).message}`);
+    throw new Error(`Failed to fetch katas: ${errorMessage}`);
   }
 
-  // Bulk upsert to katas if new ones found
+  // Perform database writes within transaction
   if (newKatas.length > 0) {
     const operations = newKatas.map((kata) => ({
       updateOne: {
@@ -298,30 +298,31 @@ export async function getKataData({
       }
     }));
 
-    const chunkSize = 500; // MongoDB bulkWrite limit consideration
+    const chunkSize = 500;
     for (let i = 0; i < operations.length; i += chunkSize) {
-      await katasCollection.bulkWrite(operations.slice(i, i + chunkSize), {
-        ordered: false
-      });
+      await katasCollection.bulkWrite(
+        operations.slice(i, i + chunkSize),
+        { ordered: false, session } // Bind to transaction
+      );
     }
 
-    // Prepare recent docs (use codewarsName for fallback if needed)
     const recentDocs = newKatas.map((kata) => ({
-      // We use codewarsName instead of user.fullName to ensure the displayed username reflects the authentic Codewars profile.
-      // This prevents potential misuse where a user could attempt to link their account to another Codewars user's profile and falsely display that user's activity as their own.
-      // By using codewarsName, we guarantee that the activity shown is tied to the correct Codewars account, maintaining integrity and preventing impersonation.
       username: codewarsName,
       userId: kata.userId,
       kataId: kata.id,
       kataName: kata.name,
       completedAt: kata.completedAt,
       avatar: user.imageUrl,
-      fallback: codewarsName.charAt(0).toUpperCase() // Simplified: First letter of Codewars username for avatar fallback
+      fallback: codewarsName.charAt(0).toUpperCase()
     }));
-    await recentlySolvedCollection.insertMany(recentDocs, { ordered: false });
+
+    await recentlySolvedCollection.insertMany(
+      recentDocs,
+      { ordered: false, session } // Bind to transaction
+    );
   }
 
-  // Fetch and return the 10 most recent katas
+  // Fetch and return the 10 most recent katas within transaction
   const katas = await katasCollection
     .find(
       { userId: codewarsUserId },
@@ -335,7 +336,8 @@ export async function getKataData({
           completedAt: 1
         },
         sort: { completedAt: -1 },
-        limit: 10
+        limit: 10,
+        session // Bind to transaction
       }
     )
     .toArray();
@@ -343,25 +345,58 @@ export async function getKataData({
   return katas.map((kata) => kataSchema.parse(kata));
 }
 
-export async function getRecentlySolved({ limit = 100 }: { limit?: number }) {
-  const db = await getDb();
-  const collection = db.collection<recentlySolvedKata>('recentlySolved');
+export async function getChampionsKataData(
+  {
+    limit = 25,
+    skip = 0
+  }: {
+    limit?: number;
+    skip?: number;
+  },
+  session?: ClientSession
+): Promise<{
+  success: boolean;
+  data: recentlySolvedKata[];
+}> {
+  try {
+    const db = await getDb();
+    const collection = db.collection<recentlySolvedKata>('recentlySolved');
 
-  const katas = await collection
-    .find({})
-    .project({
-      _id: 0,
-      username: 1,
-      userId: 1,
-      kataId: 1,
-      kataName: 1,
-      completedAt: 1,
-      avatar: 1,
-      fallback: 1
-    })
-    .sort({ completedAt: -1 }) // ✅ latest on top
-    .limit(limit)
-    .toArray();
+    const katas = await collection
+      .find(
+        {},
+        {
+          projection: {
+            _id: 0,
+            username: 1,
+            userId: 1,
+            kataId: 1,
+            kataName: 1,
+            completedAt: 1,
+            avatar: 1,
+            fallback: 1
+          },
+          sort: { completedAt: -1 },
+          limit,
+          skip,
+          session
+        }
+      )
+      .toArray();
 
-  return katas.map((kata) => recentlySolvedKataSchema.parse(kata));
+    const parsedKatas = katas.map((kata) =>
+      recentlySolvedKataSchema.parse(kata)
+    );
+
+    return {
+      success: true,
+      data: parsedKatas
+    };
+  } catch (error) {
+    console.error('Error in getChampionsKataData:', error);
+    return {
+      success: false,
+      data: []
+    };
+  }
 }

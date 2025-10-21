@@ -17,7 +17,7 @@ export default async function CodewarsChampionsPage() {
     });
   }
 
-  const { data, success } = await getRecentlySolvedData({ limit: 20 });
+  const { data, success } = await getRecentlySolvedData({ limit: 25, skip: 0 });
 
   return (
     <div className='flex flex-1 flex-col space-y-6'>

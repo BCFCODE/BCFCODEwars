@@ -22,6 +22,7 @@ export async function PATCH(request: NextRequest) {
   const client = await getClient();
 
   const session = client.startSession();
+
   try {
     const { sessionStatus } = await auth();
     if (sessionStatus !== 'active') {
@@ -58,7 +59,7 @@ export async function PATCH(request: NextRequest) {
           codewarsUsername: codewars.username,
           codewarsName: codewars.name
         },
-        { session } // Pass session for transactional context
+        session // Pass session for transactional context
       );
 
       // (b) Retrieve champions data (read-only)
@@ -67,7 +68,7 @@ export async function PATCH(request: NextRequest) {
           skip,
           limit
         },
-        { session }
+        session
       );
 
       if (!success) {
