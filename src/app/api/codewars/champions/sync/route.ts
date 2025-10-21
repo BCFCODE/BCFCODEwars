@@ -52,16 +52,23 @@ export async function PATCH(request: NextRequest) {
     // 2️⃣ Start a transaction for atomic sync
     let championsData = null;
     await session.withTransaction(async () => {
-      // (a) Fetch latest kata data and update in DB
-      await getKataData(
-        {
-          codewarsUserId: codewars.id,
-          codewarsUsername: codewars.username,
-          codewarsName: codewars.name
-        },
-        session // Pass session for transactional context
-      );
-
+      if (skip === 0) {
+        /* 
+          When skip is 0 (first page), fetch and update kata data to ensure freshness.
+          This optimizes the sync process by avoiding redundant updates during pagination,
+          eliminating the need for a separate GET handler for paginated queries.
+          Subsequent pages retrieve cached data, leveraging React Query for efficient client-side pagination.
+        */
+        // (a) Fetch latest kata data and update in DB
+        await getKataData(
+          {
+            codewarsUserId: codewars.id,
+            codewarsUsername: codewars.username,
+            codewarsName: codewars.name
+          },
+          session // Pass session for transactional context
+        );
+      }
       // (b) Retrieve champions data (read-only)
       const { data, success } = await getChampionsKataData(
         {
