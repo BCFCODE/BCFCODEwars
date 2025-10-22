@@ -1,26 +1,18 @@
 import {
-  getChampionsKataData,
-  getKataData
+  getKataData,
+  getChampionsKataData
 } from '@/app/repositories/codewarsRepository';
 import { getClient } from '@/lib/mongodb';
 import { isConnectedToCodewars } from '@/services/codewarsService';
 import { auth } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-/**
- * PATCH /api/codewars/champions/sync
- * Syncs champion kata data for the authenticated user.
- * - Verifies user is logged in and connected to Codewars.
- * - Fetches & updates kata data atomically inside a MongoDB transaction.
- * - Returns latest champions leaderboard data.
- */
 export async function PATCH(request: NextRequest) {
   const url = new URL(request.url);
   const limit = Number(url.searchParams.get('limit')) || 25;
   const skip = Number(url.searchParams.get('skip')) || 0;
 
   const client = await getClient();
-
   const session = client.startSession();
 
   try {
@@ -36,7 +28,6 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    // 1️⃣ Verify Codewars connection
     const { data: codewars } = await isConnectedToCodewars();
     if (!codewars?.isConnected) {
       return NextResponse.json(
@@ -49,32 +40,21 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    // 2️⃣ Start a transaction for atomic sync
     let championsData = null;
+    let totalCount = 0;
     await session.withTransaction(async () => {
       if (skip === 0) {
-        /* 
-          When skip is 0 (first page), fetch and update kata data to ensure freshness.
-          This optimizes the sync process by avoiding redundant updates during pagination,
-          eliminating the need for a separate GET handler for paginated queries.
-          Subsequent pages retrieve cached data, leveraging React Query for efficient client-side pagination.
-        */
-        // (a) Fetch latest kata data and update in DB
         await getKataData(
           {
             codewarsUserId: codewars.id,
             codewarsUsername: codewars.username,
             codewarsName: codewars.name
           },
-          session // Pass session for transactional context
+          session
         );
       }
-      // (b) Retrieve champions data (read-only)
       const { data, success } = await getChampionsKataData(
-        {
-          skip,
-          limit
-        },
+        { skip, limit },
         session
       );
 
@@ -83,14 +63,18 @@ export async function PATCH(request: NextRequest) {
       }
 
       championsData = data;
+      totalCount = await client
+        .db()
+        .collection('recentlySolved')
+        .countDocuments({}, { session });
     });
 
-    // 3️⃣ Commit successful response
     return NextResponse.json(
       {
         success: true,
         message: 'Champions kata data synced successfully.',
         data: championsData,
+        totalCount,
         toastType: 'success'
       },
       { status: 200 }

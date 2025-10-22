@@ -16,10 +16,13 @@ export default async function CodewarsChampionsCard() {
       codewarsName: codewars.name
     });
 
-  const { data, success } = await getRecentlySolvedData({ limit: 3 });
+  const limit = 3;
+
+  const { data, success } = await getRecentlySolvedData({ limit });
 
   return (
     <CodewarsChampions
+      limit={limit}
       data={success ? data : []}
       className={{
         kataNameStyles: cn('max-w-80')

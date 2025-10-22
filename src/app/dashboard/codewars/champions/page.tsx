@@ -1,10 +1,10 @@
-import { getKataData } from '@/app/repositories/codewarsRepository';
+import {
+  getKataData,
+  getChampionsKataData
+} from '@/app/repositories/codewarsRepository';
 import { LinkButton } from '@/components/ui/LinkButton';
 import { CodewarsChampions } from '@/features/overview/components/codewars-champions';
-import {
-  getRecentlySolvedData,
-  isConnectedToCodewars
-} from '@/services/codewarsService';
+import { isConnectedToCodewars } from '@/services/codewarsService';
 
 export default async function CodewarsChampionsPage() {
   const { data: codewars } = await isConnectedToCodewars();
@@ -17,11 +17,10 @@ export default async function CodewarsChampionsPage() {
     });
   }
 
-  const { data, success } = await getRecentlySolvedData({ limit: 25, skip: 0 });
+  const { data, success } = await getChampionsKataData({ limit: 25, skip: 0 });
 
   return (
     <div className='flex flex-1 flex-col space-y-6'>
-      {/* Header Section */}
       <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
         <div className='min-w-0 space-y-2'>
           <h2 className='text-xl font-bold tracking-tight text-gray-900 sm:text-2xl dark:text-white'>
@@ -46,8 +45,6 @@ export default async function CodewarsChampionsPage() {
             )}
           </p>
         </div>
-
-        {/* Action Buttons */}
         <div className='flex flex-wrap items-center gap-3'>
           <LinkButton
             href='/dashboard/leaderboard/codewars'
@@ -65,13 +62,11 @@ export default async function CodewarsChampionsPage() {
           />
         </div>
       </div>
-
-      {/* Codewars Champions */}
       <CodewarsChampions
         showPagination
         data={success ? data : []}
         className={{
-          avatarStyles: 'h-20 w-20'
+          avatarStyles: 'h-10 w-10'
         }}
       />
     </div>
