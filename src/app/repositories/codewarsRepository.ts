@@ -357,10 +357,13 @@ export async function getChampionsKataData(
 ): Promise<{
   success: boolean;
   data: recentlySolvedKata[];
+  totalCount: number;
 }> {
   try {
     const db = await getDb();
     const collection = db.collection<recentlySolvedKata>('recentlySolved');
+
+    const totalCount = await collection.countDocuments({});
 
     const katas = await collection
       .find(
@@ -390,13 +393,15 @@ export async function getChampionsKataData(
 
     return {
       success: true,
-      data: parsedKatas
+      data: parsedKatas,
+      totalCount
     };
   } catch (error) {
     console.error('Error in getChampionsKataData:', error);
     return {
       success: false,
-      data: []
+      data: [],
+      totalCount: 0
     };
   }
 }

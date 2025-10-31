@@ -4,6 +4,7 @@ import {
 } from '@/app/repositories/codewarsRepository';
 import { getClient } from '@/lib/mongodb';
 import { isConnectedToCodewars } from '@/services/codewarsService';
+import { recentlySolvedKata } from '@/types';
 import { auth } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -40,8 +41,9 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    let championsData = null;
+    let championsData: recentlySolvedKata[] | null = null;
     let totalCount = 0;
+
     await session.withTransaction(async () => {
       if (skip === 0) {
         await getKataData(
@@ -53,20 +55,18 @@ export async function PATCH(request: NextRequest) {
           session
         );
       }
-      const { data, success } = await getChampionsKataData(
-        { skip, limit },
-        session
-      );
+      const {
+        data,
+        totalCount: count,
+        success
+      } = await getChampionsKataData({ skip, limit }, session);
 
       if (!success) {
         throw new Error('Failed to retrieve champions kata data');
       }
 
       championsData = data;
-      totalCount = await client
-        .db()
-        .collection('recentlySolved')
-        .countDocuments({}, { session });
+      totalCount = count;
     });
 
     return NextResponse.json(

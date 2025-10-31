@@ -54,7 +54,7 @@ export function CodewarsChampions({
       duration: 5000
     });
   }
-
+  console.log(queryData?.totalCount, '<<<<<<<<<<<<<<');
   const champions: recentlySolvedKata[] = queryData?.data || [];
   const totalPages = queryData?.totalCount
     ? Math.ceil(queryData.totalCount / limit)
