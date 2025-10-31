@@ -38,7 +38,7 @@ const outlineBtn = cn(
 
 const successBtn = cn(
   baseBtn,
-  'bg-green-500/20 text-green-700 border border-green-500/30',
+  'bg-green-500/20 border border-green-500/30',
   'shadow-sm hover:shadow-md hover:bg-green-500/25',
   'active:scale-[0.98]',
   'focus:ring-green-500/40'

@@ -14,8 +14,14 @@ import { cn } from '@/lib/utils';
 import { recentlySolvedKata } from '@/types';
 import { Trophy } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { ChampionsPagination } from './codewars-champion-pagination';
+import { useState } from 'react';
+import useChampionsQuery from '@/hooks/useChampionsQuery';
+import { toast } from 'sonner';
 
 interface Props {
+  showPagination?: boolean;
+  limit: number;
   data: recentlySolvedKata[];
   className?: {
     kataNameStyles?: string;
@@ -23,8 +29,39 @@ interface Props {
   };
 }
 
-export function RecentKatas({ data, className }: Props) {
+export function CodewarsChampions({
+  showPagination,
+  limit,
+  data: initialData,
+  className
+}: Props) {
+  const [page, setPage] = useState(0);
   const router = useRouter();
+
+  const {
+    data: queryData,
+    isPending,
+    error,
+    isFetching
+  } = useChampionsQuery({
+    page,
+    limit,
+    initialData
+  });
+
+  const loadingPage = isFetching ? page : null;
+
+  if (error) {
+    toast.error(queryData?.message || 'Failed to load champions data', {
+      id: 'champions-error',
+      duration: 5000
+    });
+  }
+
+  const champions: recentlySolvedKata[] = queryData?.data || [];
+  const totalPages = queryData?.totalCount
+    ? Math.ceil(queryData.totalCount / limit)
+    : 0;
 
   return (
     <Card
@@ -37,6 +74,12 @@ export function RecentKatas({ data, className }: Props) {
         role='button'
         tabIndex={0}
         onClick={() => router.push('/dashboard/codewars/champions')}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            router.push('/dashboard/codewars/champions');
+          }
+        }}
         className={cn(
           'relative flex cursor-pointer items-center justify-start gap-4 overflow-hidden px-7 py-5',
           'bg-gradient-to-r from-[var(--royal-gold)]/20 to-[var(--kyu-5)]/20',
@@ -47,13 +90,8 @@ export function RecentKatas({ data, className }: Props) {
           'focus-visible:ring-2 focus-visible:ring-[var(--royal-gold)] focus-visible:outline-none'
         )}
       >
-        {/* Subtle shimmer sweep */}
         <div className='group-hover:animate-shimmer pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-[var(--royal-gold)]/10 to-transparent opacity-0 group-hover:opacity-100' />
-
-        {/* Glowing rotating aura behind Trophy */}
         <div className='animate-rotate-slow absolute -left-3 h-20 w-20 rounded-full bg-[var(--royal-gold)]/20 opacity-50 blur-2xl group-hover:opacity-70' />
-
-        {/* Animated Trophy Icon */}
         <div className='relative flex items-center justify-center'>
           <Trophy
             className={cn(
@@ -64,8 +102,6 @@ export function RecentKatas({ data, className }: Props) {
           />
           <div className='animate-ping-slow absolute inset-0 rounded-full border border-[var(--royal-gold)]/30 max-[420px]:-ml-1 max-[380px]:-ml-2 max-[360px]:-ml-3' />
         </div>
-
-        {/* Title & Subtitle */}
         <div className='relative z-10 flex flex-col'>
           <CardTitle
             className={cn(
@@ -87,20 +123,34 @@ export function RecentKatas({ data, className }: Props) {
       </CardHeader>
 
       <CardContent className='-mt-3 p-2'>
-        <div className='space-y-1'>
-          {data.map((kata, idx) => (
+        <div className='relative space-y-1'>
+          {isPending && (
+            <div className='absolute inset-0 flex items-center justify-center bg-white/50 dark:bg-black/50'>
+              <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-500 border-t-transparent' />
+            </div>
+          )}
+          {champions.length === 0 && !isPending && (
+            <div className='py-4 text-center text-gray-500 dark:text-gray-400'>
+              No recent katas found.
+            </div>
+          )}
+          {champions.map((kata, idx) => (
             <div
-              key={idx}
+              key={`${kata.kataId}-${kata.userId}-${idx}`}
               className={cn(
                 'flex items-center rounded-lg p-3 transition-all duration-300',
                 'hover:bg-sidebar-accent/20 focus-within:ring-sidebar-ring focus-within:ring-2 hover:scale-[1.01] hover:shadow-sm'
               )}
               tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                }
+              }}
             >
-              {/* Avatar */}
               <Avatar
                 className={cn(
-                  'h-15 w-15 border-2 border-[var(--royal-gold)]/10 shadow-md max-[420px]:hidden',
+                  'h-10 w-10 border-2 border-[var(--royal-gold)]/10 shadow-md max-[420px]:hidden',
                   'transition-transform duration-300 hover:scale-110',
                   className?.avatarStyles
                 )}
@@ -114,9 +164,7 @@ export function RecentKatas({ data, className }: Props) {
                   {kata.fallback}
                 </AvatarFallback>
               </Avatar>
-
-              {/* Kata Info */}
-              <div className='ml-4 flex-1 max-[420]:ml-0 max-[360px]:ml-1 max-[320px]:-ml-1'>
+              <div className='ml-4 flex-1 max-[420px]:ml-0 max-[360px]:ml-1 max-[320px]:-ml-1'>
                 <div className='text-foreground text-sm font-medium max-[320px]:text-xs'>
                   <span className='font-semibold'>{kata.username}</span>
                   <span className='italic'> solved </span>
@@ -136,6 +184,20 @@ export function RecentKatas({ data, className }: Props) {
           ))}
         </div>
       </CardContent>
+      {showPagination && (
+        <div className='relative mt-6'>
+          <div className='absolute inset-0 -z-10 animate-pulse bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.1),transparent_70%)] blur-2xl' />
+          <ChampionsPagination
+            loadingPage={loadingPage}
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={(newPage) => {
+              setPage(newPage);
+              // window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        </div>
+      )}
     </Card>
   );
 }

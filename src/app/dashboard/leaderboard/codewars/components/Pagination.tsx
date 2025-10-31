@@ -13,8 +13,7 @@ import {
   IconChevronLeft,
   IconChevronRight,
   IconChevronsLeft,
-  IconChevronsRight,
-  IconPlus
+  IconChevronsRight
 } from '@tabler/icons-react';
 import { Table } from '@tanstack/react-table';
 
@@ -89,10 +88,10 @@ export function Pagination({ table }: { table: Table<CodewarsTableData> }) {
             <span className='sr-only'>Go to last page</span>
             <IconChevronsRight />
           </Button>
-          <Button variant='outline' size='sm'>
+          {/* <Button variant='outline' size='sm'>
             <IconPlus />
             <span className='hidden lg:inline'>Add Section</span>
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>

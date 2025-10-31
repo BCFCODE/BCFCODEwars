@@ -1,62 +1,14 @@
-import { getKataData } from '@/app/repositories/codewarsRepository';
-import PageContainer from '@/components/layout/page-container';
-import { RecentKatas } from '@/features/overview/components/kata-champions';
 import {
-  getRecentlySolvedData,
-  isConnectedToCodewars
-} from '@/services/codewarsService';
-import Link from 'next/link';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-
-// Constants for better maintainability
-const LINK_STYLES = {
-  base: 'group relative inline-flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-lg focus:ring-4 focus:outline-none',
-  leaderboard: {
-    gradient: 'bg-gradient-to-r from-[#e94560]/30 to-[#f4a261]/10',
-    hoverGradient: 'from-[#e94560]/90 to-[#f4a261]/90',
-    focusRing: 'focus:ring-[#e94560]/50'
-  },
-  profile: {
-    gradient: 'bg-gradient-to-r from-[#f4a261]/30 to-[#e94560]/10',
-    hoverGradient: 'from-[#f4a261]/90 to-[#e94560]/90',
-    focusRing: 'focus:ring-[#f4a261]/50'
-  }
-};
-
-// Reusable LinkButton component for DRY code
-const LinkButton = ({
-  href,
-  label,
-  gradient,
-  hoverGradient,
-  focusRing
-}: {
-  href: string;
-  label: string;
-  gradient: string;
-  hoverGradient: string;
-  focusRing: string;
-}) => (
-  <Link
-    href={href}
-    className={`${LINK_STYLES.base} ${gradient} ${focusRing}`}
-    aria-label={label}
-  >
-    <span
-      className={`absolute inset-0 rounded-xl bg-gradient-to-r ${hoverGradient} opacity-0 transition-opacity duration-300 group-hover:opacity-100`}
-    />
-    <span className='relative flex items-center gap-2'>
-      {label}
-      <ArrowRightIcon className='h-5 w-5 transition-transform duration-300 group-hover:translate-x-1' />
-    </span>
-  </Link>
-);
+  getKataData,
+  getChampionsKataData
+} from '@/app/repositories/codewarsRepository';
+import { LinkButton } from '@/components/ui/LinkButton';
+import { CodewarsChampions } from '@/features/overview/components/codewars-champions';
+import { isConnectedToCodewars } from '@/services/codewarsService';
 
 export default async function CodewarsChampionsPage() {
-  // Fetch connection status
   const { data: codewars } = await isConnectedToCodewars();
 
-  // Fetch kata data if connected
   if (codewars?.isConnected) {
     await getKataData({
       codewarsUserId: codewars.id,
@@ -65,12 +17,12 @@ export default async function CodewarsChampionsPage() {
     });
   }
 
-  // Fetch recently solved data
-  const { data, success } = await getRecentlySolvedData({ limit: 20 });
+  const limit = 25;
+
+  const { data, success } = await getChampionsKataData({ limit, skip: 0 });
 
   return (
     <div className='flex flex-1 flex-col space-y-6'>
-      {/* Header Section */}
       <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
         <div className='min-w-0 space-y-2'>
           <h2 className='text-xl font-bold tracking-tight text-gray-900 sm:text-2xl dark:text-white'>
@@ -95,25 +47,29 @@ export default async function CodewarsChampionsPage() {
             )}
           </p>
         </div>
-        {/* Action Buttons */}
         <div className='flex flex-wrap items-center gap-3'>
           <LinkButton
             href='/dashboard/leaderboard/codewars'
             label='View Leaderboard'
-            {...LINK_STYLES.leaderboard}
+            gradient='bg-gradient-to-r from-[#e94560]/30 to-[#f4a261]/10'
+            hoverGradient='from-[#e94560]/90 to-[#f4a261]/90'
+            focusRing='focus:ring-[#e94560]/50'
           />
           <LinkButton
             href='/dashboard/codewars'
             label='View Profile'
-            {...LINK_STYLES.profile}
+            gradient='bg-gradient-to-r from-[#f4a261]/30 to-[#e94560]/10'
+            hoverGradient='from-[#f4a261]/90 to-[#e94560]/90'
+            focusRing='focus:ring-[#f4a261]/50'
           />
         </div>
       </div>
-      {/* Katas List */}
-      <RecentKatas
+      <CodewarsChampions
+        limit={limit}
+        showPagination
         data={success ? data : []}
         className={{
-          avatarStyles: 'h-20 w-20'
+          avatarStyles: 'h-10 w-10'
         }}
       />
     </div>

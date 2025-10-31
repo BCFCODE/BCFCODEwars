@@ -1,12 +1,12 @@
 import { getKataData } from '@/app/repositories/codewarsRepository';
-import { RecentKatas } from '@/features/overview/components/kata-champions';
+import { CodewarsChampions } from '@/features/overview/components/codewars-champions';
 import { cn } from '@/lib/utils';
 import {
   getRecentlySolvedData,
   isConnectedToCodewars
 } from '@/services/codewarsService';
 
-export default async function RecentlySolved() {
+export default async function CodewarsChampionsCard() {
   const { data: codewars } = await isConnectedToCodewars();
 
   if (codewars?.isConnected)
@@ -16,10 +16,13 @@ export default async function RecentlySolved() {
       codewarsName: codewars.name
     });
 
-  const { data, success } = await getRecentlySolvedData({ limit: 3 });
+  const limit = 3;
+
+  const { data, success } = await getRecentlySolvedData({ limit });
 
   return (
-    <RecentKatas
+    <CodewarsChampions
+      limit={limit}
       data={success ? data : []}
       className={{
         kataNameStyles: cn('max-w-80')
