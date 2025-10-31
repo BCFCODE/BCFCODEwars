@@ -27,7 +27,7 @@ interface ChampionsQueryResult {
 const SYNC_TOAST_ID = 'champions-sync';
 
 export default function useChampionsQuery({
-  page,
+  page = 0,
   limit = 25,
   initialData
 }: ChampionsQueryParams): UseQueryResult<ChampionsQueryResult, Error> {

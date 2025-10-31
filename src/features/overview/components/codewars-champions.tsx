@@ -41,12 +41,15 @@ export function CodewarsChampions({
   const {
     data: queryData,
     isPending,
-    error
+    error,
+    isFetching
   } = useChampionsQuery({
     page,
     limit,
     initialData
   });
+
+  const loadingPage = isFetching ? page : null;
 
   if (error) {
     toast.error(queryData?.message || 'Failed to load champions data', {
@@ -54,11 +57,11 @@ export function CodewarsChampions({
       duration: 5000
     });
   }
-  console.log(queryData?.totalCount, '<<<<<<<<<<<<<<');
+
   const champions: recentlySolvedKata[] = queryData?.data || [];
   const totalPages = queryData?.totalCount
     ? Math.ceil(queryData.totalCount / limit)
-    : 1;
+    : 0;
 
   return (
     <Card
@@ -185,11 +188,12 @@ export function CodewarsChampions({
         <div className='relative mt-6'>
           <div className='absolute inset-0 -z-10 animate-pulse bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.1),transparent_70%)] blur-2xl' />
           <ChampionsPagination
+            loadingPage={loadingPage}
             currentPage={page}
             totalPages={totalPages}
             onPageChange={(newPage) => {
               setPage(newPage);
-              window.scrollTo({ top: 0, behavior: 'smooth' });
+              // window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
           />
         </div>
