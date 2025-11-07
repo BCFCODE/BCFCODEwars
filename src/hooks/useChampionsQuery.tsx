@@ -1,14 +1,14 @@
 'use client';
 
+import { recentlySolvedKata } from '@/types';
 import {
   keepPreviousData,
   useQuery,
   UseQueryResult
 } from '@tanstack/react-query';
-import { Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { toast } from 'sonner';
-import { recentlySolvedKata } from '@/types';
 
 interface ChampionsQueryParams {
   page: number;
@@ -103,7 +103,7 @@ export default function useChampionsQuery({
     // Show loading only on refetch (not initial)
     if (isRefetching && !hasShownLoading.current) {
       hasShownLoading.current = true;
-      toast.loading('Syncing BCFCODE Kata Champions...', {
+      toast.loading('Syncing...', {
         id: SYNC_TOAST_ID,
         duration: Infinity
       });
@@ -124,7 +124,7 @@ export default function useChampionsQuery({
         {
           id: SYNC_TOAST_ID,
           icon: <CheckCircle2 className='h-4 w-4' />,
-          duration: 1500,
+          duration: 2000,
           action: hasNewItems
             ? {
                 label: 'View',
