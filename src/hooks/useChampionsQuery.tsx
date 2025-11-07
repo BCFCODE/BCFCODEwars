@@ -90,60 +90,53 @@ export default function useChampionsQuery({
   useEffect(() => {
     if (page !== 0) return;
 
-    const isRefetching = query.isFetching && !query.isLoading;
+    // Prevent any toast logic on initial mount
+    if (isInitialMount.current && query.isSuccess) {
+      isInitialMount.current = false;
+      prevLength.current = query.data.data.length;
+      return;
+    }
 
-    // 1. Show loading **only on refetch** (window focus, manual refetch)
+    // Only consider refetching after initial mount
+    const isRefetching = query.isFetching && !query.isPending && query.data;
+
+    // Show loading only on refetch (not initial)
     if (isRefetching && !hasShownLoading.current) {
       hasShownLoading.current = true;
       toast.loading('Syncing BCFCODE Kata Champions...', {
         id: SYNC_TOAST_ID,
-        // icon: <Loader2 className='h-4 w-4 animate-spin' />,
         duration: Infinity
       });
       return;
     }
 
-    // 2. On success
-    if (query.isSuccess) {
-      const data = query.data;
-      const currentLength = data.data.length;
+    // Success after refetch
+    if (query.isSuccess && hasShownLoading.current) {
+      const currentLength = query.data.data.length;
+      const hasNewItems = currentLength > prevLength.current;
+      const newCount = hasNewItems ? currentLength - prevLength.current : 0;
+      prevLength.current = currentLength;
 
-      // Initial load: just store length, no toast
-      if (isInitialMount.current) {
-        isInitialMount.current = false;
-        prevLength.current = currentLength;
-        hasShownLoading.current = false; // reset in case loading was shown
-        return;
-      }
-
-      // Refetch success: show toast
-      if (hasShownLoading.current) {
-        const hasNewItems = currentLength > prevLength.current;
-        const newCount = hasNewItems ? currentLength - prevLength.current : 0;
-        prevLength.current = currentLength;
-
-        toast.success(
-          newCount > 0
-            ? `Synced! ${newCount} new kata${newCount > 1 ? 's' : ''} added`
-            : 'Champions up to date',
-          {
-            id: SYNC_TOAST_ID,
-            icon: <CheckCircle2 className='h-4 w-4' />,
-            duration: 4000,
-            action: hasNewItems
-              ? {
-                  label: 'View',
-                  onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' })
-                }
-              : undefined
-          }
-        );
-
-        hasShownLoading.current = false;
-      }
+      toast.success(
+        newCount > 0
+          ? `Synced! ${newCount} new kata${newCount > 1 ? 's' : ''} added`
+          : 'Champions up to date',
+        {
+          id: SYNC_TOAST_ID,
+          icon: <CheckCircle2 className='h-4 w-4' />,
+          duration: 1500,
+          action: hasNewItems
+            ? {
+                label: 'View',
+                onClick: () => window.scrollTo({ top: 0, behavior: 'smooth' })
+              }
+            : undefined
+        }
+      );
+      hasShownLoading.current = false;
     }
 
-    // 3. On error (only if we were showing loading)
+    // Error after refetch
     if (query.isError && hasShownLoading.current) {
       toast.error(query.error?.message ?? 'Failed to sync champions', {
         id: SYNC_TOAST_ID,
@@ -154,20 +147,12 @@ export default function useChampionsQuery({
       hasShownLoading.current = false;
     }
 
-    // 4. Dismiss loading if fetch ended but we never transitioned
+    // Dismiss if fetching ended without success/error handling
     if (!query.isFetching && hasShownLoading.current) {
       toast.dismiss(SYNC_TOAST_ID);
       hasShownLoading.current = false;
     }
   }, [page, query]);
-
-  // Cleanup
-  useEffect(() => {
-    return () => {
-      toast.dismiss(SYNC_TOAST_ID);
-      hasShownLoading.current = false;
-    };
-  }, []);
 
   return query;
 }
