@@ -37,7 +37,7 @@ export function KatasTable<TData, TValue>({
       <Table
         className={clsx(
           'overflow-hidden rounded-md border',
-          'bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-5)]/10 dark:from-[var(--bg-background)]/5 dark:to-[var(--kyu-5)]/5'
+          'bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-3)]/10 dark:from-[var(--bg-background)]/5 dark:to-[var(--kyu-3)]/5'
         )}
       >
         <TableHeader>

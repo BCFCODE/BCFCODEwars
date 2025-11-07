@@ -24,7 +24,7 @@ export function StatCard({
   hint?: string;
 }) {
   return (
-    <Card className='group @container/card bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-5)]/10 dark:from-[var(--bg-background)]/10 dark:to-[var(--kyu-5)]/10'>
+    <Card className='group @container/card bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-3)]/10 dark:from-[var(--bg-background)]/10 dark:to-[var(--kyu-3)]/10'>
       <CardHeader>
         <CardDescription>{title}</CardDescription>
         <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
