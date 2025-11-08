@@ -18,7 +18,13 @@ export const navItems: NavItem[] = [
     shortcut: ['c', 'c'],
     items: [
       {
-        title: 'Champions',
+        title: 'Profile',
+        url: '/dashboard/codewars',
+        icon: 'champions',
+        shortcut: ['p']
+      },
+      {
+        title: 'History',
         url: '/dashboard/codewars/champions',
         icon: 'champions',
         shortcut: ['l', 'u']
