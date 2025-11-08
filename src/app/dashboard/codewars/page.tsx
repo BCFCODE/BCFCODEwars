@@ -97,7 +97,7 @@ export default async function CodewarsProfilePage() {
             >
               <span className='absolute inset-0 rounded-xl bg-gradient-to-r from-[var(--kyu-3)]/80 to-[var(--kyu-2)]/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100' />
               <span className='relative flex items-center gap-2'>
-                Champions
+                History
                 {/* <IconTrendingUp className='h-5 w-5 transition-transform duration-300 group-hover:translate-x-1' /> */}
                 <History className='group-hover/link:animate-spin-slow h-5 w-5' />
               </span>
