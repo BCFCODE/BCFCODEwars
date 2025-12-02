@@ -77,7 +77,7 @@ export default function useChampionsQuery({
         : keepPreviousData,
 
     staleTime: 0,
-    // gcTime: 10 * 60 * 1000,
+    gcTime: 1 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30_000),
     throwOnError: false,

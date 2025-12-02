@@ -122,7 +122,7 @@ export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> 
     // Fetch user data from Codewars API
     const response = await fetch(
       `https://www.codewars.com/api/v1/users/${encodeURIComponent(username)}`,
-      { signal: AbortSignal.timeout(10000) } // 10s timeout
+      { next: { revalidate: 60 }, signal: AbortSignal.timeout(10000) } // 10s timeout
     );
 
     if (!response.ok) {
@@ -240,7 +240,7 @@ export async function getKataData(
 
       const res = await fetch(
         `https://www.codewars.com/api/v1/users/${encodeURIComponent(codewarsUsername)}/code-challenges/completed?page=${page}`,
-        { signal: controller.signal }
+        { next: { revalidate: 60 }, signal: controller.signal }
       );
 
       clearTimeout(timeoutId);

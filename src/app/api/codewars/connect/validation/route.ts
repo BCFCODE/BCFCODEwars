@@ -36,7 +36,8 @@ export async function POST(req: Request): Promise<NextResponse<ApiResponse>> {
     const { username } = body.data;
 
     const res = await fetch(
-      `https://www.codewars.com/api/v1/users/${username}`
+      `https://www.codewars.com/api/v1/users/${username}`,
+      { next: { revalidate: 60 } }
     );
     const apiData = await res.json().catch(() => null);
 
