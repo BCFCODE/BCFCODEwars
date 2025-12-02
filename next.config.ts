@@ -13,10 +13,13 @@ const baseConfig: NextConfig = {
 
   transpilePackages: ['geist'],
 
-  // 👇 force Webpack instead of Turbopack
-  experimental: {
-    webpackBuildWorker: true
-  }
+  // ✅ This *forces* Webpack instead of Turbopack
+  webpack: (_config) => {
+    return _config; // required to activate Webpack mode
+  },
+
+  // ✅ Adding an empty turbopack block prevents Next.js from complaining
+  turbopack: {}
 };
 
 let configWithPlugins = baseConfig;
