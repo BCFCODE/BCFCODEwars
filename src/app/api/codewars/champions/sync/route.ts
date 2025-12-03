@@ -1,3 +1,4 @@
+// app/api/codewars/champions/sync/route.ts
 import {
   getKataData,
   getChampionsKataData
@@ -8,23 +9,19 @@ import { recentlySolvedKata } from '@/types';
 import { auth } from '@clerk/nextjs/server';
 import { NextRequest, NextResponse } from 'next/server';
 
+// This is the magic line — removes force-dynamic + enables caching
+export const revalidate = 60; // Cache for 1 minute in prod, instant in dev
+
 export async function PATCH(request: NextRequest) {
   const url = new URL(request.url);
   const limit = Number(url.searchParams.get('limit')) || 25;
   const skip = Number(url.searchParams.get('skip')) || 0;
 
-  const client = await getClient();
-  const session = client.startSession();
-
   try {
     const { sessionStatus } = await auth();
     if (sessionStatus !== 'active') {
       return NextResponse.json(
-        {
-          success: false,
-          message: 'You must be signed in to sync your Codewars connection.',
-          toastType: 'error'
-        },
+        { success: false, message: 'Unauthorized', toastType: 'error' },
         { status: 401 }
       );
     }
@@ -34,64 +31,63 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: 'User is not connected to Codewars.',
+          message: 'Not connected to Codewars',
           toastType: 'error'
         },
         { status: 401 }
       );
     }
 
-    let championsData: recentlySolvedKata[] | null = null;
+    let championsData: recentlySolvedKata[] = [];
     let totalCount = 0;
 
-    await session.withTransaction(async () => {
-      if (skip === 0) {
-        await getKataData(
-          {
-            codewarsUserId: codewars.id,
-            codewarsUsername: codewars.username,
-            codewarsName: codewars.name
-          },
-          session
-        );
-      }
-      const {
-        data,
-        totalCount: count,
-        success
-      } = await getChampionsKataData({ skip, limit }, session);
+    // ONLY use transaction when skip === 0 (i.e. we're writing user kata data)
+    if (skip === 0) {
+      const client = await getClient();
+      const session = client.startSession();
+      try {
+        await session.withTransaction(async () => {
+          await getKataData(
+            {
+              codewarsUserId: codewars.id,
+              codewarsUsername: codewars.username,
+              codewarsName: codewars.name
+            },
+            session
+          );
 
-      if (!success) {
-        throw new Error('Failed to retrieve champions kata data');
+          const result = await getChampionsKataData({ skip, limit }, session);
+          championsData = result.data;
+          totalCount = result.totalCount;
+        });
+      } finally {
+        await session.endSession();
       }
+    } else {
+      // READ-ONLY PATH — NO SESSION, NO TRANSACTION → blazing fast
+      const result = await getChampionsKataData({ skip, limit });
+      championsData = result.data;
+      totalCount = result.totalCount;
+    }
 
-      championsData = data;
-      totalCount = count;
+    return NextResponse.json({
+      success: true,
+      message: 'Champions synced',
+      data: championsData,
+      totalCount,
+      toastType: 'success'
     });
-
-    return NextResponse.json(
-      {
-        success: true,
-        message: 'Champions kata data synced successfully.',
-        data: championsData,
-        totalCount,
-        toastType: 'success'
-      },
-      { status: 200 }
-    );
   } catch (error) {
     console.error('[PATCH /api/codewars/champions/sync] ERROR:', error);
     return NextResponse.json(
       {
         success: false,
-        message: 'Internal server error during champion sync.',
+        message: 'Sync failed',
         error:
           process.env.NODE_ENV === 'development' ? String(error) : undefined,
         toastType: 'error'
       },
       { status: 500 }
     );
-  } finally {
-    await session.endSession();
   }
 }
