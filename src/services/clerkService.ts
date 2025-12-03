@@ -1,5 +1,4 @@
 import { auth, currentUser, type User } from '@clerk/nextjs/server';
-import type { UserResource } from '@clerk/types';
 
 /**
  * Custom error for authentication-related failures.
@@ -12,108 +11,71 @@ export class AuthError extends Error {
 }
 
 /**
- * Utility: Fetches the full current Clerk user object.
+ * Utility: Fetches the current authenticated Clerk user.
  *
- * This is a thin wrapper around Clerk's `currentUser()` that:
- *  - Ensures a user is logged in using `auth()` for a lightweight check first.
- *  - Optionally selects specific fields for performance (e.g., to avoid fetching unnecessary data).
- *  - Optionally strips `_raw` or non-serializable fields (e.g., functions, private metadata) if passing to a Client Component.
+ * A safe wrapper around `currentUser()` that:
+ * - First checks authentication via `auth()` (lightweight)
+ * - Throws a clear error if no user is signed in
+ * - Returns the full, serializable `User` object (safe for Server Components, Route Handlers, and Server Actions)
  *
- * Best practices:
- * - Use in Server Components, Route Handlers, or Server Actions only.
- * - For quick auth checks without full user data, prefer `auth()` directly.
- * - Handle errors with Next.js error boundaries (`error.tsx`) for graceful recovery.
+ * Note: In Clerk v5+, `currentUser()` returns only serializable data by default.
+ * Field selection (`select`) is no longer supported.
  *
- * @param options - Optional config for field selection and serialization.
- * @throws {AuthError} If there is no logged-in user.
- * @returns {Promise<User>} The full (or selected) Clerk `User` object for server-side use.
+ * @throws {AuthError} If no user is authenticated
+ * @returns {Promise<User>} The current Clerk user
  *
  * @example
- * // Full user
  * const user = await getUser();
- * console.log(user.firstName, user.imageUrl);
- *
- * // Selected fields only (faster)
- * const user = await getUser({ select: { firstName: true, emailAddresses: true } });
- *
- * // Client-safe (stripped)
- * const safeUser = await getUser({ stripPrivate: true });
+ * console.log(user.id, user.firstName, user.primaryEmailAddress?.emailAddress);
  */
-export async function getUser(options?: {
-  select?: UserResource;
-  stripPrivate?: boolean;
-}): Promise<User> {
+export async function getUser(): Promise<User> {
   const { userId } = await auth();
 
   if (!userId) {
-    throw new AuthError(
-      'No authenticated user found (Clerk auth returned null userId).'
-    );
+    throw new AuthError('No authenticated user found. User must be signed in.');
   }
 
   const user = await currentUser();
 
   if (!user) {
     throw new AuthError(
-      'No authenticated user found (Clerk currentUser returned null).'
+      'Authenticated user not found in Clerk (currentUser returned null).'
     );
-  }
-
-  if (options?.stripPrivate) {
-    // Strip non-serializable/private fields to avoid issues passing to Client Components
-    const { ...safeUser } = user;
-    return safeUser as User;
   }
 
   return user;
 }
 
 /**
- * Utility: Fetches the current user's primary email address from Clerk.
+ * Utility: Gets the current user's primary email address.
  *
- * This optimizes by selecting only email fields for better performance.
- * Builds on `auth()` and `currentUser()`; throws if no user or email.
+ * Lightweight and safe way to get just the email without exposing full user object.
  *
- * Best practices:
- * - For email-only needs, this avoids fetching the full user object.
- * - Use TypeScript for safe property access.
- * - In production, avoid logging sensitive data like emails.
- *
- * @throws {AuthError} If there is no logged-in user or no primary email found.
- * @returns {Promise<string>} The primary email address of the current user.
+ * @throws {AuthError} If no user is signed in or no primary email exists
+ * @returns {Promise<string>} The user's primary email address
  *
  * @example
  * const email = await getEmail();
- * console.log(email); // e.g. "user@example.com"
+ * console.log(`Welcome, ${email}!`);
  */
 export async function getEmail(): Promise<string> {
-  try {
-    const { userId } = await auth();
-    if (!userId) {
-      throw new AuthError(
-        'No authenticated user found (Clerk auth returned null userId).'
-      );
-    }
+  const { userId } = await auth();
 
-    const user = await currentUser();
-    if (!user) {
-      throw new AuthError(
-        'No authenticated user found (Clerk currentUser returned null).'
-      );
-    }
-
-    const email =
-      user.emailAddresses?.[0]?.emailAddress ??
-      user.primaryEmailAddress?.emailAddress ??
-      null;
-
-    if (!email) {
-      throw new AuthError('No primary email address found for the user.');
-    }
-
-    return email;
-  } catch (error) {
-    console.error('Error in getEmail:', error);
-    throw new AuthError(`Failed to fetch email: ${(error as Error).message}`);
+  if (!userId) {
+    throw new AuthError('No authenticated user found.');
   }
+
+  const user = await currentUser();
+
+  if (!user) {
+    throw new AuthError('User not found in Clerk.');
+  }
+
+  const primaryEmail = user.primaryEmailAddress?.emailAddress;
+
+  if (!primaryEmail) {
+    throw new AuthError('No primary email address found for this user.');
+  }
+
+  return primaryEmail;
 }
