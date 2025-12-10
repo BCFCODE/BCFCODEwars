@@ -3,7 +3,7 @@
 import PageContainer from '@/components/layout/page-container';
 import { currentUser } from '@clerk/nextjs/server';
 import type { Metadata } from 'next';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Badge } from '@/components/ui/badge';
 import {
   Card,
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     creator: '@BCFCODE'
   },
   robots: {
-    index: false, // 👈 dashboard overview is private, don’t index
+    index: false,
     follow: false
   }
 };
@@ -76,8 +76,8 @@ export default async function OverViewLayout({
           </h2>
         </div>
 
-        {/* <Cards /> */}
         <div className='*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs md:grid-cols-2 lg:grid-cols-4'>
+          {/* Static cards unchanged */}
           <Card className='@container/card bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-3)]/10 dark:from-[var(--bg-background)]/10 dark:to-[var(--kyu-3)]/10'>
             <CardHeader>
               <CardDescription>New Customers</CardDescription>
@@ -100,6 +100,7 @@ export default async function OverViewLayout({
               </div>
             </CardFooter>
           </Card>
+
           <Card className='@container/card bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-3)]/10 dark:from-[var(--bg-background)]/10 dark:to-[var(--kyu-3)]/10'>
             <CardHeader>
               <CardDescription>Active Accounts</CardDescription>
@@ -122,6 +123,7 @@ export default async function OverViewLayout({
               </div>
             </CardFooter>
           </Card>
+
           <Card className='@container/card bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-3)]/10 dark:from-[var(--bg-background)]/10 dark:to-[var(--kyu-3)]/10'>
             <CardHeader>
               <CardDescription>Growth Rate</CardDescription>
@@ -145,17 +147,33 @@ export default async function OverViewLayout({
               </div>
             </CardFooter>
           </Card>
-          {codewars}
+
+          {/* STREAMED — codewars */}
+          <Suspense fallback={<p>Streaming...</p>}>{codewars}</Suspense>
         </div>
 
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
-          <div className='col-span-4'>{bar_stats}</div>
-          <div className='col-span-4 md:col-span-3'>
-            {/* kata_champions parallel routes */}
-            {kata_champions}
+          {/* STREAMED — bar_stats */}
+          <div className='col-span-4'>
+            <Suspense fallback={<p>Streaming...</p>}>{bar_stats}</Suspense>
           </div>
-          <div className='col-span-4'>{area_stats}</div>
-          <div className='col-span-4 md:col-span-3'>{codewars_radar_chart}</div>
+
+          {/* STREAMED — kata_champions */}
+          <div className='col-span-4 md:col-span-3'>
+            <Suspense fallback={<p>Streaming...</p>}>{kata_champions}</Suspense>
+          </div>
+
+          {/* STREAMED — area_stats */}
+          <div className='col-span-4'>
+            <Suspense fallback={<p>Streaming...</p>}>{area_stats}</Suspense>
+          </div>
+
+          {/* STREAMED — codewars_radar_chart */}
+          <div className='col-span-4 md:col-span-3'>
+            <Suspense fallback={<p>Streaming...</p>}>
+              {codewars_radar_chart}
+            </Suspense>
+          </div>
         </div>
       </div>
     </PageContainer>
