@@ -18,11 +18,12 @@ import { ChampionsPagination } from './codewars-champion-pagination';
 import { useState } from 'react';
 import useChampionsQuery from '@/hooks/useChampionsQuery';
 import { toast } from 'sonner';
+import { RecentKatasSkeleton } from './recent-sales-skeleton';
 
 interface Props {
   showPagination?: boolean;
   limit: number;
-  data: recentlySolvedKata[];
+  // data: recentlySolvedKata[];
   className?: {
     kataNameStyles?: string;
     avatarStyles?: string;
@@ -32,7 +33,7 @@ interface Props {
 export function CodewarsChampions({
   showPagination,
   limit,
-  data: initialData,
+  // data: initialData,
   className
 }: Props) {
   const [page, setPage] = useState(0);
@@ -45,8 +46,8 @@ export function CodewarsChampions({
     isFetching
   } = useChampionsQuery({
     page,
-    limit,
-    initialData
+    limit
+    // initialData
   });
 
   const loadingPage = isFetching ? page : null;
@@ -124,11 +125,7 @@ export function CodewarsChampions({
 
       <CardContent className='-mt-3 p-2'>
         <div className='relative space-y-1'>
-          {isPending && (
-            <div className='absolute inset-0 flex items-center justify-center bg-white/50 dark:bg-black/50'>
-              <div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-500 border-t-transparent' />
-            </div>
-          )}
+          {isPending && <RecentKatasSkeleton length={limit} />}
           {champions.length === 0 && !isPending && (
             <div className='py-4 text-center text-gray-500 dark:text-gray-400'>
               No recent katas found.

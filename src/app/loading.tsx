@@ -1,4 +1,3 @@
-// app/loading.tsx
 export default function Loading() {
   return (
     <div className='bg-background/80 animate-fadeIn fixed inset-0 z-50 flex flex-col items-center justify-center backdrop-blur-sm'>
@@ -25,7 +24,7 @@ export default function Loading() {
 
       {/* Subtext */}
       <p className='text-muted-foreground mt-3 animate-[fadeIn_0.6s_1.2s_forwards] text-sm opacity-0'>
-        Preparing your dashboard
+        Welcome to BCFCODE
       </p>
     </div>
   );
