@@ -13,13 +13,13 @@ import { toast } from 'sonner';
 interface ChampionsQueryParams {
   page: number;
   limit?: number;
-  // initialData: recentlySolvedKata[];
+  initialData: recentlySolvedKata[];
 }
 
 interface ChampionsQueryResult {
   data: recentlySolvedKata[];
-  success: boolean;
   totalCount: number;
+  success: boolean;
   message: string;
   toastType: 'success' | 'error';
 }
@@ -28,8 +28,8 @@ const SYNC_TOAST_ID = 'champions-sync';
 
 export default function useChampionsQuery({
   page = 0,
-  limit = 25
-  // initialData
+  limit = 25,
+  initialData
 }: ChampionsQueryParams): UseQueryResult<ChampionsQueryResult, Error> {
   if (page < 0) throw new Error('Page number must be non-negative');
   if (limit < 1) throw new Error('Limit must be at least 1');
@@ -44,11 +44,7 @@ export default function useChampionsQuery({
     queryKey: ['champions', page, limit],
     queryFn: async () => {
       const response = await fetch(
-        `/api/codewars/champions/sync?limit=${limit}&skip=${skip}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' }
-        }
+        `/api/codewars/champions?limit=${limit}&skip=${skip}`
       );
 
       const result = await response.json();
@@ -65,16 +61,16 @@ export default function useChampionsQuery({
       };
     },
 
-    // placeholderData:
-    //   page === 0
-    //     ? {
-    //         success: true,
-    //         data: initialData,
-    //         totalCount: initialData.length,
-    //         message: 'Initial data loaded',
-    //         toastType: 'success'
-    //       }
-    //     : keepPreviousData,
+    placeholderData:
+      page === 0
+        ? {
+            success: true,
+            data: initialData,
+            totalCount: initialData.length,
+            message: 'Initial data loaded',
+            toastType: 'success'
+          }
+        : keepPreviousData,
 
     staleTime: 0,
     gcTime: 1 * 60 * 1000,

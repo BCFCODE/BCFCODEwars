@@ -23,7 +23,9 @@ import { RecentKatasSkeleton } from './recent-sales-skeleton';
 interface Props {
   showPagination?: boolean;
   limit: number;
-  // data: recentlySolvedKata[];
+  data: recentlySolvedKata[];
+  // success?: boolean;
+  // totalCount: number
   className?: {
     kataNameStyles?: string;
     avatarStyles?: string;
@@ -33,7 +35,8 @@ interface Props {
 export function CodewarsChampions({
   showPagination,
   limit,
-  // data: initialData,
+  // totalCount,
+  data: initialData,
   className
 }: Props) {
   const [page, setPage] = useState(0);
@@ -46,8 +49,8 @@ export function CodewarsChampions({
     isFetching
   } = useChampionsQuery({
     page,
-    limit
-    // initialData
+    limit,
+    initialData
   });
 
   const loadingPage = isFetching ? page : null;
@@ -125,12 +128,13 @@ export function CodewarsChampions({
 
       <CardContent className='-mt-3 p-2'>
         <div className='relative space-y-1'>
-          {isPending && <RecentKatasSkeleton length={limit} />}
-          {champions.length === 0 && !isPending && (
+          {champions.length === 0 && <RecentKatasSkeleton length={limit} />}
+          {/* {isPending && <RecentKatasSkeleton length={limit} />} */}
+          {/* {champions.length === 0 && !isPending && (
             <div className='py-4 text-center text-gray-500 dark:text-gray-400'>
               No recent katas found.
             </div>
-          )}
+          )} */}
           {champions.map((kata, idx) => (
             <div
               key={`${kata.kataId}-${kata.userId}-${idx}`}

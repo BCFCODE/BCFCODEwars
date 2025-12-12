@@ -7,10 +7,10 @@ import { getClient } from '@/lib/mongodb';
 import { isConnectedToCodewars } from '@/services/codewarsService';
 import { recentlySolvedKata } from '@/types';
 import { auth } from '@clerk/nextjs/server';
+import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
-// This is the magic line — removes force-dynamic + enables caching
-export const revalidate = 60; // Cache for 1 minute in prod, instant in dev
+export const dynamic = 'force-dynamic';
 
 export async function PATCH(request: NextRequest) {
   const url = new URL(request.url);
@@ -69,6 +69,10 @@ export async function PATCH(request: NextRequest) {
       championsData = result.data;
       totalCount = result.totalCount;
     }
+
+    // THIS IS THE MAGIC LINE
+    // Invalidate the cache so next read gets fresh data
+    revalidateTag('codewars-champions', 'max');
 
     return NextResponse.json({
       success: true,
