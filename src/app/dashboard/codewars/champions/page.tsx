@@ -19,7 +19,7 @@ export default async function CodewarsChampionsPage() {
 
   const limit = 25;
 
-  const { data, success } = await getChampionsKataData({ limit, skip: 0 });
+  // const { data, success } = await getChampionsKataData({ limit, skip: 0 });
 
   return (
     <div className='flex flex-1 flex-col space-y-6'>
@@ -67,7 +67,7 @@ export default async function CodewarsChampionsPage() {
       <CodewarsChampions
         limit={limit}
         showPagination
-        data={success ? data : []}
+        // data={success ? data : []}
         className={{
           avatarStyles: 'h-10 w-10'
         }}
