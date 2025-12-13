@@ -10,17 +10,16 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
+import useChampionsQuery from '@/hooks/useChampionsQuery';
 import { cn } from '@/lib/utils';
 import { recentlySolvedKata } from '@/types';
-import { Trophy, RefreshCw } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { ChampionsPagination } from './codewars-champion-pagination';
-import { useState } from 'react';
-import useChampionsQuery from '@/hooks/useChampionsQuery';
-import { toast } from 'sonner';
-import { RecentKatasSkeleton } from './recent-sales-skeleton';
-import { Button } from '@/components/ui/button';
 import { useQueryClient } from '@tanstack/react-query';
+import { Trophy } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from 'sonner';
+import { ChampionsPagination } from './codewars-champion-pagination';
+import { RecentKatasSkeleton } from './recent-sales-skeleton';
 
 interface Props {
   showPagination?: boolean;
@@ -191,7 +190,7 @@ export function CodewarsChampions({
               See who's crushing Codewars right now ⚡
             </CardDescription>
           </div>
-          {showPagination && (
+          {/* {showPagination && (
             <Button
               variant='ghost'
               size='icon'
@@ -210,7 +209,7 @@ export function CodewarsChampions({
                 )}
               />
             </Button>
-          )}
+          )} */}
         </div>
       </CardHeader>
 
