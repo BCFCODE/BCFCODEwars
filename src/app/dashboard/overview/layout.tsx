@@ -149,28 +149,76 @@ export default async function OverViewLayout({
           </Card>
 
           {/* STREAMED — codewars */}
-          <Suspense fallback={<p>Streaming...</p>}>{codewars}</Suspense>
+          <Suspense
+            fallback={
+              <div className='flex items-center justify-center p-4'>
+                <p className='text-muted-foreground text-sm'>
+                  Loading Codewars...
+                </p>
+              </div>
+            }
+          >
+            {codewars}
+          </Suspense>
         </div>
 
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
           {/* STREAMED — bar_stats */}
           <div className='col-span-4'>
-            <Suspense fallback={<p>Streaming...</p>}>{bar_stats}</Suspense>
+            <Suspense
+              fallback={
+                <div className='flex items-center justify-center p-4'>
+                  <p className='text-muted-foreground text-sm'>
+                    Loading stats...
+                  </p>
+                </div>
+              }
+            >
+              {bar_stats}
+            </Suspense>
           </div>
 
           {/* STREAMED — kata_champions */}
           <div className='col-span-4 md:col-span-3'>
-            <Suspense fallback={<p>Streaming...</p>}>{kata_champions}</Suspense>
+            <Suspense
+              fallback={
+                <div className='flex items-center justify-center p-4'>
+                  <p className='text-muted-foreground text-sm'>
+                    Loading champions...
+                  </p>
+                </div>
+              }
+            >
+              {kata_champions}
+            </Suspense>
           </div>
 
           {/* STREAMED — area_stats */}
           <div className='col-span-4'>
-            <Suspense fallback={<p>Streaming...</p>}>{area_stats}</Suspense>
+            <Suspense
+              fallback={
+                <div className='flex items-center justify-center p-4'>
+                  <p className='text-muted-foreground text-sm'>
+                    Loading area stats...
+                  </p>
+                </div>
+              }
+            >
+              {area_stats}
+            </Suspense>
           </div>
 
           {/* STREAMED — codewars_radar_chart */}
           <div className='col-span-4 md:col-span-3'>
-            <Suspense fallback={<p>Streaming...</p>}>
+            <Suspense
+              fallback={
+                <div className='flex items-center justify-center p-4'>
+                  <p className='text-muted-foreground text-sm'>
+                    Loading radar chart...
+                  </p>
+                </div>
+              }
+            >
               {codewars_radar_chart}
             </Suspense>
           </div>

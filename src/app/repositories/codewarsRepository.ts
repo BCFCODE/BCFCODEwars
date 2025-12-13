@@ -9,6 +9,17 @@ import {
   recentlySolvedKataSchema
 } from '@/types';
 import { ClientSession, Db } from 'mongodb';
+import { appendFile } from 'fs/promises';
+
+// #region agent log
+const logPath = 'f:\\Wars\\BCFCODEwars\\.cursor\\debug.log';
+const logToFile = async (data: any) => {
+  try {
+    const logEntry = JSON.stringify({ ...data, timestamp: Date.now() }) + '\n';
+    await appendFile(logPath, logEntry, 'utf8');
+  } catch (e) {}
+};
+// #endregion
 
 /**
  * Retrieves the Codewars user ID and username for the authenticated user based on their email.
@@ -208,12 +219,40 @@ export async function getKataData(
     throw new Error('Invalid or missing name');
   }
 
+  // #region agent log
+  const getKataDataStartTime = Date.now();
+  await logToFile({
+    location: 'codewarsRepository.ts:188',
+    message: 'getKataData started',
+    data: { username: codewarsUsername, userId: codewarsUserId },
+    sessionId: 'debug-session',
+    runId: 'run1',
+    hypothesisId: 'A'
+  });
+  // #endregion
   const db = await getDb();
   const katasCollection = db.collection<Kata>('katas');
   const recentlySolvedCollection = db.collection('recentlySolved');
+  // #region agent log
+  const getUserStartTime = Date.now();
+  // #endregion
   const user = await getUser(); // Fetches user data including imageUrl
+  // #region agent log
+  const getUserDuration = Date.now() - getUserStartTime;
+  await logToFile({
+    location: 'codewarsRepository.ts:214',
+    message: 'getUser completed',
+    data: { duration: getUserDuration },
+    sessionId: 'debug-session',
+    runId: 'run1',
+    hypothesisId: 'A'
+  });
+  // #endregion
 
   // Get latest completedAt checkpoint within transaction
+  // #region agent log
+  const findLatestStartTime = Date.now();
+  // #endregion
   const latest = await katasCollection.findOne(
     { userId: codewarsUserId },
     {
@@ -222,6 +261,17 @@ export async function getKataData(
       session // Bind to transaction
     }
   );
+  // #region agent log
+  const findLatestDuration = Date.now() - findLatestStartTime;
+  await logToFile({
+    location: 'codewarsRepository.ts:217',
+    message: 'findLatest completed',
+    data: { duration: findLatestDuration, hasLatest: !!latest },
+    sessionId: 'debug-session',
+    runId: 'run1',
+    hypothesisId: 'A'
+  });
+  // #endregion
   const latestCompletedAt = latest?.completedAt ?? null;
 
   // Fetch new katas sequentially with early stopping
@@ -230,8 +280,18 @@ export async function getKataData(
   let totalPages = 1;
   let shouldContinue = true;
 
+  // #region agent log
+  const apiCallsStartTime = Date.now();
+  let apiCallCount = 0;
+  let dbWriteStartTime: number | undefined;
+  // #endregion
+
   try {
     while (shouldContinue && page < totalPages) {
+      // #region agent log
+      const singleApiCallStartTime = Date.now();
+      apiCallCount++;
+      // #endregion
       const controller = new AbortController();
       const timeoutId = setTimeout(
         () => controller.abort(new Error('Request timed out')),
@@ -259,6 +319,7 @@ export async function getKataData(
       }
 
       shouldContinue = false;
+      let newKatasInPage = 0;
       for (const apiKata of data) {
         const completedDate = new Date(apiKata.completedAt);
         if (latestCompletedAt && completedDate <= latestCompletedAt) {
@@ -274,10 +335,42 @@ export async function getKataData(
           slug: apiKata.slug,
           isCollected: false
         });
+        newKatasInPage++;
         shouldContinue = true;
       }
+      // #region agent log
+      const singleApiCallDuration = Date.now() - singleApiCallStartTime;
+      await logToFile({
+        location: 'codewarsRepository.ts:254',
+        message: 'API call completed',
+        data: {
+          page,
+          duration: singleApiCallDuration,
+          newKatasInPage,
+          totalPages
+        },
+        sessionId: 'debug-session',
+        runId: 'run1',
+        hypothesisId: 'A'
+      });
+      // #endregion
       page++;
     }
+    // #region agent log
+    const apiCallsDuration = Date.now() - apiCallsStartTime;
+    await logToFile({
+      location: 'codewarsRepository.ts:248',
+      message: 'All API calls completed',
+      data: {
+        totalDuration: apiCallsDuration,
+        totalCalls: apiCallCount,
+        totalNewKatas: newKatas.length
+      },
+      sessionId: 'debug-session',
+      runId: 'run1',
+      hypothesisId: 'A'
+    });
+    // #endregion
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     if (errorMessage === 'Request timed out') {
@@ -290,6 +383,9 @@ export async function getKataData(
 
   // Perform database writes within transaction
   if (newKatas.length > 0) {
+    // #region agent log
+    dbWriteStartTime = Date.now();
+    // #endregion
     const operations = newKatas.map((kata) => ({
       updateOne: {
         filter: { userId: kata.userId, id: kata.id },
@@ -299,12 +395,18 @@ export async function getKataData(
     }));
 
     const chunkSize = 500;
+    // #region agent log
+    const bulkWriteStartTime = Date.now();
+    // #endregion
     for (let i = 0; i < operations.length; i += chunkSize) {
       await katasCollection.bulkWrite(
         operations.slice(i, i + chunkSize),
         { ordered: false, session } // Bind to transaction
       );
     }
+    // #region agent log
+    const bulkWriteDuration = Date.now() - bulkWriteStartTime;
+    // #endregion
 
     const recentDocs = newKatas.map((kata) => ({
       username: codewarsName,
@@ -316,13 +418,47 @@ export async function getKataData(
       fallback: codewarsName.charAt(0).toUpperCase()
     }));
 
+    // #region agent log
+    const insertManyStartTime = Date.now();
+    // #endregion
     await recentlySolvedCollection.insertMany(
       recentDocs,
       { ordered: false, session } // Bind to transaction
     );
+    // #region agent log
+    const insertManyDuration = Date.now() - insertManyStartTime;
+    const dbWriteDuration = Date.now() - dbWriteStartTime;
+    await logToFile({
+      location: 'codewarsRepository.ts:291',
+      message: 'DB writes completed',
+      data: {
+        bulkWriteDuration,
+        insertManyDuration,
+        dbWriteDuration,
+        newKatasCount: newKatas.length
+      },
+      sessionId: 'debug-session',
+      runId: 'run1',
+      hypothesisId: 'A'
+    });
+    // #endregion
+  } else {
+    // #region agent log
+    await logToFile({
+      location: 'codewarsRepository.ts:291',
+      message: 'No new katas - skipping DB writes',
+      data: {},
+      sessionId: 'debug-session',
+      runId: 'run1',
+      hypothesisId: 'E'
+    });
+    // #endregion
   }
 
   // Fetch and return the 10 most recent katas within transaction
+  // #region agent log
+  const fetchRecentStartTime = Date.now();
+  // #endregion
   const katas = await katasCollection
     .find(
       { userId: codewarsUserId },
@@ -341,18 +477,35 @@ export async function getKataData(
       }
     )
     .toArray();
+  // #region agent log
+  const fetchRecentDuration = Date.now() - fetchRecentStartTime;
+  const getKataDataTotalDuration = Date.now() - getKataDataStartTime;
+  const apiCallsDuration = Date.now() - apiCallsStartTime;
+  const dbWriteDuration = dbWriteStartTime ? Date.now() - dbWriteStartTime : 0;
+  await logToFile({
+    location: 'codewarsRepository.ts:188',
+    message: 'getKataData completed',
+    data: {
+      totalDuration: getKataDataTotalDuration,
+      getUserDuration,
+      findLatestDuration,
+      apiCallsDuration,
+      dbWriteDuration,
+      fetchRecentDuration,
+      returnedKatasCount: katas.length
+    },
+    sessionId: 'debug-session',
+    runId: 'run1',
+    hypothesisId: 'A'
+  });
+  // #endregion
 
   return katas.map((kata) => kataSchema.parse(kata));
 }
 
 export async function getChampionsKataData(
-  {
-    limit = 25,
-    skip = 0
-  }: {
-    limit?: number;
-    skip?: number;
-  },
+  limit = 25,
+  skip = 0,
   session?: ClientSession
 ): Promise<{
   success: boolean;
@@ -360,11 +513,33 @@ export async function getChampionsKataData(
   totalCount: number;
 }> {
   try {
+    // #region agent log
+    const getChampionsStartTime = Date.now();
+    // #endregion
     const db = await getDb();
     const collection = db.collection<recentlySolvedKata>('recentlySolved');
 
-    const totalCount = await collection.countDocuments({});
+    // #region agent log
+    const countStartTime = Date.now();
+    // #endregion
+    // Use estimatedDocumentCount for much faster performance (O(1) vs O(n))
+    // This gives an approximate count which is sufficient for pagination
+    const totalCount = await collection.estimatedDocumentCount();
+    // #region agent log
+    const countDuration = Date.now() - countStartTime;
+    await logToFile({
+      location: 'codewarsRepository.ts:348',
+      message: 'estimatedDocumentCount completed',
+      data: { duration: countDuration, totalCount },
+      sessionId: 'debug-session',
+      runId: 'run1',
+      hypothesisId: 'B'
+    });
+    // #endregion
 
+    // #region agent log
+    const findStartTime = Date.now();
+    // #endregion
     const katas = await collection
       .find(
         {},
@@ -386,6 +561,25 @@ export async function getChampionsKataData(
         }
       )
       .toArray();
+    // #region agent log
+    const findDuration = Date.now() - findStartTime;
+    const getChampionsDuration = Date.now() - getChampionsStartTime;
+    await logToFile({
+      location: 'codewarsRepository.ts:348',
+      message: 'getChampionsKataData completed',
+      data: {
+        countDuration,
+        findDuration,
+        totalDuration: getChampionsDuration,
+        returnedCount: katas.length,
+        limit,
+        skip
+      },
+      sessionId: 'debug-session',
+      runId: 'run1',
+      hypothesisId: 'B'
+    });
+    // #endregion
 
     const parsedKatas = katas.map((kata) =>
       recentlySolvedKataSchema.parse(kata)

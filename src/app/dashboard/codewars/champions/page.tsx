@@ -1,25 +1,35 @@
-import {
-  getKataData,
-  getChampionsKataData
-} from '@/app/repositories/codewarsRepository';
+import { getCachedChampions } from '@/app/api/codewars/champions/route';
+import syncWithCodewars from '@/app/api/lib/syncWithCodewars';
 import { LinkButton } from '@/components/ui/LinkButton';
 import { CodewarsChampions } from '@/features/overview/components/codewars-champions';
-import { isConnectedToCodewars } from '@/services/codewarsService';
+import { recentlySolvedKata } from '@/types';
+
+const LIMIT = 25;
 
 export default async function CodewarsChampionsPage() {
-  const { data: codewars } = await isConnectedToCodewars();
+  // Run both operations in parallel; extract `codewarsData` from the first
+  const [syncResult, championsResult] = await Promise.allSettled([
+    syncWithCodewars(),
+    getCachedChampions(LIMIT, 0)
+  ]);
 
-  if (codewars?.isConnected) {
-    await getKataData({
-      codewarsUserId: codewars.id,
-      codewarsUsername: codewars.username,
-      codewarsName: codewars.name
-    });
+  let championsData: recentlySolvedKata[] = [];
+  if (championsResult.status === 'fulfilled') {
+    championsData = championsResult.value?.data ?? [];
+  } else {
+    console.error('getCachedChampions failed:', championsResult.reason);
   }
 
-  const limit = 25;
+  let codewarsData: any = { isConnected: false };
+  if (syncResult.status === 'fulfilled') {
+    codewarsData = syncResult.value?.codewarsData ??
+      syncResult.value ?? { isConnected: false };
+  } else {
+    console.error('syncWithCodewars failed:', syncResult.reason);
+  }
 
-  // const { data, success } = await getChampionsKataData({ limit, skip: 0 });
+  // const { data, success } = await getCachedChampions(LIMIT, 0);
+  // const { data } = await getInitialChampions(LIMIT);
 
   return (
     <div className='flex flex-1 flex-col space-y-6'>
@@ -32,7 +42,7 @@ export default async function CodewarsChampionsPage() {
             </span>
           </h2>
           <p className='text-sm text-gray-600 dark:text-gray-300'>
-            {codewars?.isConnected ? (
+            {codewarsData?.isConnected ? (
               'Explore the live history of solved katas from the BCFCODE community.'
             ) : (
               <span className='flex flex-col gap-2 sm:flex-row sm:items-center'>
@@ -65,9 +75,9 @@ export default async function CodewarsChampionsPage() {
         </div>
       </div>
       <CodewarsChampions
-        limit={limit}
+        limit={LIMIT}
         showPagination
-        // data={success ? data : []}
+        data={championsData}
         className={{
           avatarStyles: 'h-10 w-10'
         }}

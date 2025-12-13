@@ -72,12 +72,14 @@ export default function useChampionsQuery({
           }
         : keepPreviousData,
 
-    staleTime: 0,
+    staleTime: Infinity, // Don't refetch automatically - only on manual sync
     gcTime: 1 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30_000),
     throwOnError: false,
-    refetchOnWindowFocus: true
+    refetchOnWindowFocus: false, // Disable automatic refetch on window focus
+    refetchOnMount: false, // Don't refetch on mount - use initialData only
+    enabled: true // Query is enabled, but won't refetch due to staleTime: Infinity
   });
 
   // ──────────────────────────────────────────────────────────────
