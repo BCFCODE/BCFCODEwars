@@ -70,7 +70,7 @@ export async function PATCH(request: NextRequest) {
 
     // THIS IS THE MAGIC LINE
     // Invalidate the cache so next read gets fresh data
-    revalidateTag('codewars-champions');
+    revalidateTag('codewars-champions', 'max');
 
     return NextResponse.json({
       success: true,
