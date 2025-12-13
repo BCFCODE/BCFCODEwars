@@ -17,15 +17,15 @@ interface Props {
 
 export default function ChampionsList({
   limit,
-  //   initialData,
+  initialData,
   totalCount
 }: Props) {
   const [page, setPage] = useState(0);
 
   const { data, error, isFetching } = useChampionsQuery({
     page,
-    limit
-    // initialData
+    limit,
+    initialData
   });
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function ChampionsList({
     toast.error('Failed to load champions data');
   }, [error]);
 
-  //   const champions = data?.data ?? [];
+  const champions = data?.data ?? [];
 
   return (
     <Card
