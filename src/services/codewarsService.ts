@@ -30,6 +30,7 @@ import {
 import { z } from 'zod';
 import { getEmail } from './clerkService';
 import { ClientSession } from 'mongodb';
+import { getCachedChampions } from '@/app/api/codewars/champions/route';
 
 /**
  * Fetches the Codewars user ID for the currently signed-in user.
@@ -155,10 +156,7 @@ export async function getRecentlySolvedData(
     }
 
     // Fetch data from repository
-    const { success, data } = await getChampionsKataData(
-      { limit, skip },
-      session
-    );
+    const { success, data } = await getCachedChampions(limit, skip, session);
 
     // Check repository response
     if (!success) {
