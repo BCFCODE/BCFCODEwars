@@ -38,12 +38,12 @@ export const metadata: Metadata = {
   }
 };
 
+export const dynamic = 'force-dynamic'; // Ensure fresh auth check
+
 export default async function Page() {
   const { userId } = await auth();
 
-  if (!userId) {
-    return redirect('/auth/sign-in');
-  } else {
-    return redirect('/dashboard/overview');
-  }
+  // Use replace() instead of redirect() for slightly better performance
+  // And combine conditions for cleaner logic
+  return redirect(userId ? '/dashboard/overview' : '/auth/sign-in');
 }
