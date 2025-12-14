@@ -47,8 +47,8 @@ export const metadata: Metadata = {
 export default async function SignInViewPage({ stars }: { stars: number }) {
   const championsLimit = 5;
   const { data: champions = [], success } = await getCachedChampions(
-    0,
-    championsLimit
+    championsLimit,
+    0
   );
 
   const getRankIcon = (index: number) => {
