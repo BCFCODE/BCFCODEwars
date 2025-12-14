@@ -1,4 +1,5 @@
 import Providers from '@/components/layout/providers';
+import { BackgroundSyncTrigger } from '@/components/layout/background-sync-trigger';
 import { Toaster } from '@/components/ui/sonner';
 import { fontVariables } from '@/lib/font';
 import ThemeProvider from '@/components/layout/ThemeToggle/theme-provider';
@@ -110,6 +111,7 @@ export default async function RootLayout({
           >
             <Providers activeThemeValue={activeThemeValue as string}>
               {children}
+              <BackgroundSyncTrigger />
               <Toaster
                 position='bottom-right'
                 richColors
