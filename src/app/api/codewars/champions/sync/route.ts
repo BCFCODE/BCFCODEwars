@@ -1,14 +1,12 @@
 // app/api/codewars/champions/sync/route.ts
-import {
-  getKataData,
-  getChampionsKataData
-} from '@/app/repositories/codewarsRepository';
+import { getKataData } from '@/app/repositories/codewarsRepository';
 import { getClient } from '@/lib/mongodb';
 import { isConnectedToCodewars } from '@/services/codewarsService';
 import { recentlySolvedKata } from '@/types';
 import { auth } from '@clerk/nextjs/server';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
+import { getCachedChampions } from '../route';
 
 export const dynamic = 'force-dynamic';
 
@@ -56,7 +54,7 @@ export async function PATCH(request: NextRequest) {
             session
           );
 
-          const result = await getChampionsKataData({ skip, limit }, session);
+          const result = await getCachedChampions(limit, skip, session);
           championsData = result.data;
           totalCount = result.totalCount;
         });
@@ -65,7 +63,7 @@ export async function PATCH(request: NextRequest) {
       }
     } else {
       // READ-ONLY PATH — NO SESSION, NO TRANSACTION → blazing fast
-      const result = await getChampionsKataData({ skip, limit });
+      const result = await getCachedChampions(limit, skip);
       championsData = result.data;
       totalCount = result.totalCount;
     }

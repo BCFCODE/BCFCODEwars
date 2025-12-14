@@ -4,14 +4,15 @@ import { getChampionsKataData } from '@/app/repositories/codewarsRepository';
 import { NextResponse } from 'next/server';
 import { unstable_cache } from 'next/cache';
 import isRateLimited from '../../lib/isRateLimited';
+import { ClientSession } from 'mongodb';
 
 export const revalidate = false; // disable ISR
 export const dynamic = 'force-dynamic'; // we control caching manually
 
-const getCachedChampions = unstable_cache(
-  async (limit: number, skip: number) => {
+export const getCachedChampions = unstable_cache(
+  async (limit: number, skip: number, session?: ClientSession) => {
     console.log('Running DB query... (only once per 5 min)');
-    const result = await getChampionsKataData({ limit, skip });
+    const result = await getChampionsKataData(limit, skip, session);
     return result;
   },
   ['codewars-champions'],

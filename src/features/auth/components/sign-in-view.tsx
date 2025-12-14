@@ -1,8 +1,7 @@
+import { getCachedChampions } from '@/app/api/codewars/champions/route';
 import { DaysAgo } from '@/app/dashboard/codewars/components/Table/DaysAgo';
 import { SolvedOn } from '@/app/dashboard/codewars/components/Table/SolvedOn';
-import { getChampionsKataData } from '@/app/repositories/codewarsRepository';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { buttonVariants } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -13,13 +12,8 @@ import {
 import { cn } from '@/lib/utils';
 import { SignIn as ClerkSignInForm } from '@clerk/nextjs';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';
-import {
-  IconStar,
-  IconTrophy,
-  IconCrown,
-  IconMedal
-} from '@tabler/icons-react';
-import { Trophy, Flame, Sparkles, Zap } from 'lucide-react';
+import { IconCrown, IconStar } from '@tabler/icons-react';
+import { Flame, Sparkles, Trophy, Zap } from 'lucide-react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -52,10 +46,10 @@ export const metadata: Metadata = {
 
 export default async function SignInViewPage({ stars }: { stars: number }) {
   const championsLimit = 5;
-  const { data: champions = [], success } = await getChampionsKataData({
-    skip: 0,
-    limit: championsLimit
-  });
+  const { data: champions = [], success } = await getCachedChampions(
+    championsLimit,
+    0
+  );
 
   const getRankIcon = (index: number) => {
     if (index === 0)

@@ -10,14 +10,15 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
+import useChampionsQuery from '@/hooks/useChampionsQuery';
 import { cn } from '@/lib/utils';
 import { recentlySolvedKata } from '@/types';
+import { useQueryClient } from '@tanstack/react-query';
 import { Trophy } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { ChampionsPagination } from './codewars-champion-pagination';
 import { useState } from 'react';
-import useChampionsQuery from '@/hooks/useChampionsQuery';
 import { toast } from 'sonner';
+import { ChampionsPagination } from './codewars-champion-pagination';
 import { RecentKatasSkeleton } from './recent-sales-skeleton';
 
 interface Props {
@@ -40,18 +41,82 @@ export function CodewarsChampions({
   className
 }: Props) {
   const [page, setPage] = useState(0);
+  const [isSyncing, setIsSyncing] = useState(false);
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const {
     data: queryData,
     isPending,
     error,
-    isFetching
+    isFetching,
+    refetch
   } = useChampionsQuery({
     page,
     limit,
     initialData
   });
+
+  const handleSync = async () => {
+    setIsSyncing(true);
+    const toastId = toast.loading('Syncing with Codewars...', {
+      id: 'champions-sync-manual'
+    });
+
+    try {
+      const response = await fetch(
+        `/api/codewars/champions/sync?limit=${limit}&skip=${page * limit}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.message || `HTTP ${response.status}: Sync failed`
+        );
+      }
+
+      const result = await response.json();
+
+      if (!result.success) {
+        throw new Error(result.message || 'Sync failed');
+      }
+
+      // Invalidate and refetch all champion queries
+      await queryClient.invalidateQueries({ queryKey: ['champions'] });
+      await refetch();
+
+      const newCount = result.data?.length || 0;
+      const prevCount = queryData?.data?.length || 0;
+      const addedCount = newCount > prevCount ? newCount - prevCount : 0;
+
+      toast.success(
+        addedCount > 0
+          ? `Synced! ${addedCount} new kata${addedCount > 1 ? 's' : ''} added`
+          : 'Champions up to date',
+        {
+          id: toastId,
+          duration: 2000
+        }
+      );
+    } catch (error) {
+      console.error('Sync error:', error);
+      toast.error(
+        error instanceof Error ? error.message : 'Failed to sync champions',
+        {
+          id: toastId,
+          duration: 5000
+        }
+      );
+    } finally {
+      setIsSyncing(false);
+    }
+  };
 
   const loadingPage = isFetching ? page : null;
 
@@ -106,23 +171,45 @@ export function CodewarsChampions({
           />
           <div className='animate-ping-slow absolute inset-0 rounded-full border border-[var(--royal-gold)]/30 max-[420px]:-ml-1 max-[380px]:-ml-2 max-[360px]:-ml-3' />
         </div>
-        <div className='relative z-10 flex flex-col'>
-          <CardTitle
-            className={cn(
-              'text-card-foreground text-2xl font-extrabold tracking-tight max-[1280px]:text-[19px] max-[480px]:text-[17px] max-[360px]:text-[14px] max-[320px]:text-[10px]',
-              'drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] transition-all duration-300 dark:group-hover:text-[var(--royal-gold)]'
-            )}
-          >
-            BCFCODE Kata Champions
-          </CardTitle>
-          <CardDescription
-            className={cn(
-              'text-card-foreground/80 mt-1 text-sm font-medium max-[480px]:text-xs max-[420px]:text-[11px] max-[360px]:text-[9px] max-[320px]:text-[7px]',
-              'transition-colors duration-300 dark:group-hover:text-[var(--royal-gold)]/90'
-            )}
-          >
-            See who’s crushing Codewars right now ⚡
-          </CardDescription>
+        <div className='relative z-10 flex flex-1 items-center justify-between'>
+          <div className='flex flex-col'>
+            <CardTitle
+              className={cn(
+                'text-card-foreground text-2xl font-extrabold tracking-tight max-[1280px]:text-[19px] max-[480px]:text-[17px] max-[360px]:text-[14px] max-[320px]:text-[10px]',
+                'drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)] transition-all duration-300 dark:group-hover:text-[var(--royal-gold)]'
+              )}
+            >
+              BCFCODE Kata Champions
+            </CardTitle>
+            <CardDescription
+              className={cn(
+                'text-card-foreground/80 mt-1 text-sm font-medium max-[480px]:text-xs max-[420px]:text-[11px] max-[360px]:text-[9px] max-[320px]:text-[7px]',
+                'transition-colors duration-300 dark:group-hover:text-[var(--royal-gold)]/90'
+              )}
+            >
+              See who's crushing Codewars right now ⚡
+            </CardDescription>
+          </div>
+          {/* {showPagination && (
+            <Button
+              variant='ghost'
+              size='icon'
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSync();
+              }}
+              disabled={isSyncing || isFetching}
+              className='ml-auto shrink-0'
+              title='Sync with Codewars'
+            >
+              <RefreshCw
+                className={cn(
+                  'h-4 w-4 transition-transform',
+                  (isSyncing || isFetching) && 'animate-spin'
+                )}
+              />
+            </Button>
+          )} */}
         </div>
       </CardHeader>
 
