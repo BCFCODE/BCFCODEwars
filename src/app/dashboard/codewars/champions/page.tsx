@@ -1,31 +1,22 @@
 import { getCachedChampions } from '@/app/api/codewars/champions/route';
-import syncWithCodewars from '@/app/api/lib/syncWithCodewars';
 import { LinkButton } from '@/components/ui/LinkButton';
 import { CodewarsChampions } from '@/features/overview/components/codewars-champions';
 import { recentlySolvedKata } from '@/types';
+import { isConnectedToCodewars } from '@/services/codewarsService';
 
 const LIMIT = 25;
 
 export default async function CodewarsChampionsPage() {
-  // Run both operations in parallel; extract `codewarsData` from the first
-  const [syncResult, championsResult] = await Promise.allSettled([
-    syncWithCodewars(),
-    getCachedChampions(LIMIT, 0)
-  ]);
+  // Fetch champions from cache immediately - sync happens in background from overview
+  const championsResult = await getCachedChampions(LIMIT, 0);
+  const { success, data: codewarsData = { isConnected: false } } =
+    await isConnectedToCodewars();
 
   let championsData: recentlySolvedKata[] = [];
-  if (championsResult.status === 'fulfilled') {
-    championsData = championsResult.value?.data ?? [];
+  if (championsResult) {
+    championsData = championsResult?.data ?? [];
   } else {
-    console.error('getCachedChampions failed:', championsResult.reason);
-  }
-
-  let codewarsData: any = { isConnected: false };
-  if (syncResult.status === 'fulfilled') {
-    codewarsData = syncResult.value?.codewarsData ??
-      syncResult.value ?? { isConnected: false };
-  } else {
-    console.error('syncWithCodewars failed:', syncResult.reason);
+    console.error('getCachedChampions failed');
   }
 
   // const { data, success } = await getCachedChampions(LIMIT, 0);
