@@ -12,17 +12,11 @@ export const navItems: NavItem[] = [
   },
   {
     title: 'Codewars',
-    url: '/dashboard/codewars',
+    url: '',
     icon: 'codewars',
     isActive: false,
     shortcut: ['c', 'c'],
     items: [
-      {
-        title: 'Profile',
-        url: '/dashboard/codewars',
-        icon: 'champions',
-        shortcut: ['p']
-      },
       {
         title: 'History',
         url: '/dashboard/codewars/champions',
