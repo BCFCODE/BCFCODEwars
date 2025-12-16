@@ -89,7 +89,7 @@ export function CodewarsChampions({
 
       // Invalidate and refetch all champion queries
       await queryClient.invalidateQueries({ queryKey: ['champions'] });
-      await refetch();
+      // await refetch();
 
       const newCount = result.data?.length || 0;
       const prevCount = queryData?.data?.length || 0;

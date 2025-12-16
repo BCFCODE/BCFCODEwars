@@ -1,5 +1,6 @@
 'use client';
 
+import syncCodewarsInBackground from '@/app/api/lib/syncInBackground';
 import { useEffect } from 'react';
 
 /**
@@ -11,13 +12,7 @@ import { useEffect } from 'react';
 export function BackgroundSyncTrigger() {
   useEffect(() => {
     // Use non-blocking request to sync
-    fetch('/api/codewars/sync-background', {
-      method: 'POST',
-      // Don't wait for response
-      keepalive: true // Continues even if tab closes
-    }).catch(() => {
-      // Silently fail - this is background work
-    });
+    syncCodewarsInBackground();
   }, []);
 
   // This component renders nothing
