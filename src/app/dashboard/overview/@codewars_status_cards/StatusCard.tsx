@@ -12,8 +12,8 @@ import { IconTrendingUp } from '@tabler/icons-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import { DiamondsCollectButtonCard } from '@/app/dashboard/codewars/components/DiamondsCollectButtonCard';
 import { isConnectedToCodewars } from '@/types';
+import { DiamondsCollectButtonCard } from '../components/DiamondsCollectButtonCard';
 
 export function CodewarsStatusCard({
   codewarsUser
@@ -83,18 +83,18 @@ export function CodewarsStatusCard({
           </span>
         </CardTitle>
       </CardHeader>
-      <CardFooter className='flex items-start justify-between gap-1 text-sm'>
+      <CardFooter className='flex items-start justify-center gap-1 text-sm'>
         <Button
           onClick={() => setShowCollectDiamondsBtn(true)}
           className='bg-background hover:bg-muted/30 text-card-foreground cursor-pointer shadow-md'
         >
           Collect
         </Button>
-        <Link href='/dashboard/codewars'>
+        {/* <Link href='/dashboard/codewars'>
           <Button className='bg-background hover:bg-muted/30 text-card-foreground cursor-pointer shadow-md'>
             Profile
           </Button>
-        </Link>
+        </Link> */}
       </CardFooter>
     </Card>
   );

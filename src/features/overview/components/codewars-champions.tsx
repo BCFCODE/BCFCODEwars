@@ -1,7 +1,5 @@
 'use client';
 
-import { DaysAgo } from '@/app/dashboard/codewars/components/Table/DaysAgo';
-import { SolvedOn } from '@/app/dashboard/codewars/components/Table/SolvedOn';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Card,
@@ -20,6 +18,8 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { ChampionsPagination } from './codewars-champion-pagination';
 import { RecentKatasSkeleton } from './recent-sales-skeleton';
+import { DaysAgo } from '@/components/ui/DaysAgo';
+import { SolvedOn } from '@/components/ui/SolvedOn';
 
 interface Props {
   showPagination?: boolean;

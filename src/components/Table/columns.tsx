@@ -2,8 +2,8 @@
 
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { Kata } from '@/types';
-import { DaysAgo } from './DaysAgo';
-import { SolvedOn } from './SolvedOn';
+import { DaysAgo } from '../ui/DaysAgo';
+import { SolvedOn } from '../ui/SolvedOn';
 import { KataName } from './KataName';
 
 export const columns: ColumnDef<Kata>[] = [

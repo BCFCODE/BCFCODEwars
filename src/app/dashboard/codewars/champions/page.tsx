@@ -48,7 +48,7 @@ export default async function CodewarsChampionsPage() {
             )}
           </p>
         </div>
-        <div className='flex flex-wrap items-center gap-3'>
+        {/* <div className='flex flex-wrap items-center gap-3'>
           <LinkButton
             href='/dashboard/leaderboard/codewars'
             label='View Leaderboard'
@@ -63,7 +63,7 @@ export default async function CodewarsChampionsPage() {
             hoverGradient='from-[#f4a261]/90 to-[#e94560]/90'
             focusRing='focus:ring-[#f4a261]/50'
           />
-        </div>
+        </div> */}
       </div>
       <CodewarsChampions
         limit={LIMIT}

@@ -1,6 +1,5 @@
 import { getCachedChampions } from '@/app/api/codewars/champions/route';
-import { DaysAgo } from '@/app/dashboard/codewars/components/Table/DaysAgo';
-import { SolvedOn } from '@/app/dashboard/codewars/components/Table/SolvedOn';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   Card,
@@ -9,6 +8,8 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
+import { DaysAgo } from '@/components/ui/DaysAgo';
+import { SolvedOn } from '@/components/ui/SolvedOn';
 import { cn } from '@/lib/utils';
 import { SignIn as ClerkSignInForm } from '@clerk/nextjs';
 import { GitHubLogoIcon } from '@radix-ui/react-icons';

@@ -7,9 +7,9 @@ import { getCodewarsProfileData } from '@/services/codewarsService';
 import { Award, Medal, Trophy } from 'lucide-react';
 import type { Metadata } from 'next';
 import React, { Suspense } from 'react';
-import { StatCard } from '../codewars/components/StatCard';
-import { UserAvatar } from '../codewars/components/UserAvatar';
-import { NotConnectedGrid } from '../codewars/components/NotConnectedGrid';
+import { NotConnectedGrid } from './components/NotConnectedGrid';
+import { UserAvatar } from './components/UserAvatar';
+import { StatCard } from './components/StatCard';
 
 export const metadata: Metadata = {
   title: 'Overview | BCFCODE Dashboard',
@@ -48,13 +48,13 @@ export const metadata: Metadata = {
 };
 
 export default async function OverViewLayout({
-  codewars,
+  codewars_status_cards,
   kata_champions,
   codewars_radar_chart,
   bar_stats,
   area_stats
 }: {
-  codewars: React.ReactNode;
+  codewars_status_cards: React.ReactNode;
   kata_champions: React.ReactNode;
   codewars_radar_chart: React.ReactNode;
   bar_stats: React.ReactNode;
@@ -199,7 +199,7 @@ export default async function OverViewLayout({
               </div>
             }
           >
-            {codewars}
+            {codewars_status_cards}
           </Suspense>
         </div>
 

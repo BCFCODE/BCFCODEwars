@@ -12,7 +12,7 @@ export const navItems: NavItem[] = [
   },
   {
     title: 'Codewars',
-    url: '',
+    url: '/dashboard/codewars/champions',
     icon: 'codewars',
     isActive: false,
     shortcut: ['c', 'c'],
@@ -31,27 +31,27 @@ export const navItems: NavItem[] = [
       }
     ]
   },
-  {
-    title: 'Leaderboard',
-    url: '/dashboard/leaderboard',
-    icon: 'leaderboard',
-    shortcut: ['l', 'l'],
-    isActive: false,
-    items: [
-      {
-        title: 'Users',
-        url: '/dashboard/leaderboard/users',
-        icon: 'user',
-        shortcut: ['l', 'u']
-      },
-      {
-        title: 'Codewars',
-        url: '/dashboard/leaderboard/codewars',
-        icon: 'check',
-        shortcut: ['c', 'c']
-      }
-    ]
-  },
+  // {
+  //   title: 'Leaderboard',
+  //   url: '/dashboard/leaderboard',
+  //   icon: 'leaderboard',
+  //   shortcut: ['l', 'l'],
+  //   isActive: false,
+  //   items: [
+  //     {
+  //       title: 'Users',
+  //       url: '/dashboard/leaderboard/users',
+  //       icon: 'user',
+  //       shortcut: ['l', 'u']
+  //     },
+  //     {
+  //       title: 'Codewars',
+  //       url: '/dashboard/leaderboard/codewars',
+  //       icon: 'check',
+  //       shortcut: ['c', 'c']
+  //     }
+  //   ]
+  // },
   {
     title: 'Account',
     url: '/dashboard/profile',
