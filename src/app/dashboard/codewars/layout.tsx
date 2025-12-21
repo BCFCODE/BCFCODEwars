@@ -2,9 +2,9 @@ import PageContainer from '@/components/layout/page-container';
 import { PropsWithChildren } from 'react';
 
 export const metadata = {
-  title: 'Codewars Profile | BCFCODE Dashboard',
+  title: 'Codewars | BCFCODE Dashboard',
   description:
-    'Your Codewars profile on BCFCODE — honor, ranks, leaderboard position and language stats.',
+    'Your Codewars on BCFCODE — honor, ranks, leaderboard position and language stats.',
   robots: { index: false, follow: false }
 };
 

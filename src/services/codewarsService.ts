@@ -23,11 +23,12 @@ import {
 import { getDb } from '@/lib/mongodb';
 import {
   codewarsProfileDataSchema,
+  type isConnectedToCodewars,
   isConnectedToCodewarsSchema,
   recentlySolvedKata,
   recentlySolvedKataSchema
 } from '@/types';
-import { z } from 'zod';
+import { SafeParseSuccess, z } from 'zod';
 import { getEmail } from './clerkService';
 import { ClientSession } from 'mongodb';
 import { getCachedChampions } from '@/app/api/codewars/champions/route';
@@ -77,7 +78,9 @@ export async function getCodewarsUserId(): Promise<string> {
  * const result = await isConnectedToCodewars();
  * if (result.success) console.log(result.data.isConnected);
  */
-export async function isConnectedToCodewars() {
+export async function isConnectedToCodewars(): Promise<
+  z.SafeParseReturnType<unknown, isConnectedToCodewars>
+> {
   const raw = await isConnected();
 
   // Validate with Zod

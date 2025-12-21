@@ -115,7 +115,7 @@ export default function CodewarsConnectForm() {
       setError(false);
       setIsSaved(true);
       toast.success('🏆 Success! Your Codewars account is now linked!');
-      window.location.href = '/dashboard/codewars';
+      window.location.href = '/dashboard/overview';
     } catch {
       setError(true);
       toast.dismiss(toastId);

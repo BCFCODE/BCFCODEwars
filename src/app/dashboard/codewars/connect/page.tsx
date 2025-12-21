@@ -1,4 +1,4 @@
-import CodewarsConnectForm from '../components/CodewarsConnectForm';
+import CodewarsConnectForm from '../../components/CodewarsConnectForm';
 
 export default function CodewarsConnectPage() {
   return (

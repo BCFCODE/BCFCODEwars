@@ -1,20 +1,15 @@
 // app/dashboard/overview/layout.tsx
 
 import PageContainer from '@/components/layout/page-container';
-import { currentUser } from '@clerk/nextjs/server';
+import { Badge } from '@/components/ui/badge';
+import { baseUrl } from '@/lib/constants';
+import { getCodewarsProfileData } from '@/services/codewarsService';
+import { Award, Medal, Trophy } from 'lucide-react';
 import type { Metadata } from 'next';
 import React, { Suspense } from 'react';
-import { Badge } from '@/components/ui/badge';
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card';
-import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
-import { baseUrl } from '@/lib/constants';
+import { NotConnectedGrid } from '../components/NotConnectedGrid';
+import { UserAvatar } from '../components/UserAvatar';
+import { StatCard } from '../components/StatCard';
 
 export const metadata: Metadata = {
   title: 'Overview | BCFCODE Dashboard',
@@ -53,100 +48,146 @@ export const metadata: Metadata = {
 };
 
 export default async function OverViewLayout({
-  codewars,
+  codewars_status_cards,
   kata_champions,
   codewars_radar_chart,
   bar_stats,
   area_stats
 }: {
-  codewars: React.ReactNode;
+  codewars_status_cards: React.ReactNode;
   kata_champions: React.ReactNode;
   codewars_radar_chart: React.ReactNode;
   bar_stats: React.ReactNode;
   area_stats: React.ReactNode;
 }) {
-  const user = await currentUser();
+  let { data } = await getCodewarsProfileData();
+  const totalCompleted = data?.codeChallenges?.totalCompleted ?? null;
+  const leaderboardPosition = data?.leaderboardPosition ?? null;
+  const overall = data?.ranks?.overall ?? null;
+
+  const formatNumber = (n: number | null | undefined) =>
+    typeof n === 'number' ? n.toLocaleString() : '—';
+
+  if (!data?.isConnected) return <NotConnectedGrid />;
 
   return (
     <PageContainer>
       <div className='flex flex-1 flex-col space-y-2'>
-        <div className='flex items-center justify-between space-y-2'>
-          <h2 className='text-2xl font-bold tracking-tight'>
-            Hi, Welcome back {user?.firstName ?? 'Guest'}👋
-          </h2>
+        <div className='flex items-start gap-4'>
+          <UserAvatar
+            isConnected={data?.isConnected ?? false}
+            size={55}
+            showPresence
+          />
+
+          <div className='min-w-0'>
+            <h2 className='text-lg leading-tight font-extrabold tracking-tight sm:text-2xl'>
+              Welcome back,{' '}
+              <span className='bg-gradient-to-r from-[var(--royal-gold)] to-[var(--kyu-2)] bg-clip-text text-transparent'>
+                {data?.name ?? 'Guest'}
+              </span>
+              <div className='flex items-center align-baseline'>
+                <span className='text-muted-foreground ml-1 font-normal'>
+                  — Codewars profile
+                </span>
+              </div>
+            </h2>
+
+            <p className='text-muted-foreground mt-1 text-xs sm:text-sm'>
+              {data?.isConnected ? (
+                <span className='flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-0'>
+                  <span className='inline-flex w-40 items-center gap-2 rounded-full bg-[var(--chart-1)]/5 px-2 py-0.5 text-[11px] font-medium text-[var(--chart-1)]/80'>
+                    • Connected to Codewars
+                  </span>
+                  <span className='ml-3'>
+                    Live honor, ranks & language stats
+                  </span>
+                </span>
+              ) : (
+                <>
+                  <span className='border-muted/20 text-muted-foreground inline-flex items-center gap-2 rounded-full border px-2 py-0.5 text-[11px] font-medium'>
+                    • Not connected
+                  </span>
+                  <span className='ml-3'>
+                    Connect to surface your Codewars metrics
+                  </span>
+                </>
+              )}
+            </p>
+          </div>
         </div>
 
         <div className='*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs md:grid-cols-2 lg:grid-cols-4'>
           {/* Static cards unchanged */}
-          <Card className='@container/card bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-3)]/10 dark:from-[var(--bg-background)]/10 dark:to-[var(--kyu-3)]/10'>
-            <CardHeader>
-              <CardDescription>New Customers</CardDescription>
-              <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
-                1,234
-              </CardTitle>
-              <CardAction>
-                <Badge variant='outline'>
-                  <IconTrendingDown />
-                  -20%
-                </Badge>
-              </CardAction>
-            </CardHeader>
-            <CardFooter className='flex-col items-start gap-1.5 text-sm'>
-              <div className='line-clamp-1 flex gap-2 font-medium'>
-                Down 20% this period <IconTrendingDown className='size-4' />
-              </div>
-              <div className='text-muted-foreground'>
-                Acquisition needs attention
-              </div>
-            </CardFooter>
-          </Card>
+          <StatCard
+            title='Leaderboard Position'
+            primary={
+              leaderboardPosition ? (
+                <span className='text-2xl font-semibold'>
+                  #{leaderboardPosition}
+                </span>
+              ) : (
+                <span className='text-2xl font-semibold'>—</span>
+              )
+            }
+            badge={
+              <Badge variant='outline' className='flex items-center gap-1'>
+                <Medal className='h-4 w-4 text-[var(--kyu-4)]' /> Global Rank
+              </Badge>
+            }
+            meta='Where you rank globally across Codewars users.'
+            hint={
+              leaderboardPosition
+                ? 'Lower rank is better — solve more high-value kata to climb.'
+                : 'No leaderboard data available.'
+            }
+          />
 
-          <Card className='@container/card bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-3)]/10 dark:from-[var(--bg-background)]/10 dark:to-[var(--kyu-3)]/10'>
-            <CardHeader>
-              <CardDescription>Active Accounts</CardDescription>
-              <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
-                45,678
-              </CardTitle>
-              <CardAction>
-                <Badge variant='outline'>
-                  <IconTrendingUp />
-                  +12.5%
-                </Badge>
-              </CardAction>
-            </CardHeader>
-            <CardFooter className='flex-col items-start gap-1.5 text-sm'>
-              <div className='line-clamp-1 flex gap-2 font-medium'>
-                Strong user retention <IconTrendingUp className='size-4' />
-              </div>
-              <div className='text-muted-foreground'>
-                Engagement exceed targets
-              </div>
-            </CardFooter>
-          </Card>
+          <StatCard
+            title='Total Katas Completed'
+            primary={
+              <span className='text-2xl font-semibold'>
+                {formatNumber(totalCompleted)}
+              </span>
+            }
+            badge={
+              <Badge variant='outline' className='flex items-center gap-1'>
+                <Trophy className='h-4 w-4 text-[var(--royal-gold)]' />
+                Katas
+              </Badge>
+            }
+            meta='Total number of katas completed on Codewars.'
+            hint='Higher completion counts reflect dedication to solving coding challenges.'
+          />
 
-          <Card className='@container/card bg-gradient-to-t from-[var(--bg-background)]/10 to-[var(--kyu-3)]/10 dark:from-[var(--bg-background)]/10 dark:to-[var(--kyu-3)]/10'>
-            <CardHeader>
-              <CardDescription>Growth Rate</CardDescription>
-              <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
-                4.5%
-              </CardTitle>
-              <CardAction>
-                <Badge variant='outline'>
-                  <IconTrendingUp />
-                  +4.5%
+          <StatCard
+            title='Overall Rank'
+            primary={
+              overall ? (
+                <div className='flex items-baseline gap-2'>
+                  <span className='text-xl font-semibold'>{overall.name}</span>
+                  <span className='text-muted-foreground text-sm'>
+                    ({formatNumber(overall.score)} pts)
+                  </span>
+                </div>
+              ) : (
+                <span className='text-lg font-semibold'>Unranked</span>
+              )
+            }
+            badge={
+              overall ? (
+                <Badge variant='outline' className='flex items-center gap-1'>
+                  <Award className='h-4 w-4' /> Rank Score
                 </Badge>
-              </CardAction>
-            </CardHeader>
-            <CardFooter className='flex-col items-start gap-1.5 text-sm'>
-              <div className='line-clamp-1 flex gap-2 font-medium'>
-                Steady performance increase{' '}
-                <IconTrendingUp className='size-4' />
-              </div>
-              <div className='text-muted-foreground'>
-                Meets growth projections
-              </div>
-            </CardFooter>
-          </Card>
+              ) : null
+            }
+            meta='Your current kyū/dan rank on Codewars.'
+            hint={
+              overall
+                ? 'Progress your rank by solving higher-kyū kata.'
+                : 'Solve kata to obtain a rank.'
+            }
+          />
 
           {/* STREAMED — codewars */}
           <Suspense
@@ -158,7 +199,7 @@ export default async function OverViewLayout({
               </div>
             }
           >
-            {codewars}
+            {codewars_status_cards}
           </Suspense>
         </div>
 

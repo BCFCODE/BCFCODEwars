@@ -9,7 +9,7 @@ import { NextResponse } from 'next/server';
  */
 export async function POST(request: Request) {
   // Trigger sync in the background without awaiting
-  syncWithCodewars().catch((err) =>
+  await syncWithCodewars().catch((err) =>
     console.error('Background sync failed:', err)
   );
 
