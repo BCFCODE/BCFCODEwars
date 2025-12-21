@@ -14,7 +14,7 @@ import { recentlySolvedKata } from '@/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { Trophy } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { toast } from 'sonner';
 import { ChampionsPagination } from './codewars-champion-pagination';
 import { RecentKatasSkeleton } from './recent-sales-skeleton';
@@ -24,7 +24,11 @@ import { SolvedOn } from '@/components/ui/SolvedOn';
 interface Props {
   showPagination?: boolean;
   limit: number;
-  data: recentlySolvedKata[];
+  cachedChampionsPromise: Promise<{
+    success: boolean;
+    data: recentlySolvedKata[];
+    totalCount: number;
+  }>;
   // success?: boolean;
   // totalCount: number
   className?: {
@@ -37,13 +41,15 @@ export function CodewarsChampions({
   showPagination,
   limit,
   // totalCount,
-  data: initialData,
+  cachedChampionsPromise,
   className
 }: Props) {
   const [page, setPage] = useState(0);
   const [isSyncing, setIsSyncing] = useState(false);
   const router = useRouter();
   const queryClient = useQueryClient();
+
+  const championsData = use(cachedChampionsPromise);
 
   const {
     data: queryData,
@@ -54,7 +60,7 @@ export function CodewarsChampions({
   } = useChampionsQuery({
     page,
     limit,
-    initialData
+    initialData: championsData.data
   });
 
   const handleSync = async () => {

@@ -1,4 +1,4 @@
-import { LeftFooter } from '@/app/dashboard/leaderboard/components/LeftFooter';
+import { LeftFooter } from '@/app/dashboard/_leaderboard/components/LeftFooter';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import {
@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { UsersTableData } from '@/types';
+import { CodewarsTableData } from '@/types';
 import {
   IconChevronLeft,
   IconChevronRight,
@@ -17,10 +17,10 @@ import {
 } from '@tabler/icons-react';
 import { Table } from '@tanstack/react-table';
 
-export function Pagination({ table }: { table: Table<UsersTableData> }) {
+export function Pagination({ table }: { table: Table<CodewarsTableData> }) {
   return (
     <div className='bg-background sticky bottom-0 z-20 flex items-center justify-between border-t px-4 py-3'>
-      <LeftFooter table={table} who='user' />
+      <LeftFooter {...{ table }} who='Code Warrior' />
       <div className='flex w-full items-center gap-8 lg:w-fit'>
         <div className='hidden items-center gap-2 lg:flex'>
           <Label htmlFor='rows-per-page' className='text-sm font-medium'>

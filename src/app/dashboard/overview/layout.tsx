@@ -7,9 +7,9 @@ import { getCodewarsProfileData } from '@/services/codewarsService';
 import { Award, Medal, Trophy } from 'lucide-react';
 import type { Metadata } from 'next';
 import React, { Suspense } from 'react';
-import { NotConnectedGrid } from './components/NotConnectedGrid';
-import { UserAvatar } from './components/UserAvatar';
-import { StatCard } from './components/StatCard';
+import { NotConnectedGrid } from '../components/NotConnectedGrid';
+import { UserAvatar } from '../components/UserAvatar';
+import { StatCard } from '../components/StatCard';
 
 export const metadata: Metadata = {
   title: 'Overview | BCFCODE Dashboard',

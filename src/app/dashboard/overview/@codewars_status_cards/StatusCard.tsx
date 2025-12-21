@@ -13,7 +13,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { isConnectedToCodewars } from '@/types';
-import { DiamondsCollectButtonCard } from '../components/DiamondsCollectButtonCard';
+import { DiamondsCollectButtonCard } from '../../components/DiamondsCollectButtonCard';
 
 export function CodewarsStatusCard({
   codewarsUser
