@@ -4,8 +4,8 @@
  * This module provides **server-only** helper functions for fetching and validating
  * the current user’s Codewars connection and profile data.
  *
- * - `isConnectedToCodewars()` returns whether the signed-in user is connected.
- * - `getCodewarsProfileData()` returns the validated Codewars profile for the signed-in user.
+ * - `isConnectedToCodewarsSafe()` returns whether the signed-in user is connected.
+ * - `getCodewarsProfileSafe()` returns the validated Codewars profile for the signed-in user.
  *
  * It uses:
  *  - `@clerk/nextjs/server` to get the authenticated user’s email
@@ -15,23 +15,23 @@
  * All functions throw if the user is not authenticated or if required fields are missing.
  */
 
+import { getCachedChampions } from '@/app/api/codewars/champions/route';
 import {
-  getCodewarsProfile,
-  getChampionsKataData,
-  isConnected
+  getCodewarsProfileUnsafe,
+  isConnectedToCodewarsUnsafe
 } from '@/app/repositories/codewarsRepository';
 import { getDb } from '@/lib/mongodb';
 import {
   codewarsProfileDataSchema,
-  type isConnectedToCodewars,
+  isConnectedToCodewarsSafeParseReturnType,
   isConnectedToCodewarsSchema,
   recentlySolvedKata,
   recentlySolvedKataSchema
 } from '@/types';
-import { SafeParseSuccess, z } from 'zod';
-import { getEmail } from './clerkService';
+import { CodewarsProfileDataSafeParseReturnType } from '@/types/codewars-profile';
 import { ClientSession } from 'mongodb';
-import { getCachedChampions } from '@/app/api/codewars/champions/route';
+import { z } from 'zod';
+import { getEmail } from './clerkService';
 
 /**
  * Fetches the Codewars user ID for the currently signed-in user.
@@ -68,20 +68,18 @@ export async function getCodewarsUserId(): Promise<string> {
  * Checks whether the currently signed-in user has connected their Codewars account.
  *
  * - Fetches the email from Clerk
- * - Calls `isConnected(email)` from the repository
+ * - Calls `isConnectedToCodewarsUnsafeemail)` from the repository
  * - Validates the returned object with `isConnectedToCodewarsSchema`
  *
  * @returns {Promise<ReturnType<typeof isConnectedToCodewarsSchema.safeParse>>}
  *          A Zod SafeParseReturn. Use `.success` to check validity and `.data` to get typed data.
  *
  * @example
- * const result = await isConnectedToCodewars();
+ * const result = await isConnectedToCodewarsSafe();
  * if (result.success) console.log(result.data.isConnected);
  */
-export async function isConnectedToCodewars(): Promise<
-  z.SafeParseReturnType<unknown, isConnectedToCodewars>
-> {
-  const raw = await isConnected();
+export async function isConnectedToCodewarsSafe(): Promise<isConnectedToCodewarsSafeParseReturnType> {
+  const raw = await isConnectedToCodewarsUnsafe();
 
   // Validate with Zod
   return isConnectedToCodewarsSchema.safeParse(raw);
@@ -91,21 +89,21 @@ export async function isConnectedToCodewars(): Promise<
  * Fetches the full Codewars profile for the currently signed-in user.
  *
  * - Fetches the email from Clerk
- * - Calls `getCodewarsProfile(email)` from the repository
+ * - Calls `getCodewarsProfileUnsafe(email)` from the repository
  * - Validates the returned object with `codewarsProfileDataSchema`
  *
  * @returns {Promise<ReturnType<typeof codewarsProfileDataSchema.safeParse>>}
  *          A Zod SafeParseReturn. Use `.success` to check validity and `.data` to get typed data.
  *
  * @example
- * const result = await getCodewarsProfileData();
+ * const result = await getCodewarsProfileSafe();
  * if (result.success) {
  *   const profile = result.data;
  *   console.log(profile.honor);
  * }
  */
-export async function getCodewarsProfileData() {
-  const raw = await getCodewarsProfile();
+export async function getCodewarsProfileSafe(): Promise<CodewarsProfileDataSafeParseReturnType> {
+  const raw = await getCodewarsProfileUnsafe();
 
   // Validate with Zod
   return codewarsProfileDataSchema.safeParse(raw);

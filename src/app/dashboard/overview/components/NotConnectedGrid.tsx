@@ -1,8 +1,15 @@
+'use client';
+
 import { Card } from '@/components/ui/card';
 import { UserX } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export function NotConnectedGrid() {
+  const [isNow, setIsNow] = useState(true);
+
+  if (!isNow) return null;
+
   return (
     <div className='flex flex-1 flex-col items-center justify-center space-y-6 px-4 py-12 transition-colors duration-500'>
       <div className='col-span-1 md:col-span-2 lg:col-span-4'>
@@ -21,11 +28,13 @@ export function NotConnectedGrid() {
                   Connect
                 </button>
               </Link>
-              <Link href='/dashboard'>
-                <button className='hover:bg-muted inline-flex cursor-pointer items-center rounded-md px-4 py-2 text-sm font-medium'>
-                  Back to Dashboard
-                </button>
-              </Link>
+
+              <button
+                onClick={() => setIsNow(false)}
+                className='hover:bg-muted inline-flex cursor-pointer items-center rounded-md px-4 py-2 text-sm font-medium'
+              >
+                Not now
+              </button>
             </div>
           </div>
         </Card>

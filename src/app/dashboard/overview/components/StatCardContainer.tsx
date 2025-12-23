@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card';
 // import { IconTrendingDown, IconTrendingUp } from '@tabler/icons-react';
 
-export function StatCard({
+export function StatCardContainer({
   title,
   primary,
   meta,

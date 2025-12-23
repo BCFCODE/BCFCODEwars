@@ -1,12 +1,8 @@
-import { isConnectedToCodewars } from '@/services/codewarsService';
-import { CodewarsStatusCard } from './StatusCard';
+import { getCodewarsProfileSafe } from '@/services/codewarsService';
+import ClientContainer from './components/ClientContainer';
 
-export default async function StatusCard() {
-  // Just show connection status - NO SYNC during render
-  // Sync is removed to improve FCP (3.17s → target <1.8s)
-  // Consider syncing via cron job or user action instead
-  const isConnected = await isConnectedToCodewars();
+export default async function CodewarsStatusCardsSlot() {
+  const codewarsProfilePromise = getCodewarsProfileSafe();
 
-  if (isConnected.success)
-    return <CodewarsStatusCard codewarsUser={isConnected.data} />;
+  return <ClientContainer promise={codewarsProfilePromise} />;
 }

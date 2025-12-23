@@ -90,7 +90,7 @@ const addDiamondsStages = [
 ] as const;
 
 /** 🔹 Lightweight check for connection + diamonds */
-export async function isConnected(): Promise<isConnectedToCodewars | null> {
+export async function isConnectedToCodewarsUnsafe(): Promise<isConnectedToCodewars | null> {
   try {
     const email = await getEmail();
     const db = await getDb();
@@ -126,7 +126,7 @@ export async function isConnected(): Promise<isConnectedToCodewars | null> {
  * @returns The Codewars profile data or null if the profile cannot be retrieved or updated.
  * @throws Error if the database operation fails, the API request fails, or required user data is missing.
  */
-export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> {
+export async function getCodewarsProfileUnsafe(): Promise<CodewarsProfileData | null> {
   try {
     const { db, email, id, username } = await getCodewarsUserId();
 
@@ -187,7 +187,7 @@ export async function getCodewarsProfile(): Promise<CodewarsProfileData | null> 
 
     return profile ?? null;
   } catch (error) {
-    console.error('Error in getCodewarsProfile:', error);
+    console.error('Error in getCodewarsProfileUnsafe:', error);
     throw new Error(
       error instanceof Error && error.message.includes('API')
         ? error.message

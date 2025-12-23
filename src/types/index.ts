@@ -40,7 +40,8 @@ export {
   type CodewarsProfileData,
   codewarsProfileDataSchema,
   type isConnectedToCodewars,
-  isConnectedToCodewarsSchema
+  isConnectedToCodewarsSchema,
+  type isConnectedToCodewarsSafeParseReturnType
 } from './codewars-profile';
 
 export { type Kata, kataSchema } from './codewars-katas';

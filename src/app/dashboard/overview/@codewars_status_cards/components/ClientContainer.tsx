@@ -1,14 +1,19 @@
+'use client';
+
 import { Badge } from '@/components/ui/badge';
-import { CodewarsProfileData } from '@/types';
 import { Award, Medal, Trophy } from 'lucide-react';
-import { DiamondsCollectButtonCard } from './DiamondsCollectButtonCard';
-import { StatCardContainer } from '../overview/components/StatCardContainer';
+import { StatCardContainer } from '../../components/StatCardContainer';
+import { DiamondsCollectCard } from './StatusCard';
+import { CodewarsProfileDataSafeParseReturnType } from '@/types/codewars-profile';
+import { use } from 'react';
+import { NotConnectedGrid } from '../../components/NotConnectedGrid';
 
 interface Props {
-  data: CodewarsProfileData;
+  promise: Promise<CodewarsProfileDataSafeParseReturnType>;
 }
 
-export async function StatCards({ data }: Props) {
+const ClientStatusCardsContainer = ({ promise }: Props) => {
+  const { data } = use(promise);
   const totalCompleted = data?.codeChallenges?.totalCompleted ?? null;
   const leaderboardPosition = data?.leaderboardPosition ?? null;
   const overall = data?.ranks?.overall ?? null;
@@ -16,8 +21,11 @@ export async function StatCards({ data }: Props) {
   const formatNumber = (n: number | null | undefined) =>
     typeof n === 'number' ? n.toLocaleString() : '—';
 
+  if (!data?.isConnected) return <NotConnectedGrid />;
+
   return (
-    <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4'>
+    <div className='*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs md:grid-cols-2 lg:grid-cols-4'>
+      {/* Static cards unchanged */}
       <StatCardContainer
         title='Leaderboard Position'
         primary={
@@ -41,7 +49,6 @@ export async function StatCards({ data }: Props) {
             : 'No leaderboard data available.'
         }
       />
-
       <StatCardContainer
         title='Total Katas Completed'
         primary={
@@ -58,7 +65,6 @@ export async function StatCards({ data }: Props) {
         meta='Total number of katas completed on Codewars.'
         hint='Higher completion counts reflect dedication to solving coding challenges.'
       />
-
       <StatCardContainer
         title='Overall Rank'
         primary={
@@ -87,8 +93,13 @@ export async function StatCards({ data }: Props) {
             : 'Solve kata to obtain a rank.'
         }
       />
-
-      <DiamondsCollectButtonCard count={data.totalDiamonds} />
+      <DiamondsCollectCard
+        isConnected={data.isConnected}
+        codewarsUsername={data.username}
+        totalDiamonds={data.totalDiamonds}
+      />
     </div>
   );
-}
+};
+
+export default ClientStatusCardsContainer;

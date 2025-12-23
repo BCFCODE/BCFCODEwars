@@ -1,13 +1,10 @@
 'use client';
 
-import type { isConnectedToCodewars } from '@/types';
+import type { isConnectedToCodewarsSafeParseReturnType } from '@/types';
 import { use } from 'react';
-import { z } from 'zod';
 
 interface Props {
-  codewarsDataPromise: Promise<
-    z.SafeParseReturnType<unknown, isConnectedToCodewars>
-  >;
+  codewarsDataPromise: Promise<isConnectedToCodewarsSafeParseReturnType>;
 }
 
 const ChampionsPageHeader = ({ codewarsDataPromise }: Props) => {

@@ -6,13 +6,13 @@ import { getCachedChampions } from '@/app/api/codewars/champions/route';
 
 const LIMIT = 3;
 
-export default async function CodewarsChampionsCard() {
-  const cachedChampionsPromise = getCachedChampions(LIMIT, 0);
+export default async function CodewarsChampionsCardSlot() {
+  const promise = getCachedChampions(LIMIT, 0);
 
   return (
     <CodewarsChampions
       limit={LIMIT}
-      cachedChampionsPromise={cachedChampionsPromise}
+      cachedChampionsPromise={promise}
       className={{
         kataNameStyles: cn('max-w-80')
       }}

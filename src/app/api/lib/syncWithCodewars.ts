@@ -1,8 +1,8 @@
 import { getKataData } from '@/app/repositories/codewarsRepository';
-import { isConnectedToCodewars } from '@/services/codewarsService';
+import { isConnectedToCodewarsSafe } from '@/services/codewarsService';
 
 const syncWithCodewars = async () => {
-  const { data: codewarsData } = await isConnectedToCodewars();
+  const { data: codewarsData } = await isConnectedToCodewarsSafe();
 
   if (codewarsData?.isConnected) {
     await getKataData({

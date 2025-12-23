@@ -1,12 +1,12 @@
 // app/api/codewars/champions/sync/route.ts
 import { getKataData } from '@/app/repositories/codewarsRepository';
 import { getClient } from '@/lib/mongodb';
-import { isConnectedToCodewars } from '@/services/codewarsService';
 import { recentlySolvedKata } from '@/types';
 import { auth } from '@clerk/nextjs/server';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import { getCachedChampions } from '../route';
+import { isConnectedToCodewarsSafe } from '@/services/codewarsService';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,7 +24,7 @@ export async function PATCH(request: NextRequest) {
       );
     }
 
-    const { data: codewars } = await isConnectedToCodewars();
+    const { data: codewars } = await isConnectedToCodewarsSafe();
     if (!codewars?.isConnected) {
       return NextResponse.json(
         {

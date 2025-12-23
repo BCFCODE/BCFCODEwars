@@ -1,15 +1,12 @@
 // app/dashboard/overview/layout.tsx
 
 import PageContainer from '@/components/layout/page-container';
-import { Badge } from '@/components/ui/badge';
 import { baseUrl } from '@/lib/constants';
-import { getCodewarsProfileData } from '@/services/codewarsService';
-import { Award, Medal, Trophy } from 'lucide-react';
+import { getCodewarsProfileSafe } from '@/services/codewarsService';
 import type { Metadata } from 'next';
 import React, { Suspense } from 'react';
-import { NotConnectedGrid } from '../components/NotConnectedGrid';
 import { UserAvatar } from '../components/UserAvatar';
-import { StatCard } from '../components/StatCard';
+import { NotConnectedGrid } from './components/NotConnectedGrid';
 
 export const metadata: Metadata = {
   title: 'Overview | BCFCODE Dashboard',
@@ -60,7 +57,7 @@ export default async function OverViewLayout({
   bar_stats: React.ReactNode;
   area_stats: React.ReactNode;
 }) {
-  let { data } = await getCodewarsProfileData();
+  let { data } = await getCodewarsProfileSafe();
   const totalCompleted = data?.codeChallenges?.totalCompleted ?? null;
   const leaderboardPosition = data?.leaderboardPosition ?? null;
   const overall = data?.ranks?.overall ?? null;
@@ -117,91 +114,18 @@ export default async function OverViewLayout({
           </div>
         </div>
 
-        <div className='*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs md:grid-cols-2 lg:grid-cols-4'>
-          {/* Static cards unchanged */}
-          <StatCard
-            title='Leaderboard Position'
-            primary={
-              leaderboardPosition ? (
-                <span className='text-2xl font-semibold'>
-                  #{leaderboardPosition}
-                </span>
-              ) : (
-                <span className='text-2xl font-semibold'>—</span>
-              )
-            }
-            badge={
-              <Badge variant='outline' className='flex items-center gap-1'>
-                <Medal className='h-4 w-4 text-[var(--kyu-4)]' /> Global Rank
-              </Badge>
-            }
-            meta='Where you rank globally across Codewars users.'
-            hint={
-              leaderboardPosition
-                ? 'Lower rank is better — solve more high-value kata to climb.'
-                : 'No leaderboard data available.'
-            }
-          />
-
-          <StatCard
-            title='Total Katas Completed'
-            primary={
-              <span className='text-2xl font-semibold'>
-                {formatNumber(totalCompleted)}
-              </span>
-            }
-            badge={
-              <Badge variant='outline' className='flex items-center gap-1'>
-                <Trophy className='h-4 w-4 text-[var(--royal-gold)]' />
-                Katas
-              </Badge>
-            }
-            meta='Total number of katas completed on Codewars.'
-            hint='Higher completion counts reflect dedication to solving coding challenges.'
-          />
-
-          <StatCard
-            title='Overall Rank'
-            primary={
-              overall ? (
-                <div className='flex items-baseline gap-2'>
-                  <span className='text-xl font-semibold'>{overall.name}</span>
-                  <span className='text-muted-foreground text-sm'>
-                    ({formatNumber(overall.score)} pts)
-                  </span>
-                </div>
-              ) : (
-                <span className='text-lg font-semibold'>Unranked</span>
-              )
-            }
-            badge={
-              overall ? (
-                <Badge variant='outline' className='flex items-center gap-1'>
-                  <Award className='h-4 w-4' /> Rank Score
-                </Badge>
-              ) : null
-            }
-            meta='Your current kyū/dan rank on Codewars.'
-            hint={
-              overall
-                ? 'Progress your rank by solving higher-kyū kata.'
-                : 'Solve kata to obtain a rank.'
-            }
-          />
-
-          {/* STREAMED — codewars */}
-          <Suspense
-            fallback={
-              <div className='flex items-center justify-center p-4'>
-                <p className='text-muted-foreground text-sm'>
-                  Loading Codewars...
-                </p>
-              </div>
-            }
-          >
-            {codewars_status_cards}
-          </Suspense>
-        </div>
+        {/* STREAMED — codewars */}
+        <Suspense
+          fallback={
+            <div className='flex items-center justify-center p-4'>
+              <p className='text-muted-foreground text-sm'>
+                Loading Codewars...
+              </p>
+            </div>
+          }
+        >
+          {codewars_status_cards}
+        </Suspense>
 
         <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
           {/* STREAMED — bar_stats */}

@@ -35,6 +35,11 @@ export const codewarsProfileDataSchema = z.object({
 // Type inference for TypeScript
 export type CodewarsProfileData = z.infer<typeof codewarsProfileDataSchema>;
 
+export type CodewarsProfileDataSafeParseReturnType = z.SafeParseReturnType<
+  unknown,
+  CodewarsProfileData
+>;
+
 export const isConnectedToCodewarsSchema = z.object({
   isConnected: z.boolean(),
   name: z.string(),
@@ -44,3 +49,8 @@ export const isConnectedToCodewarsSchema = z.object({
 });
 
 export type isConnectedToCodewars = z.infer<typeof isConnectedToCodewarsSchema>;
+
+export type isConnectedToCodewarsSafeParseReturnType = z.SafeParseReturnType<
+  unknown,
+  isConnectedToCodewars
+>;
